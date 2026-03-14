@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.0.3 (2026-03-14)
+
+Full Changelog: [v0.0.2...v0.0.3](https://github.com/brand-dot-dev/context-python-sdk/compare/v0.0.2...v0.0.3)
+
+### Chores
+
+* update SDK settings ([0c90793](https://github.com/brand-dot-dev/context-python-sdk/commit/0c90793462f3394063c47abf0bfb3b2bed60b685))
+
 ## 0.0.2 (2026-03-14)
 
 Full Changelog: [v0.0.1...v0.0.2](https://github.com/brand-dot-dev/context-python-sdk/compare/v0.0.1...v0.0.2)
