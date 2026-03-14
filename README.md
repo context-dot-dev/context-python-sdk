@@ -25,12 +25,9 @@ The REST API documentation can be found on [docs.context.dev](https://docs.conte
 ## Installation
 
 ```sh
-# install from the production repo
-pip install git+ssh://git@github.com/brand-dot-dev/context-python-sdk.git
+# install from PyPI
+pip install context.dev
 ```
-
-> [!NOTE]
-> Once this package is [published to PyPI](https://www.stainless.com/docs/guides/publish), this will become: `pip install context.dev`
 
 ## Usage
 
@@ -88,8 +85,8 @@ By default, the async client uses `httpx` for HTTP requests. However, for improv
 You can enable this by installing `aiohttp`:
 
 ```sh
-# install from the production repo
-pip install 'context.dev[aiohttp] @ git+ssh://git@github.com/brand-dot-dev/context-python-sdk.git'
+# install from PyPI
+pip install context.dev[aiohttp]
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
