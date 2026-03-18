@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.1.0 (2026-03-18)
+
+Full Changelog: [v0.0.3...v0.1.0](https://github.com/brand-dot-dev/context-python-sdk/compare/v0.0.3...v0.1.0)
+
+### Features
+
+* **api:** api update ([5cc1e7d](https://github.com/brand-dot-dev/context-python-sdk/commit/5cc1e7d56a2bc8210d4b2b06c581459cea572210))
+
+
+### Bug Fixes
+
+* **deps:** bump minimum typing-extensions version ([4695dbc](https://github.com/brand-dot-dev/context-python-sdk/commit/4695dbc34b87e85188379626840776680c6bb9b6))
+* **pydantic:** do not pass `by_alias` unless set ([b1723b9](https://github.com/brand-dot-dev/context-python-sdk/commit/b1723b9dcac429353c6d02808e6d795e5ed5caa3))
+
+
+### Chores
+
+* **internal:** tweak CI branches ([0dbacf7](https://github.com/brand-dot-dev/context-python-sdk/commit/0dbacf7d2c95a87668cd1fc052378984ca1a865e))
+
 ## 0.0.3 (2026-03-14)
 
 Full Changelog: [v0.0.2...v0.0.3](https://github.com/brand-dot-dev/context-python-sdk/compare/v0.0.2...v0.0.3)
