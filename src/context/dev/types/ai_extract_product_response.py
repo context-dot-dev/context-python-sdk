@@ -5,7 +5,7 @@ from typing_extensions import Literal
 
 from .._models import BaseModel
 
-__all__ = ["BrandAIProductResponse", "Product"]
+__all__ = ["AIExtractProductResponse", "Product"]
 
 
 class Product(BaseModel):
@@ -51,7 +51,7 @@ class Product(BaseModel):
     """URL to the product page"""
 
 
-class BrandAIProductResponse(BaseModel):
+class AIExtractProductResponse(BaseModel):
     is_product_page: Optional[bool] = None
     """Whether the given URL is a product detail page"""
 

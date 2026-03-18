@@ -6,10 +6,10 @@ from typing_extensions import Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["BrandWebScrapeMdParams"]
+__all__ = ["WebWebScrapeMdParams"]
 
 
-class BrandWebScrapeMdParams(TypedDict, total=False):
+class WebWebScrapeMdParams(TypedDict, total=False):
     url: Required[str]
     """
     Full URL to scrape and convert to markdown (must include http:// or https://

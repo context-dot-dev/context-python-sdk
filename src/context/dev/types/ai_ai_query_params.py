@@ -7,10 +7,10 @@ from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["BrandAIQueryParams", "DataToExtract", "SpecificPages"]
+__all__ = ["AIAIQueryParams", "DataToExtract", "SpecificPages"]
 
 
-class BrandAIQueryParams(TypedDict, total=False):
+class AIAIQueryParams(TypedDict, total=False):
     data_to_extract: Required[Iterable[DataToExtract]]
     """Array of data points to extract from the website"""
 

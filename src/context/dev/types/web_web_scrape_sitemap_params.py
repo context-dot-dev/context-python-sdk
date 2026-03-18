@@ -4,10 +4,10 @@ from __future__ import annotations
 
 from typing_extensions import Required, TypedDict
 
-__all__ = ["BrandWebScrapeSitemapParams"]
+__all__ = ["WebWebScrapeSitemapParams"]
 
 
-class BrandWebScrapeSitemapParams(TypedDict, total=False):
+class WebWebScrapeSitemapParams(TypedDict, total=False):
     domain: Required[str]
     """Domain name to crawl sitemaps for (e.g., 'example.com').
 

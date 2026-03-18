@@ -7,10 +7,10 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["BrandScreenshotResponse"]
+__all__ = ["WebScreenshotResponse"]
 
 
-class BrandScreenshotResponse(BaseModel):
+class WebScreenshotResponse(BaseModel):
     code: Optional[int] = None
     """HTTP status code"""
 

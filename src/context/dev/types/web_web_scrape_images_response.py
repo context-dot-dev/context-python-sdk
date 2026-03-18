@@ -5,7 +5,7 @@ from typing_extensions import Literal
 
 from .._models import BaseModel
 
-__all__ = ["BrandWebScrapeImagesResponse", "Image"]
+__all__ = ["WebWebScrapeImagesResponse", "Image"]
 
 
 class Image(BaseModel):
@@ -22,7 +22,7 @@ class Image(BaseModel):
     """The type/format of the src value"""
 
 
-class BrandWebScrapeImagesResponse(BaseModel):
+class WebWebScrapeImagesResponse(BaseModel):
     images: List[Image]
     """Array of scraped images"""
 

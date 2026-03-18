@@ -31,8 +31,13 @@ from ._base_client import (
 )
 
 if TYPE_CHECKING:
-    from .resources import brand
+    from .resources import ai, web, brand, style, utility, industry
+    from .resources.ai import AIResource, AsyncAIResource
+    from .resources.web import WebResource, AsyncWebResource
     from .resources.brand import BrandResource, AsyncBrandResource
+    from .resources.style import StyleResource, AsyncStyleResource
+    from .resources.utility import UtilityResource, AsyncUtilityResource
+    from .resources.industry import IndustryResource, AsyncIndustryResource
 
 __all__ = [
     "Timeout",
@@ -102,10 +107,40 @@ class ContextDev(SyncAPIClient):
         )
 
     @cached_property
+    def web(self) -> WebResource:
+        from .resources.web import WebResource
+
+        return WebResource(self)
+
+    @cached_property
+    def ai(self) -> AIResource:
+        from .resources.ai import AIResource
+
+        return AIResource(self)
+
+    @cached_property
+    def style(self) -> StyleResource:
+        from .resources.style import StyleResource
+
+        return StyleResource(self)
+
+    @cached_property
     def brand(self) -> BrandResource:
         from .resources.brand import BrandResource
 
         return BrandResource(self)
+
+    @cached_property
+    def industry(self) -> IndustryResource:
+        from .resources.industry import IndustryResource
+
+        return IndustryResource(self)
+
+    @cached_property
+    def utility(self) -> UtilityResource:
+        from .resources.utility import UtilityResource
+
+        return UtilityResource(self)
 
     @cached_property
     def with_raw_response(self) -> ContextDevWithRawResponse:
@@ -276,10 +311,40 @@ class AsyncContextDev(AsyncAPIClient):
         )
 
     @cached_property
+    def web(self) -> AsyncWebResource:
+        from .resources.web import AsyncWebResource
+
+        return AsyncWebResource(self)
+
+    @cached_property
+    def ai(self) -> AsyncAIResource:
+        from .resources.ai import AsyncAIResource
+
+        return AsyncAIResource(self)
+
+    @cached_property
+    def style(self) -> AsyncStyleResource:
+        from .resources.style import AsyncStyleResource
+
+        return AsyncStyleResource(self)
+
+    @cached_property
     def brand(self) -> AsyncBrandResource:
         from .resources.brand import AsyncBrandResource
 
         return AsyncBrandResource(self)
+
+    @cached_property
+    def industry(self) -> AsyncIndustryResource:
+        from .resources.industry import AsyncIndustryResource
+
+        return AsyncIndustryResource(self)
+
+    @cached_property
+    def utility(self) -> AsyncUtilityResource:
+        from .resources.utility import AsyncUtilityResource
+
+        return AsyncUtilityResource(self)
 
     @cached_property
     def with_raw_response(self) -> AsyncContextDevWithRawResponse:
@@ -401,10 +466,40 @@ class ContextDevWithRawResponse:
         self._client = client
 
     @cached_property
+    def web(self) -> web.WebResourceWithRawResponse:
+        from .resources.web import WebResourceWithRawResponse
+
+        return WebResourceWithRawResponse(self._client.web)
+
+    @cached_property
+    def ai(self) -> ai.AIResourceWithRawResponse:
+        from .resources.ai import AIResourceWithRawResponse
+
+        return AIResourceWithRawResponse(self._client.ai)
+
+    @cached_property
+    def style(self) -> style.StyleResourceWithRawResponse:
+        from .resources.style import StyleResourceWithRawResponse
+
+        return StyleResourceWithRawResponse(self._client.style)
+
+    @cached_property
     def brand(self) -> brand.BrandResourceWithRawResponse:
         from .resources.brand import BrandResourceWithRawResponse
 
         return BrandResourceWithRawResponse(self._client.brand)
+
+    @cached_property
+    def industry(self) -> industry.IndustryResourceWithRawResponse:
+        from .resources.industry import IndustryResourceWithRawResponse
+
+        return IndustryResourceWithRawResponse(self._client.industry)
+
+    @cached_property
+    def utility(self) -> utility.UtilityResourceWithRawResponse:
+        from .resources.utility import UtilityResourceWithRawResponse
+
+        return UtilityResourceWithRawResponse(self._client.utility)
 
 
 class AsyncContextDevWithRawResponse:
@@ -414,10 +509,40 @@ class AsyncContextDevWithRawResponse:
         self._client = client
 
     @cached_property
+    def web(self) -> web.AsyncWebResourceWithRawResponse:
+        from .resources.web import AsyncWebResourceWithRawResponse
+
+        return AsyncWebResourceWithRawResponse(self._client.web)
+
+    @cached_property
+    def ai(self) -> ai.AsyncAIResourceWithRawResponse:
+        from .resources.ai import AsyncAIResourceWithRawResponse
+
+        return AsyncAIResourceWithRawResponse(self._client.ai)
+
+    @cached_property
+    def style(self) -> style.AsyncStyleResourceWithRawResponse:
+        from .resources.style import AsyncStyleResourceWithRawResponse
+
+        return AsyncStyleResourceWithRawResponse(self._client.style)
+
+    @cached_property
     def brand(self) -> brand.AsyncBrandResourceWithRawResponse:
         from .resources.brand import AsyncBrandResourceWithRawResponse
 
         return AsyncBrandResourceWithRawResponse(self._client.brand)
+
+    @cached_property
+    def industry(self) -> industry.AsyncIndustryResourceWithRawResponse:
+        from .resources.industry import AsyncIndustryResourceWithRawResponse
+
+        return AsyncIndustryResourceWithRawResponse(self._client.industry)
+
+    @cached_property
+    def utility(self) -> utility.AsyncUtilityResourceWithRawResponse:
+        from .resources.utility import AsyncUtilityResourceWithRawResponse
+
+        return AsyncUtilityResourceWithRawResponse(self._client.utility)
 
 
 class ContextDevWithStreamedResponse:
@@ -427,10 +552,40 @@ class ContextDevWithStreamedResponse:
         self._client = client
 
     @cached_property
+    def web(self) -> web.WebResourceWithStreamingResponse:
+        from .resources.web import WebResourceWithStreamingResponse
+
+        return WebResourceWithStreamingResponse(self._client.web)
+
+    @cached_property
+    def ai(self) -> ai.AIResourceWithStreamingResponse:
+        from .resources.ai import AIResourceWithStreamingResponse
+
+        return AIResourceWithStreamingResponse(self._client.ai)
+
+    @cached_property
+    def style(self) -> style.StyleResourceWithStreamingResponse:
+        from .resources.style import StyleResourceWithStreamingResponse
+
+        return StyleResourceWithStreamingResponse(self._client.style)
+
+    @cached_property
     def brand(self) -> brand.BrandResourceWithStreamingResponse:
         from .resources.brand import BrandResourceWithStreamingResponse
 
         return BrandResourceWithStreamingResponse(self._client.brand)
+
+    @cached_property
+    def industry(self) -> industry.IndustryResourceWithStreamingResponse:
+        from .resources.industry import IndustryResourceWithStreamingResponse
+
+        return IndustryResourceWithStreamingResponse(self._client.industry)
+
+    @cached_property
+    def utility(self) -> utility.UtilityResourceWithStreamingResponse:
+        from .resources.utility import UtilityResourceWithStreamingResponse
+
+        return UtilityResourceWithStreamingResponse(self._client.utility)
 
 
 class AsyncContextDevWithStreamedResponse:
@@ -440,10 +595,40 @@ class AsyncContextDevWithStreamedResponse:
         self._client = client
 
     @cached_property
+    def web(self) -> web.AsyncWebResourceWithStreamingResponse:
+        from .resources.web import AsyncWebResourceWithStreamingResponse
+
+        return AsyncWebResourceWithStreamingResponse(self._client.web)
+
+    @cached_property
+    def ai(self) -> ai.AsyncAIResourceWithStreamingResponse:
+        from .resources.ai import AsyncAIResourceWithStreamingResponse
+
+        return AsyncAIResourceWithStreamingResponse(self._client.ai)
+
+    @cached_property
+    def style(self) -> style.AsyncStyleResourceWithStreamingResponse:
+        from .resources.style import AsyncStyleResourceWithStreamingResponse
+
+        return AsyncStyleResourceWithStreamingResponse(self._client.style)
+
+    @cached_property
     def brand(self) -> brand.AsyncBrandResourceWithStreamingResponse:
         from .resources.brand import AsyncBrandResourceWithStreamingResponse
 
         return AsyncBrandResourceWithStreamingResponse(self._client.brand)
+
+    @cached_property
+    def industry(self) -> industry.AsyncIndustryResourceWithStreamingResponse:
+        from .resources.industry import AsyncIndustryResourceWithStreamingResponse
+
+        return AsyncIndustryResourceWithStreamingResponse(self._client.industry)
+
+    @cached_property
+    def utility(self) -> utility.AsyncUtilityResourceWithStreamingResponse:
+        from .resources.utility import AsyncUtilityResourceWithStreamingResponse
+
+        return AsyncUtilityResourceWithStreamingResponse(self._client.utility)
 
 
 Client = ContextDev

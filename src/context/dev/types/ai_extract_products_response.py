@@ -5,7 +5,7 @@ from typing_extensions import Literal
 
 from .._models import BaseModel
 
-__all__ = ["BrandAIProductsResponse", "Product"]
+__all__ = ["AIExtractProductsResponse", "Product"]
 
 
 class Product(BaseModel):
@@ -49,6 +49,6 @@ class Product(BaseModel):
     """URL to the product page"""
 
 
-class BrandAIProductsResponse(BaseModel):
+class AIExtractProductsResponse(BaseModel):
     products: Optional[List[Product]] = None
     """Array of products extracted from the website"""

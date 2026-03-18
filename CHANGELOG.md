@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.0 (2026-03-18)
+
+Full Changelog: [v0.1.0...v0.2.0](https://github.com/brand-dot-dev/context-python-sdk/compare/v0.1.0...v0.2.0)
+
+### Features
+
+* **api:** api update ([c4538b4](https://github.com/brand-dot-dev/context-python-sdk/commit/c4538b459e6dcee56fb4b2ca85c94db4589d4318))
+* **api:** manual updates ([8304083](https://github.com/brand-dot-dev/context-python-sdk/commit/830408303450a4b85dfd444a2c4790cc8fecf292))
+* **api:** manual updates ([3285d21](https://github.com/brand-dot-dev/context-python-sdk/commit/3285d21cae790e5529ba6fcd7a79612ffc7e7738))
+
 ## 0.1.0 (2026-03-18)
 
 Full Changelog: [v0.0.3...v0.1.0](https://github.com/brand-dot-dev/context-python-sdk/compare/v0.0.3...v0.1.0)
