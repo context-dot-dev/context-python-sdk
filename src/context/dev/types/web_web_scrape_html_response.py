@@ -4,12 +4,12 @@ from typing_extensions import Literal
 
 from .._models import BaseModel
 
-__all__ = ["BrandWebScrapeMdResponse"]
+__all__ = ["WebWebScrapeHTMLResponse"]
 
 
-class BrandWebScrapeMdResponse(BaseModel):
-    markdown: str
-    """Page content converted to GitHub Flavored Markdown"""
+class WebWebScrapeHTMLResponse(BaseModel):
+    html: str
+    """Raw HTML content of the page"""
 
     success: Literal[True]
     """Indicates success"""

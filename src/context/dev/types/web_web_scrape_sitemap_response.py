@@ -7,7 +7,7 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["BrandWebScrapeSitemapResponse", "Meta"]
+__all__ = ["WebWebScrapeSitemapResponse", "Meta"]
 
 
 class Meta(BaseModel):
@@ -26,7 +26,7 @@ class Meta(BaseModel):
     """Number of sitemap files skipped (due to errors, timeouts, or limits)"""
 
 
-class BrandWebScrapeSitemapResponse(BaseModel):
+class WebWebScrapeSitemapResponse(BaseModel):
     domain: str
     """The normalized domain that was crawled"""
 

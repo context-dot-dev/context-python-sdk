@@ -1,5 +1,13 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+from .web import (
+    WebResource,
+    AsyncWebResource,
+    WebResourceWithRawResponse,
+    AsyncWebResourceWithRawResponse,
+    WebResourceWithStreamingResponse,
+    AsyncWebResourceWithStreamingResponse,
+)
 from .brand import (
     BrandResource,
     AsyncBrandResource,
@@ -10,6 +18,12 @@ from .brand import (
 )
 
 __all__ = [
+    "WebResource",
+    "AsyncWebResource",
+    "WebResourceWithRawResponse",
+    "AsyncWebResourceWithRawResponse",
+    "WebResourceWithStreamingResponse",
+    "AsyncWebResourceWithStreamingResponse",
     "BrandResource",
     "AsyncBrandResource",
     "BrandResourceWithRawResponse",
