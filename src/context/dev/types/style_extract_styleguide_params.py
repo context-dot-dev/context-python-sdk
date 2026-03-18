@@ -6,10 +6,10 @@ from typing_extensions import Literal, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["BrandStyleguideParams"]
+__all__ = ["StyleExtractStyleguideParams"]
 
 
-class BrandStyleguideParams(TypedDict, total=False):
+class StyleExtractStyleguideParams(TypedDict, total=False):
     direct_url: Annotated[str, PropertyInfo(alias="directUrl")]
     """
     A specific URL to fetch the styleguide from directly, bypassing domain

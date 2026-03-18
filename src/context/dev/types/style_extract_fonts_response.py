@@ -4,7 +4,7 @@ from typing import List
 
 from .._models import BaseModel
 
-__all__ = ["BrandFontsResponse", "Font"]
+__all__ = ["StyleExtractFontsResponse", "Font"]
 
 
 class Font(BaseModel):
@@ -30,7 +30,7 @@ class Font(BaseModel):
     """Array of CSS selectors or element types where this font is used"""
 
 
-class BrandFontsResponse(BaseModel):
+class StyleExtractFontsResponse(BaseModel):
     code: int
     """HTTP status code, e.g., 200"""
 

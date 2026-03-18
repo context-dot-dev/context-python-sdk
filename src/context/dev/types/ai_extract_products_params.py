@@ -7,7 +7,7 @@ from typing_extensions import Required, Annotated, TypeAlias, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["BrandAIProductsParams", "ByDomain", "ByDirectURL"]
+__all__ = ["AIExtractProductsParams", "ByDomain", "ByDirectURL"]
 
 
 class ByDomain(TypedDict, total=False):
@@ -41,4 +41,4 @@ class ByDirectURL(TypedDict, total=False):
     """
 
 
-BrandAIProductsParams: TypeAlias = Union[ByDomain, ByDirectURL]
+AIExtractProductsParams: TypeAlias = Union[ByDomain, ByDirectURL]

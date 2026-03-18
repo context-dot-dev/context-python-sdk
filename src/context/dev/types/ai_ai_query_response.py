@@ -4,7 +4,7 @@ from typing import List, Union, Optional
 
 from .._models import BaseModel
 
-__all__ = ["BrandAIQueryResponse", "DataExtracted"]
+__all__ = ["AIAIQueryResponse", "DataExtracted"]
 
 
 class DataExtracted(BaseModel):
@@ -19,7 +19,7 @@ class DataExtracted(BaseModel):
     """
 
 
-class BrandAIQueryResponse(BaseModel):
+class AIAIQueryResponse(BaseModel):
     data_extracted: Optional[List[DataExtracted]] = None
     """Array of extracted data points"""
 

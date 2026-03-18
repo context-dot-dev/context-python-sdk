@@ -6,10 +6,10 @@ from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["BrandScreenshotParams"]
+__all__ = ["WebScreenshotParams"]
 
 
-class BrandScreenshotParams(TypedDict, total=False):
+class WebScreenshotParams(TypedDict, total=False):
     domain: Required[str]
     """Domain name to take screenshot of (e.g., 'example.com', 'google.com').
 

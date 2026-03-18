@@ -8,7 +8,7 @@ from pydantic import Field as FieldInfo
 from .._models import BaseModel
 
 __all__ = [
-    "BrandStyleguideResponse",
+    "StyleExtractStyleguideResponse",
     "Styleguide",
     "StyleguideColors",
     "StyleguideComponents",
@@ -307,7 +307,7 @@ class Styleguide(BaseModel):
     """Typography styles used on the website"""
 
 
-class BrandStyleguideResponse(BaseModel):
+class StyleExtractStyleguideResponse(BaseModel):
     code: Optional[int] = None
     """HTTP status code"""
 

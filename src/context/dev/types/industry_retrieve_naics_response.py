@@ -5,7 +5,7 @@ from typing_extensions import Literal
 
 from .._models import BaseModel
 
-__all__ = ["BrandRetrieveNaicsResponse", "Code"]
+__all__ = ["IndustryRetrieveNaicsResponse", "Code"]
 
 
 class Code(BaseModel):
@@ -19,7 +19,7 @@ class Code(BaseModel):
     """NAICS title"""
 
 
-class BrandRetrieveNaicsResponse(BaseModel):
+class IndustryRetrieveNaicsResponse(BaseModel):
     codes: Optional[List[Code]] = None
     """Array of NAICS codes and titles."""
 

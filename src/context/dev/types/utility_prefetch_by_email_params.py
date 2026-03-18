@@ -6,14 +6,15 @@ from typing_extensions import Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["BrandFontsParams"]
+__all__ = ["UtilityPrefetchByEmailParams"]
 
 
-class BrandFontsParams(TypedDict, total=False):
-    domain: Required[str]
-    """Domain name to extract fonts from (e.g., 'example.com', 'google.com').
+class UtilityPrefetchByEmailParams(TypedDict, total=False):
+    email: Required[str]
+    """Email address to prefetch brand data for.
 
-    The domain will be automatically normalized and validated.
+    The domain will be extracted from the email. Free email providers (gmail.com,
+    yahoo.com, etc.) and disposable email addresses are not allowed.
     """
 
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
