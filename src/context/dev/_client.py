@@ -31,7 +31,8 @@ from ._base_client import (
 )
 
 if TYPE_CHECKING:
-    from .resources import brand
+    from .resources import web, brand
+    from .resources.web import WebResource, AsyncWebResource
     from .resources.brand import BrandResource, AsyncBrandResource
 
 __all__ = [
@@ -100,6 +101,12 @@ class ContextDev(SyncAPIClient):
             custom_query=default_query,
             _strict_response_validation=_strict_response_validation,
         )
+
+    @cached_property
+    def web(self) -> WebResource:
+        from .resources.web import WebResource
+
+        return WebResource(self)
 
     @cached_property
     def brand(self) -> BrandResource:
@@ -276,6 +283,12 @@ class AsyncContextDev(AsyncAPIClient):
         )
 
     @cached_property
+    def web(self) -> AsyncWebResource:
+        from .resources.web import AsyncWebResource
+
+        return AsyncWebResource(self)
+
+    @cached_property
     def brand(self) -> AsyncBrandResource:
         from .resources.brand import AsyncBrandResource
 
@@ -401,6 +414,12 @@ class ContextDevWithRawResponse:
         self._client = client
 
     @cached_property
+    def web(self) -> web.WebResourceWithRawResponse:
+        from .resources.web import WebResourceWithRawResponse
+
+        return WebResourceWithRawResponse(self._client.web)
+
+    @cached_property
     def brand(self) -> brand.BrandResourceWithRawResponse:
         from .resources.brand import BrandResourceWithRawResponse
 
@@ -412,6 +431,12 @@ class AsyncContextDevWithRawResponse:
 
     def __init__(self, client: AsyncContextDev) -> None:
         self._client = client
+
+    @cached_property
+    def web(self) -> web.AsyncWebResourceWithRawResponse:
+        from .resources.web import AsyncWebResourceWithRawResponse
+
+        return AsyncWebResourceWithRawResponse(self._client.web)
 
     @cached_property
     def brand(self) -> brand.AsyncBrandResourceWithRawResponse:
@@ -427,6 +452,12 @@ class ContextDevWithStreamedResponse:
         self._client = client
 
     @cached_property
+    def web(self) -> web.WebResourceWithStreamingResponse:
+        from .resources.web import WebResourceWithStreamingResponse
+
+        return WebResourceWithStreamingResponse(self._client.web)
+
+    @cached_property
     def brand(self) -> brand.BrandResourceWithStreamingResponse:
         from .resources.brand import BrandResourceWithStreamingResponse
 
@@ -438,6 +469,12 @@ class AsyncContextDevWithStreamedResponse:
 
     def __init__(self, client: AsyncContextDev) -> None:
         self._client = client
+
+    @cached_property
+    def web(self) -> web.AsyncWebResourceWithStreamingResponse:
+        from .resources.web import AsyncWebResourceWithStreamingResponse
+
+        return AsyncWebResourceWithStreamingResponse(self._client.web)
 
     @cached_property
     def brand(self) -> brand.AsyncBrandResourceWithStreamingResponse:

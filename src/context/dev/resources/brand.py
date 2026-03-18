@@ -16,16 +16,12 @@ from ..types import (
     brand_screenshot_params,
     brand_styleguide_params,
     brand_ai_products_params,
-    brand_web_scrape_md_params,
     brand_retrieve_naics_params,
-    brand_web_scrape_html_params,
     brand_retrieve_by_isin_params,
     brand_retrieve_by_name_params,
     brand_prefetch_by_email_params,
     brand_retrieve_by_email_params,
-    brand_web_scrape_images_params,
     brand_retrieve_by_ticker_params,
-    brand_web_scrape_sitemap_params,
     brand_retrieve_simplified_params,
     brand_identify_from_transaction_params,
 )
@@ -48,16 +44,12 @@ from ..types.brand_ai_product_response import BrandAIProductResponse
 from ..types.brand_screenshot_response import BrandScreenshotResponse
 from ..types.brand_styleguide_response import BrandStyleguideResponse
 from ..types.brand_ai_products_response import BrandAIProductsResponse
-from ..types.brand_web_scrape_md_response import BrandWebScrapeMdResponse
 from ..types.brand_retrieve_naics_response import BrandRetrieveNaicsResponse
-from ..types.brand_web_scrape_html_response import BrandWebScrapeHTMLResponse
 from ..types.brand_retrieve_by_isin_response import BrandRetrieveByIsinResponse
 from ..types.brand_retrieve_by_name_response import BrandRetrieveByNameResponse
 from ..types.brand_prefetch_by_email_response import BrandPrefetchByEmailResponse
 from ..types.brand_retrieve_by_email_response import BrandRetrieveByEmailResponse
-from ..types.brand_web_scrape_images_response import BrandWebScrapeImagesResponse
 from ..types.brand_retrieve_by_ticker_response import BrandRetrieveByTickerResponse
-from ..types.brand_web_scrape_sitemap_response import BrandWebScrapeSitemapResponse
 from ..types.brand_retrieve_simplified_response import BrandRetrieveSimplifiedResponse
 from ..types.brand_identify_from_transaction_response import BrandIdentifyFromTransactionResponse
 
@@ -1982,182 +1974,6 @@ class BrandResource(SyncAPIResource):
             cast_to=BrandStyleguideResponse,
         )
 
-    def web_scrape_html(
-        self,
-        *,
-        url: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> BrandWebScrapeHTMLResponse:
-        """Scrapes the given URL and returns the raw HTML content of the page.
-
-        Uses
-        automatic proxy escalation to handle blocked sites.
-
-        Args:
-          url: Full URL to scrape (must include http:// or https:// protocol)
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._get(
-            "/web/scrape/html",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform({"url": url}, brand_web_scrape_html_params.BrandWebScrapeHTMLParams),
-            ),
-            cast_to=BrandWebScrapeHTMLResponse,
-        )
-
-    def web_scrape_images(
-        self,
-        *,
-        url: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> BrandWebScrapeImagesResponse:
-        """Scrapes all images from the given URL.
-
-        Extracts images from img, svg,
-        picture/source, link, and video elements including inline SVGs, base64 data
-        URIs, and standard URLs.
-
-        Args:
-          url: Full URL to scrape images from (must include http:// or https:// protocol)
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._get(
-            "/web/scrape/images",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform({"url": url}, brand_web_scrape_images_params.BrandWebScrapeImagesParams),
-            ),
-            cast_to=BrandWebScrapeImagesResponse,
-        )
-
-    def web_scrape_md(
-        self,
-        *,
-        url: str,
-        include_images: bool | Omit = omit,
-        include_links: bool | Omit = omit,
-        shorten_base64_images: bool | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> BrandWebScrapeMdResponse:
-        """
-        Scrapes the given URL, converts the HTML content to GitHub Flavored Markdown
-        (GFM), and returns the result. Uses automatic proxy escalation to handle blocked
-        sites.
-
-        Args:
-          url: Full URL to scrape and convert to markdown (must include http:// or https://
-              protocol)
-
-          include_images: Include image references in Markdown output
-
-          include_links: Preserve hyperlinks in Markdown output
-
-          shorten_base64_images: Shorten base64-encoded image data in the Markdown output
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._get(
-            "/web/scrape/markdown",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "url": url,
-                        "include_images": include_images,
-                        "include_links": include_links,
-                        "shorten_base64_images": shorten_base64_images,
-                    },
-                    brand_web_scrape_md_params.BrandWebScrapeMdParams,
-                ),
-            ),
-            cast_to=BrandWebScrapeMdResponse,
-        )
-
-    def web_scrape_sitemap(
-        self,
-        *,
-        domain: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> BrandWebScrapeSitemapResponse:
-        """
-        Crawls the sitemap of the given domain and returns all discovered page URLs.
-        Supports sitemap index files (recursive), parallel fetching with concurrency
-        control, deduplication, and filters out non-page resources (images, PDFs, etc.).
-
-        Args:
-          domain: Domain name to crawl sitemaps for (e.g., 'example.com'). The domain will be
-              automatically normalized and validated.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._get(
-            "/web/scrape/sitemap",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform({"domain": domain}, brand_web_scrape_sitemap_params.BrandWebScrapeSitemapParams),
-            ),
-            cast_to=BrandWebScrapeSitemapResponse,
-        )
-
 
 class AsyncBrandResource(AsyncAPIResource):
     @cached_property
@@ -4077,186 +3893,6 @@ class AsyncBrandResource(AsyncAPIResource):
             cast_to=BrandStyleguideResponse,
         )
 
-    async def web_scrape_html(
-        self,
-        *,
-        url: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> BrandWebScrapeHTMLResponse:
-        """Scrapes the given URL and returns the raw HTML content of the page.
-
-        Uses
-        automatic proxy escalation to handle blocked sites.
-
-        Args:
-          url: Full URL to scrape (must include http:// or https:// protocol)
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._get(
-            "/web/scrape/html",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform({"url": url}, brand_web_scrape_html_params.BrandWebScrapeHTMLParams),
-            ),
-            cast_to=BrandWebScrapeHTMLResponse,
-        )
-
-    async def web_scrape_images(
-        self,
-        *,
-        url: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> BrandWebScrapeImagesResponse:
-        """Scrapes all images from the given URL.
-
-        Extracts images from img, svg,
-        picture/source, link, and video elements including inline SVGs, base64 data
-        URIs, and standard URLs.
-
-        Args:
-          url: Full URL to scrape images from (must include http:// or https:// protocol)
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._get(
-            "/web/scrape/images",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {"url": url}, brand_web_scrape_images_params.BrandWebScrapeImagesParams
-                ),
-            ),
-            cast_to=BrandWebScrapeImagesResponse,
-        )
-
-    async def web_scrape_md(
-        self,
-        *,
-        url: str,
-        include_images: bool | Omit = omit,
-        include_links: bool | Omit = omit,
-        shorten_base64_images: bool | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> BrandWebScrapeMdResponse:
-        """
-        Scrapes the given URL, converts the HTML content to GitHub Flavored Markdown
-        (GFM), and returns the result. Uses automatic proxy escalation to handle blocked
-        sites.
-
-        Args:
-          url: Full URL to scrape and convert to markdown (must include http:// or https://
-              protocol)
-
-          include_images: Include image references in Markdown output
-
-          include_links: Preserve hyperlinks in Markdown output
-
-          shorten_base64_images: Shorten base64-encoded image data in the Markdown output
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._get(
-            "/web/scrape/markdown",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "url": url,
-                        "include_images": include_images,
-                        "include_links": include_links,
-                        "shorten_base64_images": shorten_base64_images,
-                    },
-                    brand_web_scrape_md_params.BrandWebScrapeMdParams,
-                ),
-            ),
-            cast_to=BrandWebScrapeMdResponse,
-        )
-
-    async def web_scrape_sitemap(
-        self,
-        *,
-        domain: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> BrandWebScrapeSitemapResponse:
-        """
-        Crawls the sitemap of the given domain and returns all discovered page URLs.
-        Supports sitemap index files (recursive), parallel fetching with concurrency
-        control, deduplication, and filters out non-page resources (images, PDFs, etc.).
-
-        Args:
-          domain: Domain name to crawl sitemaps for (e.g., 'example.com'). The domain will be
-              automatically normalized and validated.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._get(
-            "/web/scrape/sitemap",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {"domain": domain}, brand_web_scrape_sitemap_params.BrandWebScrapeSitemapParams
-                ),
-            ),
-            cast_to=BrandWebScrapeSitemapResponse,
-        )
-
 
 class BrandResourceWithRawResponse:
     def __init__(self, brand: BrandResource) -> None:
@@ -4309,18 +3945,6 @@ class BrandResourceWithRawResponse:
         )
         self.styleguide = to_raw_response_wrapper(
             brand.styleguide,
-        )
-        self.web_scrape_html = to_raw_response_wrapper(
-            brand.web_scrape_html,
-        )
-        self.web_scrape_images = to_raw_response_wrapper(
-            brand.web_scrape_images,
-        )
-        self.web_scrape_md = to_raw_response_wrapper(
-            brand.web_scrape_md,
-        )
-        self.web_scrape_sitemap = to_raw_response_wrapper(
-            brand.web_scrape_sitemap,
         )
 
 
@@ -4376,18 +4000,6 @@ class AsyncBrandResourceWithRawResponse:
         self.styleguide = async_to_raw_response_wrapper(
             brand.styleguide,
         )
-        self.web_scrape_html = async_to_raw_response_wrapper(
-            brand.web_scrape_html,
-        )
-        self.web_scrape_images = async_to_raw_response_wrapper(
-            brand.web_scrape_images,
-        )
-        self.web_scrape_md = async_to_raw_response_wrapper(
-            brand.web_scrape_md,
-        )
-        self.web_scrape_sitemap = async_to_raw_response_wrapper(
-            brand.web_scrape_sitemap,
-        )
 
 
 class BrandResourceWithStreamingResponse:
@@ -4442,18 +4054,6 @@ class BrandResourceWithStreamingResponse:
         self.styleguide = to_streamed_response_wrapper(
             brand.styleguide,
         )
-        self.web_scrape_html = to_streamed_response_wrapper(
-            brand.web_scrape_html,
-        )
-        self.web_scrape_images = to_streamed_response_wrapper(
-            brand.web_scrape_images,
-        )
-        self.web_scrape_md = to_streamed_response_wrapper(
-            brand.web_scrape_md,
-        )
-        self.web_scrape_sitemap = to_streamed_response_wrapper(
-            brand.web_scrape_sitemap,
-        )
 
 
 class AsyncBrandResourceWithStreamingResponse:
@@ -4507,16 +4107,4 @@ class AsyncBrandResourceWithStreamingResponse:
         )
         self.styleguide = async_to_streamed_response_wrapper(
             brand.styleguide,
-        )
-        self.web_scrape_html = async_to_streamed_response_wrapper(
-            brand.web_scrape_html,
-        )
-        self.web_scrape_images = async_to_streamed_response_wrapper(
-            brand.web_scrape_images,
-        )
-        self.web_scrape_md = async_to_streamed_response_wrapper(
-            brand.web_scrape_md,
-        )
-        self.web_scrape_sitemap = async_to_streamed_response_wrapper(
-            brand.web_scrape_sitemap,
         )
