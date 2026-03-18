@@ -6,15 +6,16 @@ from typing_extensions import Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["BrandAIProductParams"]
+__all__ = ["UtilityPrefetchParams"]
 
 
-class BrandAIProductParams(TypedDict, total=False):
-    url: Required[str]
-    """The product page URL to extract product data from."""
+class UtilityPrefetchParams(TypedDict, total=False):
+    domain: Required[str]
+    """Domain name to prefetch brand data for"""
 
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
     """Optional timeout in milliseconds for the request.
 
-    Maximum allowed value is 300000ms (5 minutes).
+    If the request takes longer than this value, it will be aborted with a 408
+    status code. Maximum allowed value is 300000ms (5 minutes).
     """

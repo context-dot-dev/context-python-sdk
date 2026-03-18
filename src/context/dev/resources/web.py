@@ -2,9 +2,12 @@
 
 from __future__ import annotations
 
+from typing_extensions import Literal
+
 import httpx
 
 from ..types import (
+    web_screenshot_params,
     web_web_scrape_md_params,
     web_web_scrape_html_params,
     web_web_scrape_images_params,
@@ -21,6 +24,7 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from ..types.web_screenshot_response import WebScreenshotResponse
 from ..types.web_web_scrape_md_response import WebWebScrapeMdResponse
 from ..types.web_web_scrape_html_response import WebWebScrapeHTMLResponse
 from ..types.web_web_scrape_images_response import WebWebScrapeImagesResponse
@@ -48,6 +52,72 @@ class WebResource(SyncAPIResource):
         For more information, see https://www.github.com/brand-dot-dev/context-python-sdk#with_streaming_response
         """
         return WebResourceWithStreamingResponse(self)
+
+    def screenshot(
+        self,
+        *,
+        domain: str,
+        full_screenshot: Literal["true", "false"] | Omit = omit,
+        page: Literal["login", "signup", "blog", "careers", "pricing", "terms", "privacy", "contact"] | Omit = omit,
+        prioritize: Literal["speed", "quality"] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WebScreenshotResponse:
+        """Capture a screenshot of a website.
+
+        Supports both viewport (standard browser
+        view) and full-page screenshots. Can also screenshot specific page types (login,
+        pricing, etc.) by using heuristics to find the appropriate URL. Returns a URL to
+        the uploaded screenshot image hosted on our CDN.
+
+        Args:
+          domain: Domain name to take screenshot of (e.g., 'example.com', 'google.com'). The
+              domain will be automatically normalized and validated.
+
+          full_screenshot: Optional parameter to determine screenshot type. If 'true', takes a full page
+              screenshot capturing all content. If 'false' or not provided, takes a viewport
+              screenshot (standard browser view).
+
+          page: Optional parameter to specify which page type to screenshot. If provided, the
+              system will scrape the domain's links and use heuristics to find the most
+              appropriate URL for the specified page type (30 supported languages). If not
+              provided, screenshots the main domain landing page.
+
+          prioritize: Optional parameter to prioritize screenshot capture. If 'speed', optimizes for
+              faster capture with basic quality. If 'quality', optimizes for higher quality
+              with longer wait times. Defaults to 'quality' if not provided.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._get(
+            "/brand/screenshot",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "domain": domain,
+                        "full_screenshot": full_screenshot,
+                        "page": page,
+                        "prioritize": prioritize,
+                    },
+                    web_screenshot_params.WebScreenshotParams,
+                ),
+            ),
+            cast_to=WebScreenshotResponse,
+        )
 
     def web_scrape_html(
         self,
@@ -246,6 +316,72 @@ class AsyncWebResource(AsyncAPIResource):
         """
         return AsyncWebResourceWithStreamingResponse(self)
 
+    async def screenshot(
+        self,
+        *,
+        domain: str,
+        full_screenshot: Literal["true", "false"] | Omit = omit,
+        page: Literal["login", "signup", "blog", "careers", "pricing", "terms", "privacy", "contact"] | Omit = omit,
+        prioritize: Literal["speed", "quality"] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WebScreenshotResponse:
+        """Capture a screenshot of a website.
+
+        Supports both viewport (standard browser
+        view) and full-page screenshots. Can also screenshot specific page types (login,
+        pricing, etc.) by using heuristics to find the appropriate URL. Returns a URL to
+        the uploaded screenshot image hosted on our CDN.
+
+        Args:
+          domain: Domain name to take screenshot of (e.g., 'example.com', 'google.com'). The
+              domain will be automatically normalized and validated.
+
+          full_screenshot: Optional parameter to determine screenshot type. If 'true', takes a full page
+              screenshot capturing all content. If 'false' or not provided, takes a viewport
+              screenshot (standard browser view).
+
+          page: Optional parameter to specify which page type to screenshot. If provided, the
+              system will scrape the domain's links and use heuristics to find the most
+              appropriate URL for the specified page type (30 supported languages). If not
+              provided, screenshots the main domain landing page.
+
+          prioritize: Optional parameter to prioritize screenshot capture. If 'speed', optimizes for
+              faster capture with basic quality. If 'quality', optimizes for higher quality
+              with longer wait times. Defaults to 'quality' if not provided.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._get(
+            "/brand/screenshot",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "domain": domain,
+                        "full_screenshot": full_screenshot,
+                        "page": page,
+                        "prioritize": prioritize,
+                    },
+                    web_screenshot_params.WebScreenshotParams,
+                ),
+            ),
+            cast_to=WebScreenshotResponse,
+        )
+
     async def web_scrape_html(
         self,
         *,
@@ -429,6 +565,9 @@ class WebResourceWithRawResponse:
     def __init__(self, web: WebResource) -> None:
         self._web = web
 
+        self.screenshot = to_raw_response_wrapper(
+            web.screenshot,
+        )
         self.web_scrape_html = to_raw_response_wrapper(
             web.web_scrape_html,
         )
@@ -447,6 +586,9 @@ class AsyncWebResourceWithRawResponse:
     def __init__(self, web: AsyncWebResource) -> None:
         self._web = web
 
+        self.screenshot = async_to_raw_response_wrapper(
+            web.screenshot,
+        )
         self.web_scrape_html = async_to_raw_response_wrapper(
             web.web_scrape_html,
         )
@@ -465,6 +607,9 @@ class WebResourceWithStreamingResponse:
     def __init__(self, web: WebResource) -> None:
         self._web = web
 
+        self.screenshot = to_streamed_response_wrapper(
+            web.screenshot,
+        )
         self.web_scrape_html = to_streamed_response_wrapper(
             web.web_scrape_html,
         )
@@ -483,6 +628,9 @@ class AsyncWebResourceWithStreamingResponse:
     def __init__(self, web: AsyncWebResource) -> None:
         self._web = web
 
+        self.screenshot = async_to_streamed_response_wrapper(
+            web.screenshot,
+        )
         self.web_scrape_html = async_to_streamed_response_wrapper(
             web.web_scrape_html,
         )

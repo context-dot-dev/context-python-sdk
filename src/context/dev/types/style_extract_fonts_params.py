@@ -6,12 +6,15 @@ from typing_extensions import Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["BrandPrefetchParams"]
+__all__ = ["StyleExtractFontsParams"]
 
 
-class BrandPrefetchParams(TypedDict, total=False):
+class StyleExtractFontsParams(TypedDict, total=False):
     domain: Required[str]
-    """Domain name to prefetch brand data for"""
+    """Domain name to extract fonts from (e.g., 'example.com', 'google.com').
+
+    The domain will be automatically normalized and validated.
+    """
 
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
     """Optional timeout in milliseconds for the request.

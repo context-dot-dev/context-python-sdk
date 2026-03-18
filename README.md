@@ -130,7 +130,7 @@ from context.dev import ContextDev
 
 client = ContextDev()
 
-response = client.brand.ai_query(
+response = client.ai.ai_query(
     data_to_extract=[
         {
             "datapoint_description": "datapoint_description",

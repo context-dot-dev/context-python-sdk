@@ -4,10 +4,10 @@ from typing import Optional
 
 from .._models import BaseModel
 
-__all__ = ["BrandPrefetchByEmailResponse"]
+__all__ = ["UtilityPrefetchResponse"]
 
 
-class BrandPrefetchByEmailResponse(BaseModel):
+class UtilityPrefetchResponse(BaseModel):
     domain: Optional[str] = None
     """The domain that was queued for prefetching"""
 

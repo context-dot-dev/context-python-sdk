@@ -6,10 +6,10 @@ from typing_extensions import Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["BrandRetrieveNaicsParams"]
+__all__ = ["IndustryRetrieveNaicsParams"]
 
 
-class BrandRetrieveNaicsParams(TypedDict, total=False):
+class IndustryRetrieveNaicsParams(TypedDict, total=False):
     input: Required[str]
     """Brand domain or title to retrieve NAICS code for.
 
