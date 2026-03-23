@@ -164,7 +164,7 @@ class AIResource(SyncAPIResource):
     ) -> AIExtractProductsResponse:
         """Beta feature: Extract product information from a brand's website.
 
-        Brand.dev will
+        We will
         analyze the website and return a list of products with details such as name,
         description, image, pricing, features, and more.
 
@@ -202,7 +202,7 @@ class AIResource(SyncAPIResource):
     ) -> AIExtractProductsResponse:
         """Beta feature: Extract product information from a brand's website.
 
-        Brand.dev will
+        We will
         analyze the website and return a list of products with details such as name,
         description, image, pricing, features, and more.
 
@@ -396,7 +396,7 @@ class AsyncAIResource(AsyncAPIResource):
     ) -> AIExtractProductsResponse:
         """Beta feature: Extract product information from a brand's website.
 
-        Brand.dev will
+        We will
         analyze the website and return a list of products with details such as name,
         description, image, pricing, features, and more.
 
@@ -434,7 +434,7 @@ class AsyncAIResource(AsyncAPIResource):
     ) -> AIExtractProductsResponse:
         """Beta feature: Extract product information from a brand's website.
 
-        Brand.dev will
+        We will
         analyze the website and return a list of products with details such as name,
         description, image, pricing, features, and more.
 
