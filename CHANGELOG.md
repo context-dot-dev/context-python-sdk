@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.1 (2026-03-20)
+
+Full Changelog: [v0.2.0...v0.2.1](https://github.com/brand-dot-dev/context-python-sdk/compare/v0.2.0...v0.2.1)
+
+### Bug Fixes
+
+* sanitize endpoint path params ([8ccc27d](https://github.com/brand-dot-dev/context-python-sdk/commit/8ccc27d64fd1046ba6059c87a931b7b81716a82c))
+
 ## 0.2.0 (2026-03-18)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/brand-dot-dev/context-python-sdk/compare/v0.1.0...v0.2.0)
