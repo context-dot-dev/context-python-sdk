@@ -130,10 +130,8 @@ class WebResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebWebScrapeHTMLResponse:
-        """Scrapes the given URL and returns the raw HTML content of the page.
-
-        Uses
-        automatic proxy escalation to handle blocked sites.
+        """
+        Scrapes the given URL and returns the raw HTML content of the page.
 
         Args:
           url: Full URL to scrape (must include http:// or https:// protocol)
@@ -213,9 +211,8 @@ class WebResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebWebScrapeMdResponse:
         """
-        Scrapes the given URL, converts the HTML content to GitHub Flavored Markdown
-        (GFM), and returns the result. Uses automatic proxy escalation to handle blocked
-        sites.
+        Scrapes the given URL, converts the HTML content to Markdown, and returns the
+        result.
 
         Args:
           url: Full URL to scrape and convert to markdown (must include http:// or https://
@@ -403,10 +400,8 @@ class AsyncWebResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebWebScrapeHTMLResponse:
-        """Scrapes the given URL and returns the raw HTML content of the page.
-
-        Uses
-        automatic proxy escalation to handle blocked sites.
+        """
+        Scrapes the given URL and returns the raw HTML content of the page.
 
         Args:
           url: Full URL to scrape (must include http:// or https:// protocol)
@@ -486,9 +481,8 @@ class AsyncWebResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebWebScrapeMdResponse:
         """
-        Scrapes the given URL, converts the HTML content to GitHub Flavored Markdown
-        (GFM), and returns the result. Uses automatic proxy escalation to handle blocked
-        sites.
+        Scrapes the given URL, converts the HTML content to Markdown, and returns the
+        result.
 
         Args:
           url: Full URL to scrape and convert to markdown (must include http:// or https://
