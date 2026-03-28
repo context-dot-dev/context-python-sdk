@@ -40,7 +40,7 @@ class WebResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/brand-dot-dev/context-python-sdk#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/context-dot-dev/context-python-sdk#accessing-raw-response-data-eg-headers
         """
         return WebResourceWithRawResponse(self)
 
@@ -49,7 +49,7 @@ class WebResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/brand-dot-dev/context-python-sdk#with_streaming_response
+        For more information, see https://www.github.com/context-dot-dev/context-python-sdk#with_streaming_response
         """
         return WebResourceWithStreamingResponse(self)
 
@@ -130,10 +130,8 @@ class WebResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebWebScrapeHTMLResponse:
-        """Scrapes the given URL and returns the raw HTML content of the page.
-
-        Uses
-        automatic proxy escalation to handle blocked sites.
+        """
+        Scrapes the given URL and returns the raw HTML content of the page.
 
         Args:
           url: Full URL to scrape (must include http:// or https:// protocol)
@@ -205,6 +203,7 @@ class WebResource(SyncAPIResource):
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
+        use_main_content_only: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -213,9 +212,8 @@ class WebResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebWebScrapeMdResponse:
         """
-        Scrapes the given URL, converts the HTML content to GitHub Flavored Markdown
-        (GFM), and returns the result. Uses automatic proxy escalation to handle blocked
-        sites.
+        Scrapes the given URL, converts the HTML content to Markdown, and returns the
+        result.
 
         Args:
           url: Full URL to scrape and convert to markdown (must include http:// or https://
@@ -226,6 +224,9 @@ class WebResource(SyncAPIResource):
           include_links: Preserve hyperlinks in Markdown output
 
           shorten_base64_images: Shorten base64-encoded image data in the Markdown output
+
+          use_main_content_only: Extract only the main content of the page, excluding headers, footers, sidebars,
+              and navigation
 
           extra_headers: Send extra headers
 
@@ -248,6 +249,7 @@ class WebResource(SyncAPIResource):
                         "include_images": include_images,
                         "include_links": include_links,
                         "shorten_base64_images": shorten_base64_images,
+                        "use_main_content_only": use_main_content_only,
                     },
                     web_web_scrape_md_params.WebWebScrapeMdParams,
                 ),
@@ -259,6 +261,7 @@ class WebResource(SyncAPIResource):
         self,
         *,
         domain: str,
+        max_links: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -275,6 +278,9 @@ class WebResource(SyncAPIResource):
           domain: Domain name to crawl sitemaps for (e.g., 'example.com'). The domain will be
               automatically normalized and validated.
 
+          max_links: Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
+              Minimum is 1, maximum is 100,000.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -290,7 +296,13 @@ class WebResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform({"domain": domain}, web_web_scrape_sitemap_params.WebWebScrapeSitemapParams),
+                query=maybe_transform(
+                    {
+                        "domain": domain,
+                        "max_links": max_links,
+                    },
+                    web_web_scrape_sitemap_params.WebWebScrapeSitemapParams,
+                ),
             ),
             cast_to=WebWebScrapeSitemapResponse,
         )
@@ -303,7 +315,7 @@ class AsyncWebResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/brand-dot-dev/context-python-sdk#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/context-dot-dev/context-python-sdk#accessing-raw-response-data-eg-headers
         """
         return AsyncWebResourceWithRawResponse(self)
 
@@ -312,7 +324,7 @@ class AsyncWebResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/brand-dot-dev/context-python-sdk#with_streaming_response
+        For more information, see https://www.github.com/context-dot-dev/context-python-sdk#with_streaming_response
         """
         return AsyncWebResourceWithStreamingResponse(self)
 
@@ -393,10 +405,8 @@ class AsyncWebResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebWebScrapeHTMLResponse:
-        """Scrapes the given URL and returns the raw HTML content of the page.
-
-        Uses
-        automatic proxy escalation to handle blocked sites.
+        """
+        Scrapes the given URL and returns the raw HTML content of the page.
 
         Args:
           url: Full URL to scrape (must include http:// or https:// protocol)
@@ -468,6 +478,7 @@ class AsyncWebResource(AsyncAPIResource):
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
+        use_main_content_only: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -476,9 +487,8 @@ class AsyncWebResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebWebScrapeMdResponse:
         """
-        Scrapes the given URL, converts the HTML content to GitHub Flavored Markdown
-        (GFM), and returns the result. Uses automatic proxy escalation to handle blocked
-        sites.
+        Scrapes the given URL, converts the HTML content to Markdown, and returns the
+        result.
 
         Args:
           url: Full URL to scrape and convert to markdown (must include http:// or https://
@@ -489,6 +499,9 @@ class AsyncWebResource(AsyncAPIResource):
           include_links: Preserve hyperlinks in Markdown output
 
           shorten_base64_images: Shorten base64-encoded image data in the Markdown output
+
+          use_main_content_only: Extract only the main content of the page, excluding headers, footers, sidebars,
+              and navigation
 
           extra_headers: Send extra headers
 
@@ -511,6 +524,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "include_images": include_images,
                         "include_links": include_links,
                         "shorten_base64_images": shorten_base64_images,
+                        "use_main_content_only": use_main_content_only,
                     },
                     web_web_scrape_md_params.WebWebScrapeMdParams,
                 ),
@@ -522,6 +536,7 @@ class AsyncWebResource(AsyncAPIResource):
         self,
         *,
         domain: str,
+        max_links: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -537,6 +552,9 @@ class AsyncWebResource(AsyncAPIResource):
         Args:
           domain: Domain name to crawl sitemaps for (e.g., 'example.com'). The domain will be
               automatically normalized and validated.
+
+          max_links: Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
+              Minimum is 1, maximum is 100,000.
 
           extra_headers: Send extra headers
 
@@ -554,7 +572,11 @@ class AsyncWebResource(AsyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=await async_maybe_transform(
-                    {"domain": domain}, web_web_scrape_sitemap_params.WebWebScrapeSitemapParams
+                    {
+                        "domain": domain,
+                        "max_links": max_links,
+                    },
+                    web_web_scrape_sitemap_params.WebWebScrapeSitemapParams,
                 ),
             ),
             cast_to=WebWebScrapeSitemapResponse,

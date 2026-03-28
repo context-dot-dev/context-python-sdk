@@ -152,6 +152,7 @@ class TestWeb:
             include_images=True,
             include_links=True,
             shorten_base64_images=True,
+            use_main_content_only=True,
         )
         assert_matches_type(WebWebScrapeMdResponse, web, path=["response"])
 
@@ -186,6 +187,15 @@ class TestWeb:
     def test_method_web_scrape_sitemap(self, client: ContextDev) -> None:
         web = client.web.web_scrape_sitemap(
             domain="domain",
+        )
+        assert_matches_type(WebWebScrapeSitemapResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_web_scrape_sitemap_with_all_params(self, client: ContextDev) -> None:
+        web = client.web.web_scrape_sitemap(
+            domain="domain",
+            max_links=1,
         )
         assert_matches_type(WebWebScrapeSitemapResponse, web, path=["response"])
 
@@ -350,6 +360,7 @@ class TestAsyncWeb:
             include_images=True,
             include_links=True,
             shorten_base64_images=True,
+            use_main_content_only=True,
         )
         assert_matches_type(WebWebScrapeMdResponse, web, path=["response"])
 
@@ -384,6 +395,15 @@ class TestAsyncWeb:
     async def test_method_web_scrape_sitemap(self, async_client: AsyncContextDev) -> None:
         web = await async_client.web.web_scrape_sitemap(
             domain="domain",
+        )
+        assert_matches_type(WebWebScrapeSitemapResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_web_scrape_sitemap_with_all_params(self, async_client: AsyncContextDev) -> None:
+        web = await async_client.web.web_scrape_sitemap(
+            domain="domain",
+            max_links=1,
         )
         assert_matches_type(WebWebScrapeSitemapResponse, web, path=["response"])
 
