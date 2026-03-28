@@ -152,6 +152,7 @@ class TestWeb:
             include_images=True,
             include_links=True,
             shorten_base64_images=True,
+            use_main_content_only=True,
         )
         assert_matches_type(WebWebScrapeMdResponse, web, path=["response"])
 
@@ -359,6 +360,7 @@ class TestAsyncWeb:
             include_images=True,
             include_links=True,
             shorten_base64_images=True,
+            use_main_content_only=True,
         )
         assert_matches_type(WebWebScrapeMdResponse, web, path=["response"])
 

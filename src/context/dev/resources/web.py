@@ -203,6 +203,7 @@ class WebResource(SyncAPIResource):
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
+        use_main_content_only: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -223,6 +224,9 @@ class WebResource(SyncAPIResource):
           include_links: Preserve hyperlinks in Markdown output
 
           shorten_base64_images: Shorten base64-encoded image data in the Markdown output
+
+          use_main_content_only: Extract only the main content of the page, excluding headers, footers, sidebars,
+              and navigation
 
           extra_headers: Send extra headers
 
@@ -245,6 +249,7 @@ class WebResource(SyncAPIResource):
                         "include_images": include_images,
                         "include_links": include_links,
                         "shorten_base64_images": shorten_base64_images,
+                        "use_main_content_only": use_main_content_only,
                     },
                     web_web_scrape_md_params.WebWebScrapeMdParams,
                 ),
@@ -473,6 +478,7 @@ class AsyncWebResource(AsyncAPIResource):
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
+        use_main_content_only: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -493,6 +499,9 @@ class AsyncWebResource(AsyncAPIResource):
           include_links: Preserve hyperlinks in Markdown output
 
           shorten_base64_images: Shorten base64-encoded image data in the Markdown output
+
+          use_main_content_only: Extract only the main content of the page, excluding headers, footers, sidebars,
+              and navigation
 
           extra_headers: Send extra headers
 
@@ -515,6 +524,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "include_images": include_images,
                         "include_links": include_links,
                         "shorten_base64_images": shorten_base64_images,
+                        "use_main_content_only": use_main_content_only,
                     },
                     web_web_scrape_md_params.WebWebScrapeMdParams,
                 ),
