@@ -1,5 +1,41 @@
 # Changelog
 
+## 0.4.0 (2026-03-28)
+
+Full Changelog: [v0.3.0...v0.4.0](https://github.com/context-dot-dev/context-python-sdk/compare/v0.3.0...v0.4.0)
+
+### Features
+
+* **api:** api update ([f502ad6](https://github.com/context-dot-dev/context-python-sdk/commit/f502ad62ce34a4f0677272bec3260cb09e1c535d))
+* **api:** api update ([e04913b](https://github.com/context-dot-dev/context-python-sdk/commit/e04913ba154a94938a61cf8e0e6ea595abdcc9ab))
+* **api:** api update ([38a4e7f](https://github.com/context-dot-dev/context-python-sdk/commit/38a4e7f37ec82795600b81181833d1899b8f55d5))
+* **api:** api update ([4a10229](https://github.com/context-dot-dev/context-python-sdk/commit/4a102292482af5d8e25c6ccf56bdb18999cdb465))
+* **api:** api update ([c4538b4](https://github.com/context-dot-dev/context-python-sdk/commit/c4538b459e6dcee56fb4b2ca85c94db4589d4318))
+* **api:** api update ([5cc1e7d](https://github.com/context-dot-dev/context-python-sdk/commit/5cc1e7d56a2bc8210d4b2b06c581459cea572210))
+* **api:** manual updates ([8304083](https://github.com/context-dot-dev/context-python-sdk/commit/830408303450a4b85dfd444a2c4790cc8fecf292))
+* **api:** manual updates ([3285d21](https://github.com/context-dot-dev/context-python-sdk/commit/3285d21cae790e5529ba6fcd7a79612ffc7e7738))
+* **internal:** implement indices array format for query and form serialization ([6f40553](https://github.com/context-dot-dev/context-python-sdk/commit/6f40553d0aebcb2ecdc082481c656a89cb48b330))
+
+
+### Bug Fixes
+
+* **deps:** bump minimum typing-extensions version ([4695dbc](https://github.com/context-dot-dev/context-python-sdk/commit/4695dbc34b87e85188379626840776680c6bb9b6))
+* **pydantic:** do not pass `by_alias` unless set ([b1723b9](https://github.com/context-dot-dev/context-python-sdk/commit/b1723b9dcac429353c6d02808e6d795e5ed5caa3))
+* sanitize endpoint path params ([8ccc27d](https://github.com/context-dot-dev/context-python-sdk/commit/8ccc27d64fd1046ba6059c87a931b7b81716a82c))
+
+
+### Chores
+
+* configure new SDK language ([0277c2c](https://github.com/context-dot-dev/context-python-sdk/commit/0277c2c3a9c03e58f50a2628c133612140dd6f73))
+* **internal:** tweak CI branches ([0dbacf7](https://github.com/context-dot-dev/context-python-sdk/commit/0dbacf7d2c95a87668cd1fc052378984ca1a865e))
+* sync repo ([4003edb](https://github.com/context-dot-dev/context-python-sdk/commit/4003edb15451de5089894ef4477e36b1347569d3))
+* update SDK settings ([5cb4d7b](https://github.com/context-dot-dev/context-python-sdk/commit/5cb4d7b1710af51afa2285bae4dc24dd3b0ac4b7))
+* update SDK settings ([604b2b5](https://github.com/context-dot-dev/context-python-sdk/commit/604b2b5ef62858f4e58fd161df617c2f04a3a316))
+* update SDK settings ([d0ad046](https://github.com/context-dot-dev/context-python-sdk/commit/d0ad0460e53493b09f8f5126e26f9118989ca2bb))
+* update SDK settings ([0c90793](https://github.com/context-dot-dev/context-python-sdk/commit/0c90793462f3394063c47abf0bfb3b2bed60b685))
+* update SDK settings ([154e20a](https://github.com/context-dot-dev/context-python-sdk/commit/154e20a04eed818849ddcada3f11d97b918abf46))
+* update SDK settings ([212e987](https://github.com/context-dot-dev/context-python-sdk/commit/212e987d1d5d6dbbf0bc5f5a1a6eab6a69e67775))
+
 ## 0.3.0 (2026-03-25)
 
 Full Changelog: [v0.2.0...v0.3.0](https://github.com/context-dot-dev/python-sdk/compare/v0.2.0...v0.3.0)
