@@ -75,7 +75,6 @@ class TestStyle:
         style = client.style.extract_styleguide(
             direct_url="https://example.com",
             domain="domain",
-            prioritize="speed",
             timeout_ms=1000,
         )
         assert_matches_type(StyleExtractStyleguideResponse, style, path=["response"])
@@ -163,7 +162,6 @@ class TestAsyncStyle:
         style = await async_client.style.extract_styleguide(
             direct_url="https://example.com",
             domain="domain",
-            prioritize="speed",
             timeout_ms=1000,
         )
         assert_matches_type(StyleExtractStyleguideResponse, style, path=["response"])
