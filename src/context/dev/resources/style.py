@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from typing_extensions import Literal
-
 import httpx
 
 from ..types import style_extract_fonts_params, style_extract_styleguide_params
@@ -99,7 +97,6 @@ class StyleResource(SyncAPIResource):
         *,
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
-        prioritize: Literal["speed", "quality"] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -120,11 +117,6 @@ class StyleResource(SyncAPIResource):
 
           domain: Domain name to extract styleguide from (e.g., 'example.com', 'google.com'). The
               domain will be automatically normalized and validated.
-
-          prioritize: Optional parameter to prioritize screenshot capture for styleguide extraction.
-              If 'speed', optimizes for faster capture with basic quality. If 'quality',
-              optimizes for higher quality with longer wait times. Defaults to 'quality' if
-              not provided.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -149,7 +141,6 @@ class StyleResource(SyncAPIResource):
                     {
                         "direct_url": direct_url,
                         "domain": domain,
-                        "prioritize": prioritize,
                         "timeout_ms": timeout_ms,
                     },
                     style_extract_styleguide_params.StyleExtractStyleguideParams,
@@ -234,7 +225,6 @@ class AsyncStyleResource(AsyncAPIResource):
         *,
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
-        prioritize: Literal["speed", "quality"] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -255,11 +245,6 @@ class AsyncStyleResource(AsyncAPIResource):
 
           domain: Domain name to extract styleguide from (e.g., 'example.com', 'google.com'). The
               domain will be automatically normalized and validated.
-
-          prioritize: Optional parameter to prioritize screenshot capture for styleguide extraction.
-              If 'speed', optimizes for faster capture with basic quality. If 'quality',
-              optimizes for higher quality with longer wait times. Defaults to 'quality' if
-              not provided.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -284,7 +269,6 @@ class AsyncStyleResource(AsyncAPIResource):
                     {
                         "direct_url": direct_url,
                         "domain": domain,
-                        "prioritize": prioritize,
                         "timeout_ms": timeout_ms,
                     },
                     style_extract_styleguide_params.StyleExtractStyleguideParams,
