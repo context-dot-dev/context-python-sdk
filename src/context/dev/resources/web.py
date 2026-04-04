@@ -8,6 +8,7 @@ import httpx
 
 from ..types import (
     web_screenshot_params,
+    web_web_crawl_md_params,
     web_web_scrape_md_params,
     web_web_scrape_html_params,
     web_web_scrape_images_params,
@@ -25,6 +26,7 @@ from .._response import (
 )
 from .._base_client import make_request_options
 from ..types.web_screenshot_response import WebScreenshotResponse
+from ..types.web_web_crawl_md_response import WebWebCrawlMdResponse
 from ..types.web_web_scrape_md_response import WebWebScrapeMdResponse
 from ..types.web_web_scrape_html_response import WebWebScrapeHTMLResponse
 from ..types.web_web_scrape_images_response import WebWebScrapeImagesResponse
@@ -117,6 +119,82 @@ class WebResource(SyncAPIResource):
                 ),
             ),
             cast_to=WebScreenshotResponse,
+        )
+
+    def web_crawl_md(
+        self,
+        *,
+        url: str,
+        follow_subdomains: bool | Omit = omit,
+        include_images: bool | Omit = omit,
+        include_links: bool | Omit = omit,
+        max_depth: int | Omit = omit,
+        max_pages: int | Omit = omit,
+        shorten_base64_images: bool | Omit = omit,
+        url_regex: str | Omit = omit,
+        use_main_content_only: bool | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WebWebCrawlMdResponse:
+        """
+        Performs a crawl starting from a given URL, extracts page content as Markdown,
+        and returns results for all crawled pages. Only follows links within the same
+        domain as the starting URL. Costs 1 credit per successful page crawled.
+
+        Args:
+          url: The starting URL for the crawl (must include http:// or https:// protocol)
+
+          follow_subdomains: When true, follow links on subdomains of the starting URL's domain (e.g.
+              docs.example.com when starting from example.com). www and apex are always
+              treated as equivalent.
+
+          include_images: Include image references in the Markdown output
+
+          include_links: Preserve hyperlinks in the Markdown output
+
+          max_depth: Maximum link depth from the starting URL (0 = only the starting page)
+
+          max_pages: Maximum number of pages to crawl. Hard cap: 500.
+
+          shorten_base64_images: Truncate base64-encoded image data in the Markdown output
+
+          url_regex: Regex pattern. Only URLs matching this pattern will be followed and scraped.
+
+          use_main_content_only: Extract only the main content, stripping headers, footers, sidebars, and
+              navigation
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/web/crawl",
+            body=maybe_transform(
+                {
+                    "url": url,
+                    "follow_subdomains": follow_subdomains,
+                    "include_images": include_images,
+                    "include_links": include_links,
+                    "max_depth": max_depth,
+                    "max_pages": max_pages,
+                    "shorten_base64_images": shorten_base64_images,
+                    "url_regex": url_regex,
+                    "use_main_content_only": use_main_content_only,
+                },
+                web_web_crawl_md_params.WebWebCrawlMdParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=WebWebCrawlMdResponse,
         )
 
     def web_scrape_html(
@@ -394,6 +472,82 @@ class AsyncWebResource(AsyncAPIResource):
             cast_to=WebScreenshotResponse,
         )
 
+    async def web_crawl_md(
+        self,
+        *,
+        url: str,
+        follow_subdomains: bool | Omit = omit,
+        include_images: bool | Omit = omit,
+        include_links: bool | Omit = omit,
+        max_depth: int | Omit = omit,
+        max_pages: int | Omit = omit,
+        shorten_base64_images: bool | Omit = omit,
+        url_regex: str | Omit = omit,
+        use_main_content_only: bool | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WebWebCrawlMdResponse:
+        """
+        Performs a crawl starting from a given URL, extracts page content as Markdown,
+        and returns results for all crawled pages. Only follows links within the same
+        domain as the starting URL. Costs 1 credit per successful page crawled.
+
+        Args:
+          url: The starting URL for the crawl (must include http:// or https:// protocol)
+
+          follow_subdomains: When true, follow links on subdomains of the starting URL's domain (e.g.
+              docs.example.com when starting from example.com). www and apex are always
+              treated as equivalent.
+
+          include_images: Include image references in the Markdown output
+
+          include_links: Preserve hyperlinks in the Markdown output
+
+          max_depth: Maximum link depth from the starting URL (0 = only the starting page)
+
+          max_pages: Maximum number of pages to crawl. Hard cap: 500.
+
+          shorten_base64_images: Truncate base64-encoded image data in the Markdown output
+
+          url_regex: Regex pattern. Only URLs matching this pattern will be followed and scraped.
+
+          use_main_content_only: Extract only the main content, stripping headers, footers, sidebars, and
+              navigation
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/web/crawl",
+            body=await async_maybe_transform(
+                {
+                    "url": url,
+                    "follow_subdomains": follow_subdomains,
+                    "include_images": include_images,
+                    "include_links": include_links,
+                    "max_depth": max_depth,
+                    "max_pages": max_pages,
+                    "shorten_base64_images": shorten_base64_images,
+                    "url_regex": url_regex,
+                    "use_main_content_only": use_main_content_only,
+                },
+                web_web_crawl_md_params.WebWebCrawlMdParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=WebWebCrawlMdResponse,
+        )
+
     async def web_scrape_html(
         self,
         *,
@@ -590,6 +744,9 @@ class WebResourceWithRawResponse:
         self.screenshot = to_raw_response_wrapper(
             web.screenshot,
         )
+        self.web_crawl_md = to_raw_response_wrapper(
+            web.web_crawl_md,
+        )
         self.web_scrape_html = to_raw_response_wrapper(
             web.web_scrape_html,
         )
@@ -610,6 +767,9 @@ class AsyncWebResourceWithRawResponse:
 
         self.screenshot = async_to_raw_response_wrapper(
             web.screenshot,
+        )
+        self.web_crawl_md = async_to_raw_response_wrapper(
+            web.web_crawl_md,
         )
         self.web_scrape_html = async_to_raw_response_wrapper(
             web.web_scrape_html,
@@ -632,6 +792,9 @@ class WebResourceWithStreamingResponse:
         self.screenshot = to_streamed_response_wrapper(
             web.screenshot,
         )
+        self.web_crawl_md = to_streamed_response_wrapper(
+            web.web_crawl_md,
+        )
         self.web_scrape_html = to_streamed_response_wrapper(
             web.web_scrape_html,
         )
@@ -652,6 +815,9 @@ class AsyncWebResourceWithStreamingResponse:
 
         self.screenshot = async_to_streamed_response_wrapper(
             web.screenshot,
+        )
+        self.web_crawl_md = async_to_streamed_response_wrapper(
+            web.web_crawl_md,
         )
         self.web_scrape_html = async_to_streamed_response_wrapper(
             web.web_scrape_html,
