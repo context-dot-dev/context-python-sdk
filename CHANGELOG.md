@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.7.0 (2026-04-09)
+
+Full Changelog: [v0.6.0...v0.7.0](https://github.com/context-dot-dev/context-python-sdk/compare/v0.6.0...v0.7.0)
+
+### Features
+
+* **api:** api update ([51e02cd](https://github.com/context-dot-dev/context-python-sdk/commit/51e02cd1487c13ee0cd96a4ab10bb17108bde531))
+* **api:** api update ([cb80f56](https://github.com/context-dot-dev/context-python-sdk/commit/cb80f56cf54377fe4a80927eecaf3391e2e51622))
+* **api:** api update ([b6df2d5](https://github.com/context-dot-dev/context-python-sdk/commit/b6df2d5e74a018e70fdb3a8dd61fdb388699ef39))
+
+
+### Bug Fixes
+
+* **client:** preserve hardcoded query params when merging with user params ([57c6a22](https://github.com/context-dot-dev/context-python-sdk/commit/57c6a2294b05ae0fe0840261d07f89b61dcac0a3))
+
 ## 0.6.0 (2026-04-04)
 
 Full Changelog: [v0.5.0...v0.6.0](https://github.com/context-dot-dev/context-python-sdk/compare/v0.5.0...v0.6.0)
