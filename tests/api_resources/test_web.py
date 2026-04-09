@@ -27,15 +27,14 @@ class TestWeb:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_screenshot(self, client: ContextDev) -> None:
-        web = client.web.screenshot(
-            domain="domain",
-        )
+        web = client.web.screenshot()
         assert_matches_type(WebScreenshotResponse, web, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_screenshot_with_all_params(self, client: ContextDev) -> None:
         web = client.web.screenshot(
+            direct_url="https://example.com",
             domain="domain",
             full_screenshot="true",
             page="login",
@@ -46,9 +45,7 @@ class TestWeb:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_screenshot(self, client: ContextDev) -> None:
-        response = client.web.with_raw_response.screenshot(
-            domain="domain",
-        )
+        response = client.web.with_raw_response.screenshot()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -58,9 +55,7 @@ class TestWeb:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_screenshot(self, client: ContextDev) -> None:
-        with client.web.with_streaming_response.screenshot(
-            domain="domain",
-        ) as response:
+        with client.web.with_streaming_response.screenshot() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -285,15 +280,14 @@ class TestAsyncWeb:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_screenshot(self, async_client: AsyncContextDev) -> None:
-        web = await async_client.web.screenshot(
-            domain="domain",
-        )
+        web = await async_client.web.screenshot()
         assert_matches_type(WebScreenshotResponse, web, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_screenshot_with_all_params(self, async_client: AsyncContextDev) -> None:
         web = await async_client.web.screenshot(
+            direct_url="https://example.com",
             domain="domain",
             full_screenshot="true",
             page="login",
@@ -304,9 +298,7 @@ class TestAsyncWeb:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_screenshot(self, async_client: AsyncContextDev) -> None:
-        response = await async_client.web.with_raw_response.screenshot(
-            domain="domain",
-        )
+        response = await async_client.web.with_raw_response.screenshot()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -316,9 +308,7 @@ class TestAsyncWeb:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_screenshot(self, async_client: AsyncContextDev) -> None:
-        async with async_client.web.with_streaming_response.screenshot(
-            domain="domain",
-        ) as response:
+        async with async_client.web.with_streaming_response.screenshot() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
