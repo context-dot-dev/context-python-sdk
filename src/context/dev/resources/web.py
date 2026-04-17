@@ -150,8 +150,7 @@ class WebResource(SyncAPIResource):
     ) -> WebWebCrawlMdResponse:
         """
         Performs a crawl starting from a given URL, extracts page content as Markdown,
-        and returns results for all crawled pages. Only follows links within the same
-        domain as the starting URL. Costs 1 credit per successful page crawled.
+        and returns results for all crawled pages.
 
         Args:
           url: The starting URL for the crawl (must include http:// or https:// protocol)
@@ -522,8 +521,7 @@ class AsyncWebResource(AsyncAPIResource):
     ) -> WebWebCrawlMdResponse:
         """
         Performs a crawl starting from a given URL, extracts page content as Markdown,
-        and returns results for all crawled pages. Only follows links within the same
-        domain as the starting URL. Costs 1 credit per successful page crawled.
+        and returns results for all crawled pages.
 
         Args:
           url: The starting URL for the crawl (must include http:// or https:// protocol)
