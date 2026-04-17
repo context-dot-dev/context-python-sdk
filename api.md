@@ -36,18 +36,6 @@ Methods:
 - <code title="post /brand/ai/product">client.ai.<a href="./src/context/dev/resources/ai.py">extract_product</a>(\*\*<a href="src/context/dev/types/ai_extract_product_params.py">params</a>) -> <a href="./src/context/dev/types/ai_extract_product_response.py">AIExtractProductResponse</a></code>
 - <code title="post /brand/ai/products">client.ai.<a href="./src/context/dev/resources/ai.py">extract_products</a>(\*\*<a href="src/context/dev/types/ai_extract_products_params.py">params</a>) -> <a href="./src/context/dev/types/ai_extract_products_response.py">AIExtractProductsResponse</a></code>
 
-# Style
-
-Types:
-
-```python
-from context.dev.types import StyleExtractStyleguideResponse
-```
-
-Methods:
-
-- <code title="get /brand/styleguide">client.style.<a href="./src/context/dev/resources/style.py">extract_styleguide</a>(\*\*<a href="src/context/dev/types/style_extract_styleguide_params.py">params</a>) -> <a href="./src/context/dev/types/style_extract_styleguide_response.py">StyleExtractStyleguideResponse</a></code>
-
 # Brand
 
 Types:

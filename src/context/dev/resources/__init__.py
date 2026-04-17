@@ -24,14 +24,6 @@ from .brand import (
     BrandResourceWithStreamingResponse,
     AsyncBrandResourceWithStreamingResponse,
 )
-from .style import (
-    StyleResource,
-    AsyncStyleResource,
-    StyleResourceWithRawResponse,
-    AsyncStyleResourceWithRawResponse,
-    StyleResourceWithStreamingResponse,
-    AsyncStyleResourceWithStreamingResponse,
-)
 from .utility import (
     UtilityResource,
     AsyncUtilityResource,
@@ -62,12 +54,6 @@ __all__ = [
     "AsyncAIResourceWithRawResponse",
     "AIResourceWithStreamingResponse",
     "AsyncAIResourceWithStreamingResponse",
-    "StyleResource",
-    "AsyncStyleResource",
-    "StyleResourceWithRawResponse",
-    "AsyncStyleResourceWithRawResponse",
-    "StyleResourceWithStreamingResponse",
-    "AsyncStyleResourceWithStreamingResponse",
     "BrandResource",
     "AsyncBrandResource",
     "BrandResourceWithRawResponse",
