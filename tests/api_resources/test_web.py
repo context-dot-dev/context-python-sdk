@@ -124,6 +124,15 @@ class TestWeb:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
+    def test_method_web_scrape_html_with_all_params(self, client: ContextDev) -> None:
+        web = client.web.web_scrape_html(
+            url="https://example.com",
+            max_age_ms=0,
+        )
+        assert_matches_type(WebWebScrapeHTMLResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
     def test_raw_response_web_scrape_html(self, client: ContextDev) -> None:
         response = client.web.with_raw_response.web_scrape_html(
             url="https://example.com",
@@ -197,6 +206,7 @@ class TestWeb:
             url="https://example.com",
             include_images=True,
             include_links=True,
+            max_age_ms=0,
             shorten_base64_images=True,
             use_main_content_only=True,
         )
@@ -377,6 +387,15 @@ class TestAsyncWeb:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
+    async def test_method_web_scrape_html_with_all_params(self, async_client: AsyncContextDev) -> None:
+        web = await async_client.web.web_scrape_html(
+            url="https://example.com",
+            max_age_ms=0,
+        )
+        assert_matches_type(WebWebScrapeHTMLResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
     async def test_raw_response_web_scrape_html(self, async_client: AsyncContextDev) -> None:
         response = await async_client.web.with_raw_response.web_scrape_html(
             url="https://example.com",
@@ -450,6 +469,7 @@ class TestAsyncWeb:
             url="https://example.com",
             include_images=True,
             include_links=True,
+            max_age_ms=0,
             shorten_base64_images=True,
             use_main_content_only=True,
         )
