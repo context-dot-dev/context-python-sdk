@@ -486,7 +486,7 @@ class WebResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebWebScrapeSitemapResponse:
         """
-        Crawl an entire website's sitemap and return all discovered page URLs
+        Crawl an entire website's sitemap and return all discovered page URLs.
 
         Args:
           domain: Domain to build a sitemap for
@@ -968,7 +968,7 @@ class AsyncWebResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebWebScrapeSitemapResponse:
         """
-        Crawl an entire website's sitemap and return all discovered page URLs
+        Crawl an entire website's sitemap and return all discovered page URLs.
 
         Args:
           domain: Domain to build a sitemap for
