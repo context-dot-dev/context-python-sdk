@@ -10,12 +10,14 @@ import pytest
 from context.dev import ContextDev, AsyncContextDev
 from tests.utils import assert_matches_type
 from context.dev.types import (
+    WebScreenshotResponse,
     WebWebCrawlMdResponse,
     WebWebScrapeMdResponse,
     WebExtractFontsResponse,
     WebWebScrapeHTMLResponse,
     WebWebScrapeImagesResponse,
     WebWebScrapeSitemapResponse,
+    WebExtractStyleguideResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -59,6 +61,84 @@ class TestWeb:
 
             web = response.parse()
             assert_matches_type(WebExtractFontsResponse, web, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_extract_styleguide(self, client: ContextDev) -> None:
+        web = client.web.extract_styleguide()
+        assert_matches_type(WebExtractStyleguideResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_extract_styleguide_with_all_params(self, client: ContextDev) -> None:
+        web = client.web.extract_styleguide(
+            direct_url="https://example.com",
+            domain="domain",
+            timeout_ms=1000,
+        )
+        assert_matches_type(WebExtractStyleguideResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_extract_styleguide(self, client: ContextDev) -> None:
+        response = client.web.with_raw_response.extract_styleguide()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        web = response.parse()
+        assert_matches_type(WebExtractStyleguideResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_extract_styleguide(self, client: ContextDev) -> None:
+        with client.web.with_streaming_response.extract_styleguide() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            web = response.parse()
+            assert_matches_type(WebExtractStyleguideResponse, web, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_screenshot(self, client: ContextDev) -> None:
+        web = client.web.screenshot()
+        assert_matches_type(WebScreenshotResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_screenshot_with_all_params(self, client: ContextDev) -> None:
+        web = client.web.screenshot(
+            direct_url="https://example.com",
+            domain="domain",
+            full_screenshot="true",
+            page="login",
+            prioritize="speed",
+        )
+        assert_matches_type(WebScreenshotResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_screenshot(self, client: ContextDev) -> None:
+        response = client.web.with_raw_response.screenshot()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        web = response.parse()
+        assert_matches_type(WebScreenshotResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_screenshot(self, client: ContextDev) -> None:
+        with client.web.with_streaming_response.screenshot() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            web = response.parse()
+            assert_matches_type(WebScreenshotResponse, web, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -320,6 +400,84 @@ class TestAsyncWeb:
 
             web = await response.parse()
             assert_matches_type(WebExtractFontsResponse, web, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_extract_styleguide(self, async_client: AsyncContextDev) -> None:
+        web = await async_client.web.extract_styleguide()
+        assert_matches_type(WebExtractStyleguideResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_extract_styleguide_with_all_params(self, async_client: AsyncContextDev) -> None:
+        web = await async_client.web.extract_styleguide(
+            direct_url="https://example.com",
+            domain="domain",
+            timeout_ms=1000,
+        )
+        assert_matches_type(WebExtractStyleguideResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_extract_styleguide(self, async_client: AsyncContextDev) -> None:
+        response = await async_client.web.with_raw_response.extract_styleguide()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        web = await response.parse()
+        assert_matches_type(WebExtractStyleguideResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_extract_styleguide(self, async_client: AsyncContextDev) -> None:
+        async with async_client.web.with_streaming_response.extract_styleguide() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            web = await response.parse()
+            assert_matches_type(WebExtractStyleguideResponse, web, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_screenshot(self, async_client: AsyncContextDev) -> None:
+        web = await async_client.web.screenshot()
+        assert_matches_type(WebScreenshotResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_screenshot_with_all_params(self, async_client: AsyncContextDev) -> None:
+        web = await async_client.web.screenshot(
+            direct_url="https://example.com",
+            domain="domain",
+            full_screenshot="true",
+            page="login",
+            prioritize="speed",
+        )
+        assert_matches_type(WebScreenshotResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_screenshot(self, async_client: AsyncContextDev) -> None:
+        response = await async_client.web.with_raw_response.screenshot()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        web = await response.parse()
+        assert_matches_type(WebScreenshotResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_screenshot(self, async_client: AsyncContextDev) -> None:
+        async with async_client.web.with_streaming_response.screenshot() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            web = await response.parse()
+            assert_matches_type(WebScreenshotResponse, web, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

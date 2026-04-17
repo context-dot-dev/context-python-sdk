@@ -2,14 +2,18 @@
 
 from __future__ import annotations
 
+from typing_extensions import Literal
+
 import httpx
 
 from ..types import (
+    web_screenshot_params,
     web_web_crawl_md_params,
     web_extract_fonts_params,
     web_web_scrape_md_params,
     web_web_scrape_html_params,
     web_web_scrape_images_params,
+    web_extract_styleguide_params,
     web_web_scrape_sitemap_params,
 )
 from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
@@ -23,11 +27,13 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from ..types.web_screenshot_response import WebScreenshotResponse
 from ..types.web_web_crawl_md_response import WebWebCrawlMdResponse
 from ..types.web_extract_fonts_response import WebExtractFontsResponse
 from ..types.web_web_scrape_md_response import WebWebScrapeMdResponse
 from ..types.web_web_scrape_html_response import WebWebScrapeHTMLResponse
 from ..types.web_web_scrape_images_response import WebWebScrapeImagesResponse
+from ..types.web_extract_styleguide_response import WebExtractStyleguideResponse
 from ..types.web_web_scrape_sitemap_response import WebWebScrapeSitemapResponse
 
 __all__ = ["WebResource", "AsyncWebResource"]
@@ -108,6 +114,134 @@ class WebResource(SyncAPIResource):
                 ),
             ),
             cast_to=WebExtractFontsResponse,
+        )
+
+    def extract_styleguide(
+        self,
+        *,
+        direct_url: str | Omit = omit,
+        domain: str | Omit = omit,
+        timeout_ms: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WebExtractStyleguideResponse:
+        """
+        Extract a comprehensive design system from a website including colors,
+        typography, spacing, shadows, and UI components.
+
+        Args:
+          direct_url: A specific URL to fetch the styleguide from directly, bypassing domain
+              resolution (e.g., 'https://example.com/design-system'). When provided, the
+              styleguide is extracted from this exact URL. You must provide either 'domain' or
+              'directUrl', but not both.
+
+          domain: Domain name to extract styleguide from (e.g., 'example.com', 'google.com'). The
+              domain will be automatically normalized and validated. You must provide either
+              'domain' or 'directUrl', but not both.
+
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._get(
+            "/web/styleguide",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "direct_url": direct_url,
+                        "domain": domain,
+                        "timeout_ms": timeout_ms,
+                    },
+                    web_extract_styleguide_params.WebExtractStyleguideParams,
+                ),
+            ),
+            cast_to=WebExtractStyleguideResponse,
+        )
+
+    def screenshot(
+        self,
+        *,
+        direct_url: str | Omit = omit,
+        domain: str | Omit = omit,
+        full_screenshot: Literal["true", "false"] | Omit = omit,
+        page: Literal["login", "signup", "blog", "careers", "pricing", "terms", "privacy", "contact"] | Omit = omit,
+        prioritize: Literal["speed", "quality"] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WebScreenshotResponse:
+        """
+        Capture a screenshot of a website.
+
+        Args:
+          direct_url: A specific URL to screenshot directly, bypassing domain resolution (e.g.,
+              'https://example.com/pricing'). When provided, the screenshot is taken of this
+              exact URL. You must provide either 'domain' or 'directUrl', but not both.
+
+          domain: Domain name to take screenshot of (e.g., 'example.com', 'google.com'). The
+              domain will be automatically normalized and validated. You must provide either
+              'domain' or 'directUrl', but not both.
+
+          full_screenshot: Optional parameter to determine screenshot type. If 'true', takes a full page
+              screenshot capturing all content. If 'false' or not provided, takes a viewport
+              screenshot (standard browser view).
+
+          page: Optional parameter to specify which page type to screenshot. If provided, the
+              system will scrape the domain's links and use heuristics to find the most
+              appropriate URL for the specified page type (30 supported languages). If not
+              provided, screenshots the main domain landing page. Only applicable when using
+              'domain', not 'directUrl'.
+
+          prioritize: Optional parameter to prioritize screenshot capture. If 'speed', optimizes for
+              faster capture with basic quality. If 'quality', optimizes for higher quality
+              with longer wait times. Defaults to 'quality' if not provided.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._get(
+            "/web/screenshot",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "direct_url": direct_url,
+                        "domain": domain,
+                        "full_screenshot": full_screenshot,
+                        "page": page,
+                        "prioritize": prioritize,
+                    },
+                    web_screenshot_params.WebScreenshotParams,
+                ),
+            ),
+            cast_to=WebScreenshotResponse,
         )
 
     def web_crawl_md(
@@ -464,6 +598,134 @@ class AsyncWebResource(AsyncAPIResource):
             cast_to=WebExtractFontsResponse,
         )
 
+    async def extract_styleguide(
+        self,
+        *,
+        direct_url: str | Omit = omit,
+        domain: str | Omit = omit,
+        timeout_ms: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WebExtractStyleguideResponse:
+        """
+        Extract a comprehensive design system from a website including colors,
+        typography, spacing, shadows, and UI components.
+
+        Args:
+          direct_url: A specific URL to fetch the styleguide from directly, bypassing domain
+              resolution (e.g., 'https://example.com/design-system'). When provided, the
+              styleguide is extracted from this exact URL. You must provide either 'domain' or
+              'directUrl', but not both.
+
+          domain: Domain name to extract styleguide from (e.g., 'example.com', 'google.com'). The
+              domain will be automatically normalized and validated. You must provide either
+              'domain' or 'directUrl', but not both.
+
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._get(
+            "/web/styleguide",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "direct_url": direct_url,
+                        "domain": domain,
+                        "timeout_ms": timeout_ms,
+                    },
+                    web_extract_styleguide_params.WebExtractStyleguideParams,
+                ),
+            ),
+            cast_to=WebExtractStyleguideResponse,
+        )
+
+    async def screenshot(
+        self,
+        *,
+        direct_url: str | Omit = omit,
+        domain: str | Omit = omit,
+        full_screenshot: Literal["true", "false"] | Omit = omit,
+        page: Literal["login", "signup", "blog", "careers", "pricing", "terms", "privacy", "contact"] | Omit = omit,
+        prioritize: Literal["speed", "quality"] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WebScreenshotResponse:
+        """
+        Capture a screenshot of a website.
+
+        Args:
+          direct_url: A specific URL to screenshot directly, bypassing domain resolution (e.g.,
+              'https://example.com/pricing'). When provided, the screenshot is taken of this
+              exact URL. You must provide either 'domain' or 'directUrl', but not both.
+
+          domain: Domain name to take screenshot of (e.g., 'example.com', 'google.com'). The
+              domain will be automatically normalized and validated. You must provide either
+              'domain' or 'directUrl', but not both.
+
+          full_screenshot: Optional parameter to determine screenshot type. If 'true', takes a full page
+              screenshot capturing all content. If 'false' or not provided, takes a viewport
+              screenshot (standard browser view).
+
+          page: Optional parameter to specify which page type to screenshot. If provided, the
+              system will scrape the domain's links and use heuristics to find the most
+              appropriate URL for the specified page type (30 supported languages). If not
+              provided, screenshots the main domain landing page. Only applicable when using
+              'domain', not 'directUrl'.
+
+          prioritize: Optional parameter to prioritize screenshot capture. If 'speed', optimizes for
+              faster capture with basic quality. If 'quality', optimizes for higher quality
+              with longer wait times. Defaults to 'quality' if not provided.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._get(
+            "/web/screenshot",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "direct_url": direct_url,
+                        "domain": domain,
+                        "full_screenshot": full_screenshot,
+                        "page": page,
+                        "prioritize": prioritize,
+                    },
+                    web_screenshot_params.WebScreenshotParams,
+                ),
+            ),
+            cast_to=WebScreenshotResponse,
+        )
+
     async def web_crawl_md(
         self,
         *,
@@ -748,6 +1010,12 @@ class WebResourceWithRawResponse:
         self.extract_fonts = to_raw_response_wrapper(
             web.extract_fonts,
         )
+        self.extract_styleguide = to_raw_response_wrapper(
+            web.extract_styleguide,
+        )
+        self.screenshot = to_raw_response_wrapper(
+            web.screenshot,
+        )
         self.web_crawl_md = to_raw_response_wrapper(
             web.web_crawl_md,
         )
@@ -771,6 +1039,12 @@ class AsyncWebResourceWithRawResponse:
 
         self.extract_fonts = async_to_raw_response_wrapper(
             web.extract_fonts,
+        )
+        self.extract_styleguide = async_to_raw_response_wrapper(
+            web.extract_styleguide,
+        )
+        self.screenshot = async_to_raw_response_wrapper(
+            web.screenshot,
         )
         self.web_crawl_md = async_to_raw_response_wrapper(
             web.web_crawl_md,
@@ -796,6 +1070,12 @@ class WebResourceWithStreamingResponse:
         self.extract_fonts = to_streamed_response_wrapper(
             web.extract_fonts,
         )
+        self.extract_styleguide = to_streamed_response_wrapper(
+            web.extract_styleguide,
+        )
+        self.screenshot = to_streamed_response_wrapper(
+            web.screenshot,
+        )
         self.web_crawl_md = to_streamed_response_wrapper(
             web.web_crawl_md,
         )
@@ -819,6 +1099,12 @@ class AsyncWebResourceWithStreamingResponse:
 
         self.extract_fonts = async_to_streamed_response_wrapper(
             web.extract_fonts,
+        )
+        self.extract_styleguide = async_to_streamed_response_wrapper(
+            web.extract_styleguide,
+        )
+        self.screenshot = async_to_streamed_response_wrapper(
+            web.screenshot,
         )
         self.web_crawl_md = async_to_streamed_response_wrapper(
             web.web_crawl_md,
