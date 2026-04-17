@@ -41,12 +41,11 @@ Methods:
 Types:
 
 ```python
-from context.dev.types import StyleExtractFontsResponse, StyleExtractStyleguideResponse
+from context.dev.types import StyleExtractStyleguideResponse
 ```
 
 Methods:
 
-- <code title="get /brand/fonts">client.style.<a href="./src/context/dev/resources/style.py">extract_fonts</a>(\*\*<a href="src/context/dev/types/style_extract_fonts_params.py">params</a>) -> <a href="./src/context/dev/types/style_extract_fonts_response.py">StyleExtractFontsResponse</a></code>
 - <code title="get /brand/styleguide">client.style.<a href="./src/context/dev/resources/style.py">extract_styleguide</a>(\*\*<a href="src/context/dev/types/style_extract_styleguide_params.py">params</a>) -> <a href="./src/context/dev/types/style_extract_styleguide_response.py">StyleExtractStyleguideResponse</a></code>
 
 # Brand
