@@ -9,6 +9,7 @@ import httpx
 from ..types import (
     web_screenshot_params,
     web_web_crawl_md_params,
+    web_extract_fonts_params,
     web_web_scrape_md_params,
     web_web_scrape_html_params,
     web_web_scrape_images_params,
@@ -27,6 +28,7 @@ from .._response import (
 from .._base_client import make_request_options
 from ..types.web_screenshot_response import WebScreenshotResponse
 from ..types.web_web_crawl_md_response import WebWebCrawlMdResponse
+from ..types.web_extract_fonts_response import WebExtractFontsResponse
 from ..types.web_web_scrape_md_response import WebWebScrapeMdResponse
 from ..types.web_web_scrape_html_response import WebWebScrapeHTMLResponse
 from ..types.web_web_scrape_images_response import WebWebScrapeImagesResponse
@@ -54,6 +56,62 @@ class WebResource(SyncAPIResource):
         For more information, see https://www.github.com/context-dot-dev/context-python-sdk#with_streaming_response
         """
         return WebResourceWithStreamingResponse(self)
+
+    def extract_fonts(
+        self,
+        *,
+        direct_url: str | Omit = omit,
+        domain: str | Omit = omit,
+        timeout_ms: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WebExtractFontsResponse:
+        """
+        Scrape font information from a website including font families, usage
+        statistics, fallbacks, and element/word counts. Either 'domain' or 'directUrl'
+        must be provided as a query parameter, but not both.
+
+        Args:
+          direct_url: A specific URL to fetch fonts from directly, bypassing domain resolution (e.g.,
+              'https://example.com/design-system').
+
+          domain: Domain name to extract fonts from (e.g., 'example.com', 'google.com'). The
+              domain will be automatically normalized and validated.
+
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._get(
+            "/web/fonts",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "direct_url": direct_url,
+                        "domain": domain,
+                        "timeout_ms": timeout_ms,
+                    },
+                    web_extract_fonts_params.WebExtractFontsParams,
+                ),
+            ),
+            cast_to=WebExtractFontsResponse,
+        )
 
     def screenshot(
         self,
@@ -426,6 +484,62 @@ class AsyncWebResource(AsyncAPIResource):
         """
         return AsyncWebResourceWithStreamingResponse(self)
 
+    async def extract_fonts(
+        self,
+        *,
+        direct_url: str | Omit = omit,
+        domain: str | Omit = omit,
+        timeout_ms: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WebExtractFontsResponse:
+        """
+        Scrape font information from a website including font families, usage
+        statistics, fallbacks, and element/word counts. Either 'domain' or 'directUrl'
+        must be provided as a query parameter, but not both.
+
+        Args:
+          direct_url: A specific URL to fetch fonts from directly, bypassing domain resolution (e.g.,
+              'https://example.com/design-system').
+
+          domain: Domain name to extract fonts from (e.g., 'example.com', 'google.com'). The
+              domain will be automatically normalized and validated.
+
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._get(
+            "/web/fonts",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "direct_url": direct_url,
+                        "domain": domain,
+                        "timeout_ms": timeout_ms,
+                    },
+                    web_extract_fonts_params.WebExtractFontsParams,
+                ),
+            ),
+            cast_to=WebExtractFontsResponse,
+        )
+
     async def screenshot(
         self,
         *,
@@ -781,6 +895,9 @@ class WebResourceWithRawResponse:
     def __init__(self, web: WebResource) -> None:
         self._web = web
 
+        self.extract_fonts = to_raw_response_wrapper(
+            web.extract_fonts,
+        )
         self.screenshot = to_raw_response_wrapper(
             web.screenshot,
         )
@@ -805,6 +922,9 @@ class AsyncWebResourceWithRawResponse:
     def __init__(self, web: AsyncWebResource) -> None:
         self._web = web
 
+        self.extract_fonts = async_to_raw_response_wrapper(
+            web.extract_fonts,
+        )
         self.screenshot = async_to_raw_response_wrapper(
             web.screenshot,
         )
@@ -829,6 +949,9 @@ class WebResourceWithStreamingResponse:
     def __init__(self, web: WebResource) -> None:
         self._web = web
 
+        self.extract_fonts = to_streamed_response_wrapper(
+            web.extract_fonts,
+        )
         self.screenshot = to_streamed_response_wrapper(
             web.screenshot,
         )
@@ -853,6 +976,9 @@ class AsyncWebResourceWithStreamingResponse:
     def __init__(self, web: AsyncWebResource) -> None:
         self._web = web
 
+        self.extract_fonts = async_to_streamed_response_wrapper(
+            web.extract_fonts,
+        )
         self.screenshot = async_to_streamed_response_wrapper(
             web.screenshot,
         )
