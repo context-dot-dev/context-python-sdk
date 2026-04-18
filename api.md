@@ -66,18 +66,6 @@ Methods:
 - <code title="get /brand/retrieve-by-ticker">client.brand.<a href="./src/context/dev/resources/brand.py">retrieve_by_ticker</a>(\*\*<a href="src/context/dev/types/brand_retrieve_by_ticker_params.py">params</a>) -> <a href="./src/context/dev/types/brand_retrieve_by_ticker_response.py">BrandRetrieveByTickerResponse</a></code>
 - <code title="get /brand/retrieve-simplified">client.brand.<a href="./src/context/dev/resources/brand.py">retrieve_simplified</a>(\*\*<a href="src/context/dev/types/brand_retrieve_simplified_params.py">params</a>) -> <a href="./src/context/dev/types/brand_retrieve_simplified_response.py">BrandRetrieveSimplifiedResponse</a></code>
 
-# Industry
-
-Types:
-
-```python
-from context.dev.types import IndustryRetrieveNaicsResponse
-```
-
-Methods:
-
-- <code title="get /brand/naics">client.industry.<a href="./src/context/dev/resources/industry.py">retrieve_naics</a>(\*\*<a href="src/context/dev/types/industry_retrieve_naics_params.py">params</a>) -> <a href="./src/context/dev/types/industry_retrieve_naics_response.py">IndustryRetrieveNaicsResponse</a></code>
-
 # Utility
 
 Types:
