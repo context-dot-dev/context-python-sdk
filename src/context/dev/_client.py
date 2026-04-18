@@ -31,12 +31,11 @@ from ._base_client import (
 )
 
 if TYPE_CHECKING:
-    from .resources import ai, web, brand, utility, industry
+    from .resources import ai, web, brand, utility
     from .resources.ai import AIResource, AsyncAIResource
     from .resources.web import WebResource, AsyncWebResource
     from .resources.brand import BrandResource, AsyncBrandResource
     from .resources.utility import UtilityResource, AsyncUtilityResource
-    from .resources.industry import IndustryResource, AsyncIndustryResource
 
 __all__ = [
     "Timeout",
@@ -122,12 +121,6 @@ class ContextDev(SyncAPIClient):
         from .resources.brand import BrandResource
 
         return BrandResource(self)
-
-    @cached_property
-    def industry(self) -> IndustryResource:
-        from .resources.industry import IndustryResource
-
-        return IndustryResource(self)
 
     @cached_property
     def utility(self) -> UtilityResource:
@@ -322,12 +315,6 @@ class AsyncContextDev(AsyncAPIClient):
         return AsyncBrandResource(self)
 
     @cached_property
-    def industry(self) -> AsyncIndustryResource:
-        from .resources.industry import AsyncIndustryResource
-
-        return AsyncIndustryResource(self)
-
-    @cached_property
     def utility(self) -> AsyncUtilityResource:
         from .resources.utility import AsyncUtilityResource
 
@@ -471,12 +458,6 @@ class ContextDevWithRawResponse:
         return BrandResourceWithRawResponse(self._client.brand)
 
     @cached_property
-    def industry(self) -> industry.IndustryResourceWithRawResponse:
-        from .resources.industry import IndustryResourceWithRawResponse
-
-        return IndustryResourceWithRawResponse(self._client.industry)
-
-    @cached_property
     def utility(self) -> utility.UtilityResourceWithRawResponse:
         from .resources.utility import UtilityResourceWithRawResponse
 
@@ -506,12 +487,6 @@ class AsyncContextDevWithRawResponse:
         from .resources.brand import AsyncBrandResourceWithRawResponse
 
         return AsyncBrandResourceWithRawResponse(self._client.brand)
-
-    @cached_property
-    def industry(self) -> industry.AsyncIndustryResourceWithRawResponse:
-        from .resources.industry import AsyncIndustryResourceWithRawResponse
-
-        return AsyncIndustryResourceWithRawResponse(self._client.industry)
 
     @cached_property
     def utility(self) -> utility.AsyncUtilityResourceWithRawResponse:
@@ -545,12 +520,6 @@ class ContextDevWithStreamedResponse:
         return BrandResourceWithStreamingResponse(self._client.brand)
 
     @cached_property
-    def industry(self) -> industry.IndustryResourceWithStreamingResponse:
-        from .resources.industry import IndustryResourceWithStreamingResponse
-
-        return IndustryResourceWithStreamingResponse(self._client.industry)
-
-    @cached_property
     def utility(self) -> utility.UtilityResourceWithStreamingResponse:
         from .resources.utility import UtilityResourceWithStreamingResponse
 
@@ -580,12 +549,6 @@ class AsyncContextDevWithStreamedResponse:
         from .resources.brand import AsyncBrandResourceWithStreamingResponse
 
         return AsyncBrandResourceWithStreamingResponse(self._client.brand)
-
-    @cached_property
-    def industry(self) -> industry.AsyncIndustryResourceWithStreamingResponse:
-        from .resources.industry import AsyncIndustryResourceWithStreamingResponse
-
-        return AsyncIndustryResourceWithStreamingResponse(self._client.industry)
 
     @cached_property
     def utility(self) -> utility.AsyncUtilityResourceWithStreamingResponse:
