@@ -32,6 +32,14 @@ from .utility import (
     UtilityResourceWithStreamingResponse,
     AsyncUtilityResourceWithStreamingResponse,
 )
+from .industry import (
+    IndustryResource,
+    AsyncIndustryResource,
+    IndustryResourceWithRawResponse,
+    AsyncIndustryResourceWithRawResponse,
+    IndustryResourceWithStreamingResponse,
+    AsyncIndustryResourceWithStreamingResponse,
+)
 
 __all__ = [
     "WebResource",
@@ -52,6 +60,12 @@ __all__ = [
     "AsyncBrandResourceWithRawResponse",
     "BrandResourceWithStreamingResponse",
     "AsyncBrandResourceWithStreamingResponse",
+    "IndustryResource",
+    "AsyncIndustryResource",
+    "IndustryResourceWithRawResponse",
+    "AsyncIndustryResourceWithRawResponse",
+    "IndustryResourceWithStreamingResponse",
+    "AsyncIndustryResourceWithStreamingResponse",
     "UtilityResource",
     "AsyncUtilityResource",
     "UtilityResourceWithRawResponse",
