@@ -478,6 +478,7 @@ class WebResource(SyncAPIResource):
         *,
         domain: str,
         max_links: int | Omit = omit,
+        url_regex: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -493,6 +494,9 @@ class WebResource(SyncAPIResource):
 
           max_links: Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
               Minimum is 1, maximum is 100,000.
+
+          url_regex: Optional RE2-compatible regex pattern. Only URLs matching this pattern are
+              returned and counted against maxLinks.
 
           extra_headers: Send extra headers
 
@@ -513,6 +517,7 @@ class WebResource(SyncAPIResource):
                     {
                         "domain": domain,
                         "max_links": max_links,
+                        "url_regex": url_regex,
                     },
                     web_web_scrape_sitemap_params.WebWebScrapeSitemapParams,
                 ),
@@ -960,6 +965,7 @@ class AsyncWebResource(AsyncAPIResource):
         *,
         domain: str,
         max_links: int | Omit = omit,
+        url_regex: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -975,6 +981,9 @@ class AsyncWebResource(AsyncAPIResource):
 
           max_links: Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
               Minimum is 1, maximum is 100,000.
+
+          url_regex: Optional RE2-compatible regex pattern. Only URLs matching this pattern are
+              returned and counted against maxLinks.
 
           extra_headers: Send extra headers
 
@@ -995,6 +1004,7 @@ class AsyncWebResource(AsyncAPIResource):
                     {
                         "domain": domain,
                         "max_links": max_links,
+                        "url_regex": url_regex,
                     },
                     web_web_scrape_sitemap_params.WebWebScrapeSitemapParams,
                 ),
