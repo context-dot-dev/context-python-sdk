@@ -9,9 +9,11 @@ import httpx
 from ..types import (
     web_screenshot_params,
     web_web_crawl_md_params,
+    web_extract_fonts_params,
     web_web_scrape_md_params,
     web_web_scrape_html_params,
     web_web_scrape_images_params,
+    web_extract_styleguide_params,
     web_web_scrape_sitemap_params,
 )
 from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
@@ -27,9 +29,11 @@ from .._response import (
 from .._base_client import make_request_options
 from ..types.web_screenshot_response import WebScreenshotResponse
 from ..types.web_web_crawl_md_response import WebWebCrawlMdResponse
+from ..types.web_extract_fonts_response import WebExtractFontsResponse
 from ..types.web_web_scrape_md_response import WebWebScrapeMdResponse
 from ..types.web_web_scrape_html_response import WebWebScrapeHTMLResponse
 from ..types.web_web_scrape_images_response import WebWebScrapeImagesResponse
+from ..types.web_extract_styleguide_response import WebExtractStyleguideResponse
 from ..types.web_web_scrape_sitemap_response import WebWebScrapeSitemapResponse
 
 __all__ = ["WebResource", "AsyncWebResource"]
@@ -55,6 +59,121 @@ class WebResource(SyncAPIResource):
         """
         return WebResourceWithStreamingResponse(self)
 
+    def extract_fonts(
+        self,
+        *,
+        direct_url: str | Omit = omit,
+        domain: str | Omit = omit,
+        timeout_ms: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WebExtractFontsResponse:
+        """
+        Scrape font information from a website including font families, usage
+        statistics, fallbacks, and element/word counts.
+
+        Args:
+          direct_url: A specific URL to fetch fonts from directly, bypassing domain resolution (e.g.,
+              'https://example.com/design-system'). When provided, fonts are extracted from
+              this exact URL. You must provide either 'domain' or 'directUrl', but not both.
+
+          domain: Domain name to extract fonts from (e.g., 'example.com', 'google.com'). The
+              domain will be automatically normalized and validated. You must provide either
+              'domain' or 'directUrl', but not both.
+
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._get(
+            "/web/fonts",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "direct_url": direct_url,
+                        "domain": domain,
+                        "timeout_ms": timeout_ms,
+                    },
+                    web_extract_fonts_params.WebExtractFontsParams,
+                ),
+            ),
+            cast_to=WebExtractFontsResponse,
+        )
+
+    def extract_styleguide(
+        self,
+        *,
+        direct_url: str | Omit = omit,
+        domain: str | Omit = omit,
+        timeout_ms: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WebExtractStyleguideResponse:
+        """
+        Extract a comprehensive design system from a website including colors,
+        typography, spacing, shadows, and UI components.
+
+        Args:
+          direct_url: A specific URL to fetch the styleguide from directly, bypassing domain
+              resolution (e.g., 'https://example.com/design-system'). When provided, the
+              styleguide is extracted from this exact URL. You must provide either 'domain' or
+              'directUrl', but not both.
+
+          domain: Domain name to extract styleguide from (e.g., 'example.com', 'google.com'). The
+              domain will be automatically normalized and validated. You must provide either
+              'domain' or 'directUrl', but not both.
+
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._get(
+            "/web/styleguide",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "direct_url": direct_url,
+                        "domain": domain,
+                        "timeout_ms": timeout_ms,
+                    },
+                    web_extract_styleguide_params.WebExtractStyleguideParams,
+                ),
+            ),
+            cast_to=WebExtractStyleguideResponse,
+        )
+
     def screenshot(
         self,
         *,
@@ -70,21 +189,17 @@ class WebResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebScreenshotResponse:
-        """Capture a screenshot of a website.
-
-        Supports both viewport (standard browser
-        view) and full-page screenshots. Can also screenshot specific page types (login,
-        pricing, etc.) by using heuristics to find the appropriate URL. Either 'domain'
-        or 'directUrl' must be provided as a query parameter, but not both. Returns a
-        URL to the uploaded screenshot image hosted on our CDN.
+        """
+        Capture a screenshot of a website.
 
         Args:
           direct_url: A specific URL to screenshot directly, bypassing domain resolution (e.g.,
               'https://example.com/pricing'). When provided, the screenshot is taken of this
-              exact URL.
+              exact URL. You must provide either 'domain' or 'directUrl', but not both.
 
           domain: Domain name to take screenshot of (e.g., 'example.com', 'google.com'). The
-              domain will be automatically normalized and validated.
+              domain will be automatically normalized and validated. You must provide either
+              'domain' or 'directUrl', but not both.
 
           full_screenshot: Optional parameter to determine screenshot type. If 'true', takes a full page
               screenshot capturing all content. If 'false' or not provided, takes a viewport
@@ -109,7 +224,7 @@ class WebResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._get(
-            "/brand/screenshot",
+            "/web/screenshot",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -150,8 +265,7 @@ class WebResource(SyncAPIResource):
     ) -> WebWebCrawlMdResponse:
         """
         Performs a crawl starting from a given URL, extracts page content as Markdown,
-        and returns results for all crawled pages. Only follows links within the same
-        domain as the starting URL. Costs 1 credit per successful page crawled.
+        and returns results for all crawled pages.
 
         Args:
           url: The starting URL for the crawl (must include http:// or https:// protocol)
@@ -209,6 +323,7 @@ class WebResource(SyncAPIResource):
         self,
         *,
         url: str,
+        max_age_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -221,6 +336,10 @@ class WebResource(SyncAPIResource):
 
         Args:
           url: Full URL to scrape (must include http:// or https:// protocol)
+
+          max_age_ms: Return a cached result if a prior scrape for the same parameters exists and is
+              younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
+              omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
 
           extra_headers: Send extra headers
 
@@ -237,7 +356,13 @@ class WebResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform({"url": url}, web_web_scrape_html_params.WebWebScrapeHTMLParams),
+                query=maybe_transform(
+                    {
+                        "url": url,
+                        "max_age_ms": max_age_ms,
+                    },
+                    web_web_scrape_html_params.WebWebScrapeHTMLParams,
+                ),
             ),
             cast_to=WebWebScrapeHTMLResponse,
         )
@@ -288,6 +413,7 @@ class WebResource(SyncAPIResource):
         url: str,
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
+        max_age_ms: int | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
         use_main_content_only: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -298,16 +424,19 @@ class WebResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebWebScrapeMdResponse:
         """
-        Scrapes the given URL, converts the HTML content to Markdown, and returns the
-        result.
+        Scrapes the given URL into LLM usable Markdown.
 
         Args:
-          url: Full URL to scrape and convert to markdown (must include http:// or https://
+          url: Full URL to scrape into LLM usable Markdown (must include http:// or https://
               protocol)
 
           include_images: Include image references in Markdown output
 
           include_links: Preserve hyperlinks in Markdown output
+
+          max_age_ms: Return a cached result if a prior scrape for the same parameters exists and is
+              younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
+              omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
 
           shorten_base64_images: Shorten base64-encoded image data in the Markdown output
 
@@ -334,6 +463,7 @@ class WebResource(SyncAPIResource):
                         "url": url,
                         "include_images": include_images,
                         "include_links": include_links,
+                        "max_age_ms": max_age_ms,
                         "shorten_base64_images": shorten_base64_images,
                         "use_main_content_only": use_main_content_only,
                     },
@@ -356,13 +486,10 @@ class WebResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebWebScrapeSitemapResponse:
         """
-        Crawls the sitemap of the given domain and returns all discovered page URLs.
-        Supports sitemap index files (recursive), parallel fetching with concurrency
-        control, deduplication, and filters out non-page resources (images, PDFs, etc.).
+        Crawl an entire website's sitemap and return all discovered page URLs.
 
         Args:
-          domain: Domain name to crawl sitemaps for (e.g., 'example.com'). The domain will be
-              automatically normalized and validated.
+          domain: Domain to build a sitemap for
 
           max_links: Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
               Minimum is 1, maximum is 100,000.
@@ -414,6 +541,121 @@ class AsyncWebResource(AsyncAPIResource):
         """
         return AsyncWebResourceWithStreamingResponse(self)
 
+    async def extract_fonts(
+        self,
+        *,
+        direct_url: str | Omit = omit,
+        domain: str | Omit = omit,
+        timeout_ms: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WebExtractFontsResponse:
+        """
+        Scrape font information from a website including font families, usage
+        statistics, fallbacks, and element/word counts.
+
+        Args:
+          direct_url: A specific URL to fetch fonts from directly, bypassing domain resolution (e.g.,
+              'https://example.com/design-system'). When provided, fonts are extracted from
+              this exact URL. You must provide either 'domain' or 'directUrl', but not both.
+
+          domain: Domain name to extract fonts from (e.g., 'example.com', 'google.com'). The
+              domain will be automatically normalized and validated. You must provide either
+              'domain' or 'directUrl', but not both.
+
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._get(
+            "/web/fonts",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "direct_url": direct_url,
+                        "domain": domain,
+                        "timeout_ms": timeout_ms,
+                    },
+                    web_extract_fonts_params.WebExtractFontsParams,
+                ),
+            ),
+            cast_to=WebExtractFontsResponse,
+        )
+
+    async def extract_styleguide(
+        self,
+        *,
+        direct_url: str | Omit = omit,
+        domain: str | Omit = omit,
+        timeout_ms: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WebExtractStyleguideResponse:
+        """
+        Extract a comprehensive design system from a website including colors,
+        typography, spacing, shadows, and UI components.
+
+        Args:
+          direct_url: A specific URL to fetch the styleguide from directly, bypassing domain
+              resolution (e.g., 'https://example.com/design-system'). When provided, the
+              styleguide is extracted from this exact URL. You must provide either 'domain' or
+              'directUrl', but not both.
+
+          domain: Domain name to extract styleguide from (e.g., 'example.com', 'google.com'). The
+              domain will be automatically normalized and validated. You must provide either
+              'domain' or 'directUrl', but not both.
+
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._get(
+            "/web/styleguide",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "direct_url": direct_url,
+                        "domain": domain,
+                        "timeout_ms": timeout_ms,
+                    },
+                    web_extract_styleguide_params.WebExtractStyleguideParams,
+                ),
+            ),
+            cast_to=WebExtractStyleguideResponse,
+        )
+
     async def screenshot(
         self,
         *,
@@ -429,21 +671,17 @@ class AsyncWebResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebScreenshotResponse:
-        """Capture a screenshot of a website.
-
-        Supports both viewport (standard browser
-        view) and full-page screenshots. Can also screenshot specific page types (login,
-        pricing, etc.) by using heuristics to find the appropriate URL. Either 'domain'
-        or 'directUrl' must be provided as a query parameter, but not both. Returns a
-        URL to the uploaded screenshot image hosted on our CDN.
+        """
+        Capture a screenshot of a website.
 
         Args:
           direct_url: A specific URL to screenshot directly, bypassing domain resolution (e.g.,
               'https://example.com/pricing'). When provided, the screenshot is taken of this
-              exact URL.
+              exact URL. You must provide either 'domain' or 'directUrl', but not both.
 
           domain: Domain name to take screenshot of (e.g., 'example.com', 'google.com'). The
-              domain will be automatically normalized and validated.
+              domain will be automatically normalized and validated. You must provide either
+              'domain' or 'directUrl', but not both.
 
           full_screenshot: Optional parameter to determine screenshot type. If 'true', takes a full page
               screenshot capturing all content. If 'false' or not provided, takes a viewport
@@ -468,7 +706,7 @@ class AsyncWebResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return await self._get(
-            "/brand/screenshot",
+            "/web/screenshot",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -509,8 +747,7 @@ class AsyncWebResource(AsyncAPIResource):
     ) -> WebWebCrawlMdResponse:
         """
         Performs a crawl starting from a given URL, extracts page content as Markdown,
-        and returns results for all crawled pages. Only follows links within the same
-        domain as the starting URL. Costs 1 credit per successful page crawled.
+        and returns results for all crawled pages.
 
         Args:
           url: The starting URL for the crawl (must include http:// or https:// protocol)
@@ -568,6 +805,7 @@ class AsyncWebResource(AsyncAPIResource):
         self,
         *,
         url: str,
+        max_age_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -580,6 +818,10 @@ class AsyncWebResource(AsyncAPIResource):
 
         Args:
           url: Full URL to scrape (must include http:// or https:// protocol)
+
+          max_age_ms: Return a cached result if a prior scrape for the same parameters exists and is
+              younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
+              omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
 
           extra_headers: Send extra headers
 
@@ -596,7 +838,13 @@ class AsyncWebResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform({"url": url}, web_web_scrape_html_params.WebWebScrapeHTMLParams),
+                query=await async_maybe_transform(
+                    {
+                        "url": url,
+                        "max_age_ms": max_age_ms,
+                    },
+                    web_web_scrape_html_params.WebWebScrapeHTMLParams,
+                ),
             ),
             cast_to=WebWebScrapeHTMLResponse,
         )
@@ -647,6 +895,7 @@ class AsyncWebResource(AsyncAPIResource):
         url: str,
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
+        max_age_ms: int | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
         use_main_content_only: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -657,16 +906,19 @@ class AsyncWebResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebWebScrapeMdResponse:
         """
-        Scrapes the given URL, converts the HTML content to Markdown, and returns the
-        result.
+        Scrapes the given URL into LLM usable Markdown.
 
         Args:
-          url: Full URL to scrape and convert to markdown (must include http:// or https://
+          url: Full URL to scrape into LLM usable Markdown (must include http:// or https://
               protocol)
 
           include_images: Include image references in Markdown output
 
           include_links: Preserve hyperlinks in Markdown output
+
+          max_age_ms: Return a cached result if a prior scrape for the same parameters exists and is
+              younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
+              omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
 
           shorten_base64_images: Shorten base64-encoded image data in the Markdown output
 
@@ -693,6 +945,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "url": url,
                         "include_images": include_images,
                         "include_links": include_links,
+                        "max_age_ms": max_age_ms,
                         "shorten_base64_images": shorten_base64_images,
                         "use_main_content_only": use_main_content_only,
                     },
@@ -715,13 +968,10 @@ class AsyncWebResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebWebScrapeSitemapResponse:
         """
-        Crawls the sitemap of the given domain and returns all discovered page URLs.
-        Supports sitemap index files (recursive), parallel fetching with concurrency
-        control, deduplication, and filters out non-page resources (images, PDFs, etc.).
+        Crawl an entire website's sitemap and return all discovered page URLs.
 
         Args:
-          domain: Domain name to crawl sitemaps for (e.g., 'example.com'). The domain will be
-              automatically normalized and validated.
+          domain: Domain to build a sitemap for
 
           max_links: Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
               Minimum is 1, maximum is 100,000.
@@ -757,6 +1007,12 @@ class WebResourceWithRawResponse:
     def __init__(self, web: WebResource) -> None:
         self._web = web
 
+        self.extract_fonts = to_raw_response_wrapper(
+            web.extract_fonts,
+        )
+        self.extract_styleguide = to_raw_response_wrapper(
+            web.extract_styleguide,
+        )
         self.screenshot = to_raw_response_wrapper(
             web.screenshot,
         )
@@ -781,6 +1037,12 @@ class AsyncWebResourceWithRawResponse:
     def __init__(self, web: AsyncWebResource) -> None:
         self._web = web
 
+        self.extract_fonts = async_to_raw_response_wrapper(
+            web.extract_fonts,
+        )
+        self.extract_styleguide = async_to_raw_response_wrapper(
+            web.extract_styleguide,
+        )
         self.screenshot = async_to_raw_response_wrapper(
             web.screenshot,
         )
@@ -805,6 +1067,12 @@ class WebResourceWithStreamingResponse:
     def __init__(self, web: WebResource) -> None:
         self._web = web
 
+        self.extract_fonts = to_streamed_response_wrapper(
+            web.extract_fonts,
+        )
+        self.extract_styleguide = to_streamed_response_wrapper(
+            web.extract_styleguide,
+        )
         self.screenshot = to_streamed_response_wrapper(
             web.screenshot,
         )
@@ -829,6 +1097,12 @@ class AsyncWebResourceWithStreamingResponse:
     def __init__(self, web: AsyncWebResource) -> None:
         self._web = web
 
+        self.extract_fonts = async_to_streamed_response_wrapper(
+            web.extract_fonts,
+        )
+        self.extract_styleguide = async_to_streamed_response_wrapper(
+            web.extract_styleguide,
+        )
         self.screenshot = async_to_streamed_response_wrapper(
             web.screenshot,
         )

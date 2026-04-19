@@ -4,6 +4,8 @@ Types:
 
 ```python
 from context.dev.types import (
+    WebExtractFontsResponse,
+    WebExtractStyleguideResponse,
     WebScreenshotResponse,
     WebWebCrawlMdResponse,
     WebWebScrapeHTMLResponse,
@@ -15,7 +17,9 @@ from context.dev.types import (
 
 Methods:
 
-- <code title="get /brand/screenshot">client.web.<a href="./src/context/dev/resources/web.py">screenshot</a>(\*\*<a href="src/context/dev/types/web_screenshot_params.py">params</a>) -> <a href="./src/context/dev/types/web_screenshot_response.py">WebScreenshotResponse</a></code>
+- <code title="get /web/fonts">client.web.<a href="./src/context/dev/resources/web.py">extract_fonts</a>(\*\*<a href="src/context/dev/types/web_extract_fonts_params.py">params</a>) -> <a href="./src/context/dev/types/web_extract_fonts_response.py">WebExtractFontsResponse</a></code>
+- <code title="get /web/styleguide">client.web.<a href="./src/context/dev/resources/web.py">extract_styleguide</a>(\*\*<a href="src/context/dev/types/web_extract_styleguide_params.py">params</a>) -> <a href="./src/context/dev/types/web_extract_styleguide_response.py">WebExtractStyleguideResponse</a></code>
+- <code title="get /web/screenshot">client.web.<a href="./src/context/dev/resources/web.py">screenshot</a>(\*\*<a href="src/context/dev/types/web_screenshot_params.py">params</a>) -> <a href="./src/context/dev/types/web_screenshot_response.py">WebScreenshotResponse</a></code>
 - <code title="post /web/crawl">client.web.<a href="./src/context/dev/resources/web.py">web_crawl_md</a>(\*\*<a href="src/context/dev/types/web_web_crawl_md_params.py">params</a>) -> <a href="./src/context/dev/types/web_web_crawl_md_response.py">WebWebCrawlMdResponse</a></code>
 - <code title="get /web/scrape/html">client.web.<a href="./src/context/dev/resources/web.py">web_scrape_html</a>(\*\*<a href="src/context/dev/types/web_web_scrape_html_params.py">params</a>) -> <a href="./src/context/dev/types/web_web_scrape_html_response.py">WebWebScrapeHTMLResponse</a></code>
 - <code title="get /web/scrape/images">client.web.<a href="./src/context/dev/resources/web.py">web_scrape_images</a>(\*\*<a href="src/context/dev/types/web_web_scrape_images_params.py">params</a>) -> <a href="./src/context/dev/types/web_web_scrape_images_response.py">WebWebScrapeImagesResponse</a></code>
@@ -35,19 +39,6 @@ Methods:
 - <code title="post /brand/ai/query">client.ai.<a href="./src/context/dev/resources/ai.py">ai_query</a>(\*\*<a href="src/context/dev/types/ai_ai_query_params.py">params</a>) -> <a href="./src/context/dev/types/ai_ai_query_response.py">AIAIQueryResponse</a></code>
 - <code title="post /brand/ai/product">client.ai.<a href="./src/context/dev/resources/ai.py">extract_product</a>(\*\*<a href="src/context/dev/types/ai_extract_product_params.py">params</a>) -> <a href="./src/context/dev/types/ai_extract_product_response.py">AIExtractProductResponse</a></code>
 - <code title="post /brand/ai/products">client.ai.<a href="./src/context/dev/resources/ai.py">extract_products</a>(\*\*<a href="src/context/dev/types/ai_extract_products_params.py">params</a>) -> <a href="./src/context/dev/types/ai_extract_products_response.py">AIExtractProductsResponse</a></code>
-
-# Style
-
-Types:
-
-```python
-from context.dev.types import StyleExtractFontsResponse, StyleExtractStyleguideResponse
-```
-
-Methods:
-
-- <code title="get /brand/fonts">client.style.<a href="./src/context/dev/resources/style.py">extract_fonts</a>(\*\*<a href="src/context/dev/types/style_extract_fonts_params.py">params</a>) -> <a href="./src/context/dev/types/style_extract_fonts_response.py">StyleExtractFontsResponse</a></code>
-- <code title="get /brand/styleguide">client.style.<a href="./src/context/dev/resources/style.py">extract_styleguide</a>(\*\*<a href="src/context/dev/types/style_extract_styleguide_params.py">params</a>) -> <a href="./src/context/dev/types/style_extract_styleguide_response.py">StyleExtractStyleguideResponse</a></code>
 
 # Brand
 
@@ -85,7 +76,7 @@ from context.dev.types import IndustryRetrieveNaicsResponse
 
 Methods:
 
-- <code title="get /brand/naics">client.industry.<a href="./src/context/dev/resources/industry.py">retrieve_naics</a>(\*\*<a href="src/context/dev/types/industry_retrieve_naics_params.py">params</a>) -> <a href="./src/context/dev/types/industry_retrieve_naics_response.py">IndustryRetrieveNaicsResponse</a></code>
+- <code title="get /web/naics">client.industry.<a href="./src/context/dev/resources/industry.py">retrieve_naics</a>(\*\*<a href="src/context/dev/types/industry_retrieve_naics_params.py">params</a>) -> <a href="./src/context/dev/types/industry_retrieve_naics_response.py">IndustryRetrieveNaicsResponse</a></code>
 
 # Utility
 

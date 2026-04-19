@@ -6,20 +6,23 @@ from typing_extensions import Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["StyleExtractStyleguideParams"]
+__all__ = ["WebExtractStyleguideParams"]
 
 
-class StyleExtractStyleguideParams(TypedDict, total=False):
+class WebExtractStyleguideParams(TypedDict, total=False):
     direct_url: Annotated[str, PropertyInfo(alias="directUrl")]
     """
     A specific URL to fetch the styleguide from directly, bypassing domain
-    resolution (e.g., 'https://example.com/design-system').
+    resolution (e.g., 'https://example.com/design-system'). When provided, the
+    styleguide is extracted from this exact URL. You must provide either 'domain' or
+    'directUrl', but not both.
     """
 
     domain: str
     """Domain name to extract styleguide from (e.g., 'example.com', 'google.com').
 
-    The domain will be automatically normalized and validated.
+    The domain will be automatically normalized and validated. You must provide
+    either 'domain' or 'directUrl', but not both.
     """
 
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
