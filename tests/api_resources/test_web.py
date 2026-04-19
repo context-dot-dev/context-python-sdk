@@ -161,7 +161,7 @@ class TestWeb:
             max_depth=0,
             max_pages=1,
             shorten_base64_images=True,
-            url_regex="urlRegex",
+            url_regex="^https?://[^/]+/blog/",
             use_main_content_only=True,
         )
         assert_matches_type(WebWebCrawlMdResponse, web, path=["response"])
@@ -330,6 +330,7 @@ class TestWeb:
         web = client.web.web_scrape_sitemap(
             domain="domain",
             max_links=1,
+            url_regex="^https?://[^/]+/blog/",
         )
         assert_matches_type(WebWebScrapeSitemapResponse, web, path=["response"])
 
@@ -500,7 +501,7 @@ class TestAsyncWeb:
             max_depth=0,
             max_pages=1,
             shorten_base64_images=True,
-            url_regex="urlRegex",
+            url_regex="^https?://[^/]+/blog/",
             use_main_content_only=True,
         )
         assert_matches_type(WebWebCrawlMdResponse, web, path=["response"])
@@ -669,6 +670,7 @@ class TestAsyncWeb:
         web = await async_client.web.web_scrape_sitemap(
             domain="domain",
             max_links=1,
+            url_regex="^https?://[^/]+/blog/",
         )
         assert_matches_type(WebWebScrapeSitemapResponse, web, path=["response"])
 
