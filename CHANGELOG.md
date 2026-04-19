@@ -1,5 +1,36 @@
 # Changelog
 
+## 0.8.0 (2026-04-19)
+
+Full Changelog: [v0.7.0...v0.8.0](https://github.com/context-dot-dev/context-python-sdk/compare/v0.7.0...v0.8.0)
+
+### Features
+
+* **api:** api update ([512bf26](https://github.com/context-dot-dev/context-python-sdk/commit/512bf2610e59733e0e950531ca9e6018a5446672))
+* **api:** api update ([f98376c](https://github.com/context-dot-dev/context-python-sdk/commit/f98376cf22a331138f716f8abeb4458a8e1e38c2))
+* **api:** api update ([9ddc161](https://github.com/context-dot-dev/context-python-sdk/commit/9ddc161215cd12384152295997b95d5ac44bec08))
+* **api:** api update ([639075e](https://github.com/context-dot-dev/context-python-sdk/commit/639075e0a0aa6203375592b8b67438ae0719ca26))
+* **api:** api update ([707a6c3](https://github.com/context-dot-dev/context-python-sdk/commit/707a6c3e49096e2248ec9e4ae7e683138647c2d6))
+* **api:** api update ([bbc2458](https://github.com/context-dot-dev/context-python-sdk/commit/bbc2458c38933208b22e234d6bf1f1ffee7f883e))
+* **api:** api update ([241bacf](https://github.com/context-dot-dev/context-python-sdk/commit/241bacf196c1e316aef39429e3919fda1c5a78eb))
+* **api:** api update ([648e71b](https://github.com/context-dot-dev/context-python-sdk/commit/648e71bf7afb870dceafe6485bf47932c74ebe1b))
+* **api:** api update ([656e585](https://github.com/context-dot-dev/context-python-sdk/commit/656e585bcdf228d8651cdab5ee37f1119a51eafa))
+* **api:** api update ([3fc9944](https://github.com/context-dot-dev/context-python-sdk/commit/3fc9944ff014539c18e0216b93c936c1df2b0219))
+* **api:** api update ([b9374f5](https://github.com/context-dot-dev/context-python-sdk/commit/b9374f57a2a0ed207c39e80b6fbf710bbe170e11))
+* **api:** manual updates ([2af78a4](https://github.com/context-dot-dev/context-python-sdk/commit/2af78a43c1e9b5654668e82c009b679dc3ae8e73))
+* **api:** manual updates ([d6acbc6](https://github.com/context-dot-dev/context-python-sdk/commit/d6acbc6552d84e58a6ff7a9e99952a2a7a624647))
+* **api:** manual updates ([ec8ff2d](https://github.com/context-dot-dev/context-python-sdk/commit/ec8ff2d2a0d84fcb0c05791fa913441c60ed9c24))
+
+
+### Bug Fixes
+
+* ensure file data are only sent as 1 parameter ([7c314a2](https://github.com/context-dot-dev/context-python-sdk/commit/7c314a29f73103eb592686df101c86c6cfd26b3f))
+
+
+### Performance Improvements
+
+* **client:** optimize file structure copying in multipart requests ([573a70c](https://github.com/context-dot-dev/context-python-sdk/commit/573a70cee8cb9bed8377f816bfba419ecbe86109))
+
 ## 0.7.0 (2026-04-09)
 
 Full Changelog: [v0.6.0...v0.7.0](https://github.com/context-dot-dev/context-python-sdk/compare/v0.6.0...v0.7.0)
