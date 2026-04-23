@@ -251,6 +251,7 @@ class WebResource(SyncAPIResource):
         follow_subdomains: bool | Omit = omit,
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
+        max_age_ms: int | Omit = omit,
         max_depth: int | Omit = omit,
         max_pages: int | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
@@ -277,6 +278,10 @@ class WebResource(SyncAPIResource):
           include_images: Include image references in the Markdown output
 
           include_links: Preserve hyperlinks in the Markdown output
+
+          max_age_ms: Return a cached result if a prior scrape for the same parameters exists and is
+              younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
+              omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
 
           max_depth: Maximum link depth from the starting URL (0 = only the starting page)
 
@@ -305,6 +310,7 @@ class WebResource(SyncAPIResource):
                     "follow_subdomains": follow_subdomains,
                     "include_images": include_images,
                     "include_links": include_links,
+                    "max_age_ms": max_age_ms,
                     "max_depth": max_depth,
                     "max_pages": max_pages,
                     "shorten_base64_images": shorten_base64_images,
@@ -738,6 +744,7 @@ class AsyncWebResource(AsyncAPIResource):
         follow_subdomains: bool | Omit = omit,
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
+        max_age_ms: int | Omit = omit,
         max_depth: int | Omit = omit,
         max_pages: int | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
@@ -764,6 +771,10 @@ class AsyncWebResource(AsyncAPIResource):
           include_images: Include image references in the Markdown output
 
           include_links: Preserve hyperlinks in the Markdown output
+
+          max_age_ms: Return a cached result if a prior scrape for the same parameters exists and is
+              younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
+              omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
 
           max_depth: Maximum link depth from the starting URL (0 = only the starting page)
 
@@ -792,6 +803,7 @@ class AsyncWebResource(AsyncAPIResource):
                     "follow_subdomains": follow_subdomains,
                     "include_images": include_images,
                     "include_links": include_links,
+                    "max_age_ms": max_age_ms,
                     "max_depth": max_depth,
                     "max_pages": max_pages,
                     "shorten_base64_images": shorten_base64_images,
