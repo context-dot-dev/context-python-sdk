@@ -251,6 +251,7 @@ class WebResource(SyncAPIResource):
         follow_subdomains: bool | Omit = omit,
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
+        max_age_ms: int | Omit = omit,
         max_depth: int | Omit = omit,
         max_pages: int | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
@@ -277,6 +278,10 @@ class WebResource(SyncAPIResource):
           include_images: Include image references in the Markdown output
 
           include_links: Preserve hyperlinks in the Markdown output
+
+          max_age_ms: Return a cached result if a prior scrape for the same parameters exists and is
+              younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
+              omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
 
           max_depth: Maximum link depth from the starting URL (0 = only the starting page)
 
@@ -305,6 +310,7 @@ class WebResource(SyncAPIResource):
                     "follow_subdomains": follow_subdomains,
                     "include_images": include_images,
                     "include_links": include_links,
+                    "max_age_ms": max_age_ms,
                     "max_depth": max_depth,
                     "max_pages": max_pages,
                     "shorten_base64_images": shorten_base64_images,
@@ -478,6 +484,7 @@ class WebResource(SyncAPIResource):
         *,
         domain: str,
         max_links: int | Omit = omit,
+        url_regex: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -493,6 +500,9 @@ class WebResource(SyncAPIResource):
 
           max_links: Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
               Minimum is 1, maximum is 100,000.
+
+          url_regex: Optional RE2-compatible regex pattern. Only URLs matching this pattern are
+              returned and counted against maxLinks.
 
           extra_headers: Send extra headers
 
@@ -513,6 +523,7 @@ class WebResource(SyncAPIResource):
                     {
                         "domain": domain,
                         "max_links": max_links,
+                        "url_regex": url_regex,
                     },
                     web_web_scrape_sitemap_params.WebWebScrapeSitemapParams,
                 ),
@@ -733,6 +744,7 @@ class AsyncWebResource(AsyncAPIResource):
         follow_subdomains: bool | Omit = omit,
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
+        max_age_ms: int | Omit = omit,
         max_depth: int | Omit = omit,
         max_pages: int | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
@@ -759,6 +771,10 @@ class AsyncWebResource(AsyncAPIResource):
           include_images: Include image references in the Markdown output
 
           include_links: Preserve hyperlinks in the Markdown output
+
+          max_age_ms: Return a cached result if a prior scrape for the same parameters exists and is
+              younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
+              omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
 
           max_depth: Maximum link depth from the starting URL (0 = only the starting page)
 
@@ -787,6 +803,7 @@ class AsyncWebResource(AsyncAPIResource):
                     "follow_subdomains": follow_subdomains,
                     "include_images": include_images,
                     "include_links": include_links,
+                    "max_age_ms": max_age_ms,
                     "max_depth": max_depth,
                     "max_pages": max_pages,
                     "shorten_base64_images": shorten_base64_images,
@@ -960,6 +977,7 @@ class AsyncWebResource(AsyncAPIResource):
         *,
         domain: str,
         max_links: int | Omit = omit,
+        url_regex: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -975,6 +993,9 @@ class AsyncWebResource(AsyncAPIResource):
 
           max_links: Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
               Minimum is 1, maximum is 100,000.
+
+          url_regex: Optional RE2-compatible regex pattern. Only URLs matching this pattern are
+              returned and counted against maxLinks.
 
           extra_headers: Send extra headers
 
@@ -995,6 +1016,7 @@ class AsyncWebResource(AsyncAPIResource):
                     {
                         "domain": domain,
                         "max_links": max_links,
+                        "url_regex": url_regex,
                     },
                     web_web_scrape_sitemap_params.WebWebScrapeSitemapParams,
                 ),

@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.9.0 (2026-04-23)
+
+Full Changelog: [v0.8.0...v0.9.0](https://github.com/context-dot-dev/context-python-sdk/compare/v0.8.0...v0.9.0)
+
+### Features
+
+* **api:** api update ([83063fc](https://github.com/context-dot-dev/context-python-sdk/commit/83063fc4358dde5756a27d9a30e4eaf48929ff58))
+* **api:** api update ([7ce5f5b](https://github.com/context-dot-dev/context-python-sdk/commit/7ce5f5b35800d3dee0d8505c56a158b457868bdb))
+* **api:** api update ([90dcf23](https://github.com/context-dot-dev/context-python-sdk/commit/90dcf237bc7ee1363ad988e68bb62003d1784d5e))
+
+
+### Chores
+
+* **internal:** more robust bootstrap script ([c0a50fe](https://github.com/context-dot-dev/context-python-sdk/commit/c0a50fe104044dd08ed93d342f6f8152bfa4c602))
+
 ## 0.8.0 (2026-04-19)
 
 Full Changelog: [v0.7.0...v0.8.0](https://github.com/context-dot-dev/context-python-sdk/compare/v0.7.0...v0.8.0)
