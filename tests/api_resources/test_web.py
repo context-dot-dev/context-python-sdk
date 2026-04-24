@@ -161,6 +161,7 @@ class TestWeb:
             max_age_ms=0,
             max_depth=0,
             max_pages=1,
+            parse_pdf=True,
             shorten_base64_images=True,
             url_regex="^https?://[^/]+/blog/",
             use_main_content_only=True,
@@ -207,6 +208,7 @@ class TestWeb:
         web = client.web.web_scrape_html(
             url="https://example.com",
             max_age_ms=0,
+            parse_pdf=True,
         )
         assert_matches_type(WebWebScrapeHTMLResponse, web, path=["response"])
 
@@ -286,6 +288,7 @@ class TestWeb:
             include_images=True,
             include_links=True,
             max_age_ms=0,
+            parse_pdf=True,
             shorten_base64_images=True,
             use_main_content_only=True,
         )
@@ -502,6 +505,7 @@ class TestAsyncWeb:
             max_age_ms=0,
             max_depth=0,
             max_pages=1,
+            parse_pdf=True,
             shorten_base64_images=True,
             url_regex="^https?://[^/]+/blog/",
             use_main_content_only=True,
@@ -548,6 +552,7 @@ class TestAsyncWeb:
         web = await async_client.web.web_scrape_html(
             url="https://example.com",
             max_age_ms=0,
+            parse_pdf=True,
         )
         assert_matches_type(WebWebScrapeHTMLResponse, web, path=["response"])
 
@@ -627,6 +632,7 @@ class TestAsyncWeb:
             include_images=True,
             include_links=True,
             max_age_ms=0,
+            parse_pdf=True,
             shorten_base64_images=True,
             use_main_content_only=True,
         )

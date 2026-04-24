@@ -254,6 +254,7 @@ class WebResource(SyncAPIResource):
         max_age_ms: int | Omit = omit,
         max_depth: int | Omit = omit,
         max_pages: int | Omit = omit,
+        parse_pdf: bool | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
         url_regex: str | Omit = omit,
         use_main_content_only: bool | Omit = omit,
@@ -287,6 +288,10 @@ class WebResource(SyncAPIResource):
 
           max_pages: Maximum number of pages to crawl. Hard cap: 500.
 
+          parse_pdf: When true (default), PDF pages are fetched and their text layer is extracted and
+              converted to Markdown alongside HTML pages. When false, PDF pages are skipped
+              entirely (not included in results and not counted as failures).
+
           shorten_base64_images: Truncate base64-encoded image data in the Markdown output
 
           url_regex: Regex pattern. Only URLs matching this pattern will be followed and scraped.
@@ -313,6 +318,7 @@ class WebResource(SyncAPIResource):
                     "max_age_ms": max_age_ms,
                     "max_depth": max_depth,
                     "max_pages": max_pages,
+                    "parse_pdf": parse_pdf,
                     "shorten_base64_images": shorten_base64_images,
                     "url_regex": url_regex,
                     "use_main_content_only": use_main_content_only,
@@ -330,6 +336,7 @@ class WebResource(SyncAPIResource):
         *,
         url: str,
         max_age_ms: int | Omit = omit,
+        parse_pdf: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -346,6 +353,10 @@ class WebResource(SyncAPIResource):
           max_age_ms: Return a cached result if a prior scrape for the same parameters exists and is
               younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
               omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
+
+          parse_pdf: When true (default), PDF URLs are fetched and their text layer is extracted and
+              returned wrapped in <html><pdf>…</pdf></html>. When false, PDF URLs are skipped
+              and a 400 WEBSITE_ACCESS_ERROR is returned.
 
           extra_headers: Send extra headers
 
@@ -366,6 +377,7 @@ class WebResource(SyncAPIResource):
                     {
                         "url": url,
                         "max_age_ms": max_age_ms,
+                        "parse_pdf": parse_pdf,
                     },
                     web_web_scrape_html_params.WebWebScrapeHTMLParams,
                 ),
@@ -420,6 +432,7 @@ class WebResource(SyncAPIResource):
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
         max_age_ms: int | Omit = omit,
+        parse_pdf: bool | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
         use_main_content_only: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -443,6 +456,10 @@ class WebResource(SyncAPIResource):
           max_age_ms: Return a cached result if a prior scrape for the same parameters exists and is
               younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
               omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
+
+          parse_pdf: When true (default), PDF URLs are fetched and their text layer is extracted and
+              converted to Markdown. When false, PDF URLs are skipped and a 400
+              WEBSITE_ACCESS_ERROR is returned.
 
           shorten_base64_images: Shorten base64-encoded image data in the Markdown output
 
@@ -470,6 +487,7 @@ class WebResource(SyncAPIResource):
                         "include_images": include_images,
                         "include_links": include_links,
                         "max_age_ms": max_age_ms,
+                        "parse_pdf": parse_pdf,
                         "shorten_base64_images": shorten_base64_images,
                         "use_main_content_only": use_main_content_only,
                     },
@@ -747,6 +765,7 @@ class AsyncWebResource(AsyncAPIResource):
         max_age_ms: int | Omit = omit,
         max_depth: int | Omit = omit,
         max_pages: int | Omit = omit,
+        parse_pdf: bool | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
         url_regex: str | Omit = omit,
         use_main_content_only: bool | Omit = omit,
@@ -780,6 +799,10 @@ class AsyncWebResource(AsyncAPIResource):
 
           max_pages: Maximum number of pages to crawl. Hard cap: 500.
 
+          parse_pdf: When true (default), PDF pages are fetched and their text layer is extracted and
+              converted to Markdown alongside HTML pages. When false, PDF pages are skipped
+              entirely (not included in results and not counted as failures).
+
           shorten_base64_images: Truncate base64-encoded image data in the Markdown output
 
           url_regex: Regex pattern. Only URLs matching this pattern will be followed and scraped.
@@ -806,6 +829,7 @@ class AsyncWebResource(AsyncAPIResource):
                     "max_age_ms": max_age_ms,
                     "max_depth": max_depth,
                     "max_pages": max_pages,
+                    "parse_pdf": parse_pdf,
                     "shorten_base64_images": shorten_base64_images,
                     "url_regex": url_regex,
                     "use_main_content_only": use_main_content_only,
@@ -823,6 +847,7 @@ class AsyncWebResource(AsyncAPIResource):
         *,
         url: str,
         max_age_ms: int | Omit = omit,
+        parse_pdf: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -839,6 +864,10 @@ class AsyncWebResource(AsyncAPIResource):
           max_age_ms: Return a cached result if a prior scrape for the same parameters exists and is
               younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
               omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
+
+          parse_pdf: When true (default), PDF URLs are fetched and their text layer is extracted and
+              returned wrapped in <html><pdf>…</pdf></html>. When false, PDF URLs are skipped
+              and a 400 WEBSITE_ACCESS_ERROR is returned.
 
           extra_headers: Send extra headers
 
@@ -859,6 +888,7 @@ class AsyncWebResource(AsyncAPIResource):
                     {
                         "url": url,
                         "max_age_ms": max_age_ms,
+                        "parse_pdf": parse_pdf,
                     },
                     web_web_scrape_html_params.WebWebScrapeHTMLParams,
                 ),
@@ -913,6 +943,7 @@ class AsyncWebResource(AsyncAPIResource):
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
         max_age_ms: int | Omit = omit,
+        parse_pdf: bool | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
         use_main_content_only: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -936,6 +967,10 @@ class AsyncWebResource(AsyncAPIResource):
           max_age_ms: Return a cached result if a prior scrape for the same parameters exists and is
               younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
               omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
+
+          parse_pdf: When true (default), PDF URLs are fetched and their text layer is extracted and
+              converted to Markdown. When false, PDF URLs are skipped and a 400
+              WEBSITE_ACCESS_ERROR is returned.
 
           shorten_base64_images: Shorten base64-encoded image data in the Markdown output
 
@@ -963,6 +998,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "include_images": include_images,
                         "include_links": include_links,
                         "max_age_ms": max_age_ms,
+                        "parse_pdf": parse_pdf,
                         "shorten_base64_images": shorten_base64_images,
                         "use_main_content_only": use_main_content_only,
                     },

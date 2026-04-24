@@ -39,6 +39,13 @@ class WebWebCrawlMdParams(TypedDict, total=False):
     max_pages: Annotated[int, PropertyInfo(alias="maxPages")]
     """Maximum number of pages to crawl. Hard cap: 500."""
 
+    parse_pdf: Annotated[bool, PropertyInfo(alias="parsePDF")]
+    """
+    When true (default), PDF pages are fetched and their text layer is extracted and
+    converted to Markdown alongside HTML pages. When false, PDF pages are skipped
+    entirely (not included in results and not counted as failures).
+    """
+
     shorten_base64_images: Annotated[bool, PropertyInfo(alias="shortenBase64Images")]
     """Truncate base64-encoded image data in the Markdown output"""
 
