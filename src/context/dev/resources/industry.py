@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+from typing_extensions import Literal
+
 import httpx
 
-from ..types import industry_retrieve_naics_params
+from ..types import industry_retrieve_sic_params, industry_retrieve_naics_params
 from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -16,6 +18,7 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from ..types.industry_retrieve_sic_response import IndustryRetrieveSicResponse
 from ..types.industry_retrieve_naics_response import IndustryRetrieveNaicsResponse
 
 __all__ = ["IndustryResource", "AsyncIndustryResource"]
@@ -100,6 +103,72 @@ class IndustryResource(SyncAPIResource):
             cast_to=IndustryRetrieveNaicsResponse,
         )
 
+    def retrieve_sic(
+        self,
+        *,
+        input: str,
+        max_results: int | Omit = omit,
+        min_results: int | Omit = omit,
+        timeout_ms: int | Omit = omit,
+        type: Literal["original_sic", "latest_sec"] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> IndustryRetrieveSicResponse:
+        """
+        Classify any brand into Standard Industrial Classification (SIC) codes from its
+        domain or name. Choose between the original 1987 SIC system (`original_sic`) or
+        the latest SIC list maintained by the SEC (`latest_sec`).
+
+        Args:
+          input: Brand domain or title to retrieve SIC code for. If a valid domain is provided,
+              it will be used for classification, otherwise, we will search for the brand
+              using the provided title.
+
+          max_results: Maximum number of SIC codes to return. Must be between 1 and 10. Defaults to 5.
+
+          min_results: Minimum number of SIC codes to return. Must be at least 1. Defaults to 1.
+
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
+          type: Which SIC dataset to classify against. `original_sic` uses the 1987 Standard
+              Industrial Classification system; `latest_sec` uses the current SIC list as
+              published by the SEC. Defaults to `original_sic`.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._get(
+            "/web/sic",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "input": input,
+                        "max_results": max_results,
+                        "min_results": min_results,
+                        "timeout_ms": timeout_ms,
+                        "type": type,
+                    },
+                    industry_retrieve_sic_params.IndustryRetrieveSicParams,
+                ),
+            ),
+            cast_to=IndustryRetrieveSicResponse,
+        )
+
 
 class AsyncIndustryResource(AsyncAPIResource):
     @cached_property
@@ -180,6 +249,72 @@ class AsyncIndustryResource(AsyncAPIResource):
             cast_to=IndustryRetrieveNaicsResponse,
         )
 
+    async def retrieve_sic(
+        self,
+        *,
+        input: str,
+        max_results: int | Omit = omit,
+        min_results: int | Omit = omit,
+        timeout_ms: int | Omit = omit,
+        type: Literal["original_sic", "latest_sec"] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> IndustryRetrieveSicResponse:
+        """
+        Classify any brand into Standard Industrial Classification (SIC) codes from its
+        domain or name. Choose between the original 1987 SIC system (`original_sic`) or
+        the latest SIC list maintained by the SEC (`latest_sec`).
+
+        Args:
+          input: Brand domain or title to retrieve SIC code for. If a valid domain is provided,
+              it will be used for classification, otherwise, we will search for the brand
+              using the provided title.
+
+          max_results: Maximum number of SIC codes to return. Must be between 1 and 10. Defaults to 5.
+
+          min_results: Minimum number of SIC codes to return. Must be at least 1. Defaults to 1.
+
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
+          type: Which SIC dataset to classify against. `original_sic` uses the 1987 Standard
+              Industrial Classification system; `latest_sec` uses the current SIC list as
+              published by the SEC. Defaults to `original_sic`.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._get(
+            "/web/sic",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "input": input,
+                        "max_results": max_results,
+                        "min_results": min_results,
+                        "timeout_ms": timeout_ms,
+                        "type": type,
+                    },
+                    industry_retrieve_sic_params.IndustryRetrieveSicParams,
+                ),
+            ),
+            cast_to=IndustryRetrieveSicResponse,
+        )
+
 
 class IndustryResourceWithRawResponse:
     def __init__(self, industry: IndustryResource) -> None:
@@ -187,6 +322,9 @@ class IndustryResourceWithRawResponse:
 
         self.retrieve_naics = to_raw_response_wrapper(
             industry.retrieve_naics,
+        )
+        self.retrieve_sic = to_raw_response_wrapper(
+            industry.retrieve_sic,
         )
 
 
@@ -197,6 +335,9 @@ class AsyncIndustryResourceWithRawResponse:
         self.retrieve_naics = async_to_raw_response_wrapper(
             industry.retrieve_naics,
         )
+        self.retrieve_sic = async_to_raw_response_wrapper(
+            industry.retrieve_sic,
+        )
 
 
 class IndustryResourceWithStreamingResponse:
@@ -206,6 +347,9 @@ class IndustryResourceWithStreamingResponse:
         self.retrieve_naics = to_streamed_response_wrapper(
             industry.retrieve_naics,
         )
+        self.retrieve_sic = to_streamed_response_wrapper(
+            industry.retrieve_sic,
+        )
 
 
 class AsyncIndustryResourceWithStreamingResponse:
@@ -214,4 +358,7 @@ class AsyncIndustryResourceWithStreamingResponse:
 
         self.retrieve_naics = async_to_streamed_response_wrapper(
             industry.retrieve_naics,
+        )
+        self.retrieve_sic = async_to_streamed_response_wrapper(
+            industry.retrieve_sic,
         )
