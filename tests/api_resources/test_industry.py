@@ -9,7 +9,10 @@ import pytest
 
 from context.dev import ContextDev, AsyncContextDev
 from tests.utils import assert_matches_type
-from context.dev.types import IndustryRetrieveNaicsResponse
+from context.dev.types import (
+    IndustryRetrieveSicResponse,
+    IndustryRetrieveNaicsResponse,
+)
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -62,6 +65,52 @@ class TestIndustry:
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_retrieve_sic(self, client: ContextDev) -> None:
+        industry = client.industry.retrieve_sic(
+            input="input",
+        )
+        assert_matches_type(IndustryRetrieveSicResponse, industry, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_retrieve_sic_with_all_params(self, client: ContextDev) -> None:
+        industry = client.industry.retrieve_sic(
+            input="input",
+            max_results=1,
+            min_results=1,
+            timeout_ms=1000,
+            type="original_sic",
+        )
+        assert_matches_type(IndustryRetrieveSicResponse, industry, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_retrieve_sic(self, client: ContextDev) -> None:
+        response = client.industry.with_raw_response.retrieve_sic(
+            input="input",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        industry = response.parse()
+        assert_matches_type(IndustryRetrieveSicResponse, industry, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_retrieve_sic(self, client: ContextDev) -> None:
+        with client.industry.with_streaming_response.retrieve_sic(
+            input="input",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            industry = response.parse()
+            assert_matches_type(IndustryRetrieveSicResponse, industry, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
 
 class TestAsyncIndustry:
     parametrize = pytest.mark.parametrize(
@@ -110,5 +159,51 @@ class TestAsyncIndustry:
 
             industry = await response.parse()
             assert_matches_type(IndustryRetrieveNaicsResponse, industry, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_retrieve_sic(self, async_client: AsyncContextDev) -> None:
+        industry = await async_client.industry.retrieve_sic(
+            input="input",
+        )
+        assert_matches_type(IndustryRetrieveSicResponse, industry, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_retrieve_sic_with_all_params(self, async_client: AsyncContextDev) -> None:
+        industry = await async_client.industry.retrieve_sic(
+            input="input",
+            max_results=1,
+            min_results=1,
+            timeout_ms=1000,
+            type="original_sic",
+        )
+        assert_matches_type(IndustryRetrieveSicResponse, industry, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_retrieve_sic(self, async_client: AsyncContextDev) -> None:
+        response = await async_client.industry.with_raw_response.retrieve_sic(
+            input="input",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        industry = await response.parse()
+        assert_matches_type(IndustryRetrieveSicResponse, industry, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_retrieve_sic(self, async_client: AsyncContextDev) -> None:
+        async with async_client.industry.with_streaming_response.retrieve_sic(
+            input="input",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            industry = await response.parse()
+            assert_matches_type(IndustryRetrieveSicResponse, industry, path=["response"])
 
         assert cast(Any, response.is_closed) is True
