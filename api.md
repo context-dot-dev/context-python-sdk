@@ -71,12 +71,13 @@ Methods:
 Types:
 
 ```python
-from context.dev.types import IndustryRetrieveNaicsResponse
+from context.dev.types import IndustryRetrieveNaicsResponse, IndustryRetrieveSicResponse
 ```
 
 Methods:
 
 - <code title="get /web/naics">client.industry.<a href="./src/context/dev/resources/industry.py">retrieve_naics</a>(\*\*<a href="src/context/dev/types/industry_retrieve_naics_params.py">params</a>) -> <a href="./src/context/dev/types/industry_retrieve_naics_response.py">IndustryRetrieveNaicsResponse</a></code>
+- <code title="get /web/sic">client.industry.<a href="./src/context/dev/resources/industry.py">retrieve_sic</a>(\*\*<a href="src/context/dev/types/industry_retrieve_sic_params.py">params</a>) -> <a href="./src/context/dev/types/industry_retrieve_sic_response.py">IndustryRetrieveSicResponse</a></code>
 
 # Utility
 
