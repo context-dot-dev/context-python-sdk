@@ -125,6 +125,7 @@ class TestAI:
     def test_method_extract_product_with_all_params(self, client: ContextDev) -> None:
         ai = client.ai.extract_product(
             url="https://example.com",
+            max_age_ms=0,
             timeout_ms=1000,
         )
         assert_matches_type(AIExtractProductResponse, ai, path=["response"])
@@ -168,6 +169,7 @@ class TestAI:
     def test_method_extract_products_with_all_params_overload_1(self, client: ContextDev) -> None:
         ai = client.ai.extract_products(
             domain="domain",
+            max_age_ms=0,
             max_products=1,
             timeout_ms=1000,
         )
@@ -212,6 +214,7 @@ class TestAI:
     def test_method_extract_products_with_all_params_overload_2(self, client: ContextDev) -> None:
         ai = client.ai.extract_products(
             direct_url="https://example.com",
+            max_age_ms=0,
             max_products=1,
             timeout_ms=1000,
         )
@@ -353,6 +356,7 @@ class TestAsyncAI:
     async def test_method_extract_product_with_all_params(self, async_client: AsyncContextDev) -> None:
         ai = await async_client.ai.extract_product(
             url="https://example.com",
+            max_age_ms=0,
             timeout_ms=1000,
         )
         assert_matches_type(AIExtractProductResponse, ai, path=["response"])
@@ -396,6 +400,7 @@ class TestAsyncAI:
     async def test_method_extract_products_with_all_params_overload_1(self, async_client: AsyncContextDev) -> None:
         ai = await async_client.ai.extract_products(
             domain="domain",
+            max_age_ms=0,
             max_products=1,
             timeout_ms=1000,
         )
@@ -440,6 +445,7 @@ class TestAsyncAI:
     async def test_method_extract_products_with_all_params_overload_2(self, async_client: AsyncContextDev) -> None:
         ai = await async_client.ai.extract_products(
             direct_url="https://example.com",
+            max_age_ms=0,
             max_products=1,
             timeout_ms=1000,
         )
