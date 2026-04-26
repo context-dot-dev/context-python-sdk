@@ -115,9 +115,8 @@ class AIResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AIExtractProductResponse:
         """
-        Beta feature: Given a single URL, determines if it is a product detail page,
-        classifies the platform/product type, and extracts the product information.
-        Supports Amazon, TikTok Shop, Etsy, and generic ecommerce sites.
+        Given a single URL, determines if it is a product page and extracts the product
+        information.
 
         Args:
           url: The product page URL to extract product data from.
@@ -162,11 +161,11 @@ class AIResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AIExtractProductsResponse:
-        """Beta feature: Extract product information from a brand's website.
+        """Extract product information from a brand's website.
 
-        We will
-        analyze the website and return a list of products with details such as name,
-        description, image, pricing, features, and more.
+        We will analyze the website
+        and return a list of products with details such as name, description, image,
+        pricing, features, and more.
 
         Args:
           domain: The domain name to analyze.
@@ -200,11 +199,11 @@ class AIResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AIExtractProductsResponse:
-        """Beta feature: Extract product information from a brand's website.
+        """Extract product information from a brand's website.
 
-        We will
-        analyze the website and return a list of products with details such as name,
-        description, image, pricing, features, and more.
+        We will analyze the website
+        and return a list of products with details such as name, description, image,
+        pricing, features, and more.
 
         Args:
           direct_url: A specific URL to use directly as the starting point for extraction without
@@ -347,9 +346,8 @@ class AsyncAIResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AIExtractProductResponse:
         """
-        Beta feature: Given a single URL, determines if it is a product detail page,
-        classifies the platform/product type, and extracts the product information.
-        Supports Amazon, TikTok Shop, Etsy, and generic ecommerce sites.
+        Given a single URL, determines if it is a product page and extracts the product
+        information.
 
         Args:
           url: The product page URL to extract product data from.
@@ -394,11 +392,11 @@ class AsyncAIResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AIExtractProductsResponse:
-        """Beta feature: Extract product information from a brand's website.
+        """Extract product information from a brand's website.
 
-        We will
-        analyze the website and return a list of products with details such as name,
-        description, image, pricing, features, and more.
+        We will analyze the website
+        and return a list of products with details such as name, description, image,
+        pricing, features, and more.
 
         Args:
           domain: The domain name to analyze.
@@ -432,11 +430,11 @@ class AsyncAIResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AIExtractProductsResponse:
-        """Beta feature: Extract product information from a brand's website.
+        """Extract product information from a brand's website.
 
-        We will
-        analyze the website and return a list of products with details such as name,
-        description, image, pricing, features, and more.
+        We will analyze the website
+        and return a list of products with details such as name, description, image,
+        pricing, features, and more.
 
         Args:
           direct_url: A specific URL to use directly as the starting point for extraction without
