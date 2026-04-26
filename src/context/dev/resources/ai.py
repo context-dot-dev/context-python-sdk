@@ -106,6 +106,7 @@ class AIResource(SyncAPIResource):
         self,
         *,
         url: str,
+        max_age_ms: int | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -120,6 +121,10 @@ class AIResource(SyncAPIResource):
 
         Args:
           url: The product page URL to extract product data from.
+
+          max_age_ms: Return a cached result if a prior scrape for the same parameters exists and is
+              younger than this many milliseconds. Defaults to 7 days (604800000 ms) when
+              omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
 
           timeout_ms: Optional timeout in milliseconds for the request. Maximum allowed value is
               300000ms (5 minutes).
@@ -137,6 +142,7 @@ class AIResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "url": url,
+                    "max_age_ms": max_age_ms,
                     "timeout_ms": timeout_ms,
                 },
                 ai_extract_product_params.AIExtractProductParams,
@@ -152,6 +158,7 @@ class AIResource(SyncAPIResource):
         self,
         *,
         domain: str,
+        max_age_ms: int | Omit = omit,
         max_products: int | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -169,6 +176,10 @@ class AIResource(SyncAPIResource):
 
         Args:
           domain: The domain name to analyze.
+
+          max_age_ms: Return a cached result if a prior scrape for the same parameters exists and is
+              younger than this many milliseconds. Defaults to 7 days (604800000 ms) when
+              omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
 
           max_products: Maximum number of products to extract.
 
@@ -190,6 +201,7 @@ class AIResource(SyncAPIResource):
         self,
         *,
         direct_url: str,
+        max_age_ms: int | Omit = omit,
         max_products: int | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -208,6 +220,10 @@ class AIResource(SyncAPIResource):
         Args:
           direct_url: A specific URL to use directly as the starting point for extraction without
               domain resolution.
+
+          max_age_ms: Return a cached result if a prior scrape for the same parameters exists and is
+              younger than this many milliseconds. Defaults to 7 days (604800000 ms) when
+              omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
 
           max_products: Maximum number of products to extract.
 
@@ -229,6 +245,7 @@ class AIResource(SyncAPIResource):
         self,
         *,
         domain: str | Omit = omit,
+        max_age_ms: int | Omit = omit,
         max_products: int | Omit = omit,
         timeout_ms: int | Omit = omit,
         direct_url: str | Omit = omit,
@@ -244,6 +261,7 @@ class AIResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "domain": domain,
+                    "max_age_ms": max_age_ms,
                     "max_products": max_products,
                     "timeout_ms": timeout_ms,
                     "direct_url": direct_url,
@@ -337,6 +355,7 @@ class AsyncAIResource(AsyncAPIResource):
         self,
         *,
         url: str,
+        max_age_ms: int | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -351,6 +370,10 @@ class AsyncAIResource(AsyncAPIResource):
 
         Args:
           url: The product page URL to extract product data from.
+
+          max_age_ms: Return a cached result if a prior scrape for the same parameters exists and is
+              younger than this many milliseconds. Defaults to 7 days (604800000 ms) when
+              omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
 
           timeout_ms: Optional timeout in milliseconds for the request. Maximum allowed value is
               300000ms (5 minutes).
@@ -368,6 +391,7 @@ class AsyncAIResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "url": url,
+                    "max_age_ms": max_age_ms,
                     "timeout_ms": timeout_ms,
                 },
                 ai_extract_product_params.AIExtractProductParams,
@@ -383,6 +407,7 @@ class AsyncAIResource(AsyncAPIResource):
         self,
         *,
         domain: str,
+        max_age_ms: int | Omit = omit,
         max_products: int | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -400,6 +425,10 @@ class AsyncAIResource(AsyncAPIResource):
 
         Args:
           domain: The domain name to analyze.
+
+          max_age_ms: Return a cached result if a prior scrape for the same parameters exists and is
+              younger than this many milliseconds. Defaults to 7 days (604800000 ms) when
+              omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
 
           max_products: Maximum number of products to extract.
 
@@ -421,6 +450,7 @@ class AsyncAIResource(AsyncAPIResource):
         self,
         *,
         direct_url: str,
+        max_age_ms: int | Omit = omit,
         max_products: int | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -439,6 +469,10 @@ class AsyncAIResource(AsyncAPIResource):
         Args:
           direct_url: A specific URL to use directly as the starting point for extraction without
               domain resolution.
+
+          max_age_ms: Return a cached result if a prior scrape for the same parameters exists and is
+              younger than this many milliseconds. Defaults to 7 days (604800000 ms) when
+              omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
 
           max_products: Maximum number of products to extract.
 
@@ -460,6 +494,7 @@ class AsyncAIResource(AsyncAPIResource):
         self,
         *,
         domain: str | Omit = omit,
+        max_age_ms: int | Omit = omit,
         max_products: int | Omit = omit,
         timeout_ms: int | Omit = omit,
         direct_url: str | Omit = omit,
@@ -475,6 +510,7 @@ class AsyncAIResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "domain": domain,
+                    "max_age_ms": max_age_ms,
                     "max_products": max_products,
                     "timeout_ms": timeout_ms,
                     "direct_url": direct_url,
