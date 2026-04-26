@@ -120,8 +120,8 @@ class IndustryResource(SyncAPIResource):
     ) -> IndustryRetrieveSicResponse:
         """
         Classify any brand into Standard Industrial Classification (SIC) codes from its
-        domain or name. Choose between the original 1987 SIC system (`original_sic`) or
-        the latest SIC list maintained by the SEC (`latest_sec`).
+        domain or name. Choose between the original SIC system (`original_sic`) or the
+        latest SIC list maintained by the SEC (`latest_sec`).
 
         Args:
           input: Brand domain or title to retrieve SIC code for. If a valid domain is provided,
@@ -266,8 +266,8 @@ class AsyncIndustryResource(AsyncAPIResource):
     ) -> IndustryRetrieveSicResponse:
         """
         Classify any brand into Standard Industrial Classification (SIC) codes from its
-        domain or name. Choose between the original 1987 SIC system (`original_sic`) or
-        the latest SIC list maintained by the SEC (`latest_sec`).
+        domain or name. Choose between the original SIC system (`original_sic`) or the
+        latest SIC list maintained by the SEC (`latest_sec`).
 
         Args:
           input: Brand domain or title to retrieve SIC code for. If a valid domain is provided,
