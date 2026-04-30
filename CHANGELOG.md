@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.13.0 (2026-04-30)
+
+Full Changelog: [v0.12.0...v0.13.0](https://github.com/context-dot-dev/context-python-sdk/compare/v0.12.0...v0.13.0)
+
+### Features
+
+* **api:** api update ([c24a182](https://github.com/context-dot-dev/context-python-sdk/commit/c24a18236e7f9a4c9d84d6ead4ec0fecbdcf77fc))
+* **api:** api update ([c9c388e](https://github.com/context-dot-dev/context-python-sdk/commit/c9c388ecb41827df93f98ac8aa3c8f5ce754a13e))
+* support setting headers via env ([90d2e4e](https://github.com/context-dot-dev/context-python-sdk/commit/90d2e4e449b1af9541881775c771969d37f3a6f1))
+
+
+### Bug Fixes
+
+* use correct field name format for multipart file arrays ([95fd70e](https://github.com/context-dot-dev/context-python-sdk/commit/95fd70ecf76c50261f4224b688584ae7ff8b52af))
+
 ## 0.12.0 (2026-04-25)
 
 Full Changelog: [v0.11.0...v0.12.0](https://github.com/context-dot-dev/context-python-sdk/compare/v0.11.0...v0.12.0)
