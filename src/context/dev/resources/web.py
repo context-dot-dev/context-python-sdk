@@ -249,6 +249,7 @@ class WebResource(SyncAPIResource):
         *,
         url: str,
         follow_subdomains: bool | Omit = omit,
+        include_frames: bool | Omit = omit,
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
         max_age_ms: int | Omit = omit,
@@ -275,6 +276,9 @@ class WebResource(SyncAPIResource):
           follow_subdomains: When true, follow links on subdomains of the starting URL's domain (e.g.
               docs.example.com when starting from example.com). www and apex are always
               treated as equivalent.
+
+          include_frames: When true, the contents of iframes are rendered to Markdown for each crawled
+              page.
 
           include_images: Include image references in the Markdown output
 
@@ -313,6 +317,7 @@ class WebResource(SyncAPIResource):
                 {
                     "url": url,
                     "follow_subdomains": follow_subdomains,
+                    "include_frames": include_frames,
                     "include_images": include_images,
                     "include_links": include_links,
                     "max_age_ms": max_age_ms,
@@ -335,6 +340,7 @@ class WebResource(SyncAPIResource):
         self,
         *,
         url: str,
+        include_frames: bool | Omit = omit,
         max_age_ms: int | Omit = omit,
         parse_pdf: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -349,6 +355,8 @@ class WebResource(SyncAPIResource):
 
         Args:
           url: Full URL to scrape (must include http:// or https:// protocol)
+
+          include_frames: When true, iframes are rendered inline into the returned HTML.
 
           max_age_ms: Return a cached result if a prior scrape for the same parameters exists and is
               younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
@@ -376,6 +384,7 @@ class WebResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "url": url,
+                        "include_frames": include_frames,
                         "max_age_ms": max_age_ms,
                         "parse_pdf": parse_pdf,
                     },
@@ -429,6 +438,7 @@ class WebResource(SyncAPIResource):
         self,
         *,
         url: str,
+        include_frames: bool | Omit = omit,
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
         max_age_ms: int | Omit = omit,
@@ -448,6 +458,8 @@ class WebResource(SyncAPIResource):
         Args:
           url: Full URL to scrape into LLM usable Markdown (must include http:// or https://
               protocol)
+
+          include_frames: When true, the contents of iframes are rendered to Markdown.
 
           include_images: Include image references in Markdown output
 
@@ -484,6 +496,7 @@ class WebResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "url": url,
+                        "include_frames": include_frames,
                         "include_images": include_images,
                         "include_links": include_links,
                         "max_age_ms": max_age_ms,
@@ -760,6 +773,7 @@ class AsyncWebResource(AsyncAPIResource):
         *,
         url: str,
         follow_subdomains: bool | Omit = omit,
+        include_frames: bool | Omit = omit,
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
         max_age_ms: int | Omit = omit,
@@ -786,6 +800,9 @@ class AsyncWebResource(AsyncAPIResource):
           follow_subdomains: When true, follow links on subdomains of the starting URL's domain (e.g.
               docs.example.com when starting from example.com). www and apex are always
               treated as equivalent.
+
+          include_frames: When true, the contents of iframes are rendered to Markdown for each crawled
+              page.
 
           include_images: Include image references in the Markdown output
 
@@ -824,6 +841,7 @@ class AsyncWebResource(AsyncAPIResource):
                 {
                     "url": url,
                     "follow_subdomains": follow_subdomains,
+                    "include_frames": include_frames,
                     "include_images": include_images,
                     "include_links": include_links,
                     "max_age_ms": max_age_ms,
@@ -846,6 +864,7 @@ class AsyncWebResource(AsyncAPIResource):
         self,
         *,
         url: str,
+        include_frames: bool | Omit = omit,
         max_age_ms: int | Omit = omit,
         parse_pdf: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -860,6 +879,8 @@ class AsyncWebResource(AsyncAPIResource):
 
         Args:
           url: Full URL to scrape (must include http:// or https:// protocol)
+
+          include_frames: When true, iframes are rendered inline into the returned HTML.
 
           max_age_ms: Return a cached result if a prior scrape for the same parameters exists and is
               younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
@@ -887,6 +908,7 @@ class AsyncWebResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "url": url,
+                        "include_frames": include_frames,
                         "max_age_ms": max_age_ms,
                         "parse_pdf": parse_pdf,
                     },
@@ -940,6 +962,7 @@ class AsyncWebResource(AsyncAPIResource):
         self,
         *,
         url: str,
+        include_frames: bool | Omit = omit,
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
         max_age_ms: int | Omit = omit,
@@ -959,6 +982,8 @@ class AsyncWebResource(AsyncAPIResource):
         Args:
           url: Full URL to scrape into LLM usable Markdown (must include http:// or https://
               protocol)
+
+          include_frames: When true, the contents of iframes are rendered to Markdown.
 
           include_images: Include image references in Markdown output
 
@@ -995,6 +1020,7 @@ class AsyncWebResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "url": url,
+                        "include_frames": include_frames,
                         "include_images": include_images,
                         "include_links": include_links,
                         "max_age_ms": max_age_ms,

@@ -20,6 +20,12 @@ class WebWebCrawlMdParams(TypedDict, total=False):
     treated as equivalent.
     """
 
+    include_frames: Annotated[bool, PropertyInfo(alias="includeFrames")]
+    """
+    When true, the contents of iframes are rendered to Markdown for each crawled
+    page.
+    """
+
     include_images: Annotated[bool, PropertyInfo(alias="includeImages")]
     """Include image references in the Markdown output"""
 
