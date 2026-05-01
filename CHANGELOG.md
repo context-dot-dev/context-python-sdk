@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.14.0 (2026-05-01)
+
+Full Changelog: [v0.13.0...v0.14.0](https://github.com/context-dot-dev/context-python-sdk/compare/v0.13.0...v0.14.0)
+
+### Features
+
+* **api:** api update ([4fea286](https://github.com/context-dot-dev/context-python-sdk/commit/4fea2861863c56e66881dbe898f12365c794568c))
+* **api:** manual updates ([d23341d](https://github.com/context-dot-dev/context-python-sdk/commit/d23341d351fdd33e0f101f532fc00b7af753c229))
+
+
+### Chores
+
+* **internal:** reformat pyproject.toml ([d781abc](https://github.com/context-dot-dev/context-python-sdk/commit/d781abc45cc85a3ecfb98cbeb9ca6d32af32dcdf))
+
 ## 0.13.0 (2026-04-30)
 
 Full Changelog: [v0.12.0...v0.13.0](https://github.com/context-dot-dev/context-python-sdk/compare/v0.12.0...v0.13.0)
