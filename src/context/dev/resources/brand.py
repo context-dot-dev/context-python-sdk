@@ -184,6 +184,7 @@ class BrandResource(SyncAPIResource):
             "zulu",
         ]
         | Omit = omit,
+        max_age_ms: int | Omit = omit,
         max_speed: bool | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -202,6 +203,11 @@ class BrandResource(SyncAPIResource):
               Cannot be used with name or ticker parameters.
 
           force_language: Optional parameter to force the language of the retrieved brand data.
+
+          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
+              refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+              are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+              year.
 
           max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
               the API will skip time-consuming operations for faster response at the cost of
@@ -230,6 +236,7 @@ class BrandResource(SyncAPIResource):
                     {
                         "domain": domain,
                         "force_language": force_language,
+                        "max_age_ms": max_age_ms,
                         "max_speed": max_speed,
                         "timeout_ms": timeout_ms,
                     },
@@ -811,6 +818,7 @@ class BrandResource(SyncAPIResource):
             "zulu",
         ]
         | Omit = omit,
+        max_age_ms: int | Omit = omit,
         max_speed: bool | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -831,6 +839,11 @@ class BrandResource(SyncAPIResource):
               yahoo.com, etc.) and disposable email addresses are not allowed.
 
           force_language: Optional parameter to force the language of the retrieved brand data.
+
+          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
+              refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+              are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+              year.
 
           max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
               the API will skip time-consuming operations for faster response at the cost of
@@ -859,6 +872,7 @@ class BrandResource(SyncAPIResource):
                     {
                         "email": email,
                         "force_language": force_language,
+                        "max_age_ms": max_age_ms,
                         "max_speed": max_speed,
                         "timeout_ms": timeout_ms,
                     },
@@ -995,6 +1009,7 @@ class BrandResource(SyncAPIResource):
             "zulu",
         ]
         | Omit = omit,
+        max_age_ms: int | Omit = omit,
         max_speed: bool | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -1014,6 +1029,11 @@ class BrandResource(SyncAPIResource):
               followed by 9 alphanumeric characters and ending with a digit.
 
           force_language: Optional parameter to force the language of the retrieved brand data.
+
+          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
+              refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+              are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+              year.
 
           max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
               the API will skip time-consuming operations for faster response at the cost of
@@ -1042,6 +1062,7 @@ class BrandResource(SyncAPIResource):
                     {
                         "isin": isin,
                         "force_language": force_language,
+                        "max_age_ms": max_age_ms,
                         "max_speed": max_speed,
                         "timeout_ms": timeout_ms,
                     },
@@ -1420,6 +1441,7 @@ class BrandResource(SyncAPIResource):
             "zulu",
         ]
         | Omit = omit,
+        max_age_ms: int | Omit = omit,
         max_speed: bool | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -1440,6 +1462,11 @@ class BrandResource(SyncAPIResource):
               name.
 
           force_language: Optional parameter to force the language of the retrieved brand data.
+
+          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
+              refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+              are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+              year.
 
           max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
               the API will skip time-consuming operations for faster response at the cost of
@@ -1469,6 +1496,7 @@ class BrandResource(SyncAPIResource):
                         "name": name,
                         "country_gl": country_gl,
                         "force_language": force_language,
+                        "max_age_ms": max_age_ms,
                         "max_speed": max_speed,
                         "timeout_ms": timeout_ms,
                     },
@@ -1605,6 +1633,7 @@ class BrandResource(SyncAPIResource):
             "zulu",
         ]
         | Omit = omit,
+        max_age_ms: int | Omit = omit,
         max_speed: bool | Omit = omit,
         ticker_exchange: Literal[
             "AMEX",
@@ -1698,6 +1727,11 @@ class BrandResource(SyncAPIResource):
 
           force_language: Optional parameter to force the language of the retrieved brand data.
 
+          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
+              refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+              are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+              year.
+
           max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
@@ -1727,6 +1761,7 @@ class BrandResource(SyncAPIResource):
                     {
                         "ticker": ticker,
                         "force_language": force_language,
+                        "max_age_ms": max_age_ms,
                         "max_speed": max_speed,
                         "ticker_exchange": ticker_exchange,
                         "timeout_ms": timeout_ms,
@@ -1741,6 +1776,7 @@ class BrandResource(SyncAPIResource):
         self,
         *,
         domain: str,
+        max_age_ms: int | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -1756,6 +1792,11 @@ class BrandResource(SyncAPIResource):
 
         Args:
           domain: Domain name to retrieve simplified brand data for
+
+          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
+              refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+              are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+              year.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -1779,6 +1820,7 @@ class BrandResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "domain": domain,
+                        "max_age_ms": max_age_ms,
                         "timeout_ms": timeout_ms,
                     },
                     brand_retrieve_simplified_params.BrandRetrieveSimplifiedParams,
@@ -1935,6 +1977,7 @@ class AsyncBrandResource(AsyncAPIResource):
             "zulu",
         ]
         | Omit = omit,
+        max_age_ms: int | Omit = omit,
         max_speed: bool | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -1953,6 +1996,11 @@ class AsyncBrandResource(AsyncAPIResource):
               Cannot be used with name or ticker parameters.
 
           force_language: Optional parameter to force the language of the retrieved brand data.
+
+          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
+              refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+              are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+              year.
 
           max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
               the API will skip time-consuming operations for faster response at the cost of
@@ -1981,6 +2029,7 @@ class AsyncBrandResource(AsyncAPIResource):
                     {
                         "domain": domain,
                         "force_language": force_language,
+                        "max_age_ms": max_age_ms,
                         "max_speed": max_speed,
                         "timeout_ms": timeout_ms,
                     },
@@ -2562,6 +2611,7 @@ class AsyncBrandResource(AsyncAPIResource):
             "zulu",
         ]
         | Omit = omit,
+        max_age_ms: int | Omit = omit,
         max_speed: bool | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -2582,6 +2632,11 @@ class AsyncBrandResource(AsyncAPIResource):
               yahoo.com, etc.) and disposable email addresses are not allowed.
 
           force_language: Optional parameter to force the language of the retrieved brand data.
+
+          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
+              refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+              are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+              year.
 
           max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
               the API will skip time-consuming operations for faster response at the cost of
@@ -2610,6 +2665,7 @@ class AsyncBrandResource(AsyncAPIResource):
                     {
                         "email": email,
                         "force_language": force_language,
+                        "max_age_ms": max_age_ms,
                         "max_speed": max_speed,
                         "timeout_ms": timeout_ms,
                     },
@@ -2746,6 +2802,7 @@ class AsyncBrandResource(AsyncAPIResource):
             "zulu",
         ]
         | Omit = omit,
+        max_age_ms: int | Omit = omit,
         max_speed: bool | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -2765,6 +2822,11 @@ class AsyncBrandResource(AsyncAPIResource):
               followed by 9 alphanumeric characters and ending with a digit.
 
           force_language: Optional parameter to force the language of the retrieved brand data.
+
+          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
+              refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+              are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+              year.
 
           max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
               the API will skip time-consuming operations for faster response at the cost of
@@ -2793,6 +2855,7 @@ class AsyncBrandResource(AsyncAPIResource):
                     {
                         "isin": isin,
                         "force_language": force_language,
+                        "max_age_ms": max_age_ms,
                         "max_speed": max_speed,
                         "timeout_ms": timeout_ms,
                     },
@@ -3171,6 +3234,7 @@ class AsyncBrandResource(AsyncAPIResource):
             "zulu",
         ]
         | Omit = omit,
+        max_age_ms: int | Omit = omit,
         max_speed: bool | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -3191,6 +3255,11 @@ class AsyncBrandResource(AsyncAPIResource):
               name.
 
           force_language: Optional parameter to force the language of the retrieved brand data.
+
+          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
+              refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+              are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+              year.
 
           max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
               the API will skip time-consuming operations for faster response at the cost of
@@ -3220,6 +3289,7 @@ class AsyncBrandResource(AsyncAPIResource):
                         "name": name,
                         "country_gl": country_gl,
                         "force_language": force_language,
+                        "max_age_ms": max_age_ms,
                         "max_speed": max_speed,
                         "timeout_ms": timeout_ms,
                     },
@@ -3356,6 +3426,7 @@ class AsyncBrandResource(AsyncAPIResource):
             "zulu",
         ]
         | Omit = omit,
+        max_age_ms: int | Omit = omit,
         max_speed: bool | Omit = omit,
         ticker_exchange: Literal[
             "AMEX",
@@ -3449,6 +3520,11 @@ class AsyncBrandResource(AsyncAPIResource):
 
           force_language: Optional parameter to force the language of the retrieved brand data.
 
+          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
+              refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+              are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+              year.
+
           max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
@@ -3478,6 +3554,7 @@ class AsyncBrandResource(AsyncAPIResource):
                     {
                         "ticker": ticker,
                         "force_language": force_language,
+                        "max_age_ms": max_age_ms,
                         "max_speed": max_speed,
                         "ticker_exchange": ticker_exchange,
                         "timeout_ms": timeout_ms,
@@ -3492,6 +3569,7 @@ class AsyncBrandResource(AsyncAPIResource):
         self,
         *,
         domain: str,
+        max_age_ms: int | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -3507,6 +3585,11 @@ class AsyncBrandResource(AsyncAPIResource):
 
         Args:
           domain: Domain name to retrieve simplified brand data for
+
+          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
+              refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+              are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+              year.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -3530,6 +3613,7 @@ class AsyncBrandResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "domain": domain,
+                        "max_age_ms": max_age_ms,
                         "timeout_ms": timeout_ms,
                     },
                     brand_retrieve_simplified_params.BrandRetrieveSimplifiedParams,
