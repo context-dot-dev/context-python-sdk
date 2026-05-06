@@ -130,19 +130,11 @@ from context.dev import ContextDev
 
 client = ContextDev()
 
-response = client.ai.ai_query(
-    data_to_extract=[
-        {
-            "datapoint_description": "datapoint_description",
-            "datapoint_example": "datapoint_example",
-            "datapoint_name": "datapoint_name",
-            "datapoint_type": "text",
-        }
-    ],
-    domain="domain",
-    specific_pages={},
+response = client.web.web_scrape_images(
+    url="https://example.com",
+    enrichment={},
 )
-print(response.specific_pages)
+print(response.enrichment)
 ```
 
 ## Handling errors
