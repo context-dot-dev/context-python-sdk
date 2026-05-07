@@ -115,8 +115,13 @@ class TestWeb:
             direct_url="https://example.com",
             domain="domain",
             full_screenshot="true",
+            max_age_ms=0,
             page="login",
             prioritize="speed",
+            viewport={
+                "height": 240,
+                "width": 240,
+            },
         )
         assert_matches_type(WebScreenshotResponse, web, path=["response"])
 
@@ -477,8 +482,13 @@ class TestAsyncWeb:
             direct_url="https://example.com",
             domain="domain",
             full_screenshot="true",
+            max_age_ms=0,
             page="login",
             prioritize="speed",
+            viewport={
+                "height": 240,
+                "width": 240,
+            },
         )
         assert_matches_type(WebScreenshotResponse, web, path=["response"])
 

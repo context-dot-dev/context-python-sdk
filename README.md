@@ -130,11 +130,10 @@ from context.dev import ContextDev
 
 client = ContextDev()
 
-response = client.web.web_scrape_images(
-    url="https://example.com",
-    enrichment={},
+response = client.web.screenshot(
+    viewport={},
 )
-print(response.enrichment)
+print(response.viewport)
 ```
 
 ## Handling errors

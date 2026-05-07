@@ -6,7 +6,7 @@ from typing_extensions import Literal, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["WebScreenshotParams"]
+__all__ = ["WebScreenshotParams", "Viewport"]
 
 
 class WebScreenshotParams(TypedDict, total=False):
@@ -31,6 +31,13 @@ class WebScreenshotParams(TypedDict, total=False):
     provided, takes a viewport screenshot (standard browser view).
     """
 
+    max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
+    """
+    Return a cached screenshot if a prior screenshot for the same parameters exists
+    and is younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
+    omitted. Max is 30 days (2592000000 ms). Set to 0 to always capture fresh.
+    """
+
     page: Literal["login", "signup", "blog", "careers", "pricing", "terms", "privacy", "contact"]
     """Optional parameter to specify which page type to screenshot.
 
@@ -47,3 +54,16 @@ class WebScreenshotParams(TypedDict, total=False):
     optimizes for higher quality with longer wait times. Defaults to 'quality' if
     not provided.
     """
+
+    viewport: Viewport
+    """Optional browser viewport dimensions for the screenshot. Defaults to 1920x1080."""
+
+
+class Viewport(TypedDict, total=False):
+    """Optional browser viewport dimensions for the screenshot. Defaults to 1920x1080."""
+
+    height: int
+    """Viewport height in pixels."""
+
+    width: int
+    """Viewport width in pixels."""
