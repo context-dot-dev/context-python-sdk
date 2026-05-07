@@ -183,6 +183,7 @@ class WebResource(SyncAPIResource):
         max_age_ms: int | Omit = omit,
         page: Literal["login", "signup", "blog", "careers", "pricing", "terms", "privacy", "contact"] | Omit = omit,
         prioritize: Literal["speed", "quality"] | Omit = omit,
+        timeout_ms: int | Omit = omit,
         viewport: web_screenshot_params.Viewport | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -221,6 +222,10 @@ class WebResource(SyncAPIResource):
               faster capture with basic quality. If 'quality', optimizes for higher quality
               with longer wait times. Defaults to 'quality' if not provided.
 
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
           viewport: Optional browser viewport dimensions for the screenshot. Defaults to 1920x1080.
 
           extra_headers: Send extra headers
@@ -246,6 +251,7 @@ class WebResource(SyncAPIResource):
                         "max_age_ms": max_age_ms,
                         "page": page,
                         "prioritize": prioritize,
+                        "timeout_ms": timeout_ms,
                         "viewport": viewport,
                     },
                     web_screenshot_params.WebScreenshotParams,
@@ -267,6 +273,7 @@ class WebResource(SyncAPIResource):
         max_pages: int | Omit = omit,
         parse_pdf: bool | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
+        timeout_ms: int | Omit = omit,
         url_regex: str | Omit = omit,
         use_main_content_only: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -308,6 +315,10 @@ class WebResource(SyncAPIResource):
 
           shorten_base64_images: Truncate base64-encoded image data in the Markdown output
 
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
           url_regex: Regex pattern. Only URLs matching this pattern will be followed and scraped.
 
           use_main_content_only: Extract only the main content, stripping headers, footers, sidebars, and
@@ -335,6 +346,7 @@ class WebResource(SyncAPIResource):
                     "max_pages": max_pages,
                     "parse_pdf": parse_pdf,
                     "shorten_base64_images": shorten_base64_images,
+                    "timeout_ms": timeout_ms,
                     "url_regex": url_regex,
                     "use_main_content_only": use_main_content_only,
                 },
@@ -353,6 +365,7 @@ class WebResource(SyncAPIResource):
         include_frames: bool | Omit = omit,
         max_age_ms: int | Omit = omit,
         parse_pdf: bool | Omit = omit,
+        timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -376,6 +389,10 @@ class WebResource(SyncAPIResource):
               returned wrapped in <html><pdf>…</pdf></html>. When false, PDF URLs are skipped
               and a 400 WEBSITE_ACCESS_ERROR is returned.
 
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -397,6 +414,7 @@ class WebResource(SyncAPIResource):
                         "include_frames": include_frames,
                         "max_age_ms": max_age_ms,
                         "parse_pdf": parse_pdf,
+                        "timeout_ms": timeout_ms,
                     },
                     web_web_scrape_html_params.WebWebScrapeHTMLParams,
                 ),
@@ -410,6 +428,7 @@ class WebResource(SyncAPIResource):
         url: str,
         enrichment: web_web_scrape_images_params.Enrichment | Omit = omit,
         max_age_ms: int | Omit = omit,
+        timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -432,6 +451,10 @@ class WebResource(SyncAPIResource):
           max_age_ms: Reuse a cached result this many milliseconds old or newer. Default: 86400000 (1
               day). Set to 0 to bypass cache. Maximum: 2592000000 (30 days).
 
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -452,6 +475,7 @@ class WebResource(SyncAPIResource):
                         "url": url,
                         "enrichment": enrichment,
                         "max_age_ms": max_age_ms,
+                        "timeout_ms": timeout_ms,
                     },
                     web_web_scrape_images_params.WebWebScrapeImagesParams,
                 ),
@@ -469,6 +493,7 @@ class WebResource(SyncAPIResource):
         max_age_ms: int | Omit = omit,
         parse_pdf: bool | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
+        timeout_ms: int | Omit = omit,
         use_main_content_only: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -500,6 +525,10 @@ class WebResource(SyncAPIResource):
 
           shorten_base64_images: Shorten base64-encoded image data in the Markdown output
 
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
           use_main_content_only: Extract only the main content of the page, excluding headers, footers, sidebars,
               and navigation
 
@@ -527,6 +556,7 @@ class WebResource(SyncAPIResource):
                         "max_age_ms": max_age_ms,
                         "parse_pdf": parse_pdf,
                         "shorten_base64_images": shorten_base64_images,
+                        "timeout_ms": timeout_ms,
                         "use_main_content_only": use_main_content_only,
                     },
                     web_web_scrape_md_params.WebWebScrapeMdParams,
@@ -540,6 +570,7 @@ class WebResource(SyncAPIResource):
         *,
         domain: str,
         max_links: int | Omit = omit,
+        timeout_ms: int | Omit = omit,
         url_regex: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -556,6 +587,10 @@ class WebResource(SyncAPIResource):
 
           max_links: Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
               Minimum is 1, maximum is 100,000.
+
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
 
           url_regex: Optional RE2-compatible regex pattern. Only URLs matching this pattern are
               returned and counted against maxLinks.
@@ -579,6 +614,7 @@ class WebResource(SyncAPIResource):
                     {
                         "domain": domain,
                         "max_links": max_links,
+                        "timeout_ms": timeout_ms,
                         "url_regex": url_regex,
                     },
                     web_web_scrape_sitemap_params.WebWebScrapeSitemapParams,
@@ -732,6 +768,7 @@ class AsyncWebResource(AsyncAPIResource):
         max_age_ms: int | Omit = omit,
         page: Literal["login", "signup", "blog", "careers", "pricing", "terms", "privacy", "contact"] | Omit = omit,
         prioritize: Literal["speed", "quality"] | Omit = omit,
+        timeout_ms: int | Omit = omit,
         viewport: web_screenshot_params.Viewport | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -770,6 +807,10 @@ class AsyncWebResource(AsyncAPIResource):
               faster capture with basic quality. If 'quality', optimizes for higher quality
               with longer wait times. Defaults to 'quality' if not provided.
 
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
           viewport: Optional browser viewport dimensions for the screenshot. Defaults to 1920x1080.
 
           extra_headers: Send extra headers
@@ -795,6 +836,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "max_age_ms": max_age_ms,
                         "page": page,
                         "prioritize": prioritize,
+                        "timeout_ms": timeout_ms,
                         "viewport": viewport,
                     },
                     web_screenshot_params.WebScreenshotParams,
@@ -816,6 +858,7 @@ class AsyncWebResource(AsyncAPIResource):
         max_pages: int | Omit = omit,
         parse_pdf: bool | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
+        timeout_ms: int | Omit = omit,
         url_regex: str | Omit = omit,
         use_main_content_only: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -857,6 +900,10 @@ class AsyncWebResource(AsyncAPIResource):
 
           shorten_base64_images: Truncate base64-encoded image data in the Markdown output
 
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
           url_regex: Regex pattern. Only URLs matching this pattern will be followed and scraped.
 
           use_main_content_only: Extract only the main content, stripping headers, footers, sidebars, and
@@ -884,6 +931,7 @@ class AsyncWebResource(AsyncAPIResource):
                     "max_pages": max_pages,
                     "parse_pdf": parse_pdf,
                     "shorten_base64_images": shorten_base64_images,
+                    "timeout_ms": timeout_ms,
                     "url_regex": url_regex,
                     "use_main_content_only": use_main_content_only,
                 },
@@ -902,6 +950,7 @@ class AsyncWebResource(AsyncAPIResource):
         include_frames: bool | Omit = omit,
         max_age_ms: int | Omit = omit,
         parse_pdf: bool | Omit = omit,
+        timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -925,6 +974,10 @@ class AsyncWebResource(AsyncAPIResource):
               returned wrapped in <html><pdf>…</pdf></html>. When false, PDF URLs are skipped
               and a 400 WEBSITE_ACCESS_ERROR is returned.
 
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -946,6 +999,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "include_frames": include_frames,
                         "max_age_ms": max_age_ms,
                         "parse_pdf": parse_pdf,
+                        "timeout_ms": timeout_ms,
                     },
                     web_web_scrape_html_params.WebWebScrapeHTMLParams,
                 ),
@@ -959,6 +1013,7 @@ class AsyncWebResource(AsyncAPIResource):
         url: str,
         enrichment: web_web_scrape_images_params.Enrichment | Omit = omit,
         max_age_ms: int | Omit = omit,
+        timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -981,6 +1036,10 @@ class AsyncWebResource(AsyncAPIResource):
           max_age_ms: Reuse a cached result this many milliseconds old or newer. Default: 86400000 (1
               day). Set to 0 to bypass cache. Maximum: 2592000000 (30 days).
 
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -1001,6 +1060,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "url": url,
                         "enrichment": enrichment,
                         "max_age_ms": max_age_ms,
+                        "timeout_ms": timeout_ms,
                     },
                     web_web_scrape_images_params.WebWebScrapeImagesParams,
                 ),
@@ -1018,6 +1078,7 @@ class AsyncWebResource(AsyncAPIResource):
         max_age_ms: int | Omit = omit,
         parse_pdf: bool | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
+        timeout_ms: int | Omit = omit,
         use_main_content_only: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -1049,6 +1110,10 @@ class AsyncWebResource(AsyncAPIResource):
 
           shorten_base64_images: Shorten base64-encoded image data in the Markdown output
 
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
           use_main_content_only: Extract only the main content of the page, excluding headers, footers, sidebars,
               and navigation
 
@@ -1076,6 +1141,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "max_age_ms": max_age_ms,
                         "parse_pdf": parse_pdf,
                         "shorten_base64_images": shorten_base64_images,
+                        "timeout_ms": timeout_ms,
                         "use_main_content_only": use_main_content_only,
                     },
                     web_web_scrape_md_params.WebWebScrapeMdParams,
@@ -1089,6 +1155,7 @@ class AsyncWebResource(AsyncAPIResource):
         *,
         domain: str,
         max_links: int | Omit = omit,
+        timeout_ms: int | Omit = omit,
         url_regex: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -1105,6 +1172,10 @@ class AsyncWebResource(AsyncAPIResource):
 
           max_links: Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
               Minimum is 1, maximum is 100,000.
+
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
 
           url_regex: Optional RE2-compatible regex pattern. Only URLs matching this pattern are
               returned and counted against maxLinks.
@@ -1128,6 +1199,7 @@ class AsyncWebResource(AsyncAPIResource):
                     {
                         "domain": domain,
                         "max_links": max_links,
+                        "timeout_ms": timeout_ms,
                         "url_regex": url_regex,
                     },
                     web_web_scrape_sitemap_params.WebWebScrapeSitemapParams,
