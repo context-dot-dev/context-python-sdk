@@ -180,8 +180,10 @@ class WebResource(SyncAPIResource):
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
         full_screenshot: Literal["true", "false"] | Omit = omit,
+        max_age_ms: int | Omit = omit,
         page: Literal["login", "signup", "blog", "careers", "pricing", "terms", "privacy", "contact"] | Omit = omit,
         prioritize: Literal["speed", "quality"] | Omit = omit,
+        viewport: web_screenshot_params.Viewport | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -205,6 +207,10 @@ class WebResource(SyncAPIResource):
               screenshot capturing all content. If 'false' or not provided, takes a viewport
               screenshot (standard browser view).
 
+          max_age_ms: Return a cached screenshot if a prior screenshot for the same parameters exists
+              and is younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
+              omitted. Max is 30 days (2592000000 ms). Set to 0 to always capture fresh.
+
           page: Optional parameter to specify which page type to screenshot. If provided, the
               system will scrape the domain's links and use heuristics to find the most
               appropriate URL for the specified page type (30 supported languages). If not
@@ -214,6 +220,8 @@ class WebResource(SyncAPIResource):
           prioritize: Optional parameter to prioritize screenshot capture. If 'speed', optimizes for
               faster capture with basic quality. If 'quality', optimizes for higher quality
               with longer wait times. Defaults to 'quality' if not provided.
+
+          viewport: Optional browser viewport dimensions for the screenshot. Defaults to 1920x1080.
 
           extra_headers: Send extra headers
 
@@ -235,8 +243,10 @@ class WebResource(SyncAPIResource):
                         "direct_url": direct_url,
                         "domain": domain,
                         "full_screenshot": full_screenshot,
+                        "max_age_ms": max_age_ms,
                         "page": page,
                         "prioritize": prioritize,
+                        "viewport": viewport,
                     },
                     web_screenshot_params.WebScreenshotParams,
                 ),
@@ -719,8 +729,10 @@ class AsyncWebResource(AsyncAPIResource):
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
         full_screenshot: Literal["true", "false"] | Omit = omit,
+        max_age_ms: int | Omit = omit,
         page: Literal["login", "signup", "blog", "careers", "pricing", "terms", "privacy", "contact"] | Omit = omit,
         prioritize: Literal["speed", "quality"] | Omit = omit,
+        viewport: web_screenshot_params.Viewport | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -744,6 +756,10 @@ class AsyncWebResource(AsyncAPIResource):
               screenshot capturing all content. If 'false' or not provided, takes a viewport
               screenshot (standard browser view).
 
+          max_age_ms: Return a cached screenshot if a prior screenshot for the same parameters exists
+              and is younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
+              omitted. Max is 30 days (2592000000 ms). Set to 0 to always capture fresh.
+
           page: Optional parameter to specify which page type to screenshot. If provided, the
               system will scrape the domain's links and use heuristics to find the most
               appropriate URL for the specified page type (30 supported languages). If not
@@ -753,6 +769,8 @@ class AsyncWebResource(AsyncAPIResource):
           prioritize: Optional parameter to prioritize screenshot capture. If 'speed', optimizes for
               faster capture with basic quality. If 'quality', optimizes for higher quality
               with longer wait times. Defaults to 'quality' if not provided.
+
+          viewport: Optional browser viewport dimensions for the screenshot. Defaults to 1920x1080.
 
           extra_headers: Send extra headers
 
@@ -774,8 +792,10 @@ class AsyncWebResource(AsyncAPIResource):
                         "direct_url": direct_url,
                         "domain": domain,
                         "full_screenshot": full_screenshot,
+                        "max_age_ms": max_age_ms,
                         "page": page,
                         "prioritize": prioritize,
+                        "viewport": viewport,
                     },
                     web_screenshot_params.WebScreenshotParams,
                 ),
