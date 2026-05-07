@@ -115,8 +115,14 @@ class TestWeb:
             direct_url="https://example.com",
             domain="domain",
             full_screenshot="true",
+            max_age_ms=0,
             page="login",
             prioritize="speed",
+            timeout_ms=1000,
+            viewport={
+                "height": 240,
+                "width": 240,
+            },
         )
         assert_matches_type(WebScreenshotResponse, web, path=["response"])
 
@@ -164,6 +170,7 @@ class TestWeb:
             max_pages=1,
             parse_pdf=True,
             shorten_base64_images=True,
+            timeout_ms=1000,
             url_regex="^https?://[^/]+/blog/",
             use_main_content_only=True,
         )
@@ -211,6 +218,7 @@ class TestWeb:
             include_frames=True,
             max_age_ms=0,
             parse_pdf=True,
+            timeout_ms=1000,
         )
         assert_matches_type(WebWebScrapeHTMLResponse, web, path=["response"])
 
@@ -260,6 +268,7 @@ class TestWeb:
                 "resolution": True,
             },
             max_age_ms=0,
+            timeout_ms=1000,
         )
         assert_matches_type(WebWebScrapeImagesResponse, web, path=["response"])
 
@@ -308,6 +317,7 @@ class TestWeb:
             max_age_ms=0,
             parse_pdf=True,
             shorten_base64_images=True,
+            timeout_ms=1000,
             use_main_content_only=True,
         )
         assert_matches_type(WebWebScrapeMdResponse, web, path=["response"])
@@ -352,6 +362,7 @@ class TestWeb:
         web = client.web.web_scrape_sitemap(
             domain="domain",
             max_links=1,
+            timeout_ms=1000,
             url_regex="^https?://[^/]+/blog/",
         )
         assert_matches_type(WebWebScrapeSitemapResponse, web, path=["response"])
@@ -477,8 +488,14 @@ class TestAsyncWeb:
             direct_url="https://example.com",
             domain="domain",
             full_screenshot="true",
+            max_age_ms=0,
             page="login",
             prioritize="speed",
+            timeout_ms=1000,
+            viewport={
+                "height": 240,
+                "width": 240,
+            },
         )
         assert_matches_type(WebScreenshotResponse, web, path=["response"])
 
@@ -526,6 +543,7 @@ class TestAsyncWeb:
             max_pages=1,
             parse_pdf=True,
             shorten_base64_images=True,
+            timeout_ms=1000,
             url_regex="^https?://[^/]+/blog/",
             use_main_content_only=True,
         )
@@ -573,6 +591,7 @@ class TestAsyncWeb:
             include_frames=True,
             max_age_ms=0,
             parse_pdf=True,
+            timeout_ms=1000,
         )
         assert_matches_type(WebWebScrapeHTMLResponse, web, path=["response"])
 
@@ -622,6 +641,7 @@ class TestAsyncWeb:
                 "resolution": True,
             },
             max_age_ms=0,
+            timeout_ms=1000,
         )
         assert_matches_type(WebWebScrapeImagesResponse, web, path=["response"])
 
@@ -670,6 +690,7 @@ class TestAsyncWeb:
             max_age_ms=0,
             parse_pdf=True,
             shorten_base64_images=True,
+            timeout_ms=1000,
             use_main_content_only=True,
         )
         assert_matches_type(WebWebScrapeMdResponse, web, path=["response"])
@@ -714,6 +735,7 @@ class TestAsyncWeb:
         web = await async_client.web.web_scrape_sitemap(
             domain="domain",
             max_links=1,
+            timeout_ms=1000,
             url_regex="^https?://[^/]+/blog/",
         )
         assert_matches_type(WebWebScrapeSitemapResponse, web, path=["response"])

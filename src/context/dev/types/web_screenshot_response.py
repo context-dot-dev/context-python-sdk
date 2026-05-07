@@ -17,6 +17,9 @@ class WebScreenshotResponse(BaseModel):
     domain: Optional[str] = None
     """The normalized domain that was processed"""
 
+    height: Optional[int] = None
+    """Height in pixels of the returned screenshot image"""
+
     screenshot: Optional[str] = None
     """Public URL of the uploaded screenshot image"""
 
@@ -25,3 +28,6 @@ class WebScreenshotResponse(BaseModel):
 
     status: Optional[str] = None
     """Status of the response, e.g., 'ok'"""
+
+    width: Optional[int] = None
+    """Width in pixels of the returned screenshot image"""
