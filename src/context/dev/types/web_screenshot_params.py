@@ -47,14 +47,6 @@ class WebScreenshotParams(TypedDict, total=False):
     applicable when using 'domain', not 'directUrl'.
     """
 
-    prioritize: Literal["speed", "quality"]
-    """Optional parameter to prioritize screenshot capture.
-
-    If 'speed', optimizes for faster capture with basic quality. If 'quality',
-    optimizes for higher quality with longer wait times. Defaults to 'quality' if
-    not provided.
-    """
-
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
     """Optional timeout in milliseconds for the request.
 
@@ -64,6 +56,13 @@ class WebScreenshotParams(TypedDict, total=False):
 
     viewport: Viewport
     """Optional browser viewport dimensions for the screenshot. Defaults to 1920x1080."""
+
+    wait_for_ms: Annotated[int, PropertyInfo(alias="waitForMs")]
+    """
+    Optional browser wait time in milliseconds after initial page load before taking
+    the screenshot. Min: 0. Max: 30000 (30 seconds). Defaults to 3000 ms when
+    omitted.
+    """
 
 
 class Viewport(TypedDict, total=False):
