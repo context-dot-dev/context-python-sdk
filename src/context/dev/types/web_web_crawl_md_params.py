@@ -70,3 +70,9 @@ class WebWebCrawlMdParams(TypedDict, total=False):
     Extract only the main content, stripping headers, footers, sidebars, and
     navigation
     """
+
+    wait_for_ms: Annotated[int, PropertyInfo(alias="waitForMs")]
+    """
+    Optional browser wait time in milliseconds after initial page load for each
+    crawled page. Min: 0. Max: 30000 (30 seconds).
+    """

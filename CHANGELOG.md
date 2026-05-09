@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.19.0 (2026-05-09)
+
+Full Changelog: [v0.18.0...v0.19.0](https://github.com/context-dot-dev/context-python-sdk/compare/v0.18.0...v0.19.0)
+
+### Features
+
+* **api:** api update ([9706153](https://github.com/context-dot-dev/context-python-sdk/commit/97061533bf1bfebbba56574529b4cd2f69863edc))
+
 ## 0.18.0 (2026-05-07)
 
 Full Changelog: [v0.17.0...v0.18.0](https://github.com/context-dot-dev/context-python-sdk/compare/v0.17.0...v0.18.0)
