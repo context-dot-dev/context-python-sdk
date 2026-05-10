@@ -55,6 +55,14 @@ class WebWebCrawlMdParams(TypedDict, total=False):
     shorten_base64_images: Annotated[bool, PropertyInfo(alias="shortenBase64Images")]
     """Truncate base64-encoded image data in the Markdown output"""
 
+    stop_after_ms: Annotated[int, PropertyInfo(alias="stopAfterMs")]
+    """Soft time budget for the crawl in milliseconds.
+
+    After each scrape, the crawler checks the elapsed time and, if exceeded, returns
+    the pages collected so far instead of continuing. Min: 10000 (10s). Max: 240000
+    (4 min). Default: 120000 (2 min).
+    """
+
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
     """Optional timeout in milliseconds for the request.
 

@@ -273,6 +273,7 @@ class WebResource(SyncAPIResource):
         max_pages: int | Omit = omit,
         pdf: web_web_crawl_md_params.Pdf | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
+        stop_after_ms: int | Omit = omit,
         timeout_ms: int | Omit = omit,
         url_regex: str | Omit = omit,
         use_main_content_only: bool | Omit = omit,
@@ -315,6 +316,11 @@ class WebResource(SyncAPIResource):
 
           shorten_base64_images: Truncate base64-encoded image data in the Markdown output
 
+          stop_after_ms: Soft time budget for the crawl in milliseconds. After each scrape, the crawler
+              checks the elapsed time and, if exceeded, returns the pages collected so far
+              instead of continuing. Min: 10000 (10s). Max: 240000 (4 min). Default: 120000 (2
+              min).
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -349,6 +355,7 @@ class WebResource(SyncAPIResource):
                     "max_pages": max_pages,
                     "pdf": pdf,
                     "shorten_base64_images": shorten_base64_images,
+                    "stop_after_ms": stop_after_ms,
                     "timeout_ms": timeout_ms,
                     "url_regex": url_regex,
                     "use_main_content_only": use_main_content_only,
@@ -876,6 +883,7 @@ class AsyncWebResource(AsyncAPIResource):
         max_pages: int | Omit = omit,
         pdf: web_web_crawl_md_params.Pdf | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
+        stop_after_ms: int | Omit = omit,
         timeout_ms: int | Omit = omit,
         url_regex: str | Omit = omit,
         use_main_content_only: bool | Omit = omit,
@@ -918,6 +926,11 @@ class AsyncWebResource(AsyncAPIResource):
 
           shorten_base64_images: Truncate base64-encoded image data in the Markdown output
 
+          stop_after_ms: Soft time budget for the crawl in milliseconds. After each scrape, the crawler
+              checks the elapsed time and, if exceeded, returns the pages collected so far
+              instead of continuing. Min: 10000 (10s). Max: 240000 (4 min). Default: 120000 (2
+              min).
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -952,6 +965,7 @@ class AsyncWebResource(AsyncAPIResource):
                     "max_pages": max_pages,
                     "pdf": pdf,
                     "shorten_base64_images": shorten_base64_images,
+                    "stop_after_ms": stop_after_ms,
                     "timeout_ms": timeout_ms,
                     "url_regex": url_regex,
                     "use_main_content_only": use_main_content_only,
