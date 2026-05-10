@@ -6,7 +6,7 @@ from typing_extensions import Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["WebWebScrapeMdParams"]
+__all__ = ["WebWebScrapeMdParams", "Pdf"]
 
 
 class WebWebScrapeMdParams(TypedDict, total=False):
@@ -32,11 +32,11 @@ class WebWebScrapeMdParams(TypedDict, total=False):
     omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
     """
 
-    parse_pdf: Annotated[bool, PropertyInfo(alias="parsePDF")]
-    """
-    When true (default), PDF URLs are fetched and their text layer is extracted and
-    converted to Markdown. When false, PDF URLs are skipped and a 400
-    WEBSITE_ACCESS_ERROR is returned.
+    pdf: Pdf
+    """PDF parsing controls.
+
+    Use start/end to limit text extraction and OCR to an inclusive 1-based page
+    range.
     """
 
     shorten_base64_images: Annotated[bool, PropertyInfo(alias="shortenBase64Images")]
@@ -59,4 +59,30 @@ class WebWebScrapeMdParams(TypedDict, total=False):
     """
     Optional browser wait time in milliseconds after initial page load before
     converting the page to Markdown. Min: 0. Max: 30000 (30 seconds).
+    """
+
+
+class Pdf(TypedDict, total=False):
+    """PDF parsing controls.
+
+    Use start/end to limit text extraction and OCR to an inclusive 1-based page range.
+    """
+
+    end: int
+    """Last 1-based PDF page to parse.
+
+    When omitted, parsing ends at the last page. Must be greater than or equal to
+    start when both are provided.
+    """
+
+    should_parse: Annotated[bool, PropertyInfo(alias="shouldParse")]
+    """When true, PDF URLs are fetched and parsed.
+
+    When false, PDF URLs are skipped and a 400 WEBSITE_ACCESS_ERROR is returned.
+    """
+
+    start: int
+    """First 1-based PDF page to parse.
+
+    When omitted, parsing starts at the first page.
     """

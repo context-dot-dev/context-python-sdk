@@ -271,8 +271,9 @@ class WebResource(SyncAPIResource):
         max_age_ms: int | Omit = omit,
         max_depth: int | Omit = omit,
         max_pages: int | Omit = omit,
-        parse_pdf: bool | Omit = omit,
+        pdf: web_web_crawl_md_params.Pdf | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
+        stop_after_ms: int | Omit = omit,
         timeout_ms: int | Omit = omit,
         url_regex: str | Omit = omit,
         use_main_content_only: bool | Omit = omit,
@@ -310,11 +311,15 @@ class WebResource(SyncAPIResource):
 
           max_pages: Maximum number of pages to crawl. Hard cap: 500.
 
-          parse_pdf: When true (default), PDF pages are fetched and their text layer is extracted and
-              converted to Markdown alongside HTML pages. When false, PDF pages are skipped
-              entirely (not included in results and not counted as failures).
+          pdf: PDF parsing controls. Use start/end to limit text extraction and OCR to an
+              inclusive 1-based page range.
 
           shorten_base64_images: Truncate base64-encoded image data in the Markdown output
+
+          stop_after_ms: Soft time budget for the crawl in milliseconds. After each scrape, the crawler
+              checks the elapsed time and, if exceeded, returns the pages collected so far
+              instead of continuing. Min: 10000 (10s). Max: 240000 (4 min). Default: 120000 (2
+              min).
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -348,8 +353,9 @@ class WebResource(SyncAPIResource):
                     "max_age_ms": max_age_ms,
                     "max_depth": max_depth,
                     "max_pages": max_pages,
-                    "parse_pdf": parse_pdf,
+                    "pdf": pdf,
                     "shorten_base64_images": shorten_base64_images,
+                    "stop_after_ms": stop_after_ms,
                     "timeout_ms": timeout_ms,
                     "url_regex": url_regex,
                     "use_main_content_only": use_main_content_only,
@@ -369,7 +375,7 @@ class WebResource(SyncAPIResource):
         url: str,
         include_frames: bool | Omit = omit,
         max_age_ms: int | Omit = omit,
-        parse_pdf: bool | Omit = omit,
+        pdf: web_web_scrape_html_params.Pdf | Omit = omit,
         timeout_ms: int | Omit = omit,
         wait_for_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -391,9 +397,8 @@ class WebResource(SyncAPIResource):
               younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
               omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
 
-          parse_pdf: When true (default), PDF URLs are fetched and their text layer is extracted and
-              returned wrapped in <html><pdf>…</pdf></html>. When false, PDF URLs are skipped
-              and a 400 WEBSITE_ACCESS_ERROR is returned.
+          pdf: PDF parsing controls. Use start/end to limit text extraction and OCR to an
+              inclusive 1-based page range.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -423,7 +428,7 @@ class WebResource(SyncAPIResource):
                         "url": url,
                         "include_frames": include_frames,
                         "max_age_ms": max_age_ms,
-                        "parse_pdf": parse_pdf,
+                        "pdf": pdf,
                         "timeout_ms": timeout_ms,
                         "wait_for_ms": wait_for_ms,
                     },
@@ -507,7 +512,7 @@ class WebResource(SyncAPIResource):
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
         max_age_ms: int | Omit = omit,
-        parse_pdf: bool | Omit = omit,
+        pdf: web_web_scrape_md_params.Pdf | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
         timeout_ms: int | Omit = omit,
         use_main_content_only: bool | Omit = omit,
@@ -536,9 +541,8 @@ class WebResource(SyncAPIResource):
               younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
               omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
 
-          parse_pdf: When true (default), PDF URLs are fetched and their text layer is extracted and
-              converted to Markdown. When false, PDF URLs are skipped and a 400
-              WEBSITE_ACCESS_ERROR is returned.
+          pdf: PDF parsing controls. Use start/end to limit text extraction and OCR to an
+              inclusive 1-based page range.
 
           shorten_base64_images: Shorten base64-encoded image data in the Markdown output
 
@@ -574,7 +578,7 @@ class WebResource(SyncAPIResource):
                         "include_images": include_images,
                         "include_links": include_links,
                         "max_age_ms": max_age_ms,
-                        "parse_pdf": parse_pdf,
+                        "pdf": pdf,
                         "shorten_base64_images": shorten_base64_images,
                         "timeout_ms": timeout_ms,
                         "use_main_content_only": use_main_content_only,
@@ -877,8 +881,9 @@ class AsyncWebResource(AsyncAPIResource):
         max_age_ms: int | Omit = omit,
         max_depth: int | Omit = omit,
         max_pages: int | Omit = omit,
-        parse_pdf: bool | Omit = omit,
+        pdf: web_web_crawl_md_params.Pdf | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
+        stop_after_ms: int | Omit = omit,
         timeout_ms: int | Omit = omit,
         url_regex: str | Omit = omit,
         use_main_content_only: bool | Omit = omit,
@@ -916,11 +921,15 @@ class AsyncWebResource(AsyncAPIResource):
 
           max_pages: Maximum number of pages to crawl. Hard cap: 500.
 
-          parse_pdf: When true (default), PDF pages are fetched and their text layer is extracted and
-              converted to Markdown alongside HTML pages. When false, PDF pages are skipped
-              entirely (not included in results and not counted as failures).
+          pdf: PDF parsing controls. Use start/end to limit text extraction and OCR to an
+              inclusive 1-based page range.
 
           shorten_base64_images: Truncate base64-encoded image data in the Markdown output
+
+          stop_after_ms: Soft time budget for the crawl in milliseconds. After each scrape, the crawler
+              checks the elapsed time and, if exceeded, returns the pages collected so far
+              instead of continuing. Min: 10000 (10s). Max: 240000 (4 min). Default: 120000 (2
+              min).
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -954,8 +963,9 @@ class AsyncWebResource(AsyncAPIResource):
                     "max_age_ms": max_age_ms,
                     "max_depth": max_depth,
                     "max_pages": max_pages,
-                    "parse_pdf": parse_pdf,
+                    "pdf": pdf,
                     "shorten_base64_images": shorten_base64_images,
+                    "stop_after_ms": stop_after_ms,
                     "timeout_ms": timeout_ms,
                     "url_regex": url_regex,
                     "use_main_content_only": use_main_content_only,
@@ -975,7 +985,7 @@ class AsyncWebResource(AsyncAPIResource):
         url: str,
         include_frames: bool | Omit = omit,
         max_age_ms: int | Omit = omit,
-        parse_pdf: bool | Omit = omit,
+        pdf: web_web_scrape_html_params.Pdf | Omit = omit,
         timeout_ms: int | Omit = omit,
         wait_for_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -997,9 +1007,8 @@ class AsyncWebResource(AsyncAPIResource):
               younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
               omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
 
-          parse_pdf: When true (default), PDF URLs are fetched and their text layer is extracted and
-              returned wrapped in <html><pdf>…</pdf></html>. When false, PDF URLs are skipped
-              and a 400 WEBSITE_ACCESS_ERROR is returned.
+          pdf: PDF parsing controls. Use start/end to limit text extraction and OCR to an
+              inclusive 1-based page range.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -1029,7 +1038,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "url": url,
                         "include_frames": include_frames,
                         "max_age_ms": max_age_ms,
-                        "parse_pdf": parse_pdf,
+                        "pdf": pdf,
                         "timeout_ms": timeout_ms,
                         "wait_for_ms": wait_for_ms,
                     },
@@ -1113,7 +1122,7 @@ class AsyncWebResource(AsyncAPIResource):
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
         max_age_ms: int | Omit = omit,
-        parse_pdf: bool | Omit = omit,
+        pdf: web_web_scrape_md_params.Pdf | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
         timeout_ms: int | Omit = omit,
         use_main_content_only: bool | Omit = omit,
@@ -1142,9 +1151,8 @@ class AsyncWebResource(AsyncAPIResource):
               younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
               omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
 
-          parse_pdf: When true (default), PDF URLs are fetched and their text layer is extracted and
-              converted to Markdown. When false, PDF URLs are skipped and a 400
-              WEBSITE_ACCESS_ERROR is returned.
+          pdf: PDF parsing controls. Use start/end to limit text extraction and OCR to an
+              inclusive 1-based page range.
 
           shorten_base64_images: Shorten base64-encoded image data in the Markdown output
 
@@ -1180,7 +1188,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "include_images": include_images,
                         "include_links": include_links,
                         "max_age_ms": max_age_ms,
-                        "parse_pdf": parse_pdf,
+                        "pdf": pdf,
                         "shorten_base64_images": shorten_base64_images,
                         "timeout_ms": timeout_ms,
                         "use_main_content_only": use_main_content_only,
