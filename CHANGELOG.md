@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.20.0 (2026-05-10)
+
+Full Changelog: [v0.19.0...v0.20.0](https://github.com/context-dot-dev/context-python-sdk/compare/v0.19.0...v0.20.0)
+
+### Features
+
+* **api:** api update ([23cc0fb](https://github.com/context-dot-dev/context-python-sdk/commit/23cc0fbc81f823fb5da255c58b2f493fbcd0be68))
+* **api:** api update ([e3419e4](https://github.com/context-dot-dev/context-python-sdk/commit/e3419e41b590900a86e7b69309e32b716a61c558))
+* **api:** manual updates ([93da641](https://github.com/context-dot-dev/context-python-sdk/commit/93da64127f9de0af6154364d5a99b8a2b43534f8))
+
+
+### Bug Fixes
+
+* **client:** add missing f-string prefix in file type error message ([3159495](https://github.com/context-dot-dev/context-python-sdk/commit/3159495092a7800a01fe13b441ffab57618f81ea))
+
 ## 0.19.0 (2026-05-09)
 
 Full Changelog: [v0.18.0...v0.19.0](https://github.com/context-dot-dev/context-python-sdk/compare/v0.18.0...v0.19.0)
