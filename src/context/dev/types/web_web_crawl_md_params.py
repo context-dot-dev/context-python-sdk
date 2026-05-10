@@ -6,7 +6,7 @@ from typing_extensions import Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["WebWebCrawlMdParams"]
+__all__ = ["WebWebCrawlMdParams", "Pdf"]
 
 
 class WebWebCrawlMdParams(TypedDict, total=False):
@@ -45,11 +45,11 @@ class WebWebCrawlMdParams(TypedDict, total=False):
     max_pages: Annotated[int, PropertyInfo(alias="maxPages")]
     """Maximum number of pages to crawl. Hard cap: 500."""
 
-    parse_pdf: Annotated[bool, PropertyInfo(alias="parsePDF")]
-    """
-    When true (default), PDF pages are fetched and their text layer is extracted and
-    converted to Markdown alongside HTML pages. When false, PDF pages are skipped
-    entirely (not included in results and not counted as failures).
+    pdf: Pdf
+    """PDF parsing controls.
+
+    Use start/end to limit text extraction and OCR to an inclusive 1-based page
+    range.
     """
 
     shorten_base64_images: Annotated[bool, PropertyInfo(alias="shortenBase64Images")]
@@ -75,4 +75,31 @@ class WebWebCrawlMdParams(TypedDict, total=False):
     """
     Optional browser wait time in milliseconds after initial page load for each
     crawled page. Min: 0. Max: 30000 (30 seconds).
+    """
+
+
+class Pdf(TypedDict, total=False):
+    """PDF parsing controls.
+
+    Use start/end to limit text extraction and OCR to an inclusive 1-based page range.
+    """
+
+    end: int
+    """Last 1-based PDF page to parse.
+
+    When omitted, parsing ends at the last page. Must be greater than or equal to
+    start when both are provided.
+    """
+
+    should_parse: Annotated[bool, PropertyInfo(alias="shouldParse")]
+    """When true, PDF pages are fetched and parsed.
+
+    When false, PDF pages are skipped entirely (not included in results and not
+    counted as failures).
+    """
+
+    start: int
+    """First 1-based PDF page to parse.
+
+    When omitted, parsing starts at the first page.
     """
