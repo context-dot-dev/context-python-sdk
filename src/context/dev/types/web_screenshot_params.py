@@ -34,9 +34,8 @@ class WebScreenshotParams(TypedDict, total=False):
     handle_cookie_popup: Annotated[Literal["true", "false"], PropertyInfo(alias="handleCookiePopup")]
     """Optional parameter to control cookie/consent popup handling.
 
-    If 'true', the browser service dismisses cookie consent before capture. If
-    'false' or not provided, captures the page without that step. This value is part
-    of the screenshot cache key.
+    If 'true', we dismiss cookie banner before capture. If 'false' or not provided,
+    captures the page without that step.
     """
 
     max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
