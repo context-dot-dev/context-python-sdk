@@ -180,6 +180,7 @@ class WebResource(SyncAPIResource):
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
         full_screenshot: Literal["true", "false"] | Omit = omit,
+        handle_cookie_popup: Literal["true", "false"] | Omit = omit,
         max_age_ms: int | Omit = omit,
         page: Literal["login", "signup", "blog", "careers", "pricing", "terms", "privacy", "contact"] | Omit = omit,
         timeout_ms: int | Omit = omit,
@@ -207,6 +208,11 @@ class WebResource(SyncAPIResource):
           full_screenshot: Optional parameter to determine screenshot type. If 'true', takes a full page
               screenshot capturing all content. If 'false' or not provided, takes a viewport
               screenshot (standard browser view).
+
+          handle_cookie_popup: Optional parameter to control cookie/consent popup handling. If 'true', the
+              browser service dismisses cookie consent before capture. If 'false' or not
+              provided, captures the page without that step. This value is part of the
+              screenshot cache key.
 
           max_age_ms: Return a cached screenshot if a prior screenshot for the same parameters exists
               and is younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
@@ -248,6 +254,7 @@ class WebResource(SyncAPIResource):
                         "direct_url": direct_url,
                         "domain": domain,
                         "full_screenshot": full_screenshot,
+                        "handle_cookie_popup": handle_cookie_popup,
                         "max_age_ms": max_age_ms,
                         "page": page,
                         "timeout_ms": timeout_ms,
@@ -790,6 +797,7 @@ class AsyncWebResource(AsyncAPIResource):
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
         full_screenshot: Literal["true", "false"] | Omit = omit,
+        handle_cookie_popup: Literal["true", "false"] | Omit = omit,
         max_age_ms: int | Omit = omit,
         page: Literal["login", "signup", "blog", "careers", "pricing", "terms", "privacy", "contact"] | Omit = omit,
         timeout_ms: int | Omit = omit,
@@ -817,6 +825,11 @@ class AsyncWebResource(AsyncAPIResource):
           full_screenshot: Optional parameter to determine screenshot type. If 'true', takes a full page
               screenshot capturing all content. If 'false' or not provided, takes a viewport
               screenshot (standard browser view).
+
+          handle_cookie_popup: Optional parameter to control cookie/consent popup handling. If 'true', the
+              browser service dismisses cookie consent before capture. If 'false' or not
+              provided, captures the page without that step. This value is part of the
+              screenshot cache key.
 
           max_age_ms: Return a cached screenshot if a prior screenshot for the same parameters exists
               and is younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
@@ -858,6 +871,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "direct_url": direct_url,
                         "domain": domain,
                         "full_screenshot": full_screenshot,
+                        "handle_cookie_popup": handle_cookie_popup,
                         "max_age_ms": max_age_ms,
                         "page": page,
                         "timeout_ms": timeout_ms,
