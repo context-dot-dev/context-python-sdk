@@ -209,10 +209,9 @@ class WebResource(SyncAPIResource):
               screenshot capturing all content. If 'false' or not provided, takes a viewport
               screenshot (standard browser view).
 
-          handle_cookie_popup: Optional parameter to control cookie/consent popup handling. If 'true', the
-              browser service dismisses cookie consent before capture. If 'false' or not
-              provided, captures the page without that step. This value is part of the
-              screenshot cache key.
+          handle_cookie_popup: Optional parameter to control cookie/consent popup handling. If 'true', we
+              dismiss cookie banner before capture. If 'false' or not provided, captures the
+              page without that step.
 
           max_age_ms: Return a cached screenshot if a prior screenshot for the same parameters exists
               and is younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
@@ -826,10 +825,9 @@ class AsyncWebResource(AsyncAPIResource):
               screenshot capturing all content. If 'false' or not provided, takes a viewport
               screenshot (standard browser view).
 
-          handle_cookie_popup: Optional parameter to control cookie/consent popup handling. If 'true', the
-              browser service dismisses cookie consent before capture. If 'false' or not
-              provided, captures the page without that step. This value is part of the
-              screenshot cache key.
+          handle_cookie_popup: Optional parameter to control cookie/consent popup handling. If 'true', we
+              dismiss cookie banner before capture. If 'false' or not provided, captures the
+              page without that step.
 
           max_age_ms: Return a cached screenshot if a prior screenshot for the same parameters exists
               and is younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
