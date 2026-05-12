@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.22.0 (2026-05-12)
+
+Full Changelog: [v0.21.0...v0.22.0](https://github.com/context-dot-dev/context-python-sdk/compare/v0.21.0...v0.22.0)
+
+### Features
+
+* **api:** manual updates ([b79c985](https://github.com/context-dot-dev/context-python-sdk/commit/b79c9856d25222663dcb28637b048dc6ea092c76))
+* **internal/types:** support eagerly validating pydantic iterators ([6386dc9](https://github.com/context-dot-dev/context-python-sdk/commit/6386dc9f7931b592a5c9aa2874debae51a8f7276))
+
 ## 0.21.0 (2026-05-11)
 
 Full Changelog: [v0.20.0...v0.21.0](https://github.com/context-dot-dev/context-python-sdk/compare/v0.20.0...v0.21.0)
