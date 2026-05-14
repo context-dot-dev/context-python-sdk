@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.22.1 (2026-05-13)
+
+Full Changelog: [v0.22.0...v0.22.1](https://github.com/context-dot-dev/context-python-sdk/compare/v0.22.0...v0.22.1)
+
 ## 0.22.0 (2026-05-12)
 
 Full Changelog: [v0.21.0...v0.22.0](https://github.com/context-dot-dev/context-python-sdk/compare/v0.21.0...v0.22.0)
