@@ -29,7 +29,7 @@ class Result(BaseModel):
     """Markdown scrape status and content for this result."""
 
     relevance: Literal["high", "medium", "low"]
-    """Model-judged relevance to the original query."""
+    """Relevance to the original query."""
 
     title: str
     """Page title."""
