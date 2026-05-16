@@ -7,6 +7,7 @@ from typing_extensions import Literal
 import httpx
 
 from ..types import (
+    web_search_params,
     web_screenshot_params,
     web_web_crawl_md_params,
     web_extract_fonts_params,
@@ -16,7 +17,7 @@ from ..types import (
     web_extract_styleguide_params,
     web_web_scrape_sitemap_params,
 )
-from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
+from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -27,6 +28,7 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from ..types.web_search_response import WebSearchResponse
 from ..types.web_screenshot_response import WebScreenshotResponse
 from ..types.web_web_crawl_md_response import WebWebCrawlMdResponse
 from ..types.web_extract_fonts_response import WebExtractFontsResponse
@@ -264,6 +266,73 @@ class WebResource(SyncAPIResource):
                 ),
             ),
             cast_to=WebScreenshotResponse,
+        )
+
+    def search(
+        self,
+        *,
+        query: str,
+        exclude_domains: SequenceNotStr[str] | Omit = omit,
+        freshness: Literal["last_24_hours", "last_week", "last_month", "last_year"] | Omit = omit,
+        include_domains: SequenceNotStr[str] | Omit = omit,
+        markdown_options: web_search_params.MarkdownOptions | Omit = omit,
+        query_fanout: bool | Omit = omit,
+        timeout_ms: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WebSearchResponse:
+        """
+        Search the web and optionally scrape each result to Markdown in one round-trip.
+
+        Args:
+          query: Natural-language search query.
+
+          exclude_domains: Blocklist — drop results from these domains. Example: ["pinterest.com",
+              "reddit.com"].
+
+          freshness: Restrict results to content published within this window.
+
+          include_domains: Allowlist — only return results from these domains. Example: ["arxiv.org",
+              "github.com"].
+
+          markdown_options: Inline Markdown scraping for each result. Set `enabled: true` to activate.
+
+          query_fanout: Expand the query into multiple parallel variants for broader recall.
+
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/web/search",
+            body=maybe_transform(
+                {
+                    "query": query,
+                    "exclude_domains": exclude_domains,
+                    "freshness": freshness,
+                    "include_domains": include_domains,
+                    "markdown_options": markdown_options,
+                    "query_fanout": query_fanout,
+                    "timeout_ms": timeout_ms,
+                },
+                web_search_params.WebSearchParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=WebSearchResponse,
         )
 
     def web_crawl_md(
@@ -882,6 +951,73 @@ class AsyncWebResource(AsyncAPIResource):
             cast_to=WebScreenshotResponse,
         )
 
+    async def search(
+        self,
+        *,
+        query: str,
+        exclude_domains: SequenceNotStr[str] | Omit = omit,
+        freshness: Literal["last_24_hours", "last_week", "last_month", "last_year"] | Omit = omit,
+        include_domains: SequenceNotStr[str] | Omit = omit,
+        markdown_options: web_search_params.MarkdownOptions | Omit = omit,
+        query_fanout: bool | Omit = omit,
+        timeout_ms: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WebSearchResponse:
+        """
+        Search the web and optionally scrape each result to Markdown in one round-trip.
+
+        Args:
+          query: Natural-language search query.
+
+          exclude_domains: Blocklist — drop results from these domains. Example: ["pinterest.com",
+              "reddit.com"].
+
+          freshness: Restrict results to content published within this window.
+
+          include_domains: Allowlist — only return results from these domains. Example: ["arxiv.org",
+              "github.com"].
+
+          markdown_options: Inline Markdown scraping for each result. Set `enabled: true` to activate.
+
+          query_fanout: Expand the query into multiple parallel variants for broader recall.
+
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/web/search",
+            body=await async_maybe_transform(
+                {
+                    "query": query,
+                    "exclude_domains": exclude_domains,
+                    "freshness": freshness,
+                    "include_domains": include_domains,
+                    "markdown_options": markdown_options,
+                    "query_fanout": query_fanout,
+                    "timeout_ms": timeout_ms,
+                },
+                web_search_params.WebSearchParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=WebSearchResponse,
+        )
+
     async def web_crawl_md(
         self,
         *,
@@ -1284,6 +1420,9 @@ class WebResourceWithRawResponse:
         self.screenshot = to_raw_response_wrapper(
             web.screenshot,
         )
+        self.search = to_raw_response_wrapper(
+            web.search,
+        )
         self.web_crawl_md = to_raw_response_wrapper(
             web.web_crawl_md,
         )
@@ -1313,6 +1452,9 @@ class AsyncWebResourceWithRawResponse:
         )
         self.screenshot = async_to_raw_response_wrapper(
             web.screenshot,
+        )
+        self.search = async_to_raw_response_wrapper(
+            web.search,
         )
         self.web_crawl_md = async_to_raw_response_wrapper(
             web.web_crawl_md,
@@ -1344,6 +1486,9 @@ class WebResourceWithStreamingResponse:
         self.screenshot = to_streamed_response_wrapper(
             web.screenshot,
         )
+        self.search = to_streamed_response_wrapper(
+            web.search,
+        )
         self.web_crawl_md = to_streamed_response_wrapper(
             web.web_crawl_md,
         )
@@ -1373,6 +1518,9 @@ class AsyncWebResourceWithStreamingResponse:
         )
         self.screenshot = async_to_streamed_response_wrapper(
             web.screenshot,
+        )
+        self.search = async_to_streamed_response_wrapper(
+            web.search,
         )
         self.web_crawl_md = async_to_streamed_response_wrapper(
             web.web_crawl_md,
