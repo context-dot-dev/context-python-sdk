@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+from .web_search_params import WebSearchParams as WebSearchParams
 from .ai_ai_query_params import AIAIQueryParams as AIAIQueryParams
+from .web_search_response import WebSearchResponse as WebSearchResponse
 from .ai_ai_query_response import AIAIQueryResponse as AIAIQueryResponse
 from .brand_retrieve_params import BrandRetrieveParams as BrandRetrieveParams
 from .web_screenshot_params import WebScreenshotParams as WebScreenshotParams
