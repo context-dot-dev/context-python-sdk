@@ -39,6 +39,7 @@ class TestWeb:
         web = client.web.extract_fonts(
             direct_url="https://example.com",
             domain="domain",
+            max_age_ms=86400000,
             timeout_ms=1000,
         )
         assert_matches_type(WebExtractFontsResponse, web, path=["response"])
@@ -77,6 +78,7 @@ class TestWeb:
         web = client.web.extract_styleguide(
             direct_url="https://example.com",
             domain="domain",
+            max_age_ms=86400000,
             timeout_ms=1000,
         )
         assert_matches_type(WebExtractStyleguideResponse, web, path=["response"])
@@ -493,6 +495,7 @@ class TestAsyncWeb:
         web = await async_client.web.extract_fonts(
             direct_url="https://example.com",
             domain="domain",
+            max_age_ms=86400000,
             timeout_ms=1000,
         )
         assert_matches_type(WebExtractFontsResponse, web, path=["response"])
@@ -531,6 +534,7 @@ class TestAsyncWeb:
         web = await async_client.web.extract_styleguide(
             direct_url="https://example.com",
             domain="domain",
+            max_age_ms=86400000,
             timeout_ms=1000,
         )
         assert_matches_type(WebExtractStyleguideResponse, web, path=["response"])
