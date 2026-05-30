@@ -66,6 +66,7 @@ class WebResource(SyncAPIResource):
         *,
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
+        max_age_ms: int | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -86,6 +87,11 @@ class WebResource(SyncAPIResource):
           domain: Domain name to extract fonts from (e.g., 'example.com', 'google.com'). The
               domain will be automatically normalized and validated. You must provide either
               'domain' or 'directUrl', but not both.
+
+          max_age_ms: Maximum age in milliseconds for cached data before the API performs a hard
+              refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+              are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+              year.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -110,6 +116,7 @@ class WebResource(SyncAPIResource):
                     {
                         "direct_url": direct_url,
                         "domain": domain,
+                        "max_age_ms": max_age_ms,
                         "timeout_ms": timeout_ms,
                     },
                     web_extract_fonts_params.WebExtractFontsParams,
@@ -123,6 +130,7 @@ class WebResource(SyncAPIResource):
         *,
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
+        max_age_ms: int | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -144,6 +152,11 @@ class WebResource(SyncAPIResource):
           domain: Domain name to extract styleguide from (e.g., 'example.com', 'google.com'). The
               domain will be automatically normalized and validated. You must provide either
               'domain' or 'directUrl', but not both.
+
+          max_age_ms: Maximum age in milliseconds for cached data before the API performs a hard
+              refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+              are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+              year.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -168,6 +181,7 @@ class WebResource(SyncAPIResource):
                     {
                         "direct_url": direct_url,
                         "domain": domain,
+                        "max_age_ms": max_age_ms,
                         "timeout_ms": timeout_ms,
                     },
                     web_extract_styleguide_params.WebExtractStyleguideParams,
@@ -749,6 +763,7 @@ class AsyncWebResource(AsyncAPIResource):
         *,
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
+        max_age_ms: int | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -769,6 +784,11 @@ class AsyncWebResource(AsyncAPIResource):
           domain: Domain name to extract fonts from (e.g., 'example.com', 'google.com'). The
               domain will be automatically normalized and validated. You must provide either
               'domain' or 'directUrl', but not both.
+
+          max_age_ms: Maximum age in milliseconds for cached data before the API performs a hard
+              refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+              are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+              year.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -793,6 +813,7 @@ class AsyncWebResource(AsyncAPIResource):
                     {
                         "direct_url": direct_url,
                         "domain": domain,
+                        "max_age_ms": max_age_ms,
                         "timeout_ms": timeout_ms,
                     },
                     web_extract_fonts_params.WebExtractFontsParams,
@@ -806,6 +827,7 @@ class AsyncWebResource(AsyncAPIResource):
         *,
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
+        max_age_ms: int | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -827,6 +849,11 @@ class AsyncWebResource(AsyncAPIResource):
           domain: Domain name to extract styleguide from (e.g., 'example.com', 'google.com'). The
               domain will be automatically normalized and validated. You must provide either
               'domain' or 'directUrl', but not both.
+
+          max_age_ms: Maximum age in milliseconds for cached data before the API performs a hard
+              refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+              are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+              year.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -851,6 +878,7 @@ class AsyncWebResource(AsyncAPIResource):
                     {
                         "direct_url": direct_url,
                         "domain": domain,
+                        "max_age_ms": max_age_ms,
                         "timeout_ms": timeout_ms,
                     },
                     web_extract_styleguide_params.WebExtractStyleguideParams,
