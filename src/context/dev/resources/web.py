@@ -2,12 +2,14 @@
 
 from __future__ import annotations
 
+from typing import Dict
 from typing_extensions import Literal
 
 import httpx
 
 from ..types import (
     web_search_params,
+    web_extract_params,
     web_screenshot_params,
     web_web_crawl_md_params,
     web_extract_fonts_params,
@@ -29,6 +31,7 @@ from .._response import (
 )
 from .._base_client import make_request_options
 from ..types.web_search_response import WebSearchResponse
+from ..types.web_extract_response import WebExtractResponse
 from ..types.web_screenshot_response import WebScreenshotResponse
 from ..types.web_web_crawl_md_response import WebWebCrawlMdResponse
 from ..types.web_extract_fonts_response import WebExtractFontsResponse
@@ -60,6 +63,99 @@ class WebResource(SyncAPIResource):
         For more information, see https://www.github.com/context-dot-dev/context-python-sdk#with_streaming_response
         """
         return WebResourceWithStreamingResponse(self)
+
+    def extract(
+        self,
+        *,
+        schema: Dict[str, object],
+        url: str,
+        fact_check: bool | Omit = omit,
+        follow_subdomains: bool | Omit = omit,
+        include_frames: bool | Omit = omit,
+        instructions: str | Omit = omit,
+        max_age_ms: int | Omit = omit,
+        pdf: web_extract_params.Pdf | Omit = omit,
+        stop_after_ms: int | Omit = omit,
+        timeout_ms: int | Omit = omit,
+        wait_for_ms: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WebExtractResponse:
+        """
+        Crawl a website, convert pages to Markdown using the scrape cache, and extract
+        structured data into the provided JSON Schema. The schema must describe the
+        response data object. This endpoint does not accept targeted page-type
+        selection.
+
+        Args:
+          schema: JSON Schema for the returned data object. TypeScript Zod users can pass a JSON
+              Schema generated from a Zod object; Python users can pass the equivalent JSON
+              Schema object.
+
+          url: The starting website URL to crawl and extract from. Must include http:// or
+              https://.
+
+          fact_check: When true (default), every returned value must be grounded in facts stated on
+              the page; fields that cannot be supported by the page are returned as
+              null/empty. When false, the model may make reasonable inferences and derivations
+              from the page content (e.g. ideal customer, competitor analysis,
+              recommendations) while keeping verifiable specifics (names, quotes, URLs, dates,
+              metrics) faithful to the source.
+
+          follow_subdomains: When true, follow links on subdomains of the starting URL's domain.
+
+          include_frames: When true, iframe contents are included in Markdown before extraction.
+
+          instructions: Optional extraction guidance, such as which facts to prioritize or how to
+              interpret fields in the schema.
+
+          max_age_ms: Return cached scrape results if a prior scrape for the same parameters is
+              younger than this many milliseconds.
+
+          stop_after_ms: Soft time budget for the crawl in milliseconds.
+
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
+          wait_for_ms: Optional browser wait time in milliseconds after initial page load for each
+              crawled page.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/web/extract",
+            body=maybe_transform(
+                {
+                    "schema": schema,
+                    "url": url,
+                    "fact_check": fact_check,
+                    "follow_subdomains": follow_subdomains,
+                    "include_frames": include_frames,
+                    "instructions": instructions,
+                    "max_age_ms": max_age_ms,
+                    "pdf": pdf,
+                    "stop_after_ms": stop_after_ms,
+                    "timeout_ms": timeout_ms,
+                    "wait_for_ms": wait_for_ms,
+                },
+                web_extract_params.WebExtractParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=WebExtractResponse,
+        )
 
     def extract_fonts(
         self,
@@ -758,6 +854,99 @@ class AsyncWebResource(AsyncAPIResource):
         """
         return AsyncWebResourceWithStreamingResponse(self)
 
+    async def extract(
+        self,
+        *,
+        schema: Dict[str, object],
+        url: str,
+        fact_check: bool | Omit = omit,
+        follow_subdomains: bool | Omit = omit,
+        include_frames: bool | Omit = omit,
+        instructions: str | Omit = omit,
+        max_age_ms: int | Omit = omit,
+        pdf: web_extract_params.Pdf | Omit = omit,
+        stop_after_ms: int | Omit = omit,
+        timeout_ms: int | Omit = omit,
+        wait_for_ms: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WebExtractResponse:
+        """
+        Crawl a website, convert pages to Markdown using the scrape cache, and extract
+        structured data into the provided JSON Schema. The schema must describe the
+        response data object. This endpoint does not accept targeted page-type
+        selection.
+
+        Args:
+          schema: JSON Schema for the returned data object. TypeScript Zod users can pass a JSON
+              Schema generated from a Zod object; Python users can pass the equivalent JSON
+              Schema object.
+
+          url: The starting website URL to crawl and extract from. Must include http:// or
+              https://.
+
+          fact_check: When true (default), every returned value must be grounded in facts stated on
+              the page; fields that cannot be supported by the page are returned as
+              null/empty. When false, the model may make reasonable inferences and derivations
+              from the page content (e.g. ideal customer, competitor analysis,
+              recommendations) while keeping verifiable specifics (names, quotes, URLs, dates,
+              metrics) faithful to the source.
+
+          follow_subdomains: When true, follow links on subdomains of the starting URL's domain.
+
+          include_frames: When true, iframe contents are included in Markdown before extraction.
+
+          instructions: Optional extraction guidance, such as which facts to prioritize or how to
+              interpret fields in the schema.
+
+          max_age_ms: Return cached scrape results if a prior scrape for the same parameters is
+              younger than this many milliseconds.
+
+          stop_after_ms: Soft time budget for the crawl in milliseconds.
+
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
+          wait_for_ms: Optional browser wait time in milliseconds after initial page load for each
+              crawled page.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/web/extract",
+            body=await async_maybe_transform(
+                {
+                    "schema": schema,
+                    "url": url,
+                    "fact_check": fact_check,
+                    "follow_subdomains": follow_subdomains,
+                    "include_frames": include_frames,
+                    "instructions": instructions,
+                    "max_age_ms": max_age_ms,
+                    "pdf": pdf,
+                    "stop_after_ms": stop_after_ms,
+                    "timeout_ms": timeout_ms,
+                    "wait_for_ms": wait_for_ms,
+                },
+                web_extract_params.WebExtractParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=WebExtractResponse,
+        )
+
     async def extract_fonts(
         self,
         *,
@@ -1439,6 +1628,9 @@ class WebResourceWithRawResponse:
     def __init__(self, web: WebResource) -> None:
         self._web = web
 
+        self.extract = to_raw_response_wrapper(
+            web.extract,
+        )
         self.extract_fonts = to_raw_response_wrapper(
             web.extract_fonts,
         )
@@ -1472,6 +1664,9 @@ class AsyncWebResourceWithRawResponse:
     def __init__(self, web: AsyncWebResource) -> None:
         self._web = web
 
+        self.extract = async_to_raw_response_wrapper(
+            web.extract,
+        )
         self.extract_fonts = async_to_raw_response_wrapper(
             web.extract_fonts,
         )
@@ -1505,6 +1700,9 @@ class WebResourceWithStreamingResponse:
     def __init__(self, web: WebResource) -> None:
         self._web = web
 
+        self.extract = to_streamed_response_wrapper(
+            web.extract,
+        )
         self.extract_fonts = to_streamed_response_wrapper(
             web.extract_fonts,
         )
@@ -1538,6 +1736,9 @@ class AsyncWebResourceWithStreamingResponse:
     def __init__(self, web: AsyncWebResource) -> None:
         self._web = web
 
+        self.extract = async_to_streamed_response_wrapper(
+            web.extract,
+        )
         self.extract_fonts = async_to_streamed_response_wrapper(
             web.extract_fonts,
         )
