@@ -130,10 +130,17 @@ from context.dev import ContextDev
 
 client = ContextDev()
 
-response = client.web.screenshot(
-    viewport={},
+response = client.web.extract(
+    schema={
+        "type": "bar",
+        "properties": "bar",
+        "required": "bar",
+        "additionalProperties": "bar",
+    },
+    url="https://example.com",
+    pdf={},
 )
-print(response.viewport)
+print(response.pdf)
 ```
 
 ## Handling errors
