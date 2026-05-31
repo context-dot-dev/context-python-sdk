@@ -86,10 +86,7 @@ class WebResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebExtractResponse:
         """
-        Crawl a website, convert pages to Markdown using the scrape cache, and extract
-        structured data into the provided JSON Schema. The schema must describe the
-        response data object. This endpoint does not accept targeted page-type
-        selection.
+        Crawl a website and extract structured data using the provided JSON Schema.
 
         Args:
           schema: JSON Schema for the returned data object. TypeScript Zod users can pass a JSON
@@ -876,10 +873,7 @@ class AsyncWebResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebExtractResponse:
         """
-        Crawl a website, convert pages to Markdown using the scrape cache, and extract
-        structured data into the provided JSON Schema. The schema must describe the
-        response data object. This endpoint does not accept targeted page-type
-        selection.
+        Crawl a website and extract structured data using the provided JSON Schema.
 
         Args:
           schema: JSON Schema for the returned data object. TypeScript Zod users can pass a JSON
