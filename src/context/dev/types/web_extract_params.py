@@ -26,12 +26,12 @@ class WebExtractParams(TypedDict, total=False):
 
     fact_check: Annotated[bool, PropertyInfo(alias="factCheck")]
     """
-    When true (default), every returned value must be grounded in facts stated on
-    the page; fields that cannot be supported by the page are returned as
-    null/empty. When false, the model may make reasonable inferences and derivations
-    from the page content (e.g. ideal customer, competitor analysis,
-    recommendations) while keeping verifiable specifics (names, quotes, URLs, dates,
-    metrics) faithful to the source.
+    When true, every returned value must be grounded in facts stated on the page;
+    fields that cannot be supported by the page are returned as null/empty. When
+    false (default), the model may make reasonable inferences and derivations from
+    the page content (e.g. ideal customer, competitor analysis, recommendations)
+    while keeping verifiable specifics (names, quotes, URLs, dates, metrics)
+    faithful to the source.
     """
 
     follow_subdomains: Annotated[bool, PropertyInfo(alias="followSubdomains")]
@@ -49,7 +49,7 @@ class WebExtractParams(TypedDict, total=False):
     max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
     """
     Return cached scrape results if a prior scrape for the same parameters is
-    younger than this many milliseconds.
+    younger than this many milliseconds. Defaults to 7 days (604800000 ms).
     """
 
     pdf: Pdf

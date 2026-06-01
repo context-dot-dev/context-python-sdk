@@ -86,10 +86,8 @@ class WebResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebExtractResponse:
         """
-        Crawl a website, convert pages to Markdown using the scrape cache, and extract
-        structured data into the provided JSON Schema. The schema must describe the
-        response data object. This endpoint does not accept targeted page-type
-        selection.
+        Crawl a website, use the provided JSON Schema and instructions to prioritize
+        relevant internal links, and extract structured data from the selected pages.
 
         Args:
           schema: JSON Schema for the returned data object. TypeScript Zod users can pass a JSON
@@ -99,12 +97,12 @@ class WebResource(SyncAPIResource):
           url: The starting website URL to crawl and extract from. Must include http:// or
               https://.
 
-          fact_check: When true (default), every returned value must be grounded in facts stated on
-              the page; fields that cannot be supported by the page are returned as
-              null/empty. When false, the model may make reasonable inferences and derivations
-              from the page content (e.g. ideal customer, competitor analysis,
-              recommendations) while keeping verifiable specifics (names, quotes, URLs, dates,
-              metrics) faithful to the source.
+          fact_check: When true, every returned value must be grounded in facts stated on the page;
+              fields that cannot be supported by the page are returned as null/empty. When
+              false (default), the model may make reasonable inferences and derivations from
+              the page content (e.g. ideal customer, competitor analysis, recommendations)
+              while keeping verifiable specifics (names, quotes, URLs, dates, metrics)
+              faithful to the source.
 
           follow_subdomains: When true, follow links on subdomains of the starting URL's domain.
 
@@ -114,7 +112,7 @@ class WebResource(SyncAPIResource):
               interpret fields in the schema.
 
           max_age_ms: Return cached scrape results if a prior scrape for the same parameters is
-              younger than this many milliseconds.
+              younger than this many milliseconds. Defaults to 7 days (604800000 ms).
 
           stop_after_ms: Soft time budget for the crawl in milliseconds.
 
@@ -876,10 +874,8 @@ class AsyncWebResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebExtractResponse:
         """
-        Crawl a website, convert pages to Markdown using the scrape cache, and extract
-        structured data into the provided JSON Schema. The schema must describe the
-        response data object. This endpoint does not accept targeted page-type
-        selection.
+        Crawl a website, use the provided JSON Schema and instructions to prioritize
+        relevant internal links, and extract structured data from the selected pages.
 
         Args:
           schema: JSON Schema for the returned data object. TypeScript Zod users can pass a JSON
@@ -889,12 +885,12 @@ class AsyncWebResource(AsyncAPIResource):
           url: The starting website URL to crawl and extract from. Must include http:// or
               https://.
 
-          fact_check: When true (default), every returned value must be grounded in facts stated on
-              the page; fields that cannot be supported by the page are returned as
-              null/empty. When false, the model may make reasonable inferences and derivations
-              from the page content (e.g. ideal customer, competitor analysis,
-              recommendations) while keeping verifiable specifics (names, quotes, URLs, dates,
-              metrics) faithful to the source.
+          fact_check: When true, every returned value must be grounded in facts stated on the page;
+              fields that cannot be supported by the page are returned as null/empty. When
+              false (default), the model may make reasonable inferences and derivations from
+              the page content (e.g. ideal customer, competitor analysis, recommendations)
+              while keeping verifiable specifics (names, quotes, URLs, dates, metrics)
+              faithful to the source.
 
           follow_subdomains: When true, follow links on subdomains of the starting URL's domain.
 
@@ -904,7 +900,7 @@ class AsyncWebResource(AsyncAPIResource):
               interpret fields in the schema.
 
           max_age_ms: Return cached scrape results if a prior scrape for the same parameters is
-              younger than this many milliseconds.
+              younger than this many milliseconds. Defaults to 7 days (604800000 ms).
 
           stop_after_ms: Soft time budget for the crawl in milliseconds.
 
