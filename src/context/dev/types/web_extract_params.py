@@ -49,7 +49,7 @@ class WebExtractParams(TypedDict, total=False):
     max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
     """
     Return cached scrape results if a prior scrape for the same parameters is
-    younger than this many milliseconds.
+    younger than this many milliseconds. Defaults to 7 days (604800000 ms).
     """
 
     pdf: Pdf
