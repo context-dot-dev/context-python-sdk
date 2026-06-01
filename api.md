@@ -5,6 +5,7 @@ Types:
 ```python
 from context.dev.types import (
     WebExtractResponse,
+    WebExtractCompetitorsResponse,
     WebExtractFontsResponse,
     WebExtractStyleguideResponse,
     WebScreenshotResponse,
@@ -20,6 +21,7 @@ from context.dev.types import (
 Methods:
 
 - <code title="post /web/extract">client.web.<a href="./src/context/dev/resources/web.py">extract</a>(\*\*<a href="src/context/dev/types/web_extract_params.py">params</a>) -> <a href="./src/context/dev/types/web_extract_response.py">WebExtractResponse</a></code>
+- <code title="get /web/competitors">client.web.<a href="./src/context/dev/resources/web.py">extract_competitors</a>(\*\*<a href="src/context/dev/types/web_extract_competitors_params.py">params</a>) -> <a href="./src/context/dev/types/web_extract_competitors_response.py">WebExtractCompetitorsResponse</a></code>
 - <code title="get /web/fonts">client.web.<a href="./src/context/dev/resources/web.py">extract_fonts</a>(\*\*<a href="src/context/dev/types/web_extract_fonts_params.py">params</a>) -> <a href="./src/context/dev/types/web_extract_fonts_response.py">WebExtractFontsResponse</a></code>
 - <code title="get /web/styleguide">client.web.<a href="./src/context/dev/resources/web.py">extract_styleguide</a>(\*\*<a href="src/context/dev/types/web_extract_styleguide_params.py">params</a>) -> <a href="./src/context/dev/types/web_extract_styleguide_response.py">WebExtractStyleguideResponse</a></code>
 - <code title="get /web/screenshot">client.web.<a href="./src/context/dev/resources/web.py">screenshot</a>(\*\*<a href="src/context/dev/types/web_screenshot_params.py">params</a>) -> <a href="./src/context/dev/types/web_screenshot_response.py">WebScreenshotResponse</a></code>
