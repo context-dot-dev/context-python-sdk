@@ -86,7 +86,8 @@ class WebResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebExtractResponse:
         """
-        Crawl a website and extract structured data using the provided JSON Schema.
+        Crawl a website, use the provided JSON Schema and instructions to prioritize
+        relevant internal links, and extract structured data from the selected pages.
 
         Args:
           schema: JSON Schema for the returned data object. TypeScript Zod users can pass a JSON
@@ -111,7 +112,7 @@ class WebResource(SyncAPIResource):
               interpret fields in the schema.
 
           max_age_ms: Return cached scrape results if a prior scrape for the same parameters is
-              younger than this many milliseconds.
+              younger than this many milliseconds. Defaults to 7 days (604800000 ms).
 
           stop_after_ms: Soft time budget for the crawl in milliseconds.
 
@@ -873,7 +874,8 @@ class AsyncWebResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebExtractResponse:
         """
-        Crawl a website and extract structured data using the provided JSON Schema.
+        Crawl a website, use the provided JSON Schema and instructions to prioritize
+        relevant internal links, and extract structured data from the selected pages.
 
         Args:
           schema: JSON Schema for the returned data object. TypeScript Zod users can pass a JSON
@@ -898,7 +900,7 @@ class AsyncWebResource(AsyncAPIResource):
               interpret fields in the schema.
 
           max_age_ms: Return cached scrape results if a prior scrape for the same parameters is
-              younger than this many milliseconds.
+              younger than this many milliseconds. Defaults to 7 days (604800000 ms).
 
           stop_after_ms: Soft time budget for the crawl in milliseconds.
 
