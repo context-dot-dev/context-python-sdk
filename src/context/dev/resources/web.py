@@ -18,6 +18,7 @@ from ..types import (
     web_web_scrape_images_params,
     web_extract_styleguide_params,
     web_web_scrape_sitemap_params,
+    web_extract_competitors_params,
 )
 from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
@@ -40,6 +41,7 @@ from ..types.web_web_scrape_html_response import WebWebScrapeHTMLResponse
 from ..types.web_web_scrape_images_response import WebWebScrapeImagesResponse
 from ..types.web_extract_styleguide_response import WebExtractStyleguideResponse
 from ..types.web_web_scrape_sitemap_response import WebWebScrapeSitemapResponse
+from ..types.web_extract_competitors_response import WebExtractCompetitorsResponse
 
 __all__ = ["WebResource", "AsyncWebResource"]
 
@@ -153,6 +155,60 @@ class WebResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=WebExtractResponse,
+        )
+
+    def extract_competitors(
+        self,
+        *,
+        domain: str,
+        num_competitors: int | Omit = omit,
+        timeout_ms: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WebExtractCompetitorsResponse:
+        """
+        Analyze a company's landing page and web search evidence to return direct
+        competitors for the same product or market.
+
+        Args:
+          domain: Company domain to analyze, such as `stripe.com`. Full http(s) URLs are accepted
+              and normalized to their domain.
+
+          num_competitors: Exact number of direct competitors to return. Defaults to 5.
+
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._get(
+            "/web/competitors",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "domain": domain,
+                        "num_competitors": num_competitors,
+                        "timeout_ms": timeout_ms,
+                    },
+                    web_extract_competitors_params.WebExtractCompetitorsParams,
+                ),
+            ),
+            cast_to=WebExtractCompetitorsResponse,
         )
 
     def extract_fonts(
@@ -943,6 +999,60 @@ class AsyncWebResource(AsyncAPIResource):
             cast_to=WebExtractResponse,
         )
 
+    async def extract_competitors(
+        self,
+        *,
+        domain: str,
+        num_competitors: int | Omit = omit,
+        timeout_ms: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WebExtractCompetitorsResponse:
+        """
+        Analyze a company's landing page and web search evidence to return direct
+        competitors for the same product or market.
+
+        Args:
+          domain: Company domain to analyze, such as `stripe.com`. Full http(s) URLs are accepted
+              and normalized to their domain.
+
+          num_competitors: Exact number of direct competitors to return. Defaults to 5.
+
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._get(
+            "/web/competitors",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "domain": domain,
+                        "num_competitors": num_competitors,
+                        "timeout_ms": timeout_ms,
+                    },
+                    web_extract_competitors_params.WebExtractCompetitorsParams,
+                ),
+            ),
+            cast_to=WebExtractCompetitorsResponse,
+        )
+
     async def extract_fonts(
         self,
         *,
@@ -1627,6 +1737,9 @@ class WebResourceWithRawResponse:
         self.extract = to_raw_response_wrapper(
             web.extract,
         )
+        self.extract_competitors = to_raw_response_wrapper(
+            web.extract_competitors,
+        )
         self.extract_fonts = to_raw_response_wrapper(
             web.extract_fonts,
         )
@@ -1662,6 +1775,9 @@ class AsyncWebResourceWithRawResponse:
 
         self.extract = async_to_raw_response_wrapper(
             web.extract,
+        )
+        self.extract_competitors = async_to_raw_response_wrapper(
+            web.extract_competitors,
         )
         self.extract_fonts = async_to_raw_response_wrapper(
             web.extract_fonts,
@@ -1699,6 +1815,9 @@ class WebResourceWithStreamingResponse:
         self.extract = to_streamed_response_wrapper(
             web.extract,
         )
+        self.extract_competitors = to_streamed_response_wrapper(
+            web.extract_competitors,
+        )
         self.extract_fonts = to_streamed_response_wrapper(
             web.extract_fonts,
         )
@@ -1734,6 +1853,9 @@ class AsyncWebResourceWithStreamingResponse:
 
         self.extract = async_to_streamed_response_wrapper(
             web.extract,
+        )
+        self.extract_competitors = async_to_streamed_response_wrapper(
+            web.extract_competitors,
         )
         self.extract_fonts = async_to_streamed_response_wrapper(
             web.extract_fonts,

@@ -20,6 +20,7 @@ from context.dev.types import (
     WebWebScrapeImagesResponse,
     WebWebScrapeSitemapResponse,
     WebExtractStyleguideResponse,
+    WebExtractCompetitorsResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -104,6 +105,50 @@ class TestWeb:
 
             web = response.parse()
             assert_matches_type(WebExtractResponse, web, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_extract_competitors(self, client: ContextDev) -> None:
+        web = client.web.extract_competitors(
+            domain="xxx",
+        )
+        assert_matches_type(WebExtractCompetitorsResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_extract_competitors_with_all_params(self, client: ContextDev) -> None:
+        web = client.web.extract_competitors(
+            domain="xxx",
+            num_competitors=1,
+            timeout_ms=1000,
+        )
+        assert_matches_type(WebExtractCompetitorsResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_extract_competitors(self, client: ContextDev) -> None:
+        response = client.web.with_raw_response.extract_competitors(
+            domain="xxx",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        web = response.parse()
+        assert_matches_type(WebExtractCompetitorsResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_extract_competitors(self, client: ContextDev) -> None:
+        with client.web.with_streaming_response.extract_competitors(
+            domain="xxx",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            web = response.parse()
+            assert_matches_type(WebExtractCompetitorsResponse, web, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -639,6 +684,50 @@ class TestAsyncWeb:
 
             web = await response.parse()
             assert_matches_type(WebExtractResponse, web, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_extract_competitors(self, async_client: AsyncContextDev) -> None:
+        web = await async_client.web.extract_competitors(
+            domain="xxx",
+        )
+        assert_matches_type(WebExtractCompetitorsResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_extract_competitors_with_all_params(self, async_client: AsyncContextDev) -> None:
+        web = await async_client.web.extract_competitors(
+            domain="xxx",
+            num_competitors=1,
+            timeout_ms=1000,
+        )
+        assert_matches_type(WebExtractCompetitorsResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_extract_competitors(self, async_client: AsyncContextDev) -> None:
+        response = await async_client.web.with_raw_response.extract_competitors(
+            domain="xxx",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        web = await response.parse()
+        assert_matches_type(WebExtractCompetitorsResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_extract_competitors(self, async_client: AsyncContextDev) -> None:
+        async with async_client.web.with_streaming_response.extract_competitors(
+            domain="xxx",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            web = await response.parse()
+            assert_matches_type(WebExtractCompetitorsResponse, web, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
