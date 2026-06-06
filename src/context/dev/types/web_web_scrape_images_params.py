@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from typing import Dict
 from typing_extensions import Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
@@ -17,6 +18,13 @@ class WebWebScrapeImagesParams(TypedDict, total=False):
     """
     Optional per-image processing, sent as deep-object query params such as
     enrichment[resolution]=true.
+    """
+
+    headers: Dict[str, str]
+    """
+    Optional outbound HTTP headers forwarded only to the target URL, sent as
+    deep-object query params such as headers[X-Custom]=value. When provided, caching
+    is bypassed: the result is neither read from nor written to cache.
     """
 
     max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
