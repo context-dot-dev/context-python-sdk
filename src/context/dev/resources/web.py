@@ -612,6 +612,7 @@ class WebResource(SyncAPIResource):
         self,
         *,
         url: str,
+        headers: Dict[str, str] | Omit = omit,
         include_frames: bool | Omit = omit,
         max_age_ms: int | Omit = omit,
         pdf: web_web_scrape_html_params.Pdf | Omit = omit,
@@ -629,6 +630,10 @@ class WebResource(SyncAPIResource):
 
         Args:
           url: Full URL to scrape (must include http:// or https:// protocol)
+
+          headers: Optional outbound HTTP headers forwarded only to the target URL, sent as
+              deep-object query params such as headers[X-Custom]=value. When provided, caching
+              is bypassed: the result is neither read from nor written to cache.
 
           include_frames: When true, iframes are rendered inline into the returned HTML.
 
@@ -665,6 +670,7 @@ class WebResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "url": url,
+                        "headers": headers,
                         "include_frames": include_frames,
                         "max_age_ms": max_age_ms,
                         "pdf": pdf,
@@ -682,6 +688,7 @@ class WebResource(SyncAPIResource):
         *,
         url: str,
         enrichment: web_web_scrape_images_params.Enrichment | Omit = omit,
+        headers: Dict[str, str] | Omit = omit,
         max_age_ms: int | Omit = omit,
         timeout_ms: int | Omit = omit,
         wait_for_ms: int | Omit = omit,
@@ -703,6 +710,10 @@ class WebResource(SyncAPIResource):
 
           enrichment: Optional per-image processing, sent as deep-object query params such as
               enrichment[resolution]=true.
+
+          headers: Optional outbound HTTP headers forwarded only to the target URL, sent as
+              deep-object query params such as headers[X-Custom]=value. When provided, caching
+              is bypassed: the result is neither read from nor written to cache.
 
           max_age_ms: Reuse a cached result this many milliseconds old or newer. Default: 86400000 (1
               day). Set to 0 to bypass cache. Maximum: 2592000000 (30 days).
@@ -733,6 +744,7 @@ class WebResource(SyncAPIResource):
                     {
                         "url": url,
                         "enrichment": enrichment,
+                        "headers": headers,
                         "max_age_ms": max_age_ms,
                         "timeout_ms": timeout_ms,
                         "wait_for_ms": wait_for_ms,
@@ -747,6 +759,7 @@ class WebResource(SyncAPIResource):
         self,
         *,
         url: str,
+        headers: Dict[str, str] | Omit = omit,
         include_frames: bool | Omit = omit,
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
@@ -769,6 +782,10 @@ class WebResource(SyncAPIResource):
         Args:
           url: Full URL to scrape into LLM usable Markdown (must include http:// or https://
               protocol)
+
+          headers: Optional outbound HTTP headers forwarded only to the target URL, sent as
+              deep-object query params such as headers[X-Custom]=value. When provided, caching
+              is bypassed: the result is neither read from nor written to cache.
 
           include_frames: When true, the contents of iframes are rendered to Markdown.
 
@@ -813,6 +830,7 @@ class WebResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "url": url,
+                        "headers": headers,
                         "include_frames": include_frames,
                         "include_images": include_images,
                         "include_links": include_links,
@@ -833,6 +851,7 @@ class WebResource(SyncAPIResource):
         self,
         *,
         domain: str,
+        headers: Dict[str, str] | Omit = omit,
         max_links: int | Omit = omit,
         timeout_ms: int | Omit = omit,
         url_regex: str | Omit = omit,
@@ -848,6 +867,10 @@ class WebResource(SyncAPIResource):
 
         Args:
           domain: Domain to build a sitemap for
+
+          headers: Optional outbound HTTP headers forwarded only to the target URL, sent as
+              deep-object query params such as headers[X-Custom]=value. When provided, caching
+              is bypassed: the result is neither read from nor written to cache.
 
           max_links: Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
               Minimum is 1, maximum is 100,000.
@@ -877,6 +900,7 @@ class WebResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "domain": domain,
+                        "headers": headers,
                         "max_links": max_links,
                         "timeout_ms": timeout_ms,
                         "url_regex": url_regex,
@@ -1454,6 +1478,7 @@ class AsyncWebResource(AsyncAPIResource):
         self,
         *,
         url: str,
+        headers: Dict[str, str] | Omit = omit,
         include_frames: bool | Omit = omit,
         max_age_ms: int | Omit = omit,
         pdf: web_web_scrape_html_params.Pdf | Omit = omit,
@@ -1471,6 +1496,10 @@ class AsyncWebResource(AsyncAPIResource):
 
         Args:
           url: Full URL to scrape (must include http:// or https:// protocol)
+
+          headers: Optional outbound HTTP headers forwarded only to the target URL, sent as
+              deep-object query params such as headers[X-Custom]=value. When provided, caching
+              is bypassed: the result is neither read from nor written to cache.
 
           include_frames: When true, iframes are rendered inline into the returned HTML.
 
@@ -1507,6 +1536,7 @@ class AsyncWebResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "url": url,
+                        "headers": headers,
                         "include_frames": include_frames,
                         "max_age_ms": max_age_ms,
                         "pdf": pdf,
@@ -1524,6 +1554,7 @@ class AsyncWebResource(AsyncAPIResource):
         *,
         url: str,
         enrichment: web_web_scrape_images_params.Enrichment | Omit = omit,
+        headers: Dict[str, str] | Omit = omit,
         max_age_ms: int | Omit = omit,
         timeout_ms: int | Omit = omit,
         wait_for_ms: int | Omit = omit,
@@ -1545,6 +1576,10 @@ class AsyncWebResource(AsyncAPIResource):
 
           enrichment: Optional per-image processing, sent as deep-object query params such as
               enrichment[resolution]=true.
+
+          headers: Optional outbound HTTP headers forwarded only to the target URL, sent as
+              deep-object query params such as headers[X-Custom]=value. When provided, caching
+              is bypassed: the result is neither read from nor written to cache.
 
           max_age_ms: Reuse a cached result this many milliseconds old or newer. Default: 86400000 (1
               day). Set to 0 to bypass cache. Maximum: 2592000000 (30 days).
@@ -1575,6 +1610,7 @@ class AsyncWebResource(AsyncAPIResource):
                     {
                         "url": url,
                         "enrichment": enrichment,
+                        "headers": headers,
                         "max_age_ms": max_age_ms,
                         "timeout_ms": timeout_ms,
                         "wait_for_ms": wait_for_ms,
@@ -1589,6 +1625,7 @@ class AsyncWebResource(AsyncAPIResource):
         self,
         *,
         url: str,
+        headers: Dict[str, str] | Omit = omit,
         include_frames: bool | Omit = omit,
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
@@ -1611,6 +1648,10 @@ class AsyncWebResource(AsyncAPIResource):
         Args:
           url: Full URL to scrape into LLM usable Markdown (must include http:// or https://
               protocol)
+
+          headers: Optional outbound HTTP headers forwarded only to the target URL, sent as
+              deep-object query params such as headers[X-Custom]=value. When provided, caching
+              is bypassed: the result is neither read from nor written to cache.
 
           include_frames: When true, the contents of iframes are rendered to Markdown.
 
@@ -1655,6 +1696,7 @@ class AsyncWebResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "url": url,
+                        "headers": headers,
                         "include_frames": include_frames,
                         "include_images": include_images,
                         "include_links": include_links,
@@ -1675,6 +1717,7 @@ class AsyncWebResource(AsyncAPIResource):
         self,
         *,
         domain: str,
+        headers: Dict[str, str] | Omit = omit,
         max_links: int | Omit = omit,
         timeout_ms: int | Omit = omit,
         url_regex: str | Omit = omit,
@@ -1690,6 +1733,10 @@ class AsyncWebResource(AsyncAPIResource):
 
         Args:
           domain: Domain to build a sitemap for
+
+          headers: Optional outbound HTTP headers forwarded only to the target URL, sent as
+              deep-object query params such as headers[X-Custom]=value. When provided, caching
+              is bypassed: the result is neither read from nor written to cache.
 
           max_links: Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
               Minimum is 1, maximum is 100,000.
@@ -1719,6 +1766,7 @@ class AsyncWebResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "domain": domain,
+                        "headers": headers,
                         "max_links": max_links,
                         "timeout_ms": timeout_ms,
                         "url_regex": url_regex,

@@ -413,6 +413,7 @@ class TestWeb:
     def test_method_web_scrape_html_with_all_params(self, client: ContextDev) -> None:
         web = client.web.web_scrape_html(
             url="https://example.com",
+            headers={"foo": "J!"},
             include_frames=True,
             max_age_ms=0,
             pdf={
@@ -470,6 +471,7 @@ class TestWeb:
                 "max_time_per_ms": 1,
                 "resolution": True,
             },
+            headers={"foo": "J!"},
             max_age_ms=0,
             timeout_ms=1000,
             wait_for_ms=0,
@@ -515,6 +517,7 @@ class TestWeb:
     def test_method_web_scrape_md_with_all_params(self, client: ContextDev) -> None:
         web = client.web.web_scrape_md(
             url="https://example.com",
+            headers={"foo": "J!"},
             include_frames=True,
             include_images=True,
             include_links=True,
@@ -570,6 +573,7 @@ class TestWeb:
     def test_method_web_scrape_sitemap_with_all_params(self, client: ContextDev) -> None:
         web = client.web.web_scrape_sitemap(
             domain="domain",
+            headers={"foo": "J!"},
             max_links=1,
             timeout_ms=1000,
             url_regex="^https?://[^/]+/blog/",
@@ -992,6 +996,7 @@ class TestAsyncWeb:
     async def test_method_web_scrape_html_with_all_params(self, async_client: AsyncContextDev) -> None:
         web = await async_client.web.web_scrape_html(
             url="https://example.com",
+            headers={"foo": "J!"},
             include_frames=True,
             max_age_ms=0,
             pdf={
@@ -1049,6 +1054,7 @@ class TestAsyncWeb:
                 "max_time_per_ms": 1,
                 "resolution": True,
             },
+            headers={"foo": "J!"},
             max_age_ms=0,
             timeout_ms=1000,
             wait_for_ms=0,
@@ -1094,6 +1100,7 @@ class TestAsyncWeb:
     async def test_method_web_scrape_md_with_all_params(self, async_client: AsyncContextDev) -> None:
         web = await async_client.web.web_scrape_md(
             url="https://example.com",
+            headers={"foo": "J!"},
             include_frames=True,
             include_images=True,
             include_links=True,
@@ -1149,6 +1156,7 @@ class TestAsyncWeb:
     async def test_method_web_scrape_sitemap_with_all_params(self, async_client: AsyncContextDev) -> None:
         web = await async_client.web.web_scrape_sitemap(
             domain="domain",
+            headers={"foo": "J!"},
             max_links=1,
             timeout_ms=1000,
             url_regex="^https?://[^/]+/blog/",

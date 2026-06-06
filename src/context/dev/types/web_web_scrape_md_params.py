@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from typing import Dict
 from typing_extensions import Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
@@ -14,6 +15,13 @@ class WebWebScrapeMdParams(TypedDict, total=False):
     """
     Full URL to scrape into LLM usable Markdown (must include http:// or https://
     protocol)
+    """
+
+    headers: Dict[str, str]
+    """
+    Optional outbound HTTP headers forwarded only to the target URL, sent as
+    deep-object query params such as headers[X-Custom]=value. When provided, caching
+    is bypassed: the result is neither read from nor written to cache.
     """
 
     include_frames: Annotated[bool, PropertyInfo(alias="includeFrames")]
