@@ -503,10 +503,12 @@ class WebResource(SyncAPIResource):
         self,
         *,
         url: str,
+        exclude_selectors: SequenceNotStr[str] | Omit = omit,
         follow_subdomains: bool | Omit = omit,
         include_frames: bool | Omit = omit,
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
+        include_selectors: SequenceNotStr[str] | Omit = omit,
         max_age_ms: int | Omit = omit,
         max_depth: int | Omit = omit,
         max_pages: int | Omit = omit,
@@ -531,6 +533,10 @@ class WebResource(SyncAPIResource):
         Args:
           url: The starting URL for the crawl (must include http:// or https:// protocol)
 
+          exclude_selectors: CSS selectors to remove before each crawled page is converted to Markdown.
+              Applied after includeSelectors. Exclusion takes precedence: an element matching
+              both is removed. Examples: "nav", "footer", ".ad-banner", "[aria-hidden=true]".
+
           follow_subdomains: When true, follow links on subdomains of the starting URL's domain (e.g.
               docs.example.com when starting from example.com). www and apex are always
               treated as equivalent.
@@ -541,6 +547,11 @@ class WebResource(SyncAPIResource):
           include_images: Include image references in the Markdown output
 
           include_links: Preserve hyperlinks in the Markdown output
+
+          include_selectors: CSS selectors. When provided, only matching HTML subtrees (and their
+              descendants) are kept before each crawled page is converted to Markdown. When
+              omitted, the entire document is kept. Examples: "article.main", "#content",
+              "[role=main]".
 
           max_age_ms: Return a cached result if a prior scrape for the same parameters exists and is
               younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
@@ -585,10 +596,12 @@ class WebResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "url": url,
+                    "exclude_selectors": exclude_selectors,
                     "follow_subdomains": follow_subdomains,
                     "include_frames": include_frames,
                     "include_images": include_images,
                     "include_links": include_links,
+                    "include_selectors": include_selectors,
                     "max_age_ms": max_age_ms,
                     "max_depth": max_depth,
                     "max_pages": max_pages,
@@ -612,8 +625,10 @@ class WebResource(SyncAPIResource):
         self,
         *,
         url: str,
+        exclude_selectors: SequenceNotStr[str] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
         include_frames: bool | Omit = omit,
+        include_selectors: SequenceNotStr[str] | Omit = omit,
         max_age_ms: int | Omit = omit,
         pdf: web_web_scrape_html_params.Pdf | Omit = omit,
         timeout_ms: int | Omit = omit,
@@ -631,11 +646,19 @@ class WebResource(SyncAPIResource):
         Args:
           url: Full URL to scrape (must include http:// or https:// protocol)
 
+          exclude_selectors: CSS selectors to remove from the result. Applied after includeSelectors.
+              Exclusion takes precedence: an element matching both is removed. Examples:
+              "nav", "footer", ".ad-banner", "[aria-hidden=true]".
+
           headers: Optional outbound HTTP headers forwarded only to the target URL, sent as
               deep-object query params such as headers[X-Custom]=value. When provided, caching
               is bypassed: the result is neither read from nor written to cache.
 
           include_frames: When true, iframes are rendered inline into the returned HTML.
+
+          include_selectors: CSS selectors. When provided, only matching subtrees (and their descendants) are
+              kept and everything else is dropped. When omitted, the entire document is kept.
+              Examples: "article.main", "#content", "[role=main]".
 
           max_age_ms: Return a cached result if a prior scrape for the same parameters exists and is
               younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
@@ -670,8 +693,10 @@ class WebResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "url": url,
+                        "exclude_selectors": exclude_selectors,
                         "headers": headers,
                         "include_frames": include_frames,
+                        "include_selectors": include_selectors,
                         "max_age_ms": max_age_ms,
                         "pdf": pdf,
                         "timeout_ms": timeout_ms,
@@ -759,10 +784,12 @@ class WebResource(SyncAPIResource):
         self,
         *,
         url: str,
+        exclude_selectors: SequenceNotStr[str] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
         include_frames: bool | Omit = omit,
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
+        include_selectors: SequenceNotStr[str] | Omit = omit,
         max_age_ms: int | Omit = omit,
         pdf: web_web_scrape_md_params.Pdf | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
@@ -783,6 +810,10 @@ class WebResource(SyncAPIResource):
           url: Full URL to scrape into LLM usable Markdown (must include http:// or https://
               protocol)
 
+          exclude_selectors: CSS selectors to remove before conversion to Markdown. Applied after
+              includeSelectors. Exclusion takes precedence: an element matching both is
+              removed. Examples: "nav", "footer", ".ad-banner", "[aria-hidden=true]".
+
           headers: Optional outbound HTTP headers forwarded only to the target URL, sent as
               deep-object query params such as headers[X-Custom]=value. When provided, caching
               is bypassed: the result is neither read from nor written to cache.
@@ -792,6 +823,10 @@ class WebResource(SyncAPIResource):
           include_images: Include image references in Markdown output
 
           include_links: Preserve hyperlinks in Markdown output
+
+          include_selectors: CSS selectors. When provided, only matching HTML subtrees (and their
+              descendants) are kept before conversion to Markdown. When omitted, the entire
+              document is kept. Examples: "article.main", "#content", "[role=main]".
 
           max_age_ms: Return a cached result if a prior scrape for the same parameters exists and is
               younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
@@ -830,10 +865,12 @@ class WebResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "url": url,
+                        "exclude_selectors": exclude_selectors,
                         "headers": headers,
                         "include_frames": include_frames,
                         "include_images": include_images,
                         "include_links": include_links,
+                        "include_selectors": include_selectors,
                         "max_age_ms": max_age_ms,
                         "pdf": pdf,
                         "shorten_base64_images": shorten_base64_images,
@@ -1369,10 +1406,12 @@ class AsyncWebResource(AsyncAPIResource):
         self,
         *,
         url: str,
+        exclude_selectors: SequenceNotStr[str] | Omit = omit,
         follow_subdomains: bool | Omit = omit,
         include_frames: bool | Omit = omit,
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
+        include_selectors: SequenceNotStr[str] | Omit = omit,
         max_age_ms: int | Omit = omit,
         max_depth: int | Omit = omit,
         max_pages: int | Omit = omit,
@@ -1397,6 +1436,10 @@ class AsyncWebResource(AsyncAPIResource):
         Args:
           url: The starting URL for the crawl (must include http:// or https:// protocol)
 
+          exclude_selectors: CSS selectors to remove before each crawled page is converted to Markdown.
+              Applied after includeSelectors. Exclusion takes precedence: an element matching
+              both is removed. Examples: "nav", "footer", ".ad-banner", "[aria-hidden=true]".
+
           follow_subdomains: When true, follow links on subdomains of the starting URL's domain (e.g.
               docs.example.com when starting from example.com). www and apex are always
               treated as equivalent.
@@ -1407,6 +1450,11 @@ class AsyncWebResource(AsyncAPIResource):
           include_images: Include image references in the Markdown output
 
           include_links: Preserve hyperlinks in the Markdown output
+
+          include_selectors: CSS selectors. When provided, only matching HTML subtrees (and their
+              descendants) are kept before each crawled page is converted to Markdown. When
+              omitted, the entire document is kept. Examples: "article.main", "#content",
+              "[role=main]".
 
           max_age_ms: Return a cached result if a prior scrape for the same parameters exists and is
               younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
@@ -1451,10 +1499,12 @@ class AsyncWebResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "url": url,
+                    "exclude_selectors": exclude_selectors,
                     "follow_subdomains": follow_subdomains,
                     "include_frames": include_frames,
                     "include_images": include_images,
                     "include_links": include_links,
+                    "include_selectors": include_selectors,
                     "max_age_ms": max_age_ms,
                     "max_depth": max_depth,
                     "max_pages": max_pages,
@@ -1478,8 +1528,10 @@ class AsyncWebResource(AsyncAPIResource):
         self,
         *,
         url: str,
+        exclude_selectors: SequenceNotStr[str] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
         include_frames: bool | Omit = omit,
+        include_selectors: SequenceNotStr[str] | Omit = omit,
         max_age_ms: int | Omit = omit,
         pdf: web_web_scrape_html_params.Pdf | Omit = omit,
         timeout_ms: int | Omit = omit,
@@ -1497,11 +1549,19 @@ class AsyncWebResource(AsyncAPIResource):
         Args:
           url: Full URL to scrape (must include http:// or https:// protocol)
 
+          exclude_selectors: CSS selectors to remove from the result. Applied after includeSelectors.
+              Exclusion takes precedence: an element matching both is removed. Examples:
+              "nav", "footer", ".ad-banner", "[aria-hidden=true]".
+
           headers: Optional outbound HTTP headers forwarded only to the target URL, sent as
               deep-object query params such as headers[X-Custom]=value. When provided, caching
               is bypassed: the result is neither read from nor written to cache.
 
           include_frames: When true, iframes are rendered inline into the returned HTML.
+
+          include_selectors: CSS selectors. When provided, only matching subtrees (and their descendants) are
+              kept and everything else is dropped. When omitted, the entire document is kept.
+              Examples: "article.main", "#content", "[role=main]".
 
           max_age_ms: Return a cached result if a prior scrape for the same parameters exists and is
               younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
@@ -1536,8 +1596,10 @@ class AsyncWebResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "url": url,
+                        "exclude_selectors": exclude_selectors,
                         "headers": headers,
                         "include_frames": include_frames,
+                        "include_selectors": include_selectors,
                         "max_age_ms": max_age_ms,
                         "pdf": pdf,
                         "timeout_ms": timeout_ms,
@@ -1625,10 +1687,12 @@ class AsyncWebResource(AsyncAPIResource):
         self,
         *,
         url: str,
+        exclude_selectors: SequenceNotStr[str] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
         include_frames: bool | Omit = omit,
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
+        include_selectors: SequenceNotStr[str] | Omit = omit,
         max_age_ms: int | Omit = omit,
         pdf: web_web_scrape_md_params.Pdf | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
@@ -1649,6 +1713,10 @@ class AsyncWebResource(AsyncAPIResource):
           url: Full URL to scrape into LLM usable Markdown (must include http:// or https://
               protocol)
 
+          exclude_selectors: CSS selectors to remove before conversion to Markdown. Applied after
+              includeSelectors. Exclusion takes precedence: an element matching both is
+              removed. Examples: "nav", "footer", ".ad-banner", "[aria-hidden=true]".
+
           headers: Optional outbound HTTP headers forwarded only to the target URL, sent as
               deep-object query params such as headers[X-Custom]=value. When provided, caching
               is bypassed: the result is neither read from nor written to cache.
@@ -1658,6 +1726,10 @@ class AsyncWebResource(AsyncAPIResource):
           include_images: Include image references in Markdown output
 
           include_links: Preserve hyperlinks in Markdown output
+
+          include_selectors: CSS selectors. When provided, only matching HTML subtrees (and their
+              descendants) are kept before conversion to Markdown. When omitted, the entire
+              document is kept. Examples: "article.main", "#content", "[role=main]".
 
           max_age_ms: Return a cached result if a prior scrape for the same parameters exists and is
               younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
@@ -1696,10 +1768,12 @@ class AsyncWebResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "url": url,
+                        "exclude_selectors": exclude_selectors,
                         "headers": headers,
                         "include_frames": include_frames,
                         "include_images": include_images,
                         "include_links": include_links,
+                        "include_selectors": include_selectors,
                         "max_age_ms": max_age_ms,
                         "pdf": pdf,
                         "shorten_base64_images": shorten_base64_images,

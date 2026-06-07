@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing_extensions import Required, Annotated, TypedDict
 
+from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
 __all__ = ["WebWebCrawlMdParams", "Pdf"]
@@ -12,6 +13,13 @@ __all__ = ["WebWebCrawlMdParams", "Pdf"]
 class WebWebCrawlMdParams(TypedDict, total=False):
     url: Required[str]
     """The starting URL for the crawl (must include http:// or https:// protocol)"""
+
+    exclude_selectors: Annotated[SequenceNotStr[str], PropertyInfo(alias="excludeSelectors")]
+    """CSS selectors to remove before each crawled page is converted to Markdown.
+
+    Applied after includeSelectors. Exclusion takes precedence: an element matching
+    both is removed. Examples: "nav", "footer", ".ad-banner", "[aria-hidden=true]".
+    """
 
     follow_subdomains: Annotated[bool, PropertyInfo(alias="followSubdomains")]
     """When true, follow links on subdomains of the starting URL's domain (e.g.
@@ -31,6 +39,14 @@ class WebWebCrawlMdParams(TypedDict, total=False):
 
     include_links: Annotated[bool, PropertyInfo(alias="includeLinks")]
     """Preserve hyperlinks in the Markdown output"""
+
+    include_selectors: Annotated[SequenceNotStr[str], PropertyInfo(alias="includeSelectors")]
+    """CSS selectors.
+
+    When provided, only matching HTML subtrees (and their descendants) are kept
+    before each crawled page is converted to Markdown. When omitted, the entire
+    document is kept. Examples: "article.main", "#content", "[role=main]".
+    """
 
     max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
     """
