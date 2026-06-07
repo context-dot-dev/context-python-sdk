@@ -353,10 +353,12 @@ class TestWeb:
     def test_method_web_crawl_md_with_all_params(self, client: ContextDev) -> None:
         web = client.web.web_crawl_md(
             url="https://example.com",
+            exclude_selectors=["string"],
             follow_subdomains=True,
             include_frames=True,
             include_images=True,
             include_links=True,
+            include_selectors=["string"],
             max_age_ms=0,
             max_depth=0,
             max_pages=1,
@@ -413,8 +415,10 @@ class TestWeb:
     def test_method_web_scrape_html_with_all_params(self, client: ContextDev) -> None:
         web = client.web.web_scrape_html(
             url="https://example.com",
+            exclude_selectors=["string"],
             headers={"foo": "J!"},
             include_frames=True,
+            include_selectors=["string"],
             max_age_ms=0,
             pdf={
                 "end": 1,
@@ -517,10 +521,12 @@ class TestWeb:
     def test_method_web_scrape_md_with_all_params(self, client: ContextDev) -> None:
         web = client.web.web_scrape_md(
             url="https://example.com",
+            exclude_selectors=["string"],
             headers={"foo": "J!"},
             include_frames=True,
             include_images=True,
             include_links=True,
+            include_selectors=["string"],
             max_age_ms=0,
             pdf={
                 "end": 1,
@@ -936,10 +942,12 @@ class TestAsyncWeb:
     async def test_method_web_crawl_md_with_all_params(self, async_client: AsyncContextDev) -> None:
         web = await async_client.web.web_crawl_md(
             url="https://example.com",
+            exclude_selectors=["string"],
             follow_subdomains=True,
             include_frames=True,
             include_images=True,
             include_links=True,
+            include_selectors=["string"],
             max_age_ms=0,
             max_depth=0,
             max_pages=1,
@@ -996,8 +1004,10 @@ class TestAsyncWeb:
     async def test_method_web_scrape_html_with_all_params(self, async_client: AsyncContextDev) -> None:
         web = await async_client.web.web_scrape_html(
             url="https://example.com",
+            exclude_selectors=["string"],
             headers={"foo": "J!"},
             include_frames=True,
+            include_selectors=["string"],
             max_age_ms=0,
             pdf={
                 "end": 1,
@@ -1100,10 +1110,12 @@ class TestAsyncWeb:
     async def test_method_web_scrape_md_with_all_params(self, async_client: AsyncContextDev) -> None:
         web = await async_client.web.web_scrape_md(
             url="https://example.com",
+            exclude_selectors=["string"],
             headers={"foo": "J!"},
             include_frames=True,
             include_images=True,
             include_links=True,
+            include_selectors=["string"],
             max_age_ms=0,
             pdf={
                 "end": 1,

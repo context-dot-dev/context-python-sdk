@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import Dict
 from typing_extensions import Required, Annotated, TypedDict
 
+from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
 __all__ = ["WebWebScrapeHTMLParams", "Pdf"]
@@ -13,6 +14,13 @@ __all__ = ["WebWebScrapeHTMLParams", "Pdf"]
 class WebWebScrapeHTMLParams(TypedDict, total=False):
     url: Required[str]
     """Full URL to scrape (must include http:// or https:// protocol)"""
+
+    exclude_selectors: Annotated[SequenceNotStr[str], PropertyInfo(alias="excludeSelectors")]
+    """CSS selectors to remove from the result.
+
+    Applied after includeSelectors. Exclusion takes precedence: an element matching
+    both is removed. Examples: "nav", "footer", ".ad-banner", "[aria-hidden=true]".
+    """
 
     headers: Dict[str, str]
     """
@@ -23,6 +31,14 @@ class WebWebScrapeHTMLParams(TypedDict, total=False):
 
     include_frames: Annotated[bool, PropertyInfo(alias="includeFrames")]
     """When true, iframes are rendered inline into the returned HTML."""
+
+    include_selectors: Annotated[SequenceNotStr[str], PropertyInfo(alias="includeSelectors")]
+    """CSS selectors.
+
+    When provided, only matching subtrees (and their descendants) are kept and
+    everything else is dropped. When omitted, the entire document is kept. Examples:
+    "article.main", "#content", "[role=main]".
+    """
 
     max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
     """

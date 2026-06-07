@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import Dict
 from typing_extensions import Required, Annotated, TypedDict
 
+from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
 __all__ = ["WebWebScrapeMdParams", "Pdf"]
@@ -15,6 +16,13 @@ class WebWebScrapeMdParams(TypedDict, total=False):
     """
     Full URL to scrape into LLM usable Markdown (must include http:// or https://
     protocol)
+    """
+
+    exclude_selectors: Annotated[SequenceNotStr[str], PropertyInfo(alias="excludeSelectors")]
+    """CSS selectors to remove before conversion to Markdown.
+
+    Applied after includeSelectors. Exclusion takes precedence: an element matching
+    both is removed. Examples: "nav", "footer", ".ad-banner", "[aria-hidden=true]".
     """
 
     headers: Dict[str, str]
@@ -32,6 +40,14 @@ class WebWebScrapeMdParams(TypedDict, total=False):
 
     include_links: Annotated[bool, PropertyInfo(alias="includeLinks")]
     """Preserve hyperlinks in Markdown output"""
+
+    include_selectors: Annotated[SequenceNotStr[str], PropertyInfo(alias="includeSelectors")]
+    """CSS selectors.
+
+    When provided, only matching HTML subtrees (and their descendants) are kept
+    before conversion to Markdown. When omitted, the entire document is kept.
+    Examples: "article.main", "#content", "[role=main]".
+    """
 
     max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
     """
