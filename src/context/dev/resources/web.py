@@ -116,7 +116,8 @@ class WebResource(SyncAPIResource):
           max_age_ms: Return cached scrape results if a prior scrape for the same parameters is
               younger than this many milliseconds. Defaults to 7 days (604800000 ms).
 
-          stop_after_ms: Soft time budget for the crawl in milliseconds.
+          stop_after_ms: Soft time budget for the crawl in milliseconds. Min: 10000 (10s). Max: 110000
+              (110s). Default: 80000 (80s).
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -568,8 +569,8 @@ class WebResource(SyncAPIResource):
 
           stop_after_ms: Soft time budget for the crawl in milliseconds. After each scrape, the crawler
               checks the elapsed time and, if exceeded, returns the pages collected so far
-              instead of continuing. Min: 10000 (10s). Max: 240000 (4 min). Default: 120000 (2
-              min).
+              instead of continuing. Min: 10000 (10s). Max: 110000 (110s). Default: 80000
+              (80s).
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -1019,7 +1020,8 @@ class AsyncWebResource(AsyncAPIResource):
           max_age_ms: Return cached scrape results if a prior scrape for the same parameters is
               younger than this many milliseconds. Defaults to 7 days (604800000 ms).
 
-          stop_after_ms: Soft time budget for the crawl in milliseconds.
+          stop_after_ms: Soft time budget for the crawl in milliseconds. Min: 10000 (10s). Max: 110000
+              (110s). Default: 80000 (80s).
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -1471,8 +1473,8 @@ class AsyncWebResource(AsyncAPIResource):
 
           stop_after_ms: Soft time budget for the crawl in milliseconds. After each scrape, the crawler
               checks the elapsed time and, if exceeded, returns the pages collected so far
-              instead of continuing. Min: 10000 (10s). Max: 240000 (4 min). Default: 120000 (2
-              min).
+              instead of continuing. Min: 10000 (10s). Max: 110000 (110s). Default: 80000
+              (80s).
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
