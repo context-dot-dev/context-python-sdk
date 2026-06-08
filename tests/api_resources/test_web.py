@@ -426,6 +426,7 @@ class TestWeb:
                 "start": 1,
             },
             timeout_ms=1000,
+            use_main_content_only=True,
             wait_for_ms=0,
         )
         assert_matches_type(WebWebScrapeHTMLResponse, web, path=["response"])
@@ -1015,6 +1016,7 @@ class TestAsyncWeb:
                 "start": 1,
             },
             timeout_ms=1000,
+            use_main_content_only=True,
             wait_for_ms=0,
         )
         assert_matches_type(WebWebScrapeHTMLResponse, web, path=["response"])
