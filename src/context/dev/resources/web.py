@@ -76,6 +76,8 @@ class WebResource(SyncAPIResource):
         include_frames: bool | Omit = omit,
         instructions: str | Omit = omit,
         max_age_ms: int | Omit = omit,
+        max_depth: int | Omit = omit,
+        max_pages: int | Omit = omit,
         pdf: web_extract_params.Pdf | Omit = omit,
         stop_after_ms: int | Omit = omit,
         timeout_ms: int | Omit = omit,
@@ -116,6 +118,11 @@ class WebResource(SyncAPIResource):
           max_age_ms: Return cached scrape results if a prior scrape for the same parameters is
               younger than this many milliseconds. Defaults to 7 days (604800000 ms).
 
+          max_depth: Optional maximum link depth from the starting URL (0 = only the starting page).
+              If omitted, there is no crawl depth limit.
+
+          max_pages: Maximum number of pages to analyze for extraction. Hard cap: 50. Defaults to 5.
+
           stop_after_ms: Soft time budget for the crawl in milliseconds. Min: 10000 (10s). Max: 110000
               (110s). Default: 80000 (80s).
 
@@ -145,6 +152,8 @@ class WebResource(SyncAPIResource):
                     "include_frames": include_frames,
                     "instructions": instructions,
                     "max_age_ms": max_age_ms,
+                    "max_depth": max_depth,
+                    "max_pages": max_pages,
                     "pdf": pdf,
                     "stop_after_ms": stop_after_ms,
                     "timeout_ms": timeout_ms,
@@ -985,6 +994,8 @@ class AsyncWebResource(AsyncAPIResource):
         include_frames: bool | Omit = omit,
         instructions: str | Omit = omit,
         max_age_ms: int | Omit = omit,
+        max_depth: int | Omit = omit,
+        max_pages: int | Omit = omit,
         pdf: web_extract_params.Pdf | Omit = omit,
         stop_after_ms: int | Omit = omit,
         timeout_ms: int | Omit = omit,
@@ -1025,6 +1036,11 @@ class AsyncWebResource(AsyncAPIResource):
           max_age_ms: Return cached scrape results if a prior scrape for the same parameters is
               younger than this many milliseconds. Defaults to 7 days (604800000 ms).
 
+          max_depth: Optional maximum link depth from the starting URL (0 = only the starting page).
+              If omitted, there is no crawl depth limit.
+
+          max_pages: Maximum number of pages to analyze for extraction. Hard cap: 50. Defaults to 5.
+
           stop_after_ms: Soft time budget for the crawl in milliseconds. Min: 10000 (10s). Max: 110000
               (110s). Default: 80000 (80s).
 
@@ -1054,6 +1070,8 @@ class AsyncWebResource(AsyncAPIResource):
                     "include_frames": include_frames,
                     "instructions": instructions,
                     "max_age_ms": max_age_ms,
+                    "max_depth": max_depth,
+                    "max_pages": max_pages,
                     "pdf": pdf,
                     "stop_after_ms": stop_after_ms,
                     "timeout_ms": timeout_ms,
