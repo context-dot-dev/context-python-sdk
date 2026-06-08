@@ -61,6 +61,12 @@ class WebWebScrapeHTMLParams(TypedDict, total=False):
     status code. Maximum allowed value is 300000ms (5 minutes).
     """
 
+    use_main_content_only: Annotated[bool, PropertyInfo(alias="useMainContentOnly")]
+    """
+    When true, return only the page's main content in the HTML response, excluding
+    headers, footers, sidebars, and navigation when detectable.
+    """
+
     wait_for_ms: Annotated[int, PropertyInfo(alias="waitForMs")]
     """Optional browser wait time in milliseconds after initial page load.
 
