@@ -59,6 +59,8 @@ class TestWeb:
             include_frames=True,
             instructions="instructions",
             max_age_ms=0,
+            max_depth=0,
+            max_pages=1,
             pdf={
                 "end": 1,
                 "should_parse": True,
@@ -649,6 +651,8 @@ class TestAsyncWeb:
             include_frames=True,
             instructions="instructions",
             max_age_ms=0,
+            max_depth=0,
+            max_pages=1,
             pdf={
                 "end": 1,
                 "should_parse": True,
