@@ -633,6 +633,7 @@ class WebResource(SyncAPIResource):
         max_age_ms: int | Omit = omit,
         pdf: web_web_scrape_html_params.Pdf | Omit = omit,
         timeout_ms: int | Omit = omit,
+        use_main_content_only: bool | Omit = omit,
         wait_for_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -672,6 +673,9 @@ class WebResource(SyncAPIResource):
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
 
+          use_main_content_only: When true, return only the page's main content in the HTML response, excluding
+              headers, footers, sidebars, and navigation when detectable.
+
           wait_for_ms:
               Optional browser wait time in milliseconds after initial page load. Min: 0. Max:
               30000 (30 seconds).
@@ -701,6 +705,7 @@ class WebResource(SyncAPIResource):
                         "max_age_ms": max_age_ms,
                         "pdf": pdf,
                         "timeout_ms": timeout_ms,
+                        "use_main_content_only": use_main_content_only,
                         "wait_for_ms": wait_for_ms,
                     },
                     web_web_scrape_html_params.WebWebScrapeHTMLParams,
@@ -1537,6 +1542,7 @@ class AsyncWebResource(AsyncAPIResource):
         max_age_ms: int | Omit = omit,
         pdf: web_web_scrape_html_params.Pdf | Omit = omit,
         timeout_ms: int | Omit = omit,
+        use_main_content_only: bool | Omit = omit,
         wait_for_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -1576,6 +1582,9 @@ class AsyncWebResource(AsyncAPIResource):
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
 
+          use_main_content_only: When true, return only the page's main content in the HTML response, excluding
+              headers, footers, sidebars, and navigation when detectable.
+
           wait_for_ms:
               Optional browser wait time in milliseconds after initial page load. Min: 0. Max:
               30000 (30 seconds).
@@ -1605,6 +1614,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "max_age_ms": max_age_ms,
                         "pdf": pdf,
                         "timeout_ms": timeout_ms,
+                        "use_main_content_only": use_main_content_only,
                         "wait_for_ms": wait_for_ms,
                     },
                     web_web_scrape_html_params.WebWebScrapeHTMLParams,
