@@ -75,8 +75,8 @@ class WebWebCrawlMdParams(TypedDict, total=False):
     """Soft time budget for the crawl in milliseconds.
 
     After each scrape, the crawler checks the elapsed time and, if exceeded, returns
-    the pages collected so far instead of continuing. Min: 10000 (10s). Max: 240000
-    (4 min). Default: 120000 (2 min).
+    the pages collected so far instead of continuing. Min: 10000 (10s). Max: 110000
+    (110s). Default: 80000 (80s).
     """
 
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]

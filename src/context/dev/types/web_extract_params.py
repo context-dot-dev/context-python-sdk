@@ -55,7 +55,10 @@ class WebExtractParams(TypedDict, total=False):
     pdf: Pdf
 
     stop_after_ms: Annotated[int, PropertyInfo(alias="stopAfterMs")]
-    """Soft time budget for the crawl in milliseconds."""
+    """Soft time budget for the crawl in milliseconds.
+
+    Min: 10000 (10s). Max: 110000 (110s). Default: 80000 (80s).
+    """
 
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
     """Optional timeout in milliseconds for the request.
