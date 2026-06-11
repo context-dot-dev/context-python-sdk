@@ -5,7 +5,7 @@ from typing_extensions import Literal
 
 from .._models import BaseModel
 
-__all__ = ["WebWebScrapeImagesResponse", "Image", "ImageEnrichment"]
+__all__ = ["WebWebScrapeImagesResponse", "Image", "ImageEnrichment", "KeyMetadata"]
 
 
 class ImageEnrichment(BaseModel):
@@ -46,6 +46,19 @@ class Image(BaseModel):
     """Requested metadata for images that could be processed."""
 
 
+class KeyMetadata(BaseModel):
+    """Metadata about the API key used for the request.
+
+    Included in every response whenever a valid API key is provided, even when the response status is not 200.
+    """
+
+    credits_consumed: int
+    """The number of credits consumed by this request."""
+
+    credits_remaining: int
+    """The number of credits remaining for your organization after this request."""
+
+
 class WebWebScrapeImagesResponse(BaseModel):
     images: List[Image]
     """Images found on the page."""
@@ -55,3 +68,10 @@ class WebWebScrapeImagesResponse(BaseModel):
 
     url: str
     """Page URL that was scraped."""
+
+    key_metadata: Optional[KeyMetadata] = None
+    """Metadata about the API key used for the request.
+
+    Included in every response whenever a valid API key is provided, even when the
+    response status is not 200.
+    """

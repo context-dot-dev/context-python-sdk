@@ -52,6 +52,15 @@ class WebExtractParams(TypedDict, total=False):
     younger than this many milliseconds. Defaults to 7 days (604800000 ms).
     """
 
+    max_depth: Annotated[int, PropertyInfo(alias="maxDepth")]
+    """Optional maximum link depth from the starting URL (0 = only the starting page).
+
+    If omitted, there is no crawl depth limit.
+    """
+
+    max_pages: Annotated[int, PropertyInfo(alias="maxPages")]
+    """Maximum number of pages to analyze for extraction. Hard cap: 50. Defaults to 5."""
+
     pdf: Pdf
 
     stop_after_ms: Annotated[int, PropertyInfo(alias="stopAfterMs")]

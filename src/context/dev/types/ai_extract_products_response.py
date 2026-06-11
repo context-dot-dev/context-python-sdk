@@ -5,7 +5,20 @@ from typing_extensions import Literal
 
 from .._models import BaseModel
 
-__all__ = ["AIExtractProductsResponse", "Product"]
+__all__ = ["AIExtractProductsResponse", "KeyMetadata", "Product"]
+
+
+class KeyMetadata(BaseModel):
+    """Metadata about the API key used for the request.
+
+    Included in every response whenever a valid API key is provided, even when the response status is not 200.
+    """
+
+    credits_consumed: int
+    """The number of credits consumed by this request."""
+
+    credits_remaining: int
+    """The number of credits remaining for your organization after this request."""
 
 
 class Product(BaseModel):
@@ -53,5 +66,12 @@ class Product(BaseModel):
 
 
 class AIExtractProductsResponse(BaseModel):
+    key_metadata: Optional[KeyMetadata] = None
+    """Metadata about the API key used for the request.
+
+    Included in every response whenever a valid API key is provided, even when the
+    response status is not 200.
+    """
+
     products: Optional[List[Product]] = None
     """Array of products extracted from the website"""
