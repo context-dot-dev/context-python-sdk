@@ -7,7 +7,7 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["IndustryRetrieveSicResponse", "Code"]
+__all__ = ["IndustryRetrieveSicResponse", "Code", "KeyMetadata"]
 
 
 class Code(BaseModel):
@@ -39,6 +39,19 @@ class Code(BaseModel):
     """
 
 
+class KeyMetadata(BaseModel):
+    """Metadata about the API key used for the request.
+
+    Included in every response whenever a valid API key is provided, even when the response status is not 200.
+    """
+
+    credits_consumed: int
+    """The number of credits consumed by this request."""
+
+    credits_remaining: int
+    """The number of credits remaining for your organization after this request."""
+
+
 class IndustryRetrieveSicResponse(BaseModel):
     classification: Optional[Literal["original_sic", "latest_sec"]] = None
     """Echoes back which SIC dataset was used to classify the brand."""
@@ -53,6 +66,13 @@ class IndustryRetrieveSicResponse(BaseModel):
 
     domain: Optional[str] = None
     """Domain found for the brand"""
+
+    key_metadata: Optional[KeyMetadata] = None
+    """Metadata about the API key used for the request.
+
+    Included in every response whenever a valid API key is provided, even when the
+    response status is not 200.
+    """
 
     status: Optional[str] = None
     """Status of the response, e.g., 'ok'"""

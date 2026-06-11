@@ -1,12 +1,12 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["WebExtractResponse", "Metadata"]
+__all__ = ["WebExtractResponse", "Metadata", "KeyMetadata"]
 
 
 class Metadata(BaseModel):
@@ -19,6 +19,19 @@ class Metadata(BaseModel):
     num_succeeded: int = FieldInfo(alias="numSucceeded")
 
     num_urls: int = FieldInfo(alias="numUrls")
+
+
+class KeyMetadata(BaseModel):
+    """Metadata about the API key used for the request.
+
+    Included in every response whenever a valid API key is provided, even when the response status is not 200.
+    """
+
+    credits_consumed: int
+    """The number of credits consumed by this request."""
+
+    credits_remaining: int
+    """The number of credits remaining for your organization after this request."""
 
 
 class WebExtractResponse(BaseModel):
@@ -35,3 +48,10 @@ class WebExtractResponse(BaseModel):
 
     urls_analyzed: List[str]
     """List of URLs whose Markdown was used for extraction"""
+
+    key_metadata: Optional[KeyMetadata] = None
+    """Metadata about the API key used for the request.
+
+    Included in every response whenever a valid API key is provided, even when the
+    response status is not 200.
+    """
