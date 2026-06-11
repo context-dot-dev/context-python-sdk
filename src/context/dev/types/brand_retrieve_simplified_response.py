@@ -15,6 +15,7 @@ __all__ = [
     "BrandLogo",
     "BrandLogoColor",
     "BrandLogoResolution",
+    "KeyMetadata",
 ]
 
 
@@ -119,12 +120,32 @@ class Brand(BaseModel):
     """The title or name of the brand"""
 
 
+class KeyMetadata(BaseModel):
+    """Metadata about the API key used for the request.
+
+    Included in every response whenever a valid API key is provided, even when the response status is not 200.
+    """
+
+    credits_consumed: int
+    """The number of credits consumed by this request."""
+
+    credits_remaining: int
+    """The number of credits remaining for your organization after this request."""
+
+
 class BrandRetrieveSimplifiedResponse(BaseModel):
     brand: Optional[Brand] = None
     """Simplified brand information"""
 
     code: Optional[int] = None
     """HTTP status code of the response"""
+
+    key_metadata: Optional[KeyMetadata] = None
+    """Metadata about the API key used for the request.
+
+    Included in every response whenever a valid API key is provided, even when the
+    response status is not 200.
+    """
 
     status: Optional[str] = None
     """Status of the response, e.g., 'ok'"""

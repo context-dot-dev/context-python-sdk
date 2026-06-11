@@ -7,7 +7,7 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["WebExtractFontsResponse", "Font", "FontLinks"]
+__all__ = ["WebExtractFontsResponse", "Font", "FontLinks", "KeyMetadata"]
 
 
 class Font(BaseModel):
@@ -57,6 +57,19 @@ class FontLinks(BaseModel):
     """
 
 
+class KeyMetadata(BaseModel):
+    """Metadata about the API key used for the request.
+
+    Included in every response whenever a valid API key is provided, even when the response status is not 200.
+    """
+
+    credits_consumed: int
+    """The number of credits consumed by this request."""
+
+    credits_remaining: int
+    """The number of credits remaining for your organization after this request."""
+
+
 class WebExtractFontsResponse(BaseModel):
     code: int
     """HTTP status code, e.g., 200"""
@@ -75,4 +88,11 @@ class WebExtractFontsResponse(BaseModel):
     Font assets keyed by family name as it appears in the fonts array (non-generic
     names only). Clients match entries in fonts to pick a file URL from files.
     Omitted when no families resolve to Google or custom @font-face URLs.
+    """
+
+    key_metadata: Optional[KeyMetadata] = None
+    """Metadata about the API key used for the request.
+
+    Included in every response whenever a valid API key is provided, even when the
+    response status is not 200.
     """
