@@ -116,7 +116,7 @@ class WebWebScrapeHTMLResponse(BaseModel):
     success: Literal[True]
     """Indicates success"""
 
-    type: Literal["html", "xml", "json", "text", "csv", "markdown", "svg", "pdf"]
+    type: Literal["html", "xml", "json", "text", "csv", "markdown", "svg", "pdf", "docx", "doc"]
     """Detected content type of the returned `html` field.
 
     Sitemaps and feeds are surfaced as `xml`; ordinary pages are `html`.
