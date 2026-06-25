@@ -248,6 +248,7 @@ class TestWeb:
             handle_cookie_popup="true",
             max_age_ms=0,
             page="login",
+            scroll_offset=0,
             timeout_ms=1000,
             viewport={
                 "height": 240,
@@ -840,6 +841,7 @@ class TestAsyncWeb:
             handle_cookie_popup="true",
             max_age_ms=0,
             page="login",
+            scroll_offset=0,
             timeout_ms=1000,
             viewport={
                 "height": 240,

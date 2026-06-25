@@ -359,6 +359,7 @@ class WebResource(SyncAPIResource):
         handle_cookie_popup: Literal["true", "false"] | Omit = omit,
         max_age_ms: int | Omit = omit,
         page: Literal["login", "signup", "blog", "careers", "pricing", "terms", "privacy", "contact"] | Omit = omit,
+        scroll_offset: int | Omit = omit,
         timeout_ms: int | Omit = omit,
         viewport: web_screenshot_params.Viewport | Omit = omit,
         wait_for_ms: int | Omit = omit,
@@ -399,6 +400,13 @@ class WebResource(SyncAPIResource):
               provided, screenshots the main domain landing page. Only applicable when using
               'domain', not 'directUrl'.
 
+          scroll_offset: Optional vertical scroll offset in pixels for capturing a long page in
+              viewport-sized chunks. When provided, the full page is captured once and the
+              returned image is the viewport-sized slice that begins at this Y offset (e.g.
+              request scrollOffset=0, then 1080, then 2160 to walk a 1920x1080 landing page
+              top to bottom). The final slice may be shorter than the viewport height. Takes
+              precedence over fullScreenshot. Max: 100000.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -432,6 +440,7 @@ class WebResource(SyncAPIResource):
                         "handle_cookie_popup": handle_cookie_popup,
                         "max_age_ms": max_age_ms,
                         "page": page,
+                        "scroll_offset": scroll_offset,
                         "timeout_ms": timeout_ms,
                         "viewport": viewport,
                         "wait_for_ms": wait_for_ms,
@@ -1277,6 +1286,7 @@ class AsyncWebResource(AsyncAPIResource):
         handle_cookie_popup: Literal["true", "false"] | Omit = omit,
         max_age_ms: int | Omit = omit,
         page: Literal["login", "signup", "blog", "careers", "pricing", "terms", "privacy", "contact"] | Omit = omit,
+        scroll_offset: int | Omit = omit,
         timeout_ms: int | Omit = omit,
         viewport: web_screenshot_params.Viewport | Omit = omit,
         wait_for_ms: int | Omit = omit,
@@ -1317,6 +1327,13 @@ class AsyncWebResource(AsyncAPIResource):
               provided, screenshots the main domain landing page. Only applicable when using
               'domain', not 'directUrl'.
 
+          scroll_offset: Optional vertical scroll offset in pixels for capturing a long page in
+              viewport-sized chunks. When provided, the full page is captured once and the
+              returned image is the viewport-sized slice that begins at this Y offset (e.g.
+              request scrollOffset=0, then 1080, then 2160 to walk a 1920x1080 landing page
+              top to bottom). The final slice may be shorter than the viewport height. Takes
+              precedence over fullScreenshot. Max: 100000.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -1350,6 +1367,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "handle_cookie_popup": handle_cookie_popup,
                         "max_age_ms": max_age_ms,
                         "page": page,
+                        "scroll_offset": scroll_offset,
                         "timeout_ms": timeout_ms,
                         "viewport": viewport,
                         "wait_for_ms": wait_for_ms,
