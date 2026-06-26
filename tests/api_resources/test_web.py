@@ -242,6 +242,7 @@ class TestWeb:
     @parametrize
     def test_method_screenshot_with_all_params(self, client: ContextDev) -> None:
         web = client.web.screenshot(
+            country="de",
             direct_url="https://example.com",
             domain="domain",
             full_screenshot="true",
@@ -356,6 +357,7 @@ class TestWeb:
     def test_method_web_crawl_md_with_all_params(self, client: ContextDev) -> None:
         web = client.web.web_crawl_md(
             url="https://example.com",
+            country="de",
             exclude_selectors=["string"],
             follow_subdomains=True,
             include_frames=True,
@@ -418,6 +420,7 @@ class TestWeb:
     def test_method_web_scrape_html_with_all_params(self, client: ContextDev) -> None:
         web = client.web.web_scrape_html(
             url="https://example.com",
+            country="de",
             exclude_selectors=["string"],
             headers={"foo": "J!"},
             include_frames=True,
@@ -525,6 +528,7 @@ class TestWeb:
     def test_method_web_scrape_md_with_all_params(self, client: ContextDev) -> None:
         web = client.web.web_scrape_md(
             url="https://example.com",
+            country="de",
             exclude_selectors=["string"],
             headers={"foo": "J!"},
             include_frames=True,
@@ -835,6 +839,7 @@ class TestAsyncWeb:
     @parametrize
     async def test_method_screenshot_with_all_params(self, async_client: AsyncContextDev) -> None:
         web = await async_client.web.screenshot(
+            country="de",
             direct_url="https://example.com",
             domain="domain",
             full_screenshot="true",
@@ -949,6 +954,7 @@ class TestAsyncWeb:
     async def test_method_web_crawl_md_with_all_params(self, async_client: AsyncContextDev) -> None:
         web = await async_client.web.web_crawl_md(
             url="https://example.com",
+            country="de",
             exclude_selectors=["string"],
             follow_subdomains=True,
             include_frames=True,
@@ -1011,6 +1017,7 @@ class TestAsyncWeb:
     async def test_method_web_scrape_html_with_all_params(self, async_client: AsyncContextDev) -> None:
         web = await async_client.web.web_scrape_html(
             url="https://example.com",
+            country="de",
             exclude_selectors=["string"],
             headers={"foo": "J!"},
             include_frames=True,
@@ -1118,6 +1125,7 @@ class TestAsyncWeb:
     async def test_method_web_scrape_md_with_all_params(self, async_client: AsyncContextDev) -> None:
         web = await async_client.web.web_scrape_md(
             url="https://example.com",
+            country="de",
             exclude_selectors=["string"],
             headers={"foo": "J!"},
             include_frames=True,
