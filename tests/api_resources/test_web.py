@@ -294,6 +294,7 @@ class TestWeb:
     def test_method_search_with_all_params(self, client: ContextDev) -> None:
         web = client.web.search(
             query="x",
+            country="af",
             exclude_domains=["string"],
             freshness="last_24_hours",
             include_domains=["string"],
@@ -313,6 +314,7 @@ class TestWeb:
                 "use_main_content_only": True,
                 "wait_for_ms": 0,
             },
+            num_results=10,
             query_fanout=True,
             timeout_ms=1000,
         )
@@ -891,6 +893,7 @@ class TestAsyncWeb:
     async def test_method_search_with_all_params(self, async_client: AsyncContextDev) -> None:
         web = await async_client.web.search(
             query="x",
+            country="af",
             exclude_domains=["string"],
             freshness="last_24_hours",
             include_domains=["string"],
@@ -910,6 +913,7 @@ class TestAsyncWeb:
                 "use_main_content_only": True,
                 "wait_for_ms": 0,
             },
+            num_results=10,
             query_fanout=True,
             timeout_ms=1000,
         )
