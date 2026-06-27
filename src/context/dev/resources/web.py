@@ -353,6 +353,7 @@ class WebResource(SyncAPIResource):
     def screenshot(
         self,
         *,
+        color_scheme: Literal["light", "dark"] | Omit = omit,
         country: Literal[
             "ad",
             "ae",
@@ -581,6 +582,9 @@ class WebResource(SyncAPIResource):
         Capture a screenshot of a website.
 
         Args:
+          color_scheme: Optional parameter to choose the site's visual theme in the screenshot. Use
+              'light' or 'dark' when the site offers both appearances.
+
           country: Two-letter ISO 3166-1 alpha-2 country code for the website request location.
               When provided, Context.dev fetches the target page from that country.
 
@@ -644,6 +648,7 @@ class WebResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "color_scheme": color_scheme,
                         "country": country,
                         "direct_url": direct_url,
                         "domain": domain,
@@ -2376,6 +2381,7 @@ class AsyncWebResource(AsyncAPIResource):
     async def screenshot(
         self,
         *,
+        color_scheme: Literal["light", "dark"] | Omit = omit,
         country: Literal[
             "ad",
             "ae",
@@ -2604,6 +2610,9 @@ class AsyncWebResource(AsyncAPIResource):
         Capture a screenshot of a website.
 
         Args:
+          color_scheme: Optional parameter to choose the site's visual theme in the screenshot. Use
+              'light' or 'dark' when the site offers both appearances.
+
           country: Two-letter ISO 3166-1 alpha-2 country code for the website request location.
               When provided, Context.dev fetches the target page from that country.
 
@@ -2667,6 +2676,7 @@ class AsyncWebResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
+                        "color_scheme": color_scheme,
                         "country": country,
                         "direct_url": direct_url,
                         "domain": domain,
