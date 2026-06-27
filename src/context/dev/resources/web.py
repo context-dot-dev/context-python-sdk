@@ -288,6 +288,7 @@ class WebResource(SyncAPIResource):
     def extract_styleguide(
         self,
         *,
+        color_scheme: Literal["light", "dark"] | Omit = omit,
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
         max_age_ms: int | Omit = omit,
@@ -304,6 +305,9 @@ class WebResource(SyncAPIResource):
         typography, spacing, shadows, and UI components.
 
         Args:
+          color_scheme: Optional browser color scheme to emulate for websites that respond to
+              prefers-color-scheme. This value is part of the styleguide cache key.
+
           direct_url: A specific URL to fetch the styleguide from directly, bypassing domain
               resolution (e.g., 'https://example.com/design-system'). When provided, the
               styleguide is extracted from this exact URL. You must provide either 'domain' or
@@ -339,6 +343,7 @@ class WebResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "color_scheme": color_scheme,
                         "direct_url": direct_url,
                         "domain": domain,
                         "max_age_ms": max_age_ms,
@@ -2316,6 +2321,7 @@ class AsyncWebResource(AsyncAPIResource):
     async def extract_styleguide(
         self,
         *,
+        color_scheme: Literal["light", "dark"] | Omit = omit,
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
         max_age_ms: int | Omit = omit,
@@ -2332,6 +2338,9 @@ class AsyncWebResource(AsyncAPIResource):
         typography, spacing, shadows, and UI components.
 
         Args:
+          color_scheme: Optional browser color scheme to emulate for websites that respond to
+              prefers-color-scheme. This value is part of the styleguide cache key.
+
           direct_url: A specific URL to fetch the styleguide from directly, bypassing domain
               resolution (e.g., 'https://example.com/design-system'). When provided, the
               styleguide is extracted from this exact URL. You must provide either 'domain' or
@@ -2367,6 +2376,7 @@ class AsyncWebResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
+                        "color_scheme": color_scheme,
                         "direct_url": direct_url,
                         "domain": domain,
                         "max_age_ms": max_age_ms,

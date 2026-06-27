@@ -203,6 +203,7 @@ class TestWeb:
     @parametrize
     def test_method_extract_styleguide_with_all_params(self, client: ContextDev) -> None:
         web = client.web.extract_styleguide(
+            color_scheme="light",
             direct_url="https://example.com",
             domain="domain",
             max_age_ms=86400000,
@@ -803,6 +804,7 @@ class TestAsyncWeb:
     @parametrize
     async def test_method_extract_styleguide_with_all_params(self, async_client: AsyncContextDev) -> None:
         web = await async_client.web.extract_styleguide(
+            color_scheme="light",
             direct_url="https://example.com",
             domain="domain",
             max_age_ms=86400000,
