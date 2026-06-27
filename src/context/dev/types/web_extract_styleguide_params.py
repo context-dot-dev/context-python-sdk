@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing_extensions import Annotated, TypedDict
+from typing_extensions import Literal, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
@@ -10,6 +10,12 @@ __all__ = ["WebExtractStyleguideParams"]
 
 
 class WebExtractStyleguideParams(TypedDict, total=False):
+    color_scheme: Annotated[Literal["light", "dark"], PropertyInfo(alias="colorScheme")]
+    """
+    Optional browser color scheme to emulate for websites that respond to
+    prefers-color-scheme. This value is part of the styleguide cache key.
+    """
+
     direct_url: Annotated[str, PropertyInfo(alias="directUrl")]
     """
     A specific URL to fetch the styleguide from directly, bypassing domain
