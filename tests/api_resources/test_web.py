@@ -242,6 +242,7 @@ class TestWeb:
     @parametrize
     def test_method_screenshot_with_all_params(self, client: ContextDev) -> None:
         web = client.web.screenshot(
+            color_scheme="light",
             country="de",
             direct_url="https://example.com",
             domain="domain",
@@ -841,6 +842,7 @@ class TestAsyncWeb:
     @parametrize
     async def test_method_screenshot_with_all_params(self, async_client: AsyncContextDev) -> None:
         web = await async_client.web.screenshot(
+            color_scheme="light",
             country="de",
             direct_url="https://example.com",
             domain="domain",

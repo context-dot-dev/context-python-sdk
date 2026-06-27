@@ -10,6 +10,12 @@ __all__ = ["WebScreenshotParams", "Viewport"]
 
 
 class WebScreenshotParams(TypedDict, total=False):
+    color_scheme: Annotated[Literal["light", "dark"], PropertyInfo(alias="colorScheme")]
+    """Optional parameter to choose the site's visual theme in the screenshot.
+
+    Use 'light' or 'dark' when the site offers both appearances.
+    """
+
     country: Literal[
         "ad",
         "ae",
