@@ -35,12 +35,13 @@ from ._base_client import (
 )
 
 if TYPE_CHECKING:
-    from .resources import ai, web, brand, utility, industry
+    from .resources import ai, web, brand, utility, industry, monitors
     from .resources.ai import AIResource, AsyncAIResource
     from .resources.web import WebResource, AsyncWebResource
     from .resources.brand import BrandResource, AsyncBrandResource
     from .resources.utility import UtilityResource, AsyncUtilityResource
     from .resources.industry import IndustryResource, AsyncIndustryResource
+    from .resources.monitors import MonitorsResource, AsyncMonitorsResource
 
 __all__ = [
     "Timeout",
@@ -147,6 +148,15 @@ class ContextDev(SyncAPIClient):
         from .resources.utility import UtilityResource
 
         return UtilityResource(self)
+
+    @cached_property
+    def monitors(self) -> MonitorsResource:
+        """
+        Monitor pages, sitemaps, and extracted website data for exact or semantic changes. The change.detected webhook payload is documented by the MonitorsChangeDetectedWebhookPayload schema.
+        """
+        from .resources.monitors import MonitorsResource
+
+        return MonitorsResource(self)
 
     @cached_property
     def with_raw_response(self) -> ContextDevWithRawResponse:
@@ -356,6 +366,15 @@ class AsyncContextDev(AsyncAPIClient):
         return AsyncUtilityResource(self)
 
     @cached_property
+    def monitors(self) -> AsyncMonitorsResource:
+        """
+        Monitor pages, sitemaps, and extracted website data for exact or semantic changes. The change.detected webhook payload is documented by the MonitorsChangeDetectedWebhookPayload schema.
+        """
+        from .resources.monitors import AsyncMonitorsResource
+
+        return AsyncMonitorsResource(self)
+
+    @cached_property
     def with_raw_response(self) -> AsyncContextDevWithRawResponse:
         return AsyncContextDevWithRawResponse(self)
 
@@ -504,6 +523,15 @@ class ContextDevWithRawResponse:
 
         return UtilityResourceWithRawResponse(self._client.utility)
 
+    @cached_property
+    def monitors(self) -> monitors.MonitorsResourceWithRawResponse:
+        """
+        Monitor pages, sitemaps, and extracted website data for exact or semantic changes. The change.detected webhook payload is documented by the MonitorsChangeDetectedWebhookPayload schema.
+        """
+        from .resources.monitors import MonitorsResourceWithRawResponse
+
+        return MonitorsResourceWithRawResponse(self._client.monitors)
+
 
 class AsyncContextDevWithRawResponse:
     _client: AsyncContextDev
@@ -540,6 +568,15 @@ class AsyncContextDevWithRawResponse:
         from .resources.utility import AsyncUtilityResourceWithRawResponse
 
         return AsyncUtilityResourceWithRawResponse(self._client.utility)
+
+    @cached_property
+    def monitors(self) -> monitors.AsyncMonitorsResourceWithRawResponse:
+        """
+        Monitor pages, sitemaps, and extracted website data for exact or semantic changes. The change.detected webhook payload is documented by the MonitorsChangeDetectedWebhookPayload schema.
+        """
+        from .resources.monitors import AsyncMonitorsResourceWithRawResponse
+
+        return AsyncMonitorsResourceWithRawResponse(self._client.monitors)
 
 
 class ContextDevWithStreamedResponse:
@@ -578,6 +615,15 @@ class ContextDevWithStreamedResponse:
 
         return UtilityResourceWithStreamingResponse(self._client.utility)
 
+    @cached_property
+    def monitors(self) -> monitors.MonitorsResourceWithStreamingResponse:
+        """
+        Monitor pages, sitemaps, and extracted website data for exact or semantic changes. The change.detected webhook payload is documented by the MonitorsChangeDetectedWebhookPayload schema.
+        """
+        from .resources.monitors import MonitorsResourceWithStreamingResponse
+
+        return MonitorsResourceWithStreamingResponse(self._client.monitors)
+
 
 class AsyncContextDevWithStreamedResponse:
     _client: AsyncContextDev
@@ -614,6 +660,15 @@ class AsyncContextDevWithStreamedResponse:
         from .resources.utility import AsyncUtilityResourceWithStreamingResponse
 
         return AsyncUtilityResourceWithStreamingResponse(self._client.utility)
+
+    @cached_property
+    def monitors(self) -> monitors.AsyncMonitorsResourceWithStreamingResponse:
+        """
+        Monitor pages, sitemaps, and extracted website data for exact or semantic changes. The change.detected webhook payload is documented by the MonitorsChangeDetectedWebhookPayload schema.
+        """
+        from .resources.monitors import AsyncMonitorsResourceWithStreamingResponse
+
+        return AsyncMonitorsResourceWithStreamingResponse(self._client.monitors)
 
 
 Client = ContextDev
