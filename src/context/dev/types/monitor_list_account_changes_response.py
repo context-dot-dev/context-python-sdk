@@ -1,125 +1,55 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Union, Optional
+from typing import List, Optional
 from datetime import datetime
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Literal
 
 from .._models import BaseModel
 
-__all__ = [
-    "MonitorListAccountChangesResponse",
-    "Data",
-    "DataMonitorsPageExactChangeSummary",
-    "DataMonitorsSitemapExactChangeSummary",
-    "DataMonitorsPageSemanticChangeSummary",
-    "DataMonitorsExtractSemanticChangeSummary",
-]
+__all__ = ["MonitorListAccountChangesResponse", "Data"]
 
 
-class DataMonitorsPageExactChangeSummary(BaseModel):
+class Data(BaseModel):
+    """A lightweight change summary.
+
+    `mode` is the constant `web`; `target_type` and `change_detection_type` describe the change, and which optional fields are present depends on them (e.g. sitemap changes include `added_url_count`/`removed_url_count`; semantic changes include `confidence`/`importance`).
+    """
+
     id: str
 
-    change_detection_type: Literal["exact"]
+    change_detection_type: Literal["exact", "semantic"]
 
     detected_at: datetime
+
+    mode: Literal["web"]
+    """Top-level monitor category.
+
+    Always `web` today; the concrete behavior is described by `target` and
+    `change_detection`.
+    """
 
     monitor_id: str
 
     summary: str
 
-    target_type: Literal["page"]
+    target_type: Literal["page", "sitemap", "extract"]
 
     title: str
 
     url: str
 
-    tags: Optional[List[str]] = None
-    """User-defined tags for grouping and filtering monitors and their changes."""
+    added_url_count: Optional[int] = None
 
+    confidence: Optional[float] = None
 
-class DataMonitorsSitemapExactChangeSummary(BaseModel):
-    id: str
+    importance: Optional[Literal["low", "medium", "high"]] = None
 
-    added_url_count: int
+    matched_url_count: Optional[int] = None
 
-    change_detection_type: Literal["exact"]
-
-    detected_at: datetime
-
-    monitor_id: str
-
-    removed_url_count: int
-
-    summary: str
-
-    target_type: Literal["sitemap"]
-
-    title: str
-
-    url: str
+    removed_url_count: Optional[int] = None
 
     tags: Optional[List[str]] = None
     """User-defined tags for grouping and filtering monitors and their changes."""
-
-
-class DataMonitorsPageSemanticChangeSummary(BaseModel):
-    id: str
-
-    change_detection_type: Literal["semantic"]
-
-    confidence: float
-
-    detected_at: datetime
-
-    importance: Literal["low", "medium", "high"]
-
-    monitor_id: str
-
-    summary: str
-
-    target_type: Literal["page"]
-
-    title: str
-
-    url: str
-
-    tags: Optional[List[str]] = None
-    """User-defined tags for grouping and filtering monitors and their changes."""
-
-
-class DataMonitorsExtractSemanticChangeSummary(BaseModel):
-    id: str
-
-    change_detection_type: Literal["semantic"]
-
-    confidence: float
-
-    detected_at: datetime
-
-    importance: Literal["low", "medium", "high"]
-
-    matched_url_count: int
-
-    monitor_id: str
-
-    summary: str
-
-    target_type: Literal["extract"]
-
-    title: str
-
-    url: str
-
-    tags: Optional[List[str]] = None
-    """User-defined tags for grouping and filtering monitors and their changes."""
-
-
-Data: TypeAlias = Union[
-    DataMonitorsPageExactChangeSummary,
-    DataMonitorsSitemapExactChangeSummary,
-    DataMonitorsPageSemanticChangeSummary,
-    DataMonitorsExtractSemanticChangeSummary,
-]
 
 
 class MonitorListAccountChangesResponse(BaseModel):

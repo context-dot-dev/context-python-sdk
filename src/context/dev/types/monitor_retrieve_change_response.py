@@ -1,159 +1,80 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Union, Optional
+from typing import List, Optional
 from datetime import datetime
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Literal
 
 from .._models import BaseModel
 
-__all__ = [
-    "MonitorRetrieveChangeResponse",
-    "MonitorsPageExactChange",
-    "MonitorsSitemapExactChange",
-    "MonitorsPageSemanticChange",
-    "MonitorsPageSemanticChangeEvidence",
-    "MonitorsExtractSemanticChange",
-    "MonitorsExtractSemanticChangeEvidence",
-]
+__all__ = ["MonitorRetrieveChangeResponse", "Evidence"]
 
 
-class MonitorsPageExactChange(BaseModel):
+class Evidence(BaseModel):
+    after: str
+    """Snapshot of the content after the change."""
+
+    before: str
+    """Snapshot of the content before the change."""
+
+    url: Optional[str] = None
+    """Optional URL the evidence relates to. Absent for whole-target diffs."""
+
+
+class MonitorRetrieveChangeResponse(BaseModel):
+    """A detected change.
+
+    `mode` is the constant `web`; `target_type` and `change_detection_type` describe the change, and which optional fields are present depends on them (page: `diff` + excerpts; sitemap: `added_urls`/`removed_urls`; semantic: `query`/`confidence`/`importance`/`evidence`/`matched_urls`).
+    """
+
     id: str
 
-    change_detection_type: Literal["exact"]
+    change_detection_type: Literal["exact", "semantic"]
 
     detected_at: datetime
 
-    diff: str
-    """Text diff between the previous and current page baseline."""
+    mode: Literal["web"]
+    """Top-level monitor category.
+
+    Always `web` today; the concrete behavior is described by `target` and
+    `change_detection`.
+    """
 
     monitor_id: str
 
     summary: str
 
-    target_type: Literal["page"]
+    target_type: Literal["page", "sitemap", "extract"]
 
     title: str
 
     url: str
+
+    added_url_count: Optional[int] = None
+
+    added_urls: Optional[List[str]] = None
 
     after_text_excerpt: Optional[str] = None
 
     before_text_excerpt: Optional[str] = None
 
-    tags: Optional[List[str]] = None
-    """User-defined tags for grouping and filtering monitors and their changes."""
+    confidence: Optional[float] = None
 
+    diff: Optional[str] = None
+    """Text diff between the previous and current page baseline (page targets)."""
 
-class MonitorsSitemapExactChange(BaseModel):
-    id: str
+    evidence: Optional[List[Evidence]] = None
 
-    added_url_count: int
+    importance: Optional[Literal["low", "medium", "high"]] = None
 
-    added_urls: List[str]
+    matched_url_count: Optional[int] = None
 
-    change_detection_type: Literal["exact"]
+    matched_urls: Optional[List[str]] = None
 
-    detected_at: datetime
+    query: Optional[str] = None
 
-    monitor_id: str
+    removed_url_count: Optional[int] = None
 
-    removed_url_count: int
-
-    removed_urls: List[str]
-
-    summary: str
-
-    target_type: Literal["sitemap"]
-
-    title: str
-
-    url: str
+    removed_urls: Optional[List[str]] = None
 
     tags: Optional[List[str]] = None
     """User-defined tags for grouping and filtering monitors and their changes."""
-
-
-class MonitorsPageSemanticChangeEvidence(BaseModel):
-    after: str
-
-    before: str
-
-
-class MonitorsPageSemanticChange(BaseModel):
-    id: str
-
-    change_detection_type: Literal["semantic"]
-
-    confidence: float
-
-    detected_at: datetime
-
-    evidence: List[MonitorsPageSemanticChangeEvidence]
-
-    importance: Literal["low", "medium", "high"]
-
-    monitor_id: str
-
-    query: str
-
-    summary: str
-
-    target_type: Literal["page"]
-
-    title: str
-
-    url: str
-
-    tags: Optional[List[str]] = None
-    """User-defined tags for grouping and filtering monitors and their changes."""
-
-
-class MonitorsExtractSemanticChangeEvidence(BaseModel):
-    after: str
-    """Snapshot of the extracted data after the change."""
-
-    before: str
-    """Snapshot of the extracted data before the change."""
-
-    url: Optional[str] = None
-    """Optional URL the evidence relates to. Absent for whole-target extract diffs."""
-
-
-class MonitorsExtractSemanticChange(BaseModel):
-    id: str
-
-    change_detection_type: Literal["semantic"]
-
-    confidence: float
-
-    detected_at: datetime
-
-    evidence: List[MonitorsExtractSemanticChangeEvidence]
-
-    importance: Literal["low", "medium", "high"]
-
-    matched_url_count: int
-
-    matched_urls: List[str]
-
-    monitor_id: str
-
-    query: str
-
-    summary: str
-
-    target_type: Literal["extract"]
-
-    title: str
-
-    url: str
-    """Root URL of the extract target."""
-
-    tags: Optional[List[str]] = None
-    """User-defined tags for grouping and filtering monitors and their changes."""
-
-
-MonitorRetrieveChangeResponse: TypeAlias = Union[
-    MonitorsPageExactChange, MonitorsSitemapExactChange, MonitorsPageSemanticChange, MonitorsExtractSemanticChange
-]

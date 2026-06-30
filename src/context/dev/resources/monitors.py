@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from typing import Any, Union, Optional, cast
+from typing import List, Union, Optional
 from datetime import datetime
-from typing_extensions import Literal, overload
+from typing_extensions import Literal
 
 import httpx
 
@@ -18,7 +18,7 @@ from ..types import (
     monitor_list_account_changes_params,
 )
 from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
-from .._utils import path_template, required_args, maybe_transform, async_maybe_transform
+from .._utils import path_template, maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -67,16 +67,16 @@ class MonitorsResource(SyncAPIResource):
         """
         return MonitorsResourceWithStreamingResponse(self)
 
-    @overload
     def create(
         self,
         *,
-        change_detection: monitor_create_params.MonitorsCreatePageExactMonitorRequestChangeDetection,
+        change_detection: monitor_create_params.ChangeDetection,
         name: str,
-        schedule: monitor_create_params.MonitorsCreatePageExactMonitorRequestSchedule,
-        target: monitor_create_params.MonitorsCreatePageExactMonitorRequestTarget,
+        schedule: monitor_create_params.Schedule,
+        target: monitor_create_params.Target,
+        mode: Literal["web"] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        webhook: Optional[monitor_create_params.MonitorsCreatePageExactMonitorRequestWebhook] | Omit = omit,
+        webhook: Optional[monitor_create_params.Webhook] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -91,12 +91,16 @@ class MonitorsResource(SyncAPIResource):
         its initial baseline.
 
         Args:
-          change_detection: Detect exact changes. For page targets, this means visible text diffs. For
-              sitemap targets, this means URL additions and removals.
+          change_detection: Discriminated union describing how changes are detected.
 
           schedule: Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
               every 6 hours or every 2 days. The total interval (frequency × unit) must be
               between 10 minutes and 1 year.
+
+          target: Discriminated union describing what the monitor watches.
+
+          mode: Top-level monitor category. Always `web` today; the concrete behavior is
+              described by `target` and `change_detection`.
 
           tags: User-defined tags for grouping and filtering monitors and their changes.
 
@@ -108,187 +112,24 @@ class MonitorsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        ...
-
-    @overload
-    def create(
-        self,
-        *,
-        change_detection: monitor_create_params.MonitorsCreateSitemapExactMonitorRequestChangeDetection,
-        name: str,
-        schedule: monitor_create_params.MonitorsCreateSitemapExactMonitorRequestSchedule,
-        target: monitor_create_params.MonitorsCreateSitemapExactMonitorRequestTarget,
-        tags: SequenceNotStr[str] | Omit = omit,
-        webhook: Optional[monitor_create_params.MonitorsCreateSitemapExactMonitorRequestWebhook] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> MonitorCreateResponse:
-        """Creates a monitor.
-
-        The request body is a union of the supported target/change
-        detection combinations. The monitor runs immediately after creation to create
-        its initial baseline.
-
-        Args:
-          change_detection: Detect exact changes. For page targets, this means visible text diffs. For
-              sitemap targets, this means URL additions and removals.
-
-          schedule: Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
-              every 6 hours or every 2 days. The total interval (frequency × unit) must be
-              between 10 minutes and 1 year.
-
-          tags: User-defined tags for grouping and filtering monitors and their changes.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        ...
-
-    @overload
-    def create(
-        self,
-        *,
-        change_detection: monitor_create_params.MonitorsCreatePageSemanticMonitorRequestChangeDetection,
-        name: str,
-        schedule: monitor_create_params.MonitorsCreatePageSemanticMonitorRequestSchedule,
-        target: monitor_create_params.MonitorsCreatePageSemanticMonitorRequestTarget,
-        tags: SequenceNotStr[str] | Omit = omit,
-        webhook: Optional[monitor_create_params.MonitorsCreatePageSemanticMonitorRequestWebhook] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> MonitorCreateResponse:
-        """Creates a monitor.
-
-        The request body is a union of the supported target/change
-        detection combinations. The monitor runs immediately after creation to create
-        its initial baseline.
-
-        Args:
-          change_detection: Detect meaning-level changes that match a natural language query.
-
-          schedule: Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
-              every 6 hours or every 2 days. The total interval (frequency × unit) must be
-              between 10 minutes and 1 year.
-
-          tags: User-defined tags for grouping and filtering monitors and their changes.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        ...
-
-    @overload
-    def create(
-        self,
-        *,
-        change_detection: monitor_create_params.MonitorsCreateExtractSemanticMonitorRequestChangeDetection,
-        name: str,
-        schedule: monitor_create_params.MonitorsCreateExtractSemanticMonitorRequestSchedule,
-        target: monitor_create_params.MonitorsCreateExtractSemanticMonitorRequestTarget,
-        tags: SequenceNotStr[str] | Omit = omit,
-        webhook: Optional[monitor_create_params.MonitorsCreateExtractSemanticMonitorRequestWebhook] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> MonitorCreateResponse:
-        """Creates a monitor.
-
-        The request body is a union of the supported target/change
-        detection combinations. The monitor runs immediately after creation to create
-        its initial baseline.
-
-        Args:
-          change_detection: Detect meaning-level changes that match a natural language query.
-
-          schedule: Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
-              every 6 hours or every 2 days. The total interval (frequency × unit) must be
-              between 10 minutes and 1 year.
-
-          tags: User-defined tags for grouping and filtering monitors and their changes.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        ...
-
-    @required_args(["change_detection", "name", "schedule", "target"])
-    def create(
-        self,
-        *,
-        change_detection: monitor_create_params.MonitorsCreatePageExactMonitorRequestChangeDetection
-        | monitor_create_params.MonitorsCreateSitemapExactMonitorRequestChangeDetection
-        | monitor_create_params.MonitorsCreatePageSemanticMonitorRequestChangeDetection
-        | monitor_create_params.MonitorsCreateExtractSemanticMonitorRequestChangeDetection,
-        name: str,
-        schedule: monitor_create_params.MonitorsCreatePageExactMonitorRequestSchedule
-        | monitor_create_params.MonitorsCreateSitemapExactMonitorRequestSchedule
-        | monitor_create_params.MonitorsCreatePageSemanticMonitorRequestSchedule
-        | monitor_create_params.MonitorsCreateExtractSemanticMonitorRequestSchedule,
-        target: monitor_create_params.MonitorsCreatePageExactMonitorRequestTarget
-        | monitor_create_params.MonitorsCreateSitemapExactMonitorRequestTarget
-        | monitor_create_params.MonitorsCreatePageSemanticMonitorRequestTarget
-        | monitor_create_params.MonitorsCreateExtractSemanticMonitorRequestTarget,
-        tags: SequenceNotStr[str] | Omit = omit,
-        webhook: Optional[monitor_create_params.MonitorsCreatePageExactMonitorRequestWebhook]
-        | Optional[monitor_create_params.MonitorsCreateSitemapExactMonitorRequestWebhook]
-        | Optional[monitor_create_params.MonitorsCreatePageSemanticMonitorRequestWebhook]
-        | Optional[monitor_create_params.MonitorsCreateExtractSemanticMonitorRequestWebhook]
-        | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> MonitorCreateResponse:
-        return cast(
-            MonitorCreateResponse,
-            self._post(
-                "/monitors",
-                body=maybe_transform(
-                    {
-                        "change_detection": change_detection,
-                        "name": name,
-                        "schedule": schedule,
-                        "target": target,
-                        "tags": tags,
-                        "webhook": webhook,
-                    },
-                    monitor_create_params.MonitorCreateParams,
-                ),
-                options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-                ),
-                cast_to=cast(
-                    Any, MonitorCreateResponse
-                ),  # Union types cannot be passed in as arguments in the type system
+        return self._post(
+            "/monitors",
+            body=maybe_transform(
+                {
+                    "change_detection": change_detection,
+                    "name": name,
+                    "schedule": schedule,
+                    "target": target,
+                    "mode": mode,
+                    "tags": tags,
+                    "webhook": webhook,
+                },
+                monitor_create_params.MonitorCreateParams,
             ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=MonitorCreateResponse,
         )
 
     def retrieve(
@@ -316,17 +157,12 @@ class MonitorsResource(SyncAPIResource):
         """
         if not monitor_id:
             raise ValueError(f"Expected a non-empty value for `monitor_id` but received {monitor_id!r}")
-        return cast(
-            MonitorRetrieveResponse,
-            self._get(
-                path_template("/monitors/{monitor_id}", monitor_id=monitor_id),
-                options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-                ),
-                cast_to=cast(
-                    Any, MonitorRetrieveResponse
-                ),  # Union types cannot be passed in as arguments in the type system
+        return self._get(
+            path_template("/monitors/{monitor_id}", monitor_id=monitor_id),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
+            cast_to=MonitorRetrieveResponse,
         )
 
     def update(
@@ -376,29 +212,24 @@ class MonitorsResource(SyncAPIResource):
         """
         if not monitor_id:
             raise ValueError(f"Expected a non-empty value for `monitor_id` but received {monitor_id!r}")
-        return cast(
-            MonitorUpdateResponse,
-            self._patch(
-                path_template("/monitors/{monitor_id}", monitor_id=monitor_id),
-                body=maybe_transform(
-                    {
-                        "change_detection": change_detection,
-                        "name": name,
-                        "schedule": schedule,
-                        "status": status,
-                        "tags": tags,
-                        "target": target,
-                        "webhook": webhook,
-                    },
-                    monitor_update_params.MonitorUpdateParams,
-                ),
-                options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-                ),
-                cast_to=cast(
-                    Any, MonitorUpdateResponse
-                ),  # Union types cannot be passed in as arguments in the type system
+        return self._patch(
+            path_template("/monitors/{monitor_id}", monitor_id=monitor_id),
+            body=maybe_transform(
+                {
+                    "change_detection": change_detection,
+                    "name": name,
+                    "schedule": schedule,
+                    "status": status,
+                    "tags": tags,
+                    "target": target,
+                    "webhook": webhook,
+                },
+                monitor_update_params.MonitorUpdateParams,
             ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=MonitorUpdateResponse,
         )
 
     def list(
@@ -407,8 +238,12 @@ class MonitorsResource(SyncAPIResource):
         change_detection_type: Literal["exact", "semantic"] | Omit = omit,
         cursor: str | Omit = omit,
         limit: int | Omit = omit,
+        q: str | Omit = omit,
+        search_by: List[Literal["name", "url", "query", "tags"]] | Omit = omit,
+        search_type: Literal["exact", "prefix"] | Omit = omit,
         status: Literal["active", "paused", "failed"] | Omit = omit,
         tag: str | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         target_type: Literal["page", "sitemap", "extract"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -417,11 +252,24 @@ class MonitorsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorListResponse:
-        """
-        List monitors
+        """Lists monitors for the authenticated organization.
+
+        Supports free-text search
+        (`q` over `search_by` fields, `prefix` or `exact` via `search_type`) plus
+        status/type/tag filters. Results are paginated via the opaque `cursor`.
 
         Args:
+          q: Free-text search term, matched against the fields named in `search_by`.
+
+          search_by: Comma-separated fields to search with `q`. Defaults to all of them. Note `query`
+              only exists on semantic monitors.
+
+          search_type: `prefix` for as-you-type prefix matching (default), `exact` for full-token
+              matching.
+
           tag: Filter to items that have this tag.
+
+          tags: Comma-separated list of tags to filter by (matches monitors having any of them).
 
           extra_headers: Send extra headers
 
@@ -443,8 +291,12 @@ class MonitorsResource(SyncAPIResource):
                         "change_detection_type": change_detection_type,
                         "cursor": cursor,
                         "limit": limit,
+                        "q": q,
+                        "search_by": search_by,
+                        "search_type": search_type,
                         "status": status,
                         "tag": tag,
+                        "tags": tags,
                         "target_type": target_type,
                     },
                     monitor_list_params.MonitorListParams,
@@ -711,17 +563,12 @@ class MonitorsResource(SyncAPIResource):
         """
         if not change_id:
             raise ValueError(f"Expected a non-empty value for `change_id` but received {change_id!r}")
-        return cast(
-            MonitorRetrieveChangeResponse,
-            self._get(
-                path_template("/monitors/changes/{change_id}", change_id=change_id),
-                options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-                ),
-                cast_to=cast(
-                    Any, MonitorRetrieveChangeResponse
-                ),  # Union types cannot be passed in as arguments in the type system
+        return self._get(
+            path_template("/monitors/changes/{change_id}", change_id=change_id),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
+            cast_to=MonitorRetrieveChangeResponse,
         )
 
     def run(
@@ -784,16 +631,16 @@ class AsyncMonitorsResource(AsyncAPIResource):
         """
         return AsyncMonitorsResourceWithStreamingResponse(self)
 
-    @overload
     async def create(
         self,
         *,
-        change_detection: monitor_create_params.MonitorsCreatePageExactMonitorRequestChangeDetection,
+        change_detection: monitor_create_params.ChangeDetection,
         name: str,
-        schedule: monitor_create_params.MonitorsCreatePageExactMonitorRequestSchedule,
-        target: monitor_create_params.MonitorsCreatePageExactMonitorRequestTarget,
+        schedule: monitor_create_params.Schedule,
+        target: monitor_create_params.Target,
+        mode: Literal["web"] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        webhook: Optional[monitor_create_params.MonitorsCreatePageExactMonitorRequestWebhook] | Omit = omit,
+        webhook: Optional[monitor_create_params.Webhook] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -808,12 +655,16 @@ class AsyncMonitorsResource(AsyncAPIResource):
         its initial baseline.
 
         Args:
-          change_detection: Detect exact changes. For page targets, this means visible text diffs. For
-              sitemap targets, this means URL additions and removals.
+          change_detection: Discriminated union describing how changes are detected.
 
           schedule: Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
               every 6 hours or every 2 days. The total interval (frequency × unit) must be
               between 10 minutes and 1 year.
+
+          target: Discriminated union describing what the monitor watches.
+
+          mode: Top-level monitor category. Always `web` today; the concrete behavior is
+              described by `target` and `change_detection`.
 
           tags: User-defined tags for grouping and filtering monitors and their changes.
 
@@ -825,187 +676,24 @@ class AsyncMonitorsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        ...
-
-    @overload
-    async def create(
-        self,
-        *,
-        change_detection: monitor_create_params.MonitorsCreateSitemapExactMonitorRequestChangeDetection,
-        name: str,
-        schedule: monitor_create_params.MonitorsCreateSitemapExactMonitorRequestSchedule,
-        target: monitor_create_params.MonitorsCreateSitemapExactMonitorRequestTarget,
-        tags: SequenceNotStr[str] | Omit = omit,
-        webhook: Optional[monitor_create_params.MonitorsCreateSitemapExactMonitorRequestWebhook] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> MonitorCreateResponse:
-        """Creates a monitor.
-
-        The request body is a union of the supported target/change
-        detection combinations. The monitor runs immediately after creation to create
-        its initial baseline.
-
-        Args:
-          change_detection: Detect exact changes. For page targets, this means visible text diffs. For
-              sitemap targets, this means URL additions and removals.
-
-          schedule: Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
-              every 6 hours or every 2 days. The total interval (frequency × unit) must be
-              between 10 minutes and 1 year.
-
-          tags: User-defined tags for grouping and filtering monitors and their changes.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        ...
-
-    @overload
-    async def create(
-        self,
-        *,
-        change_detection: monitor_create_params.MonitorsCreatePageSemanticMonitorRequestChangeDetection,
-        name: str,
-        schedule: monitor_create_params.MonitorsCreatePageSemanticMonitorRequestSchedule,
-        target: monitor_create_params.MonitorsCreatePageSemanticMonitorRequestTarget,
-        tags: SequenceNotStr[str] | Omit = omit,
-        webhook: Optional[monitor_create_params.MonitorsCreatePageSemanticMonitorRequestWebhook] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> MonitorCreateResponse:
-        """Creates a monitor.
-
-        The request body is a union of the supported target/change
-        detection combinations. The monitor runs immediately after creation to create
-        its initial baseline.
-
-        Args:
-          change_detection: Detect meaning-level changes that match a natural language query.
-
-          schedule: Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
-              every 6 hours or every 2 days. The total interval (frequency × unit) must be
-              between 10 minutes and 1 year.
-
-          tags: User-defined tags for grouping and filtering monitors and their changes.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        ...
-
-    @overload
-    async def create(
-        self,
-        *,
-        change_detection: monitor_create_params.MonitorsCreateExtractSemanticMonitorRequestChangeDetection,
-        name: str,
-        schedule: monitor_create_params.MonitorsCreateExtractSemanticMonitorRequestSchedule,
-        target: monitor_create_params.MonitorsCreateExtractSemanticMonitorRequestTarget,
-        tags: SequenceNotStr[str] | Omit = omit,
-        webhook: Optional[monitor_create_params.MonitorsCreateExtractSemanticMonitorRequestWebhook] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> MonitorCreateResponse:
-        """Creates a monitor.
-
-        The request body is a union of the supported target/change
-        detection combinations. The monitor runs immediately after creation to create
-        its initial baseline.
-
-        Args:
-          change_detection: Detect meaning-level changes that match a natural language query.
-
-          schedule: Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
-              every 6 hours or every 2 days. The total interval (frequency × unit) must be
-              between 10 minutes and 1 year.
-
-          tags: User-defined tags for grouping and filtering monitors and their changes.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        ...
-
-    @required_args(["change_detection", "name", "schedule", "target"])
-    async def create(
-        self,
-        *,
-        change_detection: monitor_create_params.MonitorsCreatePageExactMonitorRequestChangeDetection
-        | monitor_create_params.MonitorsCreateSitemapExactMonitorRequestChangeDetection
-        | monitor_create_params.MonitorsCreatePageSemanticMonitorRequestChangeDetection
-        | monitor_create_params.MonitorsCreateExtractSemanticMonitorRequestChangeDetection,
-        name: str,
-        schedule: monitor_create_params.MonitorsCreatePageExactMonitorRequestSchedule
-        | monitor_create_params.MonitorsCreateSitemapExactMonitorRequestSchedule
-        | monitor_create_params.MonitorsCreatePageSemanticMonitorRequestSchedule
-        | monitor_create_params.MonitorsCreateExtractSemanticMonitorRequestSchedule,
-        target: monitor_create_params.MonitorsCreatePageExactMonitorRequestTarget
-        | monitor_create_params.MonitorsCreateSitemapExactMonitorRequestTarget
-        | monitor_create_params.MonitorsCreatePageSemanticMonitorRequestTarget
-        | monitor_create_params.MonitorsCreateExtractSemanticMonitorRequestTarget,
-        tags: SequenceNotStr[str] | Omit = omit,
-        webhook: Optional[monitor_create_params.MonitorsCreatePageExactMonitorRequestWebhook]
-        | Optional[monitor_create_params.MonitorsCreateSitemapExactMonitorRequestWebhook]
-        | Optional[monitor_create_params.MonitorsCreatePageSemanticMonitorRequestWebhook]
-        | Optional[monitor_create_params.MonitorsCreateExtractSemanticMonitorRequestWebhook]
-        | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> MonitorCreateResponse:
-        return cast(
-            MonitorCreateResponse,
-            await self._post(
-                "/monitors",
-                body=await async_maybe_transform(
-                    {
-                        "change_detection": change_detection,
-                        "name": name,
-                        "schedule": schedule,
-                        "target": target,
-                        "tags": tags,
-                        "webhook": webhook,
-                    },
-                    monitor_create_params.MonitorCreateParams,
-                ),
-                options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-                ),
-                cast_to=cast(
-                    Any, MonitorCreateResponse
-                ),  # Union types cannot be passed in as arguments in the type system
+        return await self._post(
+            "/monitors",
+            body=await async_maybe_transform(
+                {
+                    "change_detection": change_detection,
+                    "name": name,
+                    "schedule": schedule,
+                    "target": target,
+                    "mode": mode,
+                    "tags": tags,
+                    "webhook": webhook,
+                },
+                monitor_create_params.MonitorCreateParams,
             ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=MonitorCreateResponse,
         )
 
     async def retrieve(
@@ -1033,17 +721,12 @@ class AsyncMonitorsResource(AsyncAPIResource):
         """
         if not monitor_id:
             raise ValueError(f"Expected a non-empty value for `monitor_id` but received {monitor_id!r}")
-        return cast(
-            MonitorRetrieveResponse,
-            await self._get(
-                path_template("/monitors/{monitor_id}", monitor_id=monitor_id),
-                options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-                ),
-                cast_to=cast(
-                    Any, MonitorRetrieveResponse
-                ),  # Union types cannot be passed in as arguments in the type system
+        return await self._get(
+            path_template("/monitors/{monitor_id}", monitor_id=monitor_id),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
+            cast_to=MonitorRetrieveResponse,
         )
 
     async def update(
@@ -1093,29 +776,24 @@ class AsyncMonitorsResource(AsyncAPIResource):
         """
         if not monitor_id:
             raise ValueError(f"Expected a non-empty value for `monitor_id` but received {monitor_id!r}")
-        return cast(
-            MonitorUpdateResponse,
-            await self._patch(
-                path_template("/monitors/{monitor_id}", monitor_id=monitor_id),
-                body=await async_maybe_transform(
-                    {
-                        "change_detection": change_detection,
-                        "name": name,
-                        "schedule": schedule,
-                        "status": status,
-                        "tags": tags,
-                        "target": target,
-                        "webhook": webhook,
-                    },
-                    monitor_update_params.MonitorUpdateParams,
-                ),
-                options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-                ),
-                cast_to=cast(
-                    Any, MonitorUpdateResponse
-                ),  # Union types cannot be passed in as arguments in the type system
+        return await self._patch(
+            path_template("/monitors/{monitor_id}", monitor_id=monitor_id),
+            body=await async_maybe_transform(
+                {
+                    "change_detection": change_detection,
+                    "name": name,
+                    "schedule": schedule,
+                    "status": status,
+                    "tags": tags,
+                    "target": target,
+                    "webhook": webhook,
+                },
+                monitor_update_params.MonitorUpdateParams,
             ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=MonitorUpdateResponse,
         )
 
     async def list(
@@ -1124,8 +802,12 @@ class AsyncMonitorsResource(AsyncAPIResource):
         change_detection_type: Literal["exact", "semantic"] | Omit = omit,
         cursor: str | Omit = omit,
         limit: int | Omit = omit,
+        q: str | Omit = omit,
+        search_by: List[Literal["name", "url", "query", "tags"]] | Omit = omit,
+        search_type: Literal["exact", "prefix"] | Omit = omit,
         status: Literal["active", "paused", "failed"] | Omit = omit,
         tag: str | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         target_type: Literal["page", "sitemap", "extract"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -1134,11 +816,24 @@ class AsyncMonitorsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorListResponse:
-        """
-        List monitors
+        """Lists monitors for the authenticated organization.
+
+        Supports free-text search
+        (`q` over `search_by` fields, `prefix` or `exact` via `search_type`) plus
+        status/type/tag filters. Results are paginated via the opaque `cursor`.
 
         Args:
+          q: Free-text search term, matched against the fields named in `search_by`.
+
+          search_by: Comma-separated fields to search with `q`. Defaults to all of them. Note `query`
+              only exists on semantic monitors.
+
+          search_type: `prefix` for as-you-type prefix matching (default), `exact` for full-token
+              matching.
+
           tag: Filter to items that have this tag.
+
+          tags: Comma-separated list of tags to filter by (matches monitors having any of them).
 
           extra_headers: Send extra headers
 
@@ -1160,8 +855,12 @@ class AsyncMonitorsResource(AsyncAPIResource):
                         "change_detection_type": change_detection_type,
                         "cursor": cursor,
                         "limit": limit,
+                        "q": q,
+                        "search_by": search_by,
+                        "search_type": search_type,
                         "status": status,
                         "tag": tag,
+                        "tags": tags,
                         "target_type": target_type,
                     },
                     monitor_list_params.MonitorListParams,
@@ -1428,17 +1127,12 @@ class AsyncMonitorsResource(AsyncAPIResource):
         """
         if not change_id:
             raise ValueError(f"Expected a non-empty value for `change_id` but received {change_id!r}")
-        return cast(
-            MonitorRetrieveChangeResponse,
-            await self._get(
-                path_template("/monitors/changes/{change_id}", change_id=change_id),
-                options=make_request_options(
-                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-                ),
-                cast_to=cast(
-                    Any, MonitorRetrieveChangeResponse
-                ),  # Union types cannot be passed in as arguments in the type system
+        return await self._get(
+            path_template("/monitors/changes/{change_id}", change_id=change_id),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
+            cast_to=MonitorRetrieveChangeResponse,
         )
 
     async def run(
