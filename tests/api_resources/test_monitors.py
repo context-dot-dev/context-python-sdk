@@ -32,10 +32,10 @@ class TestMonitors:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_method_create_overload_1(self, client: ContextDev) -> None:
+    def test_method_create(self, client: ContextDev) -> None:
         monitor = client.monitors.create(
             change_detection={"type": "exact"},
-            name="Acme pricing monitor",
+            name="Acme pricing page",
             schedule={
                 "frequency": 6,
                 "type": "interval",
@@ -50,189 +50,10 @@ class TestMonitors:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_method_create_with_all_params_overload_1(self, client: ContextDev) -> None:
+    def test_method_create_with_all_params(self, client: ContextDev) -> None:
         monitor = client.monitors.create(
             change_detection={"type": "exact"},
-            name="Acme pricing monitor",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
-            target={
-                "type": "page",
-                "url": "https://acme.com/pricing",
-                "normalize_whitespace": True,
-            },
-            tags=["pricing", "competitor"],
-            webhook={"url": "https://example.com/webhook"},
-        )
-        assert_matches_type(MonitorCreateResponse, monitor, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_raw_response_create_overload_1(self, client: ContextDev) -> None:
-        response = client.monitors.with_raw_response.create(
-            change_detection={"type": "exact"},
-            name="Acme pricing monitor",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
-            target={
-                "type": "page",
-                "url": "https://acme.com/pricing",
-            },
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        monitor = response.parse()
-        assert_matches_type(MonitorCreateResponse, monitor, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_streaming_response_create_overload_1(self, client: ContextDev) -> None:
-        with client.monitors.with_streaming_response.create(
-            change_detection={"type": "exact"},
-            name="Acme pricing monitor",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
-            target={
-                "type": "page",
-                "url": "https://acme.com/pricing",
-            },
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            monitor = response.parse()
-            assert_matches_type(MonitorCreateResponse, monitor, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_create_overload_2(self, client: ContextDev) -> None:
-        monitor = client.monitors.create(
-            change_detection={"type": "exact"},
-            name="Acme pricing monitor",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
-            target={
-                "type": "sitemap",
-                "url": "https://acme.com/sitemap.xml",
-            },
-        )
-        assert_matches_type(MonitorCreateResponse, monitor, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_create_with_all_params_overload_2(self, client: ContextDev) -> None:
-        monitor = client.monitors.create(
-            change_detection={"type": "exact"},
-            name="Acme pricing monitor",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
-            target={
-                "type": "sitemap",
-                "url": "https://acme.com/sitemap.xml",
-                "exclude": ["/legal/*", "/privacy"],
-                "include": ["/blog/*", "/pricing*"],
-                "max_urls": 1,
-            },
-            tags=["pricing", "competitor"],
-            webhook={"url": "https://example.com/webhook"},
-        )
-        assert_matches_type(MonitorCreateResponse, monitor, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_raw_response_create_overload_2(self, client: ContextDev) -> None:
-        response = client.monitors.with_raw_response.create(
-            change_detection={"type": "exact"},
-            name="Acme pricing monitor",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
-            target={
-                "type": "sitemap",
-                "url": "https://acme.com/sitemap.xml",
-            },
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        monitor = response.parse()
-        assert_matches_type(MonitorCreateResponse, monitor, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_streaming_response_create_overload_2(self, client: ContextDev) -> None:
-        with client.monitors.with_streaming_response.create(
-            change_detection={"type": "exact"},
-            name="Acme pricing monitor",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
-            target={
-                "type": "sitemap",
-                "url": "https://acme.com/sitemap.xml",
-            },
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            monitor = response.parse()
-            assert_matches_type(MonitorCreateResponse, monitor, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_create_overload_3(self, client: ContextDev) -> None:
-        monitor = client.monitors.create(
-            change_detection={
-                "query": "Tell me when pricing, packaging, plan limits, or discounts change.",
-                "type": "semantic",
-            },
-            name="Acme pricing monitor",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
-            target={
-                "type": "page",
-                "url": "https://acme.com/pricing",
-            },
-        )
-        assert_matches_type(MonitorCreateResponse, monitor, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_create_with_all_params_overload_3(self, client: ContextDev) -> None:
-        monitor = client.monitors.create(
-            change_detection={
-                "query": "Tell me when pricing, packaging, plan limits, or discounts change.",
-                "type": "semantic",
-                "confidence_threshold": 0,
-            },
-            name="Acme pricing monitor",
+            name="Acme pricing page",
             schedule={
                 "frequency": 6,
                 "type": "interval",
@@ -243,6 +64,7 @@ class TestMonitors:
                 "url": "https://acme.com/pricing",
                 "normalize_whitespace": True,
             },
+            mode="web",
             tags=["pricing", "competitor"],
             webhook={"url": "https://example.com/webhook"},
         )
@@ -250,13 +72,10 @@ class TestMonitors:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_raw_response_create_overload_3(self, client: ContextDev) -> None:
+    def test_raw_response_create(self, client: ContextDev) -> None:
         response = client.monitors.with_raw_response.create(
-            change_detection={
-                "query": "Tell me when pricing, packaging, plan limits, or discounts change.",
-                "type": "semantic",
-            },
-            name="Acme pricing monitor",
+            change_detection={"type": "exact"},
+            name="Acme pricing page",
             schedule={
                 "frequency": 6,
                 "type": "interval",
@@ -275,13 +94,10 @@ class TestMonitors:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_streaming_response_create_overload_3(self, client: ContextDev) -> None:
+    def test_streaming_response_create(self, client: ContextDev) -> None:
         with client.monitors.with_streaming_response.create(
-            change_detection={
-                "query": "Tell me when pricing, packaging, plan limits, or discounts change.",
-                "type": "semantic",
-            },
-            name="Acme pricing monitor",
+            change_detection={"type": "exact"},
+            name="Acme pricing page",
             schedule={
                 "frequency": 6,
                 "type": "interval",
@@ -290,111 +106,6 @@ class TestMonitors:
             target={
                 "type": "page",
                 "url": "https://acme.com/pricing",
-            },
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            monitor = response.parse()
-            assert_matches_type(MonitorCreateResponse, monitor, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_create_overload_4(self, client: ContextDev) -> None:
-        monitor = client.monitors.create(
-            change_detection={
-                "query": "Tell me when pricing, packaging, plan limits, or discounts change.",
-                "type": "semantic",
-            },
-            name="Acme pricing monitor",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
-            target={
-                "type": "extract",
-                "url": "https://acme.com",
-            },
-        )
-        assert_matches_type(MonitorCreateResponse, monitor, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_create_with_all_params_overload_4(self, client: ContextDev) -> None:
-        monitor = client.monitors.create(
-            change_detection={
-                "query": "Tell me when pricing, packaging, plan limits, or discounts change.",
-                "type": "semantic",
-                "confidence_threshold": 0,
-            },
-            name="Acme pricing monitor",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
-            target={
-                "type": "extract",
-                "url": "https://acme.com",
-                "follow_subdomains": True,
-                "instructions": "Extract every pricing plan with its monthly price and included limits.",
-                "max_depth": 0,
-                "max_pages": 1,
-                "schema": {
-                    "type": "bar",
-                    "properties": "bar",
-                },
-            },
-            tags=["pricing", "competitor"],
-            webhook={"url": "https://example.com/webhook"},
-        )
-        assert_matches_type(MonitorCreateResponse, monitor, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_raw_response_create_overload_4(self, client: ContextDev) -> None:
-        response = client.monitors.with_raw_response.create(
-            change_detection={
-                "query": "Tell me when pricing, packaging, plan limits, or discounts change.",
-                "type": "semantic",
-            },
-            name="Acme pricing monitor",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
-            target={
-                "type": "extract",
-                "url": "https://acme.com",
-            },
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        monitor = response.parse()
-        assert_matches_type(MonitorCreateResponse, monitor, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_streaming_response_create_overload_4(self, client: ContextDev) -> None:
-        with client.monitors.with_streaming_response.create(
-            change_detection={
-                "query": "Tell me when pricing, packaging, plan limits, or discounts change.",
-                "type": "semantic",
-            },
-            name="Acme pricing monitor",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
-            target={
-                "type": "extract",
-                "url": "https://acme.com",
             },
         ) as response:
             assert not response.is_closed
@@ -525,8 +236,12 @@ class TestMonitors:
             change_detection_type="exact",
             cursor="cursor",
             limit=1,
+            q="q",
+            search_by=["name"],
+            search_type="exact",
             status="active",
             tag="tag",
+            tags=["string"],
             target_type="page",
         )
         assert_matches_type(MonitorListResponse, monitor, path=["response"])
@@ -876,10 +591,10 @@ class TestAsyncMonitors:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_method_create_overload_1(self, async_client: AsyncContextDev) -> None:
+    async def test_method_create(self, async_client: AsyncContextDev) -> None:
         monitor = await async_client.monitors.create(
             change_detection={"type": "exact"},
-            name="Acme pricing monitor",
+            name="Acme pricing page",
             schedule={
                 "frequency": 6,
                 "type": "interval",
@@ -894,189 +609,10 @@ class TestAsyncMonitors:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_method_create_with_all_params_overload_1(self, async_client: AsyncContextDev) -> None:
+    async def test_method_create_with_all_params(self, async_client: AsyncContextDev) -> None:
         monitor = await async_client.monitors.create(
             change_detection={"type": "exact"},
-            name="Acme pricing monitor",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
-            target={
-                "type": "page",
-                "url": "https://acme.com/pricing",
-                "normalize_whitespace": True,
-            },
-            tags=["pricing", "competitor"],
-            webhook={"url": "https://example.com/webhook"},
-        )
-        assert_matches_type(MonitorCreateResponse, monitor, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_raw_response_create_overload_1(self, async_client: AsyncContextDev) -> None:
-        response = await async_client.monitors.with_raw_response.create(
-            change_detection={"type": "exact"},
-            name="Acme pricing monitor",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
-            target={
-                "type": "page",
-                "url": "https://acme.com/pricing",
-            },
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        monitor = await response.parse()
-        assert_matches_type(MonitorCreateResponse, monitor, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_streaming_response_create_overload_1(self, async_client: AsyncContextDev) -> None:
-        async with async_client.monitors.with_streaming_response.create(
-            change_detection={"type": "exact"},
-            name="Acme pricing monitor",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
-            target={
-                "type": "page",
-                "url": "https://acme.com/pricing",
-            },
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            monitor = await response.parse()
-            assert_matches_type(MonitorCreateResponse, monitor, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_create_overload_2(self, async_client: AsyncContextDev) -> None:
-        monitor = await async_client.monitors.create(
-            change_detection={"type": "exact"},
-            name="Acme pricing monitor",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
-            target={
-                "type": "sitemap",
-                "url": "https://acme.com/sitemap.xml",
-            },
-        )
-        assert_matches_type(MonitorCreateResponse, monitor, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_create_with_all_params_overload_2(self, async_client: AsyncContextDev) -> None:
-        monitor = await async_client.monitors.create(
-            change_detection={"type": "exact"},
-            name="Acme pricing monitor",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
-            target={
-                "type": "sitemap",
-                "url": "https://acme.com/sitemap.xml",
-                "exclude": ["/legal/*", "/privacy"],
-                "include": ["/blog/*", "/pricing*"],
-                "max_urls": 1,
-            },
-            tags=["pricing", "competitor"],
-            webhook={"url": "https://example.com/webhook"},
-        )
-        assert_matches_type(MonitorCreateResponse, monitor, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_raw_response_create_overload_2(self, async_client: AsyncContextDev) -> None:
-        response = await async_client.monitors.with_raw_response.create(
-            change_detection={"type": "exact"},
-            name="Acme pricing monitor",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
-            target={
-                "type": "sitemap",
-                "url": "https://acme.com/sitemap.xml",
-            },
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        monitor = await response.parse()
-        assert_matches_type(MonitorCreateResponse, monitor, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_streaming_response_create_overload_2(self, async_client: AsyncContextDev) -> None:
-        async with async_client.monitors.with_streaming_response.create(
-            change_detection={"type": "exact"},
-            name="Acme pricing monitor",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
-            target={
-                "type": "sitemap",
-                "url": "https://acme.com/sitemap.xml",
-            },
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            monitor = await response.parse()
-            assert_matches_type(MonitorCreateResponse, monitor, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_create_overload_3(self, async_client: AsyncContextDev) -> None:
-        monitor = await async_client.monitors.create(
-            change_detection={
-                "query": "Tell me when pricing, packaging, plan limits, or discounts change.",
-                "type": "semantic",
-            },
-            name="Acme pricing monitor",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
-            target={
-                "type": "page",
-                "url": "https://acme.com/pricing",
-            },
-        )
-        assert_matches_type(MonitorCreateResponse, monitor, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_create_with_all_params_overload_3(self, async_client: AsyncContextDev) -> None:
-        monitor = await async_client.monitors.create(
-            change_detection={
-                "query": "Tell me when pricing, packaging, plan limits, or discounts change.",
-                "type": "semantic",
-                "confidence_threshold": 0,
-            },
-            name="Acme pricing monitor",
+            name="Acme pricing page",
             schedule={
                 "frequency": 6,
                 "type": "interval",
@@ -1087,6 +623,7 @@ class TestAsyncMonitors:
                 "url": "https://acme.com/pricing",
                 "normalize_whitespace": True,
             },
+            mode="web",
             tags=["pricing", "competitor"],
             webhook={"url": "https://example.com/webhook"},
         )
@@ -1094,13 +631,10 @@ class TestAsyncMonitors:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_raw_response_create_overload_3(self, async_client: AsyncContextDev) -> None:
+    async def test_raw_response_create(self, async_client: AsyncContextDev) -> None:
         response = await async_client.monitors.with_raw_response.create(
-            change_detection={
-                "query": "Tell me when pricing, packaging, plan limits, or discounts change.",
-                "type": "semantic",
-            },
-            name="Acme pricing monitor",
+            change_detection={"type": "exact"},
+            name="Acme pricing page",
             schedule={
                 "frequency": 6,
                 "type": "interval",
@@ -1119,13 +653,10 @@ class TestAsyncMonitors:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_streaming_response_create_overload_3(self, async_client: AsyncContextDev) -> None:
+    async def test_streaming_response_create(self, async_client: AsyncContextDev) -> None:
         async with async_client.monitors.with_streaming_response.create(
-            change_detection={
-                "query": "Tell me when pricing, packaging, plan limits, or discounts change.",
-                "type": "semantic",
-            },
-            name="Acme pricing monitor",
+            change_detection={"type": "exact"},
+            name="Acme pricing page",
             schedule={
                 "frequency": 6,
                 "type": "interval",
@@ -1134,111 +665,6 @@ class TestAsyncMonitors:
             target={
                 "type": "page",
                 "url": "https://acme.com/pricing",
-            },
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            monitor = await response.parse()
-            assert_matches_type(MonitorCreateResponse, monitor, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_create_overload_4(self, async_client: AsyncContextDev) -> None:
-        monitor = await async_client.monitors.create(
-            change_detection={
-                "query": "Tell me when pricing, packaging, plan limits, or discounts change.",
-                "type": "semantic",
-            },
-            name="Acme pricing monitor",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
-            target={
-                "type": "extract",
-                "url": "https://acme.com",
-            },
-        )
-        assert_matches_type(MonitorCreateResponse, monitor, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_create_with_all_params_overload_4(self, async_client: AsyncContextDev) -> None:
-        monitor = await async_client.monitors.create(
-            change_detection={
-                "query": "Tell me when pricing, packaging, plan limits, or discounts change.",
-                "type": "semantic",
-                "confidence_threshold": 0,
-            },
-            name="Acme pricing monitor",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
-            target={
-                "type": "extract",
-                "url": "https://acme.com",
-                "follow_subdomains": True,
-                "instructions": "Extract every pricing plan with its monthly price and included limits.",
-                "max_depth": 0,
-                "max_pages": 1,
-                "schema": {
-                    "type": "bar",
-                    "properties": "bar",
-                },
-            },
-            tags=["pricing", "competitor"],
-            webhook={"url": "https://example.com/webhook"},
-        )
-        assert_matches_type(MonitorCreateResponse, monitor, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_raw_response_create_overload_4(self, async_client: AsyncContextDev) -> None:
-        response = await async_client.monitors.with_raw_response.create(
-            change_detection={
-                "query": "Tell me when pricing, packaging, plan limits, or discounts change.",
-                "type": "semantic",
-            },
-            name="Acme pricing monitor",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
-            target={
-                "type": "extract",
-                "url": "https://acme.com",
-            },
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        monitor = await response.parse()
-        assert_matches_type(MonitorCreateResponse, monitor, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_streaming_response_create_overload_4(self, async_client: AsyncContextDev) -> None:
-        async with async_client.monitors.with_streaming_response.create(
-            change_detection={
-                "query": "Tell me when pricing, packaging, plan limits, or discounts change.",
-                "type": "semantic",
-            },
-            name="Acme pricing monitor",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
-            target={
-                "type": "extract",
-                "url": "https://acme.com",
             },
         ) as response:
             assert not response.is_closed
@@ -1369,8 +795,12 @@ class TestAsyncMonitors:
             change_detection_type="exact",
             cursor="cursor",
             limit=1,
+            q="q",
+            search_by=["name"],
+            search_type="exact",
             status="active",
             tag="tag",
+            tags=["string"],
             target_type="page",
         )
         assert_matches_type(MonitorListResponse, monitor, path=["response"])

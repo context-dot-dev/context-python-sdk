@@ -9,55 +9,48 @@ from .._types import SequenceNotStr
 
 __all__ = [
     "MonitorCreateParams",
-    "MonitorsCreatePageExactMonitorRequest",
-    "MonitorsCreatePageExactMonitorRequestChangeDetection",
-    "MonitorsCreatePageExactMonitorRequestSchedule",
-    "MonitorsCreatePageExactMonitorRequestTarget",
-    "MonitorsCreatePageExactMonitorRequestWebhook",
-    "MonitorsCreateSitemapExactMonitorRequest",
-    "MonitorsCreateSitemapExactMonitorRequestChangeDetection",
-    "MonitorsCreateSitemapExactMonitorRequestSchedule",
-    "MonitorsCreateSitemapExactMonitorRequestTarget",
-    "MonitorsCreateSitemapExactMonitorRequestWebhook",
-    "MonitorsCreatePageSemanticMonitorRequest",
-    "MonitorsCreatePageSemanticMonitorRequestChangeDetection",
-    "MonitorsCreatePageSemanticMonitorRequestSchedule",
-    "MonitorsCreatePageSemanticMonitorRequestTarget",
-    "MonitorsCreatePageSemanticMonitorRequestWebhook",
-    "MonitorsCreateExtractSemanticMonitorRequest",
-    "MonitorsCreateExtractSemanticMonitorRequestChangeDetection",
-    "MonitorsCreateExtractSemanticMonitorRequestSchedule",
-    "MonitorsCreateExtractSemanticMonitorRequestTarget",
-    "MonitorsCreateExtractSemanticMonitorRequestWebhook",
+    "ChangeDetection",
+    "ChangeDetectionMonitorsExactChangeDetection",
+    "ChangeDetectionMonitorsSemanticChangeDetection",
+    "Schedule",
+    "Target",
+    "TargetMonitorsPageTarget",
+    "TargetMonitorsSitemapTarget",
+    "TargetMonitorsExtractTarget",
+    "Webhook",
 ]
 
 
-class MonitorsCreatePageExactMonitorRequest(TypedDict, total=False):
-    change_detection: Required[MonitorsCreatePageExactMonitorRequestChangeDetection]
-    """Detect exact changes.
-
-    For page targets, this means visible text diffs. For sitemap targets, this means
-    URL additions and removals.
-    """
+class MonitorCreateParams(TypedDict, total=False):
+    change_detection: Required[ChangeDetection]
+    """Discriminated union describing how changes are detected."""
 
     name: Required[str]
 
-    schedule: Required[MonitorsCreatePageExactMonitorRequestSchedule]
+    schedule: Required[Schedule]
     """Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
 
     every 6 hours or every 2 days. The total interval (frequency × unit) must be
     between 10 minutes and 1 year.
     """
 
-    target: Required[MonitorsCreatePageExactMonitorRequestTarget]
+    target: Required[Target]
+    """Discriminated union describing what the monitor watches."""
+
+    mode: Literal["web"]
+    """Top-level monitor category.
+
+    Always `web` today; the concrete behavior is described by `target` and
+    `change_detection`.
+    """
 
     tags: SequenceNotStr[str]
     """User-defined tags for grouping and filtering monitors and their changes."""
 
-    webhook: Optional[MonitorsCreatePageExactMonitorRequestWebhook]
+    webhook: Optional[Webhook]
 
 
-class MonitorsCreatePageExactMonitorRequestChangeDetection(TypedDict, total=False):
+class ChangeDetectionMonitorsExactChangeDetection(TypedDict, total=False):
     """Detect exact changes.
 
     For page targets, this means visible text diffs. For sitemap targets, this means URL additions and removals.
@@ -66,7 +59,22 @@ class MonitorsCreatePageExactMonitorRequestChangeDetection(TypedDict, total=Fals
     type: Required[Literal["exact"]]
 
 
-class MonitorsCreatePageExactMonitorRequestSchedule(TypedDict, total=False):
+class ChangeDetectionMonitorsSemanticChangeDetection(TypedDict, total=False):
+    """Detect meaning-level changes that match a natural language query."""
+
+    query: Required[str]
+
+    type: Required[Literal["semantic"]]
+
+    confidence_threshold: float
+
+
+ChangeDetection: TypeAlias = Union[
+    ChangeDetectionMonitorsExactChangeDetection, ChangeDetectionMonitorsSemanticChangeDetection
+]
+
+
+class Schedule(TypedDict, total=False):
     """Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
 
     every 6 hours or every 2 days. The total interval (frequency × unit) must be between 10 minutes and 1 year.
@@ -85,7 +93,9 @@ class MonitorsCreatePageExactMonitorRequestSchedule(TypedDict, total=False):
     unit: Required[Literal["minutes", "hours", "days"]]
 
 
-class MonitorsCreatePageExactMonitorRequestTarget(TypedDict, total=False):
+class TargetMonitorsPageTarget(TypedDict, total=False):
+    """Watch a single web page."""
+
     type: Required[Literal["page"]]
 
     url: Required[str]
@@ -94,65 +104,9 @@ class MonitorsCreatePageExactMonitorRequestTarget(TypedDict, total=False):
     """Normalize whitespace before comparing or analyzing text."""
 
 
-class MonitorsCreatePageExactMonitorRequestWebhook(TypedDict, total=False):
-    url: Required[str]
-    """Webhook URL called when a change is detected."""
+class TargetMonitorsSitemapTarget(TypedDict, total=False):
+    """Watch a sitemap for URL additions and removals."""
 
-
-class MonitorsCreateSitemapExactMonitorRequest(TypedDict, total=False):
-    change_detection: Required[MonitorsCreateSitemapExactMonitorRequestChangeDetection]
-    """Detect exact changes.
-
-    For page targets, this means visible text diffs. For sitemap targets, this means
-    URL additions and removals.
-    """
-
-    name: Required[str]
-
-    schedule: Required[MonitorsCreateSitemapExactMonitorRequestSchedule]
-    """Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
-
-    every 6 hours or every 2 days. The total interval (frequency × unit) must be
-    between 10 minutes and 1 year.
-    """
-
-    target: Required[MonitorsCreateSitemapExactMonitorRequestTarget]
-
-    tags: SequenceNotStr[str]
-    """User-defined tags for grouping and filtering monitors and their changes."""
-
-    webhook: Optional[MonitorsCreateSitemapExactMonitorRequestWebhook]
-
-
-class MonitorsCreateSitemapExactMonitorRequestChangeDetection(TypedDict, total=False):
-    """Detect exact changes.
-
-    For page targets, this means visible text diffs. For sitemap targets, this means URL additions and removals.
-    """
-
-    type: Required[Literal["exact"]]
-
-
-class MonitorsCreateSitemapExactMonitorRequestSchedule(TypedDict, total=False):
-    """Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
-
-    every 6 hours or every 2 days. The total interval (frequency × unit) must be between 10 minutes and 1 year.
-    """
-
-    frequency: Required[int]
-    """Number of units between runs.
-
-    The resulting interval (frequency × unit) must be at least 10 minutes and at
-    most 1 year (e.g. minimum 10 when unit is minutes; maximum 365 when unit is
-    days).
-    """
-
-    type: Required[Literal["interval"]]
-
-    unit: Required[Literal["minutes", "hours", "days"]]
-
-
-class MonitorsCreateSitemapExactMonitorRequestTarget(TypedDict, total=False):
     type: Required[Literal["sitemap"]]
 
     url: Required[str]
@@ -167,126 +121,9 @@ class MonitorsCreateSitemapExactMonitorRequestTarget(TypedDict, total=False):
     max_urls: int
 
 
-class MonitorsCreateSitemapExactMonitorRequestWebhook(TypedDict, total=False):
-    url: Required[str]
-    """Webhook URL called when a change is detected."""
+class TargetMonitorsExtractTarget(TypedDict, total=False):
+    """Watch a site's extracted structured data."""
 
-
-class MonitorsCreatePageSemanticMonitorRequest(TypedDict, total=False):
-    change_detection: Required[MonitorsCreatePageSemanticMonitorRequestChangeDetection]
-    """Detect meaning-level changes that match a natural language query."""
-
-    name: Required[str]
-
-    schedule: Required[MonitorsCreatePageSemanticMonitorRequestSchedule]
-    """Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
-
-    every 6 hours or every 2 days. The total interval (frequency × unit) must be
-    between 10 minutes and 1 year.
-    """
-
-    target: Required[MonitorsCreatePageSemanticMonitorRequestTarget]
-
-    tags: SequenceNotStr[str]
-    """User-defined tags for grouping and filtering monitors and their changes."""
-
-    webhook: Optional[MonitorsCreatePageSemanticMonitorRequestWebhook]
-
-
-class MonitorsCreatePageSemanticMonitorRequestChangeDetection(TypedDict, total=False):
-    """Detect meaning-level changes that match a natural language query."""
-
-    query: Required[str]
-
-    type: Required[Literal["semantic"]]
-
-    confidence_threshold: float
-
-
-class MonitorsCreatePageSemanticMonitorRequestSchedule(TypedDict, total=False):
-    """Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
-
-    every 6 hours or every 2 days. The total interval (frequency × unit) must be between 10 minutes and 1 year.
-    """
-
-    frequency: Required[int]
-    """Number of units between runs.
-
-    The resulting interval (frequency × unit) must be at least 10 minutes and at
-    most 1 year (e.g. minimum 10 when unit is minutes; maximum 365 when unit is
-    days).
-    """
-
-    type: Required[Literal["interval"]]
-
-    unit: Required[Literal["minutes", "hours", "days"]]
-
-
-class MonitorsCreatePageSemanticMonitorRequestTarget(TypedDict, total=False):
-    type: Required[Literal["page"]]
-
-    url: Required[str]
-
-    normalize_whitespace: bool
-    """Normalize whitespace before comparing or analyzing text."""
-
-
-class MonitorsCreatePageSemanticMonitorRequestWebhook(TypedDict, total=False):
-    url: Required[str]
-    """Webhook URL called when a change is detected."""
-
-
-class MonitorsCreateExtractSemanticMonitorRequest(TypedDict, total=False):
-    change_detection: Required[MonitorsCreateExtractSemanticMonitorRequestChangeDetection]
-    """Detect meaning-level changes that match a natural language query."""
-
-    name: Required[str]
-
-    schedule: Required[MonitorsCreateExtractSemanticMonitorRequestSchedule]
-    """Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
-
-    every 6 hours or every 2 days. The total interval (frequency × unit) must be
-    between 10 minutes and 1 year.
-    """
-
-    target: Required[MonitorsCreateExtractSemanticMonitorRequestTarget]
-
-    tags: SequenceNotStr[str]
-    """User-defined tags for grouping and filtering monitors and their changes."""
-
-    webhook: Optional[MonitorsCreateExtractSemanticMonitorRequestWebhook]
-
-
-class MonitorsCreateExtractSemanticMonitorRequestChangeDetection(TypedDict, total=False):
-    """Detect meaning-level changes that match a natural language query."""
-
-    query: Required[str]
-
-    type: Required[Literal["semantic"]]
-
-    confidence_threshold: float
-
-
-class MonitorsCreateExtractSemanticMonitorRequestSchedule(TypedDict, total=False):
-    """Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
-
-    every 6 hours or every 2 days. The total interval (frequency × unit) must be between 10 minutes and 1 year.
-    """
-
-    frequency: Required[int]
-    """Number of units between runs.
-
-    The resulting interval (frequency × unit) must be at least 10 minutes and at
-    most 1 year (e.g. minimum 10 when unit is minutes; maximum 365 when unit is
-    days).
-    """
-
-    type: Required[Literal["interval"]]
-
-    unit: Required[Literal["minutes", "hours", "days"]]
-
-
-class MonitorsCreateExtractSemanticMonitorRequestTarget(TypedDict, total=False):
     type: Required[Literal["extract"]]
 
     url: Required[str]
@@ -310,14 +147,9 @@ class MonitorsCreateExtractSemanticMonitorRequestTarget(TypedDict, total=False):
     """
 
 
-class MonitorsCreateExtractSemanticMonitorRequestWebhook(TypedDict, total=False):
+Target: TypeAlias = Union[TargetMonitorsPageTarget, TargetMonitorsSitemapTarget, TargetMonitorsExtractTarget]
+
+
+class Webhook(TypedDict, total=False):
     url: Required[str]
     """Webhook URL called when a change is detected."""
-
-
-MonitorCreateParams: TypeAlias = Union[
-    MonitorsCreatePageExactMonitorRequest,
-    MonitorsCreateSitemapExactMonitorRequest,
-    MonitorsCreatePageSemanticMonitorRequest,
-    MonitorsCreateExtractSemanticMonitorRequest,
-]

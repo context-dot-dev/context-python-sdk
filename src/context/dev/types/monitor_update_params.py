@@ -90,6 +90,8 @@ class Schedule(TypedDict, total=False):
 
 
 class TargetMonitorsPageTarget(TypedDict, total=False):
+    """Watch a single web page."""
+
     type: Required[Literal["page"]]
 
     url: Required[str]
@@ -99,6 +101,8 @@ class TargetMonitorsPageTarget(TypedDict, total=False):
 
 
 class TargetMonitorsSitemapTarget(TypedDict, total=False):
+    """Watch a sitemap for URL additions and removals."""
+
     type: Required[Literal["sitemap"]]
 
     url: Required[str]
@@ -114,6 +118,8 @@ class TargetMonitorsSitemapTarget(TypedDict, total=False):
 
 
 class TargetMonitorsExtractTarget(TypedDict, total=False):
+    """Watch a site's extracted structured data."""
+
     type: Required[Literal["extract"]]
 
     url: Required[str]
