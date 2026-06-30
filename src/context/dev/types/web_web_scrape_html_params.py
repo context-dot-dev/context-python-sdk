@@ -265,6 +265,13 @@ class WebWebScrapeHTMLParams(TypedDict, total=False):
     range.
     """
 
+    settle_animations: Annotated[bool, PropertyInfo(alias="settleAnimations")]
+    """
+    When true, waits briefly for CSS and transition animations to settle before
+    extracting HTML. Defaults to false. This adds a bit of latency in exchange for
+    more stable output on animated pages.
+    """
+
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
     """Optional timeout in milliseconds for the request.
 
