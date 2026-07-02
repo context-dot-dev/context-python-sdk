@@ -101,7 +101,10 @@ class TargetMonitorsPageTarget(TypedDict, total=False):
 
 
 class TargetMonitorsSitemapTarget(TypedDict, total=False):
-    """Watch a sitemap for URL additions and removals."""
+    """Watch a sitemap for URL additions and removals.
+
+    Crawled URLs are normalized (lowercased host, no trailing slash/fragment) and scoped to the monitored site and its subdomains before comparison. A new URL set must be observed on two consecutive runs before a change is reported, suppressing one-run crawl flaps.
+    """
 
     type: Required[Literal["sitemap"]]
 
@@ -115,6 +118,7 @@ class TargetMonitorsSitemapTarget(TypedDict, total=False):
     """URL path patterns to include."""
 
     max_urls: int
+    """Maximum number of sitemap URLs to track (capped at 10,000)."""
 
 
 class TargetMonitorsExtractTarget(TypedDict, total=False):

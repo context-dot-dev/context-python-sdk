@@ -12,4 +12,9 @@ class MonitorListRunsParams(TypedDict, total=False):
 
     limit: int
 
-    status: Literal["queued", "running", "completed", "failed"]
+    status: Literal["queued", "running", "completed", "failed", "skipped"]
+    """Lifecycle status of a run.
+
+    `skipped` runs never executed — see `skip_reason` (insufficient credits, monitor
+    paused, or superseded by a concurrent run).
+    """
