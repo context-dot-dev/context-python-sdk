@@ -267,6 +267,12 @@ class MonitorsResource(SyncAPIResource):
           search_type: `prefix` for as-you-type prefix matching (default), `exact` for full-token
               matching.
 
+          status: Monitor lifecycle status. `failed` means the most recent run failed (see the
+              monitor's `last_error`); failed monitors keep running on schedule and flip back
+              to `active` on the next successful run. Monitors are auto-`paused` after
+              repeated consecutive failures or insufficient-credit skips; resume by PATCHing
+              status to `active`.
+
           tag: Filter to items that have this tag.
 
           tags: Comma-separated list of tags to filter by (matches monitors having any of them).
@@ -399,7 +405,7 @@ class MonitorsResource(SyncAPIResource):
         *,
         cursor: str | Omit = omit,
         limit: int | Omit = omit,
-        status: Literal["queued", "running", "completed", "failed"] | Omit = omit,
+        status: Literal["queued", "running", "completed", "failed", "skipped"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -411,6 +417,9 @@ class MonitorsResource(SyncAPIResource):
         Returns an account-wide feed of monitor runs across all monitors.
 
         Args:
+          status: Lifecycle status of a run. `skipped` runs never executed — see `skip_reason`
+              (insufficient credits, monitor paused, or superseded by a concurrent run).
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -497,7 +506,7 @@ class MonitorsResource(SyncAPIResource):
         *,
         cursor: str | Omit = omit,
         limit: int | Omit = omit,
-        status: Literal["queued", "running", "completed", "failed"] | Omit = omit,
+        status: Literal["queued", "running", "completed", "failed", "skipped"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -505,10 +514,14 @@ class MonitorsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorListRunsResponse:
-        """
-        List monitor runs
+        """List monitor runs
 
         Args:
+          status: Lifecycle status of a run.
+
+        `skipped` runs never executed — see `skip_reason`
+              (insufficient credits, monitor paused, or superseded by a concurrent run).
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -831,6 +844,12 @@ class AsyncMonitorsResource(AsyncAPIResource):
           search_type: `prefix` for as-you-type prefix matching (default), `exact` for full-token
               matching.
 
+          status: Monitor lifecycle status. `failed` means the most recent run failed (see the
+              monitor's `last_error`); failed monitors keep running on schedule and flip back
+              to `active` on the next successful run. Monitors are auto-`paused` after
+              repeated consecutive failures or insufficient-credit skips; resume by PATCHing
+              status to `active`.
+
           tag: Filter to items that have this tag.
 
           tags: Comma-separated list of tags to filter by (matches monitors having any of them).
@@ -963,7 +982,7 @@ class AsyncMonitorsResource(AsyncAPIResource):
         *,
         cursor: str | Omit = omit,
         limit: int | Omit = omit,
-        status: Literal["queued", "running", "completed", "failed"] | Omit = omit,
+        status: Literal["queued", "running", "completed", "failed", "skipped"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -975,6 +994,9 @@ class AsyncMonitorsResource(AsyncAPIResource):
         Returns an account-wide feed of monitor runs across all monitors.
 
         Args:
+          status: Lifecycle status of a run. `skipped` runs never executed — see `skip_reason`
+              (insufficient credits, monitor paused, or superseded by a concurrent run).
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -1061,7 +1083,7 @@ class AsyncMonitorsResource(AsyncAPIResource):
         *,
         cursor: str | Omit = omit,
         limit: int | Omit = omit,
-        status: Literal["queued", "running", "completed", "failed"] | Omit = omit,
+        status: Literal["queued", "running", "completed", "failed", "skipped"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1069,10 +1091,14 @@ class AsyncMonitorsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorListRunsResponse:
-        """
-        List monitor runs
+        """List monitor runs
 
         Args:
+          status: Lifecycle status of a run.
+
+        `skipped` runs never executed — see `skip_reason`
+              (insufficient credits, monitor paused, or superseded by a concurrent run).
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request

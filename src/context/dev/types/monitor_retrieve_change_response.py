@@ -41,6 +41,9 @@ class MonitorRetrieveChangeResponse(BaseModel):
 
     monitor_id: str
 
+    run_id: str
+    """The run that detected this change."""
+
     summary: str
 
     target_type: Literal["page", "sitemap", "extract"]
@@ -52,6 +55,7 @@ class MonitorRetrieveChangeResponse(BaseModel):
     added_url_count: Optional[int] = None
 
     added_urls: Optional[List[str]] = None
+    """At most 500 URLs are included; the corresponding count field is always exact."""
 
     after_text_excerpt: Optional[str] = None
 
@@ -69,12 +73,14 @@ class MonitorRetrieveChangeResponse(BaseModel):
     matched_url_count: Optional[int] = None
 
     matched_urls: Optional[List[str]] = None
+    """At most 500 URLs are included; the corresponding count field is always exact."""
 
     query: Optional[str] = None
 
     removed_url_count: Optional[int] = None
 
     removed_urls: Optional[List[str]] = None
+    """At most 500 URLs are included; the corresponding count field is always exact."""
 
     tags: Optional[List[str]] = None
     """User-defined tags for grouping and filtering monitors and their changes."""

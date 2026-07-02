@@ -33,6 +33,13 @@ class MonitorListParams(TypedDict, total=False):
     """
 
     status: Literal["active", "paused", "failed"]
+    """Monitor lifecycle status.
+
+    `failed` means the most recent run failed (see the monitor's `last_error`);
+    failed monitors keep running on schedule and flip back to `active` on the next
+    successful run. Monitors are auto-`paused` after repeated consecutive failures
+    or insufficient-credit skips; resume by PATCHing status to `active`.
+    """
 
     tag: str
     """Filter to items that have this tag."""

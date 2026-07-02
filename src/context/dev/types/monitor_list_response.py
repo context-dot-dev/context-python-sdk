@@ -20,6 +20,7 @@ __all__ = [
     "DataTargetMonitorsPageTarget",
     "DataTargetMonitorsSitemapTarget",
     "DataTargetMonitorsExtractTarget",
+    "DataLastError",
     "DataWebhook",
 ]
 
@@ -80,7 +81,10 @@ class DataTargetMonitorsPageTarget(BaseModel):
 
 
 class DataTargetMonitorsSitemapTarget(BaseModel):
-    """Watch a sitemap for URL additions and removals."""
+    """Watch a sitemap for URL additions and removals.
+
+    Crawled URLs are normalized (lowercased host, no trailing slash/fragment) and scoped to the monitored site and its subdomains before comparison. A new URL set must be observed on two consecutive runs before a change is reported, suppressing one-run crawl flaps.
+    """
 
     type: Literal["sitemap"]
 
@@ -94,6 +98,7 @@ class DataTargetMonitorsSitemapTarget(BaseModel):
     """URL path patterns to include."""
 
     max_urls: Optional[int] = None
+    """Maximum number of sitemap URLs to track (capped at 10,000)."""
 
 
 class DataTargetMonitorsExtractTarget(BaseModel):
@@ -126,6 +131,14 @@ DataTarget: TypeAlias = Annotated[
     Union[DataTargetMonitorsPageTarget, DataTargetMonitorsSitemapTarget, DataTargetMonitorsExtractTarget],
     PropertyInfo(discriminator="type"),
 ]
+
+
+class DataLastError(BaseModel):
+    """Error from the most recent failed run; null when the last run succeeded."""
+
+    code: str
+
+    message: str
 
 
 class DataWebhook(BaseModel):
@@ -172,6 +185,13 @@ class Data(BaseModel):
     """
 
     status: Literal["active", "paused", "failed"]
+    """Monitor lifecycle status.
+
+    `failed` means the most recent run failed (see the monitor's `last_error`);
+    failed monitors keep running on schedule and flip back to `active` on the next
+    successful run. Monitors are auto-`paused` after repeated consecutive failures
+    or insufficient-credit skips; resume by PATCHing status to `active`.
+    """
 
     target: DataTarget
     """Discriminated union describing what the monitor watches."""
@@ -180,7 +200,13 @@ class Data(BaseModel):
 
     last_change_at: Optional[datetime] = None
 
+    last_error: Optional[DataLastError] = None
+    """Error from the most recent failed run; null when the last run succeeded."""
+
     last_run_at: Optional[datetime] = None
+
+    next_run_at: Optional[datetime] = None
+    """When the next scheduled run is due."""
 
     tags: Optional[List[str]] = None
     """User-defined tags for grouping and filtering monitors and their changes."""
