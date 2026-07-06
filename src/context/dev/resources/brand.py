@@ -49,6 +49,7 @@ class BrandResource(SyncAPIResource):
         self,
         *,
         domain: str,
+        type: Literal["by_domain"],
         force_language: Literal[
             "afrikaans",
             "albanian",
@@ -191,6 +192,8 @@ class BrandResource(SyncAPIResource):
         Args:
           domain: Domain name to retrieve brand data for (e.g., 'stripe.com').
 
+          type: Discriminator for domain-based brand retrieval.
+
           max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
               refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
               are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
@@ -219,6 +222,7 @@ class BrandResource(SyncAPIResource):
         self,
         *,
         name: str,
+        type: Literal["by_name"],
         country_gl: str | Omit = omit,
         force_language: Literal[
             "afrikaans",
@@ -362,6 +366,8 @@ class BrandResource(SyncAPIResource):
         Args:
           name: Company name to retrieve brand data for (e.g., 'Apple Inc').
 
+          type: Discriminator for name-based brand retrieval.
+
           country_gl: Optional country code hint (GL parameter) to specify the country when looking up
               by company name.
 
@@ -393,6 +399,7 @@ class BrandResource(SyncAPIResource):
         self,
         *,
         email: str,
+        type: Literal["by_email"],
         force_language: Literal[
             "afrikaans",
             "albanian",
@@ -535,6 +542,8 @@ class BrandResource(SyncAPIResource):
         Args:
           email: Email address to retrieve brand data for (e.g., 'jane@stripe.com').
 
+          type: Discriminator for email-based brand retrieval.
+
           max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
               refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
               are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
@@ -563,6 +572,7 @@ class BrandResource(SyncAPIResource):
         self,
         *,
         ticker: str,
+        type: Literal["by_ticker"],
         force_language: Literal[
             "afrikaans",
             "albanian",
@@ -706,6 +716,8 @@ class BrandResource(SyncAPIResource):
         Args:
           ticker: Stock ticker symbol to retrieve brand data for (e.g., 'AAPL').
 
+          type: Discriminator for ticker-based brand retrieval.
+
           max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
               refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
               are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
@@ -736,6 +748,7 @@ class BrandResource(SyncAPIResource):
         self,
         *,
         transaction_info: str,
+        type: Literal["by_transaction"],
         city: str | Omit = omit,
         country_gl: str | Omit = omit,
         force_language: Literal[
@@ -882,6 +895,8 @@ class BrandResource(SyncAPIResource):
         Args:
           transaction_info: Transaction information to identify the brand.
 
+          type: Discriminator for transaction-based brand retrieval.
+
           city: Optional city name to prioritize when searching for the brand.
 
           country_gl: Optional country code hint (GL parameter) to specify the country when
@@ -913,11 +928,18 @@ class BrandResource(SyncAPIResource):
         """
         ...
 
-    @required_args(["domain"], ["name"], ["email"], ["ticker"], ["transaction_info"])
+    @required_args(
+        ["domain", "type"], ["name", "type"], ["email", "type"], ["ticker", "type"], ["transaction_info", "type"]
+    )
     def retrieve(
         self,
         *,
         domain: str | Omit = omit,
+        type: Literal["by_domain"]
+        | Literal["by_name"]
+        | Literal["by_email"]
+        | Literal["by_ticker"]
+        | Literal["by_transaction"],
         force_language: Literal[
             "afrikaans",
             "albanian",
@@ -1066,6 +1088,7 @@ class BrandResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "domain": domain,
+                    "type": type,
                     "force_language": force_language,
                     "max_age_ms": max_age_ms,
                     "max_speed": max_speed,
@@ -1172,6 +1195,7 @@ class AsyncBrandResource(AsyncAPIResource):
         self,
         *,
         domain: str,
+        type: Literal["by_domain"],
         force_language: Literal[
             "afrikaans",
             "albanian",
@@ -1314,6 +1338,8 @@ class AsyncBrandResource(AsyncAPIResource):
         Args:
           domain: Domain name to retrieve brand data for (e.g., 'stripe.com').
 
+          type: Discriminator for domain-based brand retrieval.
+
           max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
               refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
               are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
@@ -1342,6 +1368,7 @@ class AsyncBrandResource(AsyncAPIResource):
         self,
         *,
         name: str,
+        type: Literal["by_name"],
         country_gl: str | Omit = omit,
         force_language: Literal[
             "afrikaans",
@@ -1485,6 +1512,8 @@ class AsyncBrandResource(AsyncAPIResource):
         Args:
           name: Company name to retrieve brand data for (e.g., 'Apple Inc').
 
+          type: Discriminator for name-based brand retrieval.
+
           country_gl: Optional country code hint (GL parameter) to specify the country when looking up
               by company name.
 
@@ -1516,6 +1545,7 @@ class AsyncBrandResource(AsyncAPIResource):
         self,
         *,
         email: str,
+        type: Literal["by_email"],
         force_language: Literal[
             "afrikaans",
             "albanian",
@@ -1658,6 +1688,8 @@ class AsyncBrandResource(AsyncAPIResource):
         Args:
           email: Email address to retrieve brand data for (e.g., 'jane@stripe.com').
 
+          type: Discriminator for email-based brand retrieval.
+
           max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
               refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
               are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
@@ -1686,6 +1718,7 @@ class AsyncBrandResource(AsyncAPIResource):
         self,
         *,
         ticker: str,
+        type: Literal["by_ticker"],
         force_language: Literal[
             "afrikaans",
             "albanian",
@@ -1829,6 +1862,8 @@ class AsyncBrandResource(AsyncAPIResource):
         Args:
           ticker: Stock ticker symbol to retrieve brand data for (e.g., 'AAPL').
 
+          type: Discriminator for ticker-based brand retrieval.
+
           max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
               refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
               are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
@@ -1859,6 +1894,7 @@ class AsyncBrandResource(AsyncAPIResource):
         self,
         *,
         transaction_info: str,
+        type: Literal["by_transaction"],
         city: str | Omit = omit,
         country_gl: str | Omit = omit,
         force_language: Literal[
@@ -2005,6 +2041,8 @@ class AsyncBrandResource(AsyncAPIResource):
         Args:
           transaction_info: Transaction information to identify the brand.
 
+          type: Discriminator for transaction-based brand retrieval.
+
           city: Optional city name to prioritize when searching for the brand.
 
           country_gl: Optional country code hint (GL parameter) to specify the country when
@@ -2036,11 +2074,18 @@ class AsyncBrandResource(AsyncAPIResource):
         """
         ...
 
-    @required_args(["domain"], ["name"], ["email"], ["ticker"], ["transaction_info"])
+    @required_args(
+        ["domain", "type"], ["name", "type"], ["email", "type"], ["ticker", "type"], ["transaction_info", "type"]
+    )
     async def retrieve(
         self,
         *,
         domain: str | Omit = omit,
+        type: Literal["by_domain"]
+        | Literal["by_name"]
+        | Literal["by_email"]
+        | Literal["by_ticker"]
+        | Literal["by_transaction"],
         force_language: Literal[
             "afrikaans",
             "albanian",
@@ -2189,6 +2234,7 @@ class AsyncBrandResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "domain": domain,
+                    "type": type,
                     "force_language": force_language,
                     "max_age_ms": max_age_ms,
                     "max_speed": max_speed,
