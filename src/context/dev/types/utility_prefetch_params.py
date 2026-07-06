@@ -2,11 +2,17 @@
 
 from __future__ import annotations
 
-from typing_extensions import Literal, Required, Annotated, TypedDict
+from typing import Union
+from typing_extensions import Literal, Required, Annotated, TypeAlias, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["UtilityPrefetchParams", "Identifier"]
+__all__ = [
+    "UtilityPrefetchParams",
+    "Identifier",
+    "IdentifierUtilityPrefetchDomainIdentifier",
+    "IdentifierUtilityPrefetchEmailIdentifier",
+]
 
 
 class UtilityPrefetchParams(TypedDict, total=False):
@@ -24,15 +30,22 @@ class UtilityPrefetchParams(TypedDict, total=False):
     """
 
 
-class Identifier(TypedDict, total=False):
-    """Identifier of the brand to prefetch. Provide exactly one of domain or email."""
+class IdentifierUtilityPrefetchDomainIdentifier(TypedDict, total=False):
+    """Prefetch brand data by domain."""
 
-    domain: str
+    domain: Required[str]
     """Domain name to prefetch brand data for"""
 
-    email: str
+
+class IdentifierUtilityPrefetchEmailIdentifier(TypedDict, total=False):
+    """Prefetch brand data by email. The domain will be extracted and validated."""
+
+    email: Required[str]
     """Email address to prefetch brand data for.
 
     The domain will be extracted from the email. Free email providers (gmail.com,
     yahoo.com, etc.) and disposable email addresses are not allowed.
     """
+
+
+Identifier: TypeAlias = Union[IdentifierUtilityPrefetchDomainIdentifier, IdentifierUtilityPrefetchEmailIdentifier]
