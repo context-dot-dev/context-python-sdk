@@ -1211,6 +1211,7 @@ class WebResource(SyncAPIResource):
         max_depth: int | Omit = omit,
         max_pages: int | Omit = omit,
         pdf: web_web_crawl_md_params.Pdf | Omit = omit,
+        settle_animations: bool | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
         stop_after_ms: int | Omit = omit,
         timeout_ms: int | Omit = omit,
@@ -1266,6 +1267,10 @@ class WebResource(SyncAPIResource):
           pdf: PDF parsing controls. Use start/end to limit text extraction and OCR to an
               inclusive 1-based page range.
 
+          settle_animations: When true, waits briefly for CSS and transition animations to settle before
+              extracting each crawled page. Defaults to false. This adds a bit of latency in
+              exchange for more stable output on animated pages.
+
           shorten_base64_images: Truncate base64-encoded image data in the Markdown output
 
           stop_after_ms: Soft time budget for the crawl in milliseconds. After each scrape, the crawler
@@ -1309,6 +1314,7 @@ class WebResource(SyncAPIResource):
                     "max_depth": max_depth,
                     "max_pages": max_pages,
                     "pdf": pdf,
+                    "settle_animations": settle_animations,
                     "shorten_base64_images": shorten_base64_images,
                     "stop_after_ms": stop_after_ms,
                     "timeout_ms": timeout_ms,
@@ -1541,6 +1547,7 @@ class WebResource(SyncAPIResource):
         include_selectors: SequenceNotStr[str] | Omit = omit,
         max_age_ms: int | Omit = omit,
         pdf: web_web_scrape_html_params.Pdf | Omit = omit,
+        settle_animations: bool | Omit = omit,
         timeout_ms: int | Omit = omit,
         use_main_content_only: bool | Omit = omit,
         wait_for_ms: int | Omit = omit,
@@ -1581,6 +1588,10 @@ class WebResource(SyncAPIResource):
           pdf: PDF parsing controls. Use start/end to limit text extraction and OCR to an
               inclusive 1-based page range.
 
+          settle_animations: When true, waits briefly for CSS and transition animations to settle before
+              extracting HTML. Defaults to false. This adds a bit of latency in exchange for
+              more stable output on animated pages.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -1617,6 +1628,7 @@ class WebResource(SyncAPIResource):
                         "include_selectors": include_selectors,
                         "max_age_ms": max_age_ms,
                         "pdf": pdf,
+                        "settle_animations": settle_animations,
                         "timeout_ms": timeout_ms,
                         "use_main_content_only": use_main_content_only,
                         "wait_for_ms": wait_for_ms,
@@ -1631,6 +1643,7 @@ class WebResource(SyncAPIResource):
         self,
         *,
         url: str,
+        dedupe: bool | Omit = omit,
         enrichment: web_web_scrape_images_params.Enrichment | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
         max_age_ms: int | Omit = omit,
@@ -1651,6 +1664,11 @@ class WebResource(SyncAPIResource):
 
         Args:
           url: Page URL to inspect. Must include http:// or https://.
+
+          dedupe: When true, visually duplicate images are removed: every image is loaded and
+              perceptually hashed, and only the highest-resolution copy of each duplicate
+              group is kept. Images that cannot be downloaded or hashed are kept. Default:
+              false.
 
           enrichment: Optional per-image processing, sent as deep-object query params such as
               enrichment[resolution]=true.
@@ -1687,6 +1705,7 @@ class WebResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "url": url,
+                        "dedupe": dedupe,
                         "enrichment": enrichment,
                         "headers": headers,
                         "max_age_ms": max_age_ms,
@@ -1918,6 +1937,7 @@ class WebResource(SyncAPIResource):
         include_selectors: SequenceNotStr[str] | Omit = omit,
         max_age_ms: int | Omit = omit,
         pdf: web_web_scrape_md_params.Pdf | Omit = omit,
+        settle_animations: bool | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
         timeout_ms: int | Omit = omit,
         use_main_content_only: bool | Omit = omit,
@@ -1964,6 +1984,10 @@ class WebResource(SyncAPIResource):
           pdf: PDF parsing controls. Use start/end to limit text extraction and OCR to an
               inclusive 1-based page range.
 
+          settle_animations: When true, waits briefly for CSS and transition animations to settle before
+              converting to Markdown. Defaults to false. This adds a bit of latency in
+              exchange for more stable output on animated pages.
+
           shorten_base64_images: Shorten base64-encoded image data in the Markdown output
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
@@ -2003,6 +2027,7 @@ class WebResource(SyncAPIResource):
                         "include_selectors": include_selectors,
                         "max_age_ms": max_age_ms,
                         "pdf": pdf,
+                        "settle_animations": settle_animations,
                         "shorten_base64_images": shorten_base64_images,
                         "timeout_ms": timeout_ms,
                         "use_main_content_only": use_main_content_only,
@@ -3244,6 +3269,7 @@ class AsyncWebResource(AsyncAPIResource):
         max_depth: int | Omit = omit,
         max_pages: int | Omit = omit,
         pdf: web_web_crawl_md_params.Pdf | Omit = omit,
+        settle_animations: bool | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
         stop_after_ms: int | Omit = omit,
         timeout_ms: int | Omit = omit,
@@ -3299,6 +3325,10 @@ class AsyncWebResource(AsyncAPIResource):
           pdf: PDF parsing controls. Use start/end to limit text extraction and OCR to an
               inclusive 1-based page range.
 
+          settle_animations: When true, waits briefly for CSS and transition animations to settle before
+              extracting each crawled page. Defaults to false. This adds a bit of latency in
+              exchange for more stable output on animated pages.
+
           shorten_base64_images: Truncate base64-encoded image data in the Markdown output
 
           stop_after_ms: Soft time budget for the crawl in milliseconds. After each scrape, the crawler
@@ -3342,6 +3372,7 @@ class AsyncWebResource(AsyncAPIResource):
                     "max_depth": max_depth,
                     "max_pages": max_pages,
                     "pdf": pdf,
+                    "settle_animations": settle_animations,
                     "shorten_base64_images": shorten_base64_images,
                     "stop_after_ms": stop_after_ms,
                     "timeout_ms": timeout_ms,
@@ -3574,6 +3605,7 @@ class AsyncWebResource(AsyncAPIResource):
         include_selectors: SequenceNotStr[str] | Omit = omit,
         max_age_ms: int | Omit = omit,
         pdf: web_web_scrape_html_params.Pdf | Omit = omit,
+        settle_animations: bool | Omit = omit,
         timeout_ms: int | Omit = omit,
         use_main_content_only: bool | Omit = omit,
         wait_for_ms: int | Omit = omit,
@@ -3614,6 +3646,10 @@ class AsyncWebResource(AsyncAPIResource):
           pdf: PDF parsing controls. Use start/end to limit text extraction and OCR to an
               inclusive 1-based page range.
 
+          settle_animations: When true, waits briefly for CSS and transition animations to settle before
+              extracting HTML. Defaults to false. This adds a bit of latency in exchange for
+              more stable output on animated pages.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -3650,6 +3686,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "include_selectors": include_selectors,
                         "max_age_ms": max_age_ms,
                         "pdf": pdf,
+                        "settle_animations": settle_animations,
                         "timeout_ms": timeout_ms,
                         "use_main_content_only": use_main_content_only,
                         "wait_for_ms": wait_for_ms,
@@ -3664,6 +3701,7 @@ class AsyncWebResource(AsyncAPIResource):
         self,
         *,
         url: str,
+        dedupe: bool | Omit = omit,
         enrichment: web_web_scrape_images_params.Enrichment | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
         max_age_ms: int | Omit = omit,
@@ -3684,6 +3722,11 @@ class AsyncWebResource(AsyncAPIResource):
 
         Args:
           url: Page URL to inspect. Must include http:// or https://.
+
+          dedupe: When true, visually duplicate images are removed: every image is loaded and
+              perceptually hashed, and only the highest-resolution copy of each duplicate
+              group is kept. Images that cannot be downloaded or hashed are kept. Default:
+              false.
 
           enrichment: Optional per-image processing, sent as deep-object query params such as
               enrichment[resolution]=true.
@@ -3720,6 +3763,7 @@ class AsyncWebResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "url": url,
+                        "dedupe": dedupe,
                         "enrichment": enrichment,
                         "headers": headers,
                         "max_age_ms": max_age_ms,
@@ -3951,6 +3995,7 @@ class AsyncWebResource(AsyncAPIResource):
         include_selectors: SequenceNotStr[str] | Omit = omit,
         max_age_ms: int | Omit = omit,
         pdf: web_web_scrape_md_params.Pdf | Omit = omit,
+        settle_animations: bool | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
         timeout_ms: int | Omit = omit,
         use_main_content_only: bool | Omit = omit,
@@ -3997,6 +4042,10 @@ class AsyncWebResource(AsyncAPIResource):
           pdf: PDF parsing controls. Use start/end to limit text extraction and OCR to an
               inclusive 1-based page range.
 
+          settle_animations: When true, waits briefly for CSS and transition animations to settle before
+              converting to Markdown. Defaults to false. This adds a bit of latency in
+              exchange for more stable output on animated pages.
+
           shorten_base64_images: Shorten base64-encoded image data in the Markdown output
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
@@ -4036,6 +4085,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "include_selectors": include_selectors,
                         "max_age_ms": max_age_ms,
                         "pdf": pdf,
+                        "settle_animations": settle_animations,
                         "shorten_base64_images": shorten_base64_images,
                         "timeout_ms": timeout_ms,
                         "use_main_content_only": use_main_content_only,

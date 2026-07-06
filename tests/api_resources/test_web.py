@@ -376,6 +376,7 @@ class TestWeb:
                 "should_parse": True,
                 "start": 1,
             },
+            settle_animations=True,
             shorten_base64_images=True,
             stop_after_ms=10000,
             timeout_ms=1000,
@@ -435,6 +436,7 @@ class TestWeb:
                 "should_parse": True,
                 "start": 1,
             },
+            settle_animations=True,
             timeout_ms=1000,
             use_main_content_only=True,
             wait_for_ms=0,
@@ -480,6 +482,7 @@ class TestWeb:
     def test_method_web_scrape_images_with_all_params(self, client: ContextDev) -> None:
         web = client.web.web_scrape_images(
             url="https://example.com",
+            dedupe=True,
             enrichment={
                 "classification": True,
                 "hosted_url": True,
@@ -545,6 +548,7 @@ class TestWeb:
                 "should_parse": True,
                 "start": 1,
             },
+            settle_animations=True,
             shorten_base64_images=True,
             timeout_ms=1000,
             use_main_content_only=True,
@@ -977,6 +981,7 @@ class TestAsyncWeb:
                 "should_parse": True,
                 "start": 1,
             },
+            settle_animations=True,
             shorten_base64_images=True,
             stop_after_ms=10000,
             timeout_ms=1000,
@@ -1036,6 +1041,7 @@ class TestAsyncWeb:
                 "should_parse": True,
                 "start": 1,
             },
+            settle_animations=True,
             timeout_ms=1000,
             use_main_content_only=True,
             wait_for_ms=0,
@@ -1081,6 +1087,7 @@ class TestAsyncWeb:
     async def test_method_web_scrape_images_with_all_params(self, async_client: AsyncContextDev) -> None:
         web = await async_client.web.web_scrape_images(
             url="https://example.com",
+            dedupe=True,
             enrichment={
                 "classification": True,
                 "hosted_url": True,
@@ -1146,6 +1153,7 @@ class TestAsyncWeb:
                 "should_parse": True,
                 "start": 1,
             },
+            settle_animations=True,
             shorten_base64_images=True,
             timeout_ms=1000,
             use_main_content_only=True,

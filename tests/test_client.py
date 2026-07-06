@@ -883,20 +883,20 @@ class TestContextDev:
     @mock.patch("context.dev._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, client: ContextDev) -> None:
-        respx_mock.get("/brand/retrieve").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/brand/retrieve").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            client.brand.with_streaming_response.retrieve(domain="domain").__enter__()
+            client.brand.with_streaming_response.retrieve(domain="domain", type="by_domain").__enter__()
 
         assert _get_open_connections(client) == 0
 
     @mock.patch("context.dev._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, client: ContextDev) -> None:
-        respx_mock.get("/brand/retrieve").mock(return_value=httpx.Response(500))
+        respx_mock.post("/brand/retrieve").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            client.brand.with_streaming_response.retrieve(domain="domain").__enter__()
+            client.brand.with_streaming_response.retrieve(domain="domain", type="by_domain").__enter__()
         assert _get_open_connections(client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
@@ -923,9 +923,9 @@ class TestContextDev:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/brand/retrieve").mock(side_effect=retry_handler)
+        respx_mock.post("/brand/retrieve").mock(side_effect=retry_handler)
 
-        response = client.brand.with_raw_response.retrieve(domain="domain")
+        response = client.brand.with_raw_response.retrieve(domain="domain", type="by_domain")
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -947,10 +947,10 @@ class TestContextDev:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/brand/retrieve").mock(side_effect=retry_handler)
+        respx_mock.post("/brand/retrieve").mock(side_effect=retry_handler)
 
         response = client.brand.with_raw_response.retrieve(
-            domain="domain", extra_headers={"x-stainless-retry-count": Omit()}
+            domain="domain", type="by_domain", extra_headers={"x-stainless-retry-count": Omit()}
         )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
@@ -972,10 +972,10 @@ class TestContextDev:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/brand/retrieve").mock(side_effect=retry_handler)
+        respx_mock.post("/brand/retrieve").mock(side_effect=retry_handler)
 
         response = client.brand.with_raw_response.retrieve(
-            domain="domain", extra_headers={"x-stainless-retry-count": "42"}
+            domain="domain", type="by_domain", extra_headers={"x-stainless-retry-count": "42"}
         )
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
@@ -1821,10 +1821,10 @@ class TestAsyncContextDev:
     async def test_retrying_timeout_errors_doesnt_leak(
         self, respx_mock: MockRouter, async_client: AsyncContextDev
     ) -> None:
-        respx_mock.get("/brand/retrieve").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/brand/retrieve").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            await async_client.brand.with_streaming_response.retrieve(domain="domain").__aenter__()
+            await async_client.brand.with_streaming_response.retrieve(domain="domain", type="by_domain").__aenter__()
 
         assert _get_open_connections(async_client) == 0
 
@@ -1833,10 +1833,10 @@ class TestAsyncContextDev:
     async def test_retrying_status_errors_doesnt_leak(
         self, respx_mock: MockRouter, async_client: AsyncContextDev
     ) -> None:
-        respx_mock.get("/brand/retrieve").mock(return_value=httpx.Response(500))
+        respx_mock.post("/brand/retrieve").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            await async_client.brand.with_streaming_response.retrieve(domain="domain").__aenter__()
+            await async_client.brand.with_streaming_response.retrieve(domain="domain", type="by_domain").__aenter__()
         assert _get_open_connections(async_client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
@@ -1863,9 +1863,9 @@ class TestAsyncContextDev:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/brand/retrieve").mock(side_effect=retry_handler)
+        respx_mock.post("/brand/retrieve").mock(side_effect=retry_handler)
 
-        response = await client.brand.with_raw_response.retrieve(domain="domain")
+        response = await client.brand.with_raw_response.retrieve(domain="domain", type="by_domain")
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -1887,10 +1887,10 @@ class TestAsyncContextDev:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/brand/retrieve").mock(side_effect=retry_handler)
+        respx_mock.post("/brand/retrieve").mock(side_effect=retry_handler)
 
         response = await client.brand.with_raw_response.retrieve(
-            domain="domain", extra_headers={"x-stainless-retry-count": Omit()}
+            domain="domain", type="by_domain", extra_headers={"x-stainless-retry-count": Omit()}
         )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
@@ -1912,10 +1912,10 @@ class TestAsyncContextDev:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/brand/retrieve").mock(side_effect=retry_handler)
+        respx_mock.post("/brand/retrieve").mock(side_effect=retry_handler)
 
         response = await client.brand.with_raw_response.retrieve(
-            domain="domain", extra_headers={"x-stainless-retry-count": "42"}
+            domain="domain", type="by_domain", extra_headers={"x-stainless-retry-count": "42"}
         )
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"

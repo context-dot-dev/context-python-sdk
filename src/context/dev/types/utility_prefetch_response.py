@@ -1,6 +1,7 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import Optional
+from typing_extensions import Literal
 
 from .._models import BaseModel
 
@@ -36,3 +37,9 @@ class UtilityPrefetchResponse(BaseModel):
 
     status: Optional[str] = None
     """Status of the response, e.g., 'ok'"""
+
+    type: Optional[Literal["brand"]] = None
+    """
+    The type of prefetch that was queued, echoed from the request (currently always
+    'brand')
+    """

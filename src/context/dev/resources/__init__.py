@@ -40,6 +40,14 @@ from .industry import (
     IndustryResourceWithStreamingResponse,
     AsyncIndustryResourceWithStreamingResponse,
 )
+from .monitors import (
+    MonitorsResource,
+    AsyncMonitorsResource,
+    MonitorsResourceWithRawResponse,
+    AsyncMonitorsResourceWithRawResponse,
+    MonitorsResourceWithStreamingResponse,
+    AsyncMonitorsResourceWithStreamingResponse,
+)
 
 __all__ = [
     "WebResource",
@@ -72,4 +80,10 @@ __all__ = [
     "AsyncUtilityResourceWithRawResponse",
     "UtilityResourceWithStreamingResponse",
     "AsyncUtilityResourceWithStreamingResponse",
+    "MonitorsResource",
+    "AsyncMonitorsResource",
+    "MonitorsResourceWithRawResponse",
+    "AsyncMonitorsResourceWithRawResponse",
+    "MonitorsResourceWithStreamingResponse",
+    "AsyncMonitorsResourceWithStreamingResponse",
 ]

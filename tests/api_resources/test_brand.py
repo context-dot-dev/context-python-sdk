@@ -11,12 +11,7 @@ from context.dev import ContextDev, AsyncContextDev
 from tests.utils import assert_matches_type
 from context.dev.types import (
     BrandRetrieveResponse,
-    BrandRetrieveByIsinResponse,
-    BrandRetrieveByNameResponse,
-    BrandRetrieveByEmailResponse,
-    BrandRetrieveByTickerResponse,
     BrandRetrieveSimplifiedResponse,
-    BrandIdentifyFromTransactionResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -27,19 +22,21 @@ class TestBrand:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_method_retrieve(self, client: ContextDev) -> None:
+    def test_method_retrieve_overload_1(self, client: ContextDev) -> None:
         brand = client.brand.retrieve(
             domain="domain",
+            type="by_domain",
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_method_retrieve_with_all_params(self, client: ContextDev) -> None:
+    def test_method_retrieve_with_all_params_overload_1(self, client: ContextDev) -> None:
         brand = client.brand.retrieve(
             domain="domain",
+            type="by_domain",
             force_language="afrikaans",
-            max_age_ms=86400000,
+            max_age_ms=0,
             max_speed=True,
             timeout_ms=1000,
         )
@@ -47,9 +44,10 @@ class TestBrand:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_raw_response_retrieve(self, client: ContextDev) -> None:
+    def test_raw_response_retrieve_overload_1(self, client: ContextDev) -> None:
         response = client.brand.with_raw_response.retrieve(
             domain="domain",
+            type="by_domain",
         )
 
         assert response.is_closed is True
@@ -59,9 +57,10 @@ class TestBrand:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_streaming_response_retrieve(self, client: ContextDev) -> None:
+    def test_streaming_response_retrieve_overload_1(self, client: ContextDev) -> None:
         with client.brand.with_streaming_response.retrieve(
             domain="domain",
+            type="by_domain",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -73,237 +72,207 @@ class TestBrand:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_method_identify_from_transaction(self, client: ContextDev) -> None:
-        brand = client.brand.identify_from_transaction(
-            transaction_info="transaction_info",
+    def test_method_retrieve_overload_2(self, client: ContextDev) -> None:
+        brand = client.brand.retrieve(
+            name="xxx",
+            type="by_name",
         )
-        assert_matches_type(BrandIdentifyFromTransactionResponse, brand, path=["response"])
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_method_identify_from_transaction_with_all_params(self, client: ContextDev) -> None:
-        brand = client.brand.identify_from_transaction(
-            transaction_info="transaction_info",
+    def test_method_retrieve_with_all_params_overload_2(self, client: ContextDev) -> None:
+        brand = client.brand.retrieve(
+            name="xxx",
+            type="by_name",
+            country_gl="country_gl",
+            force_language="afrikaans",
+            max_age_ms=0,
+            max_speed=True,
+            timeout_ms=1000,
+        )
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_retrieve_overload_2(self, client: ContextDev) -> None:
+        response = client.brand.with_raw_response.retrieve(
+            name="xxx",
+            type="by_name",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        brand = response.parse()
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_retrieve_overload_2(self, client: ContextDev) -> None:
+        with client.brand.with_streaming_response.retrieve(
+            name="xxx",
+            type="by_name",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            brand = response.parse()
+            assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_retrieve_overload_3(self, client: ContextDev) -> None:
+        brand = client.brand.retrieve(
+            email="dev@stainless.com",
+            type="by_email",
+        )
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_retrieve_with_all_params_overload_3(self, client: ContextDev) -> None:
+        brand = client.brand.retrieve(
+            email="dev@stainless.com",
+            type="by_email",
+            force_language="afrikaans",
+            max_age_ms=0,
+            max_speed=True,
+            timeout_ms=1000,
+        )
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_retrieve_overload_3(self, client: ContextDev) -> None:
+        response = client.brand.with_raw_response.retrieve(
+            email="dev@stainless.com",
+            type="by_email",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        brand = response.parse()
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_retrieve_overload_3(self, client: ContextDev) -> None:
+        with client.brand.with_streaming_response.retrieve(
+            email="dev@stainless.com",
+            type="by_email",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            brand = response.parse()
+            assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_retrieve_overload_4(self, client: ContextDev) -> None:
+        brand = client.brand.retrieve(
+            ticker="ticker",
+            type="by_ticker",
+        )
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_retrieve_with_all_params_overload_4(self, client: ContextDev) -> None:
+        brand = client.brand.retrieve(
+            ticker="ticker",
+            type="by_ticker",
+            force_language="afrikaans",
+            max_age_ms=0,
+            max_speed=True,
+            ticker_exchange="ticker_exchange",
+            timeout_ms=1000,
+        )
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_retrieve_overload_4(self, client: ContextDev) -> None:
+        response = client.brand.with_raw_response.retrieve(
+            ticker="ticker",
+            type="by_ticker",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        brand = response.parse()
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_retrieve_overload_4(self, client: ContextDev) -> None:
+        with client.brand.with_streaming_response.retrieve(
+            ticker="ticker",
+            type="by_ticker",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            brand = response.parse()
+            assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_retrieve_overload_5(self, client: ContextDev) -> None:
+        brand = client.brand.retrieve(
+            transaction_info="xxx",
+            type="by_transaction",
+        )
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_retrieve_with_all_params_overload_5(self, client: ContextDev) -> None:
+        brand = client.brand.retrieve(
+            transaction_info="xxx",
+            type="by_transaction",
             city="city",
-            country_gl="ad",
+            country_gl="country_gl",
             force_language="afrikaans",
             high_confidence_only=True,
             max_speed=True,
-            mcc="mcc",
+            mcc=0,
             phone=0,
             timeout_ms=1000,
         )
-        assert_matches_type(BrandIdentifyFromTransactionResponse, brand, path=["response"])
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_raw_response_identify_from_transaction(self, client: ContextDev) -> None:
-        response = client.brand.with_raw_response.identify_from_transaction(
-            transaction_info="transaction_info",
+    def test_raw_response_retrieve_overload_5(self, client: ContextDev) -> None:
+        response = client.brand.with_raw_response.retrieve(
+            transaction_info="xxx",
+            type="by_transaction",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         brand = response.parse()
-        assert_matches_type(BrandIdentifyFromTransactionResponse, brand, path=["response"])
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_streaming_response_identify_from_transaction(self, client: ContextDev) -> None:
-        with client.brand.with_streaming_response.identify_from_transaction(
-            transaction_info="transaction_info",
+    def test_streaming_response_retrieve_overload_5(self, client: ContextDev) -> None:
+        with client.brand.with_streaming_response.retrieve(
+            transaction_info="xxx",
+            type="by_transaction",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             brand = response.parse()
-            assert_matches_type(BrandIdentifyFromTransactionResponse, brand, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_retrieve_by_email(self, client: ContextDev) -> None:
-        brand = client.brand.retrieve_by_email(
-            email="dev@stainless.com",
-        )
-        assert_matches_type(BrandRetrieveByEmailResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_retrieve_by_email_with_all_params(self, client: ContextDev) -> None:
-        brand = client.brand.retrieve_by_email(
-            email="dev@stainless.com",
-            force_language="afrikaans",
-            max_age_ms=86400000,
-            max_speed=True,
-            timeout_ms=1000,
-        )
-        assert_matches_type(BrandRetrieveByEmailResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_raw_response_retrieve_by_email(self, client: ContextDev) -> None:
-        response = client.brand.with_raw_response.retrieve_by_email(
-            email="dev@stainless.com",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        brand = response.parse()
-        assert_matches_type(BrandRetrieveByEmailResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_streaming_response_retrieve_by_email(self, client: ContextDev) -> None:
-        with client.brand.with_streaming_response.retrieve_by_email(
-            email="dev@stainless.com",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            brand = response.parse()
-            assert_matches_type(BrandRetrieveByEmailResponse, brand, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_retrieve_by_isin(self, client: ContextDev) -> None:
-        brand = client.brand.retrieve_by_isin(
-            isin="SE60513A9993",
-        )
-        assert_matches_type(BrandRetrieveByIsinResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_retrieve_by_isin_with_all_params(self, client: ContextDev) -> None:
-        brand = client.brand.retrieve_by_isin(
-            isin="SE60513A9993",
-            force_language="afrikaans",
-            max_age_ms=86400000,
-            max_speed=True,
-            timeout_ms=1000,
-        )
-        assert_matches_type(BrandRetrieveByIsinResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_raw_response_retrieve_by_isin(self, client: ContextDev) -> None:
-        response = client.brand.with_raw_response.retrieve_by_isin(
-            isin="SE60513A9993",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        brand = response.parse()
-        assert_matches_type(BrandRetrieveByIsinResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_streaming_response_retrieve_by_isin(self, client: ContextDev) -> None:
-        with client.brand.with_streaming_response.retrieve_by_isin(
-            isin="SE60513A9993",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            brand = response.parse()
-            assert_matches_type(BrandRetrieveByIsinResponse, brand, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_retrieve_by_name(self, client: ContextDev) -> None:
-        brand = client.brand.retrieve_by_name(
-            name="xxx",
-        )
-        assert_matches_type(BrandRetrieveByNameResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_retrieve_by_name_with_all_params(self, client: ContextDev) -> None:
-        brand = client.brand.retrieve_by_name(
-            name="xxx",
-            country_gl="ad",
-            force_language="afrikaans",
-            max_age_ms=86400000,
-            max_speed=True,
-            timeout_ms=1000,
-        )
-        assert_matches_type(BrandRetrieveByNameResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_raw_response_retrieve_by_name(self, client: ContextDev) -> None:
-        response = client.brand.with_raw_response.retrieve_by_name(
-            name="xxx",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        brand = response.parse()
-        assert_matches_type(BrandRetrieveByNameResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_streaming_response_retrieve_by_name(self, client: ContextDev) -> None:
-        with client.brand.with_streaming_response.retrieve_by_name(
-            name="xxx",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            brand = response.parse()
-            assert_matches_type(BrandRetrieveByNameResponse, brand, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_retrieve_by_ticker(self, client: ContextDev) -> None:
-        brand = client.brand.retrieve_by_ticker(
-            ticker="ticker",
-        )
-        assert_matches_type(BrandRetrieveByTickerResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_retrieve_by_ticker_with_all_params(self, client: ContextDev) -> None:
-        brand = client.brand.retrieve_by_ticker(
-            ticker="ticker",
-            force_language="afrikaans",
-            max_age_ms=86400000,
-            max_speed=True,
-            ticker_exchange="AMEX",
-            timeout_ms=1000,
-        )
-        assert_matches_type(BrandRetrieveByTickerResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_raw_response_retrieve_by_ticker(self, client: ContextDev) -> None:
-        response = client.brand.with_raw_response.retrieve_by_ticker(
-            ticker="ticker",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        brand = response.parse()
-        assert_matches_type(BrandRetrieveByTickerResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_streaming_response_retrieve_by_ticker(self, client: ContextDev) -> None:
-        with client.brand.with_streaming_response.retrieve_by_ticker(
-            ticker="ticker",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            brand = response.parse()
-            assert_matches_type(BrandRetrieveByTickerResponse, brand, path=["response"])
+            assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -359,19 +328,21 @@ class TestAsyncBrand:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_method_retrieve(self, async_client: AsyncContextDev) -> None:
+    async def test_method_retrieve_overload_1(self, async_client: AsyncContextDev) -> None:
         brand = await async_client.brand.retrieve(
             domain="domain",
+            type="by_domain",
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_method_retrieve_with_all_params(self, async_client: AsyncContextDev) -> None:
+    async def test_method_retrieve_with_all_params_overload_1(self, async_client: AsyncContextDev) -> None:
         brand = await async_client.brand.retrieve(
             domain="domain",
+            type="by_domain",
             force_language="afrikaans",
-            max_age_ms=86400000,
+            max_age_ms=0,
             max_speed=True,
             timeout_ms=1000,
         )
@@ -379,9 +350,10 @@ class TestAsyncBrand:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_raw_response_retrieve(self, async_client: AsyncContextDev) -> None:
+    async def test_raw_response_retrieve_overload_1(self, async_client: AsyncContextDev) -> None:
         response = await async_client.brand.with_raw_response.retrieve(
             domain="domain",
+            type="by_domain",
         )
 
         assert response.is_closed is True
@@ -391,9 +363,10 @@ class TestAsyncBrand:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_streaming_response_retrieve(self, async_client: AsyncContextDev) -> None:
+    async def test_streaming_response_retrieve_overload_1(self, async_client: AsyncContextDev) -> None:
         async with async_client.brand.with_streaming_response.retrieve(
             domain="domain",
+            type="by_domain",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -405,237 +378,207 @@ class TestAsyncBrand:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_method_identify_from_transaction(self, async_client: AsyncContextDev) -> None:
-        brand = await async_client.brand.identify_from_transaction(
-            transaction_info="transaction_info",
+    async def test_method_retrieve_overload_2(self, async_client: AsyncContextDev) -> None:
+        brand = await async_client.brand.retrieve(
+            name="xxx",
+            type="by_name",
         )
-        assert_matches_type(BrandIdentifyFromTransactionResponse, brand, path=["response"])
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_method_identify_from_transaction_with_all_params(self, async_client: AsyncContextDev) -> None:
-        brand = await async_client.brand.identify_from_transaction(
-            transaction_info="transaction_info",
+    async def test_method_retrieve_with_all_params_overload_2(self, async_client: AsyncContextDev) -> None:
+        brand = await async_client.brand.retrieve(
+            name="xxx",
+            type="by_name",
+            country_gl="country_gl",
+            force_language="afrikaans",
+            max_age_ms=0,
+            max_speed=True,
+            timeout_ms=1000,
+        )
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_retrieve_overload_2(self, async_client: AsyncContextDev) -> None:
+        response = await async_client.brand.with_raw_response.retrieve(
+            name="xxx",
+            type="by_name",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        brand = await response.parse()
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_retrieve_overload_2(self, async_client: AsyncContextDev) -> None:
+        async with async_client.brand.with_streaming_response.retrieve(
+            name="xxx",
+            type="by_name",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            brand = await response.parse()
+            assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_retrieve_overload_3(self, async_client: AsyncContextDev) -> None:
+        brand = await async_client.brand.retrieve(
+            email="dev@stainless.com",
+            type="by_email",
+        )
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_retrieve_with_all_params_overload_3(self, async_client: AsyncContextDev) -> None:
+        brand = await async_client.brand.retrieve(
+            email="dev@stainless.com",
+            type="by_email",
+            force_language="afrikaans",
+            max_age_ms=0,
+            max_speed=True,
+            timeout_ms=1000,
+        )
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_retrieve_overload_3(self, async_client: AsyncContextDev) -> None:
+        response = await async_client.brand.with_raw_response.retrieve(
+            email="dev@stainless.com",
+            type="by_email",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        brand = await response.parse()
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_retrieve_overload_3(self, async_client: AsyncContextDev) -> None:
+        async with async_client.brand.with_streaming_response.retrieve(
+            email="dev@stainless.com",
+            type="by_email",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            brand = await response.parse()
+            assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_retrieve_overload_4(self, async_client: AsyncContextDev) -> None:
+        brand = await async_client.brand.retrieve(
+            ticker="ticker",
+            type="by_ticker",
+        )
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_retrieve_with_all_params_overload_4(self, async_client: AsyncContextDev) -> None:
+        brand = await async_client.brand.retrieve(
+            ticker="ticker",
+            type="by_ticker",
+            force_language="afrikaans",
+            max_age_ms=0,
+            max_speed=True,
+            ticker_exchange="ticker_exchange",
+            timeout_ms=1000,
+        )
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_retrieve_overload_4(self, async_client: AsyncContextDev) -> None:
+        response = await async_client.brand.with_raw_response.retrieve(
+            ticker="ticker",
+            type="by_ticker",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        brand = await response.parse()
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_retrieve_overload_4(self, async_client: AsyncContextDev) -> None:
+        async with async_client.brand.with_streaming_response.retrieve(
+            ticker="ticker",
+            type="by_ticker",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            brand = await response.parse()
+            assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_retrieve_overload_5(self, async_client: AsyncContextDev) -> None:
+        brand = await async_client.brand.retrieve(
+            transaction_info="xxx",
+            type="by_transaction",
+        )
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_retrieve_with_all_params_overload_5(self, async_client: AsyncContextDev) -> None:
+        brand = await async_client.brand.retrieve(
+            transaction_info="xxx",
+            type="by_transaction",
             city="city",
-            country_gl="ad",
+            country_gl="country_gl",
             force_language="afrikaans",
             high_confidence_only=True,
             max_speed=True,
-            mcc="mcc",
+            mcc=0,
             phone=0,
             timeout_ms=1000,
         )
-        assert_matches_type(BrandIdentifyFromTransactionResponse, brand, path=["response"])
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_raw_response_identify_from_transaction(self, async_client: AsyncContextDev) -> None:
-        response = await async_client.brand.with_raw_response.identify_from_transaction(
-            transaction_info="transaction_info",
+    async def test_raw_response_retrieve_overload_5(self, async_client: AsyncContextDev) -> None:
+        response = await async_client.brand.with_raw_response.retrieve(
+            transaction_info="xxx",
+            type="by_transaction",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         brand = await response.parse()
-        assert_matches_type(BrandIdentifyFromTransactionResponse, brand, path=["response"])
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_streaming_response_identify_from_transaction(self, async_client: AsyncContextDev) -> None:
-        async with async_client.brand.with_streaming_response.identify_from_transaction(
-            transaction_info="transaction_info",
+    async def test_streaming_response_retrieve_overload_5(self, async_client: AsyncContextDev) -> None:
+        async with async_client.brand.with_streaming_response.retrieve(
+            transaction_info="xxx",
+            type="by_transaction",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             brand = await response.parse()
-            assert_matches_type(BrandIdentifyFromTransactionResponse, brand, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_retrieve_by_email(self, async_client: AsyncContextDev) -> None:
-        brand = await async_client.brand.retrieve_by_email(
-            email="dev@stainless.com",
-        )
-        assert_matches_type(BrandRetrieveByEmailResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_retrieve_by_email_with_all_params(self, async_client: AsyncContextDev) -> None:
-        brand = await async_client.brand.retrieve_by_email(
-            email="dev@stainless.com",
-            force_language="afrikaans",
-            max_age_ms=86400000,
-            max_speed=True,
-            timeout_ms=1000,
-        )
-        assert_matches_type(BrandRetrieveByEmailResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_raw_response_retrieve_by_email(self, async_client: AsyncContextDev) -> None:
-        response = await async_client.brand.with_raw_response.retrieve_by_email(
-            email="dev@stainless.com",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        brand = await response.parse()
-        assert_matches_type(BrandRetrieveByEmailResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_streaming_response_retrieve_by_email(self, async_client: AsyncContextDev) -> None:
-        async with async_client.brand.with_streaming_response.retrieve_by_email(
-            email="dev@stainless.com",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            brand = await response.parse()
-            assert_matches_type(BrandRetrieveByEmailResponse, brand, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_retrieve_by_isin(self, async_client: AsyncContextDev) -> None:
-        brand = await async_client.brand.retrieve_by_isin(
-            isin="SE60513A9993",
-        )
-        assert_matches_type(BrandRetrieveByIsinResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_retrieve_by_isin_with_all_params(self, async_client: AsyncContextDev) -> None:
-        brand = await async_client.brand.retrieve_by_isin(
-            isin="SE60513A9993",
-            force_language="afrikaans",
-            max_age_ms=86400000,
-            max_speed=True,
-            timeout_ms=1000,
-        )
-        assert_matches_type(BrandRetrieveByIsinResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_raw_response_retrieve_by_isin(self, async_client: AsyncContextDev) -> None:
-        response = await async_client.brand.with_raw_response.retrieve_by_isin(
-            isin="SE60513A9993",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        brand = await response.parse()
-        assert_matches_type(BrandRetrieveByIsinResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_streaming_response_retrieve_by_isin(self, async_client: AsyncContextDev) -> None:
-        async with async_client.brand.with_streaming_response.retrieve_by_isin(
-            isin="SE60513A9993",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            brand = await response.parse()
-            assert_matches_type(BrandRetrieveByIsinResponse, brand, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_retrieve_by_name(self, async_client: AsyncContextDev) -> None:
-        brand = await async_client.brand.retrieve_by_name(
-            name="xxx",
-        )
-        assert_matches_type(BrandRetrieveByNameResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_retrieve_by_name_with_all_params(self, async_client: AsyncContextDev) -> None:
-        brand = await async_client.brand.retrieve_by_name(
-            name="xxx",
-            country_gl="ad",
-            force_language="afrikaans",
-            max_age_ms=86400000,
-            max_speed=True,
-            timeout_ms=1000,
-        )
-        assert_matches_type(BrandRetrieveByNameResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_raw_response_retrieve_by_name(self, async_client: AsyncContextDev) -> None:
-        response = await async_client.brand.with_raw_response.retrieve_by_name(
-            name="xxx",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        brand = await response.parse()
-        assert_matches_type(BrandRetrieveByNameResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_streaming_response_retrieve_by_name(self, async_client: AsyncContextDev) -> None:
-        async with async_client.brand.with_streaming_response.retrieve_by_name(
-            name="xxx",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            brand = await response.parse()
-            assert_matches_type(BrandRetrieveByNameResponse, brand, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_retrieve_by_ticker(self, async_client: AsyncContextDev) -> None:
-        brand = await async_client.brand.retrieve_by_ticker(
-            ticker="ticker",
-        )
-        assert_matches_type(BrandRetrieveByTickerResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_retrieve_by_ticker_with_all_params(self, async_client: AsyncContextDev) -> None:
-        brand = await async_client.brand.retrieve_by_ticker(
-            ticker="ticker",
-            force_language="afrikaans",
-            max_age_ms=86400000,
-            max_speed=True,
-            ticker_exchange="AMEX",
-            timeout_ms=1000,
-        )
-        assert_matches_type(BrandRetrieveByTickerResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_raw_response_retrieve_by_ticker(self, async_client: AsyncContextDev) -> None:
-        response = await async_client.brand.with_raw_response.retrieve_by_ticker(
-            ticker="ticker",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        brand = await response.parse()
-        assert_matches_type(BrandRetrieveByTickerResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_streaming_response_retrieve_by_ticker(self, async_client: AsyncContextDev) -> None:
-        async with async_client.brand.with_streaming_response.retrieve_by_ticker(
-            ticker="ticker",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            brand = await response.parse()
-            assert_matches_type(BrandRetrieveByTickerResponse, brand, path=["response"])
+            assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

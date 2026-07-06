@@ -12,6 +12,12 @@ __all__ = ["WebExtractResponse", "Metadata", "KeyMetadata"]
 class Metadata(BaseModel):
     max_crawl_depth: int = FieldInfo(alias="maxCrawlDepth")
 
+    num_blocked: int = FieldInfo(alias="numBlocked")
+    """
+    Number of crawled pages excluded because they were anti-bot challenges, error
+    pages, or parked-domain placeholders.
+    """
+
     num_failed: int = FieldInfo(alias="numFailed")
 
     num_skipped: int = FieldInfo(alias="numSkipped")
