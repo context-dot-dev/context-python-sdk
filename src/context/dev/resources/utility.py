@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+from typing_extensions import Literal
+
 import httpx
 
-from ..types import utility_prefetch_params, utility_prefetch_by_email_params
+from ..types import utility_prefetch_params
 from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -17,7 +19,6 @@ from .._response import (
 )
 from .._base_client import make_request_options
 from ..types.utility_prefetch_response import UtilityPrefetchResponse
-from ..types.utility_prefetch_by_email_response import UtilityPrefetchByEmailResponse
 
 __all__ = ["UtilityResource", "AsyncUtilityResource"]
 
@@ -45,7 +46,8 @@ class UtilityResource(SyncAPIResource):
     def prefetch(
         self,
         *,
-        domain: str,
+        identifier: utility_prefetch_params.Identifier,
+        type: Literal["brand"],
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -54,12 +56,17 @@ class UtilityResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UtilityPrefetchResponse:
-        """
-        Signal that you may fetch brand data for a particular domain soon to improve
-        latency.
+        """Signal that you may fetch brand data soon to improve latency.
+
+        The type field
+        selects what to prefetch (currently only 'brand') and identifier carries exactly
+        one lookup key: a domain, or an email whose domain is extracted and validated
+        (free email providers and disposable email addresses are not allowed).
 
         Args:
-          domain: Domain name to prefetch brand data for
+          identifier: Identifier of the brand to prefetch. Provide exactly one of domain or email.
+
+          type: What to prefetch. Currently only 'brand' is supported.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -74,10 +81,11 @@ class UtilityResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._post(
-            "/brand/prefetch",
+            "/utility/prefetch",
             body=maybe_transform(
                 {
-                    "domain": domain,
+                    "identifier": identifier,
+                    "type": type,
                     "timeout_ms": timeout_ms,
                 },
                 utility_prefetch_params.UtilityPrefetchParams,
@@ -86,56 +94,6 @@ class UtilityResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=UtilityPrefetchResponse,
-        )
-
-    def prefetch_by_email(
-        self,
-        *,
-        email: str,
-        timeout_ms: int | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UtilityPrefetchByEmailResponse:
-        """
-        Signal that you may fetch brand data for a particular domain soon to improve
-        latency. This endpoint accepts an email address, extracts the domain from it,
-        validates that it's not a disposable or free email provider, and queues the
-        domain for prefetching.
-
-        Args:
-          email: Email address to prefetch brand data for. The domain will be extracted from the
-              email. Free email providers (gmail.com, yahoo.com, etc.) and disposable email
-              addresses are not allowed.
-
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._post(
-            "/brand/prefetch-by-email",
-            body=maybe_transform(
-                {
-                    "email": email,
-                    "timeout_ms": timeout_ms,
-                },
-                utility_prefetch_by_email_params.UtilityPrefetchByEmailParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=UtilityPrefetchByEmailResponse,
         )
 
 
@@ -162,7 +120,8 @@ class AsyncUtilityResource(AsyncAPIResource):
     async def prefetch(
         self,
         *,
-        domain: str,
+        identifier: utility_prefetch_params.Identifier,
+        type: Literal["brand"],
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -171,12 +130,17 @@ class AsyncUtilityResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UtilityPrefetchResponse:
-        """
-        Signal that you may fetch brand data for a particular domain soon to improve
-        latency.
+        """Signal that you may fetch brand data soon to improve latency.
+
+        The type field
+        selects what to prefetch (currently only 'brand') and identifier carries exactly
+        one lookup key: a domain, or an email whose domain is extracted and validated
+        (free email providers and disposable email addresses are not allowed).
 
         Args:
-          domain: Domain name to prefetch brand data for
+          identifier: Identifier of the brand to prefetch. Provide exactly one of domain or email.
+
+          type: What to prefetch. Currently only 'brand' is supported.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -191,10 +155,11 @@ class AsyncUtilityResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return await self._post(
-            "/brand/prefetch",
+            "/utility/prefetch",
             body=await async_maybe_transform(
                 {
-                    "domain": domain,
+                    "identifier": identifier,
+                    "type": type,
                     "timeout_ms": timeout_ms,
                 },
                 utility_prefetch_params.UtilityPrefetchParams,
@@ -205,56 +170,6 @@ class AsyncUtilityResource(AsyncAPIResource):
             cast_to=UtilityPrefetchResponse,
         )
 
-    async def prefetch_by_email(
-        self,
-        *,
-        email: str,
-        timeout_ms: int | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UtilityPrefetchByEmailResponse:
-        """
-        Signal that you may fetch brand data for a particular domain soon to improve
-        latency. This endpoint accepts an email address, extracts the domain from it,
-        validates that it's not a disposable or free email provider, and queues the
-        domain for prefetching.
-
-        Args:
-          email: Email address to prefetch brand data for. The domain will be extracted from the
-              email. Free email providers (gmail.com, yahoo.com, etc.) and disposable email
-              addresses are not allowed.
-
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._post(
-            "/brand/prefetch-by-email",
-            body=await async_maybe_transform(
-                {
-                    "email": email,
-                    "timeout_ms": timeout_ms,
-                },
-                utility_prefetch_by_email_params.UtilityPrefetchByEmailParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=UtilityPrefetchByEmailResponse,
-        )
-
 
 class UtilityResourceWithRawResponse:
     def __init__(self, utility: UtilityResource) -> None:
@@ -262,9 +177,6 @@ class UtilityResourceWithRawResponse:
 
         self.prefetch = to_raw_response_wrapper(
             utility.prefetch,
-        )
-        self.prefetch_by_email = to_raw_response_wrapper(
-            utility.prefetch_by_email,
         )
 
 
@@ -275,9 +187,6 @@ class AsyncUtilityResourceWithRawResponse:
         self.prefetch = async_to_raw_response_wrapper(
             utility.prefetch,
         )
-        self.prefetch_by_email = async_to_raw_response_wrapper(
-            utility.prefetch_by_email,
-        )
 
 
 class UtilityResourceWithStreamingResponse:
@@ -287,9 +196,6 @@ class UtilityResourceWithStreamingResponse:
         self.prefetch = to_streamed_response_wrapper(
             utility.prefetch,
         )
-        self.prefetch_by_email = to_streamed_response_wrapper(
-            utility.prefetch_by_email,
-        )
 
 
 class AsyncUtilityResourceWithStreamingResponse:
@@ -298,7 +204,4 @@ class AsyncUtilityResourceWithStreamingResponse:
 
         self.prefetch = async_to_streamed_response_wrapper(
             utility.prefetch,
-        )
-        self.prefetch_by_email = async_to_streamed_response_wrapper(
-            utility.prefetch_by_email,
         )

@@ -41,10 +41,16 @@ client = ContextDev(
     api_key=os.environ.get("CONTEXT_DEV_API_KEY"),  # This is the default and can be omitted
 )
 
-brand = client.brand.retrieve(
-    domain="REPLACE_ME",
+response = client.web.extract(
+    schema={
+        "type": "bar",
+        "properties": "bar",
+        "required": "bar",
+        "additionalProperties": "bar",
+    },
+    url="https://example.com",
 )
-print(brand.brand)
+print(response.data)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -67,10 +73,16 @@ client = AsyncContextDev(
 
 
 async def main() -> None:
-    brand = await client.brand.retrieve(
-        domain="REPLACE_ME",
+    response = await client.web.extract(
+        schema={
+            "type": "bar",
+            "properties": "bar",
+            "required": "bar",
+            "additionalProperties": "bar",
+        },
+        url="https://example.com",
     )
-    print(brand.brand)
+    print(response.data)
 
 
 asyncio.run(main())
@@ -103,10 +115,16 @@ async def main() -> None:
         api_key=os.environ.get("CONTEXT_DEV_API_KEY"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
-        brand = await client.brand.retrieve(
-            domain="REPLACE_ME",
+        response = await client.web.extract(
+            schema={
+                "type": "bar",
+                "properties": "bar",
+                "required": "bar",
+                "additionalProperties": "bar",
+            },
+            url="https://example.com",
         )
-        print(brand.brand)
+        print(response.data)
 
 
 asyncio.run(main())
@@ -159,8 +177,14 @@ from context.dev import ContextDev
 client = ContextDev()
 
 try:
-    client.brand.retrieve(
-        domain="REPLACE_ME",
+    client.web.extract(
+        schema={
+            "type": "bar",
+            "properties": "bar",
+            "required": "bar",
+            "additionalProperties": "bar",
+        },
+        url="https://example.com",
     )
 except context.dev.APIConnectionError as e:
     print("The server could not be reached")
@@ -204,8 +228,14 @@ client = ContextDev(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).brand.retrieve(
-    domain="REPLACE_ME",
+client.with_options(max_retries=5).web.extract(
+    schema={
+        "type": "bar",
+        "properties": "bar",
+        "required": "bar",
+        "additionalProperties": "bar",
+    },
+    url="https://example.com",
 )
 ```
 
@@ -229,8 +259,14 @@ client = ContextDev(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).brand.retrieve(
-    domain="REPLACE_ME",
+client.with_options(timeout=5.0).web.extract(
+    schema={
+        "type": "bar",
+        "properties": "bar",
+        "required": "bar",
+        "additionalProperties": "bar",
+    },
+    url="https://example.com",
 )
 ```
 
@@ -272,13 +308,19 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from context.dev import ContextDev
 
 client = ContextDev()
-response = client.brand.with_raw_response.retrieve(
-    domain="REPLACE_ME",
+response = client.web.with_raw_response.extract(
+    schema={
+        "type": "bar",
+        "properties": "bar",
+        "required": "bar",
+        "additionalProperties": "bar",
+    },
+    url="https://example.com",
 )
 print(response.headers.get('X-My-Header'))
 
-brand = response.parse()  # get the object that `brand.retrieve()` would have returned
-print(brand.brand)
+web = response.parse()  # get the object that `web.extract()` would have returned
+print(web.data)
 ```
 
 These methods return an [`APIResponse`](https://github.com/context-dot-dev/context-python-sdk/tree/main/src/context/dev/_response.py) object.
@@ -292,8 +334,14 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.brand.with_streaming_response.retrieve(
-    domain="REPLACE_ME",
+with client.web.with_streaming_response.extract(
+    schema={
+        "type": "bar",
+        "properties": "bar",
+        "required": "bar",
+        "additionalProperties": "bar",
+    },
+    url="https://example.com",
 ) as response:
     print(response.headers.get("X-My-Header"))
 
