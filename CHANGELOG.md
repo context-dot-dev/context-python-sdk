@@ -1,5 +1,24 @@
 # Changelog
 
+## 2.0.0 (2026-07-06)
+
+Full Changelog: [v1.3.0...v2.0.0](https://github.com/context-dot-dev/context-python-sdk/compare/v1.3.0...v2.0.0)
+
+### Features
+
+* **api:** api update ([f63569e](https://github.com/context-dot-dev/context-python-sdk/commit/f63569e84571a403cd05fbff990ea991b83e0821))
+* **api:** api update ([79826c4](https://github.com/context-dot-dev/context-python-sdk/commit/79826c4324757cb3f32a4a0392d94d7093d39562))
+* **api:** api update ([4bbf3b1](https://github.com/context-dot-dev/context-python-sdk/commit/4bbf3b1ad847353571b27118e0875bb2ff96c0c7))
+* **api:** api update ([41ee2e8](https://github.com/context-dot-dev/context-python-sdk/commit/41ee2e823e3a91c608861da5fe46b263518c223e))
+* **api:** api update ([000bd7c](https://github.com/context-dot-dev/context-python-sdk/commit/000bd7c50e673065f0023267aea7457f3bb1f6d9))
+* **api:** api update ([a2650d4](https://github.com/context-dot-dev/context-python-sdk/commit/a2650d40a7422733a94b1f2e7e558144230189a0))
+* **api:** api update ([c15ed56](https://github.com/context-dot-dev/context-python-sdk/commit/c15ed56b283f8fe464891afda1566b74b120e2d5))
+* **api:** api update ([fd00858](https://github.com/context-dot-dev/context-python-sdk/commit/fd00858ed8bc9806aebdb5f5c352d119ab2466d1))
+* **api:** api update ([789eb86](https://github.com/context-dot-dev/context-python-sdk/commit/789eb8671cd52aba441a03c0139f6993455b5f4d))
+* **api:** manual updates ([4aa172e](https://github.com/context-dot-dev/context-python-sdk/commit/4aa172e6efe35e35b050168b4f4ab3102651a935))
+* **api:** manual updates ([63d9bdf](https://github.com/context-dot-dev/context-python-sdk/commit/63d9bdfc771270ccecff225a339af6ec51dfc1f7))
+* **api:** manual updates ([f80c306](https://github.com/context-dot-dev/context-python-sdk/commit/f80c3061d969b6650d9f5a2f9df5ca8f371e14d7))
+
 ## 1.3.0 (2026-06-27)
 
 Full Changelog: [v1.2.0...v1.3.0](https://github.com/context-dot-dev/context-python-sdk/compare/v1.2.0...v1.3.0)
