@@ -43,6 +43,7 @@ client = ContextDev(
 
 brand = client.brand.retrieve(
     domain="REPLACE_ME",
+    type="by_domain",
 )
 print(brand.brand)
 ```
@@ -69,6 +70,7 @@ client = AsyncContextDev(
 async def main() -> None:
     brand = await client.brand.retrieve(
         domain="REPLACE_ME",
+        type="by_domain",
     )
     print(brand.brand)
 
@@ -105,6 +107,7 @@ async def main() -> None:
     ) as client:
         brand = await client.brand.retrieve(
             domain="REPLACE_ME",
+            type="by_domain",
         )
         print(brand.brand)
 
@@ -161,6 +164,7 @@ client = ContextDev()
 try:
     client.brand.retrieve(
         domain="REPLACE_ME",
+        type="by_domain",
     )
 except context.dev.APIConnectionError as e:
     print("The server could not be reached")
@@ -206,6 +210,7 @@ client = ContextDev(
 # Or, configure per-request:
 client.with_options(max_retries=5).brand.retrieve(
     domain="REPLACE_ME",
+    type="by_domain",
 )
 ```
 
@@ -231,6 +236,7 @@ client = ContextDev(
 # Override per-request:
 client.with_options(timeout=5.0).brand.retrieve(
     domain="REPLACE_ME",
+    type="by_domain",
 )
 ```
 
@@ -274,6 +280,7 @@ from context.dev import ContextDev
 client = ContextDev()
 response = client.brand.with_raw_response.retrieve(
     domain="REPLACE_ME",
+    type="by_domain",
 )
 print(response.headers.get('X-My-Header'))
 
@@ -294,6 +301,7 @@ To stream the response body, use `.with_streaming_response` instead, which requi
 ```python
 with client.brand.with_streaming_response.retrieve(
     domain="REPLACE_ME",
+    type="by_domain",
 ) as response:
     print(response.headers.get("X-My-Header"))
 

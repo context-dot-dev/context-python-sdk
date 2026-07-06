@@ -21,6 +21,9 @@ class BrandRetrieveByDomainRequest(TypedDict, total=False):
     domain: Required[str]
     """Domain name to retrieve brand data for (e.g., 'stripe.com')."""
 
+    type: Required[Literal["by_domain"]]
+    """Discriminator for domain-based brand retrieval."""
+
     force_language: Literal[
         "afrikaans",
         "albanian",
@@ -170,6 +173,9 @@ class BrandRetrieveByDomainRequest(TypedDict, total=False):
 class BrandRetrieveByNameRequest(TypedDict, total=False):
     name: Required[str]
     """Company name to retrieve brand data for (e.g., 'Apple Inc')."""
+
+    type: Required[Literal["by_name"]]
+    """Discriminator for name-based brand retrieval."""
 
     country_gl: str
     """
@@ -327,6 +333,9 @@ class BrandRetrieveByEmailRequest(TypedDict, total=False):
     email: Required[str]
     """Email address to retrieve brand data for (e.g., 'jane@stripe.com')."""
 
+    type: Required[Literal["by_email"]]
+    """Discriminator for email-based brand retrieval."""
+
     force_language: Literal[
         "afrikaans",
         "albanian",
@@ -476,6 +485,9 @@ class BrandRetrieveByEmailRequest(TypedDict, total=False):
 class BrandRetrieveByTickerRequest(TypedDict, total=False):
     ticker: Required[str]
     """Stock ticker symbol to retrieve brand data for (e.g., 'AAPL')."""
+
+    type: Required[Literal["by_ticker"]]
+    """Discriminator for ticker-based brand retrieval."""
 
     force_language: Literal[
         "afrikaans",
@@ -629,6 +641,9 @@ class BrandRetrieveByTickerRequest(TypedDict, total=False):
 class BrandRetrieveFromTransactionRequest(TypedDict, total=False):
     transaction_info: Required[str]
     """Transaction information to identify the brand."""
+
+    type: Required[Literal["by_transaction"]]
+    """Discriminator for transaction-based brand retrieval."""
 
     city: str
     """Optional city name to prioritize when searching for the brand."""
