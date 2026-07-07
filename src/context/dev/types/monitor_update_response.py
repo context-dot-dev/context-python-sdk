@@ -19,6 +19,10 @@ __all__ = [
     "TargetMonitorsPageTarget",
     "TargetMonitorsSitemapTarget",
     "TargetMonitorsExtractTarget",
+    "Baseline",
+    "BaselineMonitorsPageBaseline",
+    "BaselineMonitorsSitemapBaseline",
+    "BaselineMonitorsExtractBaseline",
     "LastError",
     "Webhook",
 ]
@@ -132,6 +136,54 @@ Target: TypeAlias = Annotated[
 ]
 
 
+class BaselineMonitorsPageBaseline(BaseModel):
+    """Current baseline of a `page` monitor: the visible page text as last observed."""
+
+    captured_at: datetime
+    """When this baseline was last captured or replaced."""
+
+    text: str
+    """The page's visible text as last observed."""
+
+
+class BaselineMonitorsSitemapBaseline(BaseModel):
+    """
+    Current baseline of a `sitemap` monitor: the normalized URL set as last observed.
+    """
+
+    captured_at: datetime
+    """When this baseline was last captured or replaced."""
+
+    url_count: int
+    """Number of URLs in the baseline."""
+
+    urls: List[str]
+    """The sitemap URLs as last observed (sorted, normalized)."""
+
+
+class BaselineMonitorsExtractBaseline(BaseModel):
+    """
+    Current baseline of an `extract` monitor: the structured data as last extracted.
+    """
+
+    captured_at: datetime
+    """When this baseline was last captured or replaced."""
+
+    data: object
+    """
+    The extracted structured data, matching the monitor's extraction schema (same
+    shape as the /web/extract endpoint's `data`).
+    """
+
+    urls_analyzed: List[str]
+    """URLs that were analyzed to produce the extracted data."""
+
+
+Baseline: TypeAlias = Union[
+    BaselineMonitorsPageBaseline, BaselineMonitorsSitemapBaseline, BaselineMonitorsExtractBaseline, None
+]
+
+
 class LastError(BaseModel):
     """Error from the most recent failed run; null when the last run succeeded."""
 
@@ -196,6 +248,14 @@ class MonitorUpdateResponse(BaseModel):
     """Discriminated union describing what the monitor watches."""
 
     updated_at: datetime
+
+    baseline: Optional[Baseline] = None
+    """
+    Current baseline: the last observed value the monitor compares new snapshots
+    against. Its shape follows `target.type` (page/sitemap/extract). Only populated
+    on GET /monitors/{monitor_id}; null until the first baseline run completes (and
+    after a target or change_detection update, which resets the baseline).
+    """
 
     last_change_at: Optional[datetime] = None
 
