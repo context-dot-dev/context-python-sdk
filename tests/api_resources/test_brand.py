@@ -226,6 +226,53 @@ class TestBrand:
     @parametrize
     def test_method_retrieve_overload_5(self, client: ContextDev) -> None:
         brand = client.brand.retrieve(
+            direct_url="https://example.com",
+            type="by_direct_url",
+        )
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_retrieve_with_all_params_overload_5(self, client: ContextDev) -> None:
+        brand = client.brand.retrieve(
+            direct_url="https://example.com",
+            type="by_direct_url",
+            timeout_ms=1000,
+        )
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_retrieve_overload_5(self, client: ContextDev) -> None:
+        response = client.brand.with_raw_response.retrieve(
+            direct_url="https://example.com",
+            type="by_direct_url",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        brand = response.parse()
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_retrieve_overload_5(self, client: ContextDev) -> None:
+        with client.brand.with_streaming_response.retrieve(
+            direct_url="https://example.com",
+            type="by_direct_url",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            brand = response.parse()
+            assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_retrieve_overload_6(self, client: ContextDev) -> None:
+        brand = client.brand.retrieve(
             transaction_info="xxx",
             type="by_transaction",
         )
@@ -233,7 +280,7 @@ class TestBrand:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_method_retrieve_with_all_params_overload_5(self, client: ContextDev) -> None:
+    def test_method_retrieve_with_all_params_overload_6(self, client: ContextDev) -> None:
         brand = client.brand.retrieve(
             transaction_info="xxx",
             type="by_transaction",
@@ -250,7 +297,7 @@ class TestBrand:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_raw_response_retrieve_overload_5(self, client: ContextDev) -> None:
+    def test_raw_response_retrieve_overload_6(self, client: ContextDev) -> None:
         response = client.brand.with_raw_response.retrieve(
             transaction_info="xxx",
             type="by_transaction",
@@ -263,7 +310,7 @@ class TestBrand:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_streaming_response_retrieve_overload_5(self, client: ContextDev) -> None:
+    def test_streaming_response_retrieve_overload_6(self, client: ContextDev) -> None:
         with client.brand.with_streaming_response.retrieve(
             transaction_info="xxx",
             type="by_transaction",
@@ -532,6 +579,53 @@ class TestAsyncBrand:
     @parametrize
     async def test_method_retrieve_overload_5(self, async_client: AsyncContextDev) -> None:
         brand = await async_client.brand.retrieve(
+            direct_url="https://example.com",
+            type="by_direct_url",
+        )
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_retrieve_with_all_params_overload_5(self, async_client: AsyncContextDev) -> None:
+        brand = await async_client.brand.retrieve(
+            direct_url="https://example.com",
+            type="by_direct_url",
+            timeout_ms=1000,
+        )
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_retrieve_overload_5(self, async_client: AsyncContextDev) -> None:
+        response = await async_client.brand.with_raw_response.retrieve(
+            direct_url="https://example.com",
+            type="by_direct_url",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        brand = await response.parse()
+        assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_retrieve_overload_5(self, async_client: AsyncContextDev) -> None:
+        async with async_client.brand.with_streaming_response.retrieve(
+            direct_url="https://example.com",
+            type="by_direct_url",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            brand = await response.parse()
+            assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_retrieve_overload_6(self, async_client: AsyncContextDev) -> None:
+        brand = await async_client.brand.retrieve(
             transaction_info="xxx",
             type="by_transaction",
         )
@@ -539,7 +633,7 @@ class TestAsyncBrand:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_method_retrieve_with_all_params_overload_5(self, async_client: AsyncContextDev) -> None:
+    async def test_method_retrieve_with_all_params_overload_6(self, async_client: AsyncContextDev) -> None:
         brand = await async_client.brand.retrieve(
             transaction_info="xxx",
             type="by_transaction",
@@ -556,7 +650,7 @@ class TestAsyncBrand:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_raw_response_retrieve_overload_5(self, async_client: AsyncContextDev) -> None:
+    async def test_raw_response_retrieve_overload_6(self, async_client: AsyncContextDev) -> None:
         response = await async_client.brand.with_raw_response.retrieve(
             transaction_info="xxx",
             type="by_transaction",
@@ -569,7 +663,7 @@ class TestAsyncBrand:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_streaming_response_retrieve_overload_5(self, async_client: AsyncContextDev) -> None:
+    async def test_streaming_response_retrieve_overload_6(self, async_client: AsyncContextDev) -> None:
         async with async_client.brand.with_streaming_response.retrieve(
             transaction_info="xxx",
             type="by_transaction",

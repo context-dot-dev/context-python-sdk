@@ -13,6 +13,7 @@ __all__ = [
     "BrandRetrieveByNameRequest",
     "BrandRetrieveByEmailRequest",
     "BrandRetrieveByTickerRequest",
+    "BrandRetrieveByDirectURLRequest",
     "BrandRetrieveFromTransactionRequest",
 ]
 
@@ -638,6 +639,25 @@ class BrandRetrieveByTickerRequest(TypedDict, total=False):
     """
 
 
+class BrandRetrieveByDirectURLRequest(TypedDict, total=False):
+    direct_url: Required[str]
+    """
+    Full http(s) URL to fetch brand data from (e.g.,
+    'https://stripe.com/enterprise'). Only this URL is fetched — not the entire
+    internet.
+    """
+
+    type: Required[Literal["by_direct_url"]]
+    """Discriminator for direct-URL-based brand retrieval."""
+
+    timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
+    """Optional timeout in milliseconds for the request.
+
+    If the request takes longer than this value, it will be aborted with a 408
+    status code. Maximum allowed value is 300000ms (5 minutes).
+    """
+
+
 class BrandRetrieveFromTransactionRequest(TypedDict, total=False):
     transaction_info: Required[str]
     """Transaction information to identify the brand."""
@@ -812,5 +832,6 @@ BrandRetrieveParams: TypeAlias = Union[
     BrandRetrieveByNameRequest,
     BrandRetrieveByEmailRequest,
     BrandRetrieveByTickerRequest,
+    BrandRetrieveByDirectURLRequest,
     BrandRetrieveFromTransactionRequest,
 ]
