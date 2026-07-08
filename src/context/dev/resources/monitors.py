@@ -239,7 +239,7 @@ class MonitorsResource(SyncAPIResource):
         cursor: str | Omit = omit,
         limit: int | Omit = omit,
         q: str | Omit = omit,
-        search_by: List[Literal["name", "url", "query", "tags"]] | Omit = omit,
+        search_by: List[Literal["name", "url", "instructions", "tags"]] | Omit = omit,
         search_type: Literal["exact", "prefix"] | Omit = omit,
         status: Literal["active", "paused", "failed"] | Omit = omit,
         tag: str | Omit = omit,
@@ -261,8 +261,8 @@ class MonitorsResource(SyncAPIResource):
         Args:
           q: Free-text search term, matched against the fields named in `search_by`.
 
-          search_by: Comma-separated fields to search with `q`. Defaults to all of them. Note `query`
-              only exists on semantic monitors.
+          search_by: Comma-separated fields to search with `q`. Defaults to all of them. Note
+              `instructions` only exists on extract monitors.
 
           search_type: `prefix` for as-you-type prefix matching (default), `exact` for full-token
               matching.
@@ -816,7 +816,7 @@ class AsyncMonitorsResource(AsyncAPIResource):
         cursor: str | Omit = omit,
         limit: int | Omit = omit,
         q: str | Omit = omit,
-        search_by: List[Literal["name", "url", "query", "tags"]] | Omit = omit,
+        search_by: List[Literal["name", "url", "instructions", "tags"]] | Omit = omit,
         search_type: Literal["exact", "prefix"] | Omit = omit,
         status: Literal["active", "paused", "failed"] | Omit = omit,
         tag: str | Omit = omit,
@@ -838,8 +838,8 @@ class AsyncMonitorsResource(AsyncAPIResource):
         Args:
           q: Free-text search term, matched against the fields named in `search_by`.
 
-          search_by: Comma-separated fields to search with `q`. Defaults to all of them. Note `query`
-              only exists on semantic monitors.
+          search_by: Comma-separated fields to search with `q`. Defaults to all of them. Note
+              `instructions` only exists on extract monitors.
 
           search_type: `prefix` for as-you-type prefix matching (default), `exact` for full-token
               matching.

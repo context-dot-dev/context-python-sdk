@@ -56,9 +56,9 @@ class ChangeDetectionMonitorsExactChangeDetection(TypedDict, total=False):
 
 
 class ChangeDetectionMonitorsSemanticChangeDetection(TypedDict, total=False):
-    """Detect meaning-level changes that match a natural language query."""
-
-    query: Required[str]
+    """
+    Detect meaning-level changes to the extracted data, ignoring cosmetic or paraphrase-only differences. What is watched is determined by the extract target's `schema` and `instructions`.
+    """
 
     type: Required[Literal["semantic"]]
 
@@ -124,15 +124,20 @@ class TargetMonitorsSitemapTarget(TypedDict, total=False):
 class TargetMonitorsExtractTarget(TypedDict, total=False):
     """Watch a site's extracted structured data."""
 
+    instructions: Required[str]
+    """Natural-language instructions describing what to extract and watch.
+
+    This single prompt scopes both the extraction and what changes get reported:
+    only data captured by the schema and these instructions is compared between
+    runs.
+    """
+
     type: Required[Literal["extract"]]
 
     url: Required[str]
     """Root URL to extract structured data from."""
 
     follow_subdomains: bool
-
-    instructions: str
-    """Optional natural-language instructions guiding what to extract."""
 
     max_depth: int
     """Optional maximum link depth from the starting URL (0 = only the starting page)."""
