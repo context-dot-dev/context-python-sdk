@@ -103,7 +103,7 @@ class TargetMonitorsPageTarget(TypedDict, total=False):
 class TargetMonitorsSitemapTarget(TypedDict, total=False):
     """Watch a sitemap for URL additions and removals.
 
-    Crawled URLs are normalized (lowercased host, no trailing slash/fragment) and scoped to the monitored site and its subdomains before comparison. A new URL set must be observed on two consecutive runs before a change is reported, suppressing one-run crawl flaps.
+    Crawled URLs are normalized (lowercased host, no trailing slash/fragment) and scoped to the monitored site and its subdomains before comparison. On a detected difference the sitemap is re-fetched within the same run and only URLs both observations agree on are reported, suppressing transient crawl flaps.
     """
 
     type: Required[Literal["sitemap"]]
@@ -122,14 +122,15 @@ class TargetMonitorsSitemapTarget(TypedDict, total=False):
 
 
 class TargetMonitorsExtractTarget(TypedDict, total=False):
-    """Watch a site's extracted structured data."""
+    """Watch the monitor-relevant pages of a site for meaningful changes.
+
+    A crawl guided by `schema`/`instructions` selects up to `max_pages` relevant pages to track; each run re-checks exactly those pages, and confirmed content changes are judged against the monitor's instructions. The tracked page set is refreshed by a periodic re-discovery crawl.
+    """
 
     instructions: Required[str]
-    """Natural-language instructions describing what to extract and watch.
-
-    This single prompt scopes both the extraction and what changes get reported:
-    only data captured by the schema and these instructions is compared between
-    runs.
+    """
+    Natural-language instructions guiding which pages and facts to track and which
+    changes to report.
     """
 
     type: Required[Literal["extract"]]
@@ -143,12 +144,14 @@ class TargetMonitorsExtractTarget(TypedDict, total=False):
     """Optional maximum link depth from the starting URL (0 = only the starting page)."""
 
     max_pages: int
-    """Maximum number of pages to analyze during extraction."""
+    """Maximum number of pages to track."""
 
     schema: Dict[str, object]
-    """JSON Schema describing the structured data to extract and watch for changes.
+    """JSON Schema describing the data you care about.
 
-    If omitted, a default summary + key-points schema is used.
+    It guides which pages are selected for tracking and gives the change judge
+    context on what matters. If omitted, a default summary + key-points schema is
+    used.
     """
 
 
