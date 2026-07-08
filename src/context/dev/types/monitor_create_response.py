@@ -38,9 +38,9 @@ class ChangeDetectionMonitorsExactChangeDetection(BaseModel):
 
 
 class ChangeDetectionMonitorsSemanticChangeDetection(BaseModel):
-    """Detect meaning-level changes that match a natural language query."""
-
-    query: str
+    """
+    Detect meaning-level changes to the extracted data, ignoring cosmetic or paraphrase-only differences. What is watched is determined by the extract target's `schema` and `instructions`.
+    """
 
     type: Literal["semantic"]
 
@@ -107,15 +107,20 @@ class TargetMonitorsSitemapTarget(BaseModel):
 class TargetMonitorsExtractTarget(BaseModel):
     """Watch a site's extracted structured data."""
 
+    instructions: str
+    """Natural-language instructions describing what to extract and watch.
+
+    This single prompt scopes both the extraction and what changes get reported:
+    only data captured by the schema and these instructions is compared between
+    runs.
+    """
+
     type: Literal["extract"]
 
     url: str
     """Root URL to extract structured data from."""
 
     follow_subdomains: Optional[bool] = None
-
-    instructions: Optional[str] = None
-    """Optional natural-language instructions guiding what to extract."""
 
     max_depth: Optional[int] = None
     """Optional maximum link depth from the starting URL (0 = only the starting page)."""

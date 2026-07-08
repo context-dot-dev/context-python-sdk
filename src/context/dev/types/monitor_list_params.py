@@ -20,10 +20,10 @@ class MonitorListParams(TypedDict, total=False):
     q: str
     """Free-text search term, matched against the fields named in `search_by`."""
 
-    search_by: List[Literal["name", "url", "query", "tags"]]
+    search_by: List[Literal["name", "url", "instructions", "tags"]]
     """Comma-separated fields to search with `q`.
 
-    Defaults to all of them. Note `query` only exists on semantic monitors.
+    Defaults to all of them. Note `instructions` only exists on extract monitors.
     """
 
     search_type: Literal["exact", "prefix"]

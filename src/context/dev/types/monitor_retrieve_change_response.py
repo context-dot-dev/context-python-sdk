@@ -75,8 +75,6 @@ class MonitorRetrieveChangeResponse(BaseModel):
     matched_urls: Optional[List[str]] = None
     """At most 500 URLs are included; the corresponding count field is always exact."""
 
-    query: Optional[str] = None
-
     removed_url_count: Optional[int] = None
 
     removed_urls: Optional[List[str]] = None
