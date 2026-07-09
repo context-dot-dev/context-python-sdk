@@ -187,7 +187,9 @@ class BrandResource(SyncAPIResource):
 
         Provide
         exactly one lookup identifier in the request body: a domain, company name, email
-        address, stock ticker, or transaction descriptor.
+        address, stock ticker, transaction descriptor, or direct URL. Note:
+        `by_direct_url` fetches brand data only from the provided URL — not from the
+        entire internet.
 
         Args:
           domain: Domain name to retrieve brand data for (e.g., 'stripe.com').
@@ -361,7 +363,9 @@ class BrandResource(SyncAPIResource):
 
         Provide
         exactly one lookup identifier in the request body: a domain, company name, email
-        address, stock ticker, or transaction descriptor.
+        address, stock ticker, transaction descriptor, or direct URL. Note:
+        `by_direct_url` fetches brand data only from the provided URL — not from the
+        entire internet.
 
         Args:
           name: Company name to retrieve brand data for (e.g., 'Apple Inc').
@@ -537,7 +541,9 @@ class BrandResource(SyncAPIResource):
 
         Provide
         exactly one lookup identifier in the request body: a domain, company name, email
-        address, stock ticker, or transaction descriptor.
+        address, stock ticker, transaction descriptor, or direct URL. Note:
+        `by_direct_url` fetches brand data only from the provided URL — not from the
+        entire internet.
 
         Args:
           email: Email address to retrieve brand data for (e.g., 'jane@stripe.com').
@@ -711,7 +717,9 @@ class BrandResource(SyncAPIResource):
 
         Provide
         exactly one lookup identifier in the request body: a domain, company name, email
-        address, stock ticker, or transaction descriptor.
+        address, stock ticker, transaction descriptor, or direct URL. Note:
+        `by_direct_url` fetches brand data only from the provided URL — not from the
+        entire internet.
 
         Args:
           ticker: Stock ticker symbol to retrieve brand data for (e.g., 'AAPL').
@@ -728,6 +736,49 @@ class BrandResource(SyncAPIResource):
               less comprehensive data.
 
           ticker_exchange: Optional stock exchange for the ticker. Defaults to NASDAQ if not specified.
+
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @overload
+    def retrieve(
+        self,
+        *,
+        direct_url: str,
+        type: Literal["by_direct_url"],
+        timeout_ms: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> BrandRetrieveResponse:
+        """Retrieve logos, backdrops, colors, industry, description, and more.
+
+        Provide
+        exactly one lookup identifier in the request body: a domain, company name, email
+        address, stock ticker, transaction descriptor, or direct URL. Note:
+        `by_direct_url` fetches brand data only from the provided URL — not from the
+        entire internet.
+
+        Args:
+          direct_url: Full http(s) URL to fetch brand data from (e.g.,
+              'https://stripe.com/enterprise'). Only this URL is fetched — not the entire
+              internet.
+
+          type: Discriminator for direct-URL-based brand retrieval.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -890,7 +941,9 @@ class BrandResource(SyncAPIResource):
 
         Provide
         exactly one lookup identifier in the request body: a domain, company name, email
-        address, stock ticker, or transaction descriptor.
+        address, stock ticker, transaction descriptor, or direct URL. Note:
+        `by_direct_url` fetches brand data only from the provided URL — not from the
+        entire internet.
 
         Args:
           transaction_info: Transaction information to identify the brand.
@@ -929,7 +982,12 @@ class BrandResource(SyncAPIResource):
         ...
 
     @required_args(
-        ["domain", "type"], ["name", "type"], ["email", "type"], ["ticker", "type"], ["transaction_info", "type"]
+        ["domain", "type"],
+        ["name", "type"],
+        ["email", "type"],
+        ["ticker", "type"],
+        ["direct_url", "type"],
+        ["transaction_info", "type"],
     )
     def retrieve(
         self,
@@ -939,6 +997,7 @@ class BrandResource(SyncAPIResource):
         | Literal["by_name"]
         | Literal["by_email"]
         | Literal["by_ticker"]
+        | Literal["by_direct_url"]
         | Literal["by_transaction"],
         force_language: Literal[
             "afrikaans",
@@ -1071,6 +1130,7 @@ class BrandResource(SyncAPIResource):
         email: str | Omit = omit,
         ticker: str | Omit = omit,
         ticker_exchange: str | Omit = omit,
+        direct_url: str | Omit = omit,
         transaction_info: str | Omit = omit,
         city: str | Omit = omit,
         high_confidence_only: bool | Omit = omit,
@@ -1098,6 +1158,7 @@ class BrandResource(SyncAPIResource):
                     "email": email,
                     "ticker": ticker,
                     "ticker_exchange": ticker_exchange,
+                    "direct_url": direct_url,
                     "transaction_info": transaction_info,
                     "city": city,
                     "high_confidence_only": high_confidence_only,
@@ -1333,7 +1394,9 @@ class AsyncBrandResource(AsyncAPIResource):
 
         Provide
         exactly one lookup identifier in the request body: a domain, company name, email
-        address, stock ticker, or transaction descriptor.
+        address, stock ticker, transaction descriptor, or direct URL. Note:
+        `by_direct_url` fetches brand data only from the provided URL — not from the
+        entire internet.
 
         Args:
           domain: Domain name to retrieve brand data for (e.g., 'stripe.com').
@@ -1507,7 +1570,9 @@ class AsyncBrandResource(AsyncAPIResource):
 
         Provide
         exactly one lookup identifier in the request body: a domain, company name, email
-        address, stock ticker, or transaction descriptor.
+        address, stock ticker, transaction descriptor, or direct URL. Note:
+        `by_direct_url` fetches brand data only from the provided URL — not from the
+        entire internet.
 
         Args:
           name: Company name to retrieve brand data for (e.g., 'Apple Inc').
@@ -1683,7 +1748,9 @@ class AsyncBrandResource(AsyncAPIResource):
 
         Provide
         exactly one lookup identifier in the request body: a domain, company name, email
-        address, stock ticker, or transaction descriptor.
+        address, stock ticker, transaction descriptor, or direct URL. Note:
+        `by_direct_url` fetches brand data only from the provided URL — not from the
+        entire internet.
 
         Args:
           email: Email address to retrieve brand data for (e.g., 'jane@stripe.com').
@@ -1857,7 +1924,9 @@ class AsyncBrandResource(AsyncAPIResource):
 
         Provide
         exactly one lookup identifier in the request body: a domain, company name, email
-        address, stock ticker, or transaction descriptor.
+        address, stock ticker, transaction descriptor, or direct URL. Note:
+        `by_direct_url` fetches brand data only from the provided URL — not from the
+        entire internet.
 
         Args:
           ticker: Stock ticker symbol to retrieve brand data for (e.g., 'AAPL').
@@ -1874,6 +1943,49 @@ class AsyncBrandResource(AsyncAPIResource):
               less comprehensive data.
 
           ticker_exchange: Optional stock exchange for the ticker. Defaults to NASDAQ if not specified.
+
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @overload
+    async def retrieve(
+        self,
+        *,
+        direct_url: str,
+        type: Literal["by_direct_url"],
+        timeout_ms: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> BrandRetrieveResponse:
+        """Retrieve logos, backdrops, colors, industry, description, and more.
+
+        Provide
+        exactly one lookup identifier in the request body: a domain, company name, email
+        address, stock ticker, transaction descriptor, or direct URL. Note:
+        `by_direct_url` fetches brand data only from the provided URL — not from the
+        entire internet.
+
+        Args:
+          direct_url: Full http(s) URL to fetch brand data from (e.g.,
+              'https://stripe.com/enterprise'). Only this URL is fetched — not the entire
+              internet.
+
+          type: Discriminator for direct-URL-based brand retrieval.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -2036,7 +2148,9 @@ class AsyncBrandResource(AsyncAPIResource):
 
         Provide
         exactly one lookup identifier in the request body: a domain, company name, email
-        address, stock ticker, or transaction descriptor.
+        address, stock ticker, transaction descriptor, or direct URL. Note:
+        `by_direct_url` fetches brand data only from the provided URL — not from the
+        entire internet.
 
         Args:
           transaction_info: Transaction information to identify the brand.
@@ -2075,7 +2189,12 @@ class AsyncBrandResource(AsyncAPIResource):
         ...
 
     @required_args(
-        ["domain", "type"], ["name", "type"], ["email", "type"], ["ticker", "type"], ["transaction_info", "type"]
+        ["domain", "type"],
+        ["name", "type"],
+        ["email", "type"],
+        ["ticker", "type"],
+        ["direct_url", "type"],
+        ["transaction_info", "type"],
     )
     async def retrieve(
         self,
@@ -2085,6 +2204,7 @@ class AsyncBrandResource(AsyncAPIResource):
         | Literal["by_name"]
         | Literal["by_email"]
         | Literal["by_ticker"]
+        | Literal["by_direct_url"]
         | Literal["by_transaction"],
         force_language: Literal[
             "afrikaans",
@@ -2217,6 +2337,7 @@ class AsyncBrandResource(AsyncAPIResource):
         email: str | Omit = omit,
         ticker: str | Omit = omit,
         ticker_exchange: str | Omit = omit,
+        direct_url: str | Omit = omit,
         transaction_info: str | Omit = omit,
         city: str | Omit = omit,
         high_confidence_only: bool | Omit = omit,
@@ -2244,6 +2365,7 @@ class AsyncBrandResource(AsyncAPIResource):
                     "email": email,
                     "ticker": ticker,
                     "ticker_exchange": ticker_exchange,
+                    "direct_url": direct_url,
                     "transaction_info": transaction_info,
                     "city": city,
                     "high_confidence_only": high_confidence_only,
