@@ -23,7 +23,7 @@ class Evidence(BaseModel):
 class MonitorRetrieveChangeResponse(BaseModel):
     """A detected change.
 
-    `mode` is the constant `web`; `target_type` and `change_detection_type` describe the change, and which optional fields are present depends on them (page: `diff` + excerpts; sitemap: `added_urls`/`removed_urls`; semantic: `query`/`confidence`/`importance`/`evidence`/`matched_urls`).
+    `mode` is the constant `web`; `target_type` and `change_detection_type` describe the change, and which optional fields are present depends on them (page: `diff` + excerpts; sitemap: `added_urls`/`removed_urls`; semantic: `confidence`/`importance`/`evidence`/`matched_urls`).
     """
 
     id: str
@@ -45,6 +45,9 @@ class MonitorRetrieveChangeResponse(BaseModel):
     """The run that detected this change."""
 
     summary: str
+
+    tags: List[str]
+    """User-defined tags for grouping and filtering monitors and their changes."""
 
     target_type: Literal["page", "sitemap", "extract"]
 
@@ -79,6 +82,3 @@ class MonitorRetrieveChangeResponse(BaseModel):
 
     removed_urls: Optional[List[str]] = None
     """At most 500 URLs are included; the corresponding count field is always exact."""
-
-    tags: Optional[List[str]] = None
-    """User-defined tags for grouping and filtering monitors and their changes."""
