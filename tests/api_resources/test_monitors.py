@@ -66,7 +66,10 @@ class TestMonitors:
             },
             mode="web",
             tags=["pricing", "competitor"],
-            webhook={"url": "https://example.com/webhook"},
+            webhook={
+                "url": "https://example.com/webhook",
+                "events": ["change.detected", "run.completed"],
+            },
         )
         assert_matches_type(MonitorCreateResponse, monitor, path=["response"])
 
@@ -185,7 +188,10 @@ class TestMonitors:
                 "url": "https://acme.com/pricing",
                 "normalize_whitespace": True,
             },
-            webhook={"url": "https://example.com/webhook"},
+            webhook={
+                "url": "https://example.com/webhook",
+                "events": ["change.detected", "run.completed"],
+            },
         )
         assert_matches_type(MonitorUpdateResponse, monitor, path=["response"])
 
@@ -625,7 +631,10 @@ class TestAsyncMonitors:
             },
             mode="web",
             tags=["pricing", "competitor"],
-            webhook={"url": "https://example.com/webhook"},
+            webhook={
+                "url": "https://example.com/webhook",
+                "events": ["change.detected", "run.completed"],
+            },
         )
         assert_matches_type(MonitorCreateResponse, monitor, path=["response"])
 
@@ -744,7 +753,10 @@ class TestAsyncMonitors:
                 "url": "https://acme.com/pricing",
                 "normalize_whitespace": True,
             },
-            webhook={"url": "https://example.com/webhook"},
+            webhook={
+                "url": "https://example.com/webhook",
+                "events": ["change.detected", "run.completed"],
+            },
         )
         assert_matches_type(MonitorUpdateResponse, monitor, path=["response"])
 

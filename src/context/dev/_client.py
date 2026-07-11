@@ -152,7 +152,7 @@ class ContextDev(SyncAPIClient):
     @cached_property
     def monitors(self) -> MonitorsResource:
         """
-        Monitor pages, sitemaps, and extracted website data for exact or semantic changes. The change.detected webhook payload is documented by the MonitorsChangeDetectedWebhookPayload schema.
+        Monitor pages, sitemaps, and extracted website data for exact or semantic changes. Webhook payloads are documented by the MonitorsChangeDetectedWebhookPayload and MonitorsRunCompletedWebhookPayload schemas.
         """
         from .resources.monitors import MonitorsResource
 
@@ -368,7 +368,7 @@ class AsyncContextDev(AsyncAPIClient):
     @cached_property
     def monitors(self) -> AsyncMonitorsResource:
         """
-        Monitor pages, sitemaps, and extracted website data for exact or semantic changes. The change.detected webhook payload is documented by the MonitorsChangeDetectedWebhookPayload schema.
+        Monitor pages, sitemaps, and extracted website data for exact or semantic changes. Webhook payloads are documented by the MonitorsChangeDetectedWebhookPayload and MonitorsRunCompletedWebhookPayload schemas.
         """
         from .resources.monitors import AsyncMonitorsResource
 
@@ -526,7 +526,7 @@ class ContextDevWithRawResponse:
     @cached_property
     def monitors(self) -> monitors.MonitorsResourceWithRawResponse:
         """
-        Monitor pages, sitemaps, and extracted website data for exact or semantic changes. The change.detected webhook payload is documented by the MonitorsChangeDetectedWebhookPayload schema.
+        Monitor pages, sitemaps, and extracted website data for exact or semantic changes. Webhook payloads are documented by the MonitorsChangeDetectedWebhookPayload and MonitorsRunCompletedWebhookPayload schemas.
         """
         from .resources.monitors import MonitorsResourceWithRawResponse
 
@@ -572,7 +572,7 @@ class AsyncContextDevWithRawResponse:
     @cached_property
     def monitors(self) -> monitors.AsyncMonitorsResourceWithRawResponse:
         """
-        Monitor pages, sitemaps, and extracted website data for exact or semantic changes. The change.detected webhook payload is documented by the MonitorsChangeDetectedWebhookPayload schema.
+        Monitor pages, sitemaps, and extracted website data for exact or semantic changes. Webhook payloads are documented by the MonitorsChangeDetectedWebhookPayload and MonitorsRunCompletedWebhookPayload schemas.
         """
         from .resources.monitors import AsyncMonitorsResourceWithRawResponse
 
@@ -618,7 +618,7 @@ class ContextDevWithStreamedResponse:
     @cached_property
     def monitors(self) -> monitors.MonitorsResourceWithStreamingResponse:
         """
-        Monitor pages, sitemaps, and extracted website data for exact or semantic changes. The change.detected webhook payload is documented by the MonitorsChangeDetectedWebhookPayload schema.
+        Monitor pages, sitemaps, and extracted website data for exact or semantic changes. Webhook payloads are documented by the MonitorsChangeDetectedWebhookPayload and MonitorsRunCompletedWebhookPayload schemas.
         """
         from .resources.monitors import MonitorsResourceWithStreamingResponse
 
@@ -664,7 +664,7 @@ class AsyncContextDevWithStreamedResponse:
     @cached_property
     def monitors(self) -> monitors.AsyncMonitorsResourceWithStreamingResponse:
         """
-        Monitor pages, sitemaps, and extracted website data for exact or semantic changes. The change.detected webhook payload is documented by the MonitorsChangeDetectedWebhookPayload schema.
+        Monitor pages, sitemaps, and extracted website data for exact or semantic changes. Webhook payloads are documented by the MonitorsChangeDetectedWebhookPayload and MonitorsRunCompletedWebhookPayload schemas.
         """
         from .resources.monitors import AsyncMonitorsResourceWithStreamingResponse
 

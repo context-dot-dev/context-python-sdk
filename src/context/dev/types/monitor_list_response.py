@@ -210,7 +210,15 @@ class DataLastError(BaseModel):
 
 class DataWebhook(BaseModel):
     url: str
-    """Webhook URL called when a change is detected."""
+    """Webhook URL events are delivered to."""
+
+    events: Optional[List[Literal["change.detected", "run.completed"]]] = None
+    """Events delivered to this endpoint.
+
+    `change.detected` fires only when a run detects a change; `run.completed` fires
+    on every completed run — including runs that detected no change — and embeds the
+    change when one was detected. Defaults to `["change.detected"]` when omitted.
+    """
 
     secret: Optional[str] = None
     """Signing secret used to verify webhook authenticity.
