@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, Union, Optional
+from typing import Dict, List, Union, Optional
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
 from .._types import SequenceNotStr
@@ -166,4 +166,12 @@ class Webhook(TypedDict, total=False):
     """Set to null to remove the webhook."""
 
     url: Required[str]
-    """Webhook URL called when a change is detected."""
+    """Webhook URL events are delivered to."""
+
+    events: List[Literal["change.detected", "run.completed"]]
+    """Events delivered to this endpoint.
+
+    `change.detected` fires only when a run detects a change; `run.completed` fires
+    on every completed run — including runs that detected no change — and embeds the
+    change when one was detected. Defaults to `["change.detected"]` when omitted.
+    """

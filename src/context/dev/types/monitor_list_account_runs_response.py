@@ -22,14 +22,15 @@ class DataWebhookDeliveryError(BaseModel):
 
 
 class DataWebhookDelivery(BaseModel):
-    """The webhook delivery attempted for a change detected by this run.
-
-    Omitted when no webhook was attempted, including historical runs created before delivery tracking was added.
-    """
-
     attempted_at: datetime
 
     error: Optional[DataWebhookDeliveryError] = None
+
+    event: Literal["change.detected", "run.completed"]
+    """The event this delivery carried.
+
+    Deliveries recorded before event selection existed report change.detected.
+    """
 
     event_id: str
     """Identifier sent in the X-Context-Id header."""
@@ -90,11 +91,18 @@ class Data(BaseModel):
 
     started_at: Optional[datetime] = None
 
-    webhook_delivery: Optional[DataWebhookDelivery] = None
-    """The webhook delivery attempted for a change detected by this run.
+    webhook_deliveries: Optional[List[DataWebhookDelivery]] = None
+    """
+    All webhook deliveries attempted by this run — one per subscribed event that
+    fired. Omitted when no webhook was attempted, including runs created before
+    event selection was added.
+    """
 
-    Omitted when no webhook was attempted, including historical runs created before
-    delivery tracking was added.
+    webhook_delivery: Optional[DataWebhookDelivery] = None
+    """
+    Deprecated: use `webhook_deliveries`, which records every attempt now that a run
+    can deliver multiple events. Omitted when no webhook was attempted, including
+    historical runs created before delivery tracking was added.
     """
 
 
