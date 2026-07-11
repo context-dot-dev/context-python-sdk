@@ -26,6 +26,7 @@ __all__ = [
     "DataBaselineMonitorsExtractBaseline",
     "DataLastError",
     "DataWebhook",
+    "DataWebhookFailure",
 ]
 
 
@@ -221,6 +222,27 @@ class DataWebhook(BaseModel):
     """
 
 
+class DataWebhookFailure(BaseModel):
+    """
+    Present while webhook deliveries are failing consecutively; null when deliveries are healthy or no webhook is configured. Cleared on the next successful delivery and when the webhook URL changes.
+    """
+
+    consecutive_failures: int
+    """Number of consecutive delivery attempts that did not succeed."""
+
+    last_failed_at: datetime
+
+    last_message: str
+    """Human-readable description of the most recent failure."""
+
+    last_status: Literal["rejected", "failed", "skipped_unsafe_url"]
+    """Outcome of the most recent failed delivery.
+
+    rejected means a non-2xx response; failed means no HTTP response was received;
+    skipped_unsafe_url means the URL failed the public-endpoint safety check.
+    """
+
+
 class Data(BaseModel):
     """A web monitor.
 
@@ -286,6 +308,13 @@ class Data(BaseModel):
     """User-defined tags for grouping and filtering monitors and their changes."""
 
     webhook: Optional[DataWebhook] = None
+
+    webhook_failure: Optional[DataWebhookFailure] = None
+    """
+    Present while webhook deliveries are failing consecutively; null when deliveries
+    are healthy or no webhook is configured. Cleared on the next successful delivery
+    and when the webhook URL changes.
+    """
 
 
 class MonitorListResponse(BaseModel):
