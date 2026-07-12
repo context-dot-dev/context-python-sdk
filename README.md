@@ -133,14 +133,8 @@ from context.dev import ContextDev
 
 client = ContextDev()
 
-response = client.web.extract(
-    schema={
-        "type": "bar",
-        "properties": "bar",
-        "required": "bar",
-        "additionalProperties": "bar",
-    },
-    url="https://example.com",
+response = client.parse.handle(
+    body=b"Example data",
     pdf={},
 )
 print(response.pdf)
