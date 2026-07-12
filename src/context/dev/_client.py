@@ -35,10 +35,11 @@ from ._base_client import (
 )
 
 if TYPE_CHECKING:
-    from .resources import ai, web, brand, utility, industry, monitors
+    from .resources import ai, web, brand, parse, utility, industry, monitors
     from .resources.ai import AIResource, AsyncAIResource
     from .resources.web import WebResource, AsyncWebResource
     from .resources.brand import BrandResource, AsyncBrandResource
+    from .resources.parse import ParseResource, AsyncParseResource
     from .resources.utility import UtilityResource, AsyncUtilityResource
     from .resources.industry import IndustryResource, AsyncIndustryResource
     from .resources.monitors import MonitorsResource, AsyncMonitorsResource
@@ -118,6 +119,12 @@ class ContextDev(SyncAPIClient):
             custom_query=default_query,
             _strict_response_validation=_strict_response_validation,
         )
+
+    @cached_property
+    def parse(self) -> ParseResource:
+        from .resources.parse import ParseResource
+
+        return ParseResource(self)
 
     @cached_property
     def web(self) -> WebResource:
@@ -336,6 +343,12 @@ class AsyncContextDev(AsyncAPIClient):
         )
 
     @cached_property
+    def parse(self) -> AsyncParseResource:
+        from .resources.parse import AsyncParseResource
+
+        return AsyncParseResource(self)
+
+    @cached_property
     def web(self) -> AsyncWebResource:
         from .resources.web import AsyncWebResource
 
@@ -494,6 +507,12 @@ class ContextDevWithRawResponse:
         self._client = client
 
     @cached_property
+    def parse(self) -> parse.ParseResourceWithRawResponse:
+        from .resources.parse import ParseResourceWithRawResponse
+
+        return ParseResourceWithRawResponse(self._client.parse)
+
+    @cached_property
     def web(self) -> web.WebResourceWithRawResponse:
         from .resources.web import WebResourceWithRawResponse
 
@@ -538,6 +557,12 @@ class AsyncContextDevWithRawResponse:
 
     def __init__(self, client: AsyncContextDev) -> None:
         self._client = client
+
+    @cached_property
+    def parse(self) -> parse.AsyncParseResourceWithRawResponse:
+        from .resources.parse import AsyncParseResourceWithRawResponse
+
+        return AsyncParseResourceWithRawResponse(self._client.parse)
 
     @cached_property
     def web(self) -> web.AsyncWebResourceWithRawResponse:
@@ -586,6 +611,12 @@ class ContextDevWithStreamedResponse:
         self._client = client
 
     @cached_property
+    def parse(self) -> parse.ParseResourceWithStreamingResponse:
+        from .resources.parse import ParseResourceWithStreamingResponse
+
+        return ParseResourceWithStreamingResponse(self._client.parse)
+
+    @cached_property
     def web(self) -> web.WebResourceWithStreamingResponse:
         from .resources.web import WebResourceWithStreamingResponse
 
@@ -630,6 +661,12 @@ class AsyncContextDevWithStreamedResponse:
 
     def __init__(self, client: AsyncContextDev) -> None:
         self._client = client
+
+    @cached_property
+    def parse(self) -> parse.AsyncParseResourceWithStreamingResponse:
+        from .resources.parse import AsyncParseResourceWithStreamingResponse
+
+        return AsyncParseResourceWithStreamingResponse(self._client.parse)
 
     @cached_property
     def web(self) -> web.AsyncWebResourceWithStreamingResponse:
