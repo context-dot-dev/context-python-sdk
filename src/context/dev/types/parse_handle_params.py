@@ -2,28 +2,90 @@
 
 from __future__ import annotations
 
-from typing_extensions import Annotated, TypedDict
+from typing_extensions import Literal, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["ParseHandleParams"]
+__all__ = ["ParseHandleParams", "Pdf"]
 
 
 class ParseHandleParams(TypedDict, total=False):
-    base_url: Annotated[str, PropertyInfo(alias="baseUrl")]
-    """
-    Optional HTTP(S) source document URL used to resolve relative links and image
-    references. Relative references remain relative when omitted.
-    """
+    extension: Literal[
+        "txt",
+        "text",
+        "md",
+        "markdown",
+        "html",
+        "htm",
+        "xhtml",
+        "xml",
+        "rss",
+        "atom",
+        "csv",
+        "tsv",
+        "yaml",
+        "yml",
+        "py",
+        "java",
+        "js",
+        "jsx",
+        "mjs",
+        "cjs",
+        "json",
+        "jsonl",
+        "ndjson",
+        "php",
+        "sh",
+        "bash",
+        "zsh",
+        "fish",
+        "rb",
+        "ts",
+        "tsx",
+        "rtf",
+        "srt",
+        "css",
+        "scss",
+        "less",
+        "styl",
+        "sass",
+        "svg",
+        "pdf",
+        "docx",
+        "doc",
+        "xlsx",
+        "xlsm",
+        "xlsb",
+        "xltx",
+        "xltm",
+        "xls",
+        "pptx",
+        "pptm",
+        "ppsx",
+        "ppsm",
+        "potx",
+        "potm",
+        "ppt",
+        "pps",
+        "pot",
+        "jpg",
+        "jpeg",
+        "jpe",
+        "png",
+        "gif",
+        "bmp",
+        "tiff",
+        "tif",
+        "webp",
+        "ppm",
+        "pbm",
+        "pgm",
+        "pnm",
+    ]
+    """Optional file extension hint.
 
-    extension: str
+    Case-insensitive; a leading dot is accepted (e.g. ".pdf").
     """
-    Optional file extension hint, such as pdf, docx, xlsx, pptx, html, json, csv,
-    md, py, rtf, jpg, png, or txt.
-    """
-
-    filename: str
-    """Optional filename hint used to infer the extension when extension is omitted."""
 
     include_images: Annotated[bool, PropertyInfo(alias="includeImages")]
     """Include image references in Markdown output"""
@@ -32,24 +94,21 @@ class ParseHandleParams(TypedDict, total=False):
     """Preserve hyperlinks in Markdown output"""
 
     ocr: bool
-    """
-    When true for PDF inputs, detect and OCR images embedded in the selected pages,
-    inserting recognized text at each image's position in page reading order while
-    preserving the PDF text layer. pdfStart/pdfEnd limit the inclusive page range.
-    This is separate from automatic scanned-PDF OCR fallback.
-    """
+    """Gates all OCR.
 
-    pdf_end: Annotated[int, PropertyInfo(alias="pdfEnd")]
-    """Last 1-based PDF page to parse.
-
-    When omitted, parsing ends at the last page. Must be greater than or equal to
-    pdfStart when both are provided.
+    When true, PDFs get embedded-image OCR (recognized text inserted at each image's
+    position in page reading order, preserving the text layer; pdf.start/pdf.end
+    limit the page range), scanned PDFs with no text layer get full-document OCR,
+    and raster images get their visible text transcribed. When false, no OCR runs:
+    scanned PDFs may yield no content and images return only format/dimension
+    metadata. Calls where OCR actually runs cost 5 credits instead of 1.
     """
 
-    pdf_start: Annotated[int, PropertyInfo(alias="pdfStart")]
-    """First 1-based PDF page to parse.
+    pdf: Pdf
+    """PDF page-range controls.
 
-    When omitted, parsing starts at the first page.
+    Use start/end to limit parsing (and OCR when ocr=true) to an inclusive 1-based
+    page range.
     """
 
     shorten_base64_images: Annotated[bool, PropertyInfo(alias="shortenBase64Images")]
@@ -57,3 +116,23 @@ class ParseHandleParams(TypedDict, total=False):
 
     use_main_content_only: Annotated[bool, PropertyInfo(alias="useMainContentOnly")]
     """Extract only the main content from HTML-like inputs"""
+
+
+class Pdf(TypedDict, total=False):
+    """PDF page-range controls.
+
+    Use start/end to limit parsing (and OCR when ocr=true) to an inclusive 1-based page range.
+    """
+
+    end: int
+    """Last 1-based PDF page to parse.
+
+    When omitted, parsing ends at the last page. Must be greater than or equal to
+    start when both are provided.
+    """
+
+    start: int
+    """First 1-based PDF page to parse.
+
+    When omitted, parsing starts at the first page.
+    """

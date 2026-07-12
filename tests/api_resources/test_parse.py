@@ -30,14 +30,14 @@ class TestParse:
     def test_method_handle_with_all_params(self, client: ContextDev) -> None:
         parse = client.parse.handle(
             body=b"Example data",
-            base_url="https://example.com",
-            extension="extension",
-            filename="filename",
+            extension="txt",
             include_images=True,
             include_links=True,
             ocr=True,
-            pdf_end=1,
-            pdf_start=1,
+            pdf={
+                "end": 1,
+                "start": 1,
+            },
             shorten_base64_images=True,
             use_main_content_only=True,
         )
@@ -88,14 +88,14 @@ class TestAsyncParse:
     async def test_method_handle_with_all_params(self, async_client: AsyncContextDev) -> None:
         parse = await async_client.parse.handle(
             body=b"Example data",
-            base_url="https://example.com",
-            extension="extension",
-            filename="filename",
+            extension="txt",
             include_images=True,
             include_links=True,
             ocr=True,
-            pdf_end=1,
-            pdf_start=1,
+            pdf={
+                "end": 1,
+                "start": 1,
+            },
             shorten_base64_images=True,
             use_main_content_only=True,
         )

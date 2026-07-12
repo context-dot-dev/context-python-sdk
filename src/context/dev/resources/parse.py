@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+from typing_extensions import Literal
 
 import httpx
 
@@ -59,14 +60,83 @@ class ParseResource(SyncAPIResource):
         self,
         body: FileContent | BinaryTypes,
         *,
-        base_url: str | Omit = omit,
-        extension: str | Omit = omit,
-        filename: str | Omit = omit,
+        extension: Literal[
+            "txt",
+            "text",
+            "md",
+            "markdown",
+            "html",
+            "htm",
+            "xhtml",
+            "xml",
+            "rss",
+            "atom",
+            "csv",
+            "tsv",
+            "yaml",
+            "yml",
+            "py",
+            "java",
+            "js",
+            "jsx",
+            "mjs",
+            "cjs",
+            "json",
+            "jsonl",
+            "ndjson",
+            "php",
+            "sh",
+            "bash",
+            "zsh",
+            "fish",
+            "rb",
+            "ts",
+            "tsx",
+            "rtf",
+            "srt",
+            "css",
+            "scss",
+            "less",
+            "styl",
+            "sass",
+            "svg",
+            "pdf",
+            "docx",
+            "doc",
+            "xlsx",
+            "xlsm",
+            "xlsb",
+            "xltx",
+            "xltm",
+            "xls",
+            "pptx",
+            "pptm",
+            "ppsx",
+            "ppsm",
+            "potx",
+            "potm",
+            "ppt",
+            "pps",
+            "pot",
+            "jpg",
+            "jpeg",
+            "jpe",
+            "png",
+            "gif",
+            "bmp",
+            "tiff",
+            "tif",
+            "webp",
+            "ppm",
+            "pbm",
+            "pgm",
+            "pnm",
+        ]
+        | Omit = omit,
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
         ocr: bool | Omit = omit,
-        pdf_end: int | Omit = omit,
-        pdf_start: int | Omit = omit,
+        pdf: parse_handle_params.Pdf | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
         use_main_content_only: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -78,30 +148,28 @@ class ParseResource(SyncAPIResource):
     ) -> ParseHandleResponse:
         """
         Converts raw text, source code, web/data, PDF, Microsoft Office, and image bytes
-        into LLM-usable Markdown.
+        into LLM-usable Markdown. The base request costs 1 credit. When OCR runs
+        (requires ocr=true), the entire call costs 5 credits; ocr=true requests where no
+        OCR ends up running still cost 1 credit.
 
         Args:
-          base_url: Optional HTTP(S) source document URL used to resolve relative links and image
-              references. Relative references remain relative when omitted.
-
-          extension: Optional file extension hint, such as pdf, docx, xlsx, pptx, html, json, csv,
-              md, py, rtf, jpg, png, or txt.
-
-          filename: Optional filename hint used to infer the extension when extension is omitted.
+          extension: Optional file extension hint. Case-insensitive; a leading dot is accepted (e.g.
+              ".pdf").
 
           include_images: Include image references in Markdown output
 
           include_links: Preserve hyperlinks in Markdown output
 
-          ocr: When true for PDF inputs, detect and OCR images embedded in the selected pages,
-              inserting recognized text at each image's position in page reading order while
-              preserving the PDF text layer. pdfStart/pdfEnd limit the inclusive page range.
-              This is separate from automatic scanned-PDF OCR fallback.
+          ocr: Gates all OCR. When true, PDFs get embedded-image OCR (recognized text inserted
+              at each image's position in page reading order, preserving the text layer;
+              pdf.start/pdf.end limit the page range), scanned PDFs with no text layer get
+              full-document OCR, and raster images get their visible text transcribed. When
+              false, no OCR runs: scanned PDFs may yield no content and images return only
+              format/dimension metadata. Calls where OCR actually runs cost 5 credits instead
+              of 1.
 
-          pdf_end: Last 1-based PDF page to parse. When omitted, parsing ends at the last page.
-              Must be greater than or equal to pdfStart when both are provided.
-
-          pdf_start: First 1-based PDF page to parse. When omitted, parsing starts at the first page.
+          pdf: PDF page-range controls. Use start/end to limit parsing (and OCR when ocr=true)
+              to an inclusive 1-based page range.
 
           shorten_base64_images: Shorten base64-encoded image data in the Markdown output
 
@@ -126,14 +194,11 @@ class ParseResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
-                        "base_url": base_url,
                         "extension": extension,
-                        "filename": filename,
                         "include_images": include_images,
                         "include_links": include_links,
                         "ocr": ocr,
-                        "pdf_end": pdf_end,
-                        "pdf_start": pdf_start,
+                        "pdf": pdf,
                         "shorten_base64_images": shorten_base64_images,
                         "use_main_content_only": use_main_content_only,
                     },
@@ -168,14 +233,83 @@ class AsyncParseResource(AsyncAPIResource):
         self,
         body: FileContent | AsyncBinaryTypes,
         *,
-        base_url: str | Omit = omit,
-        extension: str | Omit = omit,
-        filename: str | Omit = omit,
+        extension: Literal[
+            "txt",
+            "text",
+            "md",
+            "markdown",
+            "html",
+            "htm",
+            "xhtml",
+            "xml",
+            "rss",
+            "atom",
+            "csv",
+            "tsv",
+            "yaml",
+            "yml",
+            "py",
+            "java",
+            "js",
+            "jsx",
+            "mjs",
+            "cjs",
+            "json",
+            "jsonl",
+            "ndjson",
+            "php",
+            "sh",
+            "bash",
+            "zsh",
+            "fish",
+            "rb",
+            "ts",
+            "tsx",
+            "rtf",
+            "srt",
+            "css",
+            "scss",
+            "less",
+            "styl",
+            "sass",
+            "svg",
+            "pdf",
+            "docx",
+            "doc",
+            "xlsx",
+            "xlsm",
+            "xlsb",
+            "xltx",
+            "xltm",
+            "xls",
+            "pptx",
+            "pptm",
+            "ppsx",
+            "ppsm",
+            "potx",
+            "potm",
+            "ppt",
+            "pps",
+            "pot",
+            "jpg",
+            "jpeg",
+            "jpe",
+            "png",
+            "gif",
+            "bmp",
+            "tiff",
+            "tif",
+            "webp",
+            "ppm",
+            "pbm",
+            "pgm",
+            "pnm",
+        ]
+        | Omit = omit,
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
         ocr: bool | Omit = omit,
-        pdf_end: int | Omit = omit,
-        pdf_start: int | Omit = omit,
+        pdf: parse_handle_params.Pdf | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
         use_main_content_only: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -187,30 +321,28 @@ class AsyncParseResource(AsyncAPIResource):
     ) -> ParseHandleResponse:
         """
         Converts raw text, source code, web/data, PDF, Microsoft Office, and image bytes
-        into LLM-usable Markdown.
+        into LLM-usable Markdown. The base request costs 1 credit. When OCR runs
+        (requires ocr=true), the entire call costs 5 credits; ocr=true requests where no
+        OCR ends up running still cost 1 credit.
 
         Args:
-          base_url: Optional HTTP(S) source document URL used to resolve relative links and image
-              references. Relative references remain relative when omitted.
-
-          extension: Optional file extension hint, such as pdf, docx, xlsx, pptx, html, json, csv,
-              md, py, rtf, jpg, png, or txt.
-
-          filename: Optional filename hint used to infer the extension when extension is omitted.
+          extension: Optional file extension hint. Case-insensitive; a leading dot is accepted (e.g.
+              ".pdf").
 
           include_images: Include image references in Markdown output
 
           include_links: Preserve hyperlinks in Markdown output
 
-          ocr: When true for PDF inputs, detect and OCR images embedded in the selected pages,
-              inserting recognized text at each image's position in page reading order while
-              preserving the PDF text layer. pdfStart/pdfEnd limit the inclusive page range.
-              This is separate from automatic scanned-PDF OCR fallback.
+          ocr: Gates all OCR. When true, PDFs get embedded-image OCR (recognized text inserted
+              at each image's position in page reading order, preserving the text layer;
+              pdf.start/pdf.end limit the page range), scanned PDFs with no text layer get
+              full-document OCR, and raster images get their visible text transcribed. When
+              false, no OCR runs: scanned PDFs may yield no content and images return only
+              format/dimension metadata. Calls where OCR actually runs cost 5 credits instead
+              of 1.
 
-          pdf_end: Last 1-based PDF page to parse. When omitted, parsing ends at the last page.
-              Must be greater than or equal to pdfStart when both are provided.
-
-          pdf_start: First 1-based PDF page to parse. When omitted, parsing starts at the first page.
+          pdf: PDF page-range controls. Use start/end to limit parsing (and OCR when ocr=true)
+              to an inclusive 1-based page range.
 
           shorten_base64_images: Shorten base64-encoded image data in the Markdown output
 
@@ -235,14 +367,11 @@ class AsyncParseResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
-                        "base_url": base_url,
                         "extension": extension,
-                        "filename": filename,
                         "include_images": include_images,
                         "include_links": include_links,
                         "ocr": ocr,
-                        "pdf_end": pdf_end,
-                        "pdf_start": pdf_start,
+                        "pdf": pdf,
                         "shorten_base64_images": shorten_base64_images,
                         "use_main_content_only": use_main_content_only,
                     },
