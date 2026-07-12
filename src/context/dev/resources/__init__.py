@@ -24,6 +24,14 @@ from .brand import (
     BrandResourceWithStreamingResponse,
     AsyncBrandResourceWithStreamingResponse,
 )
+from .parse import (
+    ParseResource,
+    AsyncParseResource,
+    ParseResourceWithRawResponse,
+    AsyncParseResourceWithRawResponse,
+    ParseResourceWithStreamingResponse,
+    AsyncParseResourceWithStreamingResponse,
+)
 from .utility import (
     UtilityResource,
     AsyncUtilityResource,
@@ -50,6 +58,12 @@ from .monitors import (
 )
 
 __all__ = [
+    "ParseResource",
+    "AsyncParseResource",
+    "ParseResourceWithRawResponse",
+    "AsyncParseResourceWithRawResponse",
+    "ParseResourceWithStreamingResponse",
+    "AsyncParseResourceWithStreamingResponse",
     "WebResource",
     "AsyncWebResource",
     "WebResourceWithRawResponse",

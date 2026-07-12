@@ -5,48 +5,15 @@ from datetime import datetime
 from typing_extensions import Literal
 
 from .._models import BaseModel
+from .webhook_delivery import WebhookDelivery
 
-__all__ = ["MonitorListRunsResponse", "Data", "DataError", "DataWebhookDelivery", "DataWebhookDeliveryError"]
+__all__ = ["MonitorListRunsResponse", "Data", "DataError"]
 
 
 class DataError(BaseModel):
     code: str
 
     message: str
-
-
-class DataWebhookDeliveryError(BaseModel):
-    code: str
-
-    message: str
-
-
-class DataWebhookDelivery(BaseModel):
-    """The webhook delivery attempted for a change detected by this run.
-
-    Omitted when no webhook was attempted, including historical runs created before delivery tracking was added.
-    """
-
-    attempted_at: datetime
-
-    error: Optional[DataWebhookDeliveryError] = None
-
-    event_id: str
-    """Identifier sent in the X-Context-Id header."""
-
-    http_status: Optional[int] = None
-    """
-    The endpoint's final HTTP response status, or null when no response was
-    received.
-    """
-
-    status: Literal["delivered", "rejected", "failed", "skipped_unsafe_url"]
-    """Delivery outcome.
-
-    delivered means any 2xx response; rejected means a non-2xx response; failed
-    means no HTTP response was received; skipped_unsafe_url means the URL failed the
-    public-endpoint safety check.
-    """
 
 
 class Data(BaseModel):
@@ -90,11 +57,18 @@ class Data(BaseModel):
 
     started_at: Optional[datetime] = None
 
-    webhook_delivery: Optional[DataWebhookDelivery] = None
-    """The webhook delivery attempted for a change detected by this run.
+    webhook_deliveries: Optional[List[WebhookDelivery]] = None
+    """
+    All webhook deliveries attempted by this run — one per subscribed event that
+    fired. Omitted when no webhook was attempted, including runs created before
+    event selection was added.
+    """
 
-    Omitted when no webhook was attempted, including historical runs created before
-    delivery tracking was added.
+    webhook_delivery: Optional[WebhookDelivery] = None
+    """
+    Deprecated: use `webhook_deliveries`, which records every attempt now that a run
+    can deliver multiple events. Omitted when no webhook was attempted, including
+    historical runs created before delivery tracking was added.
     """
 
 

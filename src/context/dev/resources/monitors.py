@@ -45,7 +45,7 @@ __all__ = ["MonitorsResource", "AsyncMonitorsResource"]
 
 class MonitorsResource(SyncAPIResource):
     """
-    Monitor pages, sitemaps, and extracted website data for exact or semantic changes. The change.detected webhook payload is documented by the MonitorsChangeDetectedWebhookPayload schema.
+    Monitor pages, sitemaps, and extracted website data for exact or semantic changes. Webhook payloads are documented by the MonitorsChangeDetectedWebhookPayload and MonitorsRunCompletedWebhookPayload schemas.
     """
 
     @cached_property
@@ -622,7 +622,7 @@ class MonitorsResource(SyncAPIResource):
 
 class AsyncMonitorsResource(AsyncAPIResource):
     """
-    Monitor pages, sitemaps, and extracted website data for exact or semantic changes. The change.detected webhook payload is documented by the MonitorsChangeDetectedWebhookPayload schema.
+    Monitor pages, sitemaps, and extracted website data for exact or semantic changes. Webhook payloads are documented by the MonitorsChangeDetectedWebhookPayload and MonitorsRunCompletedWebhookPayload schemas.
     """
 
     @cached_property

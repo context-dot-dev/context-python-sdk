@@ -102,6 +102,13 @@ class KeyMetadata(BaseModel):
 
 
 class WebWebScrapeMdResponse(BaseModel):
+    content_length: int = FieldInfo(alias="contentLength")
+    """UTF-8 byte length of the returned Markdown.
+
+    Use 0 to identify an empty result and compare small values against your
+    workload's minimum useful-content threshold.
+    """
+
     markdown: str
     """Page content converted to GitHub Flavored Markdown"""
 
