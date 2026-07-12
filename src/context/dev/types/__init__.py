@@ -6,6 +6,7 @@ from .webhook_delivery import WebhookDelivery as WebhookDelivery
 from .web_search_params import WebSearchParams as WebSearchParams
 from .web_extract_params import WebExtractParams as WebExtractParams
 from .monitor_list_params import MonitorListParams as MonitorListParams
+from .parse_handle_params import ParseHandleParams as ParseHandleParams
 from .web_search_response import WebSearchResponse as WebSearchResponse
 from .monitor_run_response import MonitorRunResponse as MonitorRunResponse
 from .web_extract_response import WebExtractResponse as WebExtractResponse
@@ -13,6 +14,7 @@ from .brand_retrieve_params import BrandRetrieveParams as BrandRetrieveParams
 from .monitor_create_params import MonitorCreateParams as MonitorCreateParams
 from .monitor_list_response import MonitorListResponse as MonitorListResponse
 from .monitor_update_params import MonitorUpdateParams as MonitorUpdateParams
+from .parse_handle_response import ParseHandleResponse as ParseHandleResponse
 from .web_screenshot_params import WebScreenshotParams as WebScreenshotParams
 from .brand_retrieve_response import BrandRetrieveResponse as BrandRetrieveResponse
 from .monitor_create_response import MonitorCreateResponse as MonitorCreateResponse

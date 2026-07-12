@@ -1,3 +1,15 @@
+# Parse
+
+Types:
+
+```python
+from context.dev.types import ParseHandleResponse
+```
+
+Methods:
+
+- <code title="post /parse">client.parse.<a href="./src/context/dev/resources/parse.py">handle</a>(body, \*\*<a href="src/context/dev/types/parse_handle_params.py">params</a>) -> <a href="./src/context/dev/types/parse_handle_response.py">ParseHandleResponse</a></code>
+
 # Web
 
 Types:
