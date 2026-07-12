@@ -276,8 +276,8 @@ class WebWebCrawlMdParams(TypedDict, total=False):
     pdf: Pdf
     """PDF parsing controls.
 
-    Use start/end to limit text extraction and OCR to an inclusive 1-based page
-    range.
+    Use start/end to limit text extraction and embedded-image detection/OCR to an
+    inclusive 1-based page range.
     """
 
     settle_animations: Annotated[bool, PropertyInfo(alias="settleAnimations")]
@@ -324,7 +324,7 @@ class WebWebCrawlMdParams(TypedDict, total=False):
 class Pdf(TypedDict, total=False):
     """PDF parsing controls.
 
-    Use start/end to limit text extraction and OCR to an inclusive 1-based page range.
+    Use start/end to limit text extraction and embedded-image detection/OCR to an inclusive 1-based page range.
     """
 
     end: int
@@ -332,6 +332,13 @@ class Pdf(TypedDict, total=False):
 
     When omitted, parsing ends at the last page. Must be greater than or equal to
     start when both are provided.
+    """
+
+    ocr: bool
+    """
+    When true, detect and OCR images embedded in the selected PDF pages, inserting
+    recognized text at each image's position in page reading order while preserving
+    the PDF text layer. This is separate from automatic scanned-PDF OCR fallback.
     """
 
     should_parse: Annotated[bool, PropertyInfo(alias="shouldParse")]

@@ -373,6 +373,7 @@ class TestWeb:
             max_pages=1,
             pdf={
                 "end": 1,
+                "ocr": True,
                 "should_parse": True,
                 "start": 1,
             },
@@ -433,6 +434,7 @@ class TestWeb:
             max_age_ms=0,
             pdf={
                 "end": 1,
+                "ocr": True,
                 "should_parse": True,
                 "start": 1,
             },
@@ -545,6 +547,7 @@ class TestWeb:
             max_age_ms=0,
             pdf={
                 "end": 1,
+                "ocr": True,
                 "should_parse": True,
                 "start": 1,
             },
@@ -978,6 +981,7 @@ class TestAsyncWeb:
             max_pages=1,
             pdf={
                 "end": 1,
+                "ocr": True,
                 "should_parse": True,
                 "start": 1,
             },
@@ -1038,6 +1042,7 @@ class TestAsyncWeb:
             max_age_ms=0,
             pdf={
                 "end": 1,
+                "ocr": True,
                 "should_parse": True,
                 "start": 1,
             },
@@ -1150,6 +1155,7 @@ class TestAsyncWeb:
             max_age_ms=0,
             pdf={
                 "end": 1,
+                "ocr": True,
                 "should_parse": True,
                 "start": 1,
             },
