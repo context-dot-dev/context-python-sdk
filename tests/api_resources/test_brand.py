@@ -38,6 +38,7 @@ class TestBrand:
             force_language="afrikaans",
             max_age_ms=0,
             max_speed=True,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
@@ -89,6 +90,7 @@ class TestBrand:
             force_language="afrikaans",
             max_age_ms=0,
             max_speed=True,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
@@ -139,6 +141,7 @@ class TestBrand:
             force_language="afrikaans",
             max_age_ms=0,
             max_speed=True,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
@@ -189,6 +192,7 @@ class TestBrand:
             force_language="afrikaans",
             max_age_ms=0,
             max_speed=True,
+            tags=["production", "team-alpha"],
             ticker_exchange="ticker_exchange",
             timeout_ms=1000,
         )
@@ -237,6 +241,7 @@ class TestBrand:
         brand = client.brand.retrieve(
             direct_url="https://example.com",
             type="by_direct_url",
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
@@ -291,6 +296,7 @@ class TestBrand:
             max_speed=True,
             mcc=0,
             phone=0,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
@@ -337,6 +343,7 @@ class TestBrand:
         brand = client.brand.retrieve_simplified(
             domain="domain",
             max_age_ms=86400000,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(BrandRetrieveSimplifiedResponse, brand, path=["response"])
@@ -391,6 +398,7 @@ class TestAsyncBrand:
             force_language="afrikaans",
             max_age_ms=0,
             max_speed=True,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
@@ -442,6 +450,7 @@ class TestAsyncBrand:
             force_language="afrikaans",
             max_age_ms=0,
             max_speed=True,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
@@ -492,6 +501,7 @@ class TestAsyncBrand:
             force_language="afrikaans",
             max_age_ms=0,
             max_speed=True,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
@@ -542,6 +552,7 @@ class TestAsyncBrand:
             force_language="afrikaans",
             max_age_ms=0,
             max_speed=True,
+            tags=["production", "team-alpha"],
             ticker_exchange="ticker_exchange",
             timeout_ms=1000,
         )
@@ -590,6 +601,7 @@ class TestAsyncBrand:
         brand = await async_client.brand.retrieve(
             direct_url="https://example.com",
             type="by_direct_url",
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
@@ -644,6 +656,7 @@ class TestAsyncBrand:
             max_speed=True,
             mcc=0,
             phone=0,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
@@ -690,6 +703,7 @@ class TestAsyncBrand:
         brand = await async_client.brand.retrieve_simplified(
             domain="domain",
             max_age_ms=86400000,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(BrandRetrieveSimplifiedResponse, brand, path=["response"])

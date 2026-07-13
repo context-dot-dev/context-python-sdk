@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import Union
 from typing_extensions import Literal, Required, Annotated, TypeAlias, TypedDict
 
+from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
 __all__ = [
@@ -161,6 +162,13 @@ class BrandRetrieveByDomainRequest(TypedDict, total=False):
 
     When set to true, the API will skip time-consuming operations for faster
     response at the cost of less comprehensive data.
+    """
+
+    tags: SequenceNotStr[str]
+    """Optional caller-defined tags for tracking this request.
+
+    Tags are recorded on the request's usage log and can be used to filter usage on
+    the dashboard usage page. Up to 20 tags, each 1-50 characters.
     """
 
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
@@ -322,6 +330,13 @@ class BrandRetrieveByNameRequest(TypedDict, total=False):
     response at the cost of less comprehensive data.
     """
 
+    tags: SequenceNotStr[str]
+    """Optional caller-defined tags for tracking this request.
+
+    Tags are recorded on the request's usage log and can be used to filter usage on
+    the dashboard usage page. Up to 20 tags, each 1-50 characters.
+    """
+
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
     """Optional timeout in milliseconds for the request.
 
@@ -473,6 +488,13 @@ class BrandRetrieveByEmailRequest(TypedDict, total=False):
 
     When set to true, the API will skip time-consuming operations for faster
     response at the cost of less comprehensive data.
+    """
+
+    tags: SequenceNotStr[str]
+    """Optional caller-defined tags for tracking this request.
+
+    Tags are recorded on the request's usage log and can be used to filter usage on
+    the dashboard usage page. Up to 20 tags, each 1-50 characters.
     """
 
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
@@ -628,6 +650,13 @@ class BrandRetrieveByTickerRequest(TypedDict, total=False):
     response at the cost of less comprehensive data.
     """
 
+    tags: SequenceNotStr[str]
+    """Optional caller-defined tags for tracking this request.
+
+    Tags are recorded on the request's usage log and can be used to filter usage on
+    the dashboard usage page. Up to 20 tags, each 1-50 characters.
+    """
+
     ticker_exchange: str
     """Optional stock exchange for the ticker. Defaults to NASDAQ if not specified."""
 
@@ -649,6 +678,13 @@ class BrandRetrieveByDirectURLRequest(TypedDict, total=False):
 
     type: Required[Literal["by_direct_url"]]
     """Discriminator for direct-URL-based brand retrieval."""
+
+    tags: SequenceNotStr[str]
+    """Optional caller-defined tags for tracking this request.
+
+    Tags are recorded on the request's usage log and can be used to filter usage on
+    the dashboard usage page. Up to 20 tags, each 1-50 characters.
+    """
 
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
     """Optional timeout in milliseconds for the request.
@@ -818,6 +854,13 @@ class BrandRetrieveFromTransactionRequest(TypedDict, total=False):
 
     phone: float
     """Optional phone number from the transaction to help verify brand match."""
+
+    tags: SequenceNotStr[str]
+    """Optional caller-defined tags for tracking this request.
+
+    Tags are recorded on the request's usage log and can be used to filter usage on
+    the dashboard usage page. Up to 20 tags, each 1-50 characters.
+    """
 
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
     """Optional timeout in milliseconds for the request.

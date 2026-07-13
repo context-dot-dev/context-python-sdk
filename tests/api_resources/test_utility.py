@@ -32,6 +32,7 @@ class TestUtility:
         utility = client.utility.prefetch(
             identifier={"domain": "domain"},
             type="brand",
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(UtilityPrefetchResponse, utility, path=["response"])
@@ -85,6 +86,7 @@ class TestAsyncUtility:
         utility = await async_client.utility.prefetch(
             identifier={"domain": "domain"},
             type="brand",
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(UtilityPrefetchResponse, utility, path=["response"])

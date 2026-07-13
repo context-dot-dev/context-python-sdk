@@ -35,6 +35,7 @@ class TestIndustry:
             input="input",
             max_results=1,
             min_results=1,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(IndustryRetrieveNaicsResponse, industry, path=["response"])
@@ -80,6 +81,7 @@ class TestIndustry:
             input="input",
             max_results=1,
             min_results=1,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
             type="original_sic",
         )
@@ -132,6 +134,7 @@ class TestAsyncIndustry:
             input="input",
             max_results=1,
             min_results=1,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(IndustryRetrieveNaicsResponse, industry, path=["response"])
@@ -177,6 +180,7 @@ class TestAsyncIndustry:
             input="input",
             max_results=1,
             min_results=1,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
             type="original_sic",
         )

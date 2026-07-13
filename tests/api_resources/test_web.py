@@ -67,6 +67,7 @@ class TestWeb:
                 "start": 1,
             },
             stop_after_ms=10000,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
             wait_for_ms=0,
         )
@@ -124,6 +125,7 @@ class TestWeb:
         web = client.web.extract_competitors(
             domain="xxx",
             num_competitors=1,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(WebExtractCompetitorsResponse, web, path=["response"])
@@ -167,6 +169,7 @@ class TestWeb:
             direct_url="https://example.com",
             domain="domain",
             max_age_ms=86400000,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(WebExtractFontsResponse, web, path=["response"])
@@ -207,6 +210,7 @@ class TestWeb:
             direct_url="https://example.com",
             domain="domain",
             max_age_ms=86400000,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(WebExtractStyleguideResponse, web, path=["response"])
@@ -252,6 +256,7 @@ class TestWeb:
             max_age_ms=0,
             page="login",
             scroll_offset=0,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
             viewport={
                 "height": 240,
@@ -318,6 +323,7 @@ class TestWeb:
             },
             num_results=10,
             query_fanout=True,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(WebSearchResponse, web, path=["response"])
@@ -380,6 +386,7 @@ class TestWeb:
             settle_animations=True,
             shorten_base64_images=True,
             stop_after_ms=10000,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
             url_regex="^https?://[^/]+/blog/",
             use_main_content_only=True,
@@ -439,6 +446,7 @@ class TestWeb:
                 "start": 1,
             },
             settle_animations=True,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
             use_main_content_only=True,
             wait_for_ms=0,
@@ -493,6 +501,7 @@ class TestWeb:
             },
             headers={"foo": "J!"},
             max_age_ms=0,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
             wait_for_ms=0,
         )
@@ -553,6 +562,7 @@ class TestWeb:
             },
             settle_animations=True,
             shorten_base64_images=True,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
             use_main_content_only=True,
             wait_for_ms=0,
@@ -600,6 +610,7 @@ class TestWeb:
             domain="domain",
             headers={"foo": "J!"},
             max_links=1,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
             url_regex="^https?://[^/]+/blog/",
         )
@@ -675,6 +686,7 @@ class TestAsyncWeb:
                 "start": 1,
             },
             stop_after_ms=10000,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
             wait_for_ms=0,
         )
@@ -732,6 +744,7 @@ class TestAsyncWeb:
         web = await async_client.web.extract_competitors(
             domain="xxx",
             num_competitors=1,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(WebExtractCompetitorsResponse, web, path=["response"])
@@ -775,6 +788,7 @@ class TestAsyncWeb:
             direct_url="https://example.com",
             domain="domain",
             max_age_ms=86400000,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(WebExtractFontsResponse, web, path=["response"])
@@ -815,6 +829,7 @@ class TestAsyncWeb:
             direct_url="https://example.com",
             domain="domain",
             max_age_ms=86400000,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(WebExtractStyleguideResponse, web, path=["response"])
@@ -860,6 +875,7 @@ class TestAsyncWeb:
             max_age_ms=0,
             page="login",
             scroll_offset=0,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
             viewport={
                 "height": 240,
@@ -926,6 +942,7 @@ class TestAsyncWeb:
             },
             num_results=10,
             query_fanout=True,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(WebSearchResponse, web, path=["response"])
@@ -988,6 +1005,7 @@ class TestAsyncWeb:
             settle_animations=True,
             shorten_base64_images=True,
             stop_after_ms=10000,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
             url_regex="^https?://[^/]+/blog/",
             use_main_content_only=True,
@@ -1047,6 +1065,7 @@ class TestAsyncWeb:
                 "start": 1,
             },
             settle_animations=True,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
             use_main_content_only=True,
             wait_for_ms=0,
@@ -1101,6 +1120,7 @@ class TestAsyncWeb:
             },
             headers={"foo": "J!"},
             max_age_ms=0,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
             wait_for_ms=0,
         )
@@ -1161,6 +1181,7 @@ class TestAsyncWeb:
             },
             settle_animations=True,
             shorten_base64_images=True,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
             use_main_content_only=True,
             wait_for_ms=0,
@@ -1208,6 +1229,7 @@ class TestAsyncWeb:
             domain="domain",
             headers={"foo": "J!"},
             max_links=1,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
             url_regex="^https?://[^/]+/blog/",
         )
