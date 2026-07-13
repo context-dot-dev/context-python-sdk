@@ -39,6 +39,7 @@ class TestParse:
                 "start": 1,
             },
             shorten_base64_images=True,
+            tags=["production", "team-alpha"],
             use_main_content_only=True,
         )
         assert_matches_type(ParseHandleResponse, parse, path=["response"])
@@ -97,6 +98,7 @@ class TestAsyncParse:
                 "start": 1,
             },
             shorten_base64_images=True,
+            tags=["production", "team-alpha"],
             use_main_content_only=True,
         )
         assert_matches_type(ParseHandleResponse, parse, path=["response"])

@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import Union
 from typing_extensions import Required, Annotated, TypeAlias, TypedDict
 
+from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
 __all__ = ["AIExtractProductsParams", "ByDomain", "ByDirectURL"]
@@ -23,6 +24,13 @@ class ByDomain(TypedDict, total=False):
 
     max_products: Annotated[int, PropertyInfo(alias="maxProducts")]
     """Maximum number of products to extract."""
+
+    tags: SequenceNotStr[str]
+    """Optional caller-defined tags for tracking this request.
+
+    Tags are recorded on the request's usage log and can be used to filter usage on
+    the dashboard usage page. Up to 20 tags, each 1-50 characters.
+    """
 
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
     """Optional timeout in milliseconds for the request.
@@ -48,6 +56,13 @@ class ByDirectURL(TypedDict, total=False):
 
     max_products: Annotated[int, PropertyInfo(alias="maxProducts")]
     """Maximum number of products to extract."""
+
+    tags: SequenceNotStr[str]
+    """Optional caller-defined tags for tracking this request.
+
+    Tags are recorded on the request's usage log and can be used to filter usage on
+    the dashboard usage page. Up to 20 tags, each 1-50 characters.
+    """
 
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
     """Optional timeout in milliseconds for the request.

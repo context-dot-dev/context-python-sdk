@@ -34,6 +34,7 @@ class TestAI:
         ai = client.ai.extract_product(
             url="https://example.com",
             max_age_ms=0,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(AIExtractProductResponse, ai, path=["response"])
@@ -79,6 +80,7 @@ class TestAI:
             domain="domain",
             max_age_ms=0,
             max_products=1,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(AIExtractProductsResponse, ai, path=["response"])
@@ -124,6 +126,7 @@ class TestAI:
             direct_url="https://example.com",
             max_age_ms=0,
             max_products=1,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(AIExtractProductsResponse, ai, path=["response"])
@@ -174,6 +177,7 @@ class TestAsyncAI:
         ai = await async_client.ai.extract_product(
             url="https://example.com",
             max_age_ms=0,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(AIExtractProductResponse, ai, path=["response"])
@@ -219,6 +223,7 @@ class TestAsyncAI:
             domain="domain",
             max_age_ms=0,
             max_products=1,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(AIExtractProductsResponse, ai, path=["response"])
@@ -264,6 +269,7 @@ class TestAsyncAI:
             direct_url="https://example.com",
             max_age_ms=0,
             max_products=1,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(AIExtractProductsResponse, ai, path=["response"])

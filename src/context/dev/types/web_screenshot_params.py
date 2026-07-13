@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing_extensions import Literal, Annotated, TypedDict
 
+from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
 __all__ = ["WebScreenshotParams", "Viewport"]
@@ -279,6 +280,13 @@ class WebScreenshotParams(TypedDict, total=False):
     request scrollOffset=0, then 1080, then 2160 to walk a 1920x1080 landing page
     top to bottom). The final slice may be shorter than the viewport height. Takes
     precedence over fullScreenshot. Max: 100000.
+    """
+
+    tags: SequenceNotStr[str]
+    """Optional comma-separated caller-defined tags for tracking this request.
+
+    Tags are recorded on the request's usage log and can be used to filter usage on
+    the dashboard usage page. Up to 20 tags, each 1-50 characters.
     """
 
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]

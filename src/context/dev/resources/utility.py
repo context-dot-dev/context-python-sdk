@@ -7,7 +7,7 @@ from typing_extensions import Literal
 import httpx
 
 from ..types import utility_prefetch_params
-from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
+from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -48,6 +48,7 @@ class UtilityResource(SyncAPIResource):
         *,
         identifier: utility_prefetch_params.Identifier,
         type: Literal["brand"],
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -68,6 +69,10 @@ class UtilityResource(SyncAPIResource):
 
           type: What to prefetch. Currently only 'brand' is supported.
 
+          tags: Optional caller-defined tags for tracking this request. Tags are recorded on the
+              request's usage log and can be used to filter usage on the dashboard usage page.
+              Up to 20 tags, each 1-50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -86,6 +91,7 @@ class UtilityResource(SyncAPIResource):
                 {
                     "identifier": identifier,
                     "type": type,
+                    "tags": tags,
                     "timeout_ms": timeout_ms,
                 },
                 utility_prefetch_params.UtilityPrefetchParams,
@@ -122,6 +128,7 @@ class AsyncUtilityResource(AsyncAPIResource):
         *,
         identifier: utility_prefetch_params.Identifier,
         type: Literal["brand"],
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -142,6 +149,10 @@ class AsyncUtilityResource(AsyncAPIResource):
 
           type: What to prefetch. Currently only 'brand' is supported.
 
+          tags: Optional caller-defined tags for tracking this request. Tags are recorded on the
+              request's usage log and can be used to filter usage on the dashboard usage page.
+              Up to 20 tags, each 1-50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -160,6 +171,7 @@ class AsyncUtilityResource(AsyncAPIResource):
                 {
                     "identifier": identifier,
                     "type": type,
+                    "tags": tags,
                     "timeout_ms": timeout_ms,
                 },
                 utility_prefetch_params.UtilityPrefetchParams,

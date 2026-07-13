@@ -80,6 +80,7 @@ class WebResource(SyncAPIResource):
         max_pages: int | Omit = omit,
         pdf: web_extract_params.Pdf | Omit = omit,
         stop_after_ms: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         wait_for_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -126,6 +127,10 @@ class WebResource(SyncAPIResource):
           stop_after_ms: Soft time budget for the crawl in milliseconds. Min: 10000 (10s). Max: 110000
               (110s). Default: 80000 (80s).
 
+          tags: Optional caller-defined tags for tracking this request. Tags are recorded on the
+              request's usage log and can be used to filter usage on the dashboard usage page.
+              Up to 20 tags, each 1-50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -156,6 +161,7 @@ class WebResource(SyncAPIResource):
                     "max_pages": max_pages,
                     "pdf": pdf,
                     "stop_after_ms": stop_after_ms,
+                    "tags": tags,
                     "timeout_ms": timeout_ms,
                     "wait_for_ms": wait_for_ms,
                 },
@@ -172,6 +178,7 @@ class WebResource(SyncAPIResource):
         *,
         domain: str,
         num_competitors: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -189,6 +196,10 @@ class WebResource(SyncAPIResource):
               and normalized to their domain.
 
           num_competitors: Exact number of direct competitors to return. Defaults to 5.
+
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -213,6 +224,7 @@ class WebResource(SyncAPIResource):
                     {
                         "domain": domain,
                         "num_competitors": num_competitors,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                     },
                     web_extract_competitors_params.WebExtractCompetitorsParams,
@@ -227,6 +239,7 @@ class WebResource(SyncAPIResource):
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
         max_age_ms: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -253,6 +266,10 @@ class WebResource(SyncAPIResource):
               are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
               year.
 
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -277,6 +294,7 @@ class WebResource(SyncAPIResource):
                         "direct_url": direct_url,
                         "domain": domain,
                         "max_age_ms": max_age_ms,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                     },
                     web_extract_fonts_params.WebExtractFontsParams,
@@ -292,6 +310,7 @@ class WebResource(SyncAPIResource):
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
         max_age_ms: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -322,6 +341,10 @@ class WebResource(SyncAPIResource):
               are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
               year.
 
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -347,6 +370,7 @@ class WebResource(SyncAPIResource):
                         "direct_url": direct_url,
                         "domain": domain,
                         "max_age_ms": max_age_ms,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                     },
                     web_extract_styleguide_params.WebExtractStyleguideParams,
@@ -573,6 +597,7 @@ class WebResource(SyncAPIResource):
         max_age_ms: int | Omit = omit,
         page: Literal["login", "signup", "blog", "careers", "pricing", "terms", "privacy", "contact"] | Omit = omit,
         scroll_offset: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         viewport: web_screenshot_params.Viewport | Omit = omit,
         wait_for_ms: int | Omit = omit,
@@ -626,6 +651,10 @@ class WebResource(SyncAPIResource):
               top to bottom). The final slice may be shorter than the viewport height. Takes
               precedence over fullScreenshot. Max: 100000.
 
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -662,6 +691,7 @@ class WebResource(SyncAPIResource):
                         "max_age_ms": max_age_ms,
                         "page": page,
                         "scroll_offset": scroll_offset,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                         "viewport": viewport,
                         "wait_for_ms": wait_for_ms,
@@ -924,6 +954,7 @@ class WebResource(SyncAPIResource):
         markdown_options: web_search_params.MarkdownOptions | Omit = omit,
         num_results: int | Omit = omit,
         query_fanout: bool | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -956,6 +987,10 @@ class WebResource(SyncAPIResource):
 
           query_fanout: Expand the query into multiple parallel variants for broader recall.
 
+          tags: Optional caller-defined tags for tracking this request. Tags are recorded on the
+              request's usage log and can be used to filter usage on the dashboard usage page.
+              Up to 20 tags, each 1-50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -980,6 +1015,7 @@ class WebResource(SyncAPIResource):
                     "markdown_options": markdown_options,
                     "num_results": num_results,
                     "query_fanout": query_fanout,
+                    "tags": tags,
                     "timeout_ms": timeout_ms,
                 },
                 web_search_params.WebSearchParams,
@@ -1214,6 +1250,7 @@ class WebResource(SyncAPIResource):
         settle_animations: bool | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
         stop_after_ms: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         url_regex: str | Omit = omit,
         use_main_content_only: bool | Omit = omit,
@@ -1278,6 +1315,10 @@ class WebResource(SyncAPIResource):
               instead of continuing. Min: 10000 (10s). Max: 110000 (110s). Default: 80000
               (80s).
 
+          tags: Optional caller-defined tags for tracking this request. Tags are recorded on the
+              request's usage log and can be used to filter usage on the dashboard usage page.
+              Up to 20 tags, each 1-50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -1317,6 +1358,7 @@ class WebResource(SyncAPIResource):
                     "settle_animations": settle_animations,
                     "shorten_base64_images": shorten_base64_images,
                     "stop_after_ms": stop_after_ms,
+                    "tags": tags,
                     "timeout_ms": timeout_ms,
                     "url_regex": url_regex,
                     "use_main_content_only": use_main_content_only,
@@ -1548,6 +1590,7 @@ class WebResource(SyncAPIResource):
         max_age_ms: int | Omit = omit,
         pdf: web_web_scrape_html_params.Pdf | Omit = omit,
         settle_animations: bool | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         use_main_content_only: bool | Omit = omit,
         wait_for_ms: int | Omit = omit,
@@ -1592,6 +1635,10 @@ class WebResource(SyncAPIResource):
               extracting HTML. Defaults to false. This adds a bit of latency in exchange for
               more stable output on animated pages.
 
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -1629,6 +1676,7 @@ class WebResource(SyncAPIResource):
                         "max_age_ms": max_age_ms,
                         "pdf": pdf,
                         "settle_animations": settle_animations,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                         "use_main_content_only": use_main_content_only,
                         "wait_for_ms": wait_for_ms,
@@ -1647,6 +1695,7 @@ class WebResource(SyncAPIResource):
         enrichment: web_web_scrape_images_params.Enrichment | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
         max_age_ms: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         wait_for_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -1680,6 +1729,10 @@ class WebResource(SyncAPIResource):
           max_age_ms: Reuse a cached result this many milliseconds old or newer. Default: 86400000 (1
               day). Set to 0 to bypass cache. Maximum: 2592000000 (30 days).
 
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -1709,6 +1762,7 @@ class WebResource(SyncAPIResource):
                         "enrichment": enrichment,
                         "headers": headers,
                         "max_age_ms": max_age_ms,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                         "wait_for_ms": wait_for_ms,
                     },
@@ -1939,6 +1993,7 @@ class WebResource(SyncAPIResource):
         pdf: web_web_scrape_md_params.Pdf | Omit = omit,
         settle_animations: bool | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         use_main_content_only: bool | Omit = omit,
         wait_for_ms: int | Omit = omit,
@@ -2006,6 +2061,10 @@ class WebResource(SyncAPIResource):
 
           shorten_base64_images: Shorten base64-encoded image data in the Markdown output
 
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -2045,6 +2104,7 @@ class WebResource(SyncAPIResource):
                         "pdf": pdf,
                         "settle_animations": settle_animations,
                         "shorten_base64_images": shorten_base64_images,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                         "use_main_content_only": use_main_content_only,
                         "wait_for_ms": wait_for_ms,
@@ -2061,6 +2121,7 @@ class WebResource(SyncAPIResource):
         domain: str,
         headers: Dict[str, str] | Omit = omit,
         max_links: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         url_regex: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -2082,6 +2143,10 @@ class WebResource(SyncAPIResource):
 
           max_links: Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
               Minimum is 1, maximum is 100,000.
+
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -2110,6 +2175,7 @@ class WebResource(SyncAPIResource):
                         "domain": domain,
                         "headers": headers,
                         "max_links": max_links,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                         "url_regex": url_regex,
                     },
@@ -2154,6 +2220,7 @@ class AsyncWebResource(AsyncAPIResource):
         max_pages: int | Omit = omit,
         pdf: web_extract_params.Pdf | Omit = omit,
         stop_after_ms: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         wait_for_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -2200,6 +2267,10 @@ class AsyncWebResource(AsyncAPIResource):
           stop_after_ms: Soft time budget for the crawl in milliseconds. Min: 10000 (10s). Max: 110000
               (110s). Default: 80000 (80s).
 
+          tags: Optional caller-defined tags for tracking this request. Tags are recorded on the
+              request's usage log and can be used to filter usage on the dashboard usage page.
+              Up to 20 tags, each 1-50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -2230,6 +2301,7 @@ class AsyncWebResource(AsyncAPIResource):
                     "max_pages": max_pages,
                     "pdf": pdf,
                     "stop_after_ms": stop_after_ms,
+                    "tags": tags,
                     "timeout_ms": timeout_ms,
                     "wait_for_ms": wait_for_ms,
                 },
@@ -2246,6 +2318,7 @@ class AsyncWebResource(AsyncAPIResource):
         *,
         domain: str,
         num_competitors: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -2263,6 +2336,10 @@ class AsyncWebResource(AsyncAPIResource):
               and normalized to their domain.
 
           num_competitors: Exact number of direct competitors to return. Defaults to 5.
+
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -2287,6 +2364,7 @@ class AsyncWebResource(AsyncAPIResource):
                     {
                         "domain": domain,
                         "num_competitors": num_competitors,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                     },
                     web_extract_competitors_params.WebExtractCompetitorsParams,
@@ -2301,6 +2379,7 @@ class AsyncWebResource(AsyncAPIResource):
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
         max_age_ms: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -2327,6 +2406,10 @@ class AsyncWebResource(AsyncAPIResource):
               are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
               year.
 
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -2351,6 +2434,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "direct_url": direct_url,
                         "domain": domain,
                         "max_age_ms": max_age_ms,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                     },
                     web_extract_fonts_params.WebExtractFontsParams,
@@ -2366,6 +2450,7 @@ class AsyncWebResource(AsyncAPIResource):
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
         max_age_ms: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -2396,6 +2481,10 @@ class AsyncWebResource(AsyncAPIResource):
               are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
               year.
 
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -2421,6 +2510,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "direct_url": direct_url,
                         "domain": domain,
                         "max_age_ms": max_age_ms,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                     },
                     web_extract_styleguide_params.WebExtractStyleguideParams,
@@ -2647,6 +2737,7 @@ class AsyncWebResource(AsyncAPIResource):
         max_age_ms: int | Omit = omit,
         page: Literal["login", "signup", "blog", "careers", "pricing", "terms", "privacy", "contact"] | Omit = omit,
         scroll_offset: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         viewport: web_screenshot_params.Viewport | Omit = omit,
         wait_for_ms: int | Omit = omit,
@@ -2700,6 +2791,10 @@ class AsyncWebResource(AsyncAPIResource):
               top to bottom). The final slice may be shorter than the viewport height. Takes
               precedence over fullScreenshot. Max: 100000.
 
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -2736,6 +2831,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "max_age_ms": max_age_ms,
                         "page": page,
                         "scroll_offset": scroll_offset,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                         "viewport": viewport,
                         "wait_for_ms": wait_for_ms,
@@ -2998,6 +3094,7 @@ class AsyncWebResource(AsyncAPIResource):
         markdown_options: web_search_params.MarkdownOptions | Omit = omit,
         num_results: int | Omit = omit,
         query_fanout: bool | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -3030,6 +3127,10 @@ class AsyncWebResource(AsyncAPIResource):
 
           query_fanout: Expand the query into multiple parallel variants for broader recall.
 
+          tags: Optional caller-defined tags for tracking this request. Tags are recorded on the
+              request's usage log and can be used to filter usage on the dashboard usage page.
+              Up to 20 tags, each 1-50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -3054,6 +3155,7 @@ class AsyncWebResource(AsyncAPIResource):
                     "markdown_options": markdown_options,
                     "num_results": num_results,
                     "query_fanout": query_fanout,
+                    "tags": tags,
                     "timeout_ms": timeout_ms,
                 },
                 web_search_params.WebSearchParams,
@@ -3288,6 +3390,7 @@ class AsyncWebResource(AsyncAPIResource):
         settle_animations: bool | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
         stop_after_ms: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         url_regex: str | Omit = omit,
         use_main_content_only: bool | Omit = omit,
@@ -3352,6 +3455,10 @@ class AsyncWebResource(AsyncAPIResource):
               instead of continuing. Min: 10000 (10s). Max: 110000 (110s). Default: 80000
               (80s).
 
+          tags: Optional caller-defined tags for tracking this request. Tags are recorded on the
+              request's usage log and can be used to filter usage on the dashboard usage page.
+              Up to 20 tags, each 1-50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -3391,6 +3498,7 @@ class AsyncWebResource(AsyncAPIResource):
                     "settle_animations": settle_animations,
                     "shorten_base64_images": shorten_base64_images,
                     "stop_after_ms": stop_after_ms,
+                    "tags": tags,
                     "timeout_ms": timeout_ms,
                     "url_regex": url_regex,
                     "use_main_content_only": use_main_content_only,
@@ -3622,6 +3730,7 @@ class AsyncWebResource(AsyncAPIResource):
         max_age_ms: int | Omit = omit,
         pdf: web_web_scrape_html_params.Pdf | Omit = omit,
         settle_animations: bool | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         use_main_content_only: bool | Omit = omit,
         wait_for_ms: int | Omit = omit,
@@ -3666,6 +3775,10 @@ class AsyncWebResource(AsyncAPIResource):
               extracting HTML. Defaults to false. This adds a bit of latency in exchange for
               more stable output on animated pages.
 
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -3703,6 +3816,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "max_age_ms": max_age_ms,
                         "pdf": pdf,
                         "settle_animations": settle_animations,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                         "use_main_content_only": use_main_content_only,
                         "wait_for_ms": wait_for_ms,
@@ -3721,6 +3835,7 @@ class AsyncWebResource(AsyncAPIResource):
         enrichment: web_web_scrape_images_params.Enrichment | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
         max_age_ms: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         wait_for_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -3754,6 +3869,10 @@ class AsyncWebResource(AsyncAPIResource):
           max_age_ms: Reuse a cached result this many milliseconds old or newer. Default: 86400000 (1
               day). Set to 0 to bypass cache. Maximum: 2592000000 (30 days).
 
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -3783,6 +3902,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "enrichment": enrichment,
                         "headers": headers,
                         "max_age_ms": max_age_ms,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                         "wait_for_ms": wait_for_ms,
                     },
@@ -4013,6 +4133,7 @@ class AsyncWebResource(AsyncAPIResource):
         pdf: web_web_scrape_md_params.Pdf | Omit = omit,
         settle_animations: bool | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         use_main_content_only: bool | Omit = omit,
         wait_for_ms: int | Omit = omit,
@@ -4080,6 +4201,10 @@ class AsyncWebResource(AsyncAPIResource):
 
           shorten_base64_images: Shorten base64-encoded image data in the Markdown output
 
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -4119,6 +4244,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "pdf": pdf,
                         "settle_animations": settle_animations,
                         "shorten_base64_images": shorten_base64_images,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                         "use_main_content_only": use_main_content_only,
                         "wait_for_ms": wait_for_ms,
@@ -4135,6 +4261,7 @@ class AsyncWebResource(AsyncAPIResource):
         domain: str,
         headers: Dict[str, str] | Omit = omit,
         max_links: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         url_regex: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -4156,6 +4283,10 @@ class AsyncWebResource(AsyncAPIResource):
 
           max_links: Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
               Minimum is 1, maximum is 100,000.
+
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -4184,6 +4315,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "domain": domain,
                         "headers": headers,
                         "max_links": max_links,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                         "url_regex": url_regex,
                     },

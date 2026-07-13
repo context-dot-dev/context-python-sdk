@@ -17,6 +17,7 @@ from .._types import (
     NotGiven,
     BinaryTypes,
     FileContent,
+    SequenceNotStr,
     AsyncBinaryTypes,
     omit,
     not_given,
@@ -138,6 +139,7 @@ class ParseResource(SyncAPIResource):
         ocr: bool | Omit = omit,
         pdf: parse_handle_params.Pdf | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         use_main_content_only: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -173,6 +175,10 @@ class ParseResource(SyncAPIResource):
 
           shorten_base64_images: Shorten base64-encoded image data in the Markdown output
 
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
           use_main_content_only: Extract only the main content from HTML-like inputs
 
           extra_headers: Send extra headers
@@ -200,6 +206,7 @@ class ParseResource(SyncAPIResource):
                         "ocr": ocr,
                         "pdf": pdf,
                         "shorten_base64_images": shorten_base64_images,
+                        "tags": tags,
                         "use_main_content_only": use_main_content_only,
                     },
                     parse_handle_params.ParseHandleParams,
@@ -311,6 +318,7 @@ class AsyncParseResource(AsyncAPIResource):
         ocr: bool | Omit = omit,
         pdf: parse_handle_params.Pdf | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         use_main_content_only: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -346,6 +354,10 @@ class AsyncParseResource(AsyncAPIResource):
 
           shorten_base64_images: Shorten base64-encoded image data in the Markdown output
 
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
           use_main_content_only: Extract only the main content from HTML-like inputs
 
           extra_headers: Send extra headers
@@ -373,6 +385,7 @@ class AsyncParseResource(AsyncAPIResource):
                         "ocr": ocr,
                         "pdf": pdf,
                         "shorten_base64_images": shorten_base64_images,
+                        "tags": tags,
                         "use_main_content_only": use_main_content_only,
                     },
                     parse_handle_params.ParseHandleParams,
