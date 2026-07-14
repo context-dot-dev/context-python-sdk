@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict
+from typing import Dict, Union, Optional
 from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from .._types import SequenceNotStr
@@ -221,12 +221,13 @@ class WebWebScrapeHTMLParams(TypedDict, total=False):
         "zm",
         "zw",
     ]
-    """Two-letter ISO 3166-1 alpha-2 country code for the website request location.
-
-    When provided, Context.dev fetches the target page from that country.
+    """
+    Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
+    residential proxy exit location. Must be one of Context.dev's supported
+    countries. When provided, Context.dev fetches the target page from that country.
     """
 
-    exclude_selectors: Annotated[SequenceNotStr[str], PropertyInfo(alias="excludeSelectors")]
+    exclude_selectors: Annotated[Optional[SequenceNotStr[str]], PropertyInfo(alias="excludeSelectors")]
     """CSS selectors to remove from the result.
 
     Applied after includeSelectors. Exclusion takes precedence: an element matching
@@ -240,10 +241,10 @@ class WebWebScrapeHTMLParams(TypedDict, total=False):
     is bypassed: the result is neither read from nor written to cache.
     """
 
-    include_frames: Annotated[bool, PropertyInfo(alias="includeFrames")]
+    include_frames: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="includeFrames")]
     """When true, iframes are rendered inline into the returned HTML."""
 
-    include_selectors: Annotated[SequenceNotStr[str], PropertyInfo(alias="includeSelectors")]
+    include_selectors: Annotated[Optional[SequenceNotStr[str]], PropertyInfo(alias="includeSelectors")]
     """CSS selectors.
 
     When provided, only matching subtrees (and their descendants) are kept and
@@ -251,7 +252,7 @@ class WebWebScrapeHTMLParams(TypedDict, total=False):
     "article.main", "#content", "[role=main]".
     """
 
-    max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
+    max_age_ms: Annotated[Optional[int], PropertyInfo(alias="maxAgeMs")]
     """
     Return a cached result if a prior scrape for the same parameters exists and is
     younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
@@ -265,7 +266,7 @@ class WebWebScrapeHTMLParams(TypedDict, total=False):
     inclusive 1-based page range.
     """
 
-    settle_animations: Annotated[bool, PropertyInfo(alias="settleAnimations")]
+    settle_animations: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="settleAnimations")]
     """
     When true, waits briefly for CSS and transition animations to settle before
     extracting HTML. Defaults to false. This adds a bit of latency in exchange for
@@ -286,13 +287,13 @@ class WebWebScrapeHTMLParams(TypedDict, total=False):
     status code. Maximum allowed value is 300000ms (5 minutes).
     """
 
-    use_main_content_only: Annotated[bool, PropertyInfo(alias="useMainContentOnly")]
+    use_main_content_only: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="useMainContentOnly")]
     """
     When true, return only the page's main content in the HTML response, excluding
     headers, footers, sidebars, and navigation when detectable.
     """
 
-    wait_for_ms: Annotated[int, PropertyInfo(alias="waitForMs")]
+    wait_for_ms: Annotated[Optional[int], PropertyInfo(alias="waitForMs")]
     """Optional browser wait time in milliseconds after initial page load.
 
     Min: 0. Max: 30000 (30 seconds).
@@ -312,14 +313,14 @@ class Pdf(TypedDict, total=False):
     start when both are provided.
     """
 
-    ocr: bool
+    ocr: Union[bool, Literal["true", "false"]]
     """
     When true, detect and OCR images embedded in the selected PDF pages, inserting
     recognized text at each image's position in page reading order while preserving
     the PDF text layer. This is separate from automatic scanned-PDF OCR fallback.
     """
 
-    should_parse: Annotated[bool, PropertyInfo(alias="shouldParse")]
+    should_parse: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="shouldParse")]
     """When true, PDF URLs are fetched and parsed.
 
     When false, PDF URLs are skipped and a 400 WEBSITE_ACCESS_ERROR is returned.

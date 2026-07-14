@@ -24,7 +24,7 @@ class TestBrand:
     @parametrize
     def test_method_retrieve_overload_1(self, client: ContextDev) -> None:
         brand = client.brand.retrieve(
-            domain="domain",
+            domain="xxx",
             type="by_domain",
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
@@ -33,7 +33,7 @@ class TestBrand:
     @parametrize
     def test_method_retrieve_with_all_params_overload_1(self, client: ContextDev) -> None:
         brand = client.brand.retrieve(
-            domain="domain",
+            domain="xxx",
             type="by_domain",
             force_language="afrikaans",
             max_age_ms=0,
@@ -47,7 +47,7 @@ class TestBrand:
     @parametrize
     def test_raw_response_retrieve_overload_1(self, client: ContextDev) -> None:
         response = client.brand.with_raw_response.retrieve(
-            domain="domain",
+            domain="xxx",
             type="by_domain",
         )
 
@@ -60,7 +60,7 @@ class TestBrand:
     @parametrize
     def test_streaming_response_retrieve_overload_1(self, client: ContextDev) -> None:
         with client.brand.with_streaming_response.retrieve(
-            domain="domain",
+            domain="xxx",
             type="by_domain",
         ) as response:
             assert not response.is_closed
@@ -294,8 +294,8 @@ class TestBrand:
             force_language="afrikaans",
             high_confidence_only=True,
             max_speed=True,
-            mcc=0,
-            phone=0,
+            mcc="string",
+            phone="string",
             tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
@@ -333,7 +333,7 @@ class TestBrand:
     @parametrize
     def test_method_retrieve_simplified(self, client: ContextDev) -> None:
         brand = client.brand.retrieve_simplified(
-            domain="domain",
+            domain="xxx",
         )
         assert_matches_type(BrandRetrieveSimplifiedResponse, brand, path=["response"])
 
@@ -341,9 +341,10 @@ class TestBrand:
     @parametrize
     def test_method_retrieve_simplified_with_all_params(self, client: ContextDev) -> None:
         brand = client.brand.retrieve_simplified(
-            domain="domain",
-            max_age_ms=86400000,
+            domain="xxx",
+            max_age_ms=0,
             tags=["production", "team-alpha"],
+            theme="light",
             timeout_ms=1000,
         )
         assert_matches_type(BrandRetrieveSimplifiedResponse, brand, path=["response"])
@@ -352,7 +353,7 @@ class TestBrand:
     @parametrize
     def test_raw_response_retrieve_simplified(self, client: ContextDev) -> None:
         response = client.brand.with_raw_response.retrieve_simplified(
-            domain="domain",
+            domain="xxx",
         )
 
         assert response.is_closed is True
@@ -364,7 +365,7 @@ class TestBrand:
     @parametrize
     def test_streaming_response_retrieve_simplified(self, client: ContextDev) -> None:
         with client.brand.with_streaming_response.retrieve_simplified(
-            domain="domain",
+            domain="xxx",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -384,7 +385,7 @@ class TestAsyncBrand:
     @parametrize
     async def test_method_retrieve_overload_1(self, async_client: AsyncContextDev) -> None:
         brand = await async_client.brand.retrieve(
-            domain="domain",
+            domain="xxx",
             type="by_domain",
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
@@ -393,7 +394,7 @@ class TestAsyncBrand:
     @parametrize
     async def test_method_retrieve_with_all_params_overload_1(self, async_client: AsyncContextDev) -> None:
         brand = await async_client.brand.retrieve(
-            domain="domain",
+            domain="xxx",
             type="by_domain",
             force_language="afrikaans",
             max_age_ms=0,
@@ -407,7 +408,7 @@ class TestAsyncBrand:
     @parametrize
     async def test_raw_response_retrieve_overload_1(self, async_client: AsyncContextDev) -> None:
         response = await async_client.brand.with_raw_response.retrieve(
-            domain="domain",
+            domain="xxx",
             type="by_domain",
         )
 
@@ -420,7 +421,7 @@ class TestAsyncBrand:
     @parametrize
     async def test_streaming_response_retrieve_overload_1(self, async_client: AsyncContextDev) -> None:
         async with async_client.brand.with_streaming_response.retrieve(
-            domain="domain",
+            domain="xxx",
             type="by_domain",
         ) as response:
             assert not response.is_closed
@@ -654,8 +655,8 @@ class TestAsyncBrand:
             force_language="afrikaans",
             high_confidence_only=True,
             max_speed=True,
-            mcc=0,
-            phone=0,
+            mcc="string",
+            phone="string",
             tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
@@ -693,7 +694,7 @@ class TestAsyncBrand:
     @parametrize
     async def test_method_retrieve_simplified(self, async_client: AsyncContextDev) -> None:
         brand = await async_client.brand.retrieve_simplified(
-            domain="domain",
+            domain="xxx",
         )
         assert_matches_type(BrandRetrieveSimplifiedResponse, brand, path=["response"])
 
@@ -701,9 +702,10 @@ class TestAsyncBrand:
     @parametrize
     async def test_method_retrieve_simplified_with_all_params(self, async_client: AsyncContextDev) -> None:
         brand = await async_client.brand.retrieve_simplified(
-            domain="domain",
-            max_age_ms=86400000,
+            domain="xxx",
+            max_age_ms=0,
             tags=["production", "team-alpha"],
+            theme="light",
             timeout_ms=1000,
         )
         assert_matches_type(BrandRetrieveSimplifiedResponse, brand, path=["response"])
@@ -712,7 +714,7 @@ class TestAsyncBrand:
     @parametrize
     async def test_raw_response_retrieve_simplified(self, async_client: AsyncContextDev) -> None:
         response = await async_client.brand.with_raw_response.retrieve_simplified(
-            domain="domain",
+            domain="xxx",
         )
 
         assert response.is_closed is True
@@ -724,7 +726,7 @@ class TestAsyncBrand:
     @parametrize
     async def test_streaming_response_retrieve_simplified(self, async_client: AsyncContextDev) -> None:
         async with async_client.brand.with_streaming_response.retrieve_simplified(
-            domain="domain",
+            domain="xxx",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

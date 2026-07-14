@@ -21,7 +21,7 @@ class TestUtility:
     @parametrize
     def test_method_prefetch(self, client: ContextDev) -> None:
         utility = client.utility.prefetch(
-            identifier={"domain": "domain"},
+            identifier={"domain": "xxx"},
             type="brand",
         )
         assert_matches_type(UtilityPrefetchResponse, utility, path=["response"])
@@ -30,7 +30,7 @@ class TestUtility:
     @parametrize
     def test_method_prefetch_with_all_params(self, client: ContextDev) -> None:
         utility = client.utility.prefetch(
-            identifier={"domain": "domain"},
+            identifier={"domain": "xxx"},
             type="brand",
             tags=["production", "team-alpha"],
             timeout_ms=1000,
@@ -41,7 +41,7 @@ class TestUtility:
     @parametrize
     def test_raw_response_prefetch(self, client: ContextDev) -> None:
         response = client.utility.with_raw_response.prefetch(
-            identifier={"domain": "domain"},
+            identifier={"domain": "xxx"},
             type="brand",
         )
 
@@ -54,7 +54,7 @@ class TestUtility:
     @parametrize
     def test_streaming_response_prefetch(self, client: ContextDev) -> None:
         with client.utility.with_streaming_response.prefetch(
-            identifier={"domain": "domain"},
+            identifier={"domain": "xxx"},
             type="brand",
         ) as response:
             assert not response.is_closed
@@ -75,7 +75,7 @@ class TestAsyncUtility:
     @parametrize
     async def test_method_prefetch(self, async_client: AsyncContextDev) -> None:
         utility = await async_client.utility.prefetch(
-            identifier={"domain": "domain"},
+            identifier={"domain": "xxx"},
             type="brand",
         )
         assert_matches_type(UtilityPrefetchResponse, utility, path=["response"])
@@ -84,7 +84,7 @@ class TestAsyncUtility:
     @parametrize
     async def test_method_prefetch_with_all_params(self, async_client: AsyncContextDev) -> None:
         utility = await async_client.utility.prefetch(
-            identifier={"domain": "domain"},
+            identifier={"domain": "xxx"},
             type="brand",
             tags=["production", "team-alpha"],
             timeout_ms=1000,
@@ -95,7 +95,7 @@ class TestAsyncUtility:
     @parametrize
     async def test_raw_response_prefetch(self, async_client: AsyncContextDev) -> None:
         response = await async_client.utility.with_raw_response.prefetch(
-            identifier={"domain": "domain"},
+            identifier={"domain": "xxx"},
             type="brand",
         )
 
@@ -108,7 +108,7 @@ class TestAsyncUtility:
     @parametrize
     async def test_streaming_response_prefetch(self, async_client: AsyncContextDev) -> None:
         async with async_client.utility.with_streaming_response.prefetch(
-            identifier={"domain": "domain"},
+            identifier={"domain": "xxx"},
             type="brand",
         ) as response:
             assert not response.is_closed

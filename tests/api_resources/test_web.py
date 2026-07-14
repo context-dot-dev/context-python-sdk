@@ -167,8 +167,8 @@ class TestWeb:
     def test_method_extract_fonts_with_all_params(self, client: ContextDev) -> None:
         web = client.web.extract_fonts(
             direct_url="https://example.com",
-            domain="domain",
-            max_age_ms=86400000,
+            domain="xxx",
+            max_age_ms=0,
             tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
@@ -208,8 +208,8 @@ class TestWeb:
         web = client.web.extract_styleguide(
             color_scheme="light",
             direct_url="https://example.com",
-            domain="domain",
-            max_age_ms=86400000,
+            domain="xxx",
+            max_age_ms=0,
             tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
@@ -250,14 +250,14 @@ class TestWeb:
             color_scheme="light",
             country="de",
             direct_url="https://example.com",
-            domain="domain",
+            domain="xxx",
             full_screenshot="true",
             handle_cookie_popup="true",
             max_age_ms=0,
             page="login",
             scroll_offset=0,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_ms=1,
             viewport={
                 "height": 240,
                 "width": 240,
@@ -434,21 +434,21 @@ class TestWeb:
         web = client.web.web_scrape_html(
             url="https://example.com",
             country="de",
-            exclude_selectors=["string"],
+            exclude_selectors=["x"],
             headers={"foo": "J!"},
-            include_frames=True,
-            include_selectors=["string"],
+            include_frames="true",
+            include_selectors=["x"],
             max_age_ms=0,
             pdf={
                 "end": 1,
-                "ocr": True,
-                "should_parse": True,
+                "ocr": "true",
+                "should_parse": "true",
                 "start": 1,
             },
-            settle_animations=True,
+            settle_animations="true",
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
-            use_main_content_only=True,
+            timeout_ms=1,
+            use_main_content_only="true",
             wait_for_ms=0,
         )
         assert_matches_type(WebWebScrapeHTMLResponse, web, path=["response"])
@@ -492,17 +492,17 @@ class TestWeb:
     def test_method_web_scrape_images_with_all_params(self, client: ContextDev) -> None:
         web = client.web.web_scrape_images(
             url="https://example.com",
-            dedupe=True,
+            dedupe="true",
             enrichment={
-                "classification": True,
-                "hosted_url": True,
+                "classification": "true",
+                "hosted_url": "true",
                 "max_time_per_ms": 1,
-                "resolution": True,
+                "resolution": "true",
             },
             headers={"foo": "J!"},
             max_age_ms=0,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_ms=1,
             wait_for_ms=0,
         )
         assert_matches_type(WebWebScrapeImagesResponse, web, path=["response"])
@@ -547,24 +547,24 @@ class TestWeb:
         web = client.web.web_scrape_md(
             url="https://example.com",
             country="de",
-            exclude_selectors=["string"],
+            exclude_selectors=["x"],
             headers={"foo": "J!"},
-            include_frames=True,
-            include_images=True,
-            include_links=True,
-            include_selectors=["string"],
+            include_frames="true",
+            include_images="true",
+            include_links="true",
+            include_selectors=["x"],
             max_age_ms=0,
             pdf={
                 "end": 1,
-                "ocr": True,
-                "should_parse": True,
+                "ocr": "true",
+                "should_parse": "true",
                 "start": 1,
             },
-            settle_animations=True,
-            shorten_base64_images=True,
+            settle_animations="true",
+            shorten_base64_images="true",
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
-            use_main_content_only=True,
+            timeout_ms=1,
+            use_main_content_only="true",
             wait_for_ms=0,
         )
         assert_matches_type(WebWebScrapeMdResponse, web, path=["response"])
@@ -599,7 +599,7 @@ class TestWeb:
     @parametrize
     def test_method_web_scrape_sitemap(self, client: ContextDev) -> None:
         web = client.web.web_scrape_sitemap(
-            domain="domain",
+            domain="xxx",
         )
         assert_matches_type(WebWebScrapeSitemapResponse, web, path=["response"])
 
@@ -607,11 +607,12 @@ class TestWeb:
     @parametrize
     def test_method_web_scrape_sitemap_with_all_params(self, client: ContextDev) -> None:
         web = client.web.web_scrape_sitemap(
-            domain="domain",
+            domain="xxx",
             headers={"foo": "J!"},
             max_links=1,
+            sitemap_url="https://example.com",
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_ms=1,
             url_regex="^https?://[^/]+/blog/",
         )
         assert_matches_type(WebWebScrapeSitemapResponse, web, path=["response"])
@@ -620,7 +621,7 @@ class TestWeb:
     @parametrize
     def test_raw_response_web_scrape_sitemap(self, client: ContextDev) -> None:
         response = client.web.with_raw_response.web_scrape_sitemap(
-            domain="domain",
+            domain="xxx",
         )
 
         assert response.is_closed is True
@@ -632,7 +633,7 @@ class TestWeb:
     @parametrize
     def test_streaming_response_web_scrape_sitemap(self, client: ContextDev) -> None:
         with client.web.with_streaming_response.web_scrape_sitemap(
-            domain="domain",
+            domain="xxx",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -786,8 +787,8 @@ class TestAsyncWeb:
     async def test_method_extract_fonts_with_all_params(self, async_client: AsyncContextDev) -> None:
         web = await async_client.web.extract_fonts(
             direct_url="https://example.com",
-            domain="domain",
-            max_age_ms=86400000,
+            domain="xxx",
+            max_age_ms=0,
             tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
@@ -827,8 +828,8 @@ class TestAsyncWeb:
         web = await async_client.web.extract_styleguide(
             color_scheme="light",
             direct_url="https://example.com",
-            domain="domain",
-            max_age_ms=86400000,
+            domain="xxx",
+            max_age_ms=0,
             tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
@@ -869,14 +870,14 @@ class TestAsyncWeb:
             color_scheme="light",
             country="de",
             direct_url="https://example.com",
-            domain="domain",
+            domain="xxx",
             full_screenshot="true",
             handle_cookie_popup="true",
             max_age_ms=0,
             page="login",
             scroll_offset=0,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_ms=1,
             viewport={
                 "height": 240,
                 "width": 240,
@@ -1053,21 +1054,21 @@ class TestAsyncWeb:
         web = await async_client.web.web_scrape_html(
             url="https://example.com",
             country="de",
-            exclude_selectors=["string"],
+            exclude_selectors=["x"],
             headers={"foo": "J!"},
-            include_frames=True,
-            include_selectors=["string"],
+            include_frames="true",
+            include_selectors=["x"],
             max_age_ms=0,
             pdf={
                 "end": 1,
-                "ocr": True,
-                "should_parse": True,
+                "ocr": "true",
+                "should_parse": "true",
                 "start": 1,
             },
-            settle_animations=True,
+            settle_animations="true",
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
-            use_main_content_only=True,
+            timeout_ms=1,
+            use_main_content_only="true",
             wait_for_ms=0,
         )
         assert_matches_type(WebWebScrapeHTMLResponse, web, path=["response"])
@@ -1111,17 +1112,17 @@ class TestAsyncWeb:
     async def test_method_web_scrape_images_with_all_params(self, async_client: AsyncContextDev) -> None:
         web = await async_client.web.web_scrape_images(
             url="https://example.com",
-            dedupe=True,
+            dedupe="true",
             enrichment={
-                "classification": True,
-                "hosted_url": True,
+                "classification": "true",
+                "hosted_url": "true",
                 "max_time_per_ms": 1,
-                "resolution": True,
+                "resolution": "true",
             },
             headers={"foo": "J!"},
             max_age_ms=0,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_ms=1,
             wait_for_ms=0,
         )
         assert_matches_type(WebWebScrapeImagesResponse, web, path=["response"])
@@ -1166,24 +1167,24 @@ class TestAsyncWeb:
         web = await async_client.web.web_scrape_md(
             url="https://example.com",
             country="de",
-            exclude_selectors=["string"],
+            exclude_selectors=["x"],
             headers={"foo": "J!"},
-            include_frames=True,
-            include_images=True,
-            include_links=True,
-            include_selectors=["string"],
+            include_frames="true",
+            include_images="true",
+            include_links="true",
+            include_selectors=["x"],
             max_age_ms=0,
             pdf={
                 "end": 1,
-                "ocr": True,
-                "should_parse": True,
+                "ocr": "true",
+                "should_parse": "true",
                 "start": 1,
             },
-            settle_animations=True,
-            shorten_base64_images=True,
+            settle_animations="true",
+            shorten_base64_images="true",
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
-            use_main_content_only=True,
+            timeout_ms=1,
+            use_main_content_only="true",
             wait_for_ms=0,
         )
         assert_matches_type(WebWebScrapeMdResponse, web, path=["response"])
@@ -1218,7 +1219,7 @@ class TestAsyncWeb:
     @parametrize
     async def test_method_web_scrape_sitemap(self, async_client: AsyncContextDev) -> None:
         web = await async_client.web.web_scrape_sitemap(
-            domain="domain",
+            domain="xxx",
         )
         assert_matches_type(WebWebScrapeSitemapResponse, web, path=["response"])
 
@@ -1226,11 +1227,12 @@ class TestAsyncWeb:
     @parametrize
     async def test_method_web_scrape_sitemap_with_all_params(self, async_client: AsyncContextDev) -> None:
         web = await async_client.web.web_scrape_sitemap(
-            domain="domain",
+            domain="xxx",
             headers={"foo": "J!"},
             max_links=1,
+            sitemap_url="https://example.com",
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_ms=1,
             url_regex="^https?://[^/]+/blog/",
         )
         assert_matches_type(WebWebScrapeSitemapResponse, web, path=["response"])
@@ -1239,7 +1241,7 @@ class TestAsyncWeb:
     @parametrize
     async def test_raw_response_web_scrape_sitemap(self, async_client: AsyncContextDev) -> None:
         response = await async_client.web.with_raw_response.web_scrape_sitemap(
-            domain="domain",
+            domain="xxx",
         )
 
         assert response.is_closed is True
@@ -1251,7 +1253,7 @@ class TestAsyncWeb:
     @parametrize
     async def test_streaming_response_web_scrape_sitemap(self, async_client: AsyncContextDev) -> None:
         async with async_client.web.with_streaming_response.web_scrape_sitemap(
-            domain="domain",
+            domain="xxx",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

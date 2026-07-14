@@ -242,12 +242,12 @@ class TestMonitors:
             change_detection_type="exact",
             cursor="cursor",
             limit=1,
-            q="q",
+            q="pricing",
             search_by=["name"],
             search_type="exact",
             status="active",
-            tag="tag",
-            tags=["string"],
+            tag="pricing",
+            tags=["x"],
             target_type="page",
         )
         assert_matches_type(MonitorListResponse, monitor, path=["response"])
@@ -329,11 +329,11 @@ class TestMonitors:
             change_detection_type="exact",
             cursor="cursor",
             limit=1,
-            monitor_id="monitor_id",
-            since=parse_datetime("2019-12-27T18:11:19.117Z"),
-            tag="tag",
+            monitor_id="mon_123",
+            since=parse_datetime("2026-06-01T00:00:00Z"),
+            tag="pricing",
             target_type="page",
-            until=parse_datetime("2019-12-27T18:11:19.117Z"),
+            until=parse_datetime("2026-06-28T00:00:00Z"),
         )
         assert_matches_type(MonitorListAccountChangesResponse, monitor, path=["response"])
 
@@ -412,9 +412,9 @@ class TestMonitors:
             monitor_id="mon_123",
             cursor="cursor",
             limit=1,
-            since=parse_datetime("2019-12-27T18:11:19.117Z"),
-            tag="tag",
-            until=parse_datetime("2019-12-27T18:11:19.117Z"),
+            since=parse_datetime("2026-06-01T00:00:00Z"),
+            tag="pricing",
+            until=parse_datetime("2026-06-28T00:00:00Z"),
         )
         assert_matches_type(MonitorListChangesResponse, monitor, path=["response"])
 
@@ -807,12 +807,12 @@ class TestAsyncMonitors:
             change_detection_type="exact",
             cursor="cursor",
             limit=1,
-            q="q",
+            q="pricing",
             search_by=["name"],
             search_type="exact",
             status="active",
-            tag="tag",
-            tags=["string"],
+            tag="pricing",
+            tags=["x"],
             target_type="page",
         )
         assert_matches_type(MonitorListResponse, monitor, path=["response"])
@@ -894,11 +894,11 @@ class TestAsyncMonitors:
             change_detection_type="exact",
             cursor="cursor",
             limit=1,
-            monitor_id="monitor_id",
-            since=parse_datetime("2019-12-27T18:11:19.117Z"),
-            tag="tag",
+            monitor_id="mon_123",
+            since=parse_datetime("2026-06-01T00:00:00Z"),
+            tag="pricing",
             target_type="page",
-            until=parse_datetime("2019-12-27T18:11:19.117Z"),
+            until=parse_datetime("2026-06-28T00:00:00Z"),
         )
         assert_matches_type(MonitorListAccountChangesResponse, monitor, path=["response"])
 
@@ -977,9 +977,9 @@ class TestAsyncMonitors:
             monitor_id="mon_123",
             cursor="cursor",
             limit=1,
-            since=parse_datetime("2019-12-27T18:11:19.117Z"),
-            tag="tag",
-            until=parse_datetime("2019-12-27T18:11:19.117Z"),
+            since=parse_datetime("2026-06-01T00:00:00Z"),
+            tag="pricing",
+            until=parse_datetime("2026-06-28T00:00:00Z"),
         )
         assert_matches_type(MonitorListChangesResponse, monitor, path=["response"])
 

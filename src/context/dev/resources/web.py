@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict
+from typing import Dict, Union, Optional
 from typing_extensions import Literal
 
 import httpx
@@ -238,7 +238,7 @@ class WebResource(SyncAPIResource):
         *,
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
-        max_age_ms: int | Omit = omit,
+        max_age_ms: Optional[int] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -261,7 +261,7 @@ class WebResource(SyncAPIResource):
               domain will be automatically normalized and validated. You must provide either
               'domain' or 'directUrl', but not both.
 
-          max_age_ms: Maximum age in milliseconds for cached data before the API performs a hard
+          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
               refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
               are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
               year.
@@ -309,7 +309,7 @@ class WebResource(SyncAPIResource):
         color_scheme: Literal["light", "dark"] | Omit = omit,
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
-        max_age_ms: int | Omit = omit,
+        max_age_ms: Optional[int] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -336,7 +336,7 @@ class WebResource(SyncAPIResource):
               domain will be automatically normalized and validated. You must provide either
               'domain' or 'directUrl', but not both.
 
-          max_age_ms: Maximum age in milliseconds for cached data before the API performs a hard
+          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
               refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
               are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
               year.
@@ -593,14 +593,14 @@ class WebResource(SyncAPIResource):
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
         full_screenshot: Literal["true", "false"] | Omit = omit,
-        handle_cookie_popup: Literal["true", "false"] | Omit = omit,
-        max_age_ms: int | Omit = omit,
+        handle_cookie_popup: Union[bool, Literal["true", "false"]] | Omit = omit,
+        max_age_ms: Optional[int] | Omit = omit,
         page: Literal["login", "signup", "blog", "careers", "pricing", "terms", "privacy", "contact"] | Omit = omit,
-        scroll_offset: int | Omit = omit,
+        scroll_offset: Optional[int] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         viewport: web_screenshot_params.Viewport | Omit = omit,
-        wait_for_ms: int | Omit = omit,
+        wait_for_ms: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -615,8 +615,9 @@ class WebResource(SyncAPIResource):
           color_scheme: Optional parameter to choose the site's visual theme in the screenshot. Use
               'light' or 'dark' when the site offers both appearances.
 
-          country: Two-letter ISO 3166-1 alpha-2 country code for the website request location.
-              When provided, Context.dev fetches the target page from that country.
+          country: Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
+              residential proxy exit location. Must be one of Context.dev's supported
+              countries. When provided, Context.dev fetches the target page from that country.
 
           direct_url: A specific URL to screenshot directly, bypassing domain resolution (e.g.,
               'https://example.com/pricing'). When provided, the screenshot is taken of this
@@ -1583,17 +1584,17 @@ class WebResource(SyncAPIResource):
             "zw",
         ]
         | Omit = omit,
-        exclude_selectors: SequenceNotStr[str] | Omit = omit,
+        exclude_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
-        include_frames: bool | Omit = omit,
-        include_selectors: SequenceNotStr[str] | Omit = omit,
-        max_age_ms: int | Omit = omit,
+        include_frames: Union[bool, Literal["true", "false"]] | Omit = omit,
+        include_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
+        max_age_ms: Optional[int] | Omit = omit,
         pdf: web_web_scrape_html_params.Pdf | Omit = omit,
-        settle_animations: bool | Omit = omit,
+        settle_animations: Union[bool, Literal["true", "false"]] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
-        use_main_content_only: bool | Omit = omit,
-        wait_for_ms: int | Omit = omit,
+        use_main_content_only: Union[bool, Literal["true", "false"]] | Omit = omit,
+        wait_for_ms: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1607,8 +1608,9 @@ class WebResource(SyncAPIResource):
         Args:
           url: Full URL to scrape (must include http:// or https:// protocol)
 
-          country: Two-letter ISO 3166-1 alpha-2 country code for the website request location.
-              When provided, Context.dev fetches the target page from that country.
+          country: Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
+              residential proxy exit location. Must be one of Context.dev's supported
+              countries. When provided, Context.dev fetches the target page from that country.
 
           exclude_selectors: CSS selectors to remove from the result. Applied after includeSelectors.
               Exclusion takes precedence: an element matching both is removed. Examples:
@@ -1691,13 +1693,13 @@ class WebResource(SyncAPIResource):
         self,
         *,
         url: str,
-        dedupe: bool | Omit = omit,
-        enrichment: web_web_scrape_images_params.Enrichment | Omit = omit,
+        dedupe: Union[bool, Literal["true", "false"]] | Omit = omit,
+        enrichment: Optional[web_web_scrape_images_params.Enrichment] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
-        max_age_ms: int | Omit = omit,
+        max_age_ms: Optional[int] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
-        wait_for_ms: int | Omit = omit,
+        wait_for_ms: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1983,20 +1985,20 @@ class WebResource(SyncAPIResource):
             "zw",
         ]
         | Omit = omit,
-        exclude_selectors: SequenceNotStr[str] | Omit = omit,
+        exclude_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
-        include_frames: bool | Omit = omit,
-        include_images: bool | Omit = omit,
-        include_links: bool | Omit = omit,
-        include_selectors: SequenceNotStr[str] | Omit = omit,
-        max_age_ms: int | Omit = omit,
+        include_frames: Union[bool, Literal["true", "false"]] | Omit = omit,
+        include_images: Union[bool, Literal["true", "false"]] | Omit = omit,
+        include_links: Union[bool, Literal["true", "false"]] | Omit = omit,
+        include_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
+        max_age_ms: Optional[int] | Omit = omit,
         pdf: web_web_scrape_md_params.Pdf | Omit = omit,
-        settle_animations: bool | Omit = omit,
-        shorten_base64_images: bool | Omit = omit,
+        settle_animations: Union[bool, Literal["true", "false"]] | Omit = omit,
+        shorten_base64_images: Union[bool, Literal["true", "false"]] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
-        use_main_content_only: bool | Omit = omit,
-        wait_for_ms: int | Omit = omit,
+        use_main_content_only: Union[bool, Literal["true", "false"]] | Omit = omit,
+        wait_for_ms: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -2027,8 +2029,9 @@ class WebResource(SyncAPIResource):
           url: Full URL to scrape into LLM usable Markdown (must include http:// or https://
               protocol)
 
-          country: Two-letter ISO 3166-1 alpha-2 country code for the website request location.
-              When provided, Context.dev fetches the target page from that country.
+          country: Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
+              residential proxy exit location. Must be one of Context.dev's supported
+              countries. When provided, Context.dev fetches the target page from that country.
 
           exclude_selectors: CSS selectors to remove before conversion to Markdown. Applied after
               includeSelectors. Exclusion takes precedence: an element matching both is
@@ -2121,6 +2124,7 @@ class WebResource(SyncAPIResource):
         domain: str,
         headers: Dict[str, str] | Omit = omit,
         max_links: int | Omit = omit,
+        sitemap_url: str | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         url_regex: str | Omit = omit,
@@ -2143,6 +2147,9 @@ class WebResource(SyncAPIResource):
 
           max_links: Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
               Minimum is 1, maximum is 100,000.
+
+          sitemap_url: Optional explicit sitemap URL. When provided, exactly this sitemap is crawled
+              instead of discovering the domain's sitemaps.
 
           tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
               recorded on the request's usage log and can be used to filter usage on the
@@ -2175,6 +2182,7 @@ class WebResource(SyncAPIResource):
                         "domain": domain,
                         "headers": headers,
                         "max_links": max_links,
+                        "sitemap_url": sitemap_url,
                         "tags": tags,
                         "timeout_ms": timeout_ms,
                         "url_regex": url_regex,
@@ -2378,7 +2386,7 @@ class AsyncWebResource(AsyncAPIResource):
         *,
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
-        max_age_ms: int | Omit = omit,
+        max_age_ms: Optional[int] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -2401,7 +2409,7 @@ class AsyncWebResource(AsyncAPIResource):
               domain will be automatically normalized and validated. You must provide either
               'domain' or 'directUrl', but not both.
 
-          max_age_ms: Maximum age in milliseconds for cached data before the API performs a hard
+          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
               refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
               are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
               year.
@@ -2449,7 +2457,7 @@ class AsyncWebResource(AsyncAPIResource):
         color_scheme: Literal["light", "dark"] | Omit = omit,
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
-        max_age_ms: int | Omit = omit,
+        max_age_ms: Optional[int] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -2476,7 +2484,7 @@ class AsyncWebResource(AsyncAPIResource):
               domain will be automatically normalized and validated. You must provide either
               'domain' or 'directUrl', but not both.
 
-          max_age_ms: Maximum age in milliseconds for cached data before the API performs a hard
+          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
               refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
               are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
               year.
@@ -2733,14 +2741,14 @@ class AsyncWebResource(AsyncAPIResource):
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
         full_screenshot: Literal["true", "false"] | Omit = omit,
-        handle_cookie_popup: Literal["true", "false"] | Omit = omit,
-        max_age_ms: int | Omit = omit,
+        handle_cookie_popup: Union[bool, Literal["true", "false"]] | Omit = omit,
+        max_age_ms: Optional[int] | Omit = omit,
         page: Literal["login", "signup", "blog", "careers", "pricing", "terms", "privacy", "contact"] | Omit = omit,
-        scroll_offset: int | Omit = omit,
+        scroll_offset: Optional[int] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         viewport: web_screenshot_params.Viewport | Omit = omit,
-        wait_for_ms: int | Omit = omit,
+        wait_for_ms: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -2755,8 +2763,9 @@ class AsyncWebResource(AsyncAPIResource):
           color_scheme: Optional parameter to choose the site's visual theme in the screenshot. Use
               'light' or 'dark' when the site offers both appearances.
 
-          country: Two-letter ISO 3166-1 alpha-2 country code for the website request location.
-              When provided, Context.dev fetches the target page from that country.
+          country: Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
+              residential proxy exit location. Must be one of Context.dev's supported
+              countries. When provided, Context.dev fetches the target page from that country.
 
           direct_url: A specific URL to screenshot directly, bypassing domain resolution (e.g.,
               'https://example.com/pricing'). When provided, the screenshot is taken of this
@@ -3723,17 +3732,17 @@ class AsyncWebResource(AsyncAPIResource):
             "zw",
         ]
         | Omit = omit,
-        exclude_selectors: SequenceNotStr[str] | Omit = omit,
+        exclude_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
-        include_frames: bool | Omit = omit,
-        include_selectors: SequenceNotStr[str] | Omit = omit,
-        max_age_ms: int | Omit = omit,
+        include_frames: Union[bool, Literal["true", "false"]] | Omit = omit,
+        include_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
+        max_age_ms: Optional[int] | Omit = omit,
         pdf: web_web_scrape_html_params.Pdf | Omit = omit,
-        settle_animations: bool | Omit = omit,
+        settle_animations: Union[bool, Literal["true", "false"]] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
-        use_main_content_only: bool | Omit = omit,
-        wait_for_ms: int | Omit = omit,
+        use_main_content_only: Union[bool, Literal["true", "false"]] | Omit = omit,
+        wait_for_ms: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -3747,8 +3756,9 @@ class AsyncWebResource(AsyncAPIResource):
         Args:
           url: Full URL to scrape (must include http:// or https:// protocol)
 
-          country: Two-letter ISO 3166-1 alpha-2 country code for the website request location.
-              When provided, Context.dev fetches the target page from that country.
+          country: Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
+              residential proxy exit location. Must be one of Context.dev's supported
+              countries. When provided, Context.dev fetches the target page from that country.
 
           exclude_selectors: CSS selectors to remove from the result. Applied after includeSelectors.
               Exclusion takes precedence: an element matching both is removed. Examples:
@@ -3831,13 +3841,13 @@ class AsyncWebResource(AsyncAPIResource):
         self,
         *,
         url: str,
-        dedupe: bool | Omit = omit,
-        enrichment: web_web_scrape_images_params.Enrichment | Omit = omit,
+        dedupe: Union[bool, Literal["true", "false"]] | Omit = omit,
+        enrichment: Optional[web_web_scrape_images_params.Enrichment] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
-        max_age_ms: int | Omit = omit,
+        max_age_ms: Optional[int] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
-        wait_for_ms: int | Omit = omit,
+        wait_for_ms: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -4123,20 +4133,20 @@ class AsyncWebResource(AsyncAPIResource):
             "zw",
         ]
         | Omit = omit,
-        exclude_selectors: SequenceNotStr[str] | Omit = omit,
+        exclude_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
-        include_frames: bool | Omit = omit,
-        include_images: bool | Omit = omit,
-        include_links: bool | Omit = omit,
-        include_selectors: SequenceNotStr[str] | Omit = omit,
-        max_age_ms: int | Omit = omit,
+        include_frames: Union[bool, Literal["true", "false"]] | Omit = omit,
+        include_images: Union[bool, Literal["true", "false"]] | Omit = omit,
+        include_links: Union[bool, Literal["true", "false"]] | Omit = omit,
+        include_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
+        max_age_ms: Optional[int] | Omit = omit,
         pdf: web_web_scrape_md_params.Pdf | Omit = omit,
-        settle_animations: bool | Omit = omit,
-        shorten_base64_images: bool | Omit = omit,
+        settle_animations: Union[bool, Literal["true", "false"]] | Omit = omit,
+        shorten_base64_images: Union[bool, Literal["true", "false"]] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
-        use_main_content_only: bool | Omit = omit,
-        wait_for_ms: int | Omit = omit,
+        use_main_content_only: Union[bool, Literal["true", "false"]] | Omit = omit,
+        wait_for_ms: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -4167,8 +4177,9 @@ class AsyncWebResource(AsyncAPIResource):
           url: Full URL to scrape into LLM usable Markdown (must include http:// or https://
               protocol)
 
-          country: Two-letter ISO 3166-1 alpha-2 country code for the website request location.
-              When provided, Context.dev fetches the target page from that country.
+          country: Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
+              residential proxy exit location. Must be one of Context.dev's supported
+              countries. When provided, Context.dev fetches the target page from that country.
 
           exclude_selectors: CSS selectors to remove before conversion to Markdown. Applied after
               includeSelectors. Exclusion takes precedence: an element matching both is
@@ -4261,6 +4272,7 @@ class AsyncWebResource(AsyncAPIResource):
         domain: str,
         headers: Dict[str, str] | Omit = omit,
         max_links: int | Omit = omit,
+        sitemap_url: str | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         url_regex: str | Omit = omit,
@@ -4283,6 +4295,9 @@ class AsyncWebResource(AsyncAPIResource):
 
           max_links: Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
               Minimum is 1, maximum is 100,000.
+
+          sitemap_url: Optional explicit sitemap URL. When provided, exactly this sitemap is crawled
+              instead of discovering the domain's sitemaps.
 
           tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
               recorded on the request's usage log and can be used to filter usage on the
@@ -4315,6 +4330,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "domain": domain,
                         "headers": headers,
                         "max_links": max_links,
+                        "sitemap_url": sitemap_url,
                         "tags": tags,
                         "timeout_ms": timeout_ms,
                         "url_regex": url_regex,

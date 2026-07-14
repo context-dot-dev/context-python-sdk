@@ -30,17 +30,18 @@ class TestParse:
     def test_method_handle_with_all_params(self, client: ContextDev) -> None:
         parse = client.parse.handle(
             body=b"Example data",
+            client="x",
             extension="txt",
-            include_images=True,
-            include_links=True,
-            ocr=True,
+            include_images="true",
+            include_links="true",
+            ocr="true",
             pdf={
                 "end": 1,
                 "start": 1,
             },
-            shorten_base64_images=True,
+            shorten_base64_images="true",
             tags=["production", "team-alpha"],
-            use_main_content_only=True,
+            use_main_content_only="true",
         )
         assert_matches_type(ParseHandleResponse, parse, path=["response"])
 
@@ -89,17 +90,18 @@ class TestAsyncParse:
     async def test_method_handle_with_all_params(self, async_client: AsyncContextDev) -> None:
         parse = await async_client.parse.handle(
             body=b"Example data",
+            client="x",
             extension="txt",
-            include_images=True,
-            include_links=True,
-            ocr=True,
+            include_images="true",
+            include_links="true",
+            ocr="true",
             pdf={
                 "end": 1,
                 "start": 1,
             },
-            shorten_base64_images=True,
+            shorten_base64_images="true",
             tags=["production", "team-alpha"],
-            use_main_content_only=True,
+            use_main_content_only="true",
         )
         assert_matches_type(ParseHandleResponse, parse, path=["response"])
 
