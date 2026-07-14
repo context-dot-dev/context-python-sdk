@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from typing_extensions import Required, Annotated, TypedDict
+from typing import Optional
+from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from .._types import SequenceNotStr
 from .._utils import PropertyInfo
@@ -14,7 +15,7 @@ class BrandRetrieveSimplifiedParams(TypedDict, total=False):
     domain: Required[str]
     """Domain name to retrieve simplified brand data for"""
 
-    max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
+    max_age_ms: Annotated[Optional[int], PropertyInfo(alias="maxAgeMs")]
     """
     Maximum age in milliseconds for cached brand data before the API performs a hard
     refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
@@ -28,6 +29,9 @@ class BrandRetrieveSimplifiedParams(TypedDict, total=False):
     Tags are recorded on the request's usage log and can be used to filter usage on
     the dashboard usage page. Up to 20 tags, each 1-50 characters.
     """
+
+    theme: Literal["light", "dark"]
+    """Optional theme preference used when selecting brand assets."""
 
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
     """Optional timeout in milliseconds for the request.

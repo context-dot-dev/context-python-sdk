@@ -28,6 +28,13 @@ class WebWebScrapeSitemapParams(TypedDict, total=False):
     Defaults to 10,000. Minimum is 1, maximum is 100,000.
     """
 
+    sitemap_url: Annotated[str, PropertyInfo(alias="sitemapUrl")]
+    """Optional explicit sitemap URL.
+
+    When provided, exactly this sitemap is crawled instead of discovering the
+    domain's sitemaps.
+    """
+
     tags: SequenceNotStr[str]
     """Optional comma-separated caller-defined tags for tracking this request.
 

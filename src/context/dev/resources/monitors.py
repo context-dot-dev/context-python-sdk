@@ -239,11 +239,11 @@ class MonitorsResource(SyncAPIResource):
         cursor: str | Omit = omit,
         limit: int | Omit = omit,
         q: str | Omit = omit,
-        search_by: List[Literal["name", "url", "instructions", "tags"]] | Omit = omit,
+        search_by: Optional[List[Literal["name", "url", "instructions", "tags"]]] | Omit = omit,
         search_type: Literal["exact", "prefix"] | Omit = omit,
         status: Literal["active", "paused", "failed"] | Omit = omit,
         tag: str | Omit = omit,
-        tags: SequenceNotStr[str] | Omit = omit,
+        tags: Optional[SequenceNotStr[str]] | Omit = omit,
         target_type: Literal["page", "sitemap", "extract"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -259,6 +259,12 @@ class MonitorsResource(SyncAPIResource):
         status/type/tag filters. Results are paginated via the opaque `cursor`.
 
         Args:
+          change_detection_type: Filter by change detection type.
+
+          cursor: Opaque pagination cursor from a previous response.
+
+          limit: Maximum number of items to return per page (1-100). Defaults to 25.
+
           q: Free-text search term, matched against the fields named in `search_by`.
 
           search_by: Comma-separated fields to search with `q`. Defaults to all of them. Note
@@ -267,15 +273,13 @@ class MonitorsResource(SyncAPIResource):
           search_type: `prefix` for as-you-type prefix matching (default), `exact` for full-token
               matching.
 
-          status: Monitor lifecycle status. `failed` means the most recent run failed (see the
-              monitor's `last_error`); failed monitors keep running on schedule and flip back
-              to `active` on the next successful run. Monitors are auto-`paused` after
-              repeated consecutive failures or insufficient-credit skips; resume by PATCHing
-              status to `active`.
+          status: Filter monitors by lifecycle status.
 
           tag: Filter to items that have this tag.
 
           tags: Comma-separated list of tags to filter by (matches monitors having any of them).
+
+          target_type: Filter by target type.
 
           extra_headers: Send extra headers
 
@@ -366,7 +370,21 @@ class MonitorsResource(SyncAPIResource):
         Returns an account-wide feed of detected changes across monitors.
 
         Args:
+          change_detection_type: Filter by change detection type.
+
+          cursor: Opaque pagination cursor from a previous response.
+
+          limit: Maximum number of items to return per page (1-100). Defaults to 25.
+
+          monitor_id: Filter changes to a single monitor.
+
+          since: Only include items at or after this ISO 8601 timestamp.
+
           tag: Filter to items that have this tag.
+
+          target_type: Filter by target type.
+
+          until: Only include items before this ISO 8601 timestamp.
 
           extra_headers: Send extra headers
 
@@ -417,8 +435,11 @@ class MonitorsResource(SyncAPIResource):
         Returns an account-wide feed of monitor runs across all monitors.
 
         Args:
-          status: Lifecycle status of a run. `skipped` runs never executed — see `skip_reason`
-              (insufficient credits, monitor paused, or superseded by a concurrent run).
+          cursor: Opaque pagination cursor from a previous response.
+
+          limit: Maximum number of items to return per page (1-100). Defaults to 25.
+
+          status: Filter runs by lifecycle status.
 
           extra_headers: Send extra headers
 
@@ -467,7 +488,15 @@ class MonitorsResource(SyncAPIResource):
         List changes for a monitor
 
         Args:
+          cursor: Opaque pagination cursor from a previous response.
+
+          limit: Maximum number of items to return per page (1-100). Defaults to 25.
+
+          since: Only include items at or after this ISO 8601 timestamp.
+
           tag: Filter to items that have this tag.
+
+          until: Only include items before this ISO 8601 timestamp.
 
           extra_headers: Send extra headers
 
@@ -514,13 +543,15 @@ class MonitorsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorListRunsResponse:
-        """List monitor runs
+        """
+        List monitor runs
 
         Args:
-          status: Lifecycle status of a run.
+          cursor: Opaque pagination cursor from a previous response.
 
-        `skipped` runs never executed — see `skip_reason`
-              (insufficient credits, monitor paused, or superseded by a concurrent run).
+          limit: Maximum number of items to return per page (1-100). Defaults to 25.
+
+          status: Filter runs by lifecycle status.
 
           extra_headers: Send extra headers
 
@@ -816,11 +847,11 @@ class AsyncMonitorsResource(AsyncAPIResource):
         cursor: str | Omit = omit,
         limit: int | Omit = omit,
         q: str | Omit = omit,
-        search_by: List[Literal["name", "url", "instructions", "tags"]] | Omit = omit,
+        search_by: Optional[List[Literal["name", "url", "instructions", "tags"]]] | Omit = omit,
         search_type: Literal["exact", "prefix"] | Omit = omit,
         status: Literal["active", "paused", "failed"] | Omit = omit,
         tag: str | Omit = omit,
-        tags: SequenceNotStr[str] | Omit = omit,
+        tags: Optional[SequenceNotStr[str]] | Omit = omit,
         target_type: Literal["page", "sitemap", "extract"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -836,6 +867,12 @@ class AsyncMonitorsResource(AsyncAPIResource):
         status/type/tag filters. Results are paginated via the opaque `cursor`.
 
         Args:
+          change_detection_type: Filter by change detection type.
+
+          cursor: Opaque pagination cursor from a previous response.
+
+          limit: Maximum number of items to return per page (1-100). Defaults to 25.
+
           q: Free-text search term, matched against the fields named in `search_by`.
 
           search_by: Comma-separated fields to search with `q`. Defaults to all of them. Note
@@ -844,15 +881,13 @@ class AsyncMonitorsResource(AsyncAPIResource):
           search_type: `prefix` for as-you-type prefix matching (default), `exact` for full-token
               matching.
 
-          status: Monitor lifecycle status. `failed` means the most recent run failed (see the
-              monitor's `last_error`); failed monitors keep running on schedule and flip back
-              to `active` on the next successful run. Monitors are auto-`paused` after
-              repeated consecutive failures or insufficient-credit skips; resume by PATCHing
-              status to `active`.
+          status: Filter monitors by lifecycle status.
 
           tag: Filter to items that have this tag.
 
           tags: Comma-separated list of tags to filter by (matches monitors having any of them).
+
+          target_type: Filter by target type.
 
           extra_headers: Send extra headers
 
@@ -943,7 +978,21 @@ class AsyncMonitorsResource(AsyncAPIResource):
         Returns an account-wide feed of detected changes across monitors.
 
         Args:
+          change_detection_type: Filter by change detection type.
+
+          cursor: Opaque pagination cursor from a previous response.
+
+          limit: Maximum number of items to return per page (1-100). Defaults to 25.
+
+          monitor_id: Filter changes to a single monitor.
+
+          since: Only include items at or after this ISO 8601 timestamp.
+
           tag: Filter to items that have this tag.
+
+          target_type: Filter by target type.
+
+          until: Only include items before this ISO 8601 timestamp.
 
           extra_headers: Send extra headers
 
@@ -994,8 +1043,11 @@ class AsyncMonitorsResource(AsyncAPIResource):
         Returns an account-wide feed of monitor runs across all monitors.
 
         Args:
-          status: Lifecycle status of a run. `skipped` runs never executed — see `skip_reason`
-              (insufficient credits, monitor paused, or superseded by a concurrent run).
+          cursor: Opaque pagination cursor from a previous response.
+
+          limit: Maximum number of items to return per page (1-100). Defaults to 25.
+
+          status: Filter runs by lifecycle status.
 
           extra_headers: Send extra headers
 
@@ -1044,7 +1096,15 @@ class AsyncMonitorsResource(AsyncAPIResource):
         List changes for a monitor
 
         Args:
+          cursor: Opaque pagination cursor from a previous response.
+
+          limit: Maximum number of items to return per page (1-100). Defaults to 25.
+
+          since: Only include items at or after this ISO 8601 timestamp.
+
           tag: Filter to items that have this tag.
+
+          until: Only include items before this ISO 8601 timestamp.
 
           extra_headers: Send extra headers
 
@@ -1091,13 +1151,15 @@ class AsyncMonitorsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorListRunsResponse:
-        """List monitor runs
+        """
+        List monitor runs
 
         Args:
-          status: Lifecycle status of a run.
+          cursor: Opaque pagination cursor from a previous response.
 
-        `skipped` runs never executed — see `skip_reason`
-              (insufficient credits, monitor paused, or superseded by a concurrent run).
+          limit: Maximum number of items to return per page (1-100). Defaults to 25.
+
+          status: Filter runs by lifecycle status.
 
           extra_headers: Send extra headers
 
