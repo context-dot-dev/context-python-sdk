@@ -79,6 +79,7 @@ class WebResource(SyncAPIResource):
         max_depth: int | Omit = omit,
         max_pages: int | Omit = omit,
         pdf: web_extract_params.Pdf | Omit = omit,
+        settle_animations: bool | Omit = omit,
         stop_after_ms: int | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
@@ -124,12 +125,14 @@ class WebResource(SyncAPIResource):
 
           max_pages: Maximum number of pages to analyze for extraction. Hard cap: 50. Defaults to 5.
 
+          settle_animations: When true, waits briefly for CSS and transition animations to settle before
+              extracting each crawled page. Defaults to false. This adds a bit of latency in
+              exchange for more stable output on animated pages.
+
           stop_after_ms: Soft time budget for the crawl in milliseconds. Min: 10000 (10s). Max: 110000
               (110s). Default: 80000 (80s).
 
-          tags: Optional caller-defined tags for tracking this request. Tags are recorded on the
-              request's usage log and can be used to filter usage on the dashboard usage page.
-              Up to 20 tags, each 1-50 characters.
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -160,6 +163,7 @@ class WebResource(SyncAPIResource):
                     "max_depth": max_depth,
                     "max_pages": max_pages,
                     "pdf": pdf,
+                    "settle_animations": settle_animations,
                     "stop_after_ms": stop_after_ms,
                     "tags": tags,
                     "timeout_ms": timeout_ms,
@@ -988,9 +992,7 @@ class WebResource(SyncAPIResource):
 
           query_fanout: Expand the query into multiple parallel variants for broader recall.
 
-          tags: Optional caller-defined tags for tracking this request. Tags are recorded on the
-              request's usage log and can be used to filter usage on the dashboard usage page.
-              Up to 20 tags, each 1-50 characters.
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -1316,9 +1318,7 @@ class WebResource(SyncAPIResource):
               instead of continuing. Min: 10000 (10s). Max: 110000 (110s). Default: 80000
               (80s).
 
-          tags: Optional caller-defined tags for tracking this request. Tags are recorded on the
-              request's usage log and can be used to filter usage on the dashboard usage page.
-              Up to 20 tags, each 1-50 characters.
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -2227,6 +2227,7 @@ class AsyncWebResource(AsyncAPIResource):
         max_depth: int | Omit = omit,
         max_pages: int | Omit = omit,
         pdf: web_extract_params.Pdf | Omit = omit,
+        settle_animations: bool | Omit = omit,
         stop_after_ms: int | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
@@ -2272,12 +2273,14 @@ class AsyncWebResource(AsyncAPIResource):
 
           max_pages: Maximum number of pages to analyze for extraction. Hard cap: 50. Defaults to 5.
 
+          settle_animations: When true, waits briefly for CSS and transition animations to settle before
+              extracting each crawled page. Defaults to false. This adds a bit of latency in
+              exchange for more stable output on animated pages.
+
           stop_after_ms: Soft time budget for the crawl in milliseconds. Min: 10000 (10s). Max: 110000
               (110s). Default: 80000 (80s).
 
-          tags: Optional caller-defined tags for tracking this request. Tags are recorded on the
-              request's usage log and can be used to filter usage on the dashboard usage page.
-              Up to 20 tags, each 1-50 characters.
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -2308,6 +2311,7 @@ class AsyncWebResource(AsyncAPIResource):
                     "max_depth": max_depth,
                     "max_pages": max_pages,
                     "pdf": pdf,
+                    "settle_animations": settle_animations,
                     "stop_after_ms": stop_after_ms,
                     "tags": tags,
                     "timeout_ms": timeout_ms,
@@ -3136,9 +3140,7 @@ class AsyncWebResource(AsyncAPIResource):
 
           query_fanout: Expand the query into multiple parallel variants for broader recall.
 
-          tags: Optional caller-defined tags for tracking this request. Tags are recorded on the
-              request's usage log and can be used to filter usage on the dashboard usage page.
-              Up to 20 tags, each 1-50 characters.
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -3464,9 +3466,7 @@ class AsyncWebResource(AsyncAPIResource):
               instead of continuing. Min: 10000 (10s). Max: 110000 (110s). Default: 80000
               (80s).
 
-          tags: Optional caller-defined tags for tracking this request. Tags are recorded on the
-              request's usage log and can be used to filter usage on the dashboard usage page.
-              Up to 20 tags, each 1-50 characters.
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed

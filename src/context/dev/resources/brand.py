@@ -209,9 +209,7 @@ class BrandResource(SyncAPIResource):
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
 
-          tags: Optional caller-defined tags for tracking this request. Tags are recorded on the
-              request's usage log and can be used to filter usage on the dashboard usage page.
-              Up to 20 tags, each 1-50 characters.
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -395,9 +393,7 @@ class BrandResource(SyncAPIResource):
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
 
-          tags: Optional caller-defined tags for tracking this request. Tags are recorded on the
-              request's usage log and can be used to filter usage on the dashboard usage page.
-              Up to 20 tags, each 1-50 characters.
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -577,9 +573,7 @@ class BrandResource(SyncAPIResource):
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
 
-          tags: Optional caller-defined tags for tracking this request. Tags are recorded on the
-              request's usage log and can be used to filter usage on the dashboard usage page.
-              Up to 20 tags, each 1-50 characters.
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -760,9 +754,7 @@ class BrandResource(SyncAPIResource):
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
 
-          tags: Optional caller-defined tags for tracking this request. Tags are recorded on the
-              request's usage log and can be used to filter usage on the dashboard usage page.
-              Up to 20 tags, each 1-50 characters.
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
           ticker_exchange: Optional stock exchange for the ticker. Defaults to NASDAQ if not specified.
 
@@ -810,9 +802,7 @@ class BrandResource(SyncAPIResource):
 
           type: Discriminator for direct-URL-based brand retrieval.
 
-          tags: Optional caller-defined tags for tracking this request. Tags are recorded on the
-              request's usage log and can be used to filter usage on the dashboard usage page.
-              Up to 20 tags, each 1-50 characters.
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -1004,9 +994,7 @@ class BrandResource(SyncAPIResource):
 
           phone: Optional phone number from the transaction to help verify brand match.
 
-          tags: Optional caller-defined tags for tracking this request. Tags are recorded on the
-              request's usage log and can be used to filter usage on the dashboard usage page.
-              Up to 20 tags, each 1-50 characters.
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -1470,9 +1458,7 @@ class AsyncBrandResource(AsyncAPIResource):
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
 
-          tags: Optional caller-defined tags for tracking this request. Tags are recorded on the
-              request's usage log and can be used to filter usage on the dashboard usage page.
-              Up to 20 tags, each 1-50 characters.
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -1656,9 +1642,7 @@ class AsyncBrandResource(AsyncAPIResource):
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
 
-          tags: Optional caller-defined tags for tracking this request. Tags are recorded on the
-              request's usage log and can be used to filter usage on the dashboard usage page.
-              Up to 20 tags, each 1-50 characters.
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -1838,9 +1822,7 @@ class AsyncBrandResource(AsyncAPIResource):
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
 
-          tags: Optional caller-defined tags for tracking this request. Tags are recorded on the
-              request's usage log and can be used to filter usage on the dashboard usage page.
-              Up to 20 tags, each 1-50 characters.
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -2021,9 +2003,7 @@ class AsyncBrandResource(AsyncAPIResource):
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
 
-          tags: Optional caller-defined tags for tracking this request. Tags are recorded on the
-              request's usage log and can be used to filter usage on the dashboard usage page.
-              Up to 20 tags, each 1-50 characters.
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
           ticker_exchange: Optional stock exchange for the ticker. Defaults to NASDAQ if not specified.
 
@@ -2071,9 +2051,7 @@ class AsyncBrandResource(AsyncAPIResource):
 
           type: Discriminator for direct-URL-based brand retrieval.
 
-          tags: Optional caller-defined tags for tracking this request. Tags are recorded on the
-              request's usage log and can be used to filter usage on the dashboard usage page.
-              Up to 20 tags, each 1-50 characters.
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -2265,9 +2243,7 @@ class AsyncBrandResource(AsyncAPIResource):
 
           phone: Optional phone number from the transaction to help verify brand match.
 
-          tags: Optional caller-defined tags for tracking this request. Tags are recorded on the
-              request's usage log and can be used to filter usage on the dashboard usage page.
-              Up to 20 tags, each 1-50 characters.
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
