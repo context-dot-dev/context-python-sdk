@@ -64,6 +64,13 @@ class WebExtractParams(TypedDict, total=False):
 
     pdf: Pdf
 
+    settle_animations: Annotated[bool, PropertyInfo(alias="settleAnimations")]
+    """
+    When true, waits briefly for CSS and transition animations to settle before
+    extracting each crawled page. Defaults to false. This adds a bit of latency in
+    exchange for more stable output on animated pages.
+    """
+
     stop_after_ms: Annotated[int, PropertyInfo(alias="stopAfterMs")]
     """Soft time budget for the crawl in milliseconds.
 
@@ -71,11 +78,7 @@ class WebExtractParams(TypedDict, total=False):
     """
 
     tags: SequenceNotStr[str]
-    """Optional caller-defined tags for tracking this request.
-
-    Tags are recorded on the request's usage log and can be used to filter usage on
-    the dashboard usage page. Up to 20 tags, each 1-50 characters.
-    """
+    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
 
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
     """Optional timeout in milliseconds for the request.

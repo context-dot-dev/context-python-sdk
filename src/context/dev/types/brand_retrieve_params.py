@@ -167,11 +167,7 @@ class BrandRetrieveByDomainRequest(TypedDict, total=False):
     """
 
     tags: SequenceNotStr[str]
-    """Optional caller-defined tags for tracking this request.
-
-    Tags are recorded on the request's usage log and can be used to filter usage on
-    the dashboard usage page. Up to 20 tags, each 1-50 characters.
-    """
+    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
 
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
     """Optional timeout in milliseconds for the request.
@@ -335,11 +331,7 @@ class BrandRetrieveByNameRequest(TypedDict, total=False):
     """
 
     tags: SequenceNotStr[str]
-    """Optional caller-defined tags for tracking this request.
-
-    Tags are recorded on the request's usage log and can be used to filter usage on
-    the dashboard usage page. Up to 20 tags, each 1-50 characters.
-    """
+    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
 
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
     """Optional timeout in milliseconds for the request.
@@ -497,11 +489,7 @@ class BrandRetrieveByEmailRequest(TypedDict, total=False):
     """
 
     tags: SequenceNotStr[str]
-    """Optional caller-defined tags for tracking this request.
-
-    Tags are recorded on the request's usage log and can be used to filter usage on
-    the dashboard usage page. Up to 20 tags, each 1-50 characters.
-    """
+    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
 
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
     """Optional timeout in milliseconds for the request.
@@ -659,11 +647,7 @@ class BrandRetrieveByTickerRequest(TypedDict, total=False):
     """
 
     tags: SequenceNotStr[str]
-    """Optional caller-defined tags for tracking this request.
-
-    Tags are recorded on the request's usage log and can be used to filter usage on
-    the dashboard usage page. Up to 20 tags, each 1-50 characters.
-    """
+    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
 
     ticker_exchange: str
     """Optional stock exchange for the ticker. Defaults to NASDAQ if not specified."""
@@ -688,11 +672,7 @@ class BrandRetrieveByDirectURLRequest(TypedDict, total=False):
     """Discriminator for direct-URL-based brand retrieval."""
 
     tags: SequenceNotStr[str]
-    """Optional caller-defined tags for tracking this request.
-
-    Tags are recorded on the request's usage log and can be used to filter usage on
-    the dashboard usage page. Up to 20 tags, each 1-50 characters.
-    """
+    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
 
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
     """Optional timeout in milliseconds for the request.
@@ -866,11 +846,7 @@ class BrandRetrieveFromTransactionRequest(TypedDict, total=False):
     """Optional phone number from the transaction to help verify brand match."""
 
     tags: SequenceNotStr[str]
-    """Optional caller-defined tags for tracking this request.
-
-    Tags are recorded on the request's usage log and can be used to filter usage on
-    the dashboard usage page. Up to 20 tags, each 1-50 characters.
-    """
+    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
 
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
     """Optional timeout in milliseconds for the request.

@@ -26,11 +26,7 @@ class ByDomain(TypedDict, total=False):
     """Maximum number of products to extract."""
 
     tags: SequenceNotStr[str]
-    """Optional caller-defined tags for tracking this request.
-
-    Tags are recorded on the request's usage log and can be used to filter usage on
-    the dashboard usage page. Up to 20 tags, each 1-50 characters.
-    """
+    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
 
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
     """Optional timeout in milliseconds for the request.
@@ -58,11 +54,7 @@ class ByDirectURL(TypedDict, total=False):
     """Maximum number of products to extract."""
 
     tags: SequenceNotStr[str]
-    """Optional caller-defined tags for tracking this request.
-
-    Tags are recorded on the request's usage log and can be used to filter usage on
-    the dashboard usage page. Up to 20 tags, each 1-50 characters.
-    """
+    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
 
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
     """Optional timeout in milliseconds for the request.
