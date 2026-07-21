@@ -42,6 +42,7 @@ class TestParse:
             shorten_base64_images="true",
             tags=["production", "team-alpha"],
             use_main_content_only="true",
+            zdr="enabled",
         )
         assert_matches_type(ParseHandleResponse, parse, path=["response"])
 
@@ -102,6 +103,7 @@ class TestAsyncParse:
             shorten_base64_images="true",
             tags=["production", "team-alpha"],
             use_main_content_only="true",
+            zdr="enabled",
         )
         assert_matches_type(ParseHandleResponse, parse, path=["response"])
 

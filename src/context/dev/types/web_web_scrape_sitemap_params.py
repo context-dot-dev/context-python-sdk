@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import Dict
-from typing_extensions import Required, Annotated, TypedDict
+from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from .._types import SequenceNotStr
 from .._utils import PropertyInfo
@@ -53,4 +53,12 @@ class WebWebScrapeSitemapParams(TypedDict, total=False):
     """Optional RE2-compatible regex pattern.
 
     Only URLs matching this pattern are returned and counted against maxLinks.
+    """
+
+    zdr: Literal["enabled", "disabled"]
+    """
+    Set to enabled to bypass shared caches and omit request and response content
+    from retained usage logs. Requires zero data retention to be enabled for your
+    organization (contact support@context.dev), otherwise the request fails with
+    ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
     """

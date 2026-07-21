@@ -41,7 +41,10 @@ class WebScreenshotResponse(BaseModel):
     """
 
     screenshot: Optional[str] = None
-    """Public URL of the uploaded screenshot image"""
+    """
+    Public image URL for standard requests, or an in-memory data URL when ZDR is
+    enabled.
+    """
 
     screenshot_type: Optional[Literal["viewport", "fullPage"]] = FieldInfo(alias="screenshotType", default=None)
     """Type of screenshot that was captured"""

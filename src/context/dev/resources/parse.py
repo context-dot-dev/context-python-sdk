@@ -143,6 +143,7 @@ class ParseResource(SyncAPIResource):
         shorten_base64_images: Union[bool, Literal["true", "false"]] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         use_main_content_only: Union[bool, Literal["true", "false"]] | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -179,6 +180,11 @@ class ParseResource(SyncAPIResource):
 
           use_main_content_only: Extract only the main content from HTML-like inputs
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Requires zero data retention to be enabled for your
+              organization (contact support@context.dev), otherwise the request fails with
+              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -207,6 +213,7 @@ class ParseResource(SyncAPIResource):
                         "shorten_base64_images": shorten_base64_images,
                         "tags": tags,
                         "use_main_content_only": use_main_content_only,
+                        "zdr": zdr,
                     },
                     parse_handle_params.ParseHandleParams,
                 ),
@@ -320,6 +327,7 @@ class AsyncParseResource(AsyncAPIResource):
         shorten_base64_images: Union[bool, Literal["true", "false"]] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         use_main_content_only: Union[bool, Literal["true", "false"]] | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -356,6 +364,11 @@ class AsyncParseResource(AsyncAPIResource):
 
           use_main_content_only: Extract only the main content from HTML-like inputs
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Requires zero data retention to be enabled for your
+              organization (contact support@context.dev), otherwise the request fails with
+              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -384,6 +397,7 @@ class AsyncParseResource(AsyncAPIResource):
                         "shorten_base64_images": shorten_base64_images,
                         "tags": tags,
                         "use_main_content_only": use_main_content_only,
+                        "zdr": zdr,
                     },
                     parse_handle_params.ParseHandleParams,
                 ),

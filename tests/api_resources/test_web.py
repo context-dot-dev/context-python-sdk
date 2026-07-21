@@ -264,6 +264,7 @@ class TestWeb:
                 "width": 240,
             },
             wait_for_ms=0,
+            zdr="enabled",
         )
         assert_matches_type(WebScreenshotResponse, web, path=["response"])
 
@@ -392,6 +393,7 @@ class TestWeb:
             url_regex="^https?://[^/]+/blog/",
             use_main_content_only=True,
             wait_for_ms=0,
+            zdr="enabled",
         )
         assert_matches_type(WebWebCrawlMdResponse, web, path=["response"])
 
@@ -451,6 +453,7 @@ class TestWeb:
             timeout_ms=1,
             use_main_content_only="true",
             wait_for_ms=0,
+            zdr="enabled",
         )
         assert_matches_type(WebWebScrapeHTMLResponse, web, path=["response"])
 
@@ -567,6 +570,7 @@ class TestWeb:
             timeout_ms=1,
             use_main_content_only="true",
             wait_for_ms=0,
+            zdr="enabled",
         )
         assert_matches_type(WebWebScrapeMdResponse, web, path=["response"])
 
@@ -615,6 +619,7 @@ class TestWeb:
             tags=["production", "team-alpha"],
             timeout_ms=1,
             url_regex="^https?://[^/]+/blog/",
+            zdr="enabled",
         )
         assert_matches_type(WebWebScrapeSitemapResponse, web, path=["response"])
 
@@ -885,6 +890,7 @@ class TestAsyncWeb:
                 "width": 240,
             },
             wait_for_ms=0,
+            zdr="enabled",
         )
         assert_matches_type(WebScreenshotResponse, web, path=["response"])
 
@@ -1013,6 +1019,7 @@ class TestAsyncWeb:
             url_regex="^https?://[^/]+/blog/",
             use_main_content_only=True,
             wait_for_ms=0,
+            zdr="enabled",
         )
         assert_matches_type(WebWebCrawlMdResponse, web, path=["response"])
 
@@ -1072,6 +1079,7 @@ class TestAsyncWeb:
             timeout_ms=1,
             use_main_content_only="true",
             wait_for_ms=0,
+            zdr="enabled",
         )
         assert_matches_type(WebWebScrapeHTMLResponse, web, path=["response"])
 
@@ -1188,6 +1196,7 @@ class TestAsyncWeb:
             timeout_ms=1,
             use_main_content_only="true",
             wait_for_ms=0,
+            zdr="enabled",
         )
         assert_matches_type(WebWebScrapeMdResponse, web, path=["response"])
 
@@ -1236,6 +1245,7 @@ class TestAsyncWeb:
             tags=["production", "team-alpha"],
             timeout_ms=1,
             url_regex="^https?://[^/]+/blog/",
+            zdr="enabled",
         )
         assert_matches_type(WebWebScrapeSitemapResponse, web, path=["response"])
 

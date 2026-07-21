@@ -311,6 +311,14 @@ class WebWebScrapeMdParams(TypedDict, total=False):
     converting the page to Markdown. Min: 0. Max: 30000 (30 seconds).
     """
 
+    zdr: Literal["enabled", "disabled"]
+    """
+    Set to enabled to bypass shared caches and omit request and response content
+    from retained usage logs. Requires zero data retention to be enabled for your
+    organization (contact support@context.dev), otherwise the request fails with
+    ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+    """
+
 
 class Pdf(TypedDict, total=False):
     """PDF parsing controls.
