@@ -605,6 +605,7 @@ class WebResource(SyncAPIResource):
         timeout_ms: int | Omit = omit,
         viewport: web_screenshot_params.Viewport | Omit = omit,
         wait_for_ms: Optional[int] | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -670,6 +671,11 @@ class WebResource(SyncAPIResource):
               the screenshot. Min: 0. Max: 30000 (30 seconds). Defaults to 3000 ms when
               omitted.
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Requires zero data retention to be enabled for your
+              organization (contact support@context.dev), otherwise the request fails with
+              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -700,6 +706,7 @@ class WebResource(SyncAPIResource):
                         "timeout_ms": timeout_ms,
                         "viewport": viewport,
                         "wait_for_ms": wait_for_ms,
+                        "zdr": zdr,
                     },
                     web_screenshot_params.WebScreenshotParams,
                 ),
@@ -1258,6 +1265,7 @@ class WebResource(SyncAPIResource):
         url_regex: str | Omit = omit,
         use_main_content_only: bool | Omit = omit,
         wait_for_ms: int | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1332,6 +1340,11 @@ class WebResource(SyncAPIResource):
           wait_for_ms: Optional browser wait time in milliseconds after initial page load for each
               crawled page. Min: 0. Max: 30000 (30 seconds).
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Requires zero data retention to be enabled for your
+              organization (contact support@context.dev), otherwise the request fails with
+              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -1364,6 +1377,7 @@ class WebResource(SyncAPIResource):
                     "url_regex": url_regex,
                     "use_main_content_only": use_main_content_only,
                     "wait_for_ms": wait_for_ms,
+                    "zdr": zdr,
                 },
                 web_web_crawl_md_params.WebWebCrawlMdParams,
             ),
@@ -1595,6 +1609,7 @@ class WebResource(SyncAPIResource):
         timeout_ms: int | Omit = omit,
         use_main_content_only: Union[bool, Literal["true", "false"]] | Omit = omit,
         wait_for_ms: Optional[int] | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1652,6 +1667,11 @@ class WebResource(SyncAPIResource):
               Optional browser wait time in milliseconds after initial page load. Min: 0. Max:
               30000 (30 seconds).
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Requires zero data retention to be enabled for your
+              organization (contact support@context.dev), otherwise the request fails with
+              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -1682,6 +1702,7 @@ class WebResource(SyncAPIResource):
                         "timeout_ms": timeout_ms,
                         "use_main_content_only": use_main_content_only,
                         "wait_for_ms": wait_for_ms,
+                        "zdr": zdr,
                     },
                     web_web_scrape_html_params.WebWebScrapeHTMLParams,
                 ),
@@ -1999,6 +2020,7 @@ class WebResource(SyncAPIResource):
         timeout_ms: int | Omit = omit,
         use_main_content_only: Union[bool, Literal["true", "false"]] | Omit = omit,
         wait_for_ms: Optional[int] | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -2078,6 +2100,11 @@ class WebResource(SyncAPIResource):
           wait_for_ms: Optional browser wait time in milliseconds after initial page load before
               converting the page to Markdown. Min: 0. Max: 30000 (30 seconds).
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Requires zero data retention to be enabled for your
+              organization (contact support@context.dev), otherwise the request fails with
+              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -2111,6 +2138,7 @@ class WebResource(SyncAPIResource):
                         "timeout_ms": timeout_ms,
                         "use_main_content_only": use_main_content_only,
                         "wait_for_ms": wait_for_ms,
+                        "zdr": zdr,
                     },
                     web_web_scrape_md_params.WebWebScrapeMdParams,
                 ),
@@ -2128,6 +2156,7 @@ class WebResource(SyncAPIResource):
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         url_regex: str | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -2162,6 +2191,11 @@ class WebResource(SyncAPIResource):
           url_regex: Optional RE2-compatible regex pattern. Only URLs matching this pattern are
               returned and counted against maxLinks.
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Requires zero data retention to be enabled for your
+              organization (contact support@context.dev), otherwise the request fails with
+              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -2186,6 +2220,7 @@ class WebResource(SyncAPIResource):
                         "tags": tags,
                         "timeout_ms": timeout_ms,
                         "url_regex": url_regex,
+                        "zdr": zdr,
                     },
                     web_web_scrape_sitemap_params.WebWebScrapeSitemapParams,
                 ),
@@ -2753,6 +2788,7 @@ class AsyncWebResource(AsyncAPIResource):
         timeout_ms: int | Omit = omit,
         viewport: web_screenshot_params.Viewport | Omit = omit,
         wait_for_ms: Optional[int] | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -2818,6 +2854,11 @@ class AsyncWebResource(AsyncAPIResource):
               the screenshot. Min: 0. Max: 30000 (30 seconds). Defaults to 3000 ms when
               omitted.
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Requires zero data retention to be enabled for your
+              organization (contact support@context.dev), otherwise the request fails with
+              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -2848,6 +2889,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "timeout_ms": timeout_ms,
                         "viewport": viewport,
                         "wait_for_ms": wait_for_ms,
+                        "zdr": zdr,
                     },
                     web_screenshot_params.WebScreenshotParams,
                 ),
@@ -3406,6 +3448,7 @@ class AsyncWebResource(AsyncAPIResource):
         url_regex: str | Omit = omit,
         use_main_content_only: bool | Omit = omit,
         wait_for_ms: int | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -3480,6 +3523,11 @@ class AsyncWebResource(AsyncAPIResource):
           wait_for_ms: Optional browser wait time in milliseconds after initial page load for each
               crawled page. Min: 0. Max: 30000 (30 seconds).
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Requires zero data retention to be enabled for your
+              organization (contact support@context.dev), otherwise the request fails with
+              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -3512,6 +3560,7 @@ class AsyncWebResource(AsyncAPIResource):
                     "url_regex": url_regex,
                     "use_main_content_only": use_main_content_only,
                     "wait_for_ms": wait_for_ms,
+                    "zdr": zdr,
                 },
                 web_web_crawl_md_params.WebWebCrawlMdParams,
             ),
@@ -3743,6 +3792,7 @@ class AsyncWebResource(AsyncAPIResource):
         timeout_ms: int | Omit = omit,
         use_main_content_only: Union[bool, Literal["true", "false"]] | Omit = omit,
         wait_for_ms: Optional[int] | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -3800,6 +3850,11 @@ class AsyncWebResource(AsyncAPIResource):
               Optional browser wait time in milliseconds after initial page load. Min: 0. Max:
               30000 (30 seconds).
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Requires zero data retention to be enabled for your
+              organization (contact support@context.dev), otherwise the request fails with
+              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -3830,6 +3885,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "timeout_ms": timeout_ms,
                         "use_main_content_only": use_main_content_only,
                         "wait_for_ms": wait_for_ms,
+                        "zdr": zdr,
                     },
                     web_web_scrape_html_params.WebWebScrapeHTMLParams,
                 ),
@@ -4147,6 +4203,7 @@ class AsyncWebResource(AsyncAPIResource):
         timeout_ms: int | Omit = omit,
         use_main_content_only: Union[bool, Literal["true", "false"]] | Omit = omit,
         wait_for_ms: Optional[int] | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -4226,6 +4283,11 @@ class AsyncWebResource(AsyncAPIResource):
           wait_for_ms: Optional browser wait time in milliseconds after initial page load before
               converting the page to Markdown. Min: 0. Max: 30000 (30 seconds).
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Requires zero data retention to be enabled for your
+              organization (contact support@context.dev), otherwise the request fails with
+              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -4259,6 +4321,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "timeout_ms": timeout_ms,
                         "use_main_content_only": use_main_content_only,
                         "wait_for_ms": wait_for_ms,
+                        "zdr": zdr,
                     },
                     web_web_scrape_md_params.WebWebScrapeMdParams,
                 ),
@@ -4276,6 +4339,7 @@ class AsyncWebResource(AsyncAPIResource):
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         url_regex: str | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -4310,6 +4374,11 @@ class AsyncWebResource(AsyncAPIResource):
           url_regex: Optional RE2-compatible regex pattern. Only URLs matching this pattern are
               returned and counted against maxLinks.
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Requires zero data retention to be enabled for your
+              organization (contact support@context.dev), otherwise the request fails with
+              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -4334,6 +4403,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "tags": tags,
                         "timeout_ms": timeout_ms,
                         "url_regex": url_regex,
+                        "zdr": zdr,
                     },
                     web_web_scrape_sitemap_params.WebWebScrapeSitemapParams,
                 ),

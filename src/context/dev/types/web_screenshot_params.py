@@ -308,6 +308,14 @@ class WebScreenshotParams(TypedDict, total=False):
     omitted.
     """
 
+    zdr: Literal["enabled", "disabled"]
+    """
+    Set to enabled to bypass shared caches and omit request and response content
+    from retained usage logs. Requires zero data retention to be enabled for your
+    organization (contact support@context.dev), otherwise the request fails with
+    ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+    """
+
 
 class Viewport(TypedDict, total=False):
     """Optional browser viewport dimensions for the screenshot. Defaults to 1920x1080."""

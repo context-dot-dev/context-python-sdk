@@ -122,6 +122,14 @@ class ParseHandleParams(TypedDict, total=False):
     use_main_content_only: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="useMainContentOnly")]
     """Extract only the main content from HTML-like inputs"""
 
+    zdr: Literal["enabled", "disabled"]
+    """
+    Set to enabled to bypass shared caches and omit request and response content
+    from retained usage logs. Requires zero data retention to be enabled for your
+    organization (contact support@context.dev), otherwise the request fails with
+    ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+    """
+
 
 class Pdf(TypedDict, total=False):
     """PDF page-range options as a JSON object, e.g. {"start": 2, "end": 5}."""
