@@ -14,6 +14,7 @@ from ..types import (
     monitor_update_params,
     monitor_list_runs_params,
     monitor_list_changes_params,
+    monitor_get_credit_usage_params,
     monitor_list_account_runs_params,
     monitor_list_account_changes_params,
 )
@@ -35,8 +36,10 @@ from ..types.monitor_delete_response import MonitorDeleteResponse
 from ..types.monitor_update_response import MonitorUpdateResponse
 from ..types.monitor_retrieve_response import MonitorRetrieveResponse
 from ..types.monitor_list_runs_response import MonitorListRunsResponse
+from ..types.monitor_get_limits_response import MonitorGetLimitsResponse
 from ..types.monitor_list_changes_response import MonitorListChangesResponse
 from ..types.monitor_retrieve_change_response import MonitorRetrieveChangeResponse
+from ..types.monitor_get_credit_usage_response import MonitorGetCreditUsageResponse
 from ..types.monitor_list_account_runs_response import MonitorListAccountRunsResponse
 from ..types.monitor_list_account_changes_response import MonitorListAccountChangesResponse
 
@@ -103,6 +106,7 @@ class MonitorsResource(SyncAPIResource):
               described by `target` and `change_detection`.
 
           tags: User-defined tags for grouping and filtering monitors and their changes.
+              Duplicates are removed.
 
           extra_headers: Send extra headers
 
@@ -197,6 +201,7 @@ class MonitorsResource(SyncAPIResource):
               between 10 minutes and 1 year.
 
           tags: User-defined tags for grouping and filtering monitors and their changes.
+              Duplicates are removed.
 
           target: Discriminated union describing what the monitor watches.
 
@@ -239,11 +244,11 @@ class MonitorsResource(SyncAPIResource):
         cursor: str | Omit = omit,
         limit: int | Omit = omit,
         q: str | Omit = omit,
-        search_by: List[Literal["name", "url", "instructions", "tags"]] | Omit = omit,
+        search_by: Optional[List[Literal["name", "url", "instructions", "tags"]]] | Omit = omit,
         search_type: Literal["exact", "prefix"] | Omit = omit,
         status: Literal["active", "paused", "failed"] | Omit = omit,
         tag: str | Omit = omit,
-        tags: SequenceNotStr[str] | Omit = omit,
+        tags: Optional[SequenceNotStr[str]] | Omit = omit,
         target_type: Literal["page", "sitemap", "extract"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -259,6 +264,12 @@ class MonitorsResource(SyncAPIResource):
         status/type/tag filters. Results are paginated via the opaque `cursor`.
 
         Args:
+          change_detection_type: Filter by change detection type.
+
+          cursor: Opaque pagination cursor from a previous response.
+
+          limit: Maximum number of items to return per page (1-100). Defaults to 25.
+
           q: Free-text search term, matched against the fields named in `search_by`.
 
           search_by: Comma-separated fields to search with `q`. Defaults to all of them. Note
@@ -267,15 +278,13 @@ class MonitorsResource(SyncAPIResource):
           search_type: `prefix` for as-you-type prefix matching (default), `exact` for full-token
               matching.
 
-          status: Monitor lifecycle status. `failed` means the most recent run failed (see the
-              monitor's `last_error`); failed monitors keep running on schedule and flip back
-              to `active` on the next successful run. Monitors are auto-`paused` after
-              repeated consecutive failures or insufficient-credit skips; resume by PATCHing
-              status to `active`.
+          status: Filter monitors by lifecycle status.
 
           tag: Filter to items that have this tag.
 
           tags: Comma-separated list of tags to filter by (matches monitors having any of them).
+
+          target_type: Filter by target type.
 
           extra_headers: Send extra headers
 
@@ -344,6 +353,72 @@ class MonitorsResource(SyncAPIResource):
             cast_to=MonitorDeleteResponse,
         )
 
+    def get_credit_usage(
+        self,
+        *,
+        since: Union[str, datetime] | Omit = omit,
+        until: Union[str, datetime] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> MonitorGetCreditUsageResponse:
+        """
+        Returns credits charged per monitor over an optional [since, until] window,
+        newest spenders first.
+
+        Args:
+          since: Only include items at or after this ISO 8601 timestamp.
+
+          until: Only include items before this ISO 8601 timestamp.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._get(
+            "/monitors/credit-usage",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "since": since,
+                        "until": until,
+                    },
+                    monitor_get_credit_usage_params.MonitorGetCreditUsageParams,
+                ),
+            ),
+            cast_to=MonitorGetCreditUsageResponse,
+        )
+
+    def get_limits(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> MonitorGetLimitsResponse:
+        """Returns how many monitors the account has and the maximum it allows."""
+        return self._get(
+            "/monitors/limits",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=MonitorGetLimitsResponse,
+        )
+
     def list_account_changes(
         self,
         *,
@@ -366,7 +441,21 @@ class MonitorsResource(SyncAPIResource):
         Returns an account-wide feed of detected changes across monitors.
 
         Args:
+          change_detection_type: Filter by change detection type.
+
+          cursor: Opaque pagination cursor from a previous response.
+
+          limit: Maximum number of items to return per page (1-100). Defaults to 25.
+
+          monitor_id: Filter changes to a single monitor.
+
+          since: Only include items at or after this ISO 8601 timestamp.
+
           tag: Filter to items that have this tag.
+
+          target_type: Filter by target type.
+
+          until: Only include items before this ISO 8601 timestamp.
 
           extra_headers: Send extra headers
 
@@ -417,8 +506,11 @@ class MonitorsResource(SyncAPIResource):
         Returns an account-wide feed of monitor runs across all monitors.
 
         Args:
-          status: Lifecycle status of a run. `skipped` runs never executed — see `skip_reason`
-              (insufficient credits, monitor paused, or superseded by a concurrent run).
+          cursor: Opaque pagination cursor from a previous response.
+
+          limit: Maximum number of items to return per page (1-100). Defaults to 25.
+
+          status: Filter runs by lifecycle status.
 
           extra_headers: Send extra headers
 
@@ -467,7 +559,15 @@ class MonitorsResource(SyncAPIResource):
         List changes for a monitor
 
         Args:
+          cursor: Opaque pagination cursor from a previous response.
+
+          limit: Maximum number of items to return per page (1-100). Defaults to 25.
+
+          since: Only include items at or after this ISO 8601 timestamp.
+
           tag: Filter to items that have this tag.
+
+          until: Only include items before this ISO 8601 timestamp.
 
           extra_headers: Send extra headers
 
@@ -514,13 +614,15 @@ class MonitorsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorListRunsResponse:
-        """List monitor runs
+        """
+        List monitor runs
 
         Args:
-          status: Lifecycle status of a run.
+          cursor: Opaque pagination cursor from a previous response.
 
-        `skipped` runs never executed — see `skip_reason`
-              (insufficient credits, monitor paused, or superseded by a concurrent run).
+          limit: Maximum number of items to return per page (1-100). Defaults to 25.
+
+          status: Filter runs by lifecycle status.
 
           extra_headers: Send extra headers
 
@@ -680,6 +782,7 @@ class AsyncMonitorsResource(AsyncAPIResource):
               described by `target` and `change_detection`.
 
           tags: User-defined tags for grouping and filtering monitors and their changes.
+              Duplicates are removed.
 
           extra_headers: Send extra headers
 
@@ -774,6 +877,7 @@ class AsyncMonitorsResource(AsyncAPIResource):
               between 10 minutes and 1 year.
 
           tags: User-defined tags for grouping and filtering monitors and their changes.
+              Duplicates are removed.
 
           target: Discriminated union describing what the monitor watches.
 
@@ -816,11 +920,11 @@ class AsyncMonitorsResource(AsyncAPIResource):
         cursor: str | Omit = omit,
         limit: int | Omit = omit,
         q: str | Omit = omit,
-        search_by: List[Literal["name", "url", "instructions", "tags"]] | Omit = omit,
+        search_by: Optional[List[Literal["name", "url", "instructions", "tags"]]] | Omit = omit,
         search_type: Literal["exact", "prefix"] | Omit = omit,
         status: Literal["active", "paused", "failed"] | Omit = omit,
         tag: str | Omit = omit,
-        tags: SequenceNotStr[str] | Omit = omit,
+        tags: Optional[SequenceNotStr[str]] | Omit = omit,
         target_type: Literal["page", "sitemap", "extract"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -836,6 +940,12 @@ class AsyncMonitorsResource(AsyncAPIResource):
         status/type/tag filters. Results are paginated via the opaque `cursor`.
 
         Args:
+          change_detection_type: Filter by change detection type.
+
+          cursor: Opaque pagination cursor from a previous response.
+
+          limit: Maximum number of items to return per page (1-100). Defaults to 25.
+
           q: Free-text search term, matched against the fields named in `search_by`.
 
           search_by: Comma-separated fields to search with `q`. Defaults to all of them. Note
@@ -844,15 +954,13 @@ class AsyncMonitorsResource(AsyncAPIResource):
           search_type: `prefix` for as-you-type prefix matching (default), `exact` for full-token
               matching.
 
-          status: Monitor lifecycle status. `failed` means the most recent run failed (see the
-              monitor's `last_error`); failed monitors keep running on schedule and flip back
-              to `active` on the next successful run. Monitors are auto-`paused` after
-              repeated consecutive failures or insufficient-credit skips; resume by PATCHing
-              status to `active`.
+          status: Filter monitors by lifecycle status.
 
           tag: Filter to items that have this tag.
 
           tags: Comma-separated list of tags to filter by (matches monitors having any of them).
+
+          target_type: Filter by target type.
 
           extra_headers: Send extra headers
 
@@ -921,6 +1029,72 @@ class AsyncMonitorsResource(AsyncAPIResource):
             cast_to=MonitorDeleteResponse,
         )
 
+    async def get_credit_usage(
+        self,
+        *,
+        since: Union[str, datetime] | Omit = omit,
+        until: Union[str, datetime] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> MonitorGetCreditUsageResponse:
+        """
+        Returns credits charged per monitor over an optional [since, until] window,
+        newest spenders first.
+
+        Args:
+          since: Only include items at or after this ISO 8601 timestamp.
+
+          until: Only include items before this ISO 8601 timestamp.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._get(
+            "/monitors/credit-usage",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "since": since,
+                        "until": until,
+                    },
+                    monitor_get_credit_usage_params.MonitorGetCreditUsageParams,
+                ),
+            ),
+            cast_to=MonitorGetCreditUsageResponse,
+        )
+
+    async def get_limits(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> MonitorGetLimitsResponse:
+        """Returns how many monitors the account has and the maximum it allows."""
+        return await self._get(
+            "/monitors/limits",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=MonitorGetLimitsResponse,
+        )
+
     async def list_account_changes(
         self,
         *,
@@ -943,7 +1117,21 @@ class AsyncMonitorsResource(AsyncAPIResource):
         Returns an account-wide feed of detected changes across monitors.
 
         Args:
+          change_detection_type: Filter by change detection type.
+
+          cursor: Opaque pagination cursor from a previous response.
+
+          limit: Maximum number of items to return per page (1-100). Defaults to 25.
+
+          monitor_id: Filter changes to a single monitor.
+
+          since: Only include items at or after this ISO 8601 timestamp.
+
           tag: Filter to items that have this tag.
+
+          target_type: Filter by target type.
+
+          until: Only include items before this ISO 8601 timestamp.
 
           extra_headers: Send extra headers
 
@@ -994,8 +1182,11 @@ class AsyncMonitorsResource(AsyncAPIResource):
         Returns an account-wide feed of monitor runs across all monitors.
 
         Args:
-          status: Lifecycle status of a run. `skipped` runs never executed — see `skip_reason`
-              (insufficient credits, monitor paused, or superseded by a concurrent run).
+          cursor: Opaque pagination cursor from a previous response.
+
+          limit: Maximum number of items to return per page (1-100). Defaults to 25.
+
+          status: Filter runs by lifecycle status.
 
           extra_headers: Send extra headers
 
@@ -1044,7 +1235,15 @@ class AsyncMonitorsResource(AsyncAPIResource):
         List changes for a monitor
 
         Args:
+          cursor: Opaque pagination cursor from a previous response.
+
+          limit: Maximum number of items to return per page (1-100). Defaults to 25.
+
+          since: Only include items at or after this ISO 8601 timestamp.
+
           tag: Filter to items that have this tag.
+
+          until: Only include items before this ISO 8601 timestamp.
 
           extra_headers: Send extra headers
 
@@ -1091,13 +1290,15 @@ class AsyncMonitorsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorListRunsResponse:
-        """List monitor runs
+        """
+        List monitor runs
 
         Args:
-          status: Lifecycle status of a run.
+          cursor: Opaque pagination cursor from a previous response.
 
-        `skipped` runs never executed — see `skip_reason`
-              (insufficient credits, monitor paused, or superseded by a concurrent run).
+          limit: Maximum number of items to return per page (1-100). Defaults to 25.
+
+          status: Filter runs by lifecycle status.
 
           extra_headers: Send extra headers
 
@@ -1216,6 +1417,12 @@ class MonitorsResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             monitors.delete,
         )
+        self.get_credit_usage = to_raw_response_wrapper(
+            monitors.get_credit_usage,
+        )
+        self.get_limits = to_raw_response_wrapper(
+            monitors.get_limits,
+        )
         self.list_account_changes = to_raw_response_wrapper(
             monitors.list_account_changes,
         )
@@ -1254,6 +1461,12 @@ class AsyncMonitorsResourceWithRawResponse:
         )
         self.delete = async_to_raw_response_wrapper(
             monitors.delete,
+        )
+        self.get_credit_usage = async_to_raw_response_wrapper(
+            monitors.get_credit_usage,
+        )
+        self.get_limits = async_to_raw_response_wrapper(
+            monitors.get_limits,
         )
         self.list_account_changes = async_to_raw_response_wrapper(
             monitors.list_account_changes,
@@ -1294,6 +1507,12 @@ class MonitorsResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             monitors.delete,
         )
+        self.get_credit_usage = to_streamed_response_wrapper(
+            monitors.get_credit_usage,
+        )
+        self.get_limits = to_streamed_response_wrapper(
+            monitors.get_limits,
+        )
         self.list_account_changes = to_streamed_response_wrapper(
             monitors.list_account_changes,
         )
@@ -1332,6 +1551,12 @@ class AsyncMonitorsResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             monitors.delete,
+        )
+        self.get_credit_usage = async_to_streamed_response_wrapper(
+            monitors.get_credit_usage,
+        )
+        self.get_limits = async_to_streamed_response_wrapper(
+            monitors.get_limits,
         )
         self.list_account_changes = async_to_streamed_response_wrapper(
             monitors.list_account_changes,

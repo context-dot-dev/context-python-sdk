@@ -8,21 +8,12 @@ from typing_extensions import Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["MonitorListChangesParams"]
+__all__ = ["MonitorGetCreditUsageParams"]
 
 
-class MonitorListChangesParams(TypedDict, total=False):
-    cursor: str
-    """Opaque pagination cursor from a previous response."""
-
-    limit: int
-    """Maximum number of items to return per page (1-100). Defaults to 25."""
-
+class MonitorGetCreditUsageParams(TypedDict, total=False):
     since: Annotated[Union[str, datetime], PropertyInfo(format="iso8601")]
     """Only include items at or after this ISO 8601 timestamp."""
-
-    tag: str
-    """Filter to items that have this tag."""
 
     until: Annotated[Union[str, datetime], PropertyInfo(format="iso8601")]
     """Only include items before this ISO 8601 timestamp."""

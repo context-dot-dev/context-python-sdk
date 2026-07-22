@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing_extensions import Required, Annotated, TypedDict
 
+from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
 __all__ = ["AIExtractProductParams"]
@@ -19,6 +20,9 @@ class AIExtractProductParams(TypedDict, total=False):
     younger than this many milliseconds. Defaults to 7 days (604800000 ms) when
     omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
     """
+
+    tags: SequenceNotStr[str]
+    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
 
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
     """Optional timeout in milliseconds for the request.

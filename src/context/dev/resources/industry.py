@@ -7,7 +7,7 @@ from typing_extensions import Literal
 import httpx
 
 from ..types import industry_retrieve_sic_params, industry_retrieve_naics_params
-from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
+from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -50,6 +50,7 @@ class IndustryResource(SyncAPIResource):
         input: str,
         max_results: int | Omit = omit,
         min_results: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -70,6 +71,10 @@ class IndustryResource(SyncAPIResource):
               to 5.
 
           min_results: Minimum number of NAICS codes to return. Must be at least 1. Defaults to 1.
+
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -95,6 +100,7 @@ class IndustryResource(SyncAPIResource):
                         "input": input,
                         "max_results": max_results,
                         "min_results": min_results,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                     },
                     industry_retrieve_naics_params.IndustryRetrieveNaicsParams,
@@ -109,6 +115,7 @@ class IndustryResource(SyncAPIResource):
         input: str,
         max_results: int | Omit = omit,
         min_results: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         type: Literal["original_sic", "latest_sec"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -131,6 +138,10 @@ class IndustryResource(SyncAPIResource):
           max_results: Maximum number of SIC codes to return. Must be between 1 and 10. Defaults to 5.
 
           min_results: Minimum number of SIC codes to return. Must be at least 1. Defaults to 1.
+
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -160,6 +171,7 @@ class IndustryResource(SyncAPIResource):
                         "input": input,
                         "max_results": max_results,
                         "min_results": min_results,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                         "type": type,
                     },
@@ -196,6 +208,7 @@ class AsyncIndustryResource(AsyncAPIResource):
         input: str,
         max_results: int | Omit = omit,
         min_results: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -216,6 +229,10 @@ class AsyncIndustryResource(AsyncAPIResource):
               to 5.
 
           min_results: Minimum number of NAICS codes to return. Must be at least 1. Defaults to 1.
+
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -241,6 +258,7 @@ class AsyncIndustryResource(AsyncAPIResource):
                         "input": input,
                         "max_results": max_results,
                         "min_results": min_results,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                     },
                     industry_retrieve_naics_params.IndustryRetrieveNaicsParams,
@@ -255,6 +273,7 @@ class AsyncIndustryResource(AsyncAPIResource):
         input: str,
         max_results: int | Omit = omit,
         min_results: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         type: Literal["original_sic", "latest_sec"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -277,6 +296,10 @@ class AsyncIndustryResource(AsyncAPIResource):
           max_results: Maximum number of SIC codes to return. Must be between 1 and 10. Defaults to 5.
 
           min_results: Minimum number of SIC codes to return. Must be at least 1. Defaults to 1.
+
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -306,6 +329,7 @@ class AsyncIndustryResource(AsyncAPIResource):
                         "input": input,
                         "max_results": max_results,
                         "min_results": min_results,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                         "type": type,
                     },

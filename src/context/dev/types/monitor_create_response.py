@@ -96,10 +96,10 @@ class TargetMonitorsSitemapTarget(BaseModel):
     """Sitemap URL to monitor."""
 
     exclude: Optional[List[str]] = None
-    """URL path patterns to exclude."""
+    """URL path patterns to exclude (max 50)."""
 
     include: Optional[List[str]] = None
-    """URL path patterns to include."""
+    """URL path patterns to include (max 50)."""
 
     max_urls: Optional[int] = None
     """Maximum number of sitemap URLs to track (capped at 10,000)."""
@@ -312,7 +312,10 @@ class MonitorCreateResponse(BaseModel):
     """When the next scheduled run is due."""
 
     tags: Optional[List[str]] = None
-    """User-defined tags for grouping and filtering monitors and their changes."""
+    """User-defined tags for grouping and filtering monitors and their changes.
+
+    Duplicates are removed.
+    """
 
     webhook: Optional[Webhook] = None
 

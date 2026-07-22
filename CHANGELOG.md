@@ -1,5 +1,26 @@
 # Changelog
 
+## 2.5.0 (2026-07-22)
+
+Full Changelog: [v2.4.0...v2.5.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.4.0...v2.5.0)
+
+### Features
+
+* **api:** api update ([bbcd1c1](https://github.com/context-dot-dev/context-python-sdk/commit/bbcd1c1d42b9a2080dff7ff42ce7028339d94c25))
+* **api:** api update ([4432665](https://github.com/context-dot-dev/context-python-sdk/commit/443266595a9dec4e7ccc081ea1d4967985cb7d67))
+* **api:** api update ([94fa1f1](https://github.com/context-dot-dev/context-python-sdk/commit/94fa1f1ee791691e9e65e4d437dd7ce5f619087a))
+* **api:** api update ([4ae29fb](https://github.com/context-dot-dev/context-python-sdk/commit/4ae29fb780a4c6d971e2f77d9e7572ba12ccc8a5))
+* **api:** api update ([08d9b02](https://github.com/context-dot-dev/context-python-sdk/commit/08d9b029637ba08b636b653659427c9f21f9f9ce))
+* **api:** api update ([8592c63](https://github.com/context-dot-dev/context-python-sdk/commit/8592c635674b01bcefbc5563bc53b98e90859b0c))
+* **api:** api update ([7d2dfb5](https://github.com/context-dot-dev/context-python-sdk/commit/7d2dfb58157434152a853aebcd4f1289c2e30bd6))
+* **api:** manual updates ([e75ea61](https://github.com/context-dot-dev/context-python-sdk/commit/e75ea615fc7e9dba2d84ebc9bd4e4f8c19f98512))
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([b66fcc2](https://github.com/context-dot-dev/context-python-sdk/commit/b66fcc27146584210b8e6d500c7ce11db83cccce))
+
+
+### Bug Fixes
+
+* **internal:** resolve build failures ([e373980](https://github.com/context-dot-dev/context-python-sdk/commit/e373980c1d881969d2dc37bd2d069fd9c128595e))
+
 ## 2.4.0 (2026-07-12)
 
 Full Changelog: [v2.3.0...v2.4.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.3.0...v2.4.0)

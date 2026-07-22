@@ -7,7 +7,7 @@ from typing_extensions import overload
 import httpx
 
 from ..types import ai_extract_product_params, ai_extract_products_params
-from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
+from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import required_args, maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -49,6 +49,7 @@ class AIResource(SyncAPIResource):
         *,
         url: str,
         max_age_ms: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -68,6 +69,8 @@ class AIResource(SyncAPIResource):
               younger than this many milliseconds. Defaults to 7 days (604800000 ms) when
               omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
 
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -86,6 +89,7 @@ class AIResource(SyncAPIResource):
                 {
                     "url": url,
                     "max_age_ms": max_age_ms,
+                    "tags": tags,
                     "timeout_ms": timeout_ms,
                 },
                 ai_extract_product_params.AIExtractProductParams,
@@ -103,6 +107,7 @@ class AIResource(SyncAPIResource):
         domain: str,
         max_age_ms: int | Omit = omit,
         max_products: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -126,6 +131,8 @@ class AIResource(SyncAPIResource):
 
           max_products: Maximum number of products to extract.
 
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -147,6 +154,7 @@ class AIResource(SyncAPIResource):
         direct_url: str,
         max_age_ms: int | Omit = omit,
         max_products: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -171,6 +179,8 @@ class AIResource(SyncAPIResource):
 
           max_products: Maximum number of products to extract.
 
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -192,6 +202,7 @@ class AIResource(SyncAPIResource):
         domain: str | Omit = omit,
         max_age_ms: int | Omit = omit,
         max_products: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         direct_url: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -208,6 +219,7 @@ class AIResource(SyncAPIResource):
                     "domain": domain,
                     "max_age_ms": max_age_ms,
                     "max_products": max_products,
+                    "tags": tags,
                     "timeout_ms": timeout_ms,
                     "direct_url": direct_url,
                 },
@@ -245,6 +257,7 @@ class AsyncAIResource(AsyncAPIResource):
         *,
         url: str,
         max_age_ms: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -264,6 +277,8 @@ class AsyncAIResource(AsyncAPIResource):
               younger than this many milliseconds. Defaults to 7 days (604800000 ms) when
               omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
 
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -282,6 +297,7 @@ class AsyncAIResource(AsyncAPIResource):
                 {
                     "url": url,
                     "max_age_ms": max_age_ms,
+                    "tags": tags,
                     "timeout_ms": timeout_ms,
                 },
                 ai_extract_product_params.AIExtractProductParams,
@@ -299,6 +315,7 @@ class AsyncAIResource(AsyncAPIResource):
         domain: str,
         max_age_ms: int | Omit = omit,
         max_products: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -322,6 +339,8 @@ class AsyncAIResource(AsyncAPIResource):
 
           max_products: Maximum number of products to extract.
 
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -343,6 +362,7 @@ class AsyncAIResource(AsyncAPIResource):
         direct_url: str,
         max_age_ms: int | Omit = omit,
         max_products: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -367,6 +387,8 @@ class AsyncAIResource(AsyncAPIResource):
 
           max_products: Maximum number of products to extract.
 
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -388,6 +410,7 @@ class AsyncAIResource(AsyncAPIResource):
         domain: str | Omit = omit,
         max_age_ms: int | Omit = omit,
         max_products: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         direct_url: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -404,6 +427,7 @@ class AsyncAIResource(AsyncAPIResource):
                     "domain": domain,
                     "max_age_ms": max_age_ms,
                     "max_products": max_products,
+                    "tags": tags,
                     "timeout_ms": timeout_ms,
                     "direct_url": direct_url,
                 },

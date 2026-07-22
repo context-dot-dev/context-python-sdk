@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+from typing import Optional
 from typing_extensions import Annotated, TypedDict
 
+from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
 __all__ = ["WebExtractFontsParams"]
@@ -24,12 +26,19 @@ class WebExtractFontsParams(TypedDict, total=False):
     either 'domain' or 'directUrl', but not both.
     """
 
-    max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
+    max_age_ms: Annotated[Optional[int], PropertyInfo(alias="maxAgeMs")]
     """
-    Maximum age in milliseconds for cached data before the API performs a hard
+    Maximum age in milliseconds for cached brand data before the API performs a hard
     refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
     are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
     year.
+    """
+
+    tags: SequenceNotStr[str]
+    """Optional comma-separated caller-defined tags for tracking this request.
+
+    Tags are recorded on the request's usage log and can be used to filter usage on
+    the dashboard usage page. Up to 20 tags, each 1-50 characters.
     """
 
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]

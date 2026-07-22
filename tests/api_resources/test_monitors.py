@@ -17,7 +17,9 @@ from context.dev.types import (
     MonitorUpdateResponse,
     MonitorListRunsResponse,
     MonitorRetrieveResponse,
+    MonitorGetLimitsResponse,
     MonitorListChangesResponse,
+    MonitorGetCreditUsageResponse,
     MonitorRetrieveChangeResponse,
     MonitorListAccountRunsResponse,
     MonitorListAccountChangesResponse,
@@ -242,12 +244,12 @@ class TestMonitors:
             change_detection_type="exact",
             cursor="cursor",
             limit=1,
-            q="q",
+            q="pricing",
             search_by=["name"],
             search_type="exact",
             status="active",
-            tag="tag",
-            tags=["string"],
+            tag="pricing",
+            tags=["x"],
             target_type="page",
         )
         assert_matches_type(MonitorListResponse, monitor, path=["response"])
@@ -318,6 +320,71 @@ class TestMonitors:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
+    def test_method_get_credit_usage(self, client: ContextDev) -> None:
+        monitor = client.monitors.get_credit_usage()
+        assert_matches_type(MonitorGetCreditUsageResponse, monitor, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_get_credit_usage_with_all_params(self, client: ContextDev) -> None:
+        monitor = client.monitors.get_credit_usage(
+            since=parse_datetime("2026-06-01T00:00:00Z"),
+            until=parse_datetime("2026-06-28T00:00:00Z"),
+        )
+        assert_matches_type(MonitorGetCreditUsageResponse, monitor, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_get_credit_usage(self, client: ContextDev) -> None:
+        response = client.monitors.with_raw_response.get_credit_usage()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        monitor = response.parse()
+        assert_matches_type(MonitorGetCreditUsageResponse, monitor, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_get_credit_usage(self, client: ContextDev) -> None:
+        with client.monitors.with_streaming_response.get_credit_usage() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            monitor = response.parse()
+            assert_matches_type(MonitorGetCreditUsageResponse, monitor, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_get_limits(self, client: ContextDev) -> None:
+        monitor = client.monitors.get_limits()
+        assert_matches_type(MonitorGetLimitsResponse, monitor, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_get_limits(self, client: ContextDev) -> None:
+        response = client.monitors.with_raw_response.get_limits()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        monitor = response.parse()
+        assert_matches_type(MonitorGetLimitsResponse, monitor, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_get_limits(self, client: ContextDev) -> None:
+        with client.monitors.with_streaming_response.get_limits() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            monitor = response.parse()
+            assert_matches_type(MonitorGetLimitsResponse, monitor, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
     def test_method_list_account_changes(self, client: ContextDev) -> None:
         monitor = client.monitors.list_account_changes()
         assert_matches_type(MonitorListAccountChangesResponse, monitor, path=["response"])
@@ -329,11 +396,11 @@ class TestMonitors:
             change_detection_type="exact",
             cursor="cursor",
             limit=1,
-            monitor_id="monitor_id",
-            since=parse_datetime("2019-12-27T18:11:19.117Z"),
-            tag="tag",
+            monitor_id="mon_123",
+            since=parse_datetime("2026-06-01T00:00:00Z"),
+            tag="pricing",
             target_type="page",
-            until=parse_datetime("2019-12-27T18:11:19.117Z"),
+            until=parse_datetime("2026-06-28T00:00:00Z"),
         )
         assert_matches_type(MonitorListAccountChangesResponse, monitor, path=["response"])
 
@@ -412,9 +479,9 @@ class TestMonitors:
             monitor_id="mon_123",
             cursor="cursor",
             limit=1,
-            since=parse_datetime("2019-12-27T18:11:19.117Z"),
-            tag="tag",
-            until=parse_datetime("2019-12-27T18:11:19.117Z"),
+            since=parse_datetime("2026-06-01T00:00:00Z"),
+            tag="pricing",
+            until=parse_datetime("2026-06-28T00:00:00Z"),
         )
         assert_matches_type(MonitorListChangesResponse, monitor, path=["response"])
 
@@ -807,12 +874,12 @@ class TestAsyncMonitors:
             change_detection_type="exact",
             cursor="cursor",
             limit=1,
-            q="q",
+            q="pricing",
             search_by=["name"],
             search_type="exact",
             status="active",
-            tag="tag",
-            tags=["string"],
+            tag="pricing",
+            tags=["x"],
             target_type="page",
         )
         assert_matches_type(MonitorListResponse, monitor, path=["response"])
@@ -883,6 +950,71 @@ class TestAsyncMonitors:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
+    async def test_method_get_credit_usage(self, async_client: AsyncContextDev) -> None:
+        monitor = await async_client.monitors.get_credit_usage()
+        assert_matches_type(MonitorGetCreditUsageResponse, monitor, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_get_credit_usage_with_all_params(self, async_client: AsyncContextDev) -> None:
+        monitor = await async_client.monitors.get_credit_usage(
+            since=parse_datetime("2026-06-01T00:00:00Z"),
+            until=parse_datetime("2026-06-28T00:00:00Z"),
+        )
+        assert_matches_type(MonitorGetCreditUsageResponse, monitor, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_get_credit_usage(self, async_client: AsyncContextDev) -> None:
+        response = await async_client.monitors.with_raw_response.get_credit_usage()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        monitor = await response.parse()
+        assert_matches_type(MonitorGetCreditUsageResponse, monitor, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_get_credit_usage(self, async_client: AsyncContextDev) -> None:
+        async with async_client.monitors.with_streaming_response.get_credit_usage() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            monitor = await response.parse()
+            assert_matches_type(MonitorGetCreditUsageResponse, monitor, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_get_limits(self, async_client: AsyncContextDev) -> None:
+        monitor = await async_client.monitors.get_limits()
+        assert_matches_type(MonitorGetLimitsResponse, monitor, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_get_limits(self, async_client: AsyncContextDev) -> None:
+        response = await async_client.monitors.with_raw_response.get_limits()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        monitor = await response.parse()
+        assert_matches_type(MonitorGetLimitsResponse, monitor, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_get_limits(self, async_client: AsyncContextDev) -> None:
+        async with async_client.monitors.with_streaming_response.get_limits() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            monitor = await response.parse()
+            assert_matches_type(MonitorGetLimitsResponse, monitor, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
     async def test_method_list_account_changes(self, async_client: AsyncContextDev) -> None:
         monitor = await async_client.monitors.list_account_changes()
         assert_matches_type(MonitorListAccountChangesResponse, monitor, path=["response"])
@@ -894,11 +1026,11 @@ class TestAsyncMonitors:
             change_detection_type="exact",
             cursor="cursor",
             limit=1,
-            monitor_id="monitor_id",
-            since=parse_datetime("2019-12-27T18:11:19.117Z"),
-            tag="tag",
+            monitor_id="mon_123",
+            since=parse_datetime("2026-06-01T00:00:00Z"),
+            tag="pricing",
             target_type="page",
-            until=parse_datetime("2019-12-27T18:11:19.117Z"),
+            until=parse_datetime("2026-06-28T00:00:00Z"),
         )
         assert_matches_type(MonitorListAccountChangesResponse, monitor, path=["response"])
 
@@ -977,9 +1109,9 @@ class TestAsyncMonitors:
             monitor_id="mon_123",
             cursor="cursor",
             limit=1,
-            since=parse_datetime("2019-12-27T18:11:19.117Z"),
-            tag="tag",
-            until=parse_datetime("2019-12-27T18:11:19.117Z"),
+            since=parse_datetime("2026-06-01T00:00:00Z"),
+            tag="pricing",
+            until=parse_datetime("2026-06-28T00:00:00Z"),
         )
         assert_matches_type(MonitorListChangesResponse, monitor, path=["response"])
 

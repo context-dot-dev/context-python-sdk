@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+from typing import Union, Optional
 from typing_extensions import Literal, Annotated, TypedDict
 
+from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
 __all__ = ["WebScreenshotParams", "Viewport"]
@@ -222,9 +224,10 @@ class WebScreenshotParams(TypedDict, total=False):
         "zm",
         "zw",
     ]
-    """Two-letter ISO 3166-1 alpha-2 country code for the website request location.
-
-    When provided, Context.dev fetches the target page from that country.
+    """
+    Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
+    residential proxy exit location. Must be one of Context.dev's supported
+    countries. When provided, Context.dev fetches the target page from that country.
     """
 
     direct_url: Annotated[str, PropertyInfo(alias="directUrl")]
@@ -248,14 +251,14 @@ class WebScreenshotParams(TypedDict, total=False):
     provided, takes a viewport screenshot (standard browser view).
     """
 
-    handle_cookie_popup: Annotated[Literal["true", "false"], PropertyInfo(alias="handleCookiePopup")]
+    handle_cookie_popup: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="handleCookiePopup")]
     """Optional parameter to control cookie/consent popup handling.
 
     If 'true', we dismiss cookie banner before capture. If 'false' or not provided,
     captures the page without that step.
     """
 
-    max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
+    max_age_ms: Annotated[Optional[int], PropertyInfo(alias="maxAgeMs")]
     """
     Return a cached screenshot if a prior screenshot for the same parameters exists
     and is younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
@@ -271,7 +274,7 @@ class WebScreenshotParams(TypedDict, total=False):
     applicable when using 'domain', not 'directUrl'.
     """
 
-    scroll_offset: Annotated[int, PropertyInfo(alias="scrollOffset")]
+    scroll_offset: Annotated[Optional[int], PropertyInfo(alias="scrollOffset")]
     """
     Optional vertical scroll offset in pixels for capturing a long page in
     viewport-sized chunks. When provided, the full page is captured once and the
@@ -279,6 +282,13 @@ class WebScreenshotParams(TypedDict, total=False):
     request scrollOffset=0, then 1080, then 2160 to walk a 1920x1080 landing page
     top to bottom). The final slice may be shorter than the viewport height. Takes
     precedence over fullScreenshot. Max: 100000.
+    """
+
+    tags: SequenceNotStr[str]
+    """Optional comma-separated caller-defined tags for tracking this request.
+
+    Tags are recorded on the request's usage log and can be used to filter usage on
+    the dashboard usage page. Up to 20 tags, each 1-50 characters.
     """
 
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
@@ -291,11 +301,19 @@ class WebScreenshotParams(TypedDict, total=False):
     viewport: Viewport
     """Optional browser viewport dimensions for the screenshot. Defaults to 1920x1080."""
 
-    wait_for_ms: Annotated[int, PropertyInfo(alias="waitForMs")]
+    wait_for_ms: Annotated[Optional[int], PropertyInfo(alias="waitForMs")]
     """
     Optional browser wait time in milliseconds after initial page load before taking
     the screenshot. Min: 0. Max: 30000 (30 seconds). Defaults to 3000 ms when
     omitted.
+    """
+
+    zdr: Literal["enabled", "disabled"]
+    """
+    Set to enabled to bypass shared caches and omit request and response content
+    from retained usage logs. Requires zero data retention to be enabled for your
+    organization (contact support@context.dev), otherwise the request fails with
+    ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
     """
 
 

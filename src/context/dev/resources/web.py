@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict
+from typing import Dict, Union, Iterable, Optional
 from typing_extensions import Literal
 
 import httpx
@@ -79,7 +79,9 @@ class WebResource(SyncAPIResource):
         max_depth: int | Omit = omit,
         max_pages: int | Omit = omit,
         pdf: web_extract_params.Pdf | Omit = omit,
+        settle_animations: bool | Omit = omit,
         stop_after_ms: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         wait_for_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -123,8 +125,14 @@ class WebResource(SyncAPIResource):
 
           max_pages: Maximum number of pages to analyze for extraction. Hard cap: 50. Defaults to 5.
 
+          settle_animations: When true, waits briefly for CSS and transition animations to settle before
+              extracting each crawled page. Defaults to false. This adds a bit of latency in
+              exchange for more stable output on animated pages.
+
           stop_after_ms: Soft time budget for the crawl in milliseconds. Min: 10000 (10s). Max: 110000
               (110s). Default: 80000 (80s).
+
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -155,7 +163,9 @@ class WebResource(SyncAPIResource):
                     "max_depth": max_depth,
                     "max_pages": max_pages,
                     "pdf": pdf,
+                    "settle_animations": settle_animations,
                     "stop_after_ms": stop_after_ms,
+                    "tags": tags,
                     "timeout_ms": timeout_ms,
                     "wait_for_ms": wait_for_ms,
                 },
@@ -172,6 +182,7 @@ class WebResource(SyncAPIResource):
         *,
         domain: str,
         num_competitors: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -189,6 +200,10 @@ class WebResource(SyncAPIResource):
               and normalized to their domain.
 
           num_competitors: Exact number of direct competitors to return. Defaults to 5.
+
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -213,6 +228,7 @@ class WebResource(SyncAPIResource):
                     {
                         "domain": domain,
                         "num_competitors": num_competitors,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                     },
                     web_extract_competitors_params.WebExtractCompetitorsParams,
@@ -226,7 +242,8 @@ class WebResource(SyncAPIResource):
         *,
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
-        max_age_ms: int | Omit = omit,
+        max_age_ms: Optional[int] | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -248,10 +265,14 @@ class WebResource(SyncAPIResource):
               domain will be automatically normalized and validated. You must provide either
               'domain' or 'directUrl', but not both.
 
-          max_age_ms: Maximum age in milliseconds for cached data before the API performs a hard
+          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
               refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
               are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
               year.
+
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -277,6 +298,7 @@ class WebResource(SyncAPIResource):
                         "direct_url": direct_url,
                         "domain": domain,
                         "max_age_ms": max_age_ms,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                     },
                     web_extract_fonts_params.WebExtractFontsParams,
@@ -291,7 +313,8 @@ class WebResource(SyncAPIResource):
         color_scheme: Literal["light", "dark"] | Omit = omit,
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
-        max_age_ms: int | Omit = omit,
+        max_age_ms: Optional[int] | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -317,10 +340,14 @@ class WebResource(SyncAPIResource):
               domain will be automatically normalized and validated. You must provide either
               'domain' or 'directUrl', but not both.
 
-          max_age_ms: Maximum age in milliseconds for cached data before the API performs a hard
+          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
               refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
               are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
               year.
+
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -347,6 +374,7 @@ class WebResource(SyncAPIResource):
                         "direct_url": direct_url,
                         "domain": domain,
                         "max_age_ms": max_age_ms,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                     },
                     web_extract_styleguide_params.WebExtractStyleguideParams,
@@ -569,13 +597,15 @@ class WebResource(SyncAPIResource):
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
         full_screenshot: Literal["true", "false"] | Omit = omit,
-        handle_cookie_popup: Literal["true", "false"] | Omit = omit,
-        max_age_ms: int | Omit = omit,
+        handle_cookie_popup: Union[bool, Literal["true", "false"]] | Omit = omit,
+        max_age_ms: Optional[int] | Omit = omit,
         page: Literal["login", "signup", "blog", "careers", "pricing", "terms", "privacy", "contact"] | Omit = omit,
-        scroll_offset: int | Omit = omit,
+        scroll_offset: Optional[int] | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         viewport: web_screenshot_params.Viewport | Omit = omit,
-        wait_for_ms: int | Omit = omit,
+        wait_for_ms: Optional[int] | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -590,8 +620,9 @@ class WebResource(SyncAPIResource):
           color_scheme: Optional parameter to choose the site's visual theme in the screenshot. Use
               'light' or 'dark' when the site offers both appearances.
 
-          country: Two-letter ISO 3166-1 alpha-2 country code for the website request location.
-              When provided, Context.dev fetches the target page from that country.
+          country: Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
+              residential proxy exit location. Must be one of Context.dev's supported
+              countries. When provided, Context.dev fetches the target page from that country.
 
           direct_url: A specific URL to screenshot directly, bypassing domain resolution (e.g.,
               'https://example.com/pricing'). When provided, the screenshot is taken of this
@@ -626,6 +657,10 @@ class WebResource(SyncAPIResource):
               top to bottom). The final slice may be shorter than the viewport height. Takes
               precedence over fullScreenshot. Max: 100000.
 
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -635,6 +670,11 @@ class WebResource(SyncAPIResource):
           wait_for_ms: Optional browser wait time in milliseconds after initial page load before taking
               the screenshot. Min: 0. Max: 30000 (30 seconds). Defaults to 3000 ms when
               omitted.
+
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Requires zero data retention to be enabled for your
+              organization (contact support@context.dev), otherwise the request fails with
+              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
 
           extra_headers: Send extra headers
 
@@ -662,9 +702,11 @@ class WebResource(SyncAPIResource):
                         "max_age_ms": max_age_ms,
                         "page": page,
                         "scroll_offset": scroll_offset,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                         "viewport": viewport,
                         "wait_for_ms": wait_for_ms,
+                        "zdr": zdr,
                     },
                     web_screenshot_params.WebScreenshotParams,
                 ),
@@ -924,6 +966,7 @@ class WebResource(SyncAPIResource):
         markdown_options: web_search_params.MarkdownOptions | Omit = omit,
         num_results: int | Omit = omit,
         query_fanout: bool | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -956,6 +999,8 @@ class WebResource(SyncAPIResource):
 
           query_fanout: Expand the query into multiple parallel variants for broader recall.
 
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -980,6 +1025,7 @@ class WebResource(SyncAPIResource):
                     "markdown_options": markdown_options,
                     "num_results": num_results,
                     "query_fanout": query_fanout,
+                    "tags": tags,
                     "timeout_ms": timeout_ms,
                 },
                 web_search_params.WebSearchParams,
@@ -1214,10 +1260,12 @@ class WebResource(SyncAPIResource):
         settle_animations: bool | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
         stop_after_ms: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         url_regex: str | Omit = omit,
         use_main_content_only: bool | Omit = omit,
         wait_for_ms: int | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1278,6 +1326,8 @@ class WebResource(SyncAPIResource):
               instead of continuing. Min: 10000 (10s). Max: 110000 (110s). Default: 80000
               (80s).
 
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -1289,6 +1339,11 @@ class WebResource(SyncAPIResource):
 
           wait_for_ms: Optional browser wait time in milliseconds after initial page load for each
               crawled page. Min: 0. Max: 30000 (30 seconds).
+
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Requires zero data retention to be enabled for your
+              organization (contact support@context.dev), otherwise the request fails with
+              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
 
           extra_headers: Send extra headers
 
@@ -1317,10 +1372,12 @@ class WebResource(SyncAPIResource):
                     "settle_animations": settle_animations,
                     "shorten_base64_images": shorten_base64_images,
                     "stop_after_ms": stop_after_ms,
+                    "tags": tags,
                     "timeout_ms": timeout_ms,
                     "url_regex": url_regex,
                     "use_main_content_only": use_main_content_only,
                     "wait_for_ms": wait_for_ms,
+                    "zdr": zdr,
                 },
                 web_web_crawl_md_params.WebWebCrawlMdParams,
             ),
@@ -1334,6 +1391,7 @@ class WebResource(SyncAPIResource):
         self,
         *,
         url: str,
+        actions: Optional[Iterable[web_web_scrape_html_params.Action]] | Omit = omit,
         country: Literal[
             "ad",
             "ae",
@@ -1541,16 +1599,18 @@ class WebResource(SyncAPIResource):
             "zw",
         ]
         | Omit = omit,
-        exclude_selectors: SequenceNotStr[str] | Omit = omit,
+        exclude_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
-        include_frames: bool | Omit = omit,
-        include_selectors: SequenceNotStr[str] | Omit = omit,
-        max_age_ms: int | Omit = omit,
+        include_frames: Union[bool, Literal["true", "false"]] | Omit = omit,
+        include_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
+        max_age_ms: Optional[int] | Omit = omit,
         pdf: web_web_scrape_html_params.Pdf | Omit = omit,
-        settle_animations: bool | Omit = omit,
+        settle_animations: Union[bool, Literal["true", "false"]] | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
-        use_main_content_only: bool | Omit = omit,
-        wait_for_ms: int | Omit = omit,
+        use_main_content_only: Union[bool, Literal["true", "false"]] | Omit = omit,
+        wait_for_ms: Optional[int] | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1558,14 +1618,21 @@ class WebResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebWebScrapeHTMLResponse:
-        """
-        Scrapes the given URL and returns the raw HTML content of the page.
+        """Scrapes the given URL and returns the raw HTML content of the page.
+
+        The base
+        request costs 1 credit; requests with browser actions cost 2 credits.
 
         Args:
           url: Full URL to scrape (must include http:// or https:// protocol)
 
-          country: Two-letter ISO 3166-1 alpha-2 country code for the website request location.
-              When provided, Context.dev fetches the target page from that country.
+          actions: Optional browser actions executed in array order after the page loads and before
+              content is captured. Requires a paid plan. Send a JSON array in the query
+              parameter. Maximum: 5 actions.
+
+          country: Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
+              residential proxy exit location. Must be one of Context.dev's supported
+              countries. When provided, Context.dev fetches the target page from that country.
 
           exclude_selectors: CSS selectors to remove from the result. Applied after includeSelectors.
               Exclusion takes precedence: an element matching both is removed. Examples:
@@ -1592,6 +1659,10 @@ class WebResource(SyncAPIResource):
               extracting HTML. Defaults to false. This adds a bit of latency in exchange for
               more stable output on animated pages.
 
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -1602,6 +1673,11 @@ class WebResource(SyncAPIResource):
           wait_for_ms:
               Optional browser wait time in milliseconds after initial page load. Min: 0. Max:
               30000 (30 seconds).
+
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Requires zero data retention to be enabled for your
+              organization (contact support@context.dev), otherwise the request fails with
+              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
 
           extra_headers: Send extra headers
 
@@ -1621,6 +1697,7 @@ class WebResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "url": url,
+                        "actions": actions,
                         "country": country,
                         "exclude_selectors": exclude_selectors,
                         "headers": headers,
@@ -1629,9 +1706,11 @@ class WebResource(SyncAPIResource):
                         "max_age_ms": max_age_ms,
                         "pdf": pdf,
                         "settle_animations": settle_animations,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                         "use_main_content_only": use_main_content_only,
                         "wait_for_ms": wait_for_ms,
+                        "zdr": zdr,
                     },
                     web_web_scrape_html_params.WebWebScrapeHTMLParams,
                 ),
@@ -1643,12 +1722,14 @@ class WebResource(SyncAPIResource):
         self,
         *,
         url: str,
-        dedupe: bool | Omit = omit,
-        enrichment: web_web_scrape_images_params.Enrichment | Omit = omit,
+        actions: Optional[Iterable[web_web_scrape_images_params.Action]] | Omit = omit,
+        dedupe: Union[bool, Literal["true", "false"]] | Omit = omit,
+        enrichment: Optional[web_web_scrape_images_params.Enrichment] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
-        max_age_ms: int | Omit = omit,
+        max_age_ms: Optional[int] | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
-        wait_for_ms: int | Omit = omit,
+        wait_for_ms: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1659,11 +1740,16 @@ class WebResource(SyncAPIResource):
         """
         Extract image assets from a web page, including standard URLs, inline SVGs, data
         URIs, responsive image sources, metadata, CSS backgrounds, video posters, and
-        embeds. The base request costs 1 credit. When enrichment is enabled, the entire
-        call costs 5 credits.
+        embeds. The base request costs 1 credit, or 2 credits with browser actions. When
+        enrichment is enabled, the entire call costs 5 credits, including requests that
+        also use actions.
 
         Args:
           url: Page URL to inspect. Must include http:// or https://.
+
+          actions: Optional browser actions executed in array order after the page loads and before
+              content is captured. Requires a paid plan. Send a JSON array in the query
+              parameter. Maximum: 5 actions.
 
           dedupe: When true, visually duplicate images are removed: every image is loaded and
               perceptually hashed, and only the highest-resolution copy of each duplicate
@@ -1679,6 +1765,10 @@ class WebResource(SyncAPIResource):
 
           max_age_ms: Reuse a cached result this many milliseconds old or newer. Default: 86400000 (1
               day). Set to 0 to bypass cache. Maximum: 2592000000 (30 days).
+
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -1705,10 +1795,12 @@ class WebResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "url": url,
+                        "actions": actions,
                         "dedupe": dedupe,
                         "enrichment": enrichment,
                         "headers": headers,
                         "max_age_ms": max_age_ms,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                         "wait_for_ms": wait_for_ms,
                     },
@@ -1722,6 +1814,7 @@ class WebResource(SyncAPIResource):
         self,
         *,
         url: str,
+        actions: Optional[Iterable[web_web_scrape_md_params.Action]] | Omit = omit,
         country: Literal[
             "ad",
             "ae",
@@ -1929,19 +2022,21 @@ class WebResource(SyncAPIResource):
             "zw",
         ]
         | Omit = omit,
-        exclude_selectors: SequenceNotStr[str] | Omit = omit,
+        exclude_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
-        include_frames: bool | Omit = omit,
-        include_images: bool | Omit = omit,
-        include_links: bool | Omit = omit,
-        include_selectors: SequenceNotStr[str] | Omit = omit,
-        max_age_ms: int | Omit = omit,
+        include_frames: Union[bool, Literal["true", "false"]] | Omit = omit,
+        include_images: Union[bool, Literal["true", "false"]] | Omit = omit,
+        include_links: Union[bool, Literal["true", "false"]] | Omit = omit,
+        include_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
+        max_age_ms: Optional[int] | Omit = omit,
         pdf: web_web_scrape_md_params.Pdf | Omit = omit,
-        settle_animations: bool | Omit = omit,
-        shorten_base64_images: bool | Omit = omit,
+        settle_animations: Union[bool, Literal["true", "false"]] | Omit = omit,
+        shorten_base64_images: Union[bool, Literal["true", "false"]] | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
-        use_main_content_only: bool | Omit = omit,
-        wait_for_ms: int | Omit = omit,
+        use_main_content_only: Union[bool, Literal["true", "false"]] | Omit = omit,
+        wait_for_ms: Optional[int] | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1957,23 +2052,28 @@ class WebResource(SyncAPIResource):
 
         ### Billing & errors
 
-        | HTTP status | Billed?        | Meaning                                                                                  |
-        | ----------- | -------------- | ---------------------------------------------------------------------------------------- |
-        | 200         | Yes — 1 credit | Successful scrape, including a zero-length result when includeSelectors matched nothing  |
-        | 400         | No             | Invalid input, skipped PDF, or the page could not be scraped                             |
-        | 401 / 403   | No             | Invalid/disabled key, insufficient permissions, or credits exhausted; inspect error_code |
-        | 404         | No             | Target page returned or fingerprinted as not found                                       |
-        | 408         | No             | Request timed out                                                                        |
-        | 415         | No             | Unsupported content type                                                                 |
-        | 429         | No             | Per-minute rate limit exceeded; honor Retry-After                                        |
-        | 500         | No             | Internal error                                                                           |
+        | HTTP status | Billed?                                   | Meaning                                                                                  |
+        | ----------- | ----------------------------------------- | ---------------------------------------------------------------------------------------- |
+        | 200         | Yes — 1 credit, or 2 credits with actions | Successful scrape, including a zero-length result when includeSelectors matched nothing  |
+        | 400         | No                                        | Invalid input, skipped PDF, or the page could not be scraped                             |
+        | 401 / 403   | No                                        | Invalid/disabled key, insufficient permissions, or credits exhausted; inspect error_code |
+        | 404         | No                                        | Target page returned or fingerprinted as not found                                       |
+        | 408         | No                                        | Request timed out                                                                        |
+        | 415         | No                                        | Unsupported content type                                                                 |
+        | 429         | No                                        | Per-minute rate limit exceeded; honor Retry-After                                        |
+        | 500         | No                                        | Internal error                                                                           |
 
         Args:
           url: Full URL to scrape into LLM usable Markdown (must include http:// or https://
               protocol)
 
-          country: Two-letter ISO 3166-1 alpha-2 country code for the website request location.
-              When provided, Context.dev fetches the target page from that country.
+          actions: Optional browser actions executed in array order after the page loads and before
+              content is captured. Requires a paid plan. Send a JSON array in the query
+              parameter. Maximum: 5 actions.
+
+          country: Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
+              residential proxy exit location. Must be one of Context.dev's supported
+              countries. When provided, Context.dev fetches the target page from that country.
 
           exclude_selectors: CSS selectors to remove before conversion to Markdown. Applied after
               includeSelectors. Exclusion takes precedence: an element matching both is
@@ -2006,6 +2106,10 @@ class WebResource(SyncAPIResource):
 
           shorten_base64_images: Shorten base64-encoded image data in the Markdown output
 
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -2015,6 +2119,11 @@ class WebResource(SyncAPIResource):
 
           wait_for_ms: Optional browser wait time in milliseconds after initial page load before
               converting the page to Markdown. Min: 0. Max: 30000 (30 seconds).
+
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Requires zero data retention to be enabled for your
+              organization (contact support@context.dev), otherwise the request fails with
+              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
 
           extra_headers: Send extra headers
 
@@ -2034,6 +2143,7 @@ class WebResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "url": url,
+                        "actions": actions,
                         "country": country,
                         "exclude_selectors": exclude_selectors,
                         "headers": headers,
@@ -2045,9 +2155,11 @@ class WebResource(SyncAPIResource):
                         "pdf": pdf,
                         "settle_animations": settle_animations,
                         "shorten_base64_images": shorten_base64_images,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                         "use_main_content_only": use_main_content_only,
                         "wait_for_ms": wait_for_ms,
+                        "zdr": zdr,
                     },
                     web_web_scrape_md_params.WebWebScrapeMdParams,
                 ),
@@ -2061,8 +2173,11 @@ class WebResource(SyncAPIResource):
         domain: str,
         headers: Dict[str, str] | Omit = omit,
         max_links: int | Omit = omit,
+        sitemap_url: str | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         url_regex: str | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -2083,12 +2198,24 @@ class WebResource(SyncAPIResource):
           max_links: Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
               Minimum is 1, maximum is 100,000.
 
+          sitemap_url: Optional explicit sitemap URL. When provided, exactly this sitemap is crawled
+              instead of discovering the domain's sitemaps.
+
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
 
           url_regex: Optional RE2-compatible regex pattern. Only URLs matching this pattern are
               returned and counted against maxLinks.
+
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Requires zero data retention to be enabled for your
+              organization (contact support@context.dev), otherwise the request fails with
+              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
 
           extra_headers: Send extra headers
 
@@ -2110,8 +2237,11 @@ class WebResource(SyncAPIResource):
                         "domain": domain,
                         "headers": headers,
                         "max_links": max_links,
+                        "sitemap_url": sitemap_url,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                         "url_regex": url_regex,
+                        "zdr": zdr,
                     },
                     web_web_scrape_sitemap_params.WebWebScrapeSitemapParams,
                 ),
@@ -2153,7 +2283,9 @@ class AsyncWebResource(AsyncAPIResource):
         max_depth: int | Omit = omit,
         max_pages: int | Omit = omit,
         pdf: web_extract_params.Pdf | Omit = omit,
+        settle_animations: bool | Omit = omit,
         stop_after_ms: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         wait_for_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -2197,8 +2329,14 @@ class AsyncWebResource(AsyncAPIResource):
 
           max_pages: Maximum number of pages to analyze for extraction. Hard cap: 50. Defaults to 5.
 
+          settle_animations: When true, waits briefly for CSS and transition animations to settle before
+              extracting each crawled page. Defaults to false. This adds a bit of latency in
+              exchange for more stable output on animated pages.
+
           stop_after_ms: Soft time budget for the crawl in milliseconds. Min: 10000 (10s). Max: 110000
               (110s). Default: 80000 (80s).
+
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -2229,7 +2367,9 @@ class AsyncWebResource(AsyncAPIResource):
                     "max_depth": max_depth,
                     "max_pages": max_pages,
                     "pdf": pdf,
+                    "settle_animations": settle_animations,
                     "stop_after_ms": stop_after_ms,
+                    "tags": tags,
                     "timeout_ms": timeout_ms,
                     "wait_for_ms": wait_for_ms,
                 },
@@ -2246,6 +2386,7 @@ class AsyncWebResource(AsyncAPIResource):
         *,
         domain: str,
         num_competitors: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -2263,6 +2404,10 @@ class AsyncWebResource(AsyncAPIResource):
               and normalized to their domain.
 
           num_competitors: Exact number of direct competitors to return. Defaults to 5.
+
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -2287,6 +2432,7 @@ class AsyncWebResource(AsyncAPIResource):
                     {
                         "domain": domain,
                         "num_competitors": num_competitors,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                     },
                     web_extract_competitors_params.WebExtractCompetitorsParams,
@@ -2300,7 +2446,8 @@ class AsyncWebResource(AsyncAPIResource):
         *,
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
-        max_age_ms: int | Omit = omit,
+        max_age_ms: Optional[int] | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -2322,10 +2469,14 @@ class AsyncWebResource(AsyncAPIResource):
               domain will be automatically normalized and validated. You must provide either
               'domain' or 'directUrl', but not both.
 
-          max_age_ms: Maximum age in milliseconds for cached data before the API performs a hard
+          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
               refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
               are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
               year.
+
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -2351,6 +2502,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "direct_url": direct_url,
                         "domain": domain,
                         "max_age_ms": max_age_ms,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                     },
                     web_extract_fonts_params.WebExtractFontsParams,
@@ -2365,7 +2517,8 @@ class AsyncWebResource(AsyncAPIResource):
         color_scheme: Literal["light", "dark"] | Omit = omit,
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
-        max_age_ms: int | Omit = omit,
+        max_age_ms: Optional[int] | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -2391,10 +2544,14 @@ class AsyncWebResource(AsyncAPIResource):
               domain will be automatically normalized and validated. You must provide either
               'domain' or 'directUrl', but not both.
 
-          max_age_ms: Maximum age in milliseconds for cached data before the API performs a hard
+          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
               refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
               are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
               year.
+
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -2421,6 +2578,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "direct_url": direct_url,
                         "domain": domain,
                         "max_age_ms": max_age_ms,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                     },
                     web_extract_styleguide_params.WebExtractStyleguideParams,
@@ -2643,13 +2801,15 @@ class AsyncWebResource(AsyncAPIResource):
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
         full_screenshot: Literal["true", "false"] | Omit = omit,
-        handle_cookie_popup: Literal["true", "false"] | Omit = omit,
-        max_age_ms: int | Omit = omit,
+        handle_cookie_popup: Union[bool, Literal["true", "false"]] | Omit = omit,
+        max_age_ms: Optional[int] | Omit = omit,
         page: Literal["login", "signup", "blog", "careers", "pricing", "terms", "privacy", "contact"] | Omit = omit,
-        scroll_offset: int | Omit = omit,
+        scroll_offset: Optional[int] | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         viewport: web_screenshot_params.Viewport | Omit = omit,
-        wait_for_ms: int | Omit = omit,
+        wait_for_ms: Optional[int] | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -2664,8 +2824,9 @@ class AsyncWebResource(AsyncAPIResource):
           color_scheme: Optional parameter to choose the site's visual theme in the screenshot. Use
               'light' or 'dark' when the site offers both appearances.
 
-          country: Two-letter ISO 3166-1 alpha-2 country code for the website request location.
-              When provided, Context.dev fetches the target page from that country.
+          country: Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
+              residential proxy exit location. Must be one of Context.dev's supported
+              countries. When provided, Context.dev fetches the target page from that country.
 
           direct_url: A specific URL to screenshot directly, bypassing domain resolution (e.g.,
               'https://example.com/pricing'). When provided, the screenshot is taken of this
@@ -2700,6 +2861,10 @@ class AsyncWebResource(AsyncAPIResource):
               top to bottom). The final slice may be shorter than the viewport height. Takes
               precedence over fullScreenshot. Max: 100000.
 
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -2709,6 +2874,11 @@ class AsyncWebResource(AsyncAPIResource):
           wait_for_ms: Optional browser wait time in milliseconds after initial page load before taking
               the screenshot. Min: 0. Max: 30000 (30 seconds). Defaults to 3000 ms when
               omitted.
+
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Requires zero data retention to be enabled for your
+              organization (contact support@context.dev), otherwise the request fails with
+              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
 
           extra_headers: Send extra headers
 
@@ -2736,9 +2906,11 @@ class AsyncWebResource(AsyncAPIResource):
                         "max_age_ms": max_age_ms,
                         "page": page,
                         "scroll_offset": scroll_offset,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                         "viewport": viewport,
                         "wait_for_ms": wait_for_ms,
+                        "zdr": zdr,
                     },
                     web_screenshot_params.WebScreenshotParams,
                 ),
@@ -2998,6 +3170,7 @@ class AsyncWebResource(AsyncAPIResource):
         markdown_options: web_search_params.MarkdownOptions | Omit = omit,
         num_results: int | Omit = omit,
         query_fanout: bool | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -3030,6 +3203,8 @@ class AsyncWebResource(AsyncAPIResource):
 
           query_fanout: Expand the query into multiple parallel variants for broader recall.
 
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -3054,6 +3229,7 @@ class AsyncWebResource(AsyncAPIResource):
                     "markdown_options": markdown_options,
                     "num_results": num_results,
                     "query_fanout": query_fanout,
+                    "tags": tags,
                     "timeout_ms": timeout_ms,
                 },
                 web_search_params.WebSearchParams,
@@ -3288,10 +3464,12 @@ class AsyncWebResource(AsyncAPIResource):
         settle_animations: bool | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
         stop_after_ms: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         url_regex: str | Omit = omit,
         use_main_content_only: bool | Omit = omit,
         wait_for_ms: int | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -3352,6 +3530,8 @@ class AsyncWebResource(AsyncAPIResource):
               instead of continuing. Min: 10000 (10s). Max: 110000 (110s). Default: 80000
               (80s).
 
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -3363,6 +3543,11 @@ class AsyncWebResource(AsyncAPIResource):
 
           wait_for_ms: Optional browser wait time in milliseconds after initial page load for each
               crawled page. Min: 0. Max: 30000 (30 seconds).
+
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Requires zero data retention to be enabled for your
+              organization (contact support@context.dev), otherwise the request fails with
+              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
 
           extra_headers: Send extra headers
 
@@ -3391,10 +3576,12 @@ class AsyncWebResource(AsyncAPIResource):
                     "settle_animations": settle_animations,
                     "shorten_base64_images": shorten_base64_images,
                     "stop_after_ms": stop_after_ms,
+                    "tags": tags,
                     "timeout_ms": timeout_ms,
                     "url_regex": url_regex,
                     "use_main_content_only": use_main_content_only,
                     "wait_for_ms": wait_for_ms,
+                    "zdr": zdr,
                 },
                 web_web_crawl_md_params.WebWebCrawlMdParams,
             ),
@@ -3408,6 +3595,7 @@ class AsyncWebResource(AsyncAPIResource):
         self,
         *,
         url: str,
+        actions: Optional[Iterable[web_web_scrape_html_params.Action]] | Omit = omit,
         country: Literal[
             "ad",
             "ae",
@@ -3615,16 +3803,18 @@ class AsyncWebResource(AsyncAPIResource):
             "zw",
         ]
         | Omit = omit,
-        exclude_selectors: SequenceNotStr[str] | Omit = omit,
+        exclude_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
-        include_frames: bool | Omit = omit,
-        include_selectors: SequenceNotStr[str] | Omit = omit,
-        max_age_ms: int | Omit = omit,
+        include_frames: Union[bool, Literal["true", "false"]] | Omit = omit,
+        include_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
+        max_age_ms: Optional[int] | Omit = omit,
         pdf: web_web_scrape_html_params.Pdf | Omit = omit,
-        settle_animations: bool | Omit = omit,
+        settle_animations: Union[bool, Literal["true", "false"]] | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
-        use_main_content_only: bool | Omit = omit,
-        wait_for_ms: int | Omit = omit,
+        use_main_content_only: Union[bool, Literal["true", "false"]] | Omit = omit,
+        wait_for_ms: Optional[int] | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -3632,14 +3822,21 @@ class AsyncWebResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebWebScrapeHTMLResponse:
-        """
-        Scrapes the given URL and returns the raw HTML content of the page.
+        """Scrapes the given URL and returns the raw HTML content of the page.
+
+        The base
+        request costs 1 credit; requests with browser actions cost 2 credits.
 
         Args:
           url: Full URL to scrape (must include http:// or https:// protocol)
 
-          country: Two-letter ISO 3166-1 alpha-2 country code for the website request location.
-              When provided, Context.dev fetches the target page from that country.
+          actions: Optional browser actions executed in array order after the page loads and before
+              content is captured. Requires a paid plan. Send a JSON array in the query
+              parameter. Maximum: 5 actions.
+
+          country: Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
+              residential proxy exit location. Must be one of Context.dev's supported
+              countries. When provided, Context.dev fetches the target page from that country.
 
           exclude_selectors: CSS selectors to remove from the result. Applied after includeSelectors.
               Exclusion takes precedence: an element matching both is removed. Examples:
@@ -3666,6 +3863,10 @@ class AsyncWebResource(AsyncAPIResource):
               extracting HTML. Defaults to false. This adds a bit of latency in exchange for
               more stable output on animated pages.
 
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -3676,6 +3877,11 @@ class AsyncWebResource(AsyncAPIResource):
           wait_for_ms:
               Optional browser wait time in milliseconds after initial page load. Min: 0. Max:
               30000 (30 seconds).
+
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Requires zero data retention to be enabled for your
+              organization (contact support@context.dev), otherwise the request fails with
+              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
 
           extra_headers: Send extra headers
 
@@ -3695,6 +3901,7 @@ class AsyncWebResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "url": url,
+                        "actions": actions,
                         "country": country,
                         "exclude_selectors": exclude_selectors,
                         "headers": headers,
@@ -3703,9 +3910,11 @@ class AsyncWebResource(AsyncAPIResource):
                         "max_age_ms": max_age_ms,
                         "pdf": pdf,
                         "settle_animations": settle_animations,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                         "use_main_content_only": use_main_content_only,
                         "wait_for_ms": wait_for_ms,
+                        "zdr": zdr,
                     },
                     web_web_scrape_html_params.WebWebScrapeHTMLParams,
                 ),
@@ -3717,12 +3926,14 @@ class AsyncWebResource(AsyncAPIResource):
         self,
         *,
         url: str,
-        dedupe: bool | Omit = omit,
-        enrichment: web_web_scrape_images_params.Enrichment | Omit = omit,
+        actions: Optional[Iterable[web_web_scrape_images_params.Action]] | Omit = omit,
+        dedupe: Union[bool, Literal["true", "false"]] | Omit = omit,
+        enrichment: Optional[web_web_scrape_images_params.Enrichment] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
-        max_age_ms: int | Omit = omit,
+        max_age_ms: Optional[int] | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
-        wait_for_ms: int | Omit = omit,
+        wait_for_ms: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -3733,11 +3944,16 @@ class AsyncWebResource(AsyncAPIResource):
         """
         Extract image assets from a web page, including standard URLs, inline SVGs, data
         URIs, responsive image sources, metadata, CSS backgrounds, video posters, and
-        embeds. The base request costs 1 credit. When enrichment is enabled, the entire
-        call costs 5 credits.
+        embeds. The base request costs 1 credit, or 2 credits with browser actions. When
+        enrichment is enabled, the entire call costs 5 credits, including requests that
+        also use actions.
 
         Args:
           url: Page URL to inspect. Must include http:// or https://.
+
+          actions: Optional browser actions executed in array order after the page loads and before
+              content is captured. Requires a paid plan. Send a JSON array in the query
+              parameter. Maximum: 5 actions.
 
           dedupe: When true, visually duplicate images are removed: every image is loaded and
               perceptually hashed, and only the highest-resolution copy of each duplicate
@@ -3753,6 +3969,10 @@ class AsyncWebResource(AsyncAPIResource):
 
           max_age_ms: Reuse a cached result this many milliseconds old or newer. Default: 86400000 (1
               day). Set to 0 to bypass cache. Maximum: 2592000000 (30 days).
+
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -3779,10 +3999,12 @@ class AsyncWebResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "url": url,
+                        "actions": actions,
                         "dedupe": dedupe,
                         "enrichment": enrichment,
                         "headers": headers,
                         "max_age_ms": max_age_ms,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                         "wait_for_ms": wait_for_ms,
                     },
@@ -3796,6 +4018,7 @@ class AsyncWebResource(AsyncAPIResource):
         self,
         *,
         url: str,
+        actions: Optional[Iterable[web_web_scrape_md_params.Action]] | Omit = omit,
         country: Literal[
             "ad",
             "ae",
@@ -4003,19 +4226,21 @@ class AsyncWebResource(AsyncAPIResource):
             "zw",
         ]
         | Omit = omit,
-        exclude_selectors: SequenceNotStr[str] | Omit = omit,
+        exclude_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
-        include_frames: bool | Omit = omit,
-        include_images: bool | Omit = omit,
-        include_links: bool | Omit = omit,
-        include_selectors: SequenceNotStr[str] | Omit = omit,
-        max_age_ms: int | Omit = omit,
+        include_frames: Union[bool, Literal["true", "false"]] | Omit = omit,
+        include_images: Union[bool, Literal["true", "false"]] | Omit = omit,
+        include_links: Union[bool, Literal["true", "false"]] | Omit = omit,
+        include_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
+        max_age_ms: Optional[int] | Omit = omit,
         pdf: web_web_scrape_md_params.Pdf | Omit = omit,
-        settle_animations: bool | Omit = omit,
-        shorten_base64_images: bool | Omit = omit,
+        settle_animations: Union[bool, Literal["true", "false"]] | Omit = omit,
+        shorten_base64_images: Union[bool, Literal["true", "false"]] | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
-        use_main_content_only: bool | Omit = omit,
-        wait_for_ms: int | Omit = omit,
+        use_main_content_only: Union[bool, Literal["true", "false"]] | Omit = omit,
+        wait_for_ms: Optional[int] | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -4031,23 +4256,28 @@ class AsyncWebResource(AsyncAPIResource):
 
         ### Billing & errors
 
-        | HTTP status | Billed?        | Meaning                                                                                  |
-        | ----------- | -------------- | ---------------------------------------------------------------------------------------- |
-        | 200         | Yes — 1 credit | Successful scrape, including a zero-length result when includeSelectors matched nothing  |
-        | 400         | No             | Invalid input, skipped PDF, or the page could not be scraped                             |
-        | 401 / 403   | No             | Invalid/disabled key, insufficient permissions, or credits exhausted; inspect error_code |
-        | 404         | No             | Target page returned or fingerprinted as not found                                       |
-        | 408         | No             | Request timed out                                                                        |
-        | 415         | No             | Unsupported content type                                                                 |
-        | 429         | No             | Per-minute rate limit exceeded; honor Retry-After                                        |
-        | 500         | No             | Internal error                                                                           |
+        | HTTP status | Billed?                                   | Meaning                                                                                  |
+        | ----------- | ----------------------------------------- | ---------------------------------------------------------------------------------------- |
+        | 200         | Yes — 1 credit, or 2 credits with actions | Successful scrape, including a zero-length result when includeSelectors matched nothing  |
+        | 400         | No                                        | Invalid input, skipped PDF, or the page could not be scraped                             |
+        | 401 / 403   | No                                        | Invalid/disabled key, insufficient permissions, or credits exhausted; inspect error_code |
+        | 404         | No                                        | Target page returned or fingerprinted as not found                                       |
+        | 408         | No                                        | Request timed out                                                                        |
+        | 415         | No                                        | Unsupported content type                                                                 |
+        | 429         | No                                        | Per-minute rate limit exceeded; honor Retry-After                                        |
+        | 500         | No                                        | Internal error                                                                           |
 
         Args:
           url: Full URL to scrape into LLM usable Markdown (must include http:// or https://
               protocol)
 
-          country: Two-letter ISO 3166-1 alpha-2 country code for the website request location.
-              When provided, Context.dev fetches the target page from that country.
+          actions: Optional browser actions executed in array order after the page loads and before
+              content is captured. Requires a paid plan. Send a JSON array in the query
+              parameter. Maximum: 5 actions.
+
+          country: Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
+              residential proxy exit location. Must be one of Context.dev's supported
+              countries. When provided, Context.dev fetches the target page from that country.
 
           exclude_selectors: CSS selectors to remove before conversion to Markdown. Applied after
               includeSelectors. Exclusion takes precedence: an element matching both is
@@ -4080,6 +4310,10 @@ class AsyncWebResource(AsyncAPIResource):
 
           shorten_base64_images: Shorten base64-encoded image data in the Markdown output
 
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
@@ -4089,6 +4323,11 @@ class AsyncWebResource(AsyncAPIResource):
 
           wait_for_ms: Optional browser wait time in milliseconds after initial page load before
               converting the page to Markdown. Min: 0. Max: 30000 (30 seconds).
+
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Requires zero data retention to be enabled for your
+              organization (contact support@context.dev), otherwise the request fails with
+              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
 
           extra_headers: Send extra headers
 
@@ -4108,6 +4347,7 @@ class AsyncWebResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "url": url,
+                        "actions": actions,
                         "country": country,
                         "exclude_selectors": exclude_selectors,
                         "headers": headers,
@@ -4119,9 +4359,11 @@ class AsyncWebResource(AsyncAPIResource):
                         "pdf": pdf,
                         "settle_animations": settle_animations,
                         "shorten_base64_images": shorten_base64_images,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                         "use_main_content_only": use_main_content_only,
                         "wait_for_ms": wait_for_ms,
+                        "zdr": zdr,
                     },
                     web_web_scrape_md_params.WebWebScrapeMdParams,
                 ),
@@ -4135,8 +4377,11 @@ class AsyncWebResource(AsyncAPIResource):
         domain: str,
         headers: Dict[str, str] | Omit = omit,
         max_links: int | Omit = omit,
+        sitemap_url: str | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         url_regex: str | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -4157,12 +4402,24 @@ class AsyncWebResource(AsyncAPIResource):
           max_links: Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
               Minimum is 1, maximum is 100,000.
 
+          sitemap_url: Optional explicit sitemap URL. When provided, exactly this sitemap is crawled
+              instead of discovering the domain's sitemaps.
+
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
 
           url_regex: Optional RE2-compatible regex pattern. Only URLs matching this pattern are
               returned and counted against maxLinks.
+
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Requires zero data retention to be enabled for your
+              organization (contact support@context.dev), otherwise the request fails with
+              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
 
           extra_headers: Send extra headers
 
@@ -4184,8 +4441,11 @@ class AsyncWebResource(AsyncAPIResource):
                         "domain": domain,
                         "headers": headers,
                         "max_links": max_links,
+                        "sitemap_url": sitemap_url,
+                        "tags": tags,
                         "timeout_ms": timeout_ms,
                         "url_regex": url_regex,
+                        "zdr": zdr,
                     },
                     web_web_scrape_sitemap_params.WebWebScrapeSitemapParams,
                 ),

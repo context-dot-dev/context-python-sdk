@@ -3,8 +3,9 @@
 from __future__ import annotations
 
 from typing import Dict
-from typing_extensions import Required, Annotated, TypedDict
+from typing_extensions import Literal, Required, Annotated, TypedDict
 
+from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
 __all__ = ["WebWebScrapeSitemapParams"]
@@ -27,6 +28,20 @@ class WebWebScrapeSitemapParams(TypedDict, total=False):
     Defaults to 10,000. Minimum is 1, maximum is 100,000.
     """
 
+    sitemap_url: Annotated[str, PropertyInfo(alias="sitemapUrl")]
+    """Optional explicit sitemap URL.
+
+    When provided, exactly this sitemap is crawled instead of discovering the
+    domain's sitemaps.
+    """
+
+    tags: SequenceNotStr[str]
+    """Optional comma-separated caller-defined tags for tracking this request.
+
+    Tags are recorded on the request's usage log and can be used to filter usage on
+    the dashboard usage page. Up to 20 tags, each 1-50 characters.
+    """
+
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
     """Optional timeout in milliseconds for the request.
 
@@ -38,4 +53,12 @@ class WebWebScrapeSitemapParams(TypedDict, total=False):
     """Optional RE2-compatible regex pattern.
 
     Only URLs matching this pattern are returned and counted against maxLinks.
+    """
+
+    zdr: Literal["enabled", "disabled"]
+    """
+    Set to enabled to bypass shared caches and omit request and response content
+    from retained usage logs. Requires zero data retention to be enabled for your
+    organization (contact support@context.dev), otherwise the request fails with
+    ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
     """

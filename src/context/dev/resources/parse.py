@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+from typing import Union
 from typing_extensions import Literal
 
 import httpx
@@ -17,6 +18,7 @@ from .._types import (
     NotGiven,
     BinaryTypes,
     FileContent,
+    SequenceNotStr,
     AsyncBinaryTypes,
     omit,
     not_given,
@@ -60,6 +62,7 @@ class ParseResource(SyncAPIResource):
         self,
         body: FileContent | BinaryTypes,
         *,
+        client: str | Omit = omit,
         extension: Literal[
             "txt",
             "text",
@@ -133,12 +136,14 @@ class ParseResource(SyncAPIResource):
             "pnm",
         ]
         | Omit = omit,
-        include_images: bool | Omit = omit,
-        include_links: bool | Omit = omit,
-        ocr: bool | Omit = omit,
+        include_images: Union[bool, Literal["true", "false"]] | Omit = omit,
+        include_links: Union[bool, Literal["true", "false"]] | Omit = omit,
+        ocr: Union[bool, Literal["true", "false"]] | Omit = omit,
         pdf: parse_handle_params.Pdf | Omit = omit,
-        shorten_base64_images: bool | Omit = omit,
-        use_main_content_only: bool | Omit = omit,
+        shorten_base64_images: Union[bool, Literal["true", "false"]] | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
+        use_main_content_only: Union[bool, Literal["true", "false"]] | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -148,32 +153,37 @@ class ParseResource(SyncAPIResource):
     ) -> ParseHandleResponse:
         """
         Converts raw text, source code, web/data, PDF, Microsoft Office, and image bytes
-        into LLM-usable Markdown. The base request costs 1 credit. When OCR runs
-        (requires ocr=true), the entire call costs 5 credits; ocr=true requests where no
-        OCR ends up running still cost 1 credit.
+        into LLM-usable Markdown.
 
         Args:
-          extension: Optional file extension hint. Case-insensitive; a leading dot is accepted (e.g.
-              ".pdf").
+          client: Optional client identifier used for usage attribution.
+
+          extension: Optional file extension hint, such as pdf, docx, xlsx, pptx, html, json, csv,
+              md, py, rtf, jpg, png, or txt.
 
           include_images: Include image references in Markdown output
 
           include_links: Preserve hyperlinks in Markdown output
 
-          ocr: Gates all OCR. When true, PDFs get embedded-image OCR (recognized text inserted
-              at each image's position in page reading order, preserving the text layer;
-              pdf.start/pdf.end limit the page range), scanned PDFs with no text layer get
-              full-document OCR, and raster images get their visible text transcribed. When
-              false, no OCR runs: scanned PDFs may yield no content and images return only
-              format/dimension metadata. Calls where OCR actually runs cost 5 credits instead
-              of 1.
+          ocr: When true for PDF inputs, detect and OCR images embedded in the selected pages,
+              inserting recognized text at each image's position in page reading order while
+              preserving the PDF text layer. pdf.start/pdf.end limit the inclusive page range.
+              When false, all OCR is disabled, including the automatic scanned-PDF fallback.
 
-          pdf: PDF page-range controls. Use start/end to limit parsing (and OCR when ocr=true)
-              to an inclusive 1-based page range.
+          pdf: PDF page-range options as a JSON object, e.g. {"start": 2, "end": 5}.
 
           shorten_base64_images: Shorten base64-encoded image data in the Markdown output
 
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
           use_main_content_only: Extract only the main content from HTML-like inputs
+
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Requires zero data retention to be enabled for your
+              organization (contact support@context.dev), otherwise the request fails with
+              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
 
           extra_headers: Send extra headers
 
@@ -194,13 +204,16 @@ class ParseResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "client": client,
                         "extension": extension,
                         "include_images": include_images,
                         "include_links": include_links,
                         "ocr": ocr,
                         "pdf": pdf,
                         "shorten_base64_images": shorten_base64_images,
+                        "tags": tags,
                         "use_main_content_only": use_main_content_only,
+                        "zdr": zdr,
                     },
                     parse_handle_params.ParseHandleParams,
                 ),
@@ -233,6 +246,7 @@ class AsyncParseResource(AsyncAPIResource):
         self,
         body: FileContent | AsyncBinaryTypes,
         *,
+        client: str | Omit = omit,
         extension: Literal[
             "txt",
             "text",
@@ -306,12 +320,14 @@ class AsyncParseResource(AsyncAPIResource):
             "pnm",
         ]
         | Omit = omit,
-        include_images: bool | Omit = omit,
-        include_links: bool | Omit = omit,
-        ocr: bool | Omit = omit,
+        include_images: Union[bool, Literal["true", "false"]] | Omit = omit,
+        include_links: Union[bool, Literal["true", "false"]] | Omit = omit,
+        ocr: Union[bool, Literal["true", "false"]] | Omit = omit,
         pdf: parse_handle_params.Pdf | Omit = omit,
-        shorten_base64_images: bool | Omit = omit,
-        use_main_content_only: bool | Omit = omit,
+        shorten_base64_images: Union[bool, Literal["true", "false"]] | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
+        use_main_content_only: Union[bool, Literal["true", "false"]] | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -321,32 +337,37 @@ class AsyncParseResource(AsyncAPIResource):
     ) -> ParseHandleResponse:
         """
         Converts raw text, source code, web/data, PDF, Microsoft Office, and image bytes
-        into LLM-usable Markdown. The base request costs 1 credit. When OCR runs
-        (requires ocr=true), the entire call costs 5 credits; ocr=true requests where no
-        OCR ends up running still cost 1 credit.
+        into LLM-usable Markdown.
 
         Args:
-          extension: Optional file extension hint. Case-insensitive; a leading dot is accepted (e.g.
-              ".pdf").
+          client: Optional client identifier used for usage attribution.
+
+          extension: Optional file extension hint, such as pdf, docx, xlsx, pptx, html, json, csv,
+              md, py, rtf, jpg, png, or txt.
 
           include_images: Include image references in Markdown output
 
           include_links: Preserve hyperlinks in Markdown output
 
-          ocr: Gates all OCR. When true, PDFs get embedded-image OCR (recognized text inserted
-              at each image's position in page reading order, preserving the text layer;
-              pdf.start/pdf.end limit the page range), scanned PDFs with no text layer get
-              full-document OCR, and raster images get their visible text transcribed. When
-              false, no OCR runs: scanned PDFs may yield no content and images return only
-              format/dimension metadata. Calls where OCR actually runs cost 5 credits instead
-              of 1.
+          ocr: When true for PDF inputs, detect and OCR images embedded in the selected pages,
+              inserting recognized text at each image's position in page reading order while
+              preserving the PDF text layer. pdf.start/pdf.end limit the inclusive page range.
+              When false, all OCR is disabled, including the automatic scanned-PDF fallback.
 
-          pdf: PDF page-range controls. Use start/end to limit parsing (and OCR when ocr=true)
-              to an inclusive 1-based page range.
+          pdf: PDF page-range options as a JSON object, e.g. {"start": 2, "end": 5}.
 
           shorten_base64_images: Shorten base64-encoded image data in the Markdown output
 
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
           use_main_content_only: Extract only the main content from HTML-like inputs
+
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Requires zero data retention to be enabled for your
+              organization (contact support@context.dev), otherwise the request fails with
+              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
 
           extra_headers: Send extra headers
 
@@ -367,13 +388,16 @@ class AsyncParseResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
+                        "client": client,
                         "extension": extension,
                         "include_images": include_images,
                         "include_links": include_links,
                         "ocr": ocr,
                         "pdf": pdf,
                         "shorten_base64_images": shorten_base64_images,
+                        "tags": tags,
                         "use_main_content_only": use_main_content_only,
+                        "zdr": zdr,
                     },
                     parse_handle_params.ParseHandleParams,
                 ),

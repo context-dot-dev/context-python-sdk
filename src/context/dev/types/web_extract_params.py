@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import Dict
 from typing_extensions import Required, Annotated, TypedDict
 
+from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
 __all__ = ["WebExtractParams", "Pdf"]
@@ -63,11 +64,21 @@ class WebExtractParams(TypedDict, total=False):
 
     pdf: Pdf
 
+    settle_animations: Annotated[bool, PropertyInfo(alias="settleAnimations")]
+    """
+    When true, waits briefly for CSS and transition animations to settle before
+    extracting each crawled page. Defaults to false. This adds a bit of latency in
+    exchange for more stable output on animated pages.
+    """
+
     stop_after_ms: Annotated[int, PropertyInfo(alias="stopAfterMs")]
     """Soft time budget for the crawl in milliseconds.
 
     Min: 10000 (10s). Max: 110000 (110s). Default: 80000 (80s).
     """
+
+    tags: SequenceNotStr[str]
+    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
 
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
     """Optional timeout in milliseconds for the request.

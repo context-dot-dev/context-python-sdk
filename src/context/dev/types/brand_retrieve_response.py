@@ -170,7 +170,6 @@ class BrandIndustriesEic(BaseModel):
         "Streaming Platforms (Video, Music, Audio)",
         "Gaming & Interactive Entertainment",
         "Creator Economy & Influencer Platforms",
-        "Advertising, Adtech & Media Buying",
         "Film, TV & Production Studios",
         "Events, Venues & Live Entertainment",
         "Virtual Worlds & Metaverse Experiences",
@@ -231,6 +230,7 @@ class BrandIndustriesEic(BaseModel):
         "Streetwear & Emerging Luxury",
         "Couture & Made-to-Measure",
         "News Publishing & Journalism",
+        "Advertising, Adtech & Media Buying",
         "Digital Media & Content Platforms",
         "Broadcasting (TV & Radio)",
         "Podcasting & Audio Media",
@@ -629,11 +629,7 @@ class Brand(BaseModel):
             "zulu",
         ]
     ] = None
-    """The primary language of the brand's website content.
-
-    Detected from the HTML lang tag, page content analysis, or social media
-    descriptions.
-    """
+    """Language to force for the retrieved brand data."""
 
     slogan: Optional[str] = None
     """The brand's slogan"""

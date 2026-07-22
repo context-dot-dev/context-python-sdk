@@ -24,7 +24,7 @@ class TestIndustry:
     @parametrize
     def test_method_retrieve_naics(self, client: ContextDev) -> None:
         industry = client.industry.retrieve_naics(
-            input="input",
+            input="xxxx",
         )
         assert_matches_type(IndustryRetrieveNaicsResponse, industry, path=["response"])
 
@@ -32,9 +32,10 @@ class TestIndustry:
     @parametrize
     def test_method_retrieve_naics_with_all_params(self, client: ContextDev) -> None:
         industry = client.industry.retrieve_naics(
-            input="input",
+            input="xxxx",
             max_results=1,
             min_results=1,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(IndustryRetrieveNaicsResponse, industry, path=["response"])
@@ -43,7 +44,7 @@ class TestIndustry:
     @parametrize
     def test_raw_response_retrieve_naics(self, client: ContextDev) -> None:
         response = client.industry.with_raw_response.retrieve_naics(
-            input="input",
+            input="xxxx",
         )
 
         assert response.is_closed is True
@@ -55,7 +56,7 @@ class TestIndustry:
     @parametrize
     def test_streaming_response_retrieve_naics(self, client: ContextDev) -> None:
         with client.industry.with_streaming_response.retrieve_naics(
-            input="input",
+            input="xxxx",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -69,7 +70,7 @@ class TestIndustry:
     @parametrize
     def test_method_retrieve_sic(self, client: ContextDev) -> None:
         industry = client.industry.retrieve_sic(
-            input="input",
+            input="xxxx",
         )
         assert_matches_type(IndustryRetrieveSicResponse, industry, path=["response"])
 
@@ -77,9 +78,10 @@ class TestIndustry:
     @parametrize
     def test_method_retrieve_sic_with_all_params(self, client: ContextDev) -> None:
         industry = client.industry.retrieve_sic(
-            input="input",
+            input="xxxx",
             max_results=1,
             min_results=1,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
             type="original_sic",
         )
@@ -89,7 +91,7 @@ class TestIndustry:
     @parametrize
     def test_raw_response_retrieve_sic(self, client: ContextDev) -> None:
         response = client.industry.with_raw_response.retrieve_sic(
-            input="input",
+            input="xxxx",
         )
 
         assert response.is_closed is True
@@ -101,7 +103,7 @@ class TestIndustry:
     @parametrize
     def test_streaming_response_retrieve_sic(self, client: ContextDev) -> None:
         with client.industry.with_streaming_response.retrieve_sic(
-            input="input",
+            input="xxxx",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -121,7 +123,7 @@ class TestAsyncIndustry:
     @parametrize
     async def test_method_retrieve_naics(self, async_client: AsyncContextDev) -> None:
         industry = await async_client.industry.retrieve_naics(
-            input="input",
+            input="xxxx",
         )
         assert_matches_type(IndustryRetrieveNaicsResponse, industry, path=["response"])
 
@@ -129,9 +131,10 @@ class TestAsyncIndustry:
     @parametrize
     async def test_method_retrieve_naics_with_all_params(self, async_client: AsyncContextDev) -> None:
         industry = await async_client.industry.retrieve_naics(
-            input="input",
+            input="xxxx",
             max_results=1,
             min_results=1,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
         )
         assert_matches_type(IndustryRetrieveNaicsResponse, industry, path=["response"])
@@ -140,7 +143,7 @@ class TestAsyncIndustry:
     @parametrize
     async def test_raw_response_retrieve_naics(self, async_client: AsyncContextDev) -> None:
         response = await async_client.industry.with_raw_response.retrieve_naics(
-            input="input",
+            input="xxxx",
         )
 
         assert response.is_closed is True
@@ -152,7 +155,7 @@ class TestAsyncIndustry:
     @parametrize
     async def test_streaming_response_retrieve_naics(self, async_client: AsyncContextDev) -> None:
         async with async_client.industry.with_streaming_response.retrieve_naics(
-            input="input",
+            input="xxxx",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -166,7 +169,7 @@ class TestAsyncIndustry:
     @parametrize
     async def test_method_retrieve_sic(self, async_client: AsyncContextDev) -> None:
         industry = await async_client.industry.retrieve_sic(
-            input="input",
+            input="xxxx",
         )
         assert_matches_type(IndustryRetrieveSicResponse, industry, path=["response"])
 
@@ -174,9 +177,10 @@ class TestAsyncIndustry:
     @parametrize
     async def test_method_retrieve_sic_with_all_params(self, async_client: AsyncContextDev) -> None:
         industry = await async_client.industry.retrieve_sic(
-            input="input",
+            input="xxxx",
             max_results=1,
             min_results=1,
+            tags=["production", "team-alpha"],
             timeout_ms=1000,
             type="original_sic",
         )
@@ -186,7 +190,7 @@ class TestAsyncIndustry:
     @parametrize
     async def test_raw_response_retrieve_sic(self, async_client: AsyncContextDev) -> None:
         response = await async_client.industry.with_raw_response.retrieve_sic(
-            input="input",
+            input="xxxx",
         )
 
         assert response.is_closed is True
@@ -198,7 +202,7 @@ class TestAsyncIndustry:
     @parametrize
     async def test_streaming_response_retrieve_sic(self, async_client: AsyncContextDev) -> None:
         async with async_client.industry.with_streaming_response.retrieve_sic(
-            input="input",
+            input="xxxx",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

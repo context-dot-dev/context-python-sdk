@@ -49,7 +49,10 @@ class Data(BaseModel):
     removed_url_count: Optional[int] = None
 
     tags: Optional[List[str]] = None
-    """User-defined tags for grouping and filtering monitors and their changes."""
+    """User-defined tags for grouping and filtering monitors and their changes.
+
+    Duplicates are removed.
+    """
 
 
 class MonitorListChangesResponse(BaseModel):

@@ -288,6 +288,9 @@ class WebSearchParams(TypedDict, total=False):
     query_fanout: Annotated[bool, PropertyInfo(alias="queryFanout")]
     """Expand the query into multiple parallel variants for broader recall."""
 
+    tags: SequenceNotStr[str]
+    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
+
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
     """Optional timeout in milliseconds for the request.
 

@@ -2,14 +2,19 @@
 
 from __future__ import annotations
 
+from typing import Union
 from typing_extensions import Literal, Annotated, TypedDict
 
+from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
 __all__ = ["ParseHandleParams", "Pdf"]
 
 
 class ParseHandleParams(TypedDict, total=False):
+    client: str
+    """Optional client identifier used for usage attribution."""
+
     extension: Literal[
         "txt",
         "text",
@@ -82,47 +87,52 @@ class ParseHandleParams(TypedDict, total=False):
         "pgm",
         "pnm",
     ]
-    """Optional file extension hint.
-
-    Case-insensitive; a leading dot is accepted (e.g. ".pdf").
+    """
+    Optional file extension hint, such as pdf, docx, xlsx, pptx, html, json, csv,
+    md, py, rtf, jpg, png, or txt.
     """
 
-    include_images: Annotated[bool, PropertyInfo(alias="includeImages")]
+    include_images: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="includeImages")]
     """Include image references in Markdown output"""
 
-    include_links: Annotated[bool, PropertyInfo(alias="includeLinks")]
+    include_links: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="includeLinks")]
     """Preserve hyperlinks in Markdown output"""
 
-    ocr: bool
-    """Gates all OCR.
-
-    When true, PDFs get embedded-image OCR (recognized text inserted at each image's
-    position in page reading order, preserving the text layer; pdf.start/pdf.end
-    limit the page range), scanned PDFs with no text layer get full-document OCR,
-    and raster images get their visible text transcribed. When false, no OCR runs:
-    scanned PDFs may yield no content and images return only format/dimension
-    metadata. Calls where OCR actually runs cost 5 credits instead of 1.
+    ocr: Union[bool, Literal["true", "false"]]
+    """
+    When true for PDF inputs, detect and OCR images embedded in the selected pages,
+    inserting recognized text at each image's position in page reading order while
+    preserving the PDF text layer. pdf.start/pdf.end limit the inclusive page range.
+    When false, all OCR is disabled, including the automatic scanned-PDF fallback.
     """
 
     pdf: Pdf
-    """PDF page-range controls.
+    """PDF page-range options as a JSON object, e.g. {"start": 2, "end": 5}."""
 
-    Use start/end to limit parsing (and OCR when ocr=true) to an inclusive 1-based
-    page range.
-    """
-
-    shorten_base64_images: Annotated[bool, PropertyInfo(alias="shortenBase64Images")]
+    shorten_base64_images: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="shortenBase64Images")]
     """Shorten base64-encoded image data in the Markdown output"""
 
-    use_main_content_only: Annotated[bool, PropertyInfo(alias="useMainContentOnly")]
+    tags: SequenceNotStr[str]
+    """Optional comma-separated caller-defined tags for tracking this request.
+
+    Tags are recorded on the request's usage log and can be used to filter usage on
+    the dashboard usage page. Up to 20 tags, each 1-50 characters.
+    """
+
+    use_main_content_only: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="useMainContentOnly")]
     """Extract only the main content from HTML-like inputs"""
+
+    zdr: Literal["enabled", "disabled"]
+    """
+    Set to enabled to bypass shared caches and omit request and response content
+    from retained usage logs. Requires zero data retention to be enabled for your
+    organization (contact support@context.dev), otherwise the request fails with
+    ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+    """
 
 
 class Pdf(TypedDict, total=False):
-    """PDF page-range controls.
-
-    Use start/end to limit parsing (and OCR when ocr=true) to an inclusive 1-based page range.
-    """
+    """PDF page-range options as a JSON object, e.g. {"start": 2, "end": 5}."""
 
     end: int
     """Last 1-based PDF page to parse.

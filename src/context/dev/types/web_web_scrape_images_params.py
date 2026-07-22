@@ -2,19 +2,33 @@
 
 from __future__ import annotations
 
-from typing import Dict
-from typing_extensions import Required, Annotated, TypedDict
+from typing import Dict, Union, Iterable, Optional
+from typing_extensions import Literal, Required, Annotated, TypeAlias, TypedDict
 
+from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
-__all__ = ["WebWebScrapeImagesParams", "Enrichment"]
+__all__ = [
+    "WebWebScrapeImagesParams",
+    "Action",
+    "ActionWebScrapeWaitAction",
+    "ActionWebScrapePerformAction",
+    "Enrichment",
+]
 
 
 class WebWebScrapeImagesParams(TypedDict, total=False):
     url: Required[str]
     """Page URL to inspect. Must include http:// or https://."""
 
-    dedupe: bool
+    actions: Optional[Iterable[Action]]
+    """
+    Optional browser actions executed in array order after the page loads and before
+    content is captured. Requires a paid plan. Send a JSON array in the query
+    parameter. Maximum: 5 actions.
+    """
+
+    dedupe: Union[bool, Literal["true", "false"]]
     """
     When true, visually duplicate images are removed: every image is loaded and
     perceptually hashed, and only the highest-resolution copy of each duplicate
@@ -22,7 +36,7 @@ class WebWebScrapeImagesParams(TypedDict, total=False):
     false.
     """
 
-    enrichment: Enrichment
+    enrichment: Optional[Enrichment]
     """
     Optional per-image processing, sent as deep-object query params such as
     enrichment[resolution]=true.
@@ -35,11 +49,18 @@ class WebWebScrapeImagesParams(TypedDict, total=False):
     is bypassed: the result is neither read from nor written to cache.
     """
 
-    max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
+    max_age_ms: Annotated[Optional[int], PropertyInfo(alias="maxAgeMs")]
     """Reuse a cached result this many milliseconds old or newer.
 
     Default: 86400000 (1 day). Set to 0 to bypass cache. Maximum: 2592000000 (30
     days).
+    """
+
+    tags: SequenceNotStr[str]
+    """Optional comma-separated caller-defined tags for tracking this request.
+
+    Tags are recorded on the request's usage log and can be used to filter usage on
+    the dashboard usage page. Up to 20 tags, each 1-50 characters.
     """
 
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
@@ -49,11 +70,30 @@ class WebWebScrapeImagesParams(TypedDict, total=False):
     status code. Maximum allowed value is 300000ms (5 minutes).
     """
 
-    wait_for_ms: Annotated[int, PropertyInfo(alias="waitForMs")]
+    wait_for_ms: Annotated[Optional[int], PropertyInfo(alias="waitForMs")]
     """
     Optional browser wait time in milliseconds after initial page load before
     collecting images. Min: 0. Max: 30000 (30 seconds).
     """
+
+
+class ActionWebScrapeWaitAction(TypedDict, total=False):
+    """Pause for a fixed number of milliseconds before continuing to the next action."""
+
+    do: Required[Literal["wait"]]
+
+    time_ms: Required[Annotated[int, PropertyInfo(alias="timeMs")]]
+
+
+class ActionWebScrapePerformAction(TypedDict, total=False):
+    """Resolve and perform one natural-language browser action."""
+
+    action: Required[str]
+
+    do: Required[Literal["perform"]]
+
+
+Action: TypeAlias = Union[ActionWebScrapeWaitAction, ActionWebScrapePerformAction]
 
 
 class Enrichment(TypedDict, total=False):
@@ -61,10 +101,10 @@ class Enrichment(TypedDict, total=False):
     Optional per-image processing, sent as deep-object query params such as enrichment[resolution]=true.
     """
 
-    classification: bool
+    classification: Union[bool, Literal["true", "false"]]
     """Classify each image by visual asset type."""
 
-    hosted_url: Annotated[bool, PropertyInfo(alias="hostedUrl")]
+    hosted_url: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="hostedUrl")]
     """
     Host materializable images on the Brand.dev CDN and return their URL and MIME
     type.
@@ -73,5 +113,5 @@ class Enrichment(TypedDict, total=False):
     max_time_per_ms: Annotated[int, PropertyInfo(alias="maxTimePerMs")]
     """Per-image enrichment timeout in milliseconds. Default: 30000. Maximum: 60000."""
 
-    resolution: bool
+    resolution: Union[bool, Literal["true", "false"]]
     """Measure image width and height when possible."""
