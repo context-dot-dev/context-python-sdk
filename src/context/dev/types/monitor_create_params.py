@@ -45,7 +45,10 @@ class MonitorCreateParams(TypedDict, total=False):
     """
 
     tags: SequenceNotStr[str]
-    """User-defined tags for grouping and filtering monitors and their changes."""
+    """User-defined tags for grouping and filtering monitors and their changes.
+
+    Duplicates are removed.
+    """
 
     webhook: Optional[Webhook]
 
@@ -116,10 +119,10 @@ class TargetMonitorsSitemapTarget(TypedDict, total=False):
     """Sitemap URL to monitor."""
 
     exclude: SequenceNotStr[str]
-    """URL path patterns to exclude."""
+    """URL path patterns to exclude (max 50)."""
 
     include: SequenceNotStr[str]
-    """URL path patterns to include."""
+    """URL path patterns to include (max 50)."""
 
     max_urls: int
     """Maximum number of sitemap URLs to track (capped at 10,000)."""
