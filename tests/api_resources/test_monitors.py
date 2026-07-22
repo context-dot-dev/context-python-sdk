@@ -17,7 +17,9 @@ from context.dev.types import (
     MonitorUpdateResponse,
     MonitorListRunsResponse,
     MonitorRetrieveResponse,
+    MonitorGetLimitsResponse,
     MonitorListChangesResponse,
+    MonitorGetCreditUsageResponse,
     MonitorRetrieveChangeResponse,
     MonitorListAccountRunsResponse,
     MonitorListAccountChangesResponse,
@@ -315,6 +317,71 @@ class TestMonitors:
             client.monitors.with_raw_response.delete(
                 "",
             )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_get_credit_usage(self, client: ContextDev) -> None:
+        monitor = client.monitors.get_credit_usage()
+        assert_matches_type(MonitorGetCreditUsageResponse, monitor, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_get_credit_usage_with_all_params(self, client: ContextDev) -> None:
+        monitor = client.monitors.get_credit_usage(
+            since=parse_datetime("2026-06-01T00:00:00Z"),
+            until=parse_datetime("2026-06-28T00:00:00Z"),
+        )
+        assert_matches_type(MonitorGetCreditUsageResponse, monitor, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_get_credit_usage(self, client: ContextDev) -> None:
+        response = client.monitors.with_raw_response.get_credit_usage()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        monitor = response.parse()
+        assert_matches_type(MonitorGetCreditUsageResponse, monitor, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_get_credit_usage(self, client: ContextDev) -> None:
+        with client.monitors.with_streaming_response.get_credit_usage() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            monitor = response.parse()
+            assert_matches_type(MonitorGetCreditUsageResponse, monitor, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_get_limits(self, client: ContextDev) -> None:
+        monitor = client.monitors.get_limits()
+        assert_matches_type(MonitorGetLimitsResponse, monitor, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_get_limits(self, client: ContextDev) -> None:
+        response = client.monitors.with_raw_response.get_limits()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        monitor = response.parse()
+        assert_matches_type(MonitorGetLimitsResponse, monitor, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_get_limits(self, client: ContextDev) -> None:
+        with client.monitors.with_streaming_response.get_limits() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            monitor = response.parse()
+            assert_matches_type(MonitorGetLimitsResponse, monitor, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -880,6 +947,71 @@ class TestAsyncMonitors:
             await async_client.monitors.with_raw_response.delete(
                 "",
             )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_get_credit_usage(self, async_client: AsyncContextDev) -> None:
+        monitor = await async_client.monitors.get_credit_usage()
+        assert_matches_type(MonitorGetCreditUsageResponse, monitor, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_get_credit_usage_with_all_params(self, async_client: AsyncContextDev) -> None:
+        monitor = await async_client.monitors.get_credit_usage(
+            since=parse_datetime("2026-06-01T00:00:00Z"),
+            until=parse_datetime("2026-06-28T00:00:00Z"),
+        )
+        assert_matches_type(MonitorGetCreditUsageResponse, monitor, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_get_credit_usage(self, async_client: AsyncContextDev) -> None:
+        response = await async_client.monitors.with_raw_response.get_credit_usage()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        monitor = await response.parse()
+        assert_matches_type(MonitorGetCreditUsageResponse, monitor, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_get_credit_usage(self, async_client: AsyncContextDev) -> None:
+        async with async_client.monitors.with_streaming_response.get_credit_usage() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            monitor = await response.parse()
+            assert_matches_type(MonitorGetCreditUsageResponse, monitor, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_get_limits(self, async_client: AsyncContextDev) -> None:
+        monitor = await async_client.monitors.get_limits()
+        assert_matches_type(MonitorGetLimitsResponse, monitor, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_get_limits(self, async_client: AsyncContextDev) -> None:
+        response = await async_client.monitors.with_raw_response.get_limits()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        monitor = await response.parse()
+        assert_matches_type(MonitorGetLimitsResponse, monitor, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_get_limits(self, async_client: AsyncContextDev) -> None:
+        async with async_client.monitors.with_streaming_response.get_limits() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            monitor = await response.parse()
+            assert_matches_type(MonitorGetLimitsResponse, monitor, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize

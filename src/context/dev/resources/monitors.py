@@ -14,6 +14,7 @@ from ..types import (
     monitor_update_params,
     monitor_list_runs_params,
     monitor_list_changes_params,
+    monitor_get_credit_usage_params,
     monitor_list_account_runs_params,
     monitor_list_account_changes_params,
 )
@@ -35,8 +36,10 @@ from ..types.monitor_delete_response import MonitorDeleteResponse
 from ..types.monitor_update_response import MonitorUpdateResponse
 from ..types.monitor_retrieve_response import MonitorRetrieveResponse
 from ..types.monitor_list_runs_response import MonitorListRunsResponse
+from ..types.monitor_get_limits_response import MonitorGetLimitsResponse
 from ..types.monitor_list_changes_response import MonitorListChangesResponse
 from ..types.monitor_retrieve_change_response import MonitorRetrieveChangeResponse
+from ..types.monitor_get_credit_usage_response import MonitorGetCreditUsageResponse
 from ..types.monitor_list_account_runs_response import MonitorListAccountRunsResponse
 from ..types.monitor_list_account_changes_response import MonitorListAccountChangesResponse
 
@@ -346,6 +349,72 @@ class MonitorsResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=MonitorDeleteResponse,
+        )
+
+    def get_credit_usage(
+        self,
+        *,
+        since: Union[str, datetime] | Omit = omit,
+        until: Union[str, datetime] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> MonitorGetCreditUsageResponse:
+        """
+        Returns credits charged per monitor over an optional [since, until] window,
+        newest spenders first.
+
+        Args:
+          since: Only include items at or after this ISO 8601 timestamp.
+
+          until: Only include items before this ISO 8601 timestamp.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._get(
+            "/monitors/credit-usage",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "since": since,
+                        "until": until,
+                    },
+                    monitor_get_credit_usage_params.MonitorGetCreditUsageParams,
+                ),
+            ),
+            cast_to=MonitorGetCreditUsageResponse,
+        )
+
+    def get_limits(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> MonitorGetLimitsResponse:
+        """Returns how many monitors the account has and the maximum it allows."""
+        return self._get(
+            "/monitors/limits",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=MonitorGetLimitsResponse,
         )
 
     def list_account_changes(
@@ -956,6 +1025,72 @@ class AsyncMonitorsResource(AsyncAPIResource):
             cast_to=MonitorDeleteResponse,
         )
 
+    async def get_credit_usage(
+        self,
+        *,
+        since: Union[str, datetime] | Omit = omit,
+        until: Union[str, datetime] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> MonitorGetCreditUsageResponse:
+        """
+        Returns credits charged per monitor over an optional [since, until] window,
+        newest spenders first.
+
+        Args:
+          since: Only include items at or after this ISO 8601 timestamp.
+
+          until: Only include items before this ISO 8601 timestamp.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._get(
+            "/monitors/credit-usage",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "since": since,
+                        "until": until,
+                    },
+                    monitor_get_credit_usage_params.MonitorGetCreditUsageParams,
+                ),
+            ),
+            cast_to=MonitorGetCreditUsageResponse,
+        )
+
+    async def get_limits(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> MonitorGetLimitsResponse:
+        """Returns how many monitors the account has and the maximum it allows."""
+        return await self._get(
+            "/monitors/limits",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=MonitorGetLimitsResponse,
+        )
+
     async def list_account_changes(
         self,
         *,
@@ -1278,6 +1413,12 @@ class MonitorsResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             monitors.delete,
         )
+        self.get_credit_usage = to_raw_response_wrapper(
+            monitors.get_credit_usage,
+        )
+        self.get_limits = to_raw_response_wrapper(
+            monitors.get_limits,
+        )
         self.list_account_changes = to_raw_response_wrapper(
             monitors.list_account_changes,
         )
@@ -1316,6 +1457,12 @@ class AsyncMonitorsResourceWithRawResponse:
         )
         self.delete = async_to_raw_response_wrapper(
             monitors.delete,
+        )
+        self.get_credit_usage = async_to_raw_response_wrapper(
+            monitors.get_credit_usage,
+        )
+        self.get_limits = async_to_raw_response_wrapper(
+            monitors.get_limits,
         )
         self.list_account_changes = async_to_raw_response_wrapper(
             monitors.list_account_changes,
@@ -1356,6 +1503,12 @@ class MonitorsResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             monitors.delete,
         )
+        self.get_credit_usage = to_streamed_response_wrapper(
+            monitors.get_credit_usage,
+        )
+        self.get_limits = to_streamed_response_wrapper(
+            monitors.get_limits,
+        )
         self.list_account_changes = to_streamed_response_wrapper(
             monitors.list_account_changes,
         )
@@ -1394,6 +1547,12 @@ class AsyncMonitorsResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             monitors.delete,
+        )
+        self.get_credit_usage = async_to_streamed_response_wrapper(
+            monitors.get_credit_usage,
+        )
+        self.get_limits = async_to_streamed_response_wrapper(
+            monitors.get_limits,
         )
         self.list_account_changes = async_to_streamed_response_wrapper(
             monitors.list_account_changes,
