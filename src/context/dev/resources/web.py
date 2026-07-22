@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, Union, Optional
+from typing import Dict, Union, Iterable, Optional
 from typing_extensions import Literal
 
 import httpx
@@ -1391,6 +1391,7 @@ class WebResource(SyncAPIResource):
         self,
         *,
         url: str,
+        actions: Optional[Iterable[web_web_scrape_html_params.Action]] | Omit = omit,
         country: Literal[
             "ad",
             "ae",
@@ -1617,11 +1618,17 @@ class WebResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebWebScrapeHTMLResponse:
-        """
-        Scrapes the given URL and returns the raw HTML content of the page.
+        """Scrapes the given URL and returns the raw HTML content of the page.
+
+        The base
+        request costs 1 credit; requests with browser actions cost 2 credits.
 
         Args:
           url: Full URL to scrape (must include http:// or https:// protocol)
+
+          actions: Optional browser actions executed in array order after the page loads and before
+              content is captured. Requires a paid plan. Send a JSON array in the query
+              parameter. Maximum: 5 actions.
 
           country: Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
               residential proxy exit location. Must be one of Context.dev's supported
@@ -1690,6 +1697,7 @@ class WebResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "url": url,
+                        "actions": actions,
                         "country": country,
                         "exclude_selectors": exclude_selectors,
                         "headers": headers,
@@ -1714,6 +1722,7 @@ class WebResource(SyncAPIResource):
         self,
         *,
         url: str,
+        actions: Optional[Iterable[web_web_scrape_images_params.Action]] | Omit = omit,
         dedupe: Union[bool, Literal["true", "false"]] | Omit = omit,
         enrichment: Optional[web_web_scrape_images_params.Enrichment] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
@@ -1731,11 +1740,16 @@ class WebResource(SyncAPIResource):
         """
         Extract image assets from a web page, including standard URLs, inline SVGs, data
         URIs, responsive image sources, metadata, CSS backgrounds, video posters, and
-        embeds. The base request costs 1 credit. When enrichment is enabled, the entire
-        call costs 5 credits.
+        embeds. The base request costs 1 credit, or 2 credits with browser actions. When
+        enrichment is enabled, the entire call costs 5 credits, including requests that
+        also use actions.
 
         Args:
           url: Page URL to inspect. Must include http:// or https://.
+
+          actions: Optional browser actions executed in array order after the page loads and before
+              content is captured. Requires a paid plan. Send a JSON array in the query
+              parameter. Maximum: 5 actions.
 
           dedupe: When true, visually duplicate images are removed: every image is loaded and
               perceptually hashed, and only the highest-resolution copy of each duplicate
@@ -1781,6 +1795,7 @@ class WebResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "url": url,
+                        "actions": actions,
                         "dedupe": dedupe,
                         "enrichment": enrichment,
                         "headers": headers,
@@ -1799,6 +1814,7 @@ class WebResource(SyncAPIResource):
         self,
         *,
         url: str,
+        actions: Optional[Iterable[web_web_scrape_md_params.Action]] | Omit = omit,
         country: Literal[
             "ad",
             "ae",
@@ -2036,20 +2052,24 @@ class WebResource(SyncAPIResource):
 
         ### Billing & errors
 
-        | HTTP status | Billed?        | Meaning                                                                                  |
-        | ----------- | -------------- | ---------------------------------------------------------------------------------------- |
-        | 200         | Yes — 1 credit | Successful scrape, including a zero-length result when includeSelectors matched nothing  |
-        | 400         | No             | Invalid input, skipped PDF, or the page could not be scraped                             |
-        | 401 / 403   | No             | Invalid/disabled key, insufficient permissions, or credits exhausted; inspect error_code |
-        | 404         | No             | Target page returned or fingerprinted as not found                                       |
-        | 408         | No             | Request timed out                                                                        |
-        | 415         | No             | Unsupported content type                                                                 |
-        | 429         | No             | Per-minute rate limit exceeded; honor Retry-After                                        |
-        | 500         | No             | Internal error                                                                           |
+        | HTTP status | Billed?                                   | Meaning                                                                                  |
+        | ----------- | ----------------------------------------- | ---------------------------------------------------------------------------------------- |
+        | 200         | Yes — 1 credit, or 2 credits with actions | Successful scrape, including a zero-length result when includeSelectors matched nothing  |
+        | 400         | No                                        | Invalid input, skipped PDF, or the page could not be scraped                             |
+        | 401 / 403   | No                                        | Invalid/disabled key, insufficient permissions, or credits exhausted; inspect error_code |
+        | 404         | No                                        | Target page returned or fingerprinted as not found                                       |
+        | 408         | No                                        | Request timed out                                                                        |
+        | 415         | No                                        | Unsupported content type                                                                 |
+        | 429         | No                                        | Per-minute rate limit exceeded; honor Retry-After                                        |
+        | 500         | No                                        | Internal error                                                                           |
 
         Args:
           url: Full URL to scrape into LLM usable Markdown (must include http:// or https://
               protocol)
+
+          actions: Optional browser actions executed in array order after the page loads and before
+              content is captured. Requires a paid plan. Send a JSON array in the query
+              parameter. Maximum: 5 actions.
 
           country: Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
               residential proxy exit location. Must be one of Context.dev's supported
@@ -2123,6 +2143,7 @@ class WebResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "url": url,
+                        "actions": actions,
                         "country": country,
                         "exclude_selectors": exclude_selectors,
                         "headers": headers,
@@ -3574,6 +3595,7 @@ class AsyncWebResource(AsyncAPIResource):
         self,
         *,
         url: str,
+        actions: Optional[Iterable[web_web_scrape_html_params.Action]] | Omit = omit,
         country: Literal[
             "ad",
             "ae",
@@ -3800,11 +3822,17 @@ class AsyncWebResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebWebScrapeHTMLResponse:
-        """
-        Scrapes the given URL and returns the raw HTML content of the page.
+        """Scrapes the given URL and returns the raw HTML content of the page.
+
+        The base
+        request costs 1 credit; requests with browser actions cost 2 credits.
 
         Args:
           url: Full URL to scrape (must include http:// or https:// protocol)
+
+          actions: Optional browser actions executed in array order after the page loads and before
+              content is captured. Requires a paid plan. Send a JSON array in the query
+              parameter. Maximum: 5 actions.
 
           country: Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
               residential proxy exit location. Must be one of Context.dev's supported
@@ -3873,6 +3901,7 @@ class AsyncWebResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "url": url,
+                        "actions": actions,
                         "country": country,
                         "exclude_selectors": exclude_selectors,
                         "headers": headers,
@@ -3897,6 +3926,7 @@ class AsyncWebResource(AsyncAPIResource):
         self,
         *,
         url: str,
+        actions: Optional[Iterable[web_web_scrape_images_params.Action]] | Omit = omit,
         dedupe: Union[bool, Literal["true", "false"]] | Omit = omit,
         enrichment: Optional[web_web_scrape_images_params.Enrichment] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
@@ -3914,11 +3944,16 @@ class AsyncWebResource(AsyncAPIResource):
         """
         Extract image assets from a web page, including standard URLs, inline SVGs, data
         URIs, responsive image sources, metadata, CSS backgrounds, video posters, and
-        embeds. The base request costs 1 credit. When enrichment is enabled, the entire
-        call costs 5 credits.
+        embeds. The base request costs 1 credit, or 2 credits with browser actions. When
+        enrichment is enabled, the entire call costs 5 credits, including requests that
+        also use actions.
 
         Args:
           url: Page URL to inspect. Must include http:// or https://.
+
+          actions: Optional browser actions executed in array order after the page loads and before
+              content is captured. Requires a paid plan. Send a JSON array in the query
+              parameter. Maximum: 5 actions.
 
           dedupe: When true, visually duplicate images are removed: every image is loaded and
               perceptually hashed, and only the highest-resolution copy of each duplicate
@@ -3964,6 +3999,7 @@ class AsyncWebResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "url": url,
+                        "actions": actions,
                         "dedupe": dedupe,
                         "enrichment": enrichment,
                         "headers": headers,
@@ -3982,6 +4018,7 @@ class AsyncWebResource(AsyncAPIResource):
         self,
         *,
         url: str,
+        actions: Optional[Iterable[web_web_scrape_md_params.Action]] | Omit = omit,
         country: Literal[
             "ad",
             "ae",
@@ -4219,20 +4256,24 @@ class AsyncWebResource(AsyncAPIResource):
 
         ### Billing & errors
 
-        | HTTP status | Billed?        | Meaning                                                                                  |
-        | ----------- | -------------- | ---------------------------------------------------------------------------------------- |
-        | 200         | Yes — 1 credit | Successful scrape, including a zero-length result when includeSelectors matched nothing  |
-        | 400         | No             | Invalid input, skipped PDF, or the page could not be scraped                             |
-        | 401 / 403   | No             | Invalid/disabled key, insufficient permissions, or credits exhausted; inspect error_code |
-        | 404         | No             | Target page returned or fingerprinted as not found                                       |
-        | 408         | No             | Request timed out                                                                        |
-        | 415         | No             | Unsupported content type                                                                 |
-        | 429         | No             | Per-minute rate limit exceeded; honor Retry-After                                        |
-        | 500         | No             | Internal error                                                                           |
+        | HTTP status | Billed?                                   | Meaning                                                                                  |
+        | ----------- | ----------------------------------------- | ---------------------------------------------------------------------------------------- |
+        | 200         | Yes — 1 credit, or 2 credits with actions | Successful scrape, including a zero-length result when includeSelectors matched nothing  |
+        | 400         | No                                        | Invalid input, skipped PDF, or the page could not be scraped                             |
+        | 401 / 403   | No                                        | Invalid/disabled key, insufficient permissions, or credits exhausted; inspect error_code |
+        | 404         | No                                        | Target page returned or fingerprinted as not found                                       |
+        | 408         | No                                        | Request timed out                                                                        |
+        | 415         | No                                        | Unsupported content type                                                                 |
+        | 429         | No                                        | Per-minute rate limit exceeded; honor Retry-After                                        |
+        | 500         | No                                        | Internal error                                                                           |
 
         Args:
           url: Full URL to scrape into LLM usable Markdown (must include http:// or https://
               protocol)
+
+          actions: Optional browser actions executed in array order after the page loads and before
+              content is captured. Requires a paid plan. Send a JSON array in the query
+              parameter. Maximum: 5 actions.
 
           country: Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
               residential proxy exit location. Must be one of Context.dev's supported
@@ -4306,6 +4347,7 @@ class AsyncWebResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "url": url,
+                        "actions": actions,
                         "country": country,
                         "exclude_selectors": exclude_selectors,
                         "headers": headers,

@@ -2,18 +2,31 @@
 
 from __future__ import annotations
 
-from typing import Dict, Union, Optional
-from typing_extensions import Literal, Required, Annotated, TypedDict
+from typing import Dict, Union, Iterable, Optional
+from typing_extensions import Literal, Required, Annotated, TypeAlias, TypedDict
 
 from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
-__all__ = ["WebWebScrapeImagesParams", "Enrichment"]
+__all__ = [
+    "WebWebScrapeImagesParams",
+    "Action",
+    "ActionWebScrapeWaitAction",
+    "ActionWebScrapePerformAction",
+    "Enrichment",
+]
 
 
 class WebWebScrapeImagesParams(TypedDict, total=False):
     url: Required[str]
     """Page URL to inspect. Must include http:// or https://."""
+
+    actions: Optional[Iterable[Action]]
+    """
+    Optional browser actions executed in array order after the page loads and before
+    content is captured. Requires a paid plan. Send a JSON array in the query
+    parameter. Maximum: 5 actions.
+    """
 
     dedupe: Union[bool, Literal["true", "false"]]
     """
@@ -62,6 +75,25 @@ class WebWebScrapeImagesParams(TypedDict, total=False):
     Optional browser wait time in milliseconds after initial page load before
     collecting images. Min: 0. Max: 30000 (30 seconds).
     """
+
+
+class ActionWebScrapeWaitAction(TypedDict, total=False):
+    """Pause for a fixed number of milliseconds before continuing to the next action."""
+
+    do: Required[Literal["wait"]]
+
+    time_ms: Required[Annotated[int, PropertyInfo(alias="timeMs")]]
+
+
+class ActionWebScrapePerformAction(TypedDict, total=False):
+    """Resolve and perform one natural-language browser action."""
+
+    action: Required[str]
+
+    do: Required[Literal["perform"]]
+
+
+Action: TypeAlias = Union[ActionWebScrapeWaitAction, ActionWebScrapePerformAction]
 
 
 class Enrichment(TypedDict, total=False):
