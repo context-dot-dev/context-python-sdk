@@ -106,6 +106,8 @@ from context.dev.types import (
     MonitorUpdateResponse,
     MonitorListResponse,
     MonitorDeleteResponse,
+    MonitorGetCreditUsageResponse,
+    MonitorGetLimitsResponse,
     MonitorListAccountChangesResponse,
     MonitorListAccountRunsResponse,
     MonitorListChangesResponse,
@@ -122,6 +124,8 @@ Methods:
 - <code title="patch /monitors/{monitor_id}">client.monitors.<a href="./src/context/dev/resources/monitors.py">update</a>(monitor_id, \*\*<a href="src/context/dev/types/monitor_update_params.py">params</a>) -> <a href="./src/context/dev/types/monitor_update_response.py">MonitorUpdateResponse</a></code>
 - <code title="get /monitors">client.monitors.<a href="./src/context/dev/resources/monitors.py">list</a>(\*\*<a href="src/context/dev/types/monitor_list_params.py">params</a>) -> <a href="./src/context/dev/types/monitor_list_response.py">MonitorListResponse</a></code>
 - <code title="delete /monitors/{monitor_id}">client.monitors.<a href="./src/context/dev/resources/monitors.py">delete</a>(monitor_id) -> <a href="./src/context/dev/types/monitor_delete_response.py">MonitorDeleteResponse</a></code>
+- <code title="get /monitors/credit-usage">client.monitors.<a href="./src/context/dev/resources/monitors.py">get_credit_usage</a>(\*\*<a href="src/context/dev/types/monitor_get_credit_usage_params.py">params</a>) -> <a href="./src/context/dev/types/monitor_get_credit_usage_response.py">MonitorGetCreditUsageResponse</a></code>
+- <code title="get /monitors/limits">client.monitors.<a href="./src/context/dev/resources/monitors.py">get_limits</a>() -> <a href="./src/context/dev/types/monitor_get_limits_response.py">MonitorGetLimitsResponse</a></code>
 - <code title="get /monitors/changes">client.monitors.<a href="./src/context/dev/resources/monitors.py">list_account_changes</a>(\*\*<a href="src/context/dev/types/monitor_list_account_changes_params.py">params</a>) -> <a href="./src/context/dev/types/monitor_list_account_changes_response.py">MonitorListAccountChangesResponse</a></code>
 - <code title="get /monitors/runs">client.monitors.<a href="./src/context/dev/resources/monitors.py">list_account_runs</a>(\*\*<a href="src/context/dev/types/monitor_list_account_runs_params.py">params</a>) -> <a href="./src/context/dev/types/monitor_list_account_runs_response.py">MonitorListAccountRunsResponse</a></code>
 - <code title="get /monitors/{monitor_id}/changes">client.monitors.<a href="./src/context/dev/resources/monitors.py">list_changes</a>(monitor_id, \*\*<a href="src/context/dev/types/monitor_list_changes_params.py">params</a>) -> <a href="./src/context/dev/types/monitor_list_changes_response.py">MonitorListChangesResponse</a></code>
