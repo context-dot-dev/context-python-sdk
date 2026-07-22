@@ -436,6 +436,12 @@ class TestWeb:
     def test_method_web_scrape_html_with_all_params(self, client: ContextDev) -> None:
         web = client.web.web_scrape_html(
             url="https://example.com",
+            actions=[
+                {
+                    "do": "wait",
+                    "time_ms": 0,
+                }
+            ],
             country="de",
             exclude_selectors=["x"],
             headers={"foo": "J!"},
@@ -496,6 +502,12 @@ class TestWeb:
     def test_method_web_scrape_images_with_all_params(self, client: ContextDev) -> None:
         web = client.web.web_scrape_images(
             url="https://example.com",
+            actions=[
+                {
+                    "do": "wait",
+                    "time_ms": 0,
+                }
+            ],
             dedupe="true",
             enrichment={
                 "classification": "true",
@@ -550,6 +562,12 @@ class TestWeb:
     def test_method_web_scrape_md_with_all_params(self, client: ContextDev) -> None:
         web = client.web.web_scrape_md(
             url="https://example.com",
+            actions=[
+                {
+                    "do": "wait",
+                    "time_ms": 0,
+                }
+            ],
             country="de",
             exclude_selectors=["x"],
             headers={"foo": "J!"},
@@ -1062,6 +1080,12 @@ class TestAsyncWeb:
     async def test_method_web_scrape_html_with_all_params(self, async_client: AsyncContextDev) -> None:
         web = await async_client.web.web_scrape_html(
             url="https://example.com",
+            actions=[
+                {
+                    "do": "wait",
+                    "time_ms": 0,
+                }
+            ],
             country="de",
             exclude_selectors=["x"],
             headers={"foo": "J!"},
@@ -1122,6 +1146,12 @@ class TestAsyncWeb:
     async def test_method_web_scrape_images_with_all_params(self, async_client: AsyncContextDev) -> None:
         web = await async_client.web.web_scrape_images(
             url="https://example.com",
+            actions=[
+                {
+                    "do": "wait",
+                    "time_ms": 0,
+                }
+            ],
             dedupe="true",
             enrichment={
                 "classification": "true",
@@ -1176,6 +1206,12 @@ class TestAsyncWeb:
     async def test_method_web_scrape_md_with_all_params(self, async_client: AsyncContextDev) -> None:
         web = await async_client.web.web_scrape_md(
             url="https://example.com",
+            actions=[
+                {
+                    "do": "wait",
+                    "time_ms": 0,
+                }
+            ],
             country="de",
             exclude_selectors=["x"],
             headers={"foo": "J!"},
