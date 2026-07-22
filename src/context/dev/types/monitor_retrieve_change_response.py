@@ -47,7 +47,10 @@ class MonitorRetrieveChangeResponse(BaseModel):
     summary: str
 
     tags: List[str]
-    """User-defined tags for grouping and filtering monitors and their changes."""
+    """User-defined tags for grouping and filtering monitors and their changes.
+
+    Duplicates are removed.
+    """
 
     target_type: Literal["page", "sitemap", "extract"]
 

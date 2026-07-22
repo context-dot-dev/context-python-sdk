@@ -106,6 +106,7 @@ class MonitorsResource(SyncAPIResource):
               described by `target` and `change_detection`.
 
           tags: User-defined tags for grouping and filtering monitors and their changes.
+              Duplicates are removed.
 
           extra_headers: Send extra headers
 
@@ -200,6 +201,7 @@ class MonitorsResource(SyncAPIResource):
               between 10 minutes and 1 year.
 
           tags: User-defined tags for grouping and filtering monitors and their changes.
+              Duplicates are removed.
 
           target: Discriminated union describing what the monitor watches.
 
@@ -780,6 +782,7 @@ class AsyncMonitorsResource(AsyncAPIResource):
               described by `target` and `change_detection`.
 
           tags: User-defined tags for grouping and filtering monitors and their changes.
+              Duplicates are removed.
 
           extra_headers: Send extra headers
 
@@ -874,6 +877,7 @@ class AsyncMonitorsResource(AsyncAPIResource):
               between 10 minutes and 1 year.
 
           tags: User-defined tags for grouping and filtering monitors and their changes.
+              Duplicates are removed.
 
           target: Discriminated union describing what the monitor watches.
 
