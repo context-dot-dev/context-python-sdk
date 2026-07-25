@@ -73,11 +73,11 @@ class MonitorsResource(SyncAPIResource):
     def create(
         self,
         *,
-        change_detection: monitor_create_params.ChangeDetection,
         name: str,
-        schedule: monitor_create_params.Schedule,
         target: monitor_create_params.Target,
+        change_detection: monitor_create_params.ChangeDetection | Omit = omit,
         mode: Literal["web"] | Omit = omit,
+        schedule: monitor_create_params.Schedule | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         webhook: Optional[monitor_create_params.Webhook] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -94,16 +94,16 @@ class MonitorsResource(SyncAPIResource):
         its initial baseline.
 
         Args:
+          target: Discriminated union describing what the monitor watches.
+
           change_detection: Discriminated union describing how changes are detected.
+
+          mode: Top-level monitor category. Always `web` today; the concrete behavior is
+              described by `target` and `change_detection`.
 
           schedule: Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
               every 6 hours or every 2 days. The total interval (frequency × unit) must be
               between 10 minutes and 1 year.
-
-          target: Discriminated union describing what the monitor watches.
-
-          mode: Top-level monitor category. Always `web` today; the concrete behavior is
-              described by `target` and `change_detection`.
 
           tags: User-defined tags for grouping and filtering monitors and their changes.
               Duplicates are removed.
@@ -120,11 +120,11 @@ class MonitorsResource(SyncAPIResource):
             "/monitors",
             body=maybe_transform(
                 {
-                    "change_detection": change_detection,
                     "name": name,
-                    "schedule": schedule,
                     "target": target,
+                    "change_detection": change_detection,
                     "mode": mode,
+                    "schedule": schedule,
                     "tags": tags,
                     "webhook": webhook,
                 },
@@ -749,11 +749,11 @@ class AsyncMonitorsResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        change_detection: monitor_create_params.ChangeDetection,
         name: str,
-        schedule: monitor_create_params.Schedule,
         target: monitor_create_params.Target,
+        change_detection: monitor_create_params.ChangeDetection | Omit = omit,
         mode: Literal["web"] | Omit = omit,
+        schedule: monitor_create_params.Schedule | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         webhook: Optional[monitor_create_params.Webhook] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -770,16 +770,16 @@ class AsyncMonitorsResource(AsyncAPIResource):
         its initial baseline.
 
         Args:
+          target: Discriminated union describing what the monitor watches.
+
           change_detection: Discriminated union describing how changes are detected.
+
+          mode: Top-level monitor category. Always `web` today; the concrete behavior is
+              described by `target` and `change_detection`.
 
           schedule: Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
               every 6 hours or every 2 days. The total interval (frequency × unit) must be
               between 10 minutes and 1 year.
-
-          target: Discriminated union describing what the monitor watches.
-
-          mode: Top-level monitor category. Always `web` today; the concrete behavior is
-              described by `target` and `change_detection`.
 
           tags: User-defined tags for grouping and filtering monitors and their changes.
               Duplicates are removed.
@@ -796,11 +796,11 @@ class AsyncMonitorsResource(AsyncAPIResource):
             "/monitors",
             body=await async_maybe_transform(
                 {
-                    "change_detection": change_detection,
                     "name": name,
-                    "schedule": schedule,
                     "target": target,
+                    "change_detection": change_detection,
                     "mode": mode,
+                    "schedule": schedule,
                     "tags": tags,
                     "webhook": webhook,
                 },

@@ -9,39 +9,39 @@ from .._types import SequenceNotStr
 
 __all__ = [
     "MonitorCreateParams",
-    "ChangeDetection",
-    "ChangeDetectionMonitorsExactChangeDetection",
-    "ChangeDetectionMonitorsSemanticChangeDetection",
-    "Schedule",
     "Target",
     "TargetMonitorsPageTarget",
     "TargetMonitorsSitemapTarget",
     "TargetMonitorsExtractTarget",
+    "ChangeDetection",
+    "ChangeDetectionMonitorsExactChangeDetection",
+    "ChangeDetectionMonitorsSemanticChangeDetection",
+    "Schedule",
     "Webhook",
 ]
 
 
 class MonitorCreateParams(TypedDict, total=False):
-    change_detection: Required[ChangeDetection]
-    """Discriminated union describing how changes are detected."""
-
     name: Required[str]
-
-    schedule: Required[Schedule]
-    """Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
-
-    every 6 hours or every 2 days. The total interval (frequency × unit) must be
-    between 10 minutes and 1 year.
-    """
 
     target: Required[Target]
     """Discriminated union describing what the monitor watches."""
+
+    change_detection: ChangeDetection
+    """Discriminated union describing how changes are detected."""
 
     mode: Literal["web"]
     """Top-level monitor category.
 
     Always `web` today; the concrete behavior is described by `target` and
     `change_detection`.
+    """
+
+    schedule: Schedule
+    """Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
+
+    every 6 hours or every 2 days. The total interval (frequency × unit) must be
+    between 10 minutes and 1 year.
     """
 
     tags: SequenceNotStr[str]
@@ -51,49 +51,6 @@ class MonitorCreateParams(TypedDict, total=False):
     """
 
     webhook: Optional[Webhook]
-
-
-class ChangeDetectionMonitorsExactChangeDetection(TypedDict, total=False):
-    """Detect exact changes.
-
-    For page targets, this means visible text diffs. For sitemap targets, this means URL additions and removals.
-    """
-
-    type: Required[Literal["exact"]]
-
-
-class ChangeDetectionMonitorsSemanticChangeDetection(TypedDict, total=False):
-    """
-    Detect meaning-level changes to tracked page content, ignoring cosmetic or paraphrase-only differences. Which changes are meaningful is judged against the extract target's `instructions` (and `schema`, when provided).
-    """
-
-    type: Required[Literal["semantic"]]
-
-    confidence_threshold: float
-
-
-ChangeDetection: TypeAlias = Union[
-    ChangeDetectionMonitorsExactChangeDetection, ChangeDetectionMonitorsSemanticChangeDetection
-]
-
-
-class Schedule(TypedDict, total=False):
-    """Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
-
-    every 6 hours or every 2 days. The total interval (frequency × unit) must be between 10 minutes and 1 year.
-    """
-
-    frequency: Required[int]
-    """Number of units between runs.
-
-    The resulting interval (frequency × unit) must be at least 10 minutes and at
-    most 1 year (e.g. minimum 10 when unit is minutes; maximum 365 when unit is
-    days).
-    """
-
-    type: Required[Literal["interval"]]
-
-    unit: Required[Literal["minutes", "hours", "days"]]
 
 
 class TargetMonitorsPageTarget(TypedDict, total=False):
@@ -167,6 +124,49 @@ class TargetMonitorsExtractTarget(TypedDict, total=False):
 
 
 Target: TypeAlias = Union[TargetMonitorsPageTarget, TargetMonitorsSitemapTarget, TargetMonitorsExtractTarget]
+
+
+class ChangeDetectionMonitorsExactChangeDetection(TypedDict, total=False):
+    """Detect exact changes.
+
+    For page targets, this means visible text diffs. For sitemap targets, this means URL additions and removals.
+    """
+
+    type: Required[Literal["exact"]]
+
+
+class ChangeDetectionMonitorsSemanticChangeDetection(TypedDict, total=False):
+    """
+    Detect meaning-level changes to tracked page content, ignoring cosmetic or paraphrase-only differences. Which changes are meaningful is judged against the extract target's `instructions` (and `schema`, when provided).
+    """
+
+    type: Required[Literal["semantic"]]
+
+    confidence_threshold: float
+
+
+ChangeDetection: TypeAlias = Union[
+    ChangeDetectionMonitorsExactChangeDetection, ChangeDetectionMonitorsSemanticChangeDetection
+]
+
+
+class Schedule(TypedDict, total=False):
+    """Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
+
+    every 6 hours or every 2 days. The total interval (frequency × unit) must be between 10 minutes and 1 year.
+    """
+
+    frequency: Required[int]
+    """Number of units between runs.
+
+    The resulting interval (frequency × unit) must be at least 10 minutes and at
+    most 1 year (e.g. minimum 10 when unit is minutes; maximum 365 when unit is
+    days).
+    """
+
+    type: Required[Literal["interval"]]
+
+    unit: Required[Literal["minutes", "hours", "days"]]
 
 
 class Webhook(TypedDict, total=False):

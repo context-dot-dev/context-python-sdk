@@ -251,9 +251,8 @@ class WebhookFailure(BaseModel):
 
 
 class MonitorCreateResponse(BaseModel):
-    """A web monitor.
-
-    `mode` is the constant `web`; behavior is described by `target` (page/sitemap/extract) and `change_detection` (exact/semantic).
+    """
+    A newly created monitor plus `initial_run_id`, the id of the baseline run queued at creation.
     """
 
     id: str
@@ -262,6 +261,13 @@ class MonitorCreateResponse(BaseModel):
     """Discriminated union describing how changes are detected."""
 
     created_at: datetime
+
+    initial_run_id: Optional[str] = None
+    """
+    The baseline run queued by this create call, or null if it could not be queued
+    immediately (in which case the baseline runs on the next scheduled tick). Poll
+    GET /monitors/{monitor_id}/runs/{run_id}.
+    """
 
     mode: Literal["web"]
     """Top-level monitor category.
