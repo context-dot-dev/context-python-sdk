@@ -36,13 +36,7 @@ class TestMonitors:
     @parametrize
     def test_method_create(self, client: ContextDev) -> None:
         monitor = client.monitors.create(
-            change_detection={"type": "exact"},
             name="Acme pricing page",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
             target={
                 "type": "page",
                 "url": "https://acme.com/pricing",
@@ -54,19 +48,19 @@ class TestMonitors:
     @parametrize
     def test_method_create_with_all_params(self, client: ContextDev) -> None:
         monitor = client.monitors.create(
-            change_detection={"type": "exact"},
             name="Acme pricing page",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
             target={
                 "type": "page",
                 "url": "https://acme.com/pricing",
                 "normalize_whitespace": True,
             },
+            change_detection={"type": "exact"},
             mode="web",
+            schedule={
+                "frequency": 6,
+                "type": "interval",
+                "unit": "hours",
+            },
             tags=["pricing", "competitor"],
             webhook={
                 "url": "https://example.com/webhook",
@@ -79,13 +73,7 @@ class TestMonitors:
     @parametrize
     def test_raw_response_create(self, client: ContextDev) -> None:
         response = client.monitors.with_raw_response.create(
-            change_detection={"type": "exact"},
             name="Acme pricing page",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
             target={
                 "type": "page",
                 "url": "https://acme.com/pricing",
@@ -101,13 +89,7 @@ class TestMonitors:
     @parametrize
     def test_streaming_response_create(self, client: ContextDev) -> None:
         with client.monitors.with_streaming_response.create(
-            change_detection={"type": "exact"},
             name="Acme pricing page",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
             target={
                 "type": "page",
                 "url": "https://acme.com/pricing",
@@ -666,13 +648,7 @@ class TestAsyncMonitors:
     @parametrize
     async def test_method_create(self, async_client: AsyncContextDev) -> None:
         monitor = await async_client.monitors.create(
-            change_detection={"type": "exact"},
             name="Acme pricing page",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
             target={
                 "type": "page",
                 "url": "https://acme.com/pricing",
@@ -684,19 +660,19 @@ class TestAsyncMonitors:
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncContextDev) -> None:
         monitor = await async_client.monitors.create(
-            change_detection={"type": "exact"},
             name="Acme pricing page",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
             target={
                 "type": "page",
                 "url": "https://acme.com/pricing",
                 "normalize_whitespace": True,
             },
+            change_detection={"type": "exact"},
             mode="web",
+            schedule={
+                "frequency": 6,
+                "type": "interval",
+                "unit": "hours",
+            },
             tags=["pricing", "competitor"],
             webhook={
                 "url": "https://example.com/webhook",
@@ -709,13 +685,7 @@ class TestAsyncMonitors:
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncContextDev) -> None:
         response = await async_client.monitors.with_raw_response.create(
-            change_detection={"type": "exact"},
             name="Acme pricing page",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
             target={
                 "type": "page",
                 "url": "https://acme.com/pricing",
@@ -731,13 +701,7 @@ class TestAsyncMonitors:
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncContextDev) -> None:
         async with async_client.monitors.with_streaming_response.create(
-            change_detection={"type": "exact"},
             name="Acme pricing page",
-            schedule={
-                "frequency": 6,
-                "type": "interval",
-                "unit": "hours",
-            },
             target={
                 "type": "page",
                 "url": "https://acme.com/pricing",
