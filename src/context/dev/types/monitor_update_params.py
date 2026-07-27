@@ -60,7 +60,7 @@ class ChangeDetectionMonitorsExactChangeDetection(TypedDict, total=False):
 
 class ChangeDetectionMonitorsSemanticChangeDetection(TypedDict, total=False):
     """
-    Detect meaning-level changes to tracked page content, ignoring cosmetic or paraphrase-only differences. Which changes are meaningful is judged against the extract target's `instructions` (and `schema`, when provided).
+    Detect meaning-level changes to page content, ignoring cosmetic or instruction-irrelevant differences. Which changes are meaningful is judged against the page or extract target's `instructions` (and an extract target's `schema`, when provided).
     """
 
     type: Required[Literal["semantic"]]
@@ -93,11 +93,20 @@ class Schedule(TypedDict, total=False):
 
 
 class TargetMonitorsPageTarget(TypedDict, total=False):
-    """Watch a single web page."""
+    """Watch a single web page.
+
+    Exact detection reports visible-text diffs; semantic detection judges confirmed stable diffs against `instructions`.
+    """
 
     type: Required[Literal["page"]]
 
     url: Required[str]
+
+    instructions: str
+    """Plain-language goal describing which page changes matter.
+
+    When provided without change_detection, semantic detection is inferred.
+    """
 
     normalize_whitespace: bool
     """Normalize whitespace before comparing or analyzing text."""

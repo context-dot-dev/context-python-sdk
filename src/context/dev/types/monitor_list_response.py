@@ -41,7 +41,7 @@ class DataChangeDetectionMonitorsExactChangeDetection(BaseModel):
 
 class DataChangeDetectionMonitorsSemanticChangeDetection(BaseModel):
     """
-    Detect meaning-level changes to tracked page content, ignoring cosmetic or paraphrase-only differences. Which changes are meaningful is judged against the extract target's `instructions` (and `schema`, when provided).
+    Detect meaning-level changes to page content, ignoring cosmetic or instruction-irrelevant differences. Which changes are meaningful is judged against the page or extract target's `instructions` (and an extract target's `schema`, when provided).
     """
 
     type: Literal["semantic"]
@@ -75,11 +75,20 @@ class DataSchedule(BaseModel):
 
 
 class DataTargetMonitorsPageTarget(BaseModel):
-    """Watch a single web page."""
+    """Watch a single web page.
+
+    Exact detection reports visible-text diffs; semantic detection judges confirmed stable diffs against `instructions`.
+    """
 
     type: Literal["page"]
 
     url: str
+
+    instructions: Optional[str] = None
+    """Plain-language goal describing which page changes matter.
+
+    When provided without change_detection, semantic detection is inferred.
+    """
 
     normalize_whitespace: Optional[bool] = None
     """Normalize whitespace before comparing or analyzing text."""

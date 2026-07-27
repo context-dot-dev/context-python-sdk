@@ -52,6 +52,7 @@ class TestMonitors:
             target={
                 "type": "page",
                 "url": "https://acme.com/pricing",
+                "instructions": "Report pricing or plan availability changes. Ignore counters, timestamps, testimonials, and navigation.",
                 "normalize_whitespace": True,
             },
             change_detection={"type": "exact"},
@@ -170,6 +171,7 @@ class TestMonitors:
             target={
                 "type": "page",
                 "url": "https://acme.com/pricing",
+                "instructions": "Report pricing or plan availability changes. Ignore counters, timestamps, testimonials, and navigation.",
                 "normalize_whitespace": True,
             },
             webhook={
@@ -664,6 +666,7 @@ class TestAsyncMonitors:
             target={
                 "type": "page",
                 "url": "https://acme.com/pricing",
+                "instructions": "Report pricing or plan availability changes. Ignore counters, timestamps, testimonials, and navigation.",
                 "normalize_whitespace": True,
             },
             change_detection={"type": "exact"},
@@ -782,6 +785,7 @@ class TestAsyncMonitors:
             target={
                 "type": "page",
                 "url": "https://acme.com/pricing",
+                "instructions": "Report pricing or plan availability changes. Ignore counters, timestamps, testimonials, and navigation.",
                 "normalize_whitespace": True,
             },
             webhook={
