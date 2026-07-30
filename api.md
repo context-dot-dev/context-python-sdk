@@ -133,3 +133,25 @@ Methods:
 - <code title="get /monitors/{monitor_id}/runs">client.monitors.<a href="./src/context/dev/resources/monitors.py">list_runs</a>(monitor_id, \*\*<a href="src/context/dev/types/monitor_list_runs_params.py">params</a>) -> <a href="./src/context/dev/types/monitor_list_runs_response.py">MonitorListRunsResponse</a></code>
 - <code title="get /monitors/changes/{change_id}">client.monitors.<a href="./src/context/dev/resources/monitors.py">retrieve_change</a>(change_id) -> <a href="./src/context/dev/types/monitor_retrieve_change_response.py">MonitorRetrieveChangeResponse</a></code>
 - <code title="post /monitors/{monitor_id}/run">client.monitors.<a href="./src/context/dev/resources/monitors.py">run</a>(monitor_id) -> <a href="./src/context/dev/types/monitor_run_response.py">MonitorRunResponse</a></code>
+
+# Batch
+
+Types:
+
+```python
+from context.dev.types import (
+    BatchRetrieveResponse,
+    BatchListResponse,
+    BatchCancelResponse,
+    BatchGetResultsResponse,
+    BatchSubmitResponse,
+)
+```
+
+Methods:
+
+- <code title="get /batch/{batch_id}">client.batch.<a href="./src/context/dev/resources/batch.py">retrieve</a>(batch_id, \*\*<a href="src/context/dev/types/batch_retrieve_params.py">params</a>) -> <a href="./src/context/dev/types/batch_retrieve_response.py">BatchRetrieveResponse</a></code>
+- <code title="get /batch/list">client.batch.<a href="./src/context/dev/resources/batch.py">list</a>(\*\*<a href="src/context/dev/types/batch_list_params.py">params</a>) -> <a href="./src/context/dev/types/batch_list_response.py">BatchListResponse</a></code>
+- <code title="post /batch/{batch_id}/cancel">client.batch.<a href="./src/context/dev/resources/batch.py">cancel</a>(batch_id, \*\*<a href="src/context/dev/types/batch_cancel_params.py">params</a>) -> <a href="./src/context/dev/types/batch_cancel_response.py">BatchCancelResponse</a></code>
+- <code title="get /batch/{batch_id}/results">client.batch.<a href="./src/context/dev/resources/batch.py">get_results</a>(batch_id, \*\*<a href="src/context/dev/types/batch_get_results_params.py">params</a>) -> <a href="./src/context/dev/types/batch_get_results_response.py">BatchGetResultsResponse</a></code>
+- <code title="post /people/retrieve">client.batch.<a href="./src/context/dev/resources/batch.py">submit</a>(\*\*<a href="src/context/dev/types/batch_submit_params.py">params</a>) -> <a href="./src/context/dev/types/batch_submit_response.py">BatchSubmitResponse</a></code>

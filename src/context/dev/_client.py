@@ -35,9 +35,10 @@ from ._base_client import (
 )
 
 if TYPE_CHECKING:
-    from .resources import ai, web, brand, parse, utility, industry, monitors
+    from .resources import ai, web, batch, brand, parse, utility, industry, monitors
     from .resources.ai import AIResource, AsyncAIResource
     from .resources.web import WebResource, AsyncWebResource
+    from .resources.batch import BatchResource, AsyncBatchResource
     from .resources.brand import BrandResource, AsyncBrandResource
     from .resources.parse import ParseResource, AsyncParseResource
     from .resources.utility import UtilityResource, AsyncUtilityResource
@@ -164,6 +165,12 @@ class ContextDev(SyncAPIClient):
         from .resources.monitors import MonitorsResource
 
         return MonitorsResource(self)
+
+    @cached_property
+    def batch(self) -> BatchResource:
+        from .resources.batch import BatchResource
+
+        return BatchResource(self)
 
     @cached_property
     def with_raw_response(self) -> ContextDevWithRawResponse:
@@ -388,6 +395,12 @@ class AsyncContextDev(AsyncAPIClient):
         return AsyncMonitorsResource(self)
 
     @cached_property
+    def batch(self) -> AsyncBatchResource:
+        from .resources.batch import AsyncBatchResource
+
+        return AsyncBatchResource(self)
+
+    @cached_property
     def with_raw_response(self) -> AsyncContextDevWithRawResponse:
         return AsyncContextDevWithRawResponse(self)
 
@@ -551,6 +564,12 @@ class ContextDevWithRawResponse:
 
         return MonitorsResourceWithRawResponse(self._client.monitors)
 
+    @cached_property
+    def batch(self) -> batch.BatchResourceWithRawResponse:
+        from .resources.batch import BatchResourceWithRawResponse
+
+        return BatchResourceWithRawResponse(self._client.batch)
+
 
 class AsyncContextDevWithRawResponse:
     _client: AsyncContextDev
@@ -602,6 +621,12 @@ class AsyncContextDevWithRawResponse:
         from .resources.monitors import AsyncMonitorsResourceWithRawResponse
 
         return AsyncMonitorsResourceWithRawResponse(self._client.monitors)
+
+    @cached_property
+    def batch(self) -> batch.AsyncBatchResourceWithRawResponse:
+        from .resources.batch import AsyncBatchResourceWithRawResponse
+
+        return AsyncBatchResourceWithRawResponse(self._client.batch)
 
 
 class ContextDevWithStreamedResponse:
@@ -655,6 +680,12 @@ class ContextDevWithStreamedResponse:
 
         return MonitorsResourceWithStreamingResponse(self._client.monitors)
 
+    @cached_property
+    def batch(self) -> batch.BatchResourceWithStreamingResponse:
+        from .resources.batch import BatchResourceWithStreamingResponse
+
+        return BatchResourceWithStreamingResponse(self._client.batch)
+
 
 class AsyncContextDevWithStreamedResponse:
     _client: AsyncContextDev
@@ -706,6 +737,12 @@ class AsyncContextDevWithStreamedResponse:
         from .resources.monitors import AsyncMonitorsResourceWithStreamingResponse
 
         return AsyncMonitorsResourceWithStreamingResponse(self._client.monitors)
+
+    @cached_property
+    def batch(self) -> batch.AsyncBatchResourceWithStreamingResponse:
+        from .resources.batch import AsyncBatchResourceWithStreamingResponse
+
+        return AsyncBatchResourceWithStreamingResponse(self._client.batch)
 
 
 Client = ContextDev
