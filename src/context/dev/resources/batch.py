@@ -6,13 +6,7 @@ from typing_extensions import Literal
 
 import httpx
 
-from ..types import (
-    batch_list_params,
-    batch_cancel_params,
-    batch_submit_params,
-    batch_retrieve_params,
-    batch_get_results_params,
-)
+from ..types import batch_list_params, batch_submit_params, batch_get_results_params
 from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import path_template, maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -57,7 +51,6 @@ class BatchResource(SyncAPIResource):
         self,
         batch_id: str,
         *,
-        tags: SequenceNotStr[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -74,10 +67,6 @@ class BatchResource(SyncAPIResource):
         Args:
           batch_id: ID of the batch to retrieve or cancel.
 
-          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
-              recorded on the request's usage log and can be used to filter usage on the
-              dashboard usage page. Up to 20 tags, each 1-50 characters.
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -91,11 +80,7 @@ class BatchResource(SyncAPIResource):
         return self._get(
             path_template("/batch/{batch_id}", batch_id=batch_id),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform({"tags": tags}, batch_retrieve_params.BatchRetrieveParams),
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=BatchRetrieveResponse,
         )
@@ -105,8 +90,10 @@ class BatchResource(SyncAPIResource):
         *,
         cursor: str | Omit = omit,
         limit: int | Omit = omit,
+        q: str | Omit = omit,
+        search_type: Literal["exact", "prefix"] | Omit = omit,
         status: Literal["queued", "running", "cancelling", "completed", "cancelled", "failed"] | Omit = omit,
-        tags: SequenceNotStr[str] | Omit = omit,
+        tags: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -124,11 +111,15 @@ class BatchResource(SyncAPIResource):
 
           limit: Batches per page. Defaults to 25.
 
+          q: Free-text search term, matched against the batch id, crawl source (start URL or
+              sitemap domain), and tags.
+
+          search_type: `prefix` for as-you-type prefix matching (default), `exact` for full-token
+              matching.
+
           status: Filter by status.
 
-          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
-              recorded on the request's usage log and can be used to filter usage on the
-              dashboard usage page. Up to 20 tags, each 1-50 characters.
+          tags: Comma-separated list of tags to filter by (matches batches having any of them).
 
           extra_headers: Send extra headers
 
@@ -149,6 +140,8 @@ class BatchResource(SyncAPIResource):
                     {
                         "cursor": cursor,
                         "limit": limit,
+                        "q": q,
+                        "search_type": search_type,
                         "status": status,
                         "tags": tags,
                     },
@@ -162,7 +155,6 @@ class BatchResource(SyncAPIResource):
         self,
         batch_id: str,
         *,
-        tags: SequenceNotStr[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -178,10 +170,6 @@ class BatchResource(SyncAPIResource):
         Args:
           batch_id: ID of the batch to retrieve or cancel.
 
-          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
-              recorded on the request's usage log and can be used to filter usage on the
-              dashboard usage page. Up to 20 tags, each 1-50 characters.
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -195,11 +183,7 @@ class BatchResource(SyncAPIResource):
         return self._post(
             path_template("/batch/{batch_id}/cancel", batch_id=batch_id),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform({"tags": tags}, batch_cancel_params.BatchCancelParams),
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=BatchCancelResponse,
         )
@@ -210,7 +194,6 @@ class BatchResource(SyncAPIResource):
         *,
         cursor: str | Omit = omit,
         limit: int | Omit = omit,
-        tags: SequenceNotStr[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -230,10 +213,6 @@ class BatchResource(SyncAPIResource):
 
           limit: Records per page. Defaults to 25. A page can close early so its payload stays
               under ~8 MB; rely on next_cursor rather than counting records.
-
-          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
-              recorded on the request's usage log and can be used to filter usage on the
-              dashboard usage page. Up to 20 tags, each 1-50 characters.
 
           extra_headers: Send extra headers
 
@@ -256,7 +235,6 @@ class BatchResource(SyncAPIResource):
                     {
                         "cursor": cursor,
                         "limit": limit,
-                        "tags": tags,
                     },
                     batch_get_results_params.BatchGetResultsParams,
                 ),
@@ -338,7 +316,6 @@ class AsyncBatchResource(AsyncAPIResource):
         self,
         batch_id: str,
         *,
-        tags: SequenceNotStr[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -355,10 +332,6 @@ class AsyncBatchResource(AsyncAPIResource):
         Args:
           batch_id: ID of the batch to retrieve or cancel.
 
-          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
-              recorded on the request's usage log and can be used to filter usage on the
-              dashboard usage page. Up to 20 tags, each 1-50 characters.
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -372,11 +345,7 @@ class AsyncBatchResource(AsyncAPIResource):
         return await self._get(
             path_template("/batch/{batch_id}", batch_id=batch_id),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform({"tags": tags}, batch_retrieve_params.BatchRetrieveParams),
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=BatchRetrieveResponse,
         )
@@ -386,8 +355,10 @@ class AsyncBatchResource(AsyncAPIResource):
         *,
         cursor: str | Omit = omit,
         limit: int | Omit = omit,
+        q: str | Omit = omit,
+        search_type: Literal["exact", "prefix"] | Omit = omit,
         status: Literal["queued", "running", "cancelling", "completed", "cancelled", "failed"] | Omit = omit,
-        tags: SequenceNotStr[str] | Omit = omit,
+        tags: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -405,11 +376,15 @@ class AsyncBatchResource(AsyncAPIResource):
 
           limit: Batches per page. Defaults to 25.
 
+          q: Free-text search term, matched against the batch id, crawl source (start URL or
+              sitemap domain), and tags.
+
+          search_type: `prefix` for as-you-type prefix matching (default), `exact` for full-token
+              matching.
+
           status: Filter by status.
 
-          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
-              recorded on the request's usage log and can be used to filter usage on the
-              dashboard usage page. Up to 20 tags, each 1-50 characters.
+          tags: Comma-separated list of tags to filter by (matches batches having any of them).
 
           extra_headers: Send extra headers
 
@@ -430,6 +405,8 @@ class AsyncBatchResource(AsyncAPIResource):
                     {
                         "cursor": cursor,
                         "limit": limit,
+                        "q": q,
+                        "search_type": search_type,
                         "status": status,
                         "tags": tags,
                     },
@@ -443,7 +420,6 @@ class AsyncBatchResource(AsyncAPIResource):
         self,
         batch_id: str,
         *,
-        tags: SequenceNotStr[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -459,10 +435,6 @@ class AsyncBatchResource(AsyncAPIResource):
         Args:
           batch_id: ID of the batch to retrieve or cancel.
 
-          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
-              recorded on the request's usage log and can be used to filter usage on the
-              dashboard usage page. Up to 20 tags, each 1-50 characters.
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -476,11 +448,7 @@ class AsyncBatchResource(AsyncAPIResource):
         return await self._post(
             path_template("/batch/{batch_id}/cancel", batch_id=batch_id),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform({"tags": tags}, batch_cancel_params.BatchCancelParams),
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=BatchCancelResponse,
         )
@@ -491,7 +459,6 @@ class AsyncBatchResource(AsyncAPIResource):
         *,
         cursor: str | Omit = omit,
         limit: int | Omit = omit,
-        tags: SequenceNotStr[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -511,10 +478,6 @@ class AsyncBatchResource(AsyncAPIResource):
 
           limit: Records per page. Defaults to 25. A page can close early so its payload stays
               under ~8 MB; rely on next_cursor rather than counting records.
-
-          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
-              recorded on the request's usage log and can be used to filter usage on the
-              dashboard usage page. Up to 20 tags, each 1-50 characters.
 
           extra_headers: Send extra headers
 
@@ -537,7 +500,6 @@ class AsyncBatchResource(AsyncAPIResource):
                     {
                         "cursor": cursor,
                         "limit": limit,
-                        "tags": tags,
                     },
                     batch_get_results_params.BatchGetResultsParams,
                 ),

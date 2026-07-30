@@ -150,8 +150,8 @@ from context.dev.types import (
 
 Methods:
 
-- <code title="get /batch/{batch_id}">client.batch.<a href="./src/context/dev/resources/batch.py">retrieve</a>(batch_id, \*\*<a href="src/context/dev/types/batch_retrieve_params.py">params</a>) -> <a href="./src/context/dev/types/batch_retrieve_response.py">BatchRetrieveResponse</a></code>
+- <code title="get /batch/{batch_id}">client.batch.<a href="./src/context/dev/resources/batch.py">retrieve</a>(batch_id) -> <a href="./src/context/dev/types/batch_retrieve_response.py">BatchRetrieveResponse</a></code>
 - <code title="get /batch/list">client.batch.<a href="./src/context/dev/resources/batch.py">list</a>(\*\*<a href="src/context/dev/types/batch_list_params.py">params</a>) -> <a href="./src/context/dev/types/batch_list_response.py">BatchListResponse</a></code>
-- <code title="post /batch/{batch_id}/cancel">client.batch.<a href="./src/context/dev/resources/batch.py">cancel</a>(batch_id, \*\*<a href="src/context/dev/types/batch_cancel_params.py">params</a>) -> <a href="./src/context/dev/types/batch_cancel_response.py">BatchCancelResponse</a></code>
+- <code title="post /batch/{batch_id}/cancel">client.batch.<a href="./src/context/dev/resources/batch.py">cancel</a>(batch_id) -> <a href="./src/context/dev/types/batch_cancel_response.py">BatchCancelResponse</a></code>
 - <code title="get /batch/{batch_id}/results">client.batch.<a href="./src/context/dev/resources/batch.py">get_results</a>(batch_id, \*\*<a href="src/context/dev/types/batch_get_results_params.py">params</a>) -> <a href="./src/context/dev/types/batch_get_results_response.py">BatchGetResultsResponse</a></code>
 - <code title="post /people/retrieve">client.batch.<a href="./src/context/dev/resources/batch.py">submit</a>(\*\*<a href="src/context/dev/types/batch_submit_params.py">params</a>) -> <a href="./src/context/dev/types/batch_submit_response.py">BatchSubmitResponse</a></code>

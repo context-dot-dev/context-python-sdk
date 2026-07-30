@@ -27,16 +27,7 @@ class TestBatch:
     @parametrize
     def test_method_retrieve(self, client: ContextDev) -> None:
         batch = client.batch.retrieve(
-            batch_id="batch_9f2c8a",
-        )
-        assert_matches_type(BatchRetrieveResponse, batch, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_retrieve_with_all_params(self, client: ContextDev) -> None:
-        batch = client.batch.retrieve(
-            batch_id="batch_9f2c8a",
-            tags=["production", "team-alpha"],
+            "batch_9f2c8a",
         )
         assert_matches_type(BatchRetrieveResponse, batch, path=["response"])
 
@@ -44,7 +35,7 @@ class TestBatch:
     @parametrize
     def test_raw_response_retrieve(self, client: ContextDev) -> None:
         response = client.batch.with_raw_response.retrieve(
-            batch_id="batch_9f2c8a",
+            "batch_9f2c8a",
         )
 
         assert response.is_closed is True
@@ -56,7 +47,7 @@ class TestBatch:
     @parametrize
     def test_streaming_response_retrieve(self, client: ContextDev) -> None:
         with client.batch.with_streaming_response.retrieve(
-            batch_id="batch_9f2c8a",
+            "batch_9f2c8a",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -71,7 +62,7 @@ class TestBatch:
     def test_path_params_retrieve(self, client: ContextDev) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `batch_id` but received ''"):
             client.batch.with_raw_response.retrieve(
-                batch_id="",
+                "",
             )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
@@ -86,8 +77,10 @@ class TestBatch:
         batch = client.batch.list(
             cursor="cursor",
             limit=1,
+            q="batch_1a2b",
+            search_type="exact",
             status="queued",
-            tags=["production", "team-alpha"],
+            tags="docs,competitor",
         )
         assert_matches_type(BatchListResponse, batch, path=["response"])
 
@@ -117,16 +110,7 @@ class TestBatch:
     @parametrize
     def test_method_cancel(self, client: ContextDev) -> None:
         batch = client.batch.cancel(
-            batch_id="batch_9f2c8a",
-        )
-        assert_matches_type(BatchCancelResponse, batch, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_cancel_with_all_params(self, client: ContextDev) -> None:
-        batch = client.batch.cancel(
-            batch_id="batch_9f2c8a",
-            tags=["production", "team-alpha"],
+            "batch_9f2c8a",
         )
         assert_matches_type(BatchCancelResponse, batch, path=["response"])
 
@@ -134,7 +118,7 @@ class TestBatch:
     @parametrize
     def test_raw_response_cancel(self, client: ContextDev) -> None:
         response = client.batch.with_raw_response.cancel(
-            batch_id="batch_9f2c8a",
+            "batch_9f2c8a",
         )
 
         assert response.is_closed is True
@@ -146,7 +130,7 @@ class TestBatch:
     @parametrize
     def test_streaming_response_cancel(self, client: ContextDev) -> None:
         with client.batch.with_streaming_response.cancel(
-            batch_id="batch_9f2c8a",
+            "batch_9f2c8a",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -161,7 +145,7 @@ class TestBatch:
     def test_path_params_cancel(self, client: ContextDev) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `batch_id` but received ''"):
             client.batch.with_raw_response.cancel(
-                batch_id="",
+                "",
             )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
@@ -179,7 +163,6 @@ class TestBatch:
             batch_id="batch_9f2c8a",
             cursor="cursor",
             limit=1,
-            tags=["production", "team-alpha"],
         )
         assert_matches_type(BatchGetResultsResponse, batch, path=["response"])
 
@@ -271,16 +254,7 @@ class TestAsyncBatch:
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncContextDev) -> None:
         batch = await async_client.batch.retrieve(
-            batch_id="batch_9f2c8a",
-        )
-        assert_matches_type(BatchRetrieveResponse, batch, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_retrieve_with_all_params(self, async_client: AsyncContextDev) -> None:
-        batch = await async_client.batch.retrieve(
-            batch_id="batch_9f2c8a",
-            tags=["production", "team-alpha"],
+            "batch_9f2c8a",
         )
         assert_matches_type(BatchRetrieveResponse, batch, path=["response"])
 
@@ -288,7 +262,7 @@ class TestAsyncBatch:
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncContextDev) -> None:
         response = await async_client.batch.with_raw_response.retrieve(
-            batch_id="batch_9f2c8a",
+            "batch_9f2c8a",
         )
 
         assert response.is_closed is True
@@ -300,7 +274,7 @@ class TestAsyncBatch:
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncContextDev) -> None:
         async with async_client.batch.with_streaming_response.retrieve(
-            batch_id="batch_9f2c8a",
+            "batch_9f2c8a",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -315,7 +289,7 @@ class TestAsyncBatch:
     async def test_path_params_retrieve(self, async_client: AsyncContextDev) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `batch_id` but received ''"):
             await async_client.batch.with_raw_response.retrieve(
-                batch_id="",
+                "",
             )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
@@ -330,8 +304,10 @@ class TestAsyncBatch:
         batch = await async_client.batch.list(
             cursor="cursor",
             limit=1,
+            q="batch_1a2b",
+            search_type="exact",
             status="queued",
-            tags=["production", "team-alpha"],
+            tags="docs,competitor",
         )
         assert_matches_type(BatchListResponse, batch, path=["response"])
 
@@ -361,16 +337,7 @@ class TestAsyncBatch:
     @parametrize
     async def test_method_cancel(self, async_client: AsyncContextDev) -> None:
         batch = await async_client.batch.cancel(
-            batch_id="batch_9f2c8a",
-        )
-        assert_matches_type(BatchCancelResponse, batch, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_cancel_with_all_params(self, async_client: AsyncContextDev) -> None:
-        batch = await async_client.batch.cancel(
-            batch_id="batch_9f2c8a",
-            tags=["production", "team-alpha"],
+            "batch_9f2c8a",
         )
         assert_matches_type(BatchCancelResponse, batch, path=["response"])
 
@@ -378,7 +345,7 @@ class TestAsyncBatch:
     @parametrize
     async def test_raw_response_cancel(self, async_client: AsyncContextDev) -> None:
         response = await async_client.batch.with_raw_response.cancel(
-            batch_id="batch_9f2c8a",
+            "batch_9f2c8a",
         )
 
         assert response.is_closed is True
@@ -390,7 +357,7 @@ class TestAsyncBatch:
     @parametrize
     async def test_streaming_response_cancel(self, async_client: AsyncContextDev) -> None:
         async with async_client.batch.with_streaming_response.cancel(
-            batch_id="batch_9f2c8a",
+            "batch_9f2c8a",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -405,7 +372,7 @@ class TestAsyncBatch:
     async def test_path_params_cancel(self, async_client: AsyncContextDev) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `batch_id` but received ''"):
             await async_client.batch.with_raw_response.cancel(
-                batch_id="",
+                "",
             )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
@@ -423,7 +390,6 @@ class TestAsyncBatch:
             batch_id="batch_9f2c8a",
             cursor="cursor",
             limit=1,
-            tags=["production", "team-alpha"],
         )
         assert_matches_type(BatchGetResultsResponse, batch, path=["response"])
 

@@ -159,6 +159,9 @@ class BatchRetrieveResponse(BaseModel):
     status: Literal["queued", "running", "cancelling", "completed", "cancelled", "failed"]
     """Current state. `completed`, `cancelled`, and `failed` are final."""
 
+    tags: List[str]
+    """Tags stored on the batch at submission."""
+
     timing: Timing
 
     type: Literal["markdown", "html"]
