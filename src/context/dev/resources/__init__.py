@@ -16,6 +16,14 @@ from .web import (
     WebResourceWithStreamingResponse,
     AsyncWebResourceWithStreamingResponse,
 )
+from .batch import (
+    BatchResource,
+    AsyncBatchResource,
+    BatchResourceWithRawResponse,
+    AsyncBatchResourceWithRawResponse,
+    BatchResourceWithStreamingResponse,
+    AsyncBatchResourceWithStreamingResponse,
+)
 from .brand import (
     BrandResource,
     AsyncBrandResource,
@@ -100,4 +108,10 @@ __all__ = [
     "AsyncMonitorsResourceWithRawResponse",
     "MonitorsResourceWithStreamingResponse",
     "AsyncMonitorsResourceWithStreamingResponse",
+    "BatchResource",
+    "AsyncBatchResource",
+    "BatchResourceWithRawResponse",
+    "AsyncBatchResourceWithRawResponse",
+    "BatchResourceWithStreamingResponse",
+    "AsyncBatchResourceWithStreamingResponse",
 ]
