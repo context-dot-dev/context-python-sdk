@@ -4,8 +4,6 @@ from __future__ import annotations
 
 from typing_extensions import Literal, TypedDict
 
-from .._types import SequenceNotStr
-
 __all__ = ["BatchListParams"]
 
 
@@ -16,12 +14,20 @@ class BatchListParams(TypedDict, total=False):
     limit: int
     """Batches per page. Defaults to 25."""
 
+    q: str
+    """
+    Free-text search term, matched against the batch id, crawl source (start URL or
+    sitemap domain), and tags.
+    """
+
+    search_type: Literal["exact", "prefix"]
+    """
+    `prefix` for as-you-type prefix matching (default), `exact` for full-token
+    matching.
+    """
+
     status: Literal["queued", "running", "cancelling", "completed", "cancelled", "failed"]
     """Filter by status."""
 
-    tags: SequenceNotStr[str]
-    """Optional comma-separated caller-defined tags for tracking this request.
-
-    Tags are recorded on the request's usage log and can be used to filter usage on
-    the dashboard usage page. Up to 20 tags, each 1-50 characters.
-    """
+    tags: str
+    """Comma-separated list of tags to filter by (matches batches having any of them)."""
