@@ -7,7 +7,7 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["WebWebScrapeHTMLResponse", "Metadata", "MetadataAlternate", "KeyMetadata"]
+__all__ = ["WebWebScrapeHTMLResponse", "Metadata", "MetadataAlternate", "ActionsApplied", "KeyMetadata"]
 
 
 class MetadataAlternate(BaseModel):
@@ -88,6 +88,27 @@ class Metadata(BaseModel):
     """Twitter card metadata with the twitter: prefix removed and keys camel-cased."""
 
 
+class ActionsApplied(BaseModel):
+    instruction: str
+
+    status: Literal["applied", "failed", "skipped"]
+    """Applied means the requested page state was visibly verified.
+
+    Failed means it was not verified. Skipped means it was not attempted.
+    """
+
+    completion_evidence: Optional[str] = FieldInfo(alias="completionEvidence", default=None)
+    """Visible page evidence used to verify an applied action."""
+
+    duration_ms: Optional[float] = FieldInfo(alias="durationMs", default=None)
+
+    error: Optional[str] = None
+
+    method: Optional[str] = None
+
+    target_description: Optional[str] = FieldInfo(alias="targetDescription", default=None)
+
+
 class KeyMetadata(BaseModel):
     """Metadata about the API key used for the request.
 
@@ -129,6 +150,15 @@ class WebWebScrapeHTMLResponse(BaseModel):
 
     url: str
     """The URL that was scraped"""
+
+    actions_applied: Optional[List[ActionsApplied]] = FieldInfo(alias="actionsApplied", default=None)
+    """One verified outcome per requested browser action, in request order."""
+
+    actions_html_stale: Optional[bool] = FieldInfo(alias="actionsHtmlStale", default=None)
+    """
+    True when an action was applied but the returned content could not be refreshed
+    afterward.
+    """
 
     key_metadata: Optional[KeyMetadata] = None
     """Metadata about the API key used for the request.
