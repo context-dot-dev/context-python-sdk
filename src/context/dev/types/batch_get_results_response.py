@@ -1,16 +1,25 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import Dict, List, Union, Optional
-from typing_extensions import Literal
+from typing_extensions import Literal, Annotated, TypeAlias
 
 from pydantic import Field as FieldInfo
 
+from .._utils import PropertyInfo
 from .._models import BaseModel
 
-__all__ = ["WebWebScrapeHTMLResponse", "Metadata", "MetadataAlternate", "ActionsApplied", "KeyMetadata"]
+__all__ = [
+    "BatchGetResultsResponse",
+    "Data",
+    "DataOk",
+    "DataOkMetadata",
+    "DataOkMetadataAlternate",
+    "DataError",
+    "KeyMetadata",
+]
 
 
-class MetadataAlternate(BaseModel):
+class DataOkMetadataAlternate(BaseModel):
     href: str
     """Resolved alternate URL."""
 
@@ -24,7 +33,7 @@ class MetadataAlternate(BaseModel):
     """Alternate resource MIME type, when present."""
 
 
-class Metadata(BaseModel):
+class DataOkMetadata(BaseModel):
     """Metadata extracted from the scraped page HTML."""
 
     final_url: str = FieldInfo(alias="finalUrl")
@@ -39,7 +48,7 @@ class Metadata(BaseModel):
     additional_meta: Optional[Dict[str, Union[str, List[str]]]] = FieldInfo(alias="additionalMeta", default=None)
     """Additional non-social meta tags not promoted to top-level metadata fields."""
 
-    alternates: Optional[List[MetadataAlternate]] = None
+    alternates: Optional[List[DataOkMetadataAlternate]] = None
     """Resolved alternate links from link rel=alternate tags."""
 
     author: Optional[str] = None
@@ -88,25 +97,60 @@ class Metadata(BaseModel):
     """Twitter card metadata with the twitter: prefix removed and keys camel-cased."""
 
 
-class ActionsApplied(BaseModel):
-    instruction: str
+class DataOk(BaseModel):
+    """A page the batch fetched successfully."""
 
-    status: Literal["applied", "failed", "skipped"]
-    """Applied means the requested page state was visibly verified.
+    final_url: str
+    """URL the content was read from, after redirects."""
 
-    Failed means it was not verified. Skipped means it was not attempted.
-    """
+    http_status: Optional[int] = None
+    """HTTP status of the final response, when known."""
 
-    completion_evidence: Optional[str] = FieldInfo(alias="completionEvidence", default=None)
-    """Visible page evidence used to verify an applied action."""
+    metadata: DataOkMetadata
+    """Metadata extracted from the scraped page HTML."""
 
-    duration_ms: Optional[float] = FieldInfo(alias="durationMs", default=None)
+    status: Literal["ok"]
+    """The page was scraped."""
 
-    error: Optional[str] = None
+    url: str
+    """URL as submitted, or as discovered by the crawl."""
 
-    method: Optional[str] = None
+    html: Optional[str] = None
+    """Raw page HTML. Present on html batches."""
 
-    target_description: Optional[str] = FieldInfo(alias="targetDescription", default=None)
+    item_id: Optional[str] = FieldInfo(alias="itemId", default=None)
+    """Caller-supplied identifier echoed from submission."""
+
+    markdown: Optional[str] = None
+    """Page content as Markdown. Present on markdown batches."""
+
+    meta: Optional[Dict[str, object]] = None
+    """Caller-supplied metadata echoed from submission."""
+
+
+class DataError(BaseModel):
+    """A page the batch could not fetch."""
+
+    error_code: str
+    """Why the page failed."""
+
+    message: str
+    """Human-readable failure detail."""
+
+    status: Literal["error"]
+    """The page could not be scraped."""
+
+    url: str
+    """URL as submitted, or as discovered by the crawl."""
+
+    item_id: Optional[str] = FieldInfo(alias="itemId", default=None)
+    """Caller-supplied identifier echoed from submission."""
+
+    meta: Optional[Dict[str, object]] = None
+    """Caller-supplied metadata echoed from submission."""
+
+
+Data: TypeAlias = Annotated[Union[DataOk, DataError], PropertyInfo(discriminator="status")]
 
 
 class KeyMetadata(BaseModel):
@@ -122,43 +166,12 @@ class KeyMetadata(BaseModel):
     """The number of credits remaining for your organization after this request."""
 
 
-class WebWebScrapeHTMLResponse(BaseModel):
-    html: str
-    """The scraped content of the page.
+class BatchGetResultsResponse(BaseModel):
+    data: Optional[List[Data]] = None
+    """Result records on this page."""
 
-    For normal pages this is the raw HTML. When the page is a sitemap or feed served
-    behind an XSL stylesheet (which browsers render into HTML), this is the
-    underlying XML instead — see the `type` field.
-    """
-
-    metadata: Metadata
-    """Metadata extracted from the scraped page HTML."""
-
-    success: Literal[True]
-    """Indicates success"""
-
-    type: Literal[
-        "html", "xml", "json", "text", "csv", "markdown", "svg", "pdf", "docx", "doc", "xlsx", "xls", "pptx", "ppt"
-    ]
-    """Detected content type of the returned `html` field.
-
-    Sitemaps and feeds are surfaced as `xml`; ordinary pages are `html`. Excel
-    workbooks are surfaced as `xlsx`/`xls` with the extracted sheets as HTML tables;
-    PowerPoint presentations are surfaced as `pptx`/`ppt` with the extracted slides
-    as HTML.
-    """
-
-    url: str
-    """The URL that was scraped"""
-
-    actions_applied: Optional[List[ActionsApplied]] = FieldInfo(alias="actionsApplied", default=None)
-    """One verified outcome per requested browser action, in request order."""
-
-    actions_html_stale: Optional[bool] = FieldInfo(alias="actionsHtmlStale", default=None)
-    """
-    True when an action was applied but the returned content could not be refreshed
-    afterward.
-    """
+    has_more: Optional[bool] = None
+    """Whether another page is available."""
 
     key_metadata: Optional[KeyMetadata] = None
     """Metadata about the API key used for the request.
@@ -166,3 +179,6 @@ class WebWebScrapeHTMLResponse(BaseModel):
     Included in every response whenever a valid API key is provided, even when the
     response status is not 200.
     """
+
+    next_cursor: Optional[str] = None
+    """Cursor for the next page."""
