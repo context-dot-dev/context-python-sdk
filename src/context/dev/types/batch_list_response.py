@@ -3,15 +3,16 @@
 from typing import List, Optional
 from typing_extensions import Literal
 
-from .error import Error
+from .intake import Intake
+from .failure import Failure
 from .._models import BaseModel
-from .error_count import ErrorCount
+from .crawl_controls import CrawlControls
+from .page_error_count import PageErrorCount
 
 __all__ = [
     "BatchListResponse",
     "Data",
     "DataCredits",
-    "DataInput",
     "DataProgress",
     "DataResults",
     "DataResultsFile",
@@ -21,42 +22,39 @@ __all__ = [
 
 
 class DataCredits(BaseModel):
-    """Reserved and used credits."""
+    """What this batch has done to your credit balance."""
 
-    charged: int
-    """Credits used by successful pages."""
+    net: int
+    """`reserved` minus `refunded` — what the batch has cost so far.
 
-    estimated: int
-    """Credits reserved when the batch was accepted."""
+    Equal to `reserved` until the batch settles.
+    """
 
+    refunded: int
+    """Credits returned for pages that did not succeed.
 
-class DataInput(BaseModel):
-    """Submission counts."""
+    Stays 0 until the batch reaches a final status, then settles in one movement.
+    """
 
-    accepted: int
-    """Pages accepted, or the crawl page limit. Credits are reserved for this count."""
+    reserved: int
+    """Credits debited from your balance the moment the batch was accepted.
 
-    duplicates: int
-    """Duplicate URL and `itemId` pairs skipped. Always 0 for crawls."""
-
-    invalid: int
-    """Pages rejected during validation."""
-
-    submitted: int
-    """Pages submitted before validation. For a crawl, the page limit."""
+    This is a charge, not a forecast — the whole amount leaves the balance up front.
+    """
 
 
 class DataProgress(BaseModel):
-    """Current processing counts. Use `status` to check completion."""
+    """Pages attempted so far. Use `status` to check completion."""
 
     failed: int
     """Pages that could not be scraped."""
 
     pending: int
-    """Accepted pages not yet attempted.
+    """Reserved pages not yet attempted.
 
-    Always 0 once the batch completes; a crawl can finish under its page limit when
-    the site has no more reachable pages.
+    A cancelled batch keeps reporting the URLs it never reached; a crawl whose
+    `input.reserved_is_ceiling` is true reports 0 once final, because its unspent
+    budget was never real pages.
     """
 
     succeeded: int
@@ -75,9 +73,8 @@ class DataResultsFile(BaseModel):
 
 
 class DataResults(BaseModel):
-    """Download links available when the batch finishes.
-
-    GET /batch/{batch_id}/results serves the same records as paginated JSON.
+    """
+    Download links, available once the batch reaches a final status and null before then. GET /batch/{batch_id}/results serves the same records as paginated JSON.
     """
 
     expires_at: str
@@ -104,28 +101,46 @@ class Data(BaseModel):
     id: str
     """Batch ID used to retrieve or cancel the job."""
 
+    crawl: Optional[CrawlControls] = None
+    """
+    The crawl controls as submitted, so the limits requested can be compared against
+    what the crawl reached.
+    """
+
     credits: DataCredits
-    """Reserved and used credits."""
+    """What this batch has done to your credit balance."""
 
-    error: Optional[Error] = None
-    """Why the batch failed."""
+    failure: Optional[Failure] = None
+    """
+    A failure of the batch as a whole, distinct from the per-page failures in
+    `page_errors`.
+    """
 
-    errors: List[ErrorCount]
-    """Page failures grouped by error code."""
+    format: Literal["markdown", "html"]
+    """What each page is returned as.
 
-    input: DataInput
-    """Submission counts."""
+    Matches `input.data.format` on the submit request.
+    """
+
+    input: Intake
+    """What submission took in, and what it charged for."""
 
     mode: Literal["scrape", "crawl"]
-    """How pages are selected."""
+    """How pages were selected. Matches `input.mode` on the submit request."""
+
+    page_errors: List[PageErrorCount]
+    """Individual page failures grouped by error code, sorted by count.
+
+    Unrelated to `failure`, which is the batch itself failing.
+    """
 
     progress: DataProgress
-    """Current processing counts. Use `status` to check completion."""
+    """Pages attempted so far. Use `status` to check completion."""
 
     results: Optional[DataResults] = None
-    """Download links available when the batch finishes.
-
-    GET /batch/{batch_id}/results serves the same records as paginated JSON.
+    """
+    Download links, available once the batch reaches a final status and null before
+    then. GET /batch/{batch_id}/results serves the same records as paginated JSON.
     """
 
     status: Literal["queued", "running", "cancelling", "completed", "cancelled", "failed"]
@@ -135,9 +150,6 @@ class Data(BaseModel):
     """Tags stored on the batch at submission."""
 
     timing: DataTiming
-
-    type: Literal["markdown", "html"]
-    """Output format."""
 
 
 class KeyMetadata(BaseModel):

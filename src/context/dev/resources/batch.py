@@ -61,8 +61,8 @@ class BatchResource(SyncAPIResource):
         """Check progress and get download links when the batch finishes.
 
         Also returns the
-        rejected-URL list and webhook signing secret from submission, so nothing is lost
-        if the submit response was dropped.
+        rejected-URL list from submission. The webhook signing secret is not repeated
+        here — it is returned once, by the submit response.
 
         Args:
           batch_id: ID of the batch to retrieve or cancel.
@@ -326,8 +326,8 @@ class AsyncBatchResource(AsyncAPIResource):
         """Check progress and get download links when the batch finishes.
 
         Also returns the
-        rejected-URL list and webhook signing secret from submission, so nothing is lost
-        if the submit response was dropped.
+        rejected-URL list from submission. The webhook signing secret is not repeated
+        here — it is returned once, by the submit response.
 
         Args:
           batch_id: ID of the batch to retrieve or cancel.
