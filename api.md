@@ -140,6 +140,8 @@ Types:
 
 ```python
 from context.dev.types import (
+    ErrorCount,
+    Error,
     BatchRetrieveResponse,
     BatchListResponse,
     BatchCancelResponse,
