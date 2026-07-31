@@ -4,86 +4,45 @@ from typing import List, Optional
 from typing_extensions import Literal
 
 from .intake import Intake
-from .failure import Failure
 from .._models import BaseModel
 from .crawl_controls import CrawlControls
 from .page_error_count import PageErrorCount
 
-__all__ = ["BatchCancelResponse", "Credits", "Progress", "Results", "ResultsFile", "Timing", "KeyMetadata"]
+__all__ = ["BatchCancelResponse", "Credits", "Progress", "Timing", "KeyMetadata"]
 
 
 class Credits(BaseModel):
-    """What this batch has done to your credit balance."""
-
-    net: int
-    """`reserved` minus `refunded` — what the batch has cost so far.
-
-    Equal to `reserved` until the batch settles.
-    """
-
-    refunded: int
-    """Credits returned for pages that did not succeed.
-
-    Stays 0 until the batch reaches a final status, then settles in one movement.
-    """
+    """What this batch cost so far."""
 
     reserved: int
-    """Credits debited from your balance the moment the batch was accepted.
+    """Credits debited at submission.
 
-    This is a charge, not a forecast — the whole amount leaves the balance up front.
+    The unspent remainder is refunded once the batch settles — read
+    `credits.refunded` from GET /batch/{batch_id} then.
     """
 
 
 class Progress(BaseModel):
-    """Pages attempted so far. Use `status` to check completion."""
+    """How far the batch got before cancellation."""
 
     failed: int
-    """Pages that could not be scraped."""
+    """Pages that could not be scraped before the request landed."""
 
     pending: int
-    """Reserved pages not yet attempted.
-
-    A cancelled batch keeps reporting the URLs it never reached; a crawl whose
-    `input.reserved_is_ceiling` is true reports 0 once final, because its unspent
-    budget was never real pages.
-    """
+    """Reserved pages that will now be skipped, and refunded when the batch settles."""
 
     succeeded: int
-    """Pages scraped successfully."""
-
-
-class ResultsFile(BaseModel):
-    bytes: int
-    """Compressed file size in bytes."""
-
-    items: int
-    """Results in this file."""
-
-    url: str
-    """Temporary URL for a gzipped NDJSON file."""
-
-
-class Results(BaseModel):
-    """
-    Download links, available once the batch reaches a final status and null before then. GET /batch/{batch_id}/results serves the same records as paginated JSON.
-    """
-
-    expires_at: str
-    """When the download URLs expire."""
-
-    files: List[ResultsFile]
-    """Result files. Order is not guaranteed."""
+    """Pages scraped successfully before the request landed."""
 
 
 class Timing(BaseModel):
-    completed_at: Optional[str] = None
-    """When processing finished. Null while active."""
+    """There is no finish time yet — the batch is still winding down."""
 
     created_at: str
     """When the batch was created."""
 
     started_at: Optional[str] = None
-    """When processing started. Null while queued."""
+    """When processing started. Null if it was cancelled while still queued."""
 
 
 class KeyMetadata(BaseModel):
@@ -98,7 +57,7 @@ class KeyMetadata(BaseModel):
 
 class BatchCancelResponse(BaseModel):
     id: str
-    """Batch ID used to retrieve or cancel the job."""
+    """Batch ID."""
 
     crawl: Optional[CrawlControls] = None
     """
@@ -107,48 +66,34 @@ class BatchCancelResponse(BaseModel):
     """
 
     credits: Credits
-    """What this batch has done to your credit balance."""
-
-    failure: Optional[Failure] = None
-    """
-    A failure of the batch as a whole, distinct from the per-page failures in
-    `page_errors`.
-    """
+    """What this batch cost so far."""
 
     format: Literal["markdown", "html"]
-    """What each page is returned as.
-
-    Matches `input.data.format` on the submit request.
-    """
+    """What each page is returned as."""
 
     input: Intake
     """What submission took in, and what it charged for."""
 
     mode: Literal["scrape", "crawl"]
-    """How pages were selected. Matches `input.mode` on the submit request."""
+    """How pages were selected."""
 
     page_errors: List[PageErrorCount]
-    """Individual page failures grouped by error code, sorted by count.
-
-    Unrelated to `failure`, which is the batch itself failing.
-    """
+    """Page failures so far, grouped by error code and sorted by count."""
 
     progress: Progress
-    """Pages attempted so far. Use `status` to check completion."""
+    """How far the batch got before cancellation."""
 
-    results: Optional[Results] = None
-    """
-    Download links, available once the batch reaches a final status and null before
-    then. GET /batch/{batch_id}/results serves the same records as paginated JSON.
-    """
+    status: Literal["cancelling"]
+    """Always `cancelling`.
 
-    status: Literal["queued", "running", "cancelling", "completed", "cancelled", "failed"]
-    """Current state. `completed`, `cancelled`, and `failed` are final."""
+    Work already in flight finishes; the batch reaches `cancelled` shortly after.
+    """
 
     tags: List[str]
     """Tags stored on the batch at submission."""
 
     timing: Timing
+    """There is no finish time yet — the batch is still winding down."""
 
     key_metadata: Optional[KeyMetadata] = None
     """API key usage for this request."""
