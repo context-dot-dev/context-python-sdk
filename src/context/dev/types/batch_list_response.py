@@ -3,13 +3,14 @@
 from typing import List, Optional
 from typing_extensions import Literal
 
+from .error import Error
 from .._models import BaseModel
+from .error_count import ErrorCount
 
 __all__ = [
     "BatchListResponse",
     "Data",
     "DataCredits",
-    "DataError",
     "DataInput",
     "DataProgress",
     "DataResults",
@@ -27,16 +28,6 @@ class DataCredits(BaseModel):
 
     estimated: int
     """Credits reserved when the batch was accepted."""
-
-
-class DataError(BaseModel):
-    """Batch-level error. Null unless `status` is `failed`."""
-
-    code: str
-    """Batch error code."""
-
-    message: str
-    """Batch error message."""
 
 
 class DataInput(BaseModel):
@@ -116,10 +107,10 @@ class Data(BaseModel):
     credits: DataCredits
     """Reserved and used credits."""
 
-    error: Optional[DataError] = None
-    """Batch-level error. Null unless `status` is `failed`."""
+    error: Optional[Error] = None
+    """Why the batch failed."""
 
-    errors: List[DataError]
+    errors: List[ErrorCount]
     """Page failures grouped by error code."""
 
     input: DataInput

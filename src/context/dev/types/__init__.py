@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from .error import Error as Error
+from .error_count import ErrorCount as ErrorCount
 from .webhook_delivery import WebhookDelivery as WebhookDelivery
 from .batch_list_params import BatchListParams as BatchListParams
 from .web_search_params import WebSearchParams as WebSearchParams
