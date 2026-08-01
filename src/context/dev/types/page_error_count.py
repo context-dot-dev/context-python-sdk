@@ -2,10 +2,10 @@
 
 from .._models import BaseModel
 
-__all__ = ["ErrorCount"]
+__all__ = ["PageErrorCount"]
 
 
-class ErrorCount(BaseModel):
+class PageErrorCount(BaseModel):
     """Page failures sharing one error code."""
 
     code: str

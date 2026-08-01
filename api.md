@@ -140,8 +140,10 @@ Types:
 
 ```python
 from context.dev.types import (
-    ErrorCount,
-    Error,
+    PageErrorCount,
+    Failure,
+    CrawlControls,
+    Intake,
     BatchRetrieveResponse,
     BatchListResponse,
     BatchCancelResponse,

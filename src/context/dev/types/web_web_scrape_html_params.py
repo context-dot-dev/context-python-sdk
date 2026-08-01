@@ -229,9 +229,8 @@ class WebWebScrapeHTMLParams(TypedDict, total=False):
         "zw",
     ]
     """
-    Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
-    residential proxy exit location. Must be one of Context.dev's supported
-    countries. When provided, Context.dev fetches the target page from that country.
+    Fetch the target page through a residential proxy in this country (ISO 3166-1
+    alpha-2).
     """
 
     exclude_selectors: Annotated[Optional[SequenceNotStr[str]], PropertyInfo(alias="excludeSelectors")]

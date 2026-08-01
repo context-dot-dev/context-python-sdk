@@ -58,11 +58,8 @@ class BatchResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BatchRetrieveResponse:
-        """Check progress and get download links when the batch finishes.
-
-        Also returns the
-        rejected-URL list and webhook signing secret from submission, so nothing is lost
-        if the submit response was dropped.
+        """
+        Check progress, and get download links once the batch finishes.
 
         Args:
           batch_id: ID of the batch to retrieve or cancel.
@@ -202,9 +199,8 @@ class BatchResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BatchGetResultsResponse:
         """
-        Page through the result records of a finished batch as JSON, in the same order
-        as the downloadable result files. Use this instead of downloading and parsing
-        the NDJSON files yourself.
+        Page through a finished batch's results as JSON instead of downloading the
+        NDJSON files.
 
         Args:
           batch_id: ID of the batch to retrieve or cancel.
@@ -323,11 +319,8 @@ class AsyncBatchResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BatchRetrieveResponse:
-        """Check progress and get download links when the batch finishes.
-
-        Also returns the
-        rejected-URL list and webhook signing secret from submission, so nothing is lost
-        if the submit response was dropped.
+        """
+        Check progress, and get download links once the batch finishes.
 
         Args:
           batch_id: ID of the batch to retrieve or cancel.
@@ -467,9 +460,8 @@ class AsyncBatchResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BatchGetResultsResponse:
         """
-        Page through the result records of a finished batch as JSON, in the same order
-        as the downloadable result files. Use this instead of downloading and parsing
-        the NDJSON files yourself.
+        Page through a finished batch's results as JSON instead of downloading the
+        NDJSON files.
 
         Args:
           batch_id: ID of the batch to retrieve or cancel.
