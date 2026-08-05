@@ -10,6 +10,7 @@ import pytest
 from context.dev import ContextDev, AsyncContextDev
 from tests.utils import assert_matches_type
 from context.dev.types import (
+    BrandSearchResponse,
     BrandRetrieveResponse,
     BrandRetrieveSimplifiedResponse,
 )
@@ -375,6 +376,49 @@ class TestBrand:
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_search(self, client: ContextDev) -> None:
+        brand = client.brand.search(
+            query="x",
+        )
+        assert_matches_type(BrandSearchResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_search_with_all_params(self, client: ContextDev) -> None:
+        brand = client.brand.search(
+            query="x",
+            tags=["production", "team-alpha"],
+        )
+        assert_matches_type(BrandSearchResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_search(self, client: ContextDev) -> None:
+        response = client.brand.with_raw_response.search(
+            query="x",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        brand = response.parse()
+        assert_matches_type(BrandSearchResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_search(self, client: ContextDev) -> None:
+        with client.brand.with_streaming_response.search(
+            query="x",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            brand = response.parse()
+            assert_matches_type(BrandSearchResponse, brand, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
 
 class TestAsyncBrand:
     parametrize = pytest.mark.parametrize(
@@ -733,5 +777,48 @@ class TestAsyncBrand:
 
             brand = await response.parse()
             assert_matches_type(BrandRetrieveSimplifiedResponse, brand, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_search(self, async_client: AsyncContextDev) -> None:
+        brand = await async_client.brand.search(
+            query="x",
+        )
+        assert_matches_type(BrandSearchResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_search_with_all_params(self, async_client: AsyncContextDev) -> None:
+        brand = await async_client.brand.search(
+            query="x",
+            tags=["production", "team-alpha"],
+        )
+        assert_matches_type(BrandSearchResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_search(self, async_client: AsyncContextDev) -> None:
+        response = await async_client.brand.with_raw_response.search(
+            query="x",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        brand = await response.parse()
+        assert_matches_type(BrandSearchResponse, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_search(self, async_client: AsyncContextDev) -> None:
+        async with async_client.brand.with_streaming_response.search(
+            query="x",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            brand = await response.parse()
+            assert_matches_type(BrandSearchResponse, brand, path=["response"])
 
         assert cast(Any, response.is_closed) is True
