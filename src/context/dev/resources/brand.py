@@ -7,7 +7,7 @@ from typing_extensions import Literal, overload
 
 import httpx
 
-from ..types import brand_retrieve_params, brand_retrieve_simplified_params
+from ..types import brand_search_params, brand_retrieve_params, brand_retrieve_simplified_params
 from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import required_args, maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -19,6 +19,7 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from ..types.brand_search_response import BrandSearchResponse
 from ..types.brand_retrieve_response import BrandRetrieveResponse
 from ..types.brand_retrieve_simplified_response import BrandRetrieveSimplifiedResponse
 
@@ -1273,6 +1274,61 @@ class BrandResource(SyncAPIResource):
             cast_to=BrandRetrieveSimplifiedResponse,
         )
 
+    def search(
+        self,
+        *,
+        query: str,
+        tags: SequenceNotStr[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> BrandSearchResponse:
+        """
+        Search brands by name or domain and get back up to 10 lightweight matches
+        (domain, name, logo), most popular first: by Tranco rank, then market cap for
+        brands outside the Tranco list, with text relevance breaking ties. Matching is
+        prefix-based with no typo tolerance, so it is suited to autocomplete. Only
+        brands already in the Context.dev index are returned — use /brand/retrieve to
+        fetch (and index) a specific domain. Free on Pro and Scale plans; costs 1 credit
+        per request on the Free and Starter plans.
+
+        Args:
+          query: Search term, matched against brand names and domains by prefix (e.g. 'nike',
+              'nike.com', 'nik').
+
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._get(
+            "/brand/search",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "query": query,
+                        "tags": tags,
+                    },
+                    brand_search_params.BrandSearchParams,
+                ),
+            ),
+            cast_to=BrandSearchResponse,
+        )
+
 
 class AsyncBrandResource(AsyncAPIResource):
     @cached_property
@@ -2522,6 +2578,61 @@ class AsyncBrandResource(AsyncAPIResource):
             cast_to=BrandRetrieveSimplifiedResponse,
         )
 
+    async def search(
+        self,
+        *,
+        query: str,
+        tags: SequenceNotStr[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> BrandSearchResponse:
+        """
+        Search brands by name or domain and get back up to 10 lightweight matches
+        (domain, name, logo), most popular first: by Tranco rank, then market cap for
+        brands outside the Tranco list, with text relevance breaking ties. Matching is
+        prefix-based with no typo tolerance, so it is suited to autocomplete. Only
+        brands already in the Context.dev index are returned — use /brand/retrieve to
+        fetch (and index) a specific domain. Free on Pro and Scale plans; costs 1 credit
+        per request on the Free and Starter plans.
+
+        Args:
+          query: Search term, matched against brand names and domains by prefix (e.g. 'nike',
+              'nike.com', 'nik').
+
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._get(
+            "/brand/search",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "query": query,
+                        "tags": tags,
+                    },
+                    brand_search_params.BrandSearchParams,
+                ),
+            ),
+            cast_to=BrandSearchResponse,
+        )
+
 
 class BrandResourceWithRawResponse:
     def __init__(self, brand: BrandResource) -> None:
@@ -2532,6 +2643,9 @@ class BrandResourceWithRawResponse:
         )
         self.retrieve_simplified = to_raw_response_wrapper(
             brand.retrieve_simplified,
+        )
+        self.search = to_raw_response_wrapper(
+            brand.search,
         )
 
 
@@ -2545,6 +2659,9 @@ class AsyncBrandResourceWithRawResponse:
         self.retrieve_simplified = async_to_raw_response_wrapper(
             brand.retrieve_simplified,
         )
+        self.search = async_to_raw_response_wrapper(
+            brand.search,
+        )
 
 
 class BrandResourceWithStreamingResponse:
@@ -2557,6 +2674,9 @@ class BrandResourceWithStreamingResponse:
         self.retrieve_simplified = to_streamed_response_wrapper(
             brand.retrieve_simplified,
         )
+        self.search = to_streamed_response_wrapper(
+            brand.search,
+        )
 
 
 class AsyncBrandResourceWithStreamingResponse:
@@ -2568,4 +2688,7 @@ class AsyncBrandResourceWithStreamingResponse:
         )
         self.retrieve_simplified = async_to_streamed_response_wrapper(
             brand.retrieve_simplified,
+        )
+        self.search = async_to_streamed_response_wrapper(
+            brand.search,
         )

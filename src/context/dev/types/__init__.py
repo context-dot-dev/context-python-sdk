@@ -12,6 +12,7 @@ from .web_search_params import WebSearchParams as WebSearchParams
 from .web_extract_params import WebExtractParams as WebExtractParams
 from .batch_list_response import BatchListResponse as BatchListResponse
 from .batch_submit_params import BatchSubmitParams as BatchSubmitParams
+from .brand_search_params import BrandSearchParams as BrandSearchParams
 from .monitor_list_params import MonitorListParams as MonitorListParams
 from .parse_handle_params import ParseHandleParams as ParseHandleParams
 from .web_search_response import WebSearchResponse as WebSearchResponse
@@ -20,6 +21,7 @@ from .web_extract_response import WebExtractResponse as WebExtractResponse
 from .batch_cancel_response import BatchCancelResponse as BatchCancelResponse
 from .batch_submit_response import BatchSubmitResponse as BatchSubmitResponse
 from .brand_retrieve_params import BrandRetrieveParams as BrandRetrieveParams
+from .brand_search_response import BrandSearchResponse as BrandSearchResponse
 from .monitor_create_params import MonitorCreateParams as MonitorCreateParams
 from .monitor_list_response import MonitorListResponse as MonitorListResponse
 from .monitor_update_params import MonitorUpdateParams as MonitorUpdateParams

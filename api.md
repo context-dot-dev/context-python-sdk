@@ -62,13 +62,18 @@ Methods:
 Types:
 
 ```python
-from context.dev.types import BrandRetrieveResponse, BrandRetrieveSimplifiedResponse
+from context.dev.types import (
+    BrandRetrieveResponse,
+    BrandRetrieveSimplifiedResponse,
+    BrandSearchResponse,
+)
 ```
 
 Methods:
 
 - <code title="post /brand/retrieve">client.brand.<a href="./src/context/dev/resources/brand.py">retrieve</a>(\*\*<a href="src/context/dev/types/brand_retrieve_params.py">params</a>) -> <a href="./src/context/dev/types/brand_retrieve_response.py">BrandRetrieveResponse</a></code>
 - <code title="get /brand/retrieve-simplified">client.brand.<a href="./src/context/dev/resources/brand.py">retrieve_simplified</a>(\*\*<a href="src/context/dev/types/brand_retrieve_simplified_params.py">params</a>) -> <a href="./src/context/dev/types/brand_retrieve_simplified_response.py">BrandRetrieveSimplifiedResponse</a></code>
+- <code title="get /brand/search">client.brand.<a href="./src/context/dev/resources/brand.py">search</a>(\*\*<a href="src/context/dev/types/brand_search_params.py">params</a>) -> <a href="./src/context/dev/types/brand_search_response.py">BrandSearchResponse</a></code>
 
 # Industry
 
