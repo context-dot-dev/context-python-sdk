@@ -36,7 +36,10 @@ class KeyMetadata(BaseModel):
 
 class BrandSearchResponse(BaseModel):
     results: List[Result]
-    """Up to 10 matching brands, most popular first. Empty when nothing matches."""
+    """
+    Up to 10 matching brands, name matches first, then domain matches, most popular
+    first within each group. Empty when nothing matches.
+    """
 
     key_metadata: Optional[KeyMetadata] = None
     """Metadata about the API key used for the request.

@@ -13,6 +13,7 @@ __all__ = [
     "BrandBackdropColor",
     "BrandBackdropResolution",
     "BrandColor",
+    "BrandEmployees",
     "BrandIndustries",
     "BrandIndustriesEic",
     "BrandLinks",
@@ -88,6 +89,20 @@ class BrandColor(BaseModel):
 
     name: Optional[str] = None
     """Name of the color"""
+
+
+class BrandEmployees(BaseModel):
+    """Employee headcount information for the brand (will be null if unknown)"""
+
+    exact: Optional[int] = None
+    """Exact employee count when a precise headcount is known"""
+
+    range: Optional[
+        Literal[
+            "1 to 10", "11 to 50", "51 to 200", "201 to 500", "501 to 1000", "1001 to 5000", "5001 to 10000", "10001+"
+        ]
+    ] = None
+    """Employee count range for the brand (e.g. '11 to 50')"""
 
 
 class BrandIndustriesEic(BaseModel):
@@ -489,6 +504,9 @@ class Brand(BaseModel):
 
     email: Optional[str] = None
     """Company email address"""
+
+    employees: Optional[BrandEmployees] = None
+    """Employee headcount information for the brand (will be null if unknown)"""
 
     industries: Optional[BrandIndustries] = None
     """Industry classification information for the brand"""

@@ -127,6 +127,13 @@ class DataOk(BaseModel):
     meta: Optional[Dict[str, object]] = None
     """Caller-supplied metadata echoed from submission."""
 
+    ocr_pages: Optional[int] = None
+    """PDF pages of this document recovered by OCR (pdf.ocr=true).
+
+    Each recovered page bills 1 credit on top of the page base credit; absent when
+    no OCR ran.
+    """
+
 
 class DataError(BaseModel):
     """A page the batch could not fetch."""
