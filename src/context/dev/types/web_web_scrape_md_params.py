@@ -368,7 +368,7 @@ class Pdf(TypedDict, total=False):
     should_parse: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="shouldParse")]
     """When true, PDF URLs are fetched and parsed.
 
-    When false, PDF URLs are skipped and a 400 WEBSITE_ACCESS_ERROR is returned.
+    When false, PDF URLs are skipped and a 400 PDF_SKIPPED is returned.
     """
 
     start: int
