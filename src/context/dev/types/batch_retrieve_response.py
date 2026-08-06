@@ -25,9 +25,15 @@ class Credits(BaseModel):
     """What this batch has done to your credit balance."""
 
     net: int
-    """`reserved` minus `refunded` — what the batch has cost so far.
+    """`reserved` minus `refunded` plus `ocr_charged` — what the batch has cost so far.
 
     Equal to `reserved` until the batch settles.
+    """
+
+    ocr_charged: int
+    """
+    Credits charged for PDF pages recovered by OCR (pdf.ocr=true), 1 per recovered
+    page, on top of `reserved`. Stays 0 until the batch settles.
     """
 
     refunded: int
