@@ -50,7 +50,10 @@ class WebWebScrapeSitemapResponse(BaseModel):
     """Indicates success"""
 
     urls: List[str]
-    """Array of discovered page URLs from the sitemap (max 500)"""
+    """Discovered page URLs from the sitemap, up to `maxLinks`.
+
+    When `search` is set these are only the matching pages, most relevant first.
+    """
 
     key_metadata: Optional[KeyMetadata] = None
     """Metadata about the API key used for the request.

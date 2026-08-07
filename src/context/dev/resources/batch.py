@@ -8,7 +8,7 @@ import httpx
 
 from ..types import batch_list_params, batch_submit_params, batch_get_results_params
 from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
-from .._utils import path_template, maybe_transform, async_maybe_transform
+from .._utils import path_template, maybe_transform, strip_not_given, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -20,6 +20,7 @@ from .._response import (
 from .._base_client import make_request_options
 from ..types.batch_list_response import BatchListResponse
 from ..types.batch_cancel_response import BatchCancelResponse
+from ..types.batch_delete_response import BatchDeleteResponse
 from ..types.batch_submit_response import BatchSubmitResponse
 from ..types.batch_retrieve_response import BatchRetrieveResponse
 from ..types.batch_get_results_response import BatchGetResultsResponse
@@ -28,6 +29,8 @@ __all__ = ["BatchResource", "AsyncBatchResource"]
 
 
 class BatchResource(SyncAPIResource):
+    """Scrape many pages or crawl a site asynchronously."""
+
     @cached_property
     def with_raw_response(self) -> BatchResourceWithRawResponse:
         """
@@ -148,6 +151,43 @@ class BatchResource(SyncAPIResource):
             cast_to=BatchListResponse,
         )
 
+    def delete(
+        self,
+        batch_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> BatchDeleteResponse:
+        """Permanently delete a finished batch and its stored results.
+
+        Active batches must
+        settle first.
+
+        Args:
+          batch_id: ID of the batch to retrieve or cancel.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not batch_id:
+            raise ValueError(f"Expected a non-empty value for `batch_id` but received {batch_id!r}")
+        return self._delete(
+            path_template("/batch/{batch_id}", batch_id=batch_id),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=BatchDeleteResponse,
+        )
+
     def cancel(
         self,
         batch_id: str,
@@ -241,9 +281,10 @@ class BatchResource(SyncAPIResource):
     def submit(
         self,
         *,
-        identifiers: batch_submit_params.Identifiers,
+        input: batch_submit_params.Input,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        webhook_url: str | Omit = omit,
+        idempotency_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -252,16 +293,17 @@ class BatchResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BatchSubmitResponse:
         """
-        Retrieve and normalize a person profile from identifiers.
+        Scrape 25K URLs or crawl large websites asynchronously.
 
         Args:
-          identifiers: Known identifiers for the person. At least one identifier is required.
+          input: Choose a URL list or a site crawl.
 
-          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          tags: Tags stored on the batch. Filter the batch list by them later.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          webhook_url: URL notified when the batch finishes.
+
+          idempotency_key: Any string unique to this submission. Retries with the same key return the
+              original batch.
 
           extra_headers: Send extra headers
 
@@ -271,13 +313,14 @@ class BatchResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"Idempotency-Key": idempotency_key}), **(extra_headers or {})}
         return self._post(
-            "/people/retrieve",
+            "/batch/submit",
             body=maybe_transform(
                 {
-                    "identifiers": identifiers,
+                    "input": input,
                     "tags": tags,
-                    "timeout_ms": timeout_ms,
+                    "webhook_url": webhook_url,
                 },
                 batch_submit_params.BatchSubmitParams,
             ),
@@ -289,6 +332,8 @@ class BatchResource(SyncAPIResource):
 
 
 class AsyncBatchResource(AsyncAPIResource):
+    """Scrape many pages or crawl a site asynchronously."""
+
     @cached_property
     def with_raw_response(self) -> AsyncBatchResourceWithRawResponse:
         """
@@ -409,6 +454,43 @@ class AsyncBatchResource(AsyncAPIResource):
             cast_to=BatchListResponse,
         )
 
+    async def delete(
+        self,
+        batch_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> BatchDeleteResponse:
+        """Permanently delete a finished batch and its stored results.
+
+        Active batches must
+        settle first.
+
+        Args:
+          batch_id: ID of the batch to retrieve or cancel.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not batch_id:
+            raise ValueError(f"Expected a non-empty value for `batch_id` but received {batch_id!r}")
+        return await self._delete(
+            path_template("/batch/{batch_id}", batch_id=batch_id),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=BatchDeleteResponse,
+        )
+
     async def cancel(
         self,
         batch_id: str,
@@ -502,9 +584,10 @@ class AsyncBatchResource(AsyncAPIResource):
     async def submit(
         self,
         *,
-        identifiers: batch_submit_params.Identifiers,
+        input: batch_submit_params.Input,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        webhook_url: str | Omit = omit,
+        idempotency_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -513,16 +596,17 @@ class AsyncBatchResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BatchSubmitResponse:
         """
-        Retrieve and normalize a person profile from identifiers.
+        Scrape 25K URLs or crawl large websites asynchronously.
 
         Args:
-          identifiers: Known identifiers for the person. At least one identifier is required.
+          input: Choose a URL list or a site crawl.
 
-          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          tags: Tags stored on the batch. Filter the batch list by them later.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          webhook_url: URL notified when the batch finishes.
+
+          idempotency_key: Any string unique to this submission. Retries with the same key return the
+              original batch.
 
           extra_headers: Send extra headers
 
@@ -532,13 +616,14 @@ class AsyncBatchResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"Idempotency-Key": idempotency_key}), **(extra_headers or {})}
         return await self._post(
-            "/people/retrieve",
+            "/batch/submit",
             body=await async_maybe_transform(
                 {
-                    "identifiers": identifiers,
+                    "input": input,
                     "tags": tags,
-                    "timeout_ms": timeout_ms,
+                    "webhook_url": webhook_url,
                 },
                 batch_submit_params.BatchSubmitParams,
             ),
@@ -558,6 +643,9 @@ class BatchResourceWithRawResponse:
         )
         self.list = to_raw_response_wrapper(
             batch.list,
+        )
+        self.delete = to_raw_response_wrapper(
+            batch.delete,
         )
         self.cancel = to_raw_response_wrapper(
             batch.cancel,
@@ -580,6 +668,9 @@ class AsyncBatchResourceWithRawResponse:
         self.list = async_to_raw_response_wrapper(
             batch.list,
         )
+        self.delete = async_to_raw_response_wrapper(
+            batch.delete,
+        )
         self.cancel = async_to_raw_response_wrapper(
             batch.cancel,
         )
@@ -601,6 +692,9 @@ class BatchResourceWithStreamingResponse:
         self.list = to_streamed_response_wrapper(
             batch.list,
         )
+        self.delete = to_streamed_response_wrapper(
+            batch.delete,
+        )
         self.cancel = to_streamed_response_wrapper(
             batch.cancel,
         )
@@ -621,6 +715,9 @@ class AsyncBatchResourceWithStreamingResponse:
         )
         self.list = async_to_streamed_response_wrapper(
             batch.list,
+        )
+        self.delete = async_to_streamed_response_wrapper(
+            batch.delete,
         )
         self.cancel = async_to_streamed_response_wrapper(
             batch.cancel,

@@ -1,24 +1,10 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Optional
+from typing import Optional
 
 from .._models import BaseModel
 
-__all__ = ["BrandSearchResponse", "Result", "KeyMetadata"]
-
-
-class Result(BaseModel):
-    domain: str
-    """The brand's domain."""
-
-    logo: str
-    """
-    Logo link URL that serves the brand's logo, generated per request for the
-    calling organization.
-    """
-
-    name: str
-    """The brand's name. Empty string when unknown."""
+__all__ = ["BatchDeleteResponse", "KeyMetadata"]
 
 
 class KeyMetadata(BaseModel):
@@ -34,12 +20,12 @@ class KeyMetadata(BaseModel):
     """The number of credits remaining for your organization after this request."""
 
 
-class BrandSearchResponse(BaseModel):
-    results: List[Result]
-    """
-    Up to 10 matching brands, name matches first, then domain matches, most popular
-    first within each group. Empty when nothing matches.
-    """
+class BatchDeleteResponse(BaseModel):
+    id: Optional[str] = None
+    """ID of the deleted batch."""
+
+    deleted: Optional[bool] = None
+    """Always true on success."""
 
     key_metadata: Optional[KeyMetadata] = None
     """Metadata about the API key used for the request.

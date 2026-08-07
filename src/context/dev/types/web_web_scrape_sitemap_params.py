@@ -28,6 +28,13 @@ class WebWebScrapeSitemapParams(TypedDict, total=False):
     Defaults to 10,000. Minimum is 1, maximum is 100,000.
     """
 
+    search: str
+    """Optional search phrase.
+
+    When provided, the crawled sitemap is filtered to the pages whose URLs are about
+    that phrase, most relevant first, and the request costs 2 credits instead of 1.
+    """
+
     sitemap_url: Annotated[str, PropertyInfo(alias="sitemapUrl")]
     """Optional explicit sitemap URL.
 

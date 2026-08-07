@@ -35,12 +35,13 @@ from ._base_client import (
 )
 
 if TYPE_CHECKING:
-    from .resources import ai, web, batch, brand, parse, utility, industry, monitors
+    from .resources import ai, web, batch, brand, parse, people, utility, industry, monitors
     from .resources.ai import AIResource, AsyncAIResource
     from .resources.web import WebResource, AsyncWebResource
     from .resources.batch import BatchResource, AsyncBatchResource
     from .resources.brand import BrandResource, AsyncBrandResource
     from .resources.parse import ParseResource, AsyncParseResource
+    from .resources.people import PeopleResource, AsyncPeopleResource
     from .resources.utility import UtilityResource, AsyncUtilityResource
     from .resources.industry import IndustryResource, AsyncIndustryResource
     from .resources.monitors import MonitorsResource, AsyncMonitorsResource
@@ -168,9 +169,16 @@ class ContextDev(SyncAPIClient):
 
     @cached_property
     def batch(self) -> BatchResource:
+        """Scrape many pages or crawl a site asynchronously."""
         from .resources.batch import BatchResource
 
         return BatchResource(self)
+
+    @cached_property
+    def people(self) -> PeopleResource:
+        from .resources.people import PeopleResource
+
+        return PeopleResource(self)
 
     @cached_property
     def with_raw_response(self) -> ContextDevWithRawResponse:
@@ -396,9 +404,16 @@ class AsyncContextDev(AsyncAPIClient):
 
     @cached_property
     def batch(self) -> AsyncBatchResource:
+        """Scrape many pages or crawl a site asynchronously."""
         from .resources.batch import AsyncBatchResource
 
         return AsyncBatchResource(self)
+
+    @cached_property
+    def people(self) -> AsyncPeopleResource:
+        from .resources.people import AsyncPeopleResource
+
+        return AsyncPeopleResource(self)
 
     @cached_property
     def with_raw_response(self) -> AsyncContextDevWithRawResponse:
@@ -566,9 +581,16 @@ class ContextDevWithRawResponse:
 
     @cached_property
     def batch(self) -> batch.BatchResourceWithRawResponse:
+        """Scrape many pages or crawl a site asynchronously."""
         from .resources.batch import BatchResourceWithRawResponse
 
         return BatchResourceWithRawResponse(self._client.batch)
+
+    @cached_property
+    def people(self) -> people.PeopleResourceWithRawResponse:
+        from .resources.people import PeopleResourceWithRawResponse
+
+        return PeopleResourceWithRawResponse(self._client.people)
 
 
 class AsyncContextDevWithRawResponse:
@@ -624,9 +646,16 @@ class AsyncContextDevWithRawResponse:
 
     @cached_property
     def batch(self) -> batch.AsyncBatchResourceWithRawResponse:
+        """Scrape many pages or crawl a site asynchronously."""
         from .resources.batch import AsyncBatchResourceWithRawResponse
 
         return AsyncBatchResourceWithRawResponse(self._client.batch)
+
+    @cached_property
+    def people(self) -> people.AsyncPeopleResourceWithRawResponse:
+        from .resources.people import AsyncPeopleResourceWithRawResponse
+
+        return AsyncPeopleResourceWithRawResponse(self._client.people)
 
 
 class ContextDevWithStreamedResponse:
@@ -682,9 +711,16 @@ class ContextDevWithStreamedResponse:
 
     @cached_property
     def batch(self) -> batch.BatchResourceWithStreamingResponse:
+        """Scrape many pages or crawl a site asynchronously."""
         from .resources.batch import BatchResourceWithStreamingResponse
 
         return BatchResourceWithStreamingResponse(self._client.batch)
+
+    @cached_property
+    def people(self) -> people.PeopleResourceWithStreamingResponse:
+        from .resources.people import PeopleResourceWithStreamingResponse
+
+        return PeopleResourceWithStreamingResponse(self._client.people)
 
 
 class AsyncContextDevWithStreamedResponse:
@@ -740,9 +776,16 @@ class AsyncContextDevWithStreamedResponse:
 
     @cached_property
     def batch(self) -> batch.AsyncBatchResourceWithStreamingResponse:
+        """Scrape many pages or crawl a site asynchronously."""
         from .resources.batch import AsyncBatchResourceWithStreamingResponse
 
         return AsyncBatchResourceWithStreamingResponse(self._client.batch)
+
+    @cached_property
+    def people(self) -> people.AsyncPeopleResourceWithStreamingResponse:
+        from .resources.people import AsyncPeopleResourceWithStreamingResponse
+
+        return AsyncPeopleResourceWithStreamingResponse(self._client.people)
 
 
 Client = ContextDev
