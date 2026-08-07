@@ -12,6 +12,7 @@ from tests.utils import assert_matches_type
 from context.dev.types import (
     BatchListResponse,
     BatchCancelResponse,
+    BatchDeleteResponse,
     BatchSubmitResponse,
     BatchRetrieveResponse,
     BatchGetResultsResponse,
@@ -105,6 +106,48 @@ class TestBatch:
             assert_matches_type(BatchListResponse, batch, path=["response"])
 
         assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_delete(self, client: ContextDev) -> None:
+        batch = client.batch.delete(
+            "batch_9f2c8a",
+        )
+        assert_matches_type(BatchDeleteResponse, batch, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_delete(self, client: ContextDev) -> None:
+        response = client.batch.with_raw_response.delete(
+            "batch_9f2c8a",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        batch = response.parse()
+        assert_matches_type(BatchDeleteResponse, batch, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_delete(self, client: ContextDev) -> None:
+        with client.batch.with_streaming_response.delete(
+            "batch_9f2c8a",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            batch = response.parse()
+            assert_matches_type(BatchDeleteResponse, batch, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_path_params_delete(self, client: ContextDev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `batch_id` but received ''"):
+            client.batch.with_raw_response.delete(
+                "",
+            )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -204,7 +247,16 @@ class TestBatch:
     @parametrize
     def test_method_submit(self, client: ContextDev) -> None:
         batch = client.batch.submit(
-            identifiers={},
+            input={
+                "data": {
+                    "format": "markdown",
+                    "urls": [
+                        {"url": "https://example.com/products/anvil"},
+                        {"url": "https://example.com/products/hammer"},
+                    ],
+                },
+                "mode": "scrape",
+            },
         )
         assert_matches_type(BatchSubmitResponse, batch, path=["response"])
 
@@ -212,9 +264,45 @@ class TestBatch:
     @parametrize
     def test_method_submit_with_all_params(self, client: ContextDev) -> None:
         batch = client.batch.submit(
-            identifiers={"linkedin_url": "https://www.linkedin.com/in/yahia-bakour/"},
-            tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            input={
+                "data": {
+                    "format": "markdown",
+                    "urls": [
+                        {
+                            "url": "https://example.com/products/anvil",
+                            "item_id": "sku-1",
+                            "meta": {"category": "bar"},
+                        },
+                        {
+                            "url": "https://example.com/products/hammer",
+                            "item_id": "sku-2",
+                            "meta": {"foo": "bar"},
+                        },
+                    ],
+                    "options": {
+                        "country": "de",
+                        "exclude_selectors": ["x"],
+                        "include_images": True,
+                        "include_links": True,
+                        "include_selectors": ["x"],
+                        "max_age_ms": 0,
+                        "pdf": {
+                            "end": 1,
+                            "ocr": "true",
+                            "should_parse": "true",
+                            "start": 1,
+                        },
+                        "settle_animations": True,
+                        "shorten_base64_images": True,
+                        "use_main_content_only": True,
+                        "wait_for_ms": 0,
+                    },
+                },
+                "mode": "scrape",
+            },
+            tags=["docs", "competitor"],
+            webhook_url="webhookUrl",
+            idempotency_key="Idempotency-Key",
         )
         assert_matches_type(BatchSubmitResponse, batch, path=["response"])
 
@@ -222,7 +310,16 @@ class TestBatch:
     @parametrize
     def test_raw_response_submit(self, client: ContextDev) -> None:
         response = client.batch.with_raw_response.submit(
-            identifiers={},
+            input={
+                "data": {
+                    "format": "markdown",
+                    "urls": [
+                        {"url": "https://example.com/products/anvil"},
+                        {"url": "https://example.com/products/hammer"},
+                    ],
+                },
+                "mode": "scrape",
+            },
         )
 
         assert response.is_closed is True
@@ -234,7 +331,16 @@ class TestBatch:
     @parametrize
     def test_streaming_response_submit(self, client: ContextDev) -> None:
         with client.batch.with_streaming_response.submit(
-            identifiers={},
+            input={
+                "data": {
+                    "format": "markdown",
+                    "urls": [
+                        {"url": "https://example.com/products/anvil"},
+                        {"url": "https://example.com/products/hammer"},
+                    ],
+                },
+                "mode": "scrape",
+            },
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -335,6 +441,48 @@ class TestAsyncBatch:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
+    async def test_method_delete(self, async_client: AsyncContextDev) -> None:
+        batch = await async_client.batch.delete(
+            "batch_9f2c8a",
+        )
+        assert_matches_type(BatchDeleteResponse, batch, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_delete(self, async_client: AsyncContextDev) -> None:
+        response = await async_client.batch.with_raw_response.delete(
+            "batch_9f2c8a",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        batch = await response.parse()
+        assert_matches_type(BatchDeleteResponse, batch, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_delete(self, async_client: AsyncContextDev) -> None:
+        async with async_client.batch.with_streaming_response.delete(
+            "batch_9f2c8a",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            batch = await response.parse()
+            assert_matches_type(BatchDeleteResponse, batch, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_path_params_delete(self, async_client: AsyncContextDev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `batch_id` but received ''"):
+            await async_client.batch.with_raw_response.delete(
+                "",
+            )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
     async def test_method_cancel(self, async_client: AsyncContextDev) -> None:
         batch = await async_client.batch.cancel(
             "batch_9f2c8a",
@@ -431,7 +579,16 @@ class TestAsyncBatch:
     @parametrize
     async def test_method_submit(self, async_client: AsyncContextDev) -> None:
         batch = await async_client.batch.submit(
-            identifiers={},
+            input={
+                "data": {
+                    "format": "markdown",
+                    "urls": [
+                        {"url": "https://example.com/products/anvil"},
+                        {"url": "https://example.com/products/hammer"},
+                    ],
+                },
+                "mode": "scrape",
+            },
         )
         assert_matches_type(BatchSubmitResponse, batch, path=["response"])
 
@@ -439,9 +596,45 @@ class TestAsyncBatch:
     @parametrize
     async def test_method_submit_with_all_params(self, async_client: AsyncContextDev) -> None:
         batch = await async_client.batch.submit(
-            identifiers={"linkedin_url": "https://www.linkedin.com/in/yahia-bakour/"},
-            tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            input={
+                "data": {
+                    "format": "markdown",
+                    "urls": [
+                        {
+                            "url": "https://example.com/products/anvil",
+                            "item_id": "sku-1",
+                            "meta": {"category": "bar"},
+                        },
+                        {
+                            "url": "https://example.com/products/hammer",
+                            "item_id": "sku-2",
+                            "meta": {"foo": "bar"},
+                        },
+                    ],
+                    "options": {
+                        "country": "de",
+                        "exclude_selectors": ["x"],
+                        "include_images": True,
+                        "include_links": True,
+                        "include_selectors": ["x"],
+                        "max_age_ms": 0,
+                        "pdf": {
+                            "end": 1,
+                            "ocr": "true",
+                            "should_parse": "true",
+                            "start": 1,
+                        },
+                        "settle_animations": True,
+                        "shorten_base64_images": True,
+                        "use_main_content_only": True,
+                        "wait_for_ms": 0,
+                    },
+                },
+                "mode": "scrape",
+            },
+            tags=["docs", "competitor"],
+            webhook_url="webhookUrl",
+            idempotency_key="Idempotency-Key",
         )
         assert_matches_type(BatchSubmitResponse, batch, path=["response"])
 
@@ -449,7 +642,16 @@ class TestAsyncBatch:
     @parametrize
     async def test_raw_response_submit(self, async_client: AsyncContextDev) -> None:
         response = await async_client.batch.with_raw_response.submit(
-            identifiers={},
+            input={
+                "data": {
+                    "format": "markdown",
+                    "urls": [
+                        {"url": "https://example.com/products/anvil"},
+                        {"url": "https://example.com/products/hammer"},
+                    ],
+                },
+                "mode": "scrape",
+            },
         )
 
         assert response.is_closed is True
@@ -461,7 +663,16 @@ class TestAsyncBatch:
     @parametrize
     async def test_streaming_response_submit(self, async_client: AsyncContextDev) -> None:
         async with async_client.batch.with_streaming_response.submit(
-            identifiers={},
+            input={
+                "data": {
+                    "format": "markdown",
+                    "urls": [
+                        {"url": "https://example.com/products/anvil"},
+                        {"url": "https://example.com/products/hammer"},
+                    ],
+                },
+                "mode": "scrape",
+            },
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

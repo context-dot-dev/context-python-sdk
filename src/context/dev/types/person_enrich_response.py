@@ -1,0 +1,236 @@
+# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+from typing import List, Union, Optional
+from typing_extensions import Literal, Annotated, TypeAlias
+
+from .._utils import PropertyInfo
+from .._models import BaseModel
+
+__all__ = [
+    "PersonEnrichResponse",
+    "Match",
+    "MatchPersonEnrichmentCandidateMatch",
+    "MatchPersonEnrichmentCandidateMatchPerson",
+    "MatchPersonEnrichmentCandidateMatchPersonEducation",
+    "MatchPersonEnrichmentCandidateMatchPersonEducationInstitution",
+    "MatchPersonEnrichmentCandidateMatchPersonEducationEndDate",
+    "MatchPersonEnrichmentCandidateMatchPersonEducationStartDate",
+    "MatchPersonEnrichmentCandidateMatchPersonExperience",
+    "MatchPersonEnrichmentCandidateMatchPersonExperienceOrganization",
+    "MatchPersonEnrichmentCandidateMatchPersonExperienceEndDate",
+    "MatchPersonEnrichmentCandidateMatchPersonExperienceStartDate",
+    "MatchPersonEnrichmentCandidateMatchPersonCurrentRole",
+    "MatchPersonEnrichmentCandidateMatchPersonCurrentRoleOrganization",
+    "MatchPersonEnrichmentCandidateMatchPersonCurrentRoleEndDate",
+    "MatchPersonEnrichmentCandidateMatchPersonCurrentRoleStartDate",
+    "MatchPersonEnrichmentCandidateMatchPersonLocation",
+    "MatchPersonEnrichmentCandidateMatchPersonName",
+    "MatchPersonEnrichmentNotFoundMatch",
+    "KeyMetadata",
+]
+
+
+class MatchPersonEnrichmentCandidateMatchPersonEducationInstitution(BaseModel):
+    name: str
+
+    domain: Optional[str] = None
+
+
+class MatchPersonEnrichmentCandidateMatchPersonEducationEndDate(BaseModel):
+    year: int
+
+    day: Optional[int] = None
+
+    month: Optional[int] = None
+
+
+class MatchPersonEnrichmentCandidateMatchPersonEducationStartDate(BaseModel):
+    year: int
+
+    day: Optional[int] = None
+
+    month: Optional[int] = None
+
+
+class MatchPersonEnrichmentCandidateMatchPersonEducation(BaseModel):
+    institution: MatchPersonEnrichmentCandidateMatchPersonEducationInstitution
+
+    degree: Optional[str] = None
+
+    description: Optional[str] = None
+
+    end_date: Optional[MatchPersonEnrichmentCandidateMatchPersonEducationEndDate] = None
+
+    field_of_study: Optional[str] = None
+
+    start_date: Optional[MatchPersonEnrichmentCandidateMatchPersonEducationStartDate] = None
+
+
+class MatchPersonEnrichmentCandidateMatchPersonExperienceOrganization(BaseModel):
+    name: str
+
+    domain: Optional[str] = None
+
+
+class MatchPersonEnrichmentCandidateMatchPersonExperienceEndDate(BaseModel):
+    year: int
+
+    day: Optional[int] = None
+
+    month: Optional[int] = None
+
+
+class MatchPersonEnrichmentCandidateMatchPersonExperienceStartDate(BaseModel):
+    year: int
+
+    day: Optional[int] = None
+
+    month: Optional[int] = None
+
+
+class MatchPersonEnrichmentCandidateMatchPersonExperience(BaseModel):
+    organization: MatchPersonEnrichmentCandidateMatchPersonExperienceOrganization
+
+    title: str
+
+    description: Optional[str] = None
+
+    end_date: Optional[MatchPersonEnrichmentCandidateMatchPersonExperienceEndDate] = None
+
+    is_current: Optional[bool] = None
+
+    location: Optional[str] = None
+
+    start_date: Optional[MatchPersonEnrichmentCandidateMatchPersonExperienceStartDate] = None
+
+
+class MatchPersonEnrichmentCandidateMatchPersonCurrentRoleOrganization(BaseModel):
+    name: str
+
+    domain: Optional[str] = None
+
+
+class MatchPersonEnrichmentCandidateMatchPersonCurrentRoleEndDate(BaseModel):
+    year: int
+
+    day: Optional[int] = None
+
+    month: Optional[int] = None
+
+
+class MatchPersonEnrichmentCandidateMatchPersonCurrentRoleStartDate(BaseModel):
+    year: int
+
+    day: Optional[int] = None
+
+    month: Optional[int] = None
+
+
+class MatchPersonEnrichmentCandidateMatchPersonCurrentRole(BaseModel):
+    organization: MatchPersonEnrichmentCandidateMatchPersonCurrentRoleOrganization
+
+    title: str
+
+    description: Optional[str] = None
+
+    end_date: Optional[MatchPersonEnrichmentCandidateMatchPersonCurrentRoleEndDate] = None
+
+    is_current: Optional[bool] = None
+
+    location: Optional[str] = None
+
+    start_date: Optional[MatchPersonEnrichmentCandidateMatchPersonCurrentRoleStartDate] = None
+
+
+class MatchPersonEnrichmentCandidateMatchPersonLocation(BaseModel):
+    city: Optional[str] = None
+
+    country: Optional[str] = None
+
+    country_code: Optional[str] = None
+
+    display: Optional[str] = None
+
+    region: Optional[str] = None
+
+
+class MatchPersonEnrichmentCandidateMatchPersonName(BaseModel):
+    first: Optional[str] = None
+
+    full: Optional[str] = None
+
+    last: Optional[str] = None
+
+
+class MatchPersonEnrichmentCandidateMatchPerson(BaseModel):
+    education: List[MatchPersonEnrichmentCandidateMatchPersonEducation]
+
+    experience: List[MatchPersonEnrichmentCandidateMatchPersonExperience]
+
+    skills: List[str]
+
+    social_urls: List[str]
+
+    website_urls: List[str]
+
+    avatar_url: Optional[str] = None
+
+    bio: Optional[str] = None
+
+    current_role: Optional[MatchPersonEnrichmentCandidateMatchPersonCurrentRole] = None
+
+    email: Optional[str] = None
+
+    location: Optional[MatchPersonEnrichmentCandidateMatchPersonLocation] = None
+
+    name: Optional[MatchPersonEnrichmentCandidateMatchPersonName] = None
+
+
+class MatchPersonEnrichmentCandidateMatch(BaseModel):
+    """The highest-scoring person candidate."""
+
+    person: MatchPersonEnrichmentCandidateMatchPerson
+
+    score: int
+
+    status: Literal["candidate"]
+
+
+class MatchPersonEnrichmentNotFoundMatch(BaseModel):
+    """No usable person candidate was found."""
+
+    person: None = None
+
+    score: None = None
+
+    status: Literal["not_found"]
+
+
+Match: TypeAlias = Annotated[
+    Union[MatchPersonEnrichmentCandidateMatch, MatchPersonEnrichmentNotFoundMatch], PropertyInfo(discriminator="status")
+]
+
+
+class KeyMetadata(BaseModel):
+    """Metadata about the API key used for the request.
+
+    Included in every response whenever a valid API key is provided, even when the response status is not 200.
+    """
+
+    credits_consumed: int
+    """The number of credits consumed by this request."""
+
+    credits_remaining: int
+    """The number of credits remaining for your organization after this request."""
+
+
+class PersonEnrichResponse(BaseModel):
+    match: Match
+    """The highest-scoring person candidate."""
+
+    key_metadata: Optional[KeyMetadata] = None
+    """Metadata about the API key used for the request.
+
+    Included in every response whenever a valid API key is provided, even when the
+    response status is not 200.
+    """
