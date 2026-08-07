@@ -5,24 +5,28 @@ from typing_extensions import Literal, TypeAlias
 
 from .._models import BaseModel
 
-__all__ = ["CrawlControls", "Source", "SourceUnionMember0", "SourceUnionMember1"]
+__all__ = ["CrawlControls", "Source", "SourceStartURL", "SourceSitemap"]
 
 
-class SourceUnionMember0(BaseModel):
+class SourceStartURL(BaseModel):
+    """The crawl discovered pages by following links from one URL."""
+
     type: Literal["start_url"]
 
     url: str
     """Page the crawl started from."""
 
 
-class SourceUnionMember1(BaseModel):
+class SourceSitemap(BaseModel):
+    """The crawl scraped the pages listed in the domain's sitemap."""
+
     domain: str
     """Domain whose sitemap supplied the pages."""
 
     type: Literal["sitemap"]
 
 
-Source: TypeAlias = Union[SourceUnionMember0, SourceUnionMember1]
+Source: TypeAlias = Union[SourceStartURL, SourceSitemap]
 
 
 class CrawlControls(BaseModel):
