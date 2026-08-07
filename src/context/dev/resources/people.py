@@ -63,9 +63,9 @@ class PeopleResource(SyncAPIResource):
     ) -> PersonEnrichResponse:
         """
         Finds and normalizes the best available person candidate from additive identity
-        clues, then assigns an identity match score from 0 to 100. Available on Pro and
-        Scale plans. Successful requests cost 20 credits. Disposable and free email
-        addresses (like gmail.com, yahoo.com) will throw a 422 error.
+        clues, then assigns an identity match score from 0 to 100. Available on all paid
+        plans. Successful requests cost 20 credits. Disposable and free email addresses
+        (like gmail.com, yahoo.com) will throw a 422 error.
 
         Args:
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
@@ -144,9 +144,9 @@ class AsyncPeopleResource(AsyncAPIResource):
     ) -> PersonEnrichResponse:
         """
         Finds and normalizes the best available person candidate from additive identity
-        clues, then assigns an identity match score from 0 to 100. Available on Pro and
-        Scale plans. Successful requests cost 20 credits. Disposable and free email
-        addresses (like gmail.com, yahoo.com) will throw a 422 error.
+        clues, then assigns an identity match score from 0 to 100. Available on all paid
+        plans. Successful requests cost 20 credits. Disposable and free email addresses
+        (like gmail.com, yahoo.com) will throw a 422 error.
 
         Args:
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
