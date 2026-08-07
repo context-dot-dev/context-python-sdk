@@ -40,6 +40,14 @@ from .parse import (
     ParseResourceWithStreamingResponse,
     AsyncParseResourceWithStreamingResponse,
 )
+from .people import (
+    PeopleResource,
+    AsyncPeopleResource,
+    PeopleResourceWithRawResponse,
+    AsyncPeopleResourceWithRawResponse,
+    PeopleResourceWithStreamingResponse,
+    AsyncPeopleResourceWithStreamingResponse,
+)
 from .utility import (
     UtilityResource,
     AsyncUtilityResource,
@@ -114,4 +122,10 @@ __all__ = [
     "AsyncBatchResourceWithRawResponse",
     "BatchResourceWithStreamingResponse",
     "AsyncBatchResourceWithStreamingResponse",
+    "PeopleResource",
+    "AsyncPeopleResource",
+    "PeopleResourceWithRawResponse",
+    "AsyncPeopleResourceWithRawResponse",
+    "PeopleResourceWithStreamingResponse",
+    "AsyncPeopleResourceWithStreamingResponse",
 ]
