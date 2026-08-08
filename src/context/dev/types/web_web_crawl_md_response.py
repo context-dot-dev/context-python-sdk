@@ -6,7 +6,15 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["WebWebCrawlMdResponse", "Metadata", "Result", "ResultMetadata", "ResultMetadataAlternate", "KeyMetadata"]
+__all__ = [
+    "WebWebCrawlMdResponse",
+    "Metadata",
+    "Result",
+    "ResultMetadata",
+    "ResultMetadataAlternate",
+    "ResultMetadataHeading",
+    "KeyMetadata",
+]
 
 
 class Metadata(BaseModel):
@@ -41,6 +49,14 @@ class ResultMetadataAlternate(BaseModel):
 
     type: Optional[str] = None
     """Alternate resource MIME type, when present."""
+
+
+class ResultMetadataHeading(BaseModel):
+    level: int
+    """Heading level, 1–6 (from h1–h6)."""
+
+    text: str
+    """Heading text with whitespace collapsed, truncated to 1000 characters."""
 
 
 class ResultMetadata(BaseModel):
@@ -85,6 +101,12 @@ class ResultMetadata(BaseModel):
 
     favicon: Optional[str] = None
     """Resolved favicon URL, when present."""
+
+    headings: Optional[List[ResultMetadataHeading]] = None
+    """Page headings (h1–h6) in document order, extracted from the unfiltered document.
+
+    Capped at the first 500 headings. Omitted when the page has none.
+    """
 
     image: Optional[str] = None
     """Primary resolved preview image from Open Graph, Twitter, or image metadata."""
