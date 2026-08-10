@@ -18,10 +18,13 @@ __all__ = [
 
 class UtilityPrefetchParams(TypedDict, total=False):
     identifier: Required[Identifier]
-    """Identifier of the brand to prefetch. Provide exactly one of domain or email."""
+    """Identifier of the target to prefetch. Provide exactly one of domain or email."""
 
-    type: Required[Literal["brand"]]
-    """What to prefetch. Currently only 'brand' is supported."""
+    type: Required[Literal["brand", "styleguide"]]
+    """
+    What to prefetch: 'brand' warms the brand data cache, 'styleguide' warms the
+    styleguide cache.
+    """
 
     tags: SequenceNotStr[str]
     """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
@@ -35,17 +38,17 @@ class UtilityPrefetchParams(TypedDict, total=False):
 
 
 class IdentifierUtilityPrefetchDomainIdentifier(TypedDict, total=False):
-    """Prefetch brand data by domain."""
+    """Prefetch by domain."""
 
     domain: Required[str]
-    """Domain name to prefetch brand data for"""
+    """Domain name to prefetch data for"""
 
 
 class IdentifierUtilityPrefetchEmailIdentifier(TypedDict, total=False):
-    """Prefetch brand data by email. The domain will be extracted and validated."""
+    """Prefetch by email. The domain will be extracted and validated."""
 
     email: Required[str]
-    """Email address to prefetch brand data for.
+    """Email address to prefetch data for.
 
     The domain will be extracted from the email. Free email providers (gmail.com,
     yahoo.com, etc.) and disposable email addresses are not allowed.

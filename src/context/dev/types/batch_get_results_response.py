@@ -131,7 +131,11 @@ class DataOk(BaseModel):
     """URL as submitted, or as discovered by the crawl."""
 
     html: Optional[str] = None
-    """Raw page HTML. Present on html batches."""
+    """Page HTML.
+
+    Present on html batches, and on markdown batches submitted with
+    `options.includeHTML`.
+    """
 
     item_id: Optional[str] = FieldInfo(alias="itemId", default=None)
     """Caller-supplied identifier echoed from submission."""

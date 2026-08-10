@@ -172,6 +172,13 @@ class WebWebScrapeMdResponse(BaseModel):
     afterward.
     """
 
+    html: Optional[str] = None
+    """
+    Only present when includeHTML=true: the page HTML the Markdown was converted
+    from — the same body the Scrape HTML endpoint returns for the equivalent
+    request.
+    """
+
     key_metadata: Optional[KeyMetadata] = None
     """Metadata about the API key used for the request.
 

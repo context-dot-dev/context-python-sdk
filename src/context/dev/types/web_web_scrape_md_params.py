@@ -253,6 +253,13 @@ class WebWebScrapeMdParams(TypedDict, total=False):
     include_frames: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="includeFrames")]
     """When true, the contents of iframes are rendered to Markdown."""
 
+    include_html: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="includeHTML")]
+    """
+    When true, the response also includes an `html` field with the page HTML the
+    Markdown was converted from — the same body the Scrape HTML endpoint returns for
+    the equivalent request.
+    """
+
     include_images: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="includeImages")]
     """Include image references in Markdown output"""
 

@@ -2022,6 +2022,7 @@ class WebResource(SyncAPIResource):
         exclude_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
         include_frames: Union[bool, Literal["true", "false"]] | Omit = omit,
+        include_html: Union[bool, Literal["true", "false"]] | Omit = omit,
         include_images: Union[bool, Literal["true", "false"]] | Omit = omit,
         include_links: Union[bool, Literal["true", "false"]] | Omit = omit,
         include_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
@@ -2094,6 +2095,10 @@ class WebResource(SyncAPIResource):
 
           include_frames: When true, the contents of iframes are rendered to Markdown.
 
+          include_html: When true, the response also includes an `html` field with the page HTML the
+              Markdown was converted from — the same body the Scrape HTML endpoint returns for
+              the equivalent request.
+
           include_images: Include image references in Markdown output
 
           include_links: Preserve hyperlinks in Markdown output
@@ -2157,6 +2162,7 @@ class WebResource(SyncAPIResource):
                         "exclude_selectors": exclude_selectors,
                         "headers": headers,
                         "include_frames": include_frames,
+                        "include_html": include_html,
                         "include_images": include_images,
                         "include_links": include_links,
                         "include_selectors": include_selectors,
@@ -4246,6 +4252,7 @@ class AsyncWebResource(AsyncAPIResource):
         exclude_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
         include_frames: Union[bool, Literal["true", "false"]] | Omit = omit,
+        include_html: Union[bool, Literal["true", "false"]] | Omit = omit,
         include_images: Union[bool, Literal["true", "false"]] | Omit = omit,
         include_links: Union[bool, Literal["true", "false"]] | Omit = omit,
         include_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
@@ -4318,6 +4325,10 @@ class AsyncWebResource(AsyncAPIResource):
 
           include_frames: When true, the contents of iframes are rendered to Markdown.
 
+          include_html: When true, the response also includes an `html` field with the page HTML the
+              Markdown was converted from — the same body the Scrape HTML endpoint returns for
+              the equivalent request.
+
           include_images: Include image references in Markdown output
 
           include_links: Preserve hyperlinks in Markdown output
@@ -4381,6 +4392,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "exclude_selectors": exclude_selectors,
                         "headers": headers,
                         "include_frames": include_frames,
+                        "include_html": include_html,
                         "include_images": include_images,
                         "include_links": include_links,
                         "include_selectors": include_selectors,
