@@ -329,6 +329,12 @@ class InputScrapeDataMarkdownOptions(TypedDict, total=False):
     Applied after `includeSelectors`, so an element matching both is removed.
     """
 
+    include_html: Annotated[bool, PropertyInfo(alias="includeHTML")]
+    """
+    Also include each page's HTML in its result record, as an `html` field alongside
+    the Markdown.
+    """
+
     include_images: Annotated[bool, PropertyInfo(alias="includeImages")]
     """Include image references in the Markdown."""
 
@@ -1035,6 +1041,12 @@ class InputCrawlDataMarkdownOptions(TypedDict, total=False):
     """Remove elements matching these CSS selectors.
 
     Applied after `includeSelectors`, so an element matching both is removed.
+    """
+
+    include_html: Annotated[bool, PropertyInfo(alias="includeHTML")]
+    """
+    Also include each page's HTML in its result record, as an `html` field alongside
+    the Markdown.
     """
 
     include_images: Annotated[bool, PropertyInfo(alias="includeImages")]

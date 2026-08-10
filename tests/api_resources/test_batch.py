@@ -282,6 +282,7 @@ class TestBatch:
                     "options": {
                         "country": "de",
                         "exclude_selectors": ["x"],
+                        "include_html": True,
                         "include_images": True,
                         "include_links": True,
                         "include_selectors": ["x"],
@@ -614,6 +615,7 @@ class TestAsyncBatch:
                     "options": {
                         "country": "de",
                         "exclude_selectors": ["x"],
+                        "include_html": True,
                         "include_images": True,
                         "include_links": True,
                         "include_selectors": ["x"],
