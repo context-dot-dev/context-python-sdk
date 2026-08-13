@@ -88,7 +88,7 @@ class InputScrapeDataMarkdownOptionsPdf(TypedDict, total=False):
     start when both are provided.
     """
 
-    ocr: Union[bool, Literal["true", "false"]]
+    ocr: bool
     """
     When true, OCR the selected PDF pages that have no usable text layer (scans),
     replacing each recovered page's text with the OCR result while pages with a real
@@ -96,7 +96,7 @@ class InputScrapeDataMarkdownOptionsPdf(TypedDict, total=False):
     of the base request cost. When false, no OCR runs.
     """
 
-    should_parse: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="shouldParse")]
+    should_parse: Annotated[bool, PropertyInfo(alias="shouldParse")]
     """When true, PDF URLs are fetched and parsed.
 
     When false, PDF URLs are skipped and a 400 PDF_SKIPPED is returned.
@@ -419,7 +419,7 @@ class InputScrapeDataHTMLOptionsPdf(TypedDict, total=False):
     start when both are provided.
     """
 
-    ocr: Union[bool, Literal["true", "false"]]
+    ocr: bool
     """
     When true, OCR the selected PDF pages that have no usable text layer (scans),
     replacing each recovered page's text with the OCR result while pages with a real
@@ -427,7 +427,7 @@ class InputScrapeDataHTMLOptionsPdf(TypedDict, total=False):
     of the base request cost. When false, no OCR runs.
     """
 
-    should_parse: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="shouldParse")]
+    should_parse: Annotated[bool, PropertyInfo(alias="shouldParse")]
     """When true, PDF URLs are fetched and parsed.
 
     When false, PDF URLs are skipped and a 400 PDF_SKIPPED is returned.
@@ -802,7 +802,7 @@ class InputCrawlDataMarkdownOptionsPdf(TypedDict, total=False):
     start when both are provided.
     """
 
-    ocr: Union[bool, Literal["true", "false"]]
+    ocr: bool
     """
     When true, OCR the selected PDF pages that have no usable text layer (scans),
     replacing each recovered page's text with the OCR result while pages with a real
@@ -810,7 +810,7 @@ class InputCrawlDataMarkdownOptionsPdf(TypedDict, total=False):
     of the base request cost. When false, no OCR runs.
     """
 
-    should_parse: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="shouldParse")]
+    should_parse: Annotated[bool, PropertyInfo(alias="shouldParse")]
     """When true, PDF URLs are fetched and parsed.
 
     When false, PDF URLs are skipped and a 400 PDF_SKIPPED is returned.
@@ -1185,7 +1185,7 @@ class InputCrawlDataHTMLOptionsPdf(TypedDict, total=False):
     start when both are provided.
     """
 
-    ocr: Union[bool, Literal["true", "false"]]
+    ocr: bool
     """
     When true, OCR the selected PDF pages that have no usable text layer (scans),
     replacing each recovered page's text with the OCR result while pages with a real
@@ -1193,7 +1193,7 @@ class InputCrawlDataHTMLOptionsPdf(TypedDict, total=False):
     of the base request cost. When false, no OCR runs.
     """
 
-    should_parse: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="shouldParse")]
+    should_parse: Annotated[bool, PropertyInfo(alias="shouldParse")]
     """When true, PDF URLs are fetched and parsed.
 
     When false, PDF URLs are skipped and a 400 PDF_SKIPPED is returned.
