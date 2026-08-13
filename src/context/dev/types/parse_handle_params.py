@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from typing import Union
 from typing_extensions import Literal, Annotated, TypedDict
 
 from .._types import SequenceNotStr
@@ -92,13 +91,13 @@ class ParseHandleParams(TypedDict, total=False):
     md, py, rtf, jpg, png, or txt.
     """
 
-    include_images: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="includeImages")]
+    include_images: Annotated[bool, PropertyInfo(alias="includeImages")]
     """Include image references in Markdown output"""
 
-    include_links: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="includeLinks")]
+    include_links: Annotated[bool, PropertyInfo(alias="includeLinks")]
     """Preserve hyperlinks in Markdown output"""
 
-    ocr: Union[bool, Literal["true", "false"]]
+    ocr: bool
     """
     When true for PDF inputs, OCR the selected pages that have no usable text layer
     (scans), replacing each recovered page's text with the OCR result while pages
@@ -110,7 +109,7 @@ class ParseHandleParams(TypedDict, total=False):
     pdf: Pdf
     """PDF page-range options as a JSON object, e.g. {"start": 2, "end": 5}."""
 
-    shorten_base64_images: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="shortenBase64Images")]
+    shorten_base64_images: Annotated[bool, PropertyInfo(alias="shortenBase64Images")]
     """Shorten base64-encoded image data in the Markdown output"""
 
     tags: SequenceNotStr[str]
@@ -120,7 +119,7 @@ class ParseHandleParams(TypedDict, total=False):
     the dashboard usage page. Up to 20 tags, each 1-50 characters.
     """
 
-    use_main_content_only: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="useMainContentOnly")]
+    use_main_content_only: Annotated[bool, PropertyInfo(alias="useMainContentOnly")]
     """Extract only the main content from HTML-like inputs"""
 
     zdr: Literal["enabled", "disabled"]

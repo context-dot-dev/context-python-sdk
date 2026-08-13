@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import os
-from typing import Union
 from typing_extensions import Literal
 
 import httpx
@@ -136,13 +135,13 @@ class ParseResource(SyncAPIResource):
             "pnm",
         ]
         | Omit = omit,
-        include_images: Union[bool, Literal["true", "false"]] | Omit = omit,
-        include_links: Union[bool, Literal["true", "false"]] | Omit = omit,
-        ocr: Union[bool, Literal["true", "false"]] | Omit = omit,
+        include_images: bool | Omit = omit,
+        include_links: bool | Omit = omit,
+        ocr: bool | Omit = omit,
         pdf: parse_handle_params.Pdf | Omit = omit,
-        shorten_base64_images: Union[bool, Literal["true", "false"]] | Omit = omit,
+        shorten_base64_images: bool | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        use_main_content_only: Union[bool, Literal["true", "false"]] | Omit = omit,
+        use_main_content_only: bool | Omit = omit,
         zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -321,13 +320,13 @@ class AsyncParseResource(AsyncAPIResource):
             "pnm",
         ]
         | Omit = omit,
-        include_images: Union[bool, Literal["true", "false"]] | Omit = omit,
-        include_links: Union[bool, Literal["true", "false"]] | Omit = omit,
-        ocr: Union[bool, Literal["true", "false"]] | Omit = omit,
+        include_images: bool | Omit = omit,
+        include_links: bool | Omit = omit,
+        ocr: bool | Omit = omit,
         pdf: parse_handle_params.Pdf | Omit = omit,
-        shorten_base64_images: Union[bool, Literal["true", "false"]] | Omit = omit,
+        shorten_base64_images: bool | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        use_main_content_only: Union[bool, Literal["true", "false"]] | Omit = omit,
+        use_main_content_only: bool | Omit = omit,
         zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.

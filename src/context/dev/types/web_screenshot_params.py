@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Union, Optional
+from typing import Optional
 from typing_extensions import Literal, Annotated, TypedDict
 
 from .._types import SequenceNotStr
@@ -250,7 +250,7 @@ class WebScreenshotParams(TypedDict, total=False):
     provided, takes a viewport screenshot (standard browser view).
     """
 
-    handle_cookie_popup: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="handleCookiePopup")]
+    handle_cookie_popup: Annotated[bool, PropertyInfo(alias="handleCookiePopup")]
     """Optional parameter to control cookie/consent popup handling.
 
     If 'true', we dismiss cookie banner before capture. If 'false' or not provided,

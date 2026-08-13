@@ -289,8 +289,8 @@ class TestBatch:
                         "max_age_ms": 0,
                         "pdf": {
                             "end": 1,
-                            "ocr": "true",
-                            "should_parse": "true",
+                            "ocr": True,
+                            "should_parse": True,
                             "start": 1,
                         },
                         "settle_animations": True,
@@ -622,8 +622,8 @@ class TestAsyncBatch:
                         "max_age_ms": 0,
                         "pdf": {
                             "end": 1,
-                            "ocr": "true",
-                            "should_parse": "true",
+                            "ocr": True,
+                            "should_parse": True,
                             "start": 1,
                         },
                         "settle_animations": True,
