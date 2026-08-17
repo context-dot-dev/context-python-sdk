@@ -389,7 +389,10 @@ class TestBrand:
     def test_method_search_with_all_params(self, client: ContextDev) -> None:
         brand = client.brand.search(
             query="x",
+            autocomplete=True,
+            query_by=["name"],
             tags=["production", "team-alpha"],
+            typo_tolerance=0,
         )
         assert_matches_type(BrandSearchResponse, brand, path=["response"])
 
@@ -793,7 +796,10 @@ class TestAsyncBrand:
     async def test_method_search_with_all_params(self, async_client: AsyncContextDev) -> None:
         brand = await async_client.brand.search(
             query="x",
+            autocomplete=True,
+            query_by=["name"],
             tags=["production", "team-alpha"],
+            typo_tolerance=0,
         )
         assert_matches_type(BrandSearchResponse, brand, path=["response"])
 
