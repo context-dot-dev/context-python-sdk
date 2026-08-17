@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Union, Optional
+from typing import List, Union, Optional
 from typing_extensions import Literal, overload
 
 import httpx
@@ -1278,7 +1278,10 @@ class BrandResource(SyncAPIResource):
         self,
         *,
         query: str,
+        autocomplete: bool | Omit = omit,
+        query_by: List[Literal["name", "domain"]] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
+        typo_tolerance: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1287,22 +1290,24 @@ class BrandResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandSearchResponse:
         """
-        Search brands by name or domain and get back up to 10 lightweight matches
-        (domain, name, logo). Name matches rank ahead of domain matches; within each
-        group the most popular brands come first: by Tranco rank, then market cap for
-        brands outside the Tranco list, with text relevance breaking ties. Matching is
-        prefix-based with no typo tolerance, so it is suited to autocomplete. Only
-        brands already in the Context.dev index are returned — use /brand/retrieve to
-        fetch (and index) a specific domain. Free on Pro and Scale plans; costs 1 credit
-        per request on the Free and Starter plans.
+        Search indexed brands by name or domain
 
         Args:
-          query: Search term, matched against brand names and domains by prefix (e.g. 'nike',
+          query: Search term, matched against the fields selected by queryBy (e.g. 'nike',
               'nike.com', 'nik').
+
+          autocomplete: Whether the search term matches by prefix, so partial words match as they are
+              typed (e.g. 'nik' matches Nike). Set to false to match whole words only.
+
+          query_by: Fields to match the search term against, as a comma-separated list or repeated
+              parameter: 'name', 'domain', or both. Defaults to both.
 
           tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
               recorded on the request's usage log and can be used to filter usage on the
               dashboard usage page. Up to 20 tags, each 1-50 characters.
+
+          typo_tolerance: Maximum number of typos tolerated when matching, from 0 to 2. Defaults to 0 (no
+              typo tolerance).
 
           extra_headers: Send extra headers
 
@@ -1322,7 +1327,10 @@ class BrandResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "query": query,
+                        "autocomplete": autocomplete,
+                        "query_by": query_by,
                         "tags": tags,
+                        "typo_tolerance": typo_tolerance,
                     },
                     brand_search_params.BrandSearchParams,
                 ),
@@ -2583,7 +2591,10 @@ class AsyncBrandResource(AsyncAPIResource):
         self,
         *,
         query: str,
+        autocomplete: bool | Omit = omit,
+        query_by: List[Literal["name", "domain"]] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
+        typo_tolerance: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -2592,22 +2603,24 @@ class AsyncBrandResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandSearchResponse:
         """
-        Search brands by name or domain and get back up to 10 lightweight matches
-        (domain, name, logo). Name matches rank ahead of domain matches; within each
-        group the most popular brands come first: by Tranco rank, then market cap for
-        brands outside the Tranco list, with text relevance breaking ties. Matching is
-        prefix-based with no typo tolerance, so it is suited to autocomplete. Only
-        brands already in the Context.dev index are returned — use /brand/retrieve to
-        fetch (and index) a specific domain. Free on Pro and Scale plans; costs 1 credit
-        per request on the Free and Starter plans.
+        Search indexed brands by name or domain
 
         Args:
-          query: Search term, matched against brand names and domains by prefix (e.g. 'nike',
+          query: Search term, matched against the fields selected by queryBy (e.g. 'nike',
               'nike.com', 'nik').
+
+          autocomplete: Whether the search term matches by prefix, so partial words match as they are
+              typed (e.g. 'nik' matches Nike). Set to false to match whole words only.
+
+          query_by: Fields to match the search term against, as a comma-separated list or repeated
+              parameter: 'name', 'domain', or both. Defaults to both.
 
           tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
               recorded on the request's usage log and can be used to filter usage on the
               dashboard usage page. Up to 20 tags, each 1-50 characters.
+
+          typo_tolerance: Maximum number of typos tolerated when matching, from 0 to 2. Defaults to 0 (no
+              typo tolerance).
 
           extra_headers: Send extra headers
 
@@ -2627,7 +2640,10 @@ class AsyncBrandResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "query": query,
+                        "autocomplete": autocomplete,
+                        "query_by": query_by,
                         "tags": tags,
+                        "typo_tolerance": typo_tolerance,
                     },
                     brand_search_params.BrandSearchParams,
                 ),
