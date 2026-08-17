@@ -38,8 +38,5 @@ class UtilityPrefetchResponse(BaseModel):
     status: Optional[str] = None
     """Status of the response, e.g., 'ok'"""
 
-    type: Optional[Literal["brand"]] = None
-    """
-    The type of prefetch that was queued, echoed from the request (currently always
-    'brand')
-    """
+    type: Optional[Literal["brand", "styleguide"]] = None
+    """The type of prefetch that was queued, echoed from the request"""

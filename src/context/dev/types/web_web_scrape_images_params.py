@@ -28,7 +28,7 @@ class WebWebScrapeImagesParams(TypedDict, total=False):
     parameter. Maximum: 5 actions.
     """
 
-    dedupe: Union[bool, Literal["true", "false"]]
+    dedupe: bool
     """
     When true, visually duplicate images are removed: every image is loaded and
     perceptually hashed, and only the highest-resolution copy of each duplicate
@@ -101,10 +101,10 @@ class Enrichment(TypedDict, total=False):
     Optional per-image processing, sent as deep-object query params such as enrichment[resolution]=true.
     """
 
-    classification: Union[bool, Literal["true", "false"]]
+    classification: bool
     """Classify each image by visual asset type."""
 
-    hosted_url: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="hostedUrl")]
+    hosted_url: Annotated[bool, PropertyInfo(alias="hostedUrl")]
     """
     Host materializable images on the Brand.dev CDN and return their URL and MIME
     type.
@@ -113,5 +113,5 @@ class Enrichment(TypedDict, total=False):
     max_time_per_ms: Annotated[int, PropertyInfo(alias="maxTimePerMs")]
     """Per-image enrichment timeout in milliseconds. Default: 30000. Maximum: 60000."""
 
-    resolution: Union[bool, Literal["true", "false"]]
+    resolution: bool
     """Measure image width and height when possible."""

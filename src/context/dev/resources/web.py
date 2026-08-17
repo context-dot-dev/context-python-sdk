@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, Union, Iterable, Optional
+from typing import Dict, Iterable, Optional
 from typing_extensions import Literal
 
 import httpx
@@ -597,7 +597,7 @@ class WebResource(SyncAPIResource):
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
         full_screenshot: Literal["true", "false"] | Omit = omit,
-        handle_cookie_popup: Union[bool, Literal["true", "false"]] | Omit = omit,
+        handle_cookie_popup: bool | Omit = omit,
         max_age_ms: Optional[int] | Omit = omit,
         page: Literal["login", "signup", "blog", "careers", "pricing", "terms", "privacy", "contact"] | Omit = omit,
         scroll_offset: Optional[int] | Omit = omit,
@@ -1599,14 +1599,14 @@ class WebResource(SyncAPIResource):
         | Omit = omit,
         exclude_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
-        include_frames: Union[bool, Literal["true", "false"]] | Omit = omit,
+        include_frames: bool | Omit = omit,
         include_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
         max_age_ms: Optional[int] | Omit = omit,
         pdf: web_web_scrape_html_params.Pdf | Omit = omit,
-        settle_animations: Union[bool, Literal["true", "false"]] | Omit = omit,
+        settle_animations: bool | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
-        use_main_content_only: Union[bool, Literal["true", "false"]] | Omit = omit,
+        use_main_content_only: bool | Omit = omit,
         wait_for_ms: Optional[int] | Omit = omit,
         zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -1720,7 +1720,7 @@ class WebResource(SyncAPIResource):
         *,
         url: str,
         actions: Optional[Iterable[web_web_scrape_images_params.Action]] | Omit = omit,
-        dedupe: Union[bool, Literal["true", "false"]] | Omit = omit,
+        dedupe: bool | Omit = omit,
         enrichment: Optional[web_web_scrape_images_params.Enrichment] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
         max_age_ms: Optional[int] | Omit = omit,
@@ -2021,17 +2021,18 @@ class WebResource(SyncAPIResource):
         | Omit = omit,
         exclude_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
-        include_frames: Union[bool, Literal["true", "false"]] | Omit = omit,
-        include_images: Union[bool, Literal["true", "false"]] | Omit = omit,
-        include_links: Union[bool, Literal["true", "false"]] | Omit = omit,
+        include_frames: bool | Omit = omit,
+        include_html: bool | Omit = omit,
+        include_images: bool | Omit = omit,
+        include_links: bool | Omit = omit,
         include_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
         max_age_ms: Optional[int] | Omit = omit,
         pdf: web_web_scrape_md_params.Pdf | Omit = omit,
-        settle_animations: Union[bool, Literal["true", "false"]] | Omit = omit,
-        shorten_base64_images: Union[bool, Literal["true", "false"]] | Omit = omit,
+        settle_animations: bool | Omit = omit,
+        shorten_base64_images: bool | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
-        use_main_content_only: Union[bool, Literal["true", "false"]] | Omit = omit,
+        use_main_content_only: bool | Omit = omit,
         wait_for_ms: Optional[int] | Omit = omit,
         zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -2061,17 +2062,17 @@ class WebResource(SyncAPIResource):
 
         ### Billing & errors
 
-        | HTTP status | Billed?                                   | Meaning                                                                                  |
-        | ----------- | ----------------------------------------- | ---------------------------------------------------------------------------------------- |
-        | 200         | Yes — 1 credit, or 2 credits with actions | Successful scrape, including a zero-length result when includeSelectors matched nothing  |
-        | 400         | No                                        | Invalid input, skipped PDF, or the page could not be scraped                             |
-        | 401 / 403   | No                                        | Invalid/disabled key, insufficient permissions, or credits exhausted; inspect error_code |
-        | 404         | No                                        | Target page returned or fingerprinted as not found                                       |
-        | 408         | No                                        | Request timed out                                                                        |
-        | 413         | No                                        | Target content exceeds the maximum supported size (20 MB)                                |
-        | 415         | No                                        | Unsupported content type                                                                 |
-        | 429         | No                                        | Per-minute rate limit exceeded; honor Retry-After                                        |
-        | 500         | No                                        | Internal error                                                                           |
+        | HTTP status | Billed?                                   | Meaning                                                                                                                                                                                                                                                                                                       |
+        | ----------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+        | 200         | Yes — 1 credit, or 2 credits with actions | Successful scrape, including a zero-length result when includeSelectors matched nothing                                                                                                                                                                                                                       |
+        | 400         | No                                        | Invalid input, skipped PDF, or the page could not be scraped. error_code WEBSITE_BLOCKED specifically means the site answered with an anti-bot challenge, CAPTCHA wall, or login shell instead of the page (even when the site returned HTTP 200) — retrying later or from another country sometimes succeeds |
+        | 401 / 403   | No                                        | Invalid/disabled key, insufficient permissions, or credits exhausted; inspect error_code                                                                                                                                                                                                                      |
+        | 404         | No                                        | Target page returned or fingerprinted as not found                                                                                                                                                                                                                                                            |
+        | 408         | No                                        | Request timed out                                                                                                                                                                                                                                                                                             |
+        | 413         | No                                        | Target content exceeds the maximum supported size (20 MB)                                                                                                                                                                                                                                                     |
+        | 415         | No                                        | Unsupported content type                                                                                                                                                                                                                                                                                      |
+        | 429         | No                                        | Per-minute rate limit exceeded; honor Retry-After                                                                                                                                                                                                                                                             |
+        | 500         | No                                        | Internal error                                                                                                                                                                                                                                                                                                |
 
         Args:
           url: Full URL to scrape into LLM usable Markdown (must include http:// or https://
@@ -2093,6 +2094,10 @@ class WebResource(SyncAPIResource):
               is bypassed: the result is neither read from nor written to cache.
 
           include_frames: When true, the contents of iframes are rendered to Markdown.
+
+          include_html: When true, the response also includes an `html` field with the page HTML the
+              Markdown was converted from — the same body the Scrape HTML endpoint returns for
+              the equivalent request.
 
           include_images: Include image references in Markdown output
 
@@ -2157,6 +2162,7 @@ class WebResource(SyncAPIResource):
                         "exclude_selectors": exclude_selectors,
                         "headers": headers,
                         "include_frames": include_frames,
+                        "include_html": include_html,
                         "include_images": include_images,
                         "include_links": include_links,
                         "include_selectors": include_selectors,
@@ -2821,7 +2827,7 @@ class AsyncWebResource(AsyncAPIResource):
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
         full_screenshot: Literal["true", "false"] | Omit = omit,
-        handle_cookie_popup: Union[bool, Literal["true", "false"]] | Omit = omit,
+        handle_cookie_popup: bool | Omit = omit,
         max_age_ms: Optional[int] | Omit = omit,
         page: Literal["login", "signup", "blog", "careers", "pricing", "terms", "privacy", "contact"] | Omit = omit,
         scroll_offset: Optional[int] | Omit = omit,
@@ -3823,14 +3829,14 @@ class AsyncWebResource(AsyncAPIResource):
         | Omit = omit,
         exclude_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
-        include_frames: Union[bool, Literal["true", "false"]] | Omit = omit,
+        include_frames: bool | Omit = omit,
         include_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
         max_age_ms: Optional[int] | Omit = omit,
         pdf: web_web_scrape_html_params.Pdf | Omit = omit,
-        settle_animations: Union[bool, Literal["true", "false"]] | Omit = omit,
+        settle_animations: bool | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
-        use_main_content_only: Union[bool, Literal["true", "false"]] | Omit = omit,
+        use_main_content_only: bool | Omit = omit,
         wait_for_ms: Optional[int] | Omit = omit,
         zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -3944,7 +3950,7 @@ class AsyncWebResource(AsyncAPIResource):
         *,
         url: str,
         actions: Optional[Iterable[web_web_scrape_images_params.Action]] | Omit = omit,
-        dedupe: Union[bool, Literal["true", "false"]] | Omit = omit,
+        dedupe: bool | Omit = omit,
         enrichment: Optional[web_web_scrape_images_params.Enrichment] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
         max_age_ms: Optional[int] | Omit = omit,
@@ -4245,17 +4251,18 @@ class AsyncWebResource(AsyncAPIResource):
         | Omit = omit,
         exclude_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
-        include_frames: Union[bool, Literal["true", "false"]] | Omit = omit,
-        include_images: Union[bool, Literal["true", "false"]] | Omit = omit,
-        include_links: Union[bool, Literal["true", "false"]] | Omit = omit,
+        include_frames: bool | Omit = omit,
+        include_html: bool | Omit = omit,
+        include_images: bool | Omit = omit,
+        include_links: bool | Omit = omit,
         include_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
         max_age_ms: Optional[int] | Omit = omit,
         pdf: web_web_scrape_md_params.Pdf | Omit = omit,
-        settle_animations: Union[bool, Literal["true", "false"]] | Omit = omit,
-        shorten_base64_images: Union[bool, Literal["true", "false"]] | Omit = omit,
+        settle_animations: bool | Omit = omit,
+        shorten_base64_images: bool | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
-        use_main_content_only: Union[bool, Literal["true", "false"]] | Omit = omit,
+        use_main_content_only: bool | Omit = omit,
         wait_for_ms: Optional[int] | Omit = omit,
         zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -4285,17 +4292,17 @@ class AsyncWebResource(AsyncAPIResource):
 
         ### Billing & errors
 
-        | HTTP status | Billed?                                   | Meaning                                                                                  |
-        | ----------- | ----------------------------------------- | ---------------------------------------------------------------------------------------- |
-        | 200         | Yes — 1 credit, or 2 credits with actions | Successful scrape, including a zero-length result when includeSelectors matched nothing  |
-        | 400         | No                                        | Invalid input, skipped PDF, or the page could not be scraped                             |
-        | 401 / 403   | No                                        | Invalid/disabled key, insufficient permissions, or credits exhausted; inspect error_code |
-        | 404         | No                                        | Target page returned or fingerprinted as not found                                       |
-        | 408         | No                                        | Request timed out                                                                        |
-        | 413         | No                                        | Target content exceeds the maximum supported size (20 MB)                                |
-        | 415         | No                                        | Unsupported content type                                                                 |
-        | 429         | No                                        | Per-minute rate limit exceeded; honor Retry-After                                        |
-        | 500         | No                                        | Internal error                                                                           |
+        | HTTP status | Billed?                                   | Meaning                                                                                                                                                                                                                                                                                                       |
+        | ----------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+        | 200         | Yes — 1 credit, or 2 credits with actions | Successful scrape, including a zero-length result when includeSelectors matched nothing                                                                                                                                                                                                                       |
+        | 400         | No                                        | Invalid input, skipped PDF, or the page could not be scraped. error_code WEBSITE_BLOCKED specifically means the site answered with an anti-bot challenge, CAPTCHA wall, or login shell instead of the page (even when the site returned HTTP 200) — retrying later or from another country sometimes succeeds |
+        | 401 / 403   | No                                        | Invalid/disabled key, insufficient permissions, or credits exhausted; inspect error_code                                                                                                                                                                                                                      |
+        | 404         | No                                        | Target page returned or fingerprinted as not found                                                                                                                                                                                                                                                            |
+        | 408         | No                                        | Request timed out                                                                                                                                                                                                                                                                                             |
+        | 413         | No                                        | Target content exceeds the maximum supported size (20 MB)                                                                                                                                                                                                                                                     |
+        | 415         | No                                        | Unsupported content type                                                                                                                                                                                                                                                                                      |
+        | 429         | No                                        | Per-minute rate limit exceeded; honor Retry-After                                                                                                                                                                                                                                                             |
+        | 500         | No                                        | Internal error                                                                                                                                                                                                                                                                                                |
 
         Args:
           url: Full URL to scrape into LLM usable Markdown (must include http:// or https://
@@ -4317,6 +4324,10 @@ class AsyncWebResource(AsyncAPIResource):
               is bypassed: the result is neither read from nor written to cache.
 
           include_frames: When true, the contents of iframes are rendered to Markdown.
+
+          include_html: When true, the response also includes an `html` field with the page HTML the
+              Markdown was converted from — the same body the Scrape HTML endpoint returns for
+              the equivalent request.
 
           include_images: Include image references in Markdown output
 
@@ -4381,6 +4392,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "exclude_selectors": exclude_selectors,
                         "headers": headers,
                         "include_frames": include_frames,
+                        "include_html": include_html,
                         "include_images": include_images,
                         "include_links": include_links,
                         "include_selectors": include_selectors,

@@ -178,3 +178,15 @@ from context.dev.types import PersonEnrichResponse
 Methods:
 
 - <code title="post /people/enrich">client.people.<a href="./src/context/dev/resources/people.py">enrich</a>(\*\*<a href="src/context/dev/types/person_enrich_params.py">params</a>) -> <a href="./src/context/dev/types/person_enrich_response.py">PersonEnrichResponse</a></code>
+
+# News
+
+Types:
+
+```python
+from context.dev.types import NewsSearchResponse
+```
+
+Methods:
+
+- <code title="post /news/search">client.news.<a href="./src/context/dev/resources/news.py">search</a>(\*\*<a href="src/context/dev/types/news_search_params.py">params</a>) -> <a href="./src/context/dev/types/news_search_response.py">NewsSearchResponse</a></code>

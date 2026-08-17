@@ -14,6 +14,7 @@ __all__ = [
     "DataOk",
     "DataOkMetadata",
     "DataOkMetadataAlternate",
+    "DataOkMetadataHeading",
     "DataError",
     "KeyMetadata",
 ]
@@ -31,6 +32,14 @@ class DataOkMetadataAlternate(BaseModel):
 
     type: Optional[str] = None
     """Alternate resource MIME type, when present."""
+
+
+class DataOkMetadataHeading(BaseModel):
+    level: int
+    """Heading level, 1–6 (from h1–h6)."""
+
+    text: str
+    """Heading text with whitespace collapsed, truncated to 1000 characters."""
 
 
 class DataOkMetadata(BaseModel):
@@ -62,6 +71,12 @@ class DataOkMetadata(BaseModel):
 
     favicon: Optional[str] = None
     """Resolved favicon URL, when present."""
+
+    headings: Optional[List[DataOkMetadataHeading]] = None
+    """Page headings (h1–h6) in document order, extracted from the unfiltered document.
+
+    Capped at the first 500 headings. Omitted when the page has none.
+    """
 
     image: Optional[str] = None
     """Primary resolved preview image from Open Graph, Twitter, or image metadata."""
@@ -116,7 +131,11 @@ class DataOk(BaseModel):
     """URL as submitted, or as discovered by the crawl."""
 
     html: Optional[str] = None
-    """Raw page HTML. Present on html batches."""
+    """Page HTML.
+
+    Present on html batches, and on markdown batches submitted with
+    `options.includeHTML`.
+    """
 
     item_id: Optional[str] = FieldInfo(alias="itemId", default=None)
     """Caller-supplied identifier echoed from submission."""

@@ -47,7 +47,7 @@ class UtilityResource(SyncAPIResource):
         self,
         *,
         identifier: utility_prefetch_params.Identifier,
-        type: Literal["brand"],
+        type: Literal["brand", "styleguide"],
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -57,17 +57,19 @@ class UtilityResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UtilityPrefetchResponse:
-        """Signal that you may fetch brand data soon to improve latency.
+        """Signal that you may fetch data soon to improve latency.
 
-        The type field
-        selects what to prefetch (currently only 'brand') and identifier carries exactly
-        one lookup key: a domain, or an email whose domain is extracted and validated
-        (free email providers and disposable email addresses are not allowed).
+        The type field selects
+        what to prefetch ('brand' queues a brand data fetch, 'styleguide' queues a
+        styleguide extraction) and identifier carries exactly one lookup key: a domain,
+        or an email whose domain is extracted and validated (free email providers and
+        disposable email addresses are not allowed).
 
         Args:
-          identifier: Identifier of the brand to prefetch. Provide exactly one of domain or email.
+          identifier: Identifier of the target to prefetch. Provide exactly one of domain or email.
 
-          type: What to prefetch. Currently only 'brand' is supported.
+          type: What to prefetch: 'brand' warms the brand data cache, 'styleguide' warms the
+              styleguide cache.
 
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
@@ -125,7 +127,7 @@ class AsyncUtilityResource(AsyncAPIResource):
         self,
         *,
         identifier: utility_prefetch_params.Identifier,
-        type: Literal["brand"],
+        type: Literal["brand", "styleguide"],
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -135,17 +137,19 @@ class AsyncUtilityResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UtilityPrefetchResponse:
-        """Signal that you may fetch brand data soon to improve latency.
+        """Signal that you may fetch data soon to improve latency.
 
-        The type field
-        selects what to prefetch (currently only 'brand') and identifier carries exactly
-        one lookup key: a domain, or an email whose domain is extracted and validated
-        (free email providers and disposable email addresses are not allowed).
+        The type field selects
+        what to prefetch ('brand' queues a brand data fetch, 'styleguide' queues a
+        styleguide extraction) and identifier carries exactly one lookup key: a domain,
+        or an email whose domain is extracted and validated (free email providers and
+        disposable email addresses are not allowed).
 
         Args:
-          identifier: Identifier of the brand to prefetch. Provide exactly one of domain or email.
+          identifier: Identifier of the target to prefetch. Provide exactly one of domain or email.
 
-          type: What to prefetch. Currently only 'brand' is supported.
+          type: What to prefetch: 'brand' warms the brand data cache, 'styleguide' warms the
+              styleguide cache.
 
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 

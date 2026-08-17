@@ -32,16 +32,16 @@ class TestParse:
             body=b"Example data",
             client="x",
             extension="txt",
-            include_images="true",
-            include_links="true",
-            ocr="true",
+            include_images=True,
+            include_links=True,
+            ocr=True,
             pdf={
                 "end": 1,
                 "start": 1,
             },
-            shorten_base64_images="true",
+            shorten_base64_images=True,
             tags=["production", "team-alpha"],
-            use_main_content_only="true",
+            use_main_content_only=True,
             zdr="enabled",
         )
         assert_matches_type(ParseHandleResponse, parse, path=["response"])
@@ -93,16 +93,16 @@ class TestAsyncParse:
             body=b"Example data",
             client="x",
             extension="txt",
-            include_images="true",
-            include_links="true",
-            ocr="true",
+            include_images=True,
+            include_links=True,
+            ocr=True,
             pdf={
                 "end": 1,
                 "start": 1,
             },
-            shorten_base64_images="true",
+            shorten_base64_images=True,
             tags=["production", "team-alpha"],
-            use_main_content_only="true",
+            use_main_content_only=True,
             zdr="enabled",
         )
         assert_matches_type(ParseHandleResponse, parse, path=["response"])

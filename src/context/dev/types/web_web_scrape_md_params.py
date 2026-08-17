@@ -250,13 +250,20 @@ class WebWebScrapeMdParams(TypedDict, total=False):
     is bypassed: the result is neither read from nor written to cache.
     """
 
-    include_frames: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="includeFrames")]
+    include_frames: Annotated[bool, PropertyInfo(alias="includeFrames")]
     """When true, the contents of iframes are rendered to Markdown."""
 
-    include_images: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="includeImages")]
+    include_html: Annotated[bool, PropertyInfo(alias="includeHTML")]
+    """
+    When true, the response also includes an `html` field with the page HTML the
+    Markdown was converted from — the same body the Scrape HTML endpoint returns for
+    the equivalent request.
+    """
+
+    include_images: Annotated[bool, PropertyInfo(alias="includeImages")]
     """Include image references in Markdown output"""
 
-    include_links: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="includeLinks")]
+    include_links: Annotated[bool, PropertyInfo(alias="includeLinks")]
     """Preserve hyperlinks in Markdown output"""
 
     include_selectors: Annotated[Optional[SequenceNotStr[str]], PropertyInfo(alias="includeSelectors")]
@@ -281,14 +288,14 @@ class WebWebScrapeMdParams(TypedDict, total=False):
     inclusive 1-based page range.
     """
 
-    settle_animations: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="settleAnimations")]
+    settle_animations: Annotated[bool, PropertyInfo(alias="settleAnimations")]
     """
     When true, waits briefly for CSS and transition animations to settle before
     converting to Markdown. Defaults to false. This adds a bit of latency in
     exchange for more stable output on animated pages.
     """
 
-    shorten_base64_images: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="shortenBase64Images")]
+    shorten_base64_images: Annotated[bool, PropertyInfo(alias="shortenBase64Images")]
     """Shorten base64-encoded image data in the Markdown output"""
 
     tags: SequenceNotStr[str]
@@ -305,7 +312,7 @@ class WebWebScrapeMdParams(TypedDict, total=False):
     status code. Maximum allowed value is 300000ms (5 minutes).
     """
 
-    use_main_content_only: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="useMainContentOnly")]
+    use_main_content_only: Annotated[bool, PropertyInfo(alias="useMainContentOnly")]
     """
     Extract only the main content of the page, excluding headers, footers, sidebars,
     and navigation
@@ -358,7 +365,7 @@ class Pdf(TypedDict, total=False):
     start when both are provided.
     """
 
-    ocr: Union[bool, Literal["true", "false"]]
+    ocr: bool
     """
     When true, OCR the selected PDF pages that have no usable text layer (scans),
     replacing each recovered page's text with the OCR result while pages with a real
@@ -366,7 +373,7 @@ class Pdf(TypedDict, total=False):
     of the base request cost. When false, no OCR runs.
     """
 
-    should_parse: Annotated[Union[bool, Literal["true", "false"]], PropertyInfo(alias="shouldParse")]
+    should_parse: Annotated[bool, PropertyInfo(alias="shouldParse")]
     """When true, PDF URLs are fetched and parsed.
 
     When false, PDF URLs are skipped and a 400 PDF_SKIPPED is returned.

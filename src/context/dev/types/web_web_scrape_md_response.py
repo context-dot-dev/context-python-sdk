@@ -7,7 +7,14 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["WebWebScrapeMdResponse", "Metadata", "MetadataAlternate", "ActionsApplied", "KeyMetadata"]
+__all__ = [
+    "WebWebScrapeMdResponse",
+    "Metadata",
+    "MetadataAlternate",
+    "MetadataHeading",
+    "ActionsApplied",
+    "KeyMetadata",
+]
 
 
 class MetadataAlternate(BaseModel):
@@ -22,6 +29,14 @@ class MetadataAlternate(BaseModel):
 
     type: Optional[str] = None
     """Alternate resource MIME type, when present."""
+
+
+class MetadataHeading(BaseModel):
+    level: int
+    """Heading level, 1–6 (from h1–h6)."""
+
+    text: str
+    """Heading text with whitespace collapsed, truncated to 1000 characters."""
 
 
 class Metadata(BaseModel):
@@ -53,6 +68,12 @@ class Metadata(BaseModel):
 
     favicon: Optional[str] = None
     """Resolved favicon URL, when present."""
+
+    headings: Optional[List[MetadataHeading]] = None
+    """Page headings (h1–h6) in document order, extracted from the unfiltered document.
+
+    Capped at the first 500 headings. Omitted when the page has none.
+    """
 
     image: Optional[str] = None
     """Primary resolved preview image from Open Graph, Twitter, or image metadata."""
@@ -149,6 +170,13 @@ class WebWebScrapeMdResponse(BaseModel):
     """
     True when an action was applied but the returned content could not be refreshed
     afterward.
+    """
+
+    html: Optional[str] = None
+    """
+    Only present when includeHTML=true: the page HTML the Markdown was converted
+    from — the same body the Scrape HTML endpoint returns for the equivalent
+    request.
     """
 
     key_metadata: Optional[KeyMetadata] = None
