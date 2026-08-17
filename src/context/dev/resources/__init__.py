@@ -16,6 +16,14 @@ from .web import (
     WebResourceWithStreamingResponse,
     AsyncWebResourceWithStreamingResponse,
 )
+from .news import (
+    NewsResource,
+    AsyncNewsResource,
+    NewsResourceWithRawResponse,
+    AsyncNewsResourceWithRawResponse,
+    NewsResourceWithStreamingResponse,
+    AsyncNewsResourceWithStreamingResponse,
+)
 from .batch import (
     BatchResource,
     AsyncBatchResource,
@@ -128,4 +136,10 @@ __all__ = [
     "AsyncPeopleResourceWithRawResponse",
     "PeopleResourceWithStreamingResponse",
     "AsyncPeopleResourceWithStreamingResponse",
+    "NewsResource",
+    "AsyncNewsResource",
+    "NewsResourceWithRawResponse",
+    "AsyncNewsResourceWithRawResponse",
+    "NewsResourceWithStreamingResponse",
+    "AsyncNewsResourceWithStreamingResponse",
 ]
