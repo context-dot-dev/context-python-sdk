@@ -35,9 +35,10 @@ from ._base_client import (
 )
 
 if TYPE_CHECKING:
-    from .resources import ai, web, batch, brand, parse, people, utility, industry, monitors
+    from .resources import ai, web, news, batch, brand, parse, people, utility, industry, monitors
     from .resources.ai import AIResource, AsyncAIResource
     from .resources.web import WebResource, AsyncWebResource
+    from .resources.news import NewsResource, AsyncNewsResource
     from .resources.batch import BatchResource, AsyncBatchResource
     from .resources.brand import BrandResource, AsyncBrandResource
     from .resources.parse import ParseResource, AsyncParseResource
@@ -179,6 +180,13 @@ class ContextDev(SyncAPIClient):
         from .resources.people import PeopleResource
 
         return PeopleResource(self)
+
+    @cached_property
+    def news(self) -> NewsResource:
+        """Search live first-party RSS and free historical news data by company identity."""
+        from .resources.news import NewsResource
+
+        return NewsResource(self)
 
     @cached_property
     def with_raw_response(self) -> ContextDevWithRawResponse:
@@ -416,6 +424,13 @@ class AsyncContextDev(AsyncAPIClient):
         return AsyncPeopleResource(self)
 
     @cached_property
+    def news(self) -> AsyncNewsResource:
+        """Search live first-party RSS and free historical news data by company identity."""
+        from .resources.news import AsyncNewsResource
+
+        return AsyncNewsResource(self)
+
+    @cached_property
     def with_raw_response(self) -> AsyncContextDevWithRawResponse:
         return AsyncContextDevWithRawResponse(self)
 
@@ -592,6 +607,13 @@ class ContextDevWithRawResponse:
 
         return PeopleResourceWithRawResponse(self._client.people)
 
+    @cached_property
+    def news(self) -> news.NewsResourceWithRawResponse:
+        """Search live first-party RSS and free historical news data by company identity."""
+        from .resources.news import NewsResourceWithRawResponse
+
+        return NewsResourceWithRawResponse(self._client.news)
+
 
 class AsyncContextDevWithRawResponse:
     _client: AsyncContextDev
@@ -656,6 +678,13 @@ class AsyncContextDevWithRawResponse:
         from .resources.people import AsyncPeopleResourceWithRawResponse
 
         return AsyncPeopleResourceWithRawResponse(self._client.people)
+
+    @cached_property
+    def news(self) -> news.AsyncNewsResourceWithRawResponse:
+        """Search live first-party RSS and free historical news data by company identity."""
+        from .resources.news import AsyncNewsResourceWithRawResponse
+
+        return AsyncNewsResourceWithRawResponse(self._client.news)
 
 
 class ContextDevWithStreamedResponse:
@@ -722,6 +751,13 @@ class ContextDevWithStreamedResponse:
 
         return PeopleResourceWithStreamingResponse(self._client.people)
 
+    @cached_property
+    def news(self) -> news.NewsResourceWithStreamingResponse:
+        """Search live first-party RSS and free historical news data by company identity."""
+        from .resources.news import NewsResourceWithStreamingResponse
+
+        return NewsResourceWithStreamingResponse(self._client.news)
+
 
 class AsyncContextDevWithStreamedResponse:
     _client: AsyncContextDev
@@ -786,6 +822,13 @@ class AsyncContextDevWithStreamedResponse:
         from .resources.people import AsyncPeopleResourceWithStreamingResponse
 
         return AsyncPeopleResourceWithStreamingResponse(self._client.people)
+
+    @cached_property
+    def news(self) -> news.AsyncNewsResourceWithStreamingResponse:
+        """Search live first-party RSS and free historical news data by company identity."""
+        from .resources.news import AsyncNewsResourceWithStreamingResponse
+
+        return AsyncNewsResourceWithStreamingResponse(self._client.news)
 
 
 Client = ContextDev
