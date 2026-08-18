@@ -58,6 +58,13 @@ class BrandColor(BaseModel):
     name: Optional[str] = None
     """Name of the color"""
 
+    source: Optional[Literal["site", "logo"]] = None
+    """
+    Where the color was observed: 'site' colors come from the website's own theme
+    signals (rendered page colors, manifest, theme-color meta), 'logo' colors from
+    logo image pixels.
+    """
+
 
 class BrandLogoColor(BaseModel):
     hex: Optional[str] = None

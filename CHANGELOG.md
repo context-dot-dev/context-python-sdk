@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.11.0 (2026-08-18)
+
+Full Changelog: [v2.10.0...v2.11.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.10.0...v2.11.0)
+
+### Features
+
+* **api:** api update ([2bdb356](https://github.com/context-dot-dev/context-python-sdk/commit/2bdb356049b2611469b28d34c9ddcc990a629525))
+* **api:** api update ([2ac4e0c](https://github.com/context-dot-dev/context-python-sdk/commit/2ac4e0c1b06711b284477705f83d20e0c1dd83f5))
+* **api:** api update ([68cb98c](https://github.com/context-dot-dev/context-python-sdk/commit/68cb98ca3b510157f56d34ed0cf598d7cae3b988))
+
 ## 2.10.0 (2026-08-17)
 
 Full Changelog: [v2.9.0...v2.10.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.9.0...v2.10.0)
