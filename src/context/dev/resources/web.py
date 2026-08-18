@@ -386,6 +386,7 @@ class WebResource(SyncAPIResource):
     def screenshot(
         self,
         *,
+        clear_popups: bool | Omit = omit,
         color_scheme: Literal["light", "dark"] | Omit = omit,
         country: Literal[
             "ad",
@@ -617,6 +618,12 @@ class WebResource(SyncAPIResource):
         Capture a screenshot of a website.
 
         Args:
+          clear_popups: Optional parameter for comprehensive popup cleanup. If 'true', the browser
+              dismisses detected cookie/consent UI and clears other detected obstructive
+              popups and overlays before capture. If 'false' or not provided, this parameter
+              requests no cleanup; handleCookiePopup can still request cookie/consent handling
+              independently.
+
           color_scheme: Optional parameter to choose the site's visual theme in the screenshot. Use
               'light' or 'dark' when the site offers both appearances.
 
@@ -692,6 +699,7 @@ class WebResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "clear_popups": clear_popups,
                         "color_scheme": color_scheme,
                         "country": country,
                         "direct_url": direct_url,
@@ -2616,6 +2624,7 @@ class AsyncWebResource(AsyncAPIResource):
     async def screenshot(
         self,
         *,
+        clear_popups: bool | Omit = omit,
         color_scheme: Literal["light", "dark"] | Omit = omit,
         country: Literal[
             "ad",
@@ -2847,6 +2856,12 @@ class AsyncWebResource(AsyncAPIResource):
         Capture a screenshot of a website.
 
         Args:
+          clear_popups: Optional parameter for comprehensive popup cleanup. If 'true', the browser
+              dismisses detected cookie/consent UI and clears other detected obstructive
+              popups and overlays before capture. If 'false' or not provided, this parameter
+              requests no cleanup; handleCookiePopup can still request cookie/consent handling
+              independently.
+
           color_scheme: Optional parameter to choose the site's visual theme in the screenshot. Use
               'light' or 'dark' when the site offers both appearances.
 
@@ -2922,6 +2937,7 @@ class AsyncWebResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
+                        "clear_popups": clear_popups,
                         "color_scheme": color_scheme,
                         "country": country,
                         "direct_url": direct_url,
