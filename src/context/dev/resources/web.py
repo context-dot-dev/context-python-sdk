@@ -1338,13 +1338,15 @@ class WebResource(SyncAPIResource):
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
 
-          url_regex: Regex pattern. Only URLs matching this pattern will be followed and scraped.
+          url_regex: Regex pattern. Only URLs matching this pattern will be followed and scraped. An
+              automatic prefix scope in the form ^<starting URL> follows a redirect of the
+              starting page.
 
           use_main_content_only: Extract only the main content, stripping headers, footers, sidebars, and
               navigation
 
-          wait_for_ms: Optional browser wait time in milliseconds after initial page load for each
-              crawled page. Min: 0. Max: 30000 (30 seconds).
+          wait_for_ms: Browser wait time in milliseconds after initial page load for each crawled page.
+              Defaults to 3500 (3.5 seconds). Min: 0. Max: 30000 (30 seconds).
 
           zdr: Set to enabled to bypass shared caches and omit request and response content
               from retained usage logs. Requires zero data retention to be enabled for your
@@ -3576,13 +3578,15 @@ class AsyncWebResource(AsyncAPIResource):
               than this value, it will be aborted with a 408 status code. Maximum allowed
               value is 300000ms (5 minutes).
 
-          url_regex: Regex pattern. Only URLs matching this pattern will be followed and scraped.
+          url_regex: Regex pattern. Only URLs matching this pattern will be followed and scraped. An
+              automatic prefix scope in the form ^<starting URL> follows a redirect of the
+              starting page.
 
           use_main_content_only: Extract only the main content, stripping headers, footers, sidebars, and
               navigation
 
-          wait_for_ms: Optional browser wait time in milliseconds after initial page load for each
-              crawled page. Min: 0. Max: 30000 (30 seconds).
+          wait_for_ms: Browser wait time in milliseconds after initial page load for each crawled page.
+              Defaults to 3500 (3.5 seconds). Min: 0. Max: 30000 (30 seconds).
 
           zdr: Set to enabled to bypass shared caches and omit request and response content
               from retained usage logs. Requires zero data retention to be enabled for your
