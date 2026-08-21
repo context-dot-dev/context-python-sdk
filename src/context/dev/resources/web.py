@@ -71,6 +71,7 @@ class WebResource(SyncAPIResource):
         *,
         schema: Dict[str, object],
         url: str,
+        actions: Iterable[web_extract_params.Action] | Omit = omit,
         fact_check: bool | Omit = omit,
         follow_subdomains: bool | Omit = omit,
         include_frames: bool | Omit = omit,
@@ -96,12 +97,18 @@ class WebResource(SyncAPIResource):
         relevant internal links, and extract structured data from the selected pages.
 
         Args:
-          schema: JSON Schema for the returned data object. TypeScript Zod users can pass a JSON
-              Schema generated from a Zod object; Python users can pass the equivalent JSON
-              Schema object.
+          schema: JSON Schema for the returned data object. Image fields such as `image_urls` or
+              `product_photos` automatically make page image references available to
+              extraction, so product data and photos can be returned in one call. TypeScript
+              Zod users can pass a JSON Schema generated from a Zod object; Python users can
+              pass the equivalent JSON Schema object.
 
           url: The starting website URL to crawl and extract from. Must include http:// or
               https://.
+
+          actions: Optional browser actions executed in order on the requested page after it loads
+              and before extraction. Requires a paid plan. When actions are provided and
+              stopAfterMs is omitted, the crawl budget defaults to 110000 ms.
 
           fact_check: When true, every returned value must be grounded in facts stated on the page;
               fields that cannot be supported by the page are returned as null/empty. When
@@ -130,7 +137,8 @@ class WebResource(SyncAPIResource):
               exchange for more stable output on animated pages.
 
           stop_after_ms: Soft time budget for the crawl in milliseconds. Min: 10000 (10s). Max: 110000
-              (110s). Default: 80000 (80s).
+              (110s). Defaults to 80000 (80s), or 110000 (110s) when browser actions are
+              provided.
 
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
@@ -155,6 +163,7 @@ class WebResource(SyncAPIResource):
                 {
                     "schema": schema,
                     "url": url,
+                    "actions": actions,
                     "fact_check": fact_check,
                     "follow_subdomains": follow_subdomains,
                     "include_frames": include_frames,
@@ -2311,6 +2320,7 @@ class AsyncWebResource(AsyncAPIResource):
         *,
         schema: Dict[str, object],
         url: str,
+        actions: Iterable[web_extract_params.Action] | Omit = omit,
         fact_check: bool | Omit = omit,
         follow_subdomains: bool | Omit = omit,
         include_frames: bool | Omit = omit,
@@ -2336,12 +2346,18 @@ class AsyncWebResource(AsyncAPIResource):
         relevant internal links, and extract structured data from the selected pages.
 
         Args:
-          schema: JSON Schema for the returned data object. TypeScript Zod users can pass a JSON
-              Schema generated from a Zod object; Python users can pass the equivalent JSON
-              Schema object.
+          schema: JSON Schema for the returned data object. Image fields such as `image_urls` or
+              `product_photos` automatically make page image references available to
+              extraction, so product data and photos can be returned in one call. TypeScript
+              Zod users can pass a JSON Schema generated from a Zod object; Python users can
+              pass the equivalent JSON Schema object.
 
           url: The starting website URL to crawl and extract from. Must include http:// or
               https://.
+
+          actions: Optional browser actions executed in order on the requested page after it loads
+              and before extraction. Requires a paid plan. When actions are provided and
+              stopAfterMs is omitted, the crawl budget defaults to 110000 ms.
 
           fact_check: When true, every returned value must be grounded in facts stated on the page;
               fields that cannot be supported by the page are returned as null/empty. When
@@ -2370,7 +2386,8 @@ class AsyncWebResource(AsyncAPIResource):
               exchange for more stable output on animated pages.
 
           stop_after_ms: Soft time budget for the crawl in milliseconds. Min: 10000 (10s). Max: 110000
-              (110s). Default: 80000 (80s).
+              (110s). Defaults to 80000 (80s), or 110000 (110s) when browser actions are
+              provided.
 
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
@@ -2395,6 +2412,7 @@ class AsyncWebResource(AsyncAPIResource):
                 {
                     "schema": schema,
                     "url": url,
+                    "actions": actions,
                     "fact_check": fact_check,
                     "follow_subdomains": follow_subdomains,
                     "include_frames": include_frames,

@@ -1,12 +1,34 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import Dict, List, Optional
+from typing_extensions import Literal
 
 from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["WebExtractResponse", "Metadata", "KeyMetadata"]
+__all__ = ["WebExtractResponse", "Metadata", "MetadataActionsApplied", "KeyMetadata"]
+
+
+class MetadataActionsApplied(BaseModel):
+    instruction: str
+
+    status: Literal["applied", "failed", "skipped"]
+    """Applied means the requested page state was visibly verified.
+
+    Failed means it was not verified. Skipped means it was not attempted.
+    """
+
+    completion_evidence: Optional[str] = FieldInfo(alias="completionEvidence", default=None)
+    """Visible page evidence used to verify an applied action."""
+
+    duration_ms: Optional[float] = FieldInfo(alias="durationMs", default=None)
+
+    error: Optional[str] = None
+
+    method: Optional[str] = None
+
+    target_description: Optional[str] = FieldInfo(alias="targetDescription", default=None)
 
 
 class Metadata(BaseModel):
@@ -25,6 +47,9 @@ class Metadata(BaseModel):
     num_succeeded: int = FieldInfo(alias="numSucceeded")
 
     num_urls: int = FieldInfo(alias="numUrls")
+
+    actions_applied: Optional[List[MetadataActionsApplied]] = FieldInfo(alias="actionsApplied", default=None)
+    """One verified outcome per requested browser action, in request order."""
 
 
 class KeyMetadata(BaseModel):
