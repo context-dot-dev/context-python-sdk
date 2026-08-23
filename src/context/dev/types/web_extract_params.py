@@ -2,27 +2,44 @@
 
 from __future__ import annotations
 
-from typing import Dict
-from typing_extensions import Required, Annotated, TypedDict
+from typing import Dict, Union, Iterable
+from typing_extensions import Literal, Required, Annotated, TypeAlias, TypedDict
 
 from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
-__all__ = ["WebExtractParams", "Pdf"]
+__all__ = [
+    "WebExtractParams",
+    "Action",
+    "ActionWebScrapeWaitAction",
+    "ActionWebScrapePerformAction",
+    "ActionWebScrapeScrollAction",
+    "Pdf",
+]
 
 
 class WebExtractParams(TypedDict, total=False):
     schema: Required[Dict[str, object]]
     """JSON Schema for the returned data object.
 
-    TypeScript Zod users can pass a JSON Schema generated from a Zod object; Python
-    users can pass the equivalent JSON Schema object.
+    Image fields such as `image_urls` or `product_photos` automatically make page
+    image references available to extraction, so product data and photos can be
+    returned in one call. TypeScript Zod users can pass a JSON Schema generated from
+    a Zod object; Python users can pass the equivalent JSON Schema object.
     """
 
     url: Required[str]
     """The starting website URL to crawl and extract from.
 
     Must include http:// or https://.
+    """
+
+    actions: Iterable[Action]
+    """
+    Optional browser actions executed in order on the requested page after it loads,
+    before links are discovered or additional pages are crawled. Requires a paid
+    plan. When actions are provided and stopAfterMs is omitted, the crawl budget
+    defaults to 110000 ms.
     """
 
     fact_check: Annotated[bool, PropertyInfo(alias="factCheck")]
@@ -74,7 +91,8 @@ class WebExtractParams(TypedDict, total=False):
     stop_after_ms: Annotated[int, PropertyInfo(alias="stopAfterMs")]
     """Soft time budget for the crawl in milliseconds.
 
-    Min: 10000 (10s). Max: 110000 (110s). Default: 80000 (80s).
+    Min: 10000 (10s). Max: 110000 (110s). Defaults to 80000 (80s), or 110000 (110s)
+    when browser actions are provided.
     """
 
     tags: SequenceNotStr[str]
@@ -92,6 +110,51 @@ class WebExtractParams(TypedDict, total=False):
     Optional browser wait time in milliseconds after initial page load for each
     crawled page.
     """
+
+
+class ActionWebScrapeWaitAction(TypedDict, total=False):
+    """Pause for a fixed number of milliseconds before continuing to the next action."""
+
+    do: Required[Literal["wait"]]
+
+    time_ms: Required[Annotated[int, PropertyInfo(alias="timeMs")]]
+
+
+class ActionWebScrapePerformAction(TypedDict, total=False):
+    """Resolve and perform one natural-language browser action."""
+
+    action: Required[str]
+
+    do: Required[Literal["perform"]]
+
+
+class ActionWebScrapeScrollAction(TypedDict, total=False):
+    """
+    Scroll the page or a selected scrollable container, waiting adaptively for content and dimensions to settle after each iteration.
+    """
+
+    do: Required[Literal["scroll"]]
+
+    amount: Union[int, Literal["viewport", "max"]]
+    """Pixels per scroll, one visible viewport, or the current scroll boundary.
+
+    Defaults to viewport.
+    """
+
+    container: str
+    """CSS selector for the first matching scroll container. Defaults to the page."""
+
+    direction: Literal["up", "down", "left", "right"]
+    """Direction to scroll. Defaults to down."""
+
+    max_scrolls: Annotated[int, PropertyInfo(alias="maxScrolls")]
+    """Maximum scroll iterations.
+
+    Stops early when scrolling and scrollable extent stop changing. Defaults to 1.
+    """
+
+
+Action: TypeAlias = Union[ActionWebScrapeWaitAction, ActionWebScrapePerformAction, ActionWebScrapeScrollAction]
 
 
 class Pdf(TypedDict, total=False):

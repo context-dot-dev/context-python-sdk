@@ -308,7 +308,12 @@ class WebWebCrawlMdParams(TypedDict, total=False):
     """
 
     url_regex: Annotated[str, PropertyInfo(alias="urlRegex")]
-    """Regex pattern. Only URLs matching this pattern will be followed and scraped."""
+    """Regex pattern.
+
+    Only URLs matching this pattern will be followed and scraped. An automatic
+    prefix scope in the form ^<starting URL> follows a redirect of the starting
+    page.
+    """
 
     use_main_content_only: Annotated[bool, PropertyInfo(alias="useMainContentOnly")]
     """
@@ -317,9 +322,9 @@ class WebWebCrawlMdParams(TypedDict, total=False):
     """
 
     wait_for_ms: Annotated[int, PropertyInfo(alias="waitForMs")]
-    """
-    Optional browser wait time in milliseconds after initial page load for each
-    crawled page. Min: 0. Max: 30000 (30 seconds).
+    """Browser wait time in milliseconds after initial page load for each crawled page.
+
+    Defaults to 3500 (3.5 seconds). Min: 0. Max: 30000 (30 seconds).
     """
 
     zdr: Literal["enabled", "disabled"]

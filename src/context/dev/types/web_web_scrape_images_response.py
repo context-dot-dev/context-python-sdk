@@ -3,9 +3,11 @@
 from typing import List, Optional
 from typing_extensions import Literal
 
+from pydantic import Field as FieldInfo
+
 from .._models import BaseModel
 
-__all__ = ["WebWebScrapeImagesResponse", "Image", "ImageEnrichment", "KeyMetadata"]
+__all__ = ["WebWebScrapeImagesResponse", "Image", "ImageEnrichment", "ActionsApplied", "KeyMetadata"]
 
 
 class ImageEnrichment(BaseModel):
@@ -46,6 +48,27 @@ class Image(BaseModel):
     """Requested metadata for images that could be processed."""
 
 
+class ActionsApplied(BaseModel):
+    instruction: str
+
+    status: Literal["applied", "failed", "skipped"]
+    """Applied means the requested page state was visibly verified.
+
+    Failed means it was not verified. Skipped means it was not attempted.
+    """
+
+    completion_evidence: Optional[str] = FieldInfo(alias="completionEvidence", default=None)
+    """Visible page evidence used to verify an applied action."""
+
+    duration_ms: Optional[float] = FieldInfo(alias="durationMs", default=None)
+
+    error: Optional[str] = None
+
+    method: Optional[str] = None
+
+    target_description: Optional[str] = FieldInfo(alias="targetDescription", default=None)
+
+
 class KeyMetadata(BaseModel):
     """Metadata about the API key used for the request.
 
@@ -68,6 +91,9 @@ class WebWebScrapeImagesResponse(BaseModel):
 
     url: str
     """Page URL that was scraped."""
+
+    actions_applied: Optional[List[ActionsApplied]] = FieldInfo(alias="actionsApplied", default=None)
+    """One verified outcome per requested browser action, in request order."""
 
     key_metadata: Optional[KeyMetadata] = None
     """Metadata about the API key used for the request.

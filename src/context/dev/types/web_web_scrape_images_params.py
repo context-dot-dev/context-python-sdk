@@ -13,6 +13,7 @@ __all__ = [
     "Action",
     "ActionWebScrapeWaitAction",
     "ActionWebScrapePerformAction",
+    "ActionWebScrapeScrollAction",
     "Enrichment",
 ]
 
@@ -93,7 +94,33 @@ class ActionWebScrapePerformAction(TypedDict, total=False):
     do: Required[Literal["perform"]]
 
 
-Action: TypeAlias = Union[ActionWebScrapeWaitAction, ActionWebScrapePerformAction]
+class ActionWebScrapeScrollAction(TypedDict, total=False):
+    """
+    Scroll the page or a selected scrollable container, waiting adaptively for content and dimensions to settle after each iteration.
+    """
+
+    do: Required[Literal["scroll"]]
+
+    amount: Union[int, Literal["viewport", "max"]]
+    """Pixels per scroll, one visible viewport, or the current scroll boundary.
+
+    Defaults to viewport.
+    """
+
+    container: str
+    """CSS selector for the first matching scroll container. Defaults to the page."""
+
+    direction: Literal["up", "down", "left", "right"]
+    """Direction to scroll. Defaults to down."""
+
+    max_scrolls: Annotated[int, PropertyInfo(alias="maxScrolls")]
+    """Maximum scroll iterations.
+
+    Stops early when scrolling and scrollable extent stop changing. Defaults to 1.
+    """
+
+
+Action: TypeAlias = Union[ActionWebScrapeWaitAction, ActionWebScrapePerformAction, ActionWebScrapeScrollAction]
 
 
 class Enrichment(TypedDict, total=False):

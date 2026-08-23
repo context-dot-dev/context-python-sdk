@@ -54,6 +54,12 @@ class TestWeb:
                 "additionalProperties": "bar",
             },
             url="https://example.com",
+            actions=[
+                {
+                    "do": "wait",
+                    "time_ms": 0,
+                }
+            ],
             fact_check=True,
             follow_subdomains=True,
             include_frames=True,
@@ -701,6 +707,12 @@ class TestAsyncWeb:
                 "additionalProperties": "bar",
             },
             url="https://example.com",
+            actions=[
+                {
+                    "do": "wait",
+                    "time_ms": 0,
+                }
+            ],
             fact_check=True,
             follow_subdomains=True,
             include_frames=True,

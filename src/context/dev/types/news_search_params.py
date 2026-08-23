@@ -218,6 +218,7 @@ class FilterBy(TypedDict, total=False):
                 "cg",
                 "ch",
                 "cl",
+                "cz",
                 "de",
                 "fi",
                 "fr",
