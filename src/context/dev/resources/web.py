@@ -106,9 +106,10 @@ class WebResource(SyncAPIResource):
           url: The starting website URL to crawl and extract from. Must include http:// or
               https://.
 
-          actions: Optional browser actions executed in order on the requested page after it loads
-              and before extraction. Requires a paid plan. When actions are provided and
-              stopAfterMs is omitted, the crawl budget defaults to 110000 ms.
+          actions: Optional browser actions executed in order on the requested page after it loads,
+              before links are discovered or additional pages are crawled. Requires a paid
+              plan. When actions are provided and stopAfterMs is omitted, the crawl budget
+              defaults to 110000 ms.
 
           fact_check: When true, every returned value must be grounded in facts stated on the page;
               fields that cannot be supported by the page are returned as null/empty. When
@@ -2355,9 +2356,10 @@ class AsyncWebResource(AsyncAPIResource):
           url: The starting website URL to crawl and extract from. Must include http:// or
               https://.
 
-          actions: Optional browser actions executed in order on the requested page after it loads
-              and before extraction. Requires a paid plan. When actions are provided and
-              stopAfterMs is omitted, the crawl budget defaults to 110000 ms.
+          actions: Optional browser actions executed in order on the requested page after it loads,
+              before links are discovered or additional pages are crawled. Requires a paid
+              plan. When actions are provided and stopAfterMs is omitted, the crawl budget
+              defaults to 110000 ms.
 
           fact_check: When true, every returned value must be grounded in facts stated on the page;
               fields that cannot be supported by the page are returned as null/empty. When
