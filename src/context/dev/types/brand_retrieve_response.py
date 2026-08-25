@@ -525,7 +525,11 @@ class Brand(BaseModel):
     """Important website links for the brand"""
 
     logos: Optional[List[BrandLogo]] = None
-    """An array of logos associated with the brand"""
+    """An array of logos associated with the brand.
+
+    When a similarly shaped SVG variant exists, it is returned ahead of its raster
+    equivalent; otherwise relevance order is preserved
+    """
 
     phone: Optional[str] = None
     """Company phone number"""
