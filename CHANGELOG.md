@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.13.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.12.0...v2.13.0) (2026-08-27)
+
+
+### Features
+
+* initial stlc build ([bab3e14](https://github.com/context-dot-dev/context-python-sdk/commit/bab3e142cf69a78b51578fe10c82921259210b99))
+
 ## 2.12.0 (2026-08-23)
 
 Full Changelog: [v2.11.0...v2.12.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.11.0...v2.12.0)
