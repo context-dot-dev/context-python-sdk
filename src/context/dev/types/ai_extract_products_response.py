@@ -5,7 +5,23 @@ from typing_extensions import Literal
 
 from .._models import BaseModel
 
-__all__ = ["AIExtractProductsResponse", "KeyMetadata", "Product"]
+__all__ = ["AIExtractProductsResponse", "CacheMetadata", "KeyMetadata", "Product"]
+
+
+class CacheMetadata(BaseModel):
+    """Cache outcome for this response.
+
+    Composite responses are hits only when every cache-controlled fetch contributing to the output was a hit; age_ms is the oldest contributing hit.
+    """
+
+    age_ms: int
+    """Age of the cached data in milliseconds. Zero for miss and zdr responses."""
+
+    status: Literal["hit", "miss", "zdr"]
+    """
+    Whether the response was served from cache, required fresh work, or honored
+    zero-data-retention cache bypass.
+    """
 
 
 class KeyMetadata(BaseModel):
@@ -81,6 +97,13 @@ class Product(BaseModel):
 
 
 class AIExtractProductsResponse(BaseModel):
+    cache_metadata: CacheMetadata
+    """Cache outcome for this response.
+
+    Composite responses are hits only when every cache-controlled fetch contributing
+    to the output was a hit; age_ms is the oldest contributing hit.
+    """
+
     key_metadata: Optional[KeyMetadata] = None
     """Metadata about the API key used for the request.
 

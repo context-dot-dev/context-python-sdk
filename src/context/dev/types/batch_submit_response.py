@@ -7,7 +7,23 @@ from .intake import Intake
 from .._models import BaseModel
 from .crawl_controls import CrawlControls
 
-__all__ = ["BatchSubmitResponse", "Credits", "InvalidURL", "KeyMetadata"]
+__all__ = ["BatchSubmitResponse", "CacheMetadata", "Credits", "InvalidURL", "KeyMetadata"]
+
+
+class CacheMetadata(BaseModel):
+    """Cache outcome for this response.
+
+    Composite responses are hits only when every cache-controlled fetch contributing to the output was a hit; age_ms is the oldest contributing hit.
+    """
+
+    age_ms: int
+    """Age of the cached data in milliseconds. Zero for miss and zdr responses."""
+
+    status: Literal["hit", "miss", "zdr"]
+    """
+    Whether the response was served from cache, required fresh work, or honored
+    zero-data-retention cache bypass.
+    """
 
 
 class Credits(BaseModel):
@@ -41,6 +57,13 @@ class KeyMetadata(BaseModel):
 class BatchSubmitResponse(BaseModel):
     id: str
     """Batch ID. Poll GET /batch/{batch_id} with it."""
+
+    cache_metadata: CacheMetadata
+    """Cache outcome for this response.
+
+    Composite responses are hits only when every cache-controlled fetch contributing
+    to the output was a hit; age_ms is the oldest contributing hit.
+    """
 
     crawl: Optional[CrawlControls] = None
     """

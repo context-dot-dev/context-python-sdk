@@ -1,6 +1,7 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import Dict, List, Union, Optional
+from typing_extensions import Literal
 
 from pydantic import Field as FieldInfo
 
@@ -8,6 +9,7 @@ from .._models import BaseModel
 
 __all__ = [
     "WebWebCrawlMdResponse",
+    "CacheMetadata",
     "Metadata",
     "Result",
     "ResultMetadata",
@@ -15,6 +17,22 @@ __all__ = [
     "ResultMetadataHeading",
     "KeyMetadata",
 ]
+
+
+class CacheMetadata(BaseModel):
+    """Cache outcome for this response.
+
+    Composite responses are hits only when every cache-controlled fetch contributing to the output was a hit; age_ms is the oldest contributing hit.
+    """
+
+    age_ms: int
+    """Age of the cached data in milliseconds. Zero for miss and zdr responses."""
+
+    status: Literal["hit", "miss", "zdr"]
+    """
+    Whether the response was served from cache, required fresh work, or honored
+    zero-data-retention cache bypass.
+    """
 
 
 class Metadata(BaseModel):
@@ -160,6 +178,13 @@ class KeyMetadata(BaseModel):
 
 
 class WebWebCrawlMdResponse(BaseModel):
+    cache_metadata: CacheMetadata
+    """Cache outcome for this response.
+
+    Composite responses are hits only when every cache-controlled fetch contributing
+    to the output was a hit; age_ms is the oldest contributing hit.
+    """
+
     metadata: Metadata
 
     results: List[Result]
