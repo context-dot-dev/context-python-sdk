@@ -12,12 +12,29 @@ __all__ = [
     "BatchGetResultsResponse",
     "Data",
     "DataOk",
+    "DataOkCacheMetadata",
     "DataOkMetadata",
     "DataOkMetadataAlternate",
     "DataOkMetadataHeading",
     "DataError",
     "KeyMetadata",
 ]
+
+
+class DataOkCacheMetadata(BaseModel):
+    """Cache outcome for this response.
+
+    Composite responses are hits only when every cache-controlled fetch contributing to the output was a hit; age_ms is the oldest contributing hit.
+    """
+
+    age_ms: int
+    """Age of the cached data in milliseconds. Zero for miss and zdr responses."""
+
+    status: Literal["hit", "miss", "zdr"]
+    """
+    Whether the response was served from cache, required fresh work, or honored
+    zero-data-retention cache bypass.
+    """
 
 
 class DataOkMetadataAlternate(BaseModel):
@@ -114,6 +131,13 @@ class DataOkMetadata(BaseModel):
 
 class DataOk(BaseModel):
     """A page the batch fetched successfully."""
+
+    cache_metadata: DataOkCacheMetadata
+    """Cache outcome for this response.
+
+    Composite responses are hits only when every cache-controlled fetch contributing
+    to the output was a hit; age_ms is the oldest contributing hit.
+    """
 
     final_url: str
     """URL the content was read from, after redirects."""

@@ -7,6 +7,7 @@ from .._models import BaseModel
 
 __all__ = [
     "BrandRetrieveSimplifiedResponse",
+    "CacheMetadata",
     "Brand",
     "BrandBackdrop",
     "BrandBackdropColor",
@@ -17,6 +18,22 @@ __all__ = [
     "BrandLogoResolution",
     "KeyMetadata",
 ]
+
+
+class CacheMetadata(BaseModel):
+    """Cache outcome for this response.
+
+    Composite responses are hits only when every cache-controlled fetch contributing to the output was a hit; age_ms is the oldest contributing hit.
+    """
+
+    age_ms: int
+    """Age of the cached data in milliseconds. Zero for miss and zdr responses."""
+
+    status: Literal["hit", "miss", "zdr"]
+    """
+    Whether the response was served from cache, required fresh work, or honored
+    zero-data-retention cache bypass.
+    """
 
 
 class BrandBackdropColor(BaseModel):
@@ -141,6 +158,13 @@ class KeyMetadata(BaseModel):
 
 
 class BrandRetrieveSimplifiedResponse(BaseModel):
+    cache_metadata: CacheMetadata
+    """Cache outcome for this response.
+
+    Composite responses are hits only when every cache-controlled fetch contributing
+    to the output was a hit; age_ms is the oldest contributing hit.
+    """
+
     brand: Optional[Brand] = None
     """Simplified brand information"""
 
