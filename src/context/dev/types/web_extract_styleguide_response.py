@@ -9,6 +9,7 @@ from .._models import BaseModel
 
 __all__ = [
     "WebExtractStyleguideResponse",
+    "CacheMetadata",
     "KeyMetadata",
     "Styleguide",
     "StyleguideColors",
@@ -29,6 +30,22 @@ __all__ = [
     "StyleguideTypographyHeadingsH4",
     "StyleguideTypographyP",
 ]
+
+
+class CacheMetadata(BaseModel):
+    """Cache outcome for this response.
+
+    Composite responses are hits only when every cache-controlled fetch contributing to the output was a hit; age_ms is the oldest contributing hit.
+    """
+
+    age_ms: int
+    """Age of the cached data in milliseconds. Zero for miss and zdr responses."""
+
+    status: Literal["hit", "miss", "zdr"]
+    """
+    Whether the response was served from cache, required fresh work, or honored
+    zero-data-retention cache bypass.
+    """
 
 
 class KeyMetadata(BaseModel):
@@ -428,6 +445,13 @@ class Styleguide(BaseModel):
 
 
 class WebExtractStyleguideResponse(BaseModel):
+    cache_metadata: CacheMetadata
+    """Cache outcome for this response.
+
+    Composite responses are hits only when every cache-controlled fetch contributing
+    to the output was a hit; age_ms is the oldest contributing hit.
+    """
+
     code: Optional[int] = None
     """HTTP status code"""
 
