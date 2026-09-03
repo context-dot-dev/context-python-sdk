@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.14.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.13.0...v2.14.0) (2026-09-03)
+
+
+### Features
+
+* **sitemap:** add subdomain discovery ([ba3478c](https://github.com/context-dot-dev/context-python-sdk/commit/ba3478c05c7517aa5b02f8d381082f86944bfa1d))
+
 ## [2.13.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.12.0...v2.13.0) (2026-08-27)
 
 
