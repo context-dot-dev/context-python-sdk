@@ -640,6 +640,7 @@ class TestWeb:
         web = client.web.web_scrape_sitemap(
             domain="xxx",
             headers={"foo": "J!"},
+            include_subdomains=True,
             max_links=1,
             search="help center and troubleshooting articles",
             sitemap_url="https://example.com",
@@ -1293,6 +1294,7 @@ class TestAsyncWeb:
         web = await async_client.web.web_scrape_sitemap(
             domain="xxx",
             headers={"foo": "J!"},
+            include_subdomains=True,
             max_links=1,
             search="help center and troubleshooting articles",
             sitemap_url="https://example.com",

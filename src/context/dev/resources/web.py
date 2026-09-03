@@ -2207,6 +2207,7 @@ class WebResource(SyncAPIResource):
         *,
         domain: str,
         headers: Dict[str, str] | Omit = omit,
+        include_subdomains: bool | Omit = omit,
         max_links: int | Omit = omit,
         search: str | Omit = omit,
         sitemap_url: str | Omit = omit,
@@ -2223,11 +2224,12 @@ class WebResource(SyncAPIResource):
     ) -> WebWebScrapeSitemapResponse:
         """Crawl an entire website's sitemap and return all discovered page URLs.
 
-        Pass
-        `search` to have the crawled sitemap filtered down to the pages about a phrase
-        (for example `pricing and plans` or `api authentication docs`), most relevant
-        first — a searched crawl scans the whole sitemap and costs 2 credits instead
-        of 1.
+        Set
+        `includeSubdomains=true` to also discover public pages and sitemaps on child
+        hosts such as `docs.example.com` or `brand.example.com`. Pass `search` to have
+        the discovered URLs filtered down to the pages about a phrase (for example
+        `pricing and plans` or `api authentication docs`), most relevant first — a
+        searched crawl scans the whole sitemap and costs 2 credits instead of 1.
 
         Args:
           domain: Domain to build a sitemap for
@@ -2235,6 +2237,9 @@ class WebResource(SyncAPIResource):
           headers: Optional outbound HTTP headers forwarded only to the target URL, sent as
               deep-object query params such as headers[X-Custom]=value. When provided, caching
               is bypassed: the result is neither read from nor written to cache.
+
+          include_subdomains: When true, discover and include public pages and sitemaps on subdomains of the
+              requested domain. Defaults to false.
 
           max_links: Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
               Minimum is 1, maximum is 100,000.
@@ -2281,6 +2286,7 @@ class WebResource(SyncAPIResource):
                     {
                         "domain": domain,
                         "headers": headers,
+                        "include_subdomains": include_subdomains,
                         "max_links": max_links,
                         "search": search,
                         "sitemap_url": sitemap_url,
@@ -4457,6 +4463,7 @@ class AsyncWebResource(AsyncAPIResource):
         *,
         domain: str,
         headers: Dict[str, str] | Omit = omit,
+        include_subdomains: bool | Omit = omit,
         max_links: int | Omit = omit,
         search: str | Omit = omit,
         sitemap_url: str | Omit = omit,
@@ -4473,11 +4480,12 @@ class AsyncWebResource(AsyncAPIResource):
     ) -> WebWebScrapeSitemapResponse:
         """Crawl an entire website's sitemap and return all discovered page URLs.
 
-        Pass
-        `search` to have the crawled sitemap filtered down to the pages about a phrase
-        (for example `pricing and plans` or `api authentication docs`), most relevant
-        first — a searched crawl scans the whole sitemap and costs 2 credits instead
-        of 1.
+        Set
+        `includeSubdomains=true` to also discover public pages and sitemaps on child
+        hosts such as `docs.example.com` or `brand.example.com`. Pass `search` to have
+        the discovered URLs filtered down to the pages about a phrase (for example
+        `pricing and plans` or `api authentication docs`), most relevant first — a
+        searched crawl scans the whole sitemap and costs 2 credits instead of 1.
 
         Args:
           domain: Domain to build a sitemap for
@@ -4485,6 +4493,9 @@ class AsyncWebResource(AsyncAPIResource):
           headers: Optional outbound HTTP headers forwarded only to the target URL, sent as
               deep-object query params such as headers[X-Custom]=value. When provided, caching
               is bypassed: the result is neither read from nor written to cache.
+
+          include_subdomains: When true, discover and include public pages and sitemaps on subdomains of the
+              requested domain. Defaults to false.
 
           max_links: Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
               Minimum is 1, maximum is 100,000.
@@ -4531,6 +4542,7 @@ class AsyncWebResource(AsyncAPIResource):
                     {
                         "domain": domain,
                         "headers": headers,
+                        "include_subdomains": include_subdomains,
                         "max_links": max_links,
                         "search": search,
                         "sitemap_url": sitemap_url,

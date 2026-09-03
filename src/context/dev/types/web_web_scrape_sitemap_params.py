@@ -22,6 +22,12 @@ class WebWebScrapeSitemapParams(TypedDict, total=False):
     is bypassed: the result is neither read from nor written to cache.
     """
 
+    include_subdomains: Annotated[bool, PropertyInfo(alias="includeSubdomains")]
+    """
+    When true, discover and include public pages and sitemaps on subdomains of the
+    requested domain. Defaults to false.
+    """
+
     max_links: Annotated[int, PropertyInfo(alias="maxLinks")]
     """Maximum number of links to return from the sitemap crawl.
 
