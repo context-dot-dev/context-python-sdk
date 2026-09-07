@@ -42,3 +42,9 @@ class WebhookDelivery(BaseModel):
     means no HTTP response was received; skipped_unsafe_url means the URL failed the
     public-endpoint safety check.
     """
+
+    delivery_id: Optional[str] = None
+    """Retained delivery ID for GET /webhooks/deliveries/{delivery_id}.
+
+    Omitted for historical or unretained deliveries.
+    """

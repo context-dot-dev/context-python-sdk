@@ -6,6 +6,7 @@ from typing import Dict, List, Union, Optional
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
 from .._types import SequenceNotStr
+from .retry_config_param import RetryConfigParam
 
 __all__ = [
     "MonitorCreateParams",
@@ -188,4 +189,11 @@ class Webhook(TypedDict, total=False):
     `change.detected` fires only when a run detects a change; `run.completed` fires
     on every completed run — including runs that detected no change — and embeds the
     change when one was detected. Defaults to `["change.detected"]` when omitted.
+    """
+
+    retry: RetryConfigParam
+    """Opt into durable webhook delivery.
+
+    An empty object uses the default retry schedule. Omit retry to preserve legacy
+    delivery behavior. The policy is snapshotted for each event.
     """

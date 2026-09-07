@@ -8,6 +8,7 @@ from pydantic import Field as FieldInfo
 
 from .._utils import PropertyInfo
 from .._models import BaseModel
+from .retry_config import RetryConfig
 
 __all__ = [
     "MonitorCreateResponse",
@@ -226,6 +227,13 @@ class Webhook(BaseModel):
     `change.detected` fires only when a run detects a change; `run.completed` fires
     on every completed run — including runs that detected no change — and embeds the
     change when one was detected. Defaults to `["change.detected"]` when omitted.
+    """
+
+    retry: Optional[RetryConfig] = None
+    """Opt into durable webhook delivery.
+
+    An empty object uses the default retry schedule. Omit retry to preserve legacy
+    delivery behavior. The policy is snapshotted for each event.
     """
 
     secret: Optional[str] = None

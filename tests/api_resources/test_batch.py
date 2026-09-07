@@ -302,6 +302,10 @@ class TestBatch:
                 "mode": "scrape",
             },
             tags=["docs", "competitor"],
+            webhook={
+                "url": "https://example.com",
+                "retry": {"delays_seconds": [10, 60, 300, 1800, 7200, 21600, 57600]},
+            },
             webhook_url="webhookUrl",
             idempotency_key="Idempotency-Key",
         )
@@ -635,6 +639,10 @@ class TestAsyncBatch:
                 "mode": "scrape",
             },
             tags=["docs", "competitor"],
+            webhook={
+                "url": "https://example.com",
+                "retry": {"delays_seconds": [10, 60, 300, 1800, 7200, 21600, 57600]},
+            },
             webhook_url="webhookUrl",
             idempotency_key="Idempotency-Key",
         )

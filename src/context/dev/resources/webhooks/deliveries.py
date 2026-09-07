@@ -1,0 +1,581 @@
+# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+from __future__ import annotations
+
+from typing_extensions import Literal
+
+import httpx
+
+from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
+from ..._utils import path_template, maybe_transform, strip_not_given, async_maybe_transform
+from ..._compat import cached_property
+from ..._resource import SyncAPIResource, AsyncAPIResource
+from ..._response import (
+    to_raw_response_wrapper,
+    to_streamed_response_wrapper,
+    async_to_raw_response_wrapper,
+    async_to_streamed_response_wrapper,
+)
+from ..._base_client import make_request_options
+from ...types.webhooks import (
+    delivery_list_params,
+    delivery_retry_params,
+    delivery_retrieve_params,
+    delivery_list_attempts_params,
+)
+from ...types.webhooks.delivery_list_response import DeliveryListResponse
+from ...types.webhooks.delivery_retry_response import DeliveryRetryResponse
+from ...types.webhooks.delivery_retrieve_response import DeliveryRetrieveResponse
+from ...types.webhooks.delivery_list_attempts_response import DeliveryListAttemptsResponse
+
+__all__ = ["DeliveriesResource", "AsyncDeliveriesResource"]
+
+
+class DeliveriesResource(SyncAPIResource):
+    """
+    Inspect and retry batch and monitor webhook deliveries without rerunning the underlying work.
+    """
+
+    @cached_property
+    def with_raw_response(self) -> DeliveriesResourceWithRawResponse:
+        """
+        This property can be used as a prefix for any HTTP method call to return
+        the raw response object instead of the parsed content.
+
+        For more information, see https://www.github.com/context-dot-dev/context-python-sdk#accessing-raw-response-data-eg-headers
+        """
+        return DeliveriesResourceWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> DeliveriesResourceWithStreamingResponse:
+        """
+        An alternative to `.with_raw_response` that doesn't eagerly read the response body.
+
+        For more information, see https://www.github.com/context-dot-dev/context-python-sdk#with_streaming_response
+        """
+        return DeliveriesResourceWithStreamingResponse(self)
+
+    def retrieve(
+        self,
+        delivery_id: str,
+        *,
+        tags: SequenceNotStr[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DeliveryRetrieveResponse:
+        """
+        Get the live status, retry policy, latest attempt, and replay expiration for a
+        retained delivery. Use the attempts endpoint for its complete paginated history.
+        This endpoint costs no credits.
+
+        Args:
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not delivery_id:
+            raise ValueError(f"Expected a non-empty value for `delivery_id` but received {delivery_id!r}")
+        return self._get(
+            path_template("/webhooks/deliveries/{delivery_id}", delivery_id=delivery_id),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"tags": tags}, delivery_retrieve_params.DeliveryRetrieveParams),
+            ),
+            cast_to=DeliveryRetrieveResponse,
+        )
+
+    def list(
+        self,
+        *,
+        batch_id: str | Omit = omit,
+        cursor: str | Omit = omit,
+        limit: int | Omit = omit,
+        monitor_id: str | Omit = omit,
+        run_id: str | Omit = omit,
+        status: Literal["pending", "delivering", "retrying", "delivered", "failed", "cancelled"] | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DeliveryListResponse:
+        """
+        List retained batch and monitor webhook deliveries for your organization, newest
+        first. Filter by at most one of batch_id, monitor_id, or run_id, optionally
+        combined with status. Historical events without retained payloads are not
+        listed. This endpoint costs no credits.
+
+        Args:
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._get(
+            "/webhooks/deliveries",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "batch_id": batch_id,
+                        "cursor": cursor,
+                        "limit": limit,
+                        "monitor_id": monitor_id,
+                        "run_id": run_id,
+                        "status": status,
+                        "tags": tags,
+                    },
+                    delivery_list_params.DeliveryListParams,
+                ),
+            ),
+            cast_to=DeliveryListResponse,
+        )
+
+    def list_attempts(
+        self,
+        delivery_id: str,
+        *,
+        cursor: str | Omit = omit,
+        limit: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DeliveryListAttemptsResponse:
+        """
+        List individual HTTP attempts for a delivery, newest first, including their
+        destination, timestamps, HTTP status, and error. An interrupted attempt may have
+        reached the endpoint even when its outcome is unknown. This endpoint costs no
+        credits.
+
+        Args:
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not delivery_id:
+            raise ValueError(f"Expected a non-empty value for `delivery_id` but received {delivery_id!r}")
+        return self._get(
+            path_template("/webhooks/deliveries/{delivery_id}/attempts", delivery_id=delivery_id),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "cursor": cursor,
+                        "limit": limit,
+                        "tags": tags,
+                    },
+                    delivery_list_attempts_params.DeliveryListAttemptsParams,
+                ),
+            ),
+            cast_to=DeliveryListAttemptsResponse,
+        )
+
+    def retry(
+        self,
+        delivery_id: str,
+        *,
+        force: bool | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
+        idempotency_key: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DeliveryRetryResponse:
+        """
+        Queue an immediate attempt without rerunning or billing the underlying batch or
+        monitor. A waiting retry is brought forward. A failed delivery gets one
+        additional attempt without restarting its automatic retry budget. Set force:
+        true to resend an acknowledged delivery. An in-progress attempt cannot be
+        duplicated. The stored event body, event ID, and creation time remain unchanged;
+        each attempt receives a fresh signature. Monitor retries use the current URL and
+        secret; removing the webhook cancels pending deliveries. Batch result URLs in
+        old payloads may have expired: retrieve the batch to get fresh URLs. Replay is
+        available for seven days. A successful attempt cancels remaining automatic
+        retries. Idempotency-Key is scoped to your organization and retained with the
+        delivery metadata; repeating the same key and input returns the original
+        accepted response.
+
+        Args:
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not delivery_id:
+            raise ValueError(f"Expected a non-empty value for `delivery_id` but received {delivery_id!r}")
+        extra_headers = {**strip_not_given({"Idempotency-Key": idempotency_key}), **(extra_headers or {})}
+        return self._post(
+            path_template("/webhooks/deliveries/{delivery_id}/retry", delivery_id=delivery_id),
+            body=maybe_transform(
+                {
+                    "force": force,
+                    "tags": tags,
+                },
+                delivery_retry_params.DeliveryRetryParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=DeliveryRetryResponse,
+        )
+
+
+class AsyncDeliveriesResource(AsyncAPIResource):
+    """
+    Inspect and retry batch and monitor webhook deliveries without rerunning the underlying work.
+    """
+
+    @cached_property
+    def with_raw_response(self) -> AsyncDeliveriesResourceWithRawResponse:
+        """
+        This property can be used as a prefix for any HTTP method call to return
+        the raw response object instead of the parsed content.
+
+        For more information, see https://www.github.com/context-dot-dev/context-python-sdk#accessing-raw-response-data-eg-headers
+        """
+        return AsyncDeliveriesResourceWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> AsyncDeliveriesResourceWithStreamingResponse:
+        """
+        An alternative to `.with_raw_response` that doesn't eagerly read the response body.
+
+        For more information, see https://www.github.com/context-dot-dev/context-python-sdk#with_streaming_response
+        """
+        return AsyncDeliveriesResourceWithStreamingResponse(self)
+
+    async def retrieve(
+        self,
+        delivery_id: str,
+        *,
+        tags: SequenceNotStr[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DeliveryRetrieveResponse:
+        """
+        Get the live status, retry policy, latest attempt, and replay expiration for a
+        retained delivery. Use the attempts endpoint for its complete paginated history.
+        This endpoint costs no credits.
+
+        Args:
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not delivery_id:
+            raise ValueError(f"Expected a non-empty value for `delivery_id` but received {delivery_id!r}")
+        return await self._get(
+            path_template("/webhooks/deliveries/{delivery_id}", delivery_id=delivery_id),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform({"tags": tags}, delivery_retrieve_params.DeliveryRetrieveParams),
+            ),
+            cast_to=DeliveryRetrieveResponse,
+        )
+
+    async def list(
+        self,
+        *,
+        batch_id: str | Omit = omit,
+        cursor: str | Omit = omit,
+        limit: int | Omit = omit,
+        monitor_id: str | Omit = omit,
+        run_id: str | Omit = omit,
+        status: Literal["pending", "delivering", "retrying", "delivered", "failed", "cancelled"] | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DeliveryListResponse:
+        """
+        List retained batch and monitor webhook deliveries for your organization, newest
+        first. Filter by at most one of batch_id, monitor_id, or run_id, optionally
+        combined with status. Historical events without retained payloads are not
+        listed. This endpoint costs no credits.
+
+        Args:
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._get(
+            "/webhooks/deliveries",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "batch_id": batch_id,
+                        "cursor": cursor,
+                        "limit": limit,
+                        "monitor_id": monitor_id,
+                        "run_id": run_id,
+                        "status": status,
+                        "tags": tags,
+                    },
+                    delivery_list_params.DeliveryListParams,
+                ),
+            ),
+            cast_to=DeliveryListResponse,
+        )
+
+    async def list_attempts(
+        self,
+        delivery_id: str,
+        *,
+        cursor: str | Omit = omit,
+        limit: int | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DeliveryListAttemptsResponse:
+        """
+        List individual HTTP attempts for a delivery, newest first, including their
+        destination, timestamps, HTTP status, and error. An interrupted attempt may have
+        reached the endpoint even when its outcome is unknown. This endpoint costs no
+        credits.
+
+        Args:
+          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
+              recorded on the request's usage log and can be used to filter usage on the
+              dashboard usage page. Up to 20 tags, each 1-50 characters.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not delivery_id:
+            raise ValueError(f"Expected a non-empty value for `delivery_id` but received {delivery_id!r}")
+        return await self._get(
+            path_template("/webhooks/deliveries/{delivery_id}/attempts", delivery_id=delivery_id),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "cursor": cursor,
+                        "limit": limit,
+                        "tags": tags,
+                    },
+                    delivery_list_attempts_params.DeliveryListAttemptsParams,
+                ),
+            ),
+            cast_to=DeliveryListAttemptsResponse,
+        )
+
+    async def retry(
+        self,
+        delivery_id: str,
+        *,
+        force: bool | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
+        idempotency_key: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DeliveryRetryResponse:
+        """
+        Queue an immediate attempt without rerunning or billing the underlying batch or
+        monitor. A waiting retry is brought forward. A failed delivery gets one
+        additional attempt without restarting its automatic retry budget. Set force:
+        true to resend an acknowledged delivery. An in-progress attempt cannot be
+        duplicated. The stored event body, event ID, and creation time remain unchanged;
+        each attempt receives a fresh signature. Monitor retries use the current URL and
+        secret; removing the webhook cancels pending deliveries. Batch result URLs in
+        old payloads may have expired: retrieve the batch to get fresh URLs. Replay is
+        available for seven days. A successful attempt cancels remaining automatic
+        retries. Idempotency-Key is scoped to your organization and retained with the
+        delivery metadata; repeating the same key and input returns the original
+        accepted response.
+
+        Args:
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not delivery_id:
+            raise ValueError(f"Expected a non-empty value for `delivery_id` but received {delivery_id!r}")
+        extra_headers = {**strip_not_given({"Idempotency-Key": idempotency_key}), **(extra_headers or {})}
+        return await self._post(
+            path_template("/webhooks/deliveries/{delivery_id}/retry", delivery_id=delivery_id),
+            body=await async_maybe_transform(
+                {
+                    "force": force,
+                    "tags": tags,
+                },
+                delivery_retry_params.DeliveryRetryParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=DeliveryRetryResponse,
+        )
+
+
+class DeliveriesResourceWithRawResponse:
+    def __init__(self, deliveries: DeliveriesResource) -> None:
+        self._deliveries = deliveries
+
+        self.retrieve = to_raw_response_wrapper(
+            deliveries.retrieve,
+        )
+        self.list = to_raw_response_wrapper(
+            deliveries.list,
+        )
+        self.list_attempts = to_raw_response_wrapper(
+            deliveries.list_attempts,
+        )
+        self.retry = to_raw_response_wrapper(
+            deliveries.retry,
+        )
+
+
+class AsyncDeliveriesResourceWithRawResponse:
+    def __init__(self, deliveries: AsyncDeliveriesResource) -> None:
+        self._deliveries = deliveries
+
+        self.retrieve = async_to_raw_response_wrapper(
+            deliveries.retrieve,
+        )
+        self.list = async_to_raw_response_wrapper(
+            deliveries.list,
+        )
+        self.list_attempts = async_to_raw_response_wrapper(
+            deliveries.list_attempts,
+        )
+        self.retry = async_to_raw_response_wrapper(
+            deliveries.retry,
+        )
+
+
+class DeliveriesResourceWithStreamingResponse:
+    def __init__(self, deliveries: DeliveriesResource) -> None:
+        self._deliveries = deliveries
+
+        self.retrieve = to_streamed_response_wrapper(
+            deliveries.retrieve,
+        )
+        self.list = to_streamed_response_wrapper(
+            deliveries.list,
+        )
+        self.list_attempts = to_streamed_response_wrapper(
+            deliveries.list_attempts,
+        )
+        self.retry = to_streamed_response_wrapper(
+            deliveries.retry,
+        )
+
+
+class AsyncDeliveriesResourceWithStreamingResponse:
+    def __init__(self, deliveries: AsyncDeliveriesResource) -> None:
+        self._deliveries = deliveries
+
+        self.retrieve = async_to_streamed_response_wrapper(
+            deliveries.retrieve,
+        )
+        self.list = async_to_streamed_response_wrapper(
+            deliveries.list,
+        )
+        self.list_attempts = async_to_streamed_response_wrapper(
+            deliveries.list_attempts,
+        )
+        self.retry = async_to_streamed_response_wrapper(
+            deliveries.retry,
+        )

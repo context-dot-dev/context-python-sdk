@@ -66,6 +66,7 @@ class TestMonitors:
             webhook={
                 "url": "https://example.com/webhook",
                 "events": ["change.detected", "run.completed"],
+                "retry": {"delays_seconds": [10, 60, 300, 1800, 7200, 21600, 57600]},
             },
         )
         assert_matches_type(MonitorCreateResponse, monitor, path=["response"])
@@ -177,6 +178,7 @@ class TestMonitors:
             webhook={
                 "url": "https://example.com/webhook",
                 "events": ["change.detected", "run.completed"],
+                "retry": {"delays_seconds": [10, 60, 300, 1800, 7200, 21600, 57600]},
             },
         )
         assert_matches_type(MonitorUpdateResponse, monitor, path=["response"])
@@ -680,6 +682,7 @@ class TestAsyncMonitors:
             webhook={
                 "url": "https://example.com/webhook",
                 "events": ["change.detected", "run.completed"],
+                "retry": {"delays_seconds": [10, 60, 300, 1800, 7200, 21600, 57600]},
             },
         )
         assert_matches_type(MonitorCreateResponse, monitor, path=["response"])
@@ -791,6 +794,7 @@ class TestAsyncMonitors:
             webhook={
                 "url": "https://example.com/webhook",
                 "events": ["change.detected", "run.completed"],
+                "retry": {"delays_seconds": [10, 60, 300, 1800, 7200, 21600, 57600]},
             },
         )
         assert_matches_type(MonitorUpdateResponse, monitor, path=["response"])

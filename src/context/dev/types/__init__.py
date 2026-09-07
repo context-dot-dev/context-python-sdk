@@ -4,12 +4,14 @@ from __future__ import annotations
 
 from .intake import Intake as Intake
 from .failure import Failure as Failure
+from .retry_config import RetryConfig as RetryConfig
 from .crawl_controls import CrawlControls as CrawlControls
 from .page_error_count import PageErrorCount as PageErrorCount
 from .webhook_delivery import WebhookDelivery as WebhookDelivery
 from .batch_list_params import BatchListParams as BatchListParams
 from .web_search_params import WebSearchParams as WebSearchParams
 from .news_search_params import NewsSearchParams as NewsSearchParams
+from .retry_config_param import RetryConfigParam as RetryConfigParam
 from .web_extract_params import WebExtractParams as WebExtractParams
 from .batch_list_response import BatchListResponse as BatchListResponse
 from .batch_submit_params import BatchSubmitParams as BatchSubmitParams

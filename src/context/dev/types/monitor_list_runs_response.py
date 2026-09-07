@@ -71,6 +71,14 @@ class Data(BaseModel):
     historical runs created before delivery tracking was added.
     """
 
+    webhook_delivery_ids: Optional[List[str]] = None
+    """Retained webhook deliveries for this run.
+
+    Inspect their live state and attempt history through /webhooks/deliveries. With
+    webhook.retry configured, delivery is asynchronous and the legacy
+    webhook_delivery/webhook_deliveries outcomes are omitted.
+    """
+
 
 class MonitorListRunsResponse(BaseModel):
     data: List[Data]

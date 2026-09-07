@@ -7,6 +7,7 @@ from typing_extensions import Literal, Required, Annotated, TypeAlias, TypedDict
 
 from .._types import SequenceNotStr
 from .._utils import PropertyInfo
+from .retry_config_param import RetryConfigParam
 
 __all__ = [
     "BatchSubmitParams",
@@ -39,6 +40,7 @@ __all__ = [
     "InputCrawlDataHTMLSourceSitemapControls",
     "InputCrawlDataHTMLOptions",
     "InputCrawlDataHTMLOptionsPdf",
+    "Webhook",
 ]
 
 
@@ -49,8 +51,18 @@ class BatchSubmitParams(TypedDict, total=False):
     tags: SequenceNotStr[str]
     """Tags stored on the batch. Filter the batch list by them later."""
 
+    webhook: Webhook
+    """Completion webhook settings.
+
+    Cannot be combined with webhookUrl. Omitting retry preserves legacy delivery;
+    retry: {} opts into durable retries.
+    """
+
     webhook_url: Annotated[str, PropertyInfo(alias="webhookUrl")]
-    """URL notified when the batch finishes."""
+    """Legacy URL notified when the batch finishes.
+
+    Preserves one best-effort attempt. Cannot be combined with webhook.
+    """
 
     idempotency_key: Annotated[str, PropertyInfo(alias="Idempotency-Key")]
     """Any string unique to this submission.
@@ -1486,3 +1498,19 @@ class InputCrawl(TypedDict, total=False):
 
 
 Input: TypeAlias = Union[InputScrape, InputCrawl]
+
+
+class Webhook(TypedDict, total=False):
+    """Completion webhook settings.
+
+    Cannot be combined with webhookUrl. Omitting retry preserves legacy delivery; retry: {} opts into durable retries.
+    """
+
+    url: Required[str]
+
+    retry: RetryConfigParam
+    """Opt into durable webhook delivery.
+
+    An empty object uses the default retry schedule. Omit retry to preserve legacy
+    delivery behavior. The policy is snapshotted for each event.
+    """
