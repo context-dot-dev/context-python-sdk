@@ -80,6 +80,14 @@ from .monitors import (
     MonitorsResourceWithStreamingResponse,
     AsyncMonitorsResourceWithStreamingResponse,
 )
+from .webhooks import (
+    WebhooksResource,
+    AsyncWebhooksResource,
+    WebhooksResourceWithRawResponse,
+    AsyncWebhooksResourceWithRawResponse,
+    WebhooksResourceWithStreamingResponse,
+    AsyncWebhooksResourceWithStreamingResponse,
+)
 
 __all__ = [
     "ParseResource",
@@ -130,6 +138,12 @@ __all__ = [
     "AsyncBatchResourceWithRawResponse",
     "BatchResourceWithStreamingResponse",
     "AsyncBatchResourceWithStreamingResponse",
+    "WebhooksResource",
+    "AsyncWebhooksResource",
+    "WebhooksResourceWithRawResponse",
+    "AsyncWebhooksResourceWithRawResponse",
+    "WebhooksResourceWithStreamingResponse",
+    "AsyncWebhooksResourceWithStreamingResponse",
     "PeopleResource",
     "AsyncPeopleResource",
     "PeopleResourceWithRawResponse",

@@ -167,6 +167,36 @@ Methods:
 - <code title="get /batch/{batch_id}/results">client.batch.<a href="./src/context/dev/resources/batch.py">get_results</a>(batch_id, \*\*<a href="src/context/dev/types/batch_get_results_params.py">params</a>) -> <a href="./src/context/dev/types/batch_get_results_response.py">BatchGetResultsResponse</a></code>
 - <code title="post /batch/submit">client.batch.<a href="./src/context/dev/resources/batch.py">submit</a>(\*\*<a href="src/context/dev/types/batch_submit_params.py">params</a>) -> <a href="./src/context/dev/types/batch_submit_response.py">BatchSubmitResponse</a></code>
 
+# Webhooks
+
+Types:
+
+```python
+from context.dev.types import RetryConfig
+```
+
+## Deliveries
+
+Types:
+
+```python
+from context.dev.types.webhooks import (
+    Attempt,
+    Delivery,
+    DeliveryRetrieveResponse,
+    DeliveryListResponse,
+    DeliveryListAttemptsResponse,
+    DeliveryRetryResponse,
+)
+```
+
+Methods:
+
+- <code title="get /webhooks/deliveries/{delivery_id}">client.webhooks.deliveries.<a href="./src/context/dev/resources/webhooks/deliveries.py">retrieve</a>(delivery_id, \*\*<a href="src/context/dev/types/webhooks/delivery_retrieve_params.py">params</a>) -> <a href="./src/context/dev/types/webhooks/delivery_retrieve_response.py">DeliveryRetrieveResponse</a></code>
+- <code title="get /webhooks/deliveries">client.webhooks.deliveries.<a href="./src/context/dev/resources/webhooks/deliveries.py">list</a>(\*\*<a href="src/context/dev/types/webhooks/delivery_list_params.py">params</a>) -> <a href="./src/context/dev/types/webhooks/delivery_list_response.py">DeliveryListResponse</a></code>
+- <code title="get /webhooks/deliveries/{delivery_id}/attempts">client.webhooks.deliveries.<a href="./src/context/dev/resources/webhooks/deliveries.py">list_attempts</a>(delivery_id, \*\*<a href="src/context/dev/types/webhooks/delivery_list_attempts_params.py">params</a>) -> <a href="./src/context/dev/types/webhooks/delivery_list_attempts_response.py">DeliveryListAttemptsResponse</a></code>
+- <code title="post /webhooks/deliveries/{delivery_id}/retry">client.webhooks.deliveries.<a href="./src/context/dev/resources/webhooks/deliveries.py">retry</a>(delivery_id, \*\*<a href="src/context/dev/types/webhooks/delivery_retry_params.py">params</a>) -> <a href="./src/context/dev/types/webhooks/delivery_retry_response.py">DeliveryRetryResponse</a></code>
+
 # People
 
 Types:

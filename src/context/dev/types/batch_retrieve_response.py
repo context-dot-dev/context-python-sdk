@@ -178,3 +178,10 @@ class BatchRetrieveResponse(BaseModel):
 
     key_metadata: Optional[KeyMetadata] = None
     """API key usage for this request."""
+
+    webhook_delivery_id: Optional[str] = None
+    """Retained completion delivery ID.
+
+    Inspect or retry it through /webhooks/deliveries/{delivery_id}. Present once the
+    delivery has been retained.
+    """

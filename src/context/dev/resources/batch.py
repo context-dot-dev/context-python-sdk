@@ -283,6 +283,7 @@ class BatchResource(SyncAPIResource):
         *,
         input: batch_submit_params.Input,
         tags: SequenceNotStr[str] | Omit = omit,
+        webhook: batch_submit_params.Webhook | Omit = omit,
         webhook_url: str | Omit = omit,
         idempotency_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -300,7 +301,11 @@ class BatchResource(SyncAPIResource):
 
           tags: Tags stored on the batch. Filter the batch list by them later.
 
-          webhook_url: URL notified when the batch finishes.
+          webhook: Completion webhook settings. Cannot be combined with webhookUrl. Omitting retry
+              preserves legacy delivery; retry: {} opts into durable retries.
+
+          webhook_url: Legacy URL notified when the batch finishes. Preserves one best-effort attempt.
+              Cannot be combined with webhook.
 
           idempotency_key: Any string unique to this submission. Retries with the same key return the
               original batch.
@@ -320,6 +325,7 @@ class BatchResource(SyncAPIResource):
                 {
                     "input": input,
                     "tags": tags,
+                    "webhook": webhook,
                     "webhook_url": webhook_url,
                 },
                 batch_submit_params.BatchSubmitParams,
@@ -586,6 +592,7 @@ class AsyncBatchResource(AsyncAPIResource):
         *,
         input: batch_submit_params.Input,
         tags: SequenceNotStr[str] | Omit = omit,
+        webhook: batch_submit_params.Webhook | Omit = omit,
         webhook_url: str | Omit = omit,
         idempotency_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -603,7 +610,11 @@ class AsyncBatchResource(AsyncAPIResource):
 
           tags: Tags stored on the batch. Filter the batch list by them later.
 
-          webhook_url: URL notified when the batch finishes.
+          webhook: Completion webhook settings. Cannot be combined with webhookUrl. Omitting retry
+              preserves legacy delivery; retry: {} opts into durable retries.
+
+          webhook_url: Legacy URL notified when the batch finishes. Preserves one best-effort attempt.
+              Cannot be combined with webhook.
 
           idempotency_key: Any string unique to this submission. Retries with the same key return the
               original batch.
@@ -623,6 +634,7 @@ class AsyncBatchResource(AsyncAPIResource):
                 {
                     "input": input,
                     "tags": tags,
+                    "webhook": webhook,
                     "webhook_url": webhook_url,
                 },
                 batch_submit_params.BatchSubmitParams,

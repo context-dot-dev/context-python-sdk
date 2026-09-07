@@ -35,7 +35,7 @@ from ._base_client import (
 )
 
 if TYPE_CHECKING:
-    from .resources import ai, web, news, batch, brand, parse, people, utility, industry, monitors
+    from .resources import ai, web, news, batch, brand, parse, people, utility, industry, monitors, webhooks
     from .resources.ai import AIResource, AsyncAIResource
     from .resources.web import WebResource, AsyncWebResource
     from .resources.news import NewsResource, AsyncNewsResource
@@ -46,6 +46,7 @@ if TYPE_CHECKING:
     from .resources.utility import UtilityResource, AsyncUtilityResource
     from .resources.industry import IndustryResource, AsyncIndustryResource
     from .resources.monitors import MonitorsResource, AsyncMonitorsResource
+    from .resources.webhooks.webhooks import WebhooksResource, AsyncWebhooksResource
 
 __all__ = [
     "Timeout",
@@ -174,6 +175,12 @@ class ContextDev(SyncAPIClient):
         from .resources.batch import BatchResource
 
         return BatchResource(self)
+
+    @cached_property
+    def webhooks(self) -> WebhooksResource:
+        from .resources.webhooks import WebhooksResource
+
+        return WebhooksResource(self)
 
     @cached_property
     def people(self) -> PeopleResource:
@@ -418,6 +425,12 @@ class AsyncContextDev(AsyncAPIClient):
         return AsyncBatchResource(self)
 
     @cached_property
+    def webhooks(self) -> AsyncWebhooksResource:
+        from .resources.webhooks import AsyncWebhooksResource
+
+        return AsyncWebhooksResource(self)
+
+    @cached_property
     def people(self) -> AsyncPeopleResource:
         from .resources.people import AsyncPeopleResource
 
@@ -602,6 +615,12 @@ class ContextDevWithRawResponse:
         return BatchResourceWithRawResponse(self._client.batch)
 
     @cached_property
+    def webhooks(self) -> webhooks.WebhooksResourceWithRawResponse:
+        from .resources.webhooks import WebhooksResourceWithRawResponse
+
+        return WebhooksResourceWithRawResponse(self._client.webhooks)
+
+    @cached_property
     def people(self) -> people.PeopleResourceWithRawResponse:
         from .resources.people import PeopleResourceWithRawResponse
 
@@ -672,6 +691,12 @@ class AsyncContextDevWithRawResponse:
         from .resources.batch import AsyncBatchResourceWithRawResponse
 
         return AsyncBatchResourceWithRawResponse(self._client.batch)
+
+    @cached_property
+    def webhooks(self) -> webhooks.AsyncWebhooksResourceWithRawResponse:
+        from .resources.webhooks import AsyncWebhooksResourceWithRawResponse
+
+        return AsyncWebhooksResourceWithRawResponse(self._client.webhooks)
 
     @cached_property
     def people(self) -> people.AsyncPeopleResourceWithRawResponse:
@@ -746,6 +771,12 @@ class ContextDevWithStreamedResponse:
         return BatchResourceWithStreamingResponse(self._client.batch)
 
     @cached_property
+    def webhooks(self) -> webhooks.WebhooksResourceWithStreamingResponse:
+        from .resources.webhooks import WebhooksResourceWithStreamingResponse
+
+        return WebhooksResourceWithStreamingResponse(self._client.webhooks)
+
+    @cached_property
     def people(self) -> people.PeopleResourceWithStreamingResponse:
         from .resources.people import PeopleResourceWithStreamingResponse
 
@@ -816,6 +847,12 @@ class AsyncContextDevWithStreamedResponse:
         from .resources.batch import AsyncBatchResourceWithStreamingResponse
 
         return AsyncBatchResourceWithStreamingResponse(self._client.batch)
+
+    @cached_property
+    def webhooks(self) -> webhooks.AsyncWebhooksResourceWithStreamingResponse:
+        from .resources.webhooks import AsyncWebhooksResourceWithStreamingResponse
+
+        return AsyncWebhooksResourceWithStreamingResponse(self._client.webhooks)
 
     @cached_property
     def people(self) -> people.AsyncPeopleResourceWithStreamingResponse:
