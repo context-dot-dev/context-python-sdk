@@ -19,9 +19,7 @@ __all__ = ["WebhooksResource", "AsyncWebhooksResource"]
 class WebhooksResource(SyncAPIResource):
     @cached_property
     def deliveries(self) -> DeliveriesResource:
-        """
-        Inspect and retry batch and monitor webhook deliveries without rerunning the underlying work.
-        """
+        """Inspect and retry webhook deliveries. These endpoints cost no credits."""
         return DeliveriesResource(self._client)
 
     @cached_property
@@ -47,9 +45,7 @@ class WebhooksResource(SyncAPIResource):
 class AsyncWebhooksResource(AsyncAPIResource):
     @cached_property
     def deliveries(self) -> AsyncDeliveriesResource:
-        """
-        Inspect and retry batch and monitor webhook deliveries without rerunning the underlying work.
-        """
+        """Inspect and retry webhook deliveries. These endpoints cost no credits."""
         return AsyncDeliveriesResource(self._client)
 
     @cached_property
@@ -78,9 +74,7 @@ class WebhooksResourceWithRawResponse:
 
     @cached_property
     def deliveries(self) -> DeliveriesResourceWithRawResponse:
-        """
-        Inspect and retry batch and monitor webhook deliveries without rerunning the underlying work.
-        """
+        """Inspect and retry webhook deliveries. These endpoints cost no credits."""
         return DeliveriesResourceWithRawResponse(self._webhooks.deliveries)
 
 
@@ -90,9 +84,7 @@ class AsyncWebhooksResourceWithRawResponse:
 
     @cached_property
     def deliveries(self) -> AsyncDeliveriesResourceWithRawResponse:
-        """
-        Inspect and retry batch and monitor webhook deliveries without rerunning the underlying work.
-        """
+        """Inspect and retry webhook deliveries. These endpoints cost no credits."""
         return AsyncDeliveriesResourceWithRawResponse(self._webhooks.deliveries)
 
 
@@ -102,9 +94,7 @@ class WebhooksResourceWithStreamingResponse:
 
     @cached_property
     def deliveries(self) -> DeliveriesResourceWithStreamingResponse:
-        """
-        Inspect and retry batch and monitor webhook deliveries without rerunning the underlying work.
-        """
+        """Inspect and retry webhook deliveries. These endpoints cost no credits."""
         return DeliveriesResourceWithStreamingResponse(self._webhooks.deliveries)
 
 
@@ -114,7 +104,5 @@ class AsyncWebhooksResourceWithStreamingResponse:
 
     @cached_property
     def deliveries(self) -> AsyncDeliveriesResourceWithStreamingResponse:
-        """
-        Inspect and retry batch and monitor webhook deliveries without rerunning the underlying work.
-        """
+        """Inspect and retry webhook deliveries. These endpoints cost no credits."""
         return AsyncDeliveriesResourceWithStreamingResponse(self._webhooks.deliveries)

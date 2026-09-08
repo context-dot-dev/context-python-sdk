@@ -211,9 +211,8 @@ class WebResource(SyncAPIResource):
 
           num_competitors: Exact number of direct competitors to return. Defaults to 5.
 
-          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
-              recorded on the request's usage log and can be used to filter usage on the
-              dashboard usage page. Up to 20 tags, each 1-50 characters.
+          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
+              characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -280,9 +279,8 @@ class WebResource(SyncAPIResource):
               are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
               year.
 
-          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
-              recorded on the request's usage log and can be used to filter usage on the
-              dashboard usage page. Up to 20 tags, each 1-50 characters.
+          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
+              characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -355,9 +353,8 @@ class WebResource(SyncAPIResource):
               are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
               year.
 
-          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
-              recorded on the request's usage log and can be used to filter usage on the
-              dashboard usage page. Up to 20 tags, each 1-50 characters.
+          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
+              characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -673,9 +670,8 @@ class WebResource(SyncAPIResource):
               top to bottom). The final slice may be shorter than the viewport height. Takes
               precedence over fullScreenshot. Max: 100000.
 
-          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
-              recorded on the request's usage log and can be used to filter usage on the
-              dashboard usage page. Up to 20 tags, each 1-50 characters.
+          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
+              characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -1676,9 +1672,8 @@ class WebResource(SyncAPIResource):
               extracting HTML. Defaults to false. This adds a bit of latency in exchange for
               more stable output on animated pages.
 
-          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
-              recorded on the request's usage log and can be used to filter usage on the
-              dashboard usage page. Up to 20 tags, each 1-50 characters.
+          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
+              characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -1783,9 +1778,8 @@ class WebResource(SyncAPIResource):
           max_age_ms: Reuse a cached result this many milliseconds old or newer. Default: 86400000 (1
               day). Set to 0 to bypass cache. Maximum: 2592000000 (30 days).
 
-          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
-              recorded on the request's usage log and can be used to filter usage on the
-              dashboard usage page. Up to 20 tags, each 1-50 characters.
+          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
+              characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -2140,9 +2134,8 @@ class WebResource(SyncAPIResource):
 
           shorten_base64_images: Shorten base64-encoded image data in the Markdown output
 
-          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
-              recorded on the request's usage log and can be used to filter usage on the
-              dashboard usage page. Up to 20 tags, each 1-50 characters.
+          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
+              characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -2251,9 +2244,8 @@ class WebResource(SyncAPIResource):
           sitemap_url: Optional explicit sitemap URL. When provided, exactly this sitemap is crawled
               instead of discovering the domain's sitemaps.
 
-          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
-              recorded on the request's usage log and can be used to filter usage on the
-              dashboard usage page. Up to 20 tags, each 1-50 characters.
+          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
+              characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -2467,9 +2459,8 @@ class AsyncWebResource(AsyncAPIResource):
 
           num_competitors: Exact number of direct competitors to return. Defaults to 5.
 
-          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
-              recorded on the request's usage log and can be used to filter usage on the
-              dashboard usage page. Up to 20 tags, each 1-50 characters.
+          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
+              characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -2536,9 +2527,8 @@ class AsyncWebResource(AsyncAPIResource):
               are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
               year.
 
-          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
-              recorded on the request's usage log and can be used to filter usage on the
-              dashboard usage page. Up to 20 tags, each 1-50 characters.
+          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
+              characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -2611,9 +2601,8 @@ class AsyncWebResource(AsyncAPIResource):
               are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
               year.
 
-          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
-              recorded on the request's usage log and can be used to filter usage on the
-              dashboard usage page. Up to 20 tags, each 1-50 characters.
+          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
+              characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -2929,9 +2918,8 @@ class AsyncWebResource(AsyncAPIResource):
               top to bottom). The final slice may be shorter than the viewport height. Takes
               precedence over fullScreenshot. Max: 100000.
 
-          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
-              recorded on the request's usage log and can be used to filter usage on the
-              dashboard usage page. Up to 20 tags, each 1-50 characters.
+          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
+              characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -3932,9 +3920,8 @@ class AsyncWebResource(AsyncAPIResource):
               extracting HTML. Defaults to false. This adds a bit of latency in exchange for
               more stable output on animated pages.
 
-          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
-              recorded on the request's usage log and can be used to filter usage on the
-              dashboard usage page. Up to 20 tags, each 1-50 characters.
+          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
+              characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -4039,9 +4026,8 @@ class AsyncWebResource(AsyncAPIResource):
           max_age_ms: Reuse a cached result this many milliseconds old or newer. Default: 86400000 (1
               day). Set to 0 to bypass cache. Maximum: 2592000000 (30 days).
 
-          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
-              recorded on the request's usage log and can be used to filter usage on the
-              dashboard usage page. Up to 20 tags, each 1-50 characters.
+          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
+              characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -4396,9 +4382,8 @@ class AsyncWebResource(AsyncAPIResource):
 
           shorten_base64_images: Shorten base64-encoded image data in the Markdown output
 
-          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
-              recorded on the request's usage log and can be used to filter usage on the
-              dashboard usage page. Up to 20 tags, each 1-50 characters.
+          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
+              characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -4507,9 +4492,8 @@ class AsyncWebResource(AsyncAPIResource):
           sitemap_url: Optional explicit sitemap URL. When provided, exactly this sitemap is crawled
               instead of discovering the domain's sitemaps.
 
-          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
-              recorded on the request's usage log and can be used to filter usage on the
-              dashboard usage page. Up to 20 tags, each 1-50 characters.
+          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
+              characters.
 
           timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
               than this value, it will be aborted with a 408 status code. Maximum allowed

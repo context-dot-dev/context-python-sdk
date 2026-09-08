@@ -48,10 +48,10 @@ class KeyMetadata(BaseModel):
     """API key usage for this request."""
 
     credits_consumed: int
-    """The number of credits consumed by this request."""
+    """Credits used by this request."""
 
     credits_remaining: int
-    """The number of credits remaining for your organization after this request."""
+    """Credits remaining for your organization."""
 
 
 class BatchSubmitResponse(BaseModel):

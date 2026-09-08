@@ -44,7 +44,4 @@ class WebhookDelivery(BaseModel):
     """
 
     delivery_id: Optional[str] = None
-    """Retained delivery ID for GET /webhooks/deliveries/{delivery_id}.
-
-    Omitted for historical or unretained deliveries.
-    """
+    """Delivery ID for status checks and retries, when available."""

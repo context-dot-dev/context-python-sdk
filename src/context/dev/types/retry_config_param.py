@@ -9,15 +9,10 @@ __all__ = ["RetryConfigParam"]
 
 
 class RetryConfigParam(TypedDict, total=False):
-    """Opt into durable webhook delivery.
-
-    An empty object uses the default retry schedule. Omit retry to preserve legacy delivery behavior. The policy is snapshotted for each event.
-    """
+    """Webhook retry settings. Use {} for the default schedule."""
 
     delays_seconds: Iterable[int]
-    """Wait in seconds after each failed attempt.
+    """Retry delays in seconds, totaling at most 72 hours.
 
-    The first attempt is immediate. At most 10 delays, each 1–86400 seconds,
-    totaling at most 72 hours. Small jitter is added automatically. An empty array
-    disables automatic retries; manual retries remain available.
+    Use [] to disable automatic retries.
     """

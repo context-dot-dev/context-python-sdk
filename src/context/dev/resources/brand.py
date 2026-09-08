@@ -1235,9 +1235,8 @@ class BrandResource(SyncAPIResource):
               are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
               year.
 
-          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
-              recorded on the request's usage log and can be used to filter usage on the
-              dashboard usage page. Up to 20 tags, each 1-50 characters.
+          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
+              characters.
 
           theme: Optional theme preference used when selecting brand assets.
 
@@ -1302,9 +1301,8 @@ class BrandResource(SyncAPIResource):
           query_by: Fields to match the search term against, as a comma-separated list or repeated
               parameter: 'name', 'domain', or both. Defaults to both.
 
-          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
-              recorded on the request's usage log and can be used to filter usage on the
-              dashboard usage page. Up to 20 tags, each 1-50 characters.
+          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
+              characters.
 
           typo_tolerance: Maximum number of typos tolerated when matching, from 0 to 2. Defaults to 0 (no
               typo tolerance).
@@ -2548,9 +2546,8 @@ class AsyncBrandResource(AsyncAPIResource):
               are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
               year.
 
-          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
-              recorded on the request's usage log and can be used to filter usage on the
-              dashboard usage page. Up to 20 tags, each 1-50 characters.
+          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
+              characters.
 
           theme: Optional theme preference used when selecting brand assets.
 
@@ -2615,9 +2612,8 @@ class AsyncBrandResource(AsyncAPIResource):
           query_by: Fields to match the search term against, as a comma-separated list or repeated
               parameter: 'name', 'domain', or both. Defaults to both.
 
-          tags: Optional comma-separated caller-defined tags for tracking this request. Tags are
-              recorded on the request's usage log and can be used to filter usage on the
-              dashboard usage page. Up to 20 tags, each 1-50 characters.
+          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
+              characters.
 
           typo_tolerance: Maximum number of typos tolerated when matching, from 0 to 2. Defaults to 0 (no
               typo tolerance).

@@ -2,29 +2,63 @@
 
 from __future__ import annotations
 
-from typing_extensions import Literal, TypedDict
+from typing import Union
+from datetime import datetime
+from typing_extensions import Literal, Required, Annotated, TypeAlias, TypedDict
 
 from ..._types import SequenceNotStr
+from ..._utils import PropertyInfo
 
-__all__ = ["DeliveryListParams"]
+__all__ = ["DeliveryListParams", "ByBatch", "ByMonitor"]
 
 
-class DeliveryListParams(TypedDict, total=False):
+class ByBatch(TypedDict, total=False):
+    type: Required[Literal["batch"]]
+    """Delivery source."""
+
     batch_id: str
+    """Filter by batch ID."""
+
+    created_after: Annotated[Union[str, datetime], PropertyInfo(format="iso8601")]
+    """Only include events created after this ISO 8601 timestamp."""
 
     cursor: str
+    """The next_cursor from the previous response."""
 
     limit: int
-
-    monitor_id: str
-
-    run_id: str
+    """Number of deliveries to return."""
 
     status: Literal["pending", "delivering", "retrying", "delivered", "failed", "cancelled"]
+    """Filter by delivery status."""
 
     tags: SequenceNotStr[str]
-    """Optional comma-separated caller-defined tags for tracking this request.
+    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
 
-    Tags are recorded on the request's usage log and can be used to filter usage on
-    the dashboard usage page. Up to 20 tags, each 1-50 characters.
-    """
+
+class ByMonitor(TypedDict, total=False):
+    type: Required[Literal["monitor"]]
+    """Delivery source."""
+
+    created_after: Annotated[Union[str, datetime], PropertyInfo(format="iso8601")]
+    """Only include events created after this ISO 8601 timestamp."""
+
+    cursor: str
+    """The next_cursor from the previous response."""
+
+    limit: int
+    """Number of deliveries to return."""
+
+    monitor_id: str
+    """Filter by monitor ID."""
+
+    run_id: str
+    """Filter by monitor run ID."""
+
+    status: Literal["pending", "delivering", "retrying", "delivered", "failed", "cancelled"]
+    """Filter by delivery status."""
+
+    tags: SequenceNotStr[str]
+    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
+
+
+DeliveryListParams: TypeAlias = Union[ByBatch, ByMonitor]

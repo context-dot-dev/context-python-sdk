@@ -183,6 +183,7 @@ Types:
 from context.dev.types.webhooks import (
     Attempt,
     Delivery,
+    DeliverySummary,
     DeliveryRetrieveResponse,
     DeliveryListResponse,
     DeliveryListAttemptsResponse,
@@ -193,7 +194,7 @@ from context.dev.types.webhooks import (
 Methods:
 
 - <code title="get /webhooks/deliveries/{delivery_id}">client.webhooks.deliveries.<a href="./src/context/dev/resources/webhooks/deliveries.py">retrieve</a>(delivery_id, \*\*<a href="src/context/dev/types/webhooks/delivery_retrieve_params.py">params</a>) -> <a href="./src/context/dev/types/webhooks/delivery_retrieve_response.py">DeliveryRetrieveResponse</a></code>
-- <code title="get /webhooks/deliveries">client.webhooks.deliveries.<a href="./src/context/dev/resources/webhooks/deliveries.py">list</a>(\*\*<a href="src/context/dev/types/webhooks/delivery_list_params.py">params</a>) -> <a href="./src/context/dev/types/webhooks/delivery_list_response.py">DeliveryListResponse</a></code>
+- <code title="post /webhooks/deliveries">client.webhooks.deliveries.<a href="./src/context/dev/resources/webhooks/deliveries.py">list</a>(\*\*<a href="src/context/dev/types/webhooks/delivery_list_params.py">params</a>) -> <a href="./src/context/dev/types/webhooks/delivery_list_response.py">DeliveryListResponse</a></code>
 - <code title="get /webhooks/deliveries/{delivery_id}/attempts">client.webhooks.deliveries.<a href="./src/context/dev/resources/webhooks/deliveries.py">list_attempts</a>(delivery_id, \*\*<a href="src/context/dev/types/webhooks/delivery_list_attempts_params.py">params</a>) -> <a href="./src/context/dev/types/webhooks/delivery_list_attempts_response.py">DeliveryListAttemptsResponse</a></code>
 - <code title="post /webhooks/deliveries/{delivery_id}/retry">client.webhooks.deliveries.<a href="./src/context/dev/resources/webhooks/deliveries.py">retry</a>(delivery_id, \*\*<a href="src/context/dev/types/webhooks/delivery_retry_params.py">params</a>) -> <a href="./src/context/dev/types/webhooks/delivery_retry_response.py">DeliveryRetryResponse</a></code>
 
