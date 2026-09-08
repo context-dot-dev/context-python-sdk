@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.15.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.14.0...v2.15.0) (2026-09-08)
+
+
+### Features
+
+* **webhooks:** add configurable retries and manual replay ([3b219e5](https://github.com/context-dot-dev/context-python-sdk/commit/3b219e5a7891d94c9d7006392acc182ced1cea6e))
+* **webhooks:** simplify delivery APIs ([8b485b3](https://github.com/context-dot-dev/context-python-sdk/commit/8b485b3197cb114b0c4c7f49294f48d5630927d6))
+
 ## [2.14.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.13.0...v2.14.0) (2026-09-03)
 
 
