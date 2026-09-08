@@ -190,8 +190,4 @@ class Webhook(TypedDict, total=False):
     """
 
     retry: RetryConfigParam
-    """Opt into durable webhook delivery.
-
-    An empty object uses the default retry schedule. Omit retry to preserve legacy
-    delivery behavior. The policy is snapshotted for each event.
-    """
+    """Webhook retry settings. Use {} for the default schedule."""

@@ -293,10 +293,9 @@ class WebScreenshotParams(TypedDict, total=False):
     """
 
     tags: SequenceNotStr[str]
-    """Optional comma-separated caller-defined tags for tracking this request.
+    """Comma-separated tags for tracking request usage.
 
-    Tags are recorded on the request's usage log and can be used to filter usage on
-    the dashboard usage page. Up to 20 tags, each 1-50 characters.
+    Up to 20 tags, each 1-50 characters.
     """
 
     timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]

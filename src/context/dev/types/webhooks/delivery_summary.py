@@ -4,11 +4,9 @@ from typing import Union, Optional
 from datetime import datetime
 from typing_extensions import Literal, TypeAlias
 
-from .attempt import Attempt
 from ..._models import BaseModel
-from ..retry_config import RetryConfig
 
-__all__ = ["Delivery", "LastError", "Source", "SourceBatch", "SourceMonitor"]
+__all__ = ["DeliverySummary", "LastError", "Source", "SourceBatch", "SourceMonitor"]
 
 
 class LastError(BaseModel):
@@ -43,7 +41,7 @@ class SourceMonitor(BaseModel):
 Source: TypeAlias = Union[SourceBatch, SourceMonitor]
 
 
-class Delivery(BaseModel):
+class DeliverySummary(BaseModel):
     id: str
     """Delivery ID."""
 
@@ -56,20 +54,11 @@ class Delivery(BaseModel):
     event: Literal["batch.completed", "batch.failed", "batch.cancelled", "change.detected", "run.completed"]
     """Webhook event type."""
 
-    event_id: str
-    """Stable event ID for deduplicating received webhooks."""
-
-    last_attempt: Optional[Attempt] = None
-    """Latest attempt, or null if none."""
-
     last_error: Optional[LastError] = None
     """Latest delivery error, or null if none."""
 
     next_attempt_at: Optional[datetime] = None
     """Next scheduled attempt, or null if none."""
-
-    retry: RetryConfig
-    """Webhook retry settings. Use {} for the default schedule."""
 
     retry_expires_at: datetime
     """Manual retry deadline, seven days after event creation."""

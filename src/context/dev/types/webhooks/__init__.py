@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from .attempt import Attempt as Attempt
 from .delivery import Delivery as Delivery
+from .delivery_summary import DeliverySummary as DeliverySummary
 from .delivery_list_params import DeliveryListParams as DeliveryListParams
 from .delivery_retry_params import DeliveryRetryParams as DeliveryRetryParams
 from .delivery_list_response import DeliveryListResponse as DeliveryListResponse
