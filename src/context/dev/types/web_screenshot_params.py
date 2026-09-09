@@ -312,7 +312,8 @@ class WebScreenshotParams(TypedDict, total=False):
     """
     Optional browser wait time in milliseconds after initial page load before taking
     the screenshot. Min: 0. Max: 30000 (30 seconds). Defaults to 3000 ms when
-    omitted.
+    omitted. When combined with timeoutMS, timeoutMS must be at least waitForMs +
+    10000 ms; a shorter deadline is rejected with 400 TIMEOUT_TOO_SHORT_FOR_WAIT.
     """
 
     zdr: Literal["enabled", "disabled"]
