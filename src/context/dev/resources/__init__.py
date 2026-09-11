@@ -16,6 +16,14 @@ from .web import (
     WebResourceWithStreamingResponse,
     AsyncWebResourceWithStreamingResponse,
 )
+from .logs import (
+    LogsResource,
+    AsyncLogsResource,
+    LogsResourceWithRawResponse,
+    AsyncLogsResourceWithRawResponse,
+    LogsResourceWithStreamingResponse,
+    AsyncLogsResourceWithStreamingResponse,
+)
 from .news import (
     NewsResource,
     AsyncNewsResource,
@@ -156,4 +164,10 @@ __all__ = [
     "AsyncNewsResourceWithRawResponse",
     "NewsResourceWithStreamingResponse",
     "AsyncNewsResourceWithStreamingResponse",
+    "LogsResource",
+    "AsyncLogsResource",
+    "LogsResourceWithRawResponse",
+    "AsyncLogsResourceWithRawResponse",
+    "LogsResourceWithStreamingResponse",
+    "AsyncLogsResourceWithStreamingResponse",
 ]
