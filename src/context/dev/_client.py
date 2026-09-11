@@ -35,9 +35,10 @@ from ._base_client import (
 )
 
 if TYPE_CHECKING:
-    from .resources import ai, web, news, batch, brand, parse, people, utility, industry, monitors, webhooks
+    from .resources import ai, web, logs, news, batch, brand, parse, people, utility, industry, monitors, webhooks
     from .resources.ai import AIResource, AsyncAIResource
     from .resources.web import WebResource, AsyncWebResource
+    from .resources.logs import LogsResource, AsyncLogsResource
     from .resources.news import NewsResource, AsyncNewsResource
     from .resources.batch import BatchResource, AsyncBatchResource
     from .resources.brand import BrandResource, AsyncBrandResource
@@ -194,6 +195,16 @@ class ContextDev(SyncAPIClient):
         from .resources.news import NewsResource
 
         return NewsResource(self)
+
+    @cached_property
+    def logs(self) -> LogsResource:
+        """Read your organization's API request logs to debug failed calls.
+
+        These endpoints cost no credits and use a separate rate limit.
+        """
+        from .resources.logs import LogsResource
+
+        return LogsResource(self)
 
     @cached_property
     def with_raw_response(self) -> ContextDevWithRawResponse:
@@ -444,6 +455,16 @@ class AsyncContextDev(AsyncAPIClient):
         return AsyncNewsResource(self)
 
     @cached_property
+    def logs(self) -> AsyncLogsResource:
+        """Read your organization's API request logs to debug failed calls.
+
+        These endpoints cost no credits and use a separate rate limit.
+        """
+        from .resources.logs import AsyncLogsResource
+
+        return AsyncLogsResource(self)
+
+    @cached_property
     def with_raw_response(self) -> AsyncContextDevWithRawResponse:
         return AsyncContextDevWithRawResponse(self)
 
@@ -633,6 +654,16 @@ class ContextDevWithRawResponse:
 
         return NewsResourceWithRawResponse(self._client.news)
 
+    @cached_property
+    def logs(self) -> logs.LogsResourceWithRawResponse:
+        """Read your organization's API request logs to debug failed calls.
+
+        These endpoints cost no credits and use a separate rate limit.
+        """
+        from .resources.logs import LogsResourceWithRawResponse
+
+        return LogsResourceWithRawResponse(self._client.logs)
+
 
 class AsyncContextDevWithRawResponse:
     _client: AsyncContextDev
@@ -710,6 +741,16 @@ class AsyncContextDevWithRawResponse:
         from .resources.news import AsyncNewsResourceWithRawResponse
 
         return AsyncNewsResourceWithRawResponse(self._client.news)
+
+    @cached_property
+    def logs(self) -> logs.AsyncLogsResourceWithRawResponse:
+        """Read your organization's API request logs to debug failed calls.
+
+        These endpoints cost no credits and use a separate rate limit.
+        """
+        from .resources.logs import AsyncLogsResourceWithRawResponse
+
+        return AsyncLogsResourceWithRawResponse(self._client.logs)
 
 
 class ContextDevWithStreamedResponse:
@@ -789,6 +830,16 @@ class ContextDevWithStreamedResponse:
 
         return NewsResourceWithStreamingResponse(self._client.news)
 
+    @cached_property
+    def logs(self) -> logs.LogsResourceWithStreamingResponse:
+        """Read your organization's API request logs to debug failed calls.
+
+        These endpoints cost no credits and use a separate rate limit.
+        """
+        from .resources.logs import LogsResourceWithStreamingResponse
+
+        return LogsResourceWithStreamingResponse(self._client.logs)
+
 
 class AsyncContextDevWithStreamedResponse:
     _client: AsyncContextDev
@@ -866,6 +917,16 @@ class AsyncContextDevWithStreamedResponse:
         from .resources.news import AsyncNewsResourceWithStreamingResponse
 
         return AsyncNewsResourceWithStreamingResponse(self._client.news)
+
+    @cached_property
+    def logs(self) -> logs.AsyncLogsResourceWithStreamingResponse:
+        """Read your organization's API request logs to debug failed calls.
+
+        These endpoints cost no credits and use a separate rate limit.
+        """
+        from .resources.logs import AsyncLogsResourceWithStreamingResponse
+
+        return AsyncLogsResourceWithStreamingResponse(self._client.logs)
 
 
 Client = ContextDev

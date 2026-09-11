@@ -221,3 +221,16 @@ from context.dev.types import NewsSearchResponse
 Methods:
 
 - <code title="post /news/search">client.news.<a href="./src/context/dev/resources/news.py">search</a>(\*\*<a href="src/context/dev/types/news_search_params.py">params</a>) -> <a href="./src/context/dev/types/news_search_response.py">NewsSearchResponse</a></code>
+
+# Logs
+
+Types:
+
+```python
+from context.dev.types import LogRetrieveResponse, LogListResponse
+```
+
+Methods:
+
+- <code title="get /logs/{request_id}">client.logs.<a href="./src/context/dev/resources/logs.py">retrieve</a>(request_id) -> <a href="./src/context/dev/types/log_retrieve_response.py">LogRetrieveResponse</a></code>
+- <code title="get /logs">client.logs.<a href="./src/context/dev/resources/logs.py">list</a>(\*\*<a href="src/context/dev/types/log_list_params.py">params</a>) -> <a href="./src/context/dev/types/log_list_response.py">LogListResponse</a></code>
