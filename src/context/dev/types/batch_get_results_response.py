@@ -214,6 +214,12 @@ class KeyMetadata(BaseModel):
 
 
 class BatchGetResultsResponse(BaseModel):
+    request_id: str
+    """Unique id of this API call, also sent in the X-Request-Id response header.
+
+    Quote it when contacting support about a failed request.
+    """
+
     data: Optional[List[Data]] = None
     """Result records on this page."""
 

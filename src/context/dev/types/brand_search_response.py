@@ -32,6 +32,12 @@ class KeyMetadata(BaseModel):
 
 
 class BrandSearchResponse(BaseModel):
+    request_id: str
+    """Unique id of this API call, also sent in the X-Request-Id response header.
+
+    Quote it when contacting support about a failed request.
+    """
+
     results: List[Result]
     """
     Up to 10 matching brands, name matches first, then domain matches, most popular

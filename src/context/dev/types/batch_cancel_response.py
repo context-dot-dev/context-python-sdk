@@ -83,6 +83,12 @@ class BatchCancelResponse(BaseModel):
     progress: Progress
     """How far the batch got before cancellation."""
 
+    request_id: str
+    """Unique id of this API call, also sent in the X-Request-Id response header.
+
+    Quote it when contacting support about a failed request.
+    """
+
     status: Literal["cancelling"]
     """Always `cancelling`.
 

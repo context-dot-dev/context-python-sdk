@@ -162,6 +162,12 @@ class BatchRetrieveResponse(BaseModel):
     progress: Progress
     """Pages attempted so far. Use `status` to check completion."""
 
+    request_id: str
+    """Unique id of this API call, also sent in the X-Request-Id response header.
+
+    Quote it when contacting support about a failed request.
+    """
+
     results: Optional[Results] = None
     """
     Download links, available once the batch reaches a final status and null before

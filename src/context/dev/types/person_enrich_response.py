@@ -242,5 +242,11 @@ class PersonEnrichResponse(BaseModel):
     match: Match
     """The highest-scoring person candidate."""
 
+    request_id: str
+    """Unique id of this API call, also sent in the X-Request-Id response header.
+
+    Quote it when contacting support about a failed request.
+    """
+
     key_metadata: Optional[KeyMetadata] = None
     """Credit usage, included whenever a valid API key is provided."""

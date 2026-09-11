@@ -44,6 +44,12 @@ class WebScreenshotResponse(BaseModel):
     to the output was a hit; age_ms is the oldest contributing hit.
     """
 
+    request_id: str
+    """Unique id of this API call, also sent in the X-Request-Id response header.
+
+    Quote it when contacting support about a failed request.
+    """
+
     code: Optional[int] = None
     """HTTP status code"""
 

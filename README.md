@@ -36,7 +36,7 @@ brand = client.brand.retrieve(
     domain="REPLACE_ME",
     type="by_domain",
 )
-print(brand.cache_metadata)
+print(brand.request_id)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -63,7 +63,7 @@ async def main() -> None:
         domain="REPLACE_ME",
         type="by_domain",
     )
-    print(brand.cache_metadata)
+    print(brand.request_id)
 
 
 asyncio.run(main())
@@ -100,7 +100,7 @@ async def main() -> None:
             domain="REPLACE_ME",
             type="by_domain",
         )
-        print(brand.cache_metadata)
+        print(brand.request_id)
 
 
 asyncio.run(main())
@@ -270,7 +270,7 @@ response = client.brand.with_raw_response.retrieve(
 print(response.headers.get('X-My-Header'))
 
 brand = response.parse()  # get the object that `brand.retrieve()` would have returned
-print(brand.cache_metadata)
+print(brand.request_id)
 ```
 
 These methods return an [`APIResponse`](https://github.com/context-dot-dev/context-python-sdk/tree/main/src/context/dev/_response.py) object.

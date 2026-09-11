@@ -30,6 +30,12 @@ class KeyMetadata(BaseModel):
 
 
 class IndustryRetrieveNaicsResponse(BaseModel):
+    request_id: str
+    """Unique id of this API call, also sent in the X-Request-Id response header.
+
+    Quote it when contacting support about a failed request.
+    """
+
     codes: Optional[List[Code]] = None
     """Array of NAICS codes and titles."""
 
