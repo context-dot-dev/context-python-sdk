@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.16.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.15.0...v2.16.0) (2026-09-11)
+
+
+### Features
+
+* **api:** return request_id on every response ([6904a7c](https://github.com/context-dot-dev/context-python-sdk/commit/6904a7ca6d23a4602fa42135476515d094a2f382))
+* **logs:** expose request log endpoints in SDKs ([#1025](https://github.com/context-dot-dev/context-python-sdk/issues/1025)) ([74461ed](https://github.com/context-dot-dev/context-python-sdk/commit/74461ed4655656dd1e869c3bc958aa6c93ffd50e))
+
+
+### Bug Fixes
+
+* **api:** reject timeoutMS too short for waitForMs ([ca4de4e](https://github.com/context-dot-dev/context-python-sdk/commit/ca4de4e6bc4808ec37615156bfa9d1389505d137))
+
 ## [2.15.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.14.0...v2.15.0) (2026-09-08)
 
 
