@@ -50,6 +50,12 @@ class KeyMetadata(BaseModel):
 
 
 class IndustryRetrieveSicResponse(BaseModel):
+    request_id: str
+    """Unique id of this API call, also sent in the X-Request-Id response header.
+
+    Quote it when contacting support about a failed request.
+    """
+
     classification: Optional[Literal["original_sic", "latest_sec"]] = None
     """Echoes back which SIC dataset was used to classify the brand."""
 

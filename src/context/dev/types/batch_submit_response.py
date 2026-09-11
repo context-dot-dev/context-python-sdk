@@ -89,6 +89,12 @@ class BatchSubmitResponse(BaseModel):
     mode: Literal["scrape", "crawl"]
     """How pages will be selected."""
 
+    request_id: str
+    """Unique id of this API call, also sent in the X-Request-Id response header.
+
+    Quote it when contacting support about a failed request.
+    """
+
     status: Literal["queued"]
     """Always `queued`. An accepted batch has not started yet."""
 

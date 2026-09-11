@@ -63,6 +63,12 @@ class WebExtractCompetitorsResponse(BaseModel):
     domain: str
     """Normalized input domain."""
 
+    request_id: str
+    """Unique id of this API call, also sent in the X-Request-Id response header.
+
+    Quote it when contacting support about a failed request.
+    """
+
     status: Literal["ok"]
     """Status of the response."""
 

@@ -106,6 +106,12 @@ class WebWebScrapeImagesResponse(BaseModel):
     images: List[Image]
     """Images found on the page."""
 
+    request_id: str
+    """Unique id of this API call, also sent in the X-Request-Id response header.
+
+    Quote it when contacting support about a failed request.
+    """
+
     success: Literal[True]
     """Always true on success."""
 

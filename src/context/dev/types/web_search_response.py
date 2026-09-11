@@ -75,6 +75,12 @@ class WebSearchResponse(BaseModel):
     query: str
     """Echo of the original query (useful when fanout was enabled)."""
 
+    request_id: str
+    """Unique id of this API call, also sent in the X-Request-Id response header.
+
+    Quote it when contacting support about a failed request.
+    """
+
     results: List[Result]
 
     key_metadata: Optional[KeyMetadata] = None

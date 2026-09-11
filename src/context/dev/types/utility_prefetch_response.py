@@ -19,6 +19,12 @@ class KeyMetadata(BaseModel):
 
 
 class UtilityPrefetchResponse(BaseModel):
+    request_id: str
+    """Unique id of this API call, also sent in the X-Request-Id response header.
+
+    Quote it when contacting support about a failed request.
+    """
+
     domain: Optional[str] = None
     """The domain that was queued for prefetching"""
 

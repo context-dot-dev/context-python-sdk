@@ -176,6 +176,12 @@ class WebWebScrapeHTMLResponse(BaseModel):
     metadata: Metadata
     """Metadata extracted from the scraped page HTML."""
 
+    request_id: str
+    """Unique id of this API call, also sent in the X-Request-Id response header.
+
+    Quote it when contacting support about a failed request.
+    """
+
     success: Literal[True]
     """Indicates success"""
 

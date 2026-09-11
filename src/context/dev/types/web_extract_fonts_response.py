@@ -100,6 +100,12 @@ class WebExtractFontsResponse(BaseModel):
     fonts: List[Font]
     """Array of font usage information"""
 
+    request_id: str
+    """Unique id of this API call, also sent in the X-Request-Id response header.
+
+    Quote it when contacting support about a failed request.
+    """
+
     status: str
     """Status of the response, e.g., 'ok'"""
 
