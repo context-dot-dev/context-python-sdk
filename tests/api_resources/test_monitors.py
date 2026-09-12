@@ -52,6 +52,8 @@ class TestMonitors:
             target={
                 "type": "page",
                 "url": "https://acme.com/pricing",
+                "exclude_selectors": [".carousel", '[id^="TA_"]'],
+                "include_selectors": ["#attraction-details"],
                 "instructions": "Report pricing or plan availability changes. Ignore counters, timestamps, testimonials, and navigation.",
                 "normalize_whitespace": True,
             },
@@ -172,6 +174,8 @@ class TestMonitors:
             target={
                 "type": "page",
                 "url": "https://acme.com/pricing",
+                "exclude_selectors": [".carousel", '[id^="TA_"]'],
+                "include_selectors": ["#attraction-details"],
                 "instructions": "Report pricing or plan availability changes. Ignore counters, timestamps, testimonials, and navigation.",
                 "normalize_whitespace": True,
             },
@@ -668,6 +672,8 @@ class TestAsyncMonitors:
             target={
                 "type": "page",
                 "url": "https://acme.com/pricing",
+                "exclude_selectors": [".carousel", '[id^="TA_"]'],
+                "include_selectors": ["#attraction-details"],
                 "instructions": "Report pricing or plan availability changes. Ignore counters, timestamps, testimonials, and navigation.",
                 "normalize_whitespace": True,
             },
@@ -788,6 +794,8 @@ class TestAsyncMonitors:
             target={
                 "type": "page",
                 "url": "https://acme.com/pricing",
+                "exclude_selectors": [".carousel", '[id^="TA_"]'],
+                "include_selectors": ["#attraction-details"],
                 "instructions": "Report pricing or plan availability changes. Ignore counters, timestamps, testimonials, and navigation.",
                 "normalize_whitespace": True,
             },
