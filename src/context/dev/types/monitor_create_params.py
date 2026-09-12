@@ -64,6 +64,24 @@ class TargetMonitorsPageTarget(TypedDict, total=False):
 
     url: Required[str]
 
+    exclude_selectors: SequenceNotStr[str]
+    """CSS selectors for HTML regions to remove before text extraction.
+
+    Applied after include_selectors; exclusion takes precedence when an element
+    matches both. Omit or pass an empty array to apply no explicit exclusions.
+    Changing these selectors creates a new baseline.
+    """
+
+    include_selectors: SequenceNotStr[str]
+    """CSS selectors defining the HTML regions to monitor.
+
+    Matching subtrees are combined in document order before text extraction, instead
+    of automatic main-content selection. Omit or pass an empty array to use
+    automatic main-content extraction. If the filtered page has no usable text, the
+    run fails without replacing the baseline. Changing these selectors creates a new
+    baseline.
+    """
+
     instructions: str
     """Plain-language goal describing which page changes matter.
 
