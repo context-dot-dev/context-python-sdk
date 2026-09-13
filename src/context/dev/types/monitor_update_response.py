@@ -237,7 +237,10 @@ class LastError(BaseModel):
 
 class Webhook(BaseModel):
     url: str
-    """Webhook URL events are delivered to."""
+    """Webhook URL events are delivered to.
+
+    Slack incoming webhook URLs are automatically formatted as Slack messages.
+    """
 
     events: Optional[List[Literal["change.detected", "run.completed"]]] = None
     """Events delivered to this endpoint.

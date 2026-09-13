@@ -199,7 +199,10 @@ class Schedule(TypedDict, total=False):
 
 class Webhook(TypedDict, total=False):
     url: Required[str]
-    """Webhook URL events are delivered to."""
+    """Webhook URL events are delivered to.
+
+    Slack incoming webhook URLs are automatically formatted as Slack messages.
+    """
 
     events: List[Literal["change.detected", "run.completed"]]
     """Events delivered to this endpoint.
