@@ -9,6 +9,7 @@ import httpx
 
 from ..types import (
     web_search_params,
+    web_answers_params,
     web_extract_params,
     web_screenshot_params,
     web_web_crawl_md_params,
@@ -32,6 +33,7 @@ from .._response import (
 )
 from .._base_client import make_request_options
 from ..types.web_search_response import WebSearchResponse
+from ..types.web_answers_response import WebAnswersResponse
 from ..types.web_extract_response import WebExtractResponse
 from ..types.web_screenshot_response import WebScreenshotResponse
 from ..types.web_web_crawl_md_response import WebWebCrawlMdResponse
@@ -65,6 +67,73 @@ class WebResource(SyncAPIResource):
         For more information, see https://www.github.com/context-dot-dev/context-python-sdk#with_streaming_response
         """
         return WebResourceWithStreamingResponse(self)
+
+    def answers(
+        self,
+        *,
+        task: str,
+        json_format: Dict[str, object] | Omit = omit,
+        mode: Literal["fast", "ultra"] | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
+        timeout_ms: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WebAnswersResponse:
+        """
+        Researches the live web and returns a sourced answer in your requested JSON
+        shape. Select fast for a smaller research budget at 10 credits or ultra for
+        deeper reasoning at 100 credits. Defaults to ultra. Fast research is limited to
+        30 seconds and ultra to 50 seconds; timeoutMS can shorten either deadline.
+
+        Args:
+          task: What to research and answer, in plain language. Naming a domain in the task (for
+              example "pricing on context.dev") makes the agent read that site before it
+              searches.
+
+          json_format: An example object with placeholder values (for example {"pricing_page_url": "",
+              "plans": [{"name": "", "price": 0}]}). Object keys and value types are
+              preserved; unknown values may be null. Empty arrays accept any JSON items.
+              Defaults to {"result": ""}. Maximum 8 levels, 500 values, and 16000 characters.
+
+          mode: Research level: fast uses a smaller model and research budget for 10 credits;
+              ultra uses deeper reasoning and research for 100 credits. Defaults to ultra.
+              Only successful requests consume credits.
+
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/web/answers",
+            body=maybe_transform(
+                {
+                    "task": task,
+                    "json_format": json_format,
+                    "mode": mode,
+                    "tags": tags,
+                    "timeout_ms": timeout_ms,
+                },
+                web_answers_params.WebAnswersParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=WebAnswersResponse,
+        )
 
     def extract(
         self,
@@ -2321,6 +2390,73 @@ class AsyncWebResource(AsyncAPIResource):
         """
         return AsyncWebResourceWithStreamingResponse(self)
 
+    async def answers(
+        self,
+        *,
+        task: str,
+        json_format: Dict[str, object] | Omit = omit,
+        mode: Literal["fast", "ultra"] | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
+        timeout_ms: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WebAnswersResponse:
+        """
+        Researches the live web and returns a sourced answer in your requested JSON
+        shape. Select fast for a smaller research budget at 10 credits or ultra for
+        deeper reasoning at 100 credits. Defaults to ultra. Fast research is limited to
+        30 seconds and ultra to 50 seconds; timeoutMS can shorten either deadline.
+
+        Args:
+          task: What to research and answer, in plain language. Naming a domain in the task (for
+              example "pricing on context.dev") makes the agent read that site before it
+              searches.
+
+          json_format: An example object with placeholder values (for example {"pricing_page_url": "",
+              "plans": [{"name": "", "price": 0}]}). Object keys and value types are
+              preserved; unknown values may be null. Empty arrays accept any JSON items.
+              Defaults to {"result": ""}. Maximum 8 levels, 500 values, and 16000 characters.
+
+          mode: Research level: fast uses a smaller model and research budget for 10 credits;
+              ultra uses deeper reasoning and research for 100 credits. Defaults to ultra.
+              Only successful requests consume credits.
+
+          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/web/answers",
+            body=await async_maybe_transform(
+                {
+                    "task": task,
+                    "json_format": json_format,
+                    "mode": mode,
+                    "tags": tags,
+                    "timeout_ms": timeout_ms,
+                },
+                web_answers_params.WebAnswersParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=WebAnswersResponse,
+        )
+
     async def extract(
         self,
         *,
@@ -4560,6 +4696,9 @@ class WebResourceWithRawResponse:
     def __init__(self, web: WebResource) -> None:
         self._web = web
 
+        self.answers = to_raw_response_wrapper(
+            web.answers,
+        )
         self.extract = to_raw_response_wrapper(
             web.extract,
         )
@@ -4599,6 +4738,9 @@ class AsyncWebResourceWithRawResponse:
     def __init__(self, web: AsyncWebResource) -> None:
         self._web = web
 
+        self.answers = async_to_raw_response_wrapper(
+            web.answers,
+        )
         self.extract = async_to_raw_response_wrapper(
             web.extract,
         )
@@ -4638,6 +4780,9 @@ class WebResourceWithStreamingResponse:
     def __init__(self, web: WebResource) -> None:
         self._web = web
 
+        self.answers = to_streamed_response_wrapper(
+            web.answers,
+        )
         self.extract = to_streamed_response_wrapper(
             web.extract,
         )
@@ -4677,6 +4822,9 @@ class AsyncWebResourceWithStreamingResponse:
     def __init__(self, web: AsyncWebResource) -> None:
         self._web = web
 
+        self.answers = async_to_streamed_response_wrapper(
+            web.answers,
+        )
         self.extract = async_to_streamed_response_wrapper(
             web.extract,
         )

@@ -14,6 +14,7 @@ from .log_list_response import LogListResponse as LogListResponse
 from .web_search_params import WebSearchParams as WebSearchParams
 from .news_search_params import NewsSearchParams as NewsSearchParams
 from .retry_config_param import RetryConfigParam as RetryConfigParam
+from .web_answers_params import WebAnswersParams as WebAnswersParams
 from .web_extract_params import WebExtractParams as WebExtractParams
 from .batch_list_response import BatchListResponse as BatchListResponse
 from .batch_submit_params import BatchSubmitParams as BatchSubmitParams
@@ -24,6 +25,7 @@ from .web_search_response import WebSearchResponse as WebSearchResponse
 from .monitor_run_response import MonitorRunResponse as MonitorRunResponse
 from .news_search_response import NewsSearchResponse as NewsSearchResponse
 from .person_enrich_params import PersonEnrichParams as PersonEnrichParams
+from .web_answers_response import WebAnswersResponse as WebAnswersResponse
 from .web_extract_response import WebExtractResponse as WebExtractResponse
 from .batch_cancel_response import BatchCancelResponse as BatchCancelResponse
 from .batch_delete_response import BatchDeleteResponse as BatchDeleteResponse
