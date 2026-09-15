@@ -7,7 +7,6 @@ from .._models import BaseModel
 
 __all__ = [
     "BrandRetrieveResponse",
-    "CacheMetadata",
     "Brand",
     "BrandAddress",
     "BrandBackdrop",
@@ -23,24 +22,9 @@ __all__ = [
     "BrandLogoResolution",
     "BrandSocial",
     "BrandStock",
+    "CacheMetadata",
     "KeyMetadata",
 ]
-
-
-class CacheMetadata(BaseModel):
-    """Cache outcome for this response.
-
-    Composite responses are hits only when every cache-controlled fetch contributing to the output was a hit; age_ms is the oldest contributing hit.
-    """
-
-    age_ms: int
-    """Age of the cached data in milliseconds. Zero for miss and zdr responses."""
-
-    status: Literal["hit", "miss", "zdr"]
-    """
-    Whether the response was served from cache, required fresh work, or honored
-    zero-data-retention cache bypass.
-    """
 
 
 class BrandAddress(BaseModel):
@@ -693,6 +677,22 @@ class Brand(BaseModel):
     """The title or name of the brand"""
 
 
+class CacheMetadata(BaseModel):
+    """Cache outcome for this response.
+
+    Composite responses are hits only when every cache-controlled fetch contributing to the output was a hit; age_ms is the oldest contributing hit.
+    """
+
+    age_ms: int
+    """Age of the cached data in milliseconds. Zero for miss and zdr responses."""
+
+    status: Literal["hit", "miss", "zdr"]
+    """
+    Whether the response was served from cache, required fresh work, or honored
+    zero-data-retention cache bypass.
+    """
+
+
 class KeyMetadata(BaseModel):
     """Credit usage, included whenever a valid API key is provided."""
 
@@ -704,6 +704,9 @@ class KeyMetadata(BaseModel):
 
 
 class BrandRetrieveResponse(BaseModel):
+    brand: Brand
+    """Detailed brand information"""
+
     cache_metadata: CacheMetadata
     """Cache outcome for this response.
 
@@ -711,17 +714,17 @@ class BrandRetrieveResponse(BaseModel):
     to the output was a hit; age_ms is the oldest contributing hit.
     """
 
+    code: int
+    """HTTP status code"""
+
     request_id: str
     """Unique id of this API call, also sent in the X-Request-Id response header.
 
     Quote it when contacting support about a failed request.
     """
 
-    brand: Optional[Brand] = None
-    """Detailed brand information"""
-
-    code: Optional[int] = None
-    """HTTP status code"""
+    status: str
+    """Status of the response, e.g., 'ok'"""
 
     key_metadata: Optional[KeyMetadata] = None
     """Credit usage, included whenever a valid API key is provided."""
@@ -731,6 +734,3 @@ class BrandRetrieveResponse(BaseModel):
     True when the timeout ended processing and this response contains the usable
     data completed so far. Unfinished fields are omitted.
     """
-
-    status: Optional[str] = None
-    """Status of the response, e.g., 'ok'"""
