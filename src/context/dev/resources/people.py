@@ -53,7 +53,7 @@ class PeopleResource(SyncAPIResource):
         name: person_enrich_params.Name | Omit = omit,
         social_urls: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: person_enrich_params.TimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -70,9 +70,9 @@ class PeopleResource(SyncAPIResource):
         Args:
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -93,7 +93,7 @@ class PeopleResource(SyncAPIResource):
                     "name": name,
                     "social_urls": social_urls,
                     "tags": tags,
-                    "timeout_ms": timeout_ms,
+                    "timeout_opts": timeout_opts,
                 },
                 person_enrich_params.PersonEnrichParams,
             ),
@@ -134,7 +134,7 @@ class AsyncPeopleResource(AsyncAPIResource):
         name: person_enrich_params.Name | Omit = omit,
         social_urls: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: person_enrich_params.TimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -151,9 +151,9 @@ class AsyncPeopleResource(AsyncAPIResource):
         Args:
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -174,7 +174,7 @@ class AsyncPeopleResource(AsyncAPIResource):
                     "name": name,
                     "social_urls": social_urls,
                     "tags": tags,
-                    "timeout_ms": timeout_ms,
+                    "timeout_opts": timeout_opts,
                 },
                 person_enrich_params.PersonEnrichParams,
             ),

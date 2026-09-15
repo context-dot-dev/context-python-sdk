@@ -124,11 +124,12 @@ from context.dev import ContextDev
 
 client = ContextDev()
 
-response = client.parse.handle(
-    body=b"Example data",
-    pdf={},
+brand = client.brand.retrieve(
+    domain="xxx",
+    type="by_domain",
+    timeout_opts={"milliseconds": 1000},
 )
-print(response.pdf)
+print(brand.timeout_opts)
 ```
 
 ## Handling errors

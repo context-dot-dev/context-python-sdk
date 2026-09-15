@@ -180,7 +180,7 @@ class BrandResource(SyncAPIResource):
         max_age_ms: int | Omit = omit,
         max_speed: bool | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: brand_retrieve_params.BrandRetrieveByDomainRequestTimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -212,9 +212,9 @@ class BrandResource(SyncAPIResource):
 
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -361,7 +361,7 @@ class BrandResource(SyncAPIResource):
         max_age_ms: int | Omit = omit,
         max_speed: bool | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: brand_retrieve_params.BrandRetrieveByNameRequestTimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -396,9 +396,9 @@ class BrandResource(SyncAPIResource):
 
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -544,7 +544,7 @@ class BrandResource(SyncAPIResource):
         max_age_ms: int | Omit = omit,
         max_speed: bool | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: brand_retrieve_params.BrandRetrieveByEmailRequestTimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -576,9 +576,9 @@ class BrandResource(SyncAPIResource):
 
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -725,7 +725,7 @@ class BrandResource(SyncAPIResource):
         max_speed: bool | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         ticker_exchange: str | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: brand_retrieve_params.BrandRetrieveByTickerRequestTimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -759,9 +759,9 @@ class BrandResource(SyncAPIResource):
 
           ticker_exchange: Optional stock exchange for the ticker. Defaults to NASDAQ if not specified.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -780,7 +780,7 @@ class BrandResource(SyncAPIResource):
         direct_url: str,
         type: Literal["by_direct_url"],
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: brand_retrieve_params.BrandRetrieveByDirectURLRequestTimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -805,9 +805,9 @@ class BrandResource(SyncAPIResource):
 
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -957,7 +957,7 @@ class BrandResource(SyncAPIResource):
         mcc: Union[str, float] | Omit = omit,
         phone: Union[str, float] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: brand_retrieve_params.BrandRetrieveFromTransactionRequestTimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -997,9 +997,9 @@ class BrandResource(SyncAPIResource):
 
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -1157,7 +1157,13 @@ class BrandResource(SyncAPIResource):
         max_age_ms: int | Omit = omit,
         max_speed: bool | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: brand_retrieve_params.BrandRetrieveByDomainRequestTimeoutOpts
+        | brand_retrieve_params.BrandRetrieveByNameRequestTimeoutOpts
+        | brand_retrieve_params.BrandRetrieveByEmailRequestTimeoutOpts
+        | brand_retrieve_params.BrandRetrieveByTickerRequestTimeoutOpts
+        | brand_retrieve_params.BrandRetrieveByDirectURLRequestTimeoutOpts
+        | brand_retrieve_params.BrandRetrieveFromTransactionRequestTimeoutOpts
+        | Omit = omit,
         name: str | Omit = omit,
         country_gl: str | Omit = omit,
         email: str | Omit = omit,
@@ -1186,7 +1192,7 @@ class BrandResource(SyncAPIResource):
                     "max_age_ms": max_age_ms,
                     "max_speed": max_speed,
                     "tags": tags,
-                    "timeout_ms": timeout_ms,
+                    "timeout_opts": timeout_opts,
                     "name": name,
                     "country_gl": country_gl,
                     "email": email,
@@ -1214,7 +1220,7 @@ class BrandResource(SyncAPIResource):
         max_age_ms: Optional[int] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         theme: Literal["light", "dark"] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: brand_retrieve_simplified_params.TimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1240,9 +1246,9 @@ class BrandResource(SyncAPIResource):
 
           theme: Optional theme preference used when selecting brand assets.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -1265,7 +1271,7 @@ class BrandResource(SyncAPIResource):
                         "max_age_ms": max_age_ms,
                         "tags": tags,
                         "theme": theme,
-                        "timeout_ms": timeout_ms,
+                        "timeout_opts": timeout_opts,
                     },
                     brand_retrieve_simplified_params.BrandRetrieveSimplifiedParams,
                 ),
@@ -1491,7 +1497,7 @@ class AsyncBrandResource(AsyncAPIResource):
         max_age_ms: int | Omit = omit,
         max_speed: bool | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: brand_retrieve_params.BrandRetrieveByDomainRequestTimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1523,9 +1529,9 @@ class AsyncBrandResource(AsyncAPIResource):
 
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -1672,7 +1678,7 @@ class AsyncBrandResource(AsyncAPIResource):
         max_age_ms: int | Omit = omit,
         max_speed: bool | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: brand_retrieve_params.BrandRetrieveByNameRequestTimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1707,9 +1713,9 @@ class AsyncBrandResource(AsyncAPIResource):
 
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -1855,7 +1861,7 @@ class AsyncBrandResource(AsyncAPIResource):
         max_age_ms: int | Omit = omit,
         max_speed: bool | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: brand_retrieve_params.BrandRetrieveByEmailRequestTimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1887,9 +1893,9 @@ class AsyncBrandResource(AsyncAPIResource):
 
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -2036,7 +2042,7 @@ class AsyncBrandResource(AsyncAPIResource):
         max_speed: bool | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         ticker_exchange: str | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: brand_retrieve_params.BrandRetrieveByTickerRequestTimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -2070,9 +2076,9 @@ class AsyncBrandResource(AsyncAPIResource):
 
           ticker_exchange: Optional stock exchange for the ticker. Defaults to NASDAQ if not specified.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -2091,7 +2097,7 @@ class AsyncBrandResource(AsyncAPIResource):
         direct_url: str,
         type: Literal["by_direct_url"],
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: brand_retrieve_params.BrandRetrieveByDirectURLRequestTimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -2116,9 +2122,9 @@ class AsyncBrandResource(AsyncAPIResource):
 
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -2268,7 +2274,7 @@ class AsyncBrandResource(AsyncAPIResource):
         mcc: Union[str, float] | Omit = omit,
         phone: Union[str, float] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: brand_retrieve_params.BrandRetrieveFromTransactionRequestTimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -2308,9 +2314,9 @@ class AsyncBrandResource(AsyncAPIResource):
 
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -2468,7 +2474,13 @@ class AsyncBrandResource(AsyncAPIResource):
         max_age_ms: int | Omit = omit,
         max_speed: bool | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: brand_retrieve_params.BrandRetrieveByDomainRequestTimeoutOpts
+        | brand_retrieve_params.BrandRetrieveByNameRequestTimeoutOpts
+        | brand_retrieve_params.BrandRetrieveByEmailRequestTimeoutOpts
+        | brand_retrieve_params.BrandRetrieveByTickerRequestTimeoutOpts
+        | brand_retrieve_params.BrandRetrieveByDirectURLRequestTimeoutOpts
+        | brand_retrieve_params.BrandRetrieveFromTransactionRequestTimeoutOpts
+        | Omit = omit,
         name: str | Omit = omit,
         country_gl: str | Omit = omit,
         email: str | Omit = omit,
@@ -2497,7 +2509,7 @@ class AsyncBrandResource(AsyncAPIResource):
                     "max_age_ms": max_age_ms,
                     "max_speed": max_speed,
                     "tags": tags,
-                    "timeout_ms": timeout_ms,
+                    "timeout_opts": timeout_opts,
                     "name": name,
                     "country_gl": country_gl,
                     "email": email,
@@ -2525,7 +2537,7 @@ class AsyncBrandResource(AsyncAPIResource):
         max_age_ms: Optional[int] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         theme: Literal["light", "dark"] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: brand_retrieve_simplified_params.TimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -2551,9 +2563,9 @@ class AsyncBrandResource(AsyncAPIResource):
 
           theme: Optional theme preference used when selecting brand assets.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -2576,7 +2588,7 @@ class AsyncBrandResource(AsyncAPIResource):
                         "max_age_ms": max_age_ms,
                         "tags": tags,
                         "theme": theme,
-                        "timeout_ms": timeout_ms,
+                        "timeout_opts": timeout_opts,
                     },
                     brand_retrieve_simplified_params.BrandRetrieveSimplifiedParams,
                 ),

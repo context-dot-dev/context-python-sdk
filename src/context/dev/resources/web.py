@@ -77,7 +77,7 @@ class WebResource(SyncAPIResource):
         json_format: Dict[str, object] | Omit = omit,
         mode: Literal["fast", "ultra"] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: web_answers_params.TimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -89,7 +89,8 @@ class WebResource(SyncAPIResource):
         Researches the live web and returns a sourced answer in your requested JSON
         shape. Select fast for a smaller research budget at 10 credits or ultra for
         deeper reasoning at 100 credits. Defaults to ultra. Fast research is limited to
-        30 seconds and ultra to 50 seconds; timeoutMS can shorten either deadline.
+        30 seconds and ultra to 50 seconds; timeoutOpts.milliseconds can shorten either
+        deadline.
 
         Args:
           task: What to research and answer, in plain language. Naming a domain in the task (for
@@ -107,9 +108,9 @@ class WebResource(SyncAPIResource):
 
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -127,7 +128,7 @@ class WebResource(SyncAPIResource):
                     "json_format": json_format,
                     "mode": mode,
                     "tags": tags,
-                    "timeout_ms": timeout_ms,
+                    "timeout_opts": timeout_opts,
                 },
                 web_answers_params.WebAnswersParams,
             ),
@@ -154,7 +155,7 @@ class WebResource(SyncAPIResource):
         settle_animations: bool | Omit = omit,
         stop_after_ms: int | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: web_extract_params.TimeoutOpts | Omit = omit,
         wait_for_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -214,9 +215,9 @@ class WebResource(SyncAPIResource):
 
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           wait_for_ms: Optional browser wait time in milliseconds after initial page load for each
               crawled page.
@@ -247,7 +248,7 @@ class WebResource(SyncAPIResource):
                     "settle_animations": settle_animations,
                     "stop_after_ms": stop_after_ms,
                     "tags": tags,
-                    "timeout_ms": timeout_ms,
+                    "timeout_opts": timeout_opts,
                     "wait_for_ms": wait_for_ms,
                 },
                 web_extract_params.WebExtractParams,
@@ -264,7 +265,7 @@ class WebResource(SyncAPIResource):
         domain: str,
         num_competitors: int | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: web_extract_competitors_params.TimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -285,9 +286,9 @@ class WebResource(SyncAPIResource):
           tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
               characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -309,7 +310,7 @@ class WebResource(SyncAPIResource):
                         "domain": domain,
                         "num_competitors": num_competitors,
                         "tags": tags,
-                        "timeout_ms": timeout_ms,
+                        "timeout_opts": timeout_opts,
                     },
                     web_extract_competitors_params.WebExtractCompetitorsParams,
                 ),
@@ -324,7 +325,7 @@ class WebResource(SyncAPIResource):
         domain: str | Omit = omit,
         max_age_ms: Optional[int] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: web_extract_fonts_params.TimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -353,9 +354,9 @@ class WebResource(SyncAPIResource):
           tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
               characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -378,7 +379,7 @@ class WebResource(SyncAPIResource):
                         "domain": domain,
                         "max_age_ms": max_age_ms,
                         "tags": tags,
-                        "timeout_ms": timeout_ms,
+                        "timeout_opts": timeout_opts,
                     },
                     web_extract_fonts_params.WebExtractFontsParams,
                 ),
@@ -394,7 +395,7 @@ class WebResource(SyncAPIResource):
         domain: str | Omit = omit,
         max_age_ms: Optional[int] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: web_extract_styleguide_params.TimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -427,9 +428,9 @@ class WebResource(SyncAPIResource):
           tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
               characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -453,7 +454,7 @@ class WebResource(SyncAPIResource):
                         "domain": domain,
                         "max_age_ms": max_age_ms,
                         "tags": tags,
-                        "timeout_ms": timeout_ms,
+                        "timeout_opts": timeout_opts,
                     },
                     web_extract_styleguide_params.WebExtractStyleguideParams,
                 ),
@@ -681,7 +682,7 @@ class WebResource(SyncAPIResource):
         page: Literal["login", "signup", "blog", "careers", "pricing", "terms", "privacy", "contact"] | Omit = omit,
         scroll_offset: Optional[int] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: web_screenshot_params.TimeoutOpts | Omit = omit,
         viewport: web_screenshot_params.Viewport | Omit = omit,
         wait_for_ms: Optional[int] | Omit = omit,
         zdr: Literal["enabled", "disabled"] | Omit = omit,
@@ -744,16 +745,17 @@ class WebResource(SyncAPIResource):
           tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
               characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           viewport: Optional browser viewport dimensions for the screenshot. Defaults to 1920x1080.
 
           wait_for_ms: Optional browser wait time in milliseconds after initial page load before taking
               the screenshot. Min: 0. Max: 30000 (30 seconds). Defaults to 3000 ms when
-              omitted. When combined with timeoutMS, timeoutMS must be at least waitForMs +
-              10000 ms; a shorter deadline is rejected with 400 TIMEOUT_TOO_SHORT_FOR_WAIT.
+              omitted. When combined with timeoutOpts, timeoutOpts.milliseconds must be at
+              least waitForMs + 10000 ms; a shorter deadline is rejected with 400
+              TIMEOUT_TOO_SHORT_FOR_WAIT.
 
           zdr: Set to enabled to bypass shared caches and omit request and response content
               from retained usage logs. Requires zero data retention to be enabled for your
@@ -788,7 +790,7 @@ class WebResource(SyncAPIResource):
                         "page": page,
                         "scroll_offset": scroll_offset,
                         "tags": tags,
-                        "timeout_ms": timeout_ms,
+                        "timeout_opts": timeout_opts,
                         "viewport": viewport,
                         "wait_for_ms": wait_for_ms,
                         "zdr": zdr,
@@ -1052,7 +1054,7 @@ class WebResource(SyncAPIResource):
         num_results: int | Omit = omit,
         query_fanout: bool | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: web_search_params.TimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1086,9 +1088,9 @@ class WebResource(SyncAPIResource):
 
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -1111,7 +1113,7 @@ class WebResource(SyncAPIResource):
                     "num_results": num_results,
                     "query_fanout": query_fanout,
                     "tags": tags,
-                    "timeout_ms": timeout_ms,
+                    "timeout_opts": timeout_opts,
                 },
                 web_search_params.WebSearchParams,
             ),
@@ -1346,7 +1348,7 @@ class WebResource(SyncAPIResource):
         shorten_base64_images: bool | Omit = omit,
         stop_after_ms: int | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: web_web_crawl_md_params.TimeoutOpts | Omit = omit,
         url_regex: str | Omit = omit,
         use_main_content_only: bool | Omit = omit,
         wait_for_ms: int | Omit = omit,
@@ -1412,9 +1414,9 @@ class WebResource(SyncAPIResource):
 
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           url_regex: Regex pattern. Only URLs matching this pattern will be followed and scraped. An
               automatic prefix scope in the form ^<starting URL> follows a redirect of the
@@ -1459,7 +1461,7 @@ class WebResource(SyncAPIResource):
                     "shorten_base64_images": shorten_base64_images,
                     "stop_after_ms": stop_after_ms,
                     "tags": tags,
-                    "timeout_ms": timeout_ms,
+                    "timeout_opts": timeout_opts,
                     "url_regex": url_regex,
                     "use_main_content_only": use_main_content_only,
                     "wait_for_ms": wait_for_ms,
@@ -1686,7 +1688,7 @@ class WebResource(SyncAPIResource):
         | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: web_web_scrape_bytes_params.TimeoutOpts | Omit = omit,
         zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -1723,9 +1725,9 @@ class WebResource(SyncAPIResource):
           tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
               characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           zdr: Set to enabled to bypass shared caches and omit request and response content
               from retained usage logs. Requires zero data retention to be enabled for your
@@ -1753,7 +1755,7 @@ class WebResource(SyncAPIResource):
                         "country": country,
                         "headers": headers,
                         "tags": tags,
-                        "timeout_ms": timeout_ms,
+                        "timeout_opts": timeout_opts,
                         "zdr": zdr,
                     },
                     web_web_scrape_bytes_params.WebWebScrapeBytesParams,
@@ -1982,7 +1984,7 @@ class WebResource(SyncAPIResource):
         pdf: web_web_scrape_html_params.Pdf | Omit = omit,
         settle_animations: bool | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: web_web_scrape_html_params.TimeoutOpts | Omit = omit,
         use_main_content_only: bool | Omit = omit,
         wait_for_ms: Optional[int] | Omit = omit,
         zdr: Literal["enabled", "disabled"] | Omit = omit,
@@ -1996,7 +1998,11 @@ class WebResource(SyncAPIResource):
         """Scrapes the given URL and returns the raw HTML content of the page.
 
         The base
-        request costs 1 credit; requests with browser actions cost 2 credits.
+        request costs 1 credit; requests with browser actions cost 2 credits. A request
+        that hits its timeoutOpts.milliseconds deadline fails with 408 and is not
+        billed, unless timeoutOpts.behavior=return-partial is set — then the page as
+        rendered so far is returned with `finalDOMState: "still-loading"` and billed at
+        the base cost of 1 credit.
 
         Args:
           url: Full URL to scrape (must include http:// or https:// protocol)
@@ -2036,17 +2042,17 @@ class WebResource(SyncAPIResource):
           tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
               characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           use_main_content_only: When true, return only the page's main content in the HTML response, excluding
               headers, footers, sidebars, and navigation when detectable.
 
           wait_for_ms:
               Optional browser wait time in milliseconds after initial page load. Min: 0. Max:
-              30000 (30 seconds). When combined with timeoutMS, timeoutMS must be at least
-              waitForMs + 10000 ms; a shorter deadline is rejected with 400
+              30000 (30 seconds). When combined with timeoutOpts, timeoutOpts.milliseconds
+              must be at least waitForMs + 10000 ms; a shorter deadline is rejected with 400
               TIMEOUT_TOO_SHORT_FOR_WAIT.
 
           zdr: Set to enabled to bypass shared caches and omit request and response content
@@ -2082,7 +2088,7 @@ class WebResource(SyncAPIResource):
                         "pdf": pdf,
                         "settle_animations": settle_animations,
                         "tags": tags,
-                        "timeout_ms": timeout_ms,
+                        "timeout_opts": timeout_opts,
                         "use_main_content_only": use_main_content_only,
                         "wait_for_ms": wait_for_ms,
                         "zdr": zdr,
@@ -2103,7 +2109,7 @@ class WebResource(SyncAPIResource):
         headers: Dict[str, str] | Omit = omit,
         max_age_ms: Optional[int] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: web_web_scrape_images_params.TimeoutOpts | Omit = omit,
         wait_for_ms: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -2144,14 +2150,14 @@ class WebResource(SyncAPIResource):
           tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
               characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           wait_for_ms: Optional browser wait time in milliseconds after initial page load before
               collecting images. Min: 0. Max: 30000 (30 seconds). When combined with
-              timeoutMS, timeoutMS must be at least waitForMs + 10000 ms; a shorter deadline
-              is rejected with 400 TIMEOUT_TOO_SHORT_FOR_WAIT.
+              timeoutOpts, timeoutOpts.milliseconds must be at least waitForMs + 10000 ms; a
+              shorter deadline is rejected with 400 TIMEOUT_TOO_SHORT_FOR_WAIT.
 
           extra_headers: Send extra headers
 
@@ -2177,7 +2183,7 @@ class WebResource(SyncAPIResource):
                         "headers": headers,
                         "max_age_ms": max_age_ms,
                         "tags": tags,
-                        "timeout_ms": timeout_ms,
+                        "timeout_opts": timeout_opts,
                         "wait_for_ms": wait_for_ms,
                     },
                     web_web_scrape_images_params.WebWebScrapeImagesParams,
@@ -2410,7 +2416,7 @@ class WebResource(SyncAPIResource):
         settle_animations: bool | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: web_web_scrape_md_params.TimeoutOpts | Omit = omit,
         use_main_content_only: bool | Omit = omit,
         wait_for_ms: Optional[int] | Omit = omit,
         zdr: Literal["enabled", "disabled"] | Omit = omit,
@@ -2443,11 +2449,11 @@ class WebResource(SyncAPIResource):
 
         | HTTP status | Billed?                                   | Meaning                                                                                                                                                                                                                                                                                                       |
         | ----------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-        | 200         | Yes — 1 credit, or 2 credits with actions | Successful scrape, including a zero-length result when includeSelectors matched nothing                                                                                                                                                                                                                       |
+        | 200         | Yes — 1 credit, or 2 credits with actions | Successful scrape, including a zero-length result when includeSelectors matched nothing. A partial result (`finalDOMState: "still-loading"`, only with timeoutOpts.behavior=return-partial) is billed at the base 1 credit with no OCR or actions surcharge                                                   |
         | 400         | No                                        | Invalid input, skipped PDF, or the page could not be scraped. error_code WEBSITE_BLOCKED specifically means the site answered with an anti-bot challenge, CAPTCHA wall, or login shell instead of the page (even when the site returned HTTP 200) — retrying later or from another country sometimes succeeds |
         | 401 / 403   | No                                        | Invalid/disabled key, insufficient permissions, or credits exhausted; inspect error_code                                                                                                                                                                                                                      |
         | 404         | No                                        | Target page returned or fingerprinted as not found                                                                                                                                                                                                                                                            |
-        | 408         | No                                        | Request timed out                                                                                                                                                                                                                                                                                             |
+        | 408         | No                                        | Request timed out. With timeoutOpts.behavior=return-partial this only happens when nothing usable had rendered by the deadline                                                                                                                                                                                |
         | 413         | No                                        | Target content exceeds the maximum supported size (20 MB)                                                                                                                                                                                                                                                     |
         | 415         | No                                        | Unsupported content type                                                                                                                                                                                                                                                                                      |
         | 429         | No                                        | Per-minute rate limit exceeded; honor Retry-After                                                                                                                                                                                                                                                             |
@@ -2502,17 +2508,17 @@ class WebResource(SyncAPIResource):
           tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
               characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           use_main_content_only: Extract only the main content of the page, excluding headers, footers, sidebars,
               and navigation
 
           wait_for_ms: Optional browser wait time in milliseconds after initial page load before
               converting the page to Markdown. Min: 0. Max: 30000 (30 seconds). When combined
-              with timeoutMS, timeoutMS must be at least waitForMs + 10000 ms; a shorter
-              deadline is rejected with 400 TIMEOUT_TOO_SHORT_FOR_WAIT.
+              with timeoutOpts, timeoutOpts.milliseconds must be at least waitForMs + 10000
+              ms; a shorter deadline is rejected with 400 TIMEOUT_TOO_SHORT_FOR_WAIT.
 
           zdr: Set to enabled to bypass shared caches and omit request and response content
               from retained usage logs. Requires zero data retention to be enabled for your
@@ -2551,7 +2557,7 @@ class WebResource(SyncAPIResource):
                         "settle_animations": settle_animations,
                         "shorten_base64_images": shorten_base64_images,
                         "tags": tags,
-                        "timeout_ms": timeout_ms,
+                        "timeout_opts": timeout_opts,
                         "use_main_content_only": use_main_content_only,
                         "wait_for_ms": wait_for_ms,
                         "zdr": zdr,
@@ -2572,7 +2578,7 @@ class WebResource(SyncAPIResource):
         search: str | Omit = omit,
         sitemap_url: str | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: web_web_scrape_sitemap_params.TimeoutOpts | Omit = omit,
         url_regex: str | Omit = omit,
         zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -2614,9 +2620,9 @@ class WebResource(SyncAPIResource):
           tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
               characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           url_regex: Optional RE2-compatible regex pattern. Only URLs matching this pattern are
               returned and counted against maxLinks.
@@ -2650,7 +2656,7 @@ class WebResource(SyncAPIResource):
                         "search": search,
                         "sitemap_url": sitemap_url,
                         "tags": tags,
-                        "timeout_ms": timeout_ms,
+                        "timeout_opts": timeout_opts,
                         "url_regex": url_regex,
                         "zdr": zdr,
                     },
@@ -2688,7 +2694,7 @@ class AsyncWebResource(AsyncAPIResource):
         json_format: Dict[str, object] | Omit = omit,
         mode: Literal["fast", "ultra"] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: web_answers_params.TimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -2700,7 +2706,8 @@ class AsyncWebResource(AsyncAPIResource):
         Researches the live web and returns a sourced answer in your requested JSON
         shape. Select fast for a smaller research budget at 10 credits or ultra for
         deeper reasoning at 100 credits. Defaults to ultra. Fast research is limited to
-        30 seconds and ultra to 50 seconds; timeoutMS can shorten either deadline.
+        30 seconds and ultra to 50 seconds; timeoutOpts.milliseconds can shorten either
+        deadline.
 
         Args:
           task: What to research and answer, in plain language. Naming a domain in the task (for
@@ -2718,9 +2725,9 @@ class AsyncWebResource(AsyncAPIResource):
 
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -2738,7 +2745,7 @@ class AsyncWebResource(AsyncAPIResource):
                     "json_format": json_format,
                     "mode": mode,
                     "tags": tags,
-                    "timeout_ms": timeout_ms,
+                    "timeout_opts": timeout_opts,
                 },
                 web_answers_params.WebAnswersParams,
             ),
@@ -2765,7 +2772,7 @@ class AsyncWebResource(AsyncAPIResource):
         settle_animations: bool | Omit = omit,
         stop_after_ms: int | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: web_extract_params.TimeoutOpts | Omit = omit,
         wait_for_ms: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -2825,9 +2832,9 @@ class AsyncWebResource(AsyncAPIResource):
 
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           wait_for_ms: Optional browser wait time in milliseconds after initial page load for each
               crawled page.
@@ -2858,7 +2865,7 @@ class AsyncWebResource(AsyncAPIResource):
                     "settle_animations": settle_animations,
                     "stop_after_ms": stop_after_ms,
                     "tags": tags,
-                    "timeout_ms": timeout_ms,
+                    "timeout_opts": timeout_opts,
                     "wait_for_ms": wait_for_ms,
                 },
                 web_extract_params.WebExtractParams,
@@ -2875,7 +2882,7 @@ class AsyncWebResource(AsyncAPIResource):
         domain: str,
         num_competitors: int | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: web_extract_competitors_params.TimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -2896,9 +2903,9 @@ class AsyncWebResource(AsyncAPIResource):
           tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
               characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -2920,7 +2927,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "domain": domain,
                         "num_competitors": num_competitors,
                         "tags": tags,
-                        "timeout_ms": timeout_ms,
+                        "timeout_opts": timeout_opts,
                     },
                     web_extract_competitors_params.WebExtractCompetitorsParams,
                 ),
@@ -2935,7 +2942,7 @@ class AsyncWebResource(AsyncAPIResource):
         domain: str | Omit = omit,
         max_age_ms: Optional[int] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: web_extract_fonts_params.TimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -2964,9 +2971,9 @@ class AsyncWebResource(AsyncAPIResource):
           tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
               characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -2989,7 +2996,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "domain": domain,
                         "max_age_ms": max_age_ms,
                         "tags": tags,
-                        "timeout_ms": timeout_ms,
+                        "timeout_opts": timeout_opts,
                     },
                     web_extract_fonts_params.WebExtractFontsParams,
                 ),
@@ -3005,7 +3012,7 @@ class AsyncWebResource(AsyncAPIResource):
         domain: str | Omit = omit,
         max_age_ms: Optional[int] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: web_extract_styleguide_params.TimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -3038,9 +3045,9 @@ class AsyncWebResource(AsyncAPIResource):
           tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
               characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -3064,7 +3071,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "domain": domain,
                         "max_age_ms": max_age_ms,
                         "tags": tags,
-                        "timeout_ms": timeout_ms,
+                        "timeout_opts": timeout_opts,
                     },
                     web_extract_styleguide_params.WebExtractStyleguideParams,
                 ),
@@ -3292,7 +3299,7 @@ class AsyncWebResource(AsyncAPIResource):
         page: Literal["login", "signup", "blog", "careers", "pricing", "terms", "privacy", "contact"] | Omit = omit,
         scroll_offset: Optional[int] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: web_screenshot_params.TimeoutOpts | Omit = omit,
         viewport: web_screenshot_params.Viewport | Omit = omit,
         wait_for_ms: Optional[int] | Omit = omit,
         zdr: Literal["enabled", "disabled"] | Omit = omit,
@@ -3355,16 +3362,17 @@ class AsyncWebResource(AsyncAPIResource):
           tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
               characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           viewport: Optional browser viewport dimensions for the screenshot. Defaults to 1920x1080.
 
           wait_for_ms: Optional browser wait time in milliseconds after initial page load before taking
               the screenshot. Min: 0. Max: 30000 (30 seconds). Defaults to 3000 ms when
-              omitted. When combined with timeoutMS, timeoutMS must be at least waitForMs +
-              10000 ms; a shorter deadline is rejected with 400 TIMEOUT_TOO_SHORT_FOR_WAIT.
+              omitted. When combined with timeoutOpts, timeoutOpts.milliseconds must be at
+              least waitForMs + 10000 ms; a shorter deadline is rejected with 400
+              TIMEOUT_TOO_SHORT_FOR_WAIT.
 
           zdr: Set to enabled to bypass shared caches and omit request and response content
               from retained usage logs. Requires zero data retention to be enabled for your
@@ -3399,7 +3407,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "page": page,
                         "scroll_offset": scroll_offset,
                         "tags": tags,
-                        "timeout_ms": timeout_ms,
+                        "timeout_opts": timeout_opts,
                         "viewport": viewport,
                         "wait_for_ms": wait_for_ms,
                         "zdr": zdr,
@@ -3663,7 +3671,7 @@ class AsyncWebResource(AsyncAPIResource):
         num_results: int | Omit = omit,
         query_fanout: bool | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: web_search_params.TimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -3697,9 +3705,9 @@ class AsyncWebResource(AsyncAPIResource):
 
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -3722,7 +3730,7 @@ class AsyncWebResource(AsyncAPIResource):
                     "num_results": num_results,
                     "query_fanout": query_fanout,
                     "tags": tags,
-                    "timeout_ms": timeout_ms,
+                    "timeout_opts": timeout_opts,
                 },
                 web_search_params.WebSearchParams,
             ),
@@ -3957,7 +3965,7 @@ class AsyncWebResource(AsyncAPIResource):
         shorten_base64_images: bool | Omit = omit,
         stop_after_ms: int | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: web_web_crawl_md_params.TimeoutOpts | Omit = omit,
         url_regex: str | Omit = omit,
         use_main_content_only: bool | Omit = omit,
         wait_for_ms: int | Omit = omit,
@@ -4023,9 +4031,9 @@ class AsyncWebResource(AsyncAPIResource):
 
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           url_regex: Regex pattern. Only URLs matching this pattern will be followed and scraped. An
               automatic prefix scope in the form ^<starting URL> follows a redirect of the
@@ -4070,7 +4078,7 @@ class AsyncWebResource(AsyncAPIResource):
                     "shorten_base64_images": shorten_base64_images,
                     "stop_after_ms": stop_after_ms,
                     "tags": tags,
-                    "timeout_ms": timeout_ms,
+                    "timeout_opts": timeout_opts,
                     "url_regex": url_regex,
                     "use_main_content_only": use_main_content_only,
                     "wait_for_ms": wait_for_ms,
@@ -4297,7 +4305,7 @@ class AsyncWebResource(AsyncAPIResource):
         | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: web_web_scrape_bytes_params.TimeoutOpts | Omit = omit,
         zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -4334,9 +4342,9 @@ class AsyncWebResource(AsyncAPIResource):
           tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
               characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           zdr: Set to enabled to bypass shared caches and omit request and response content
               from retained usage logs. Requires zero data retention to be enabled for your
@@ -4364,7 +4372,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "country": country,
                         "headers": headers,
                         "tags": tags,
-                        "timeout_ms": timeout_ms,
+                        "timeout_opts": timeout_opts,
                         "zdr": zdr,
                     },
                     web_web_scrape_bytes_params.WebWebScrapeBytesParams,
@@ -4593,7 +4601,7 @@ class AsyncWebResource(AsyncAPIResource):
         pdf: web_web_scrape_html_params.Pdf | Omit = omit,
         settle_animations: bool | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: web_web_scrape_html_params.TimeoutOpts | Omit = omit,
         use_main_content_only: bool | Omit = omit,
         wait_for_ms: Optional[int] | Omit = omit,
         zdr: Literal["enabled", "disabled"] | Omit = omit,
@@ -4607,7 +4615,11 @@ class AsyncWebResource(AsyncAPIResource):
         """Scrapes the given URL and returns the raw HTML content of the page.
 
         The base
-        request costs 1 credit; requests with browser actions cost 2 credits.
+        request costs 1 credit; requests with browser actions cost 2 credits. A request
+        that hits its timeoutOpts.milliseconds deadline fails with 408 and is not
+        billed, unless timeoutOpts.behavior=return-partial is set — then the page as
+        rendered so far is returned with `finalDOMState: "still-loading"` and billed at
+        the base cost of 1 credit.
 
         Args:
           url: Full URL to scrape (must include http:// or https:// protocol)
@@ -4647,17 +4659,17 @@ class AsyncWebResource(AsyncAPIResource):
           tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
               characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           use_main_content_only: When true, return only the page's main content in the HTML response, excluding
               headers, footers, sidebars, and navigation when detectable.
 
           wait_for_ms:
               Optional browser wait time in milliseconds after initial page load. Min: 0. Max:
-              30000 (30 seconds). When combined with timeoutMS, timeoutMS must be at least
-              waitForMs + 10000 ms; a shorter deadline is rejected with 400
+              30000 (30 seconds). When combined with timeoutOpts, timeoutOpts.milliseconds
+              must be at least waitForMs + 10000 ms; a shorter deadline is rejected with 400
               TIMEOUT_TOO_SHORT_FOR_WAIT.
 
           zdr: Set to enabled to bypass shared caches and omit request and response content
@@ -4693,7 +4705,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "pdf": pdf,
                         "settle_animations": settle_animations,
                         "tags": tags,
-                        "timeout_ms": timeout_ms,
+                        "timeout_opts": timeout_opts,
                         "use_main_content_only": use_main_content_only,
                         "wait_for_ms": wait_for_ms,
                         "zdr": zdr,
@@ -4714,7 +4726,7 @@ class AsyncWebResource(AsyncAPIResource):
         headers: Dict[str, str] | Omit = omit,
         max_age_ms: Optional[int] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: web_web_scrape_images_params.TimeoutOpts | Omit = omit,
         wait_for_ms: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -4755,14 +4767,14 @@ class AsyncWebResource(AsyncAPIResource):
           tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
               characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           wait_for_ms: Optional browser wait time in milliseconds after initial page load before
               collecting images. Min: 0. Max: 30000 (30 seconds). When combined with
-              timeoutMS, timeoutMS must be at least waitForMs + 10000 ms; a shorter deadline
-              is rejected with 400 TIMEOUT_TOO_SHORT_FOR_WAIT.
+              timeoutOpts, timeoutOpts.milliseconds must be at least waitForMs + 10000 ms; a
+              shorter deadline is rejected with 400 TIMEOUT_TOO_SHORT_FOR_WAIT.
 
           extra_headers: Send extra headers
 
@@ -4788,7 +4800,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "headers": headers,
                         "max_age_ms": max_age_ms,
                         "tags": tags,
-                        "timeout_ms": timeout_ms,
+                        "timeout_opts": timeout_opts,
                         "wait_for_ms": wait_for_ms,
                     },
                     web_web_scrape_images_params.WebWebScrapeImagesParams,
@@ -5021,7 +5033,7 @@ class AsyncWebResource(AsyncAPIResource):
         settle_animations: bool | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: web_web_scrape_md_params.TimeoutOpts | Omit = omit,
         use_main_content_only: bool | Omit = omit,
         wait_for_ms: Optional[int] | Omit = omit,
         zdr: Literal["enabled", "disabled"] | Omit = omit,
@@ -5054,11 +5066,11 @@ class AsyncWebResource(AsyncAPIResource):
 
         | HTTP status | Billed?                                   | Meaning                                                                                                                                                                                                                                                                                                       |
         | ----------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-        | 200         | Yes — 1 credit, or 2 credits with actions | Successful scrape, including a zero-length result when includeSelectors matched nothing                                                                                                                                                                                                                       |
+        | 200         | Yes — 1 credit, or 2 credits with actions | Successful scrape, including a zero-length result when includeSelectors matched nothing. A partial result (`finalDOMState: "still-loading"`, only with timeoutOpts.behavior=return-partial) is billed at the base 1 credit with no OCR or actions surcharge                                                   |
         | 400         | No                                        | Invalid input, skipped PDF, or the page could not be scraped. error_code WEBSITE_BLOCKED specifically means the site answered with an anti-bot challenge, CAPTCHA wall, or login shell instead of the page (even when the site returned HTTP 200) — retrying later or from another country sometimes succeeds |
         | 401 / 403   | No                                        | Invalid/disabled key, insufficient permissions, or credits exhausted; inspect error_code                                                                                                                                                                                                                      |
         | 404         | No                                        | Target page returned or fingerprinted as not found                                                                                                                                                                                                                                                            |
-        | 408         | No                                        | Request timed out                                                                                                                                                                                                                                                                                             |
+        | 408         | No                                        | Request timed out. With timeoutOpts.behavior=return-partial this only happens when nothing usable had rendered by the deadline                                                                                                                                                                                |
         | 413         | No                                        | Target content exceeds the maximum supported size (20 MB)                                                                                                                                                                                                                                                     |
         | 415         | No                                        | Unsupported content type                                                                                                                                                                                                                                                                                      |
         | 429         | No                                        | Per-minute rate limit exceeded; honor Retry-After                                                                                                                                                                                                                                                             |
@@ -5113,17 +5125,17 @@ class AsyncWebResource(AsyncAPIResource):
           tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
               characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           use_main_content_only: Extract only the main content of the page, excluding headers, footers, sidebars,
               and navigation
 
           wait_for_ms: Optional browser wait time in milliseconds after initial page load before
               converting the page to Markdown. Min: 0. Max: 30000 (30 seconds). When combined
-              with timeoutMS, timeoutMS must be at least waitForMs + 10000 ms; a shorter
-              deadline is rejected with 400 TIMEOUT_TOO_SHORT_FOR_WAIT.
+              with timeoutOpts, timeoutOpts.milliseconds must be at least waitForMs + 10000
+              ms; a shorter deadline is rejected with 400 TIMEOUT_TOO_SHORT_FOR_WAIT.
 
           zdr: Set to enabled to bypass shared caches and omit request and response content
               from retained usage logs. Requires zero data retention to be enabled for your
@@ -5162,7 +5174,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "settle_animations": settle_animations,
                         "shorten_base64_images": shorten_base64_images,
                         "tags": tags,
-                        "timeout_ms": timeout_ms,
+                        "timeout_opts": timeout_opts,
                         "use_main_content_only": use_main_content_only,
                         "wait_for_ms": wait_for_ms,
                         "zdr": zdr,
@@ -5183,7 +5195,7 @@ class AsyncWebResource(AsyncAPIResource):
         search: str | Omit = omit,
         sitemap_url: str | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: web_web_scrape_sitemap_params.TimeoutOpts | Omit = omit,
         url_regex: str | Omit = omit,
         zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -5225,9 +5237,9 @@ class AsyncWebResource(AsyncAPIResource):
           tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
               characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           url_regex: Optional RE2-compatible regex pattern. Only URLs matching this pattern are
               returned and counted against maxLinks.
@@ -5261,7 +5273,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "search": search,
                         "sitemap_url": sitemap_url,
                         "tags": tags,
-                        "timeout_ms": timeout_ms,
+                        "timeout_opts": timeout_opts,
                         "url_regex": url_regex,
                         "zdr": zdr,
                     },

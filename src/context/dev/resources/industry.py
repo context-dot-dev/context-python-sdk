@@ -51,7 +51,7 @@ class IndustryResource(SyncAPIResource):
         max_results: int | Omit = omit,
         min_results: int | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: industry_retrieve_naics_params.TimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -75,9 +75,9 @@ class IndustryResource(SyncAPIResource):
           tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
               characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -100,7 +100,7 @@ class IndustryResource(SyncAPIResource):
                         "max_results": max_results,
                         "min_results": min_results,
                         "tags": tags,
-                        "timeout_ms": timeout_ms,
+                        "timeout_opts": timeout_opts,
                     },
                     industry_retrieve_naics_params.IndustryRetrieveNaicsParams,
                 ),
@@ -115,7 +115,7 @@ class IndustryResource(SyncAPIResource):
         max_results: int | Omit = omit,
         min_results: int | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: industry_retrieve_sic_params.TimeoutOpts | Omit = omit,
         type: Literal["original_sic", "latest_sec"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -141,9 +141,9 @@ class IndustryResource(SyncAPIResource):
           tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
               characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           type: Which SIC dataset to classify against. `original_sic` uses the 1987 Standard
               Industrial Classification system; `latest_sec` uses the current SIC list as
@@ -170,7 +170,7 @@ class IndustryResource(SyncAPIResource):
                         "max_results": max_results,
                         "min_results": min_results,
                         "tags": tags,
-                        "timeout_ms": timeout_ms,
+                        "timeout_opts": timeout_opts,
                         "type": type,
                     },
                     industry_retrieve_sic_params.IndustryRetrieveSicParams,
@@ -207,7 +207,7 @@ class AsyncIndustryResource(AsyncAPIResource):
         max_results: int | Omit = omit,
         min_results: int | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: industry_retrieve_naics_params.TimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -231,9 +231,9 @@ class AsyncIndustryResource(AsyncAPIResource):
           tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
               characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -256,7 +256,7 @@ class AsyncIndustryResource(AsyncAPIResource):
                         "max_results": max_results,
                         "min_results": min_results,
                         "tags": tags,
-                        "timeout_ms": timeout_ms,
+                        "timeout_opts": timeout_opts,
                     },
                     industry_retrieve_naics_params.IndustryRetrieveNaicsParams,
                 ),
@@ -271,7 +271,7 @@ class AsyncIndustryResource(AsyncAPIResource):
         max_results: int | Omit = omit,
         min_results: int | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: industry_retrieve_sic_params.TimeoutOpts | Omit = omit,
         type: Literal["original_sic", "latest_sec"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -297,9 +297,9 @@ class AsyncIndustryResource(AsyncAPIResource):
           tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
               characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           type: Which SIC dataset to classify against. `original_sic` uses the 1987 Standard
               Industrial Classification system; `latest_sec` uses the current SIC list as
@@ -326,7 +326,7 @@ class AsyncIndustryResource(AsyncAPIResource):
                         "max_results": max_results,
                         "min_results": min_results,
                         "tags": tags,
-                        "timeout_ms": timeout_ms,
+                        "timeout_opts": timeout_opts,
                         "type": type,
                     },
                     industry_retrieve_sic_params.IndustryRetrieveSicParams,

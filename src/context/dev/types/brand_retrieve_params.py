@@ -11,11 +11,17 @@ from .._utils import PropertyInfo
 __all__ = [
     "BrandRetrieveParams",
     "BrandRetrieveByDomainRequest",
+    "BrandRetrieveByDomainRequestTimeoutOpts",
     "BrandRetrieveByNameRequest",
+    "BrandRetrieveByNameRequestTimeoutOpts",
     "BrandRetrieveByEmailRequest",
+    "BrandRetrieveByEmailRequestTimeoutOpts",
     "BrandRetrieveByTickerRequest",
+    "BrandRetrieveByTickerRequestTimeoutOpts",
     "BrandRetrieveByDirectURLRequest",
+    "BrandRetrieveByDirectURLRequestTimeoutOpts",
     "BrandRetrieveFromTransactionRequest",
+    "BrandRetrieveFromTransactionRequestTimeoutOpts",
 ]
 
 
@@ -169,11 +175,30 @@ class BrandRetrieveByDomainRequest(TypedDict, total=False):
     tags: SequenceNotStr[str]
     """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
 
-    timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
-    """Optional timeout in milliseconds for the request.
+    timeout_opts: Annotated[BrandRetrieveByDomainRequestTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
+    """Optional request deadline and behavior on timeout.
 
-    If the request takes longer than this value, it will be aborted with a 408
-    status code. Maximum allowed value is 300000ms (5 minutes).
+    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail
+    or a JSON-encoded timeoutOpts object.
+    """
+
+
+class BrandRetrieveByDomainRequestTimeoutOpts(TypedDict, total=False):
+    """Optional request deadline and behavior on timeout.
+
+    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded timeoutOpts object.
+    """
+
+    milliseconds: Required[int]
+    """Request deadline in milliseconds. Maximum: 300000 (5 minutes)."""
+
+    behavior: Literal["fail", "return-partial"]
+    """What to do at the deadline.
+
+    "fail" returns 408 REQUEST_TIMEOUT without charging credits. "return-partial"
+    returns usable results collected so far; if none are available, the request
+    still fails without charging credits. Partial results are not cached as complete
+    results.
     """
 
 
@@ -333,11 +358,30 @@ class BrandRetrieveByNameRequest(TypedDict, total=False):
     tags: SequenceNotStr[str]
     """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
 
-    timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
-    """Optional timeout in milliseconds for the request.
+    timeout_opts: Annotated[BrandRetrieveByNameRequestTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
+    """Optional request deadline and behavior on timeout.
 
-    If the request takes longer than this value, it will be aborted with a 408
-    status code. Maximum allowed value is 300000ms (5 minutes).
+    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail
+    or a JSON-encoded timeoutOpts object.
+    """
+
+
+class BrandRetrieveByNameRequestTimeoutOpts(TypedDict, total=False):
+    """Optional request deadline and behavior on timeout.
+
+    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded timeoutOpts object.
+    """
+
+    milliseconds: Required[int]
+    """Request deadline in milliseconds. Maximum: 300000 (5 minutes)."""
+
+    behavior: Literal["fail", "return-partial"]
+    """What to do at the deadline.
+
+    "fail" returns 408 REQUEST_TIMEOUT without charging credits. "return-partial"
+    returns usable results collected so far; if none are available, the request
+    still fails without charging credits. Partial results are not cached as complete
+    results.
     """
 
 
@@ -491,11 +535,30 @@ class BrandRetrieveByEmailRequest(TypedDict, total=False):
     tags: SequenceNotStr[str]
     """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
 
-    timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
-    """Optional timeout in milliseconds for the request.
+    timeout_opts: Annotated[BrandRetrieveByEmailRequestTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
+    """Optional request deadline and behavior on timeout.
 
-    If the request takes longer than this value, it will be aborted with a 408
-    status code. Maximum allowed value is 300000ms (5 minutes).
+    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail
+    or a JSON-encoded timeoutOpts object.
+    """
+
+
+class BrandRetrieveByEmailRequestTimeoutOpts(TypedDict, total=False):
+    """Optional request deadline and behavior on timeout.
+
+    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded timeoutOpts object.
+    """
+
+    milliseconds: Required[int]
+    """Request deadline in milliseconds. Maximum: 300000 (5 minutes)."""
+
+    behavior: Literal["fail", "return-partial"]
+    """What to do at the deadline.
+
+    "fail" returns 408 REQUEST_TIMEOUT without charging credits. "return-partial"
+    returns usable results collected so far; if none are available, the request
+    still fails without charging credits. Partial results are not cached as complete
+    results.
     """
 
 
@@ -652,11 +715,30 @@ class BrandRetrieveByTickerRequest(TypedDict, total=False):
     ticker_exchange: str
     """Optional stock exchange for the ticker. Defaults to NASDAQ if not specified."""
 
-    timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
-    """Optional timeout in milliseconds for the request.
+    timeout_opts: Annotated[BrandRetrieveByTickerRequestTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
+    """Optional request deadline and behavior on timeout.
 
-    If the request takes longer than this value, it will be aborted with a 408
-    status code. Maximum allowed value is 300000ms (5 minutes).
+    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail
+    or a JSON-encoded timeoutOpts object.
+    """
+
+
+class BrandRetrieveByTickerRequestTimeoutOpts(TypedDict, total=False):
+    """Optional request deadline and behavior on timeout.
+
+    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded timeoutOpts object.
+    """
+
+    milliseconds: Required[int]
+    """Request deadline in milliseconds. Maximum: 300000 (5 minutes)."""
+
+    behavior: Literal["fail", "return-partial"]
+    """What to do at the deadline.
+
+    "fail" returns 408 REQUEST_TIMEOUT without charging credits. "return-partial"
+    returns usable results collected so far; if none are available, the request
+    still fails without charging credits. Partial results are not cached as complete
+    results.
     """
 
 
@@ -674,11 +756,30 @@ class BrandRetrieveByDirectURLRequest(TypedDict, total=False):
     tags: SequenceNotStr[str]
     """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
 
-    timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
-    """Optional timeout in milliseconds for the request.
+    timeout_opts: Annotated[BrandRetrieveByDirectURLRequestTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
+    """Optional request deadline and behavior on timeout.
 
-    If the request takes longer than this value, it will be aborted with a 408
-    status code. Maximum allowed value is 300000ms (5 minutes).
+    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail
+    or a JSON-encoded timeoutOpts object.
+    """
+
+
+class BrandRetrieveByDirectURLRequestTimeoutOpts(TypedDict, total=False):
+    """Optional request deadline and behavior on timeout.
+
+    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded timeoutOpts object.
+    """
+
+    milliseconds: Required[int]
+    """Request deadline in milliseconds. Maximum: 300000 (5 minutes)."""
+
+    behavior: Literal["fail", "return-partial"]
+    """What to do at the deadline.
+
+    "fail" returns 408 REQUEST_TIMEOUT without charging credits. "return-partial"
+    returns usable results collected so far; if none are available, the request
+    still fails without charging credits. Partial results are not cached as complete
+    results.
     """
 
 
@@ -848,11 +949,30 @@ class BrandRetrieveFromTransactionRequest(TypedDict, total=False):
     tags: SequenceNotStr[str]
     """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
 
-    timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
-    """Optional timeout in milliseconds for the request.
+    timeout_opts: Annotated[BrandRetrieveFromTransactionRequestTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
+    """Optional request deadline and behavior on timeout.
 
-    If the request takes longer than this value, it will be aborted with a 408
-    status code. Maximum allowed value is 300000ms (5 minutes).
+    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail
+    or a JSON-encoded timeoutOpts object.
+    """
+
+
+class BrandRetrieveFromTransactionRequestTimeoutOpts(TypedDict, total=False):
+    """Optional request deadline and behavior on timeout.
+
+    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded timeoutOpts object.
+    """
+
+    milliseconds: Required[int]
+    """Request deadline in milliseconds. Maximum: 300000 (5 minutes)."""
+
+    behavior: Literal["fail", "return-partial"]
+    """What to do at the deadline.
+
+    "fail" returns 408 REQUEST_TIMEOUT without charging credits. "return-partial"
+    returns usable results collected so far; if none are available, the request
+    still fails without charging credits. Partial results are not cached as complete
+    results.
     """
 
 

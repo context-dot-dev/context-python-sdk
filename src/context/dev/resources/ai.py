@@ -50,7 +50,7 @@ class AIResource(SyncAPIResource):
         url: str,
         max_age_ms: int | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: ai_extract_product_params.TimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -71,9 +71,9 @@ class AIResource(SyncAPIResource):
 
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -90,7 +90,7 @@ class AIResource(SyncAPIResource):
                     "url": url,
                     "max_age_ms": max_age_ms,
                     "tags": tags,
-                    "timeout_ms": timeout_ms,
+                    "timeout_opts": timeout_opts,
                 },
                 ai_extract_product_params.AIExtractProductParams,
             ),
@@ -108,7 +108,7 @@ class AIResource(SyncAPIResource):
         max_age_ms: int | Omit = omit,
         max_products: int | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: ai_extract_products_params.ByDomainTimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -133,9 +133,9 @@ class AIResource(SyncAPIResource):
 
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -155,7 +155,7 @@ class AIResource(SyncAPIResource):
         max_age_ms: int | Omit = omit,
         max_products: int | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: ai_extract_products_params.ByDirectURLTimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -181,9 +181,9 @@ class AIResource(SyncAPIResource):
 
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -203,7 +203,9 @@ class AIResource(SyncAPIResource):
         max_age_ms: int | Omit = omit,
         max_products: int | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: ai_extract_products_params.ByDomainTimeoutOpts
+        | ai_extract_products_params.ByDirectURLTimeoutOpts
+        | Omit = omit,
         direct_url: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -220,7 +222,7 @@ class AIResource(SyncAPIResource):
                     "max_age_ms": max_age_ms,
                     "max_products": max_products,
                     "tags": tags,
-                    "timeout_ms": timeout_ms,
+                    "timeout_opts": timeout_opts,
                     "direct_url": direct_url,
                 },
                 ai_extract_products_params.AIExtractProductsParams,
@@ -258,7 +260,7 @@ class AsyncAIResource(AsyncAPIResource):
         url: str,
         max_age_ms: int | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: ai_extract_product_params.TimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -279,9 +281,9 @@ class AsyncAIResource(AsyncAPIResource):
 
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -298,7 +300,7 @@ class AsyncAIResource(AsyncAPIResource):
                     "url": url,
                     "max_age_ms": max_age_ms,
                     "tags": tags,
-                    "timeout_ms": timeout_ms,
+                    "timeout_opts": timeout_opts,
                 },
                 ai_extract_product_params.AIExtractProductParams,
             ),
@@ -316,7 +318,7 @@ class AsyncAIResource(AsyncAPIResource):
         max_age_ms: int | Omit = omit,
         max_products: int | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: ai_extract_products_params.ByDomainTimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -341,9 +343,9 @@ class AsyncAIResource(AsyncAPIResource):
 
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -363,7 +365,7 @@ class AsyncAIResource(AsyncAPIResource):
         max_age_ms: int | Omit = omit,
         max_products: int | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: ai_extract_products_params.ByDirectURLTimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -389,9 +391,9 @@ class AsyncAIResource(AsyncAPIResource):
 
           tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
 
-          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
-              than this value, it will be aborted with a 408 status code. Maximum allowed
-              value is 300000ms (5 minutes).
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
 
           extra_headers: Send extra headers
 
@@ -411,7 +413,9 @@ class AsyncAIResource(AsyncAPIResource):
         max_age_ms: int | Omit = omit,
         max_products: int | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
-        timeout_ms: int | Omit = omit,
+        timeout_opts: ai_extract_products_params.ByDomainTimeoutOpts
+        | ai_extract_products_params.ByDirectURLTimeoutOpts
+        | Omit = omit,
         direct_url: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -428,7 +432,7 @@ class AsyncAIResource(AsyncAPIResource):
                     "max_age_ms": max_age_ms,
                     "max_products": max_products,
                     "tags": tags,
-                    "timeout_ms": timeout_ms,
+                    "timeout_opts": timeout_opts,
                     "direct_url": direct_url,
                 },
                 ai_extract_products_params.AIExtractProductsParams,

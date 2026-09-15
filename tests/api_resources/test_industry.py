@@ -36,7 +36,10 @@ class TestIndustry:
             max_results=1,
             min_results=1,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(IndustryRetrieveNaicsResponse, industry, path=["response"])
 
@@ -82,7 +85,10 @@ class TestIndustry:
             max_results=1,
             min_results=1,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
             type="original_sic",
         )
         assert_matches_type(IndustryRetrieveSicResponse, industry, path=["response"])
@@ -135,7 +141,10 @@ class TestAsyncIndustry:
             max_results=1,
             min_results=1,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(IndustryRetrieveNaicsResponse, industry, path=["response"])
 
@@ -181,7 +190,10 @@ class TestAsyncIndustry:
             max_results=1,
             min_results=1,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
             type="original_sic",
         )
         assert_matches_type(IndustryRetrieveSicResponse, industry, path=["response"])

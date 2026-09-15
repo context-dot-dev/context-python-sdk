@@ -726,5 +726,11 @@ class BrandRetrieveResponse(BaseModel):
     key_metadata: Optional[KeyMetadata] = None
     """Credit usage, included whenever a valid API key is provided."""
 
+    partial: Optional[bool] = None
+    """
+    True when the timeout ended processing and this response contains the usable
+    data completed so far. Unfinished fields are omitted.
+    """
+
     status: Optional[str] = None
     """Status of the response, e.g., 'ok'"""

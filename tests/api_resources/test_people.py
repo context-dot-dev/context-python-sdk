@@ -54,7 +54,10 @@ class TestPeople:
             },
             social_urls=["https://www.linkedin.com/in/ada-lovelace/"],
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(PersonEnrichResponse, person, path=["response"])
 
@@ -123,7 +126,10 @@ class TestAsyncPeople:
             },
             social_urls=["https://www.linkedin.com/in/ada-lovelace/"],
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(PersonEnrichResponse, person, path=["response"])
 

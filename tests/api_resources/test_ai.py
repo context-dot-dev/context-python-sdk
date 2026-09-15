@@ -35,7 +35,10 @@ class TestAI:
             url="https://example.com",
             max_age_ms=0,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(AIExtractProductResponse, ai, path=["response"])
 
@@ -81,7 +84,10 @@ class TestAI:
             max_age_ms=0,
             max_products=1,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(AIExtractProductsResponse, ai, path=["response"])
 
@@ -127,7 +133,10 @@ class TestAI:
             max_age_ms=0,
             max_products=1,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(AIExtractProductsResponse, ai, path=["response"])
 
@@ -178,7 +187,10 @@ class TestAsyncAI:
             url="https://example.com",
             max_age_ms=0,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(AIExtractProductResponse, ai, path=["response"])
 
@@ -224,7 +236,10 @@ class TestAsyncAI:
             max_age_ms=0,
             max_products=1,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(AIExtractProductsResponse, ai, path=["response"])
 
@@ -270,7 +285,10 @@ class TestAsyncAI:
             max_age_ms=0,
             max_products=1,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(AIExtractProductsResponse, ai, path=["response"])
 

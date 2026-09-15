@@ -29,3 +29,9 @@ class WebAnswersResponse(BaseModel):
 
     key_metadata: Optional[KeyMetadata] = None
     """Credit usage, included whenever a valid API key is provided."""
+
+    partial: Optional[bool] = None
+    """
+    True when the request deadline ended research and the answer uses the evidence
+    collected so far.
+    """

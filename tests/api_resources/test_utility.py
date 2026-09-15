@@ -33,7 +33,10 @@ class TestUtility:
             identifier={"domain": "xxx"},
             type="brand",
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(UtilityPrefetchResponse, utility, path=["response"])
 
@@ -87,7 +90,10 @@ class TestAsyncUtility:
             identifier={"domain": "xxx"},
             type="brand",
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(UtilityPrefetchResponse, utility, path=["response"])
 

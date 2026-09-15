@@ -56,6 +56,16 @@ class WebScreenshotResponse(BaseModel):
     domain: Optional[str] = None
     """The normalized domain that was processed"""
 
+    final_dom_state: Optional[Literal["loaded", "still-loading"]] = FieldInfo(alias="finalDOMState", default=None)
+    """How complete the returned content is.
+
+    `loaded` means the page finished the waits the request asked for.
+    `still-loading` only occurs with timeoutOpts.behavior=return-partial: the
+    timeoutOpts.milliseconds deadline was reached first, so the content reflects the
+    DOM at that moment and late-rendering parts may be missing. Partial results are
+    billed at the base request cost.
+    """
+
     height: Optional[int] = None
     """Height in pixels of the returned screenshot image"""
 
