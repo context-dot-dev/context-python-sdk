@@ -18,6 +18,7 @@ from context.dev.types import (
     WebWebScrapeMdResponse,
     WebExtractFontsResponse,
     WebWebScrapeHTMLResponse,
+    WebWebScrapeBytesResponse,
     WebWebScrapeImagesResponse,
     WebWebScrapeSitemapResponse,
     WebExtractStyleguideResponse,
@@ -477,6 +478,53 @@ class TestWeb:
 
             web = response.parse()
             assert_matches_type(WebWebCrawlMdResponse, web, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_web_scrape_bytes(self, client: ContextDev) -> None:
+        web = client.web.web_scrape_bytes(
+            url="https://example.com",
+        )
+        assert_matches_type(WebWebScrapeBytesResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_web_scrape_bytes_with_all_params(self, client: ContextDev) -> None:
+        web = client.web.web_scrape_bytes(
+            url="https://example.com",
+            country="de",
+            headers={"foo": "J!"},
+            tags=["production", "team-alpha"],
+            timeout_ms=1,
+            zdr="enabled",
+        )
+        assert_matches_type(WebWebScrapeBytesResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_web_scrape_bytes(self, client: ContextDev) -> None:
+        response = client.web.with_raw_response.web_scrape_bytes(
+            url="https://example.com",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        web = response.parse()
+        assert_matches_type(WebWebScrapeBytesResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_web_scrape_bytes(self, client: ContextDev) -> None:
+        with client.web.with_streaming_response.web_scrape_bytes(
+            url="https://example.com",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            web = response.parse()
+            assert_matches_type(WebWebScrapeBytesResponse, web, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -1180,6 +1228,53 @@ class TestAsyncWeb:
 
             web = await response.parse()
             assert_matches_type(WebWebCrawlMdResponse, web, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_web_scrape_bytes(self, async_client: AsyncContextDev) -> None:
+        web = await async_client.web.web_scrape_bytes(
+            url="https://example.com",
+        )
+        assert_matches_type(WebWebScrapeBytesResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_web_scrape_bytes_with_all_params(self, async_client: AsyncContextDev) -> None:
+        web = await async_client.web.web_scrape_bytes(
+            url="https://example.com",
+            country="de",
+            headers={"foo": "J!"},
+            tags=["production", "team-alpha"],
+            timeout_ms=1,
+            zdr="enabled",
+        )
+        assert_matches_type(WebWebScrapeBytesResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_web_scrape_bytes(self, async_client: AsyncContextDev) -> None:
+        response = await async_client.web.with_raw_response.web_scrape_bytes(
+            url="https://example.com",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        web = await response.parse()
+        assert_matches_type(WebWebScrapeBytesResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_web_scrape_bytes(self, async_client: AsyncContextDev) -> None:
+        async with async_client.web.with_streaming_response.web_scrape_bytes(
+            url="https://example.com",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            web = await response.parse()
+            assert_matches_type(WebWebScrapeBytesResponse, web, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

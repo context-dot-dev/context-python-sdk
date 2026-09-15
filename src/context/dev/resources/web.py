@@ -16,6 +16,7 @@ from ..types import (
     web_extract_fonts_params,
     web_web_scrape_md_params,
     web_web_scrape_html_params,
+    web_web_scrape_bytes_params,
     web_web_scrape_images_params,
     web_extract_styleguide_params,
     web_web_scrape_sitemap_params,
@@ -40,6 +41,7 @@ from ..types.web_web_crawl_md_response import WebWebCrawlMdResponse
 from ..types.web_extract_fonts_response import WebExtractFontsResponse
 from ..types.web_web_scrape_md_response import WebWebScrapeMdResponse
 from ..types.web_web_scrape_html_response import WebWebScrapeHTMLResponse
+from ..types.web_web_scrape_bytes_response import WebWebScrapeBytesResponse
 from ..types.web_web_scrape_images_response import WebWebScrapeImagesResponse
 from ..types.web_extract_styleguide_response import WebExtractStyleguideResponse
 from ..types.web_web_scrape_sitemap_response import WebWebScrapeSitemapResponse
@@ -1469,6 +1471,295 @@ class WebResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=WebWebCrawlMdResponse,
+        )
+
+    def web_scrape_bytes(
+        self,
+        *,
+        url: str,
+        country: Literal[
+            "ad",
+            "ae",
+            "af",
+            "ag",
+            "ai",
+            "al",
+            "am",
+            "ao",
+            "ar",
+            "at",
+            "au",
+            "aw",
+            "az",
+            "ba",
+            "bb",
+            "bd",
+            "be",
+            "bf",
+            "bg",
+            "bh",
+            "bi",
+            "bj",
+            "bm",
+            "bn",
+            "bo",
+            "bq",
+            "br",
+            "bs",
+            "bw",
+            "by",
+            "bz",
+            "ca",
+            "cd",
+            "cf",
+            "cg",
+            "ch",
+            "ci",
+            "cl",
+            "cm",
+            "cn",
+            "co",
+            "cr",
+            "cv",
+            "cw",
+            "cy",
+            "cz",
+            "de",
+            "dj",
+            "dk",
+            "dm",
+            "do",
+            "dz",
+            "ec",
+            "ee",
+            "eg",
+            "es",
+            "et",
+            "fi",
+            "fj",
+            "fr",
+            "ga",
+            "gb",
+            "gd",
+            "ge",
+            "gf",
+            "gg",
+            "gh",
+            "gm",
+            "gn",
+            "gp",
+            "gq",
+            "gr",
+            "gt",
+            "gu",
+            "gw",
+            "gy",
+            "hk",
+            "hn",
+            "hr",
+            "ht",
+            "hu",
+            "id",
+            "ie",
+            "il",
+            "im",
+            "in",
+            "iq",
+            "ir",
+            "is",
+            "it",
+            "je",
+            "jm",
+            "jo",
+            "jp",
+            "ke",
+            "kg",
+            "kh",
+            "kn",
+            "kr",
+            "kw",
+            "ky",
+            "kz",
+            "la",
+            "lb",
+            "lc",
+            "lk",
+            "lr",
+            "ls",
+            "lt",
+            "lu",
+            "lv",
+            "ly",
+            "ma",
+            "mc",
+            "md",
+            "me",
+            "mf",
+            "mg",
+            "mk",
+            "ml",
+            "mm",
+            "mn",
+            "mo",
+            "mq",
+            "mr",
+            "mt",
+            "mu",
+            "mv",
+            "mw",
+            "mx",
+            "my",
+            "mz",
+            "na",
+            "nc",
+            "ne",
+            "ng",
+            "ni",
+            "nl",
+            "no",
+            "np",
+            "nz",
+            "om",
+            "pa",
+            "pe",
+            "pf",
+            "pg",
+            "ph",
+            "pk",
+            "pl",
+            "pr",
+            "ps",
+            "pt",
+            "py",
+            "qa",
+            "re",
+            "ro",
+            "rs",
+            "ru",
+            "rw",
+            "sa",
+            "sc",
+            "sd",
+            "se",
+            "sg",
+            "si",
+            "sk",
+            "sl",
+            "sm",
+            "sn",
+            "so",
+            "sr",
+            "ss",
+            "st",
+            "sv",
+            "sx",
+            "sy",
+            "sz",
+            "tc",
+            "td",
+            "tg",
+            "th",
+            "tj",
+            "tl",
+            "tm",
+            "tn",
+            "tr",
+            "tt",
+            "tw",
+            "tz",
+            "ua",
+            "ug",
+            "us",
+            "uy",
+            "uz",
+            "vc",
+            "ve",
+            "vg",
+            "vi",
+            "vn",
+            "ye",
+            "yt",
+            "za",
+            "zm",
+            "zw",
+        ]
+        | Omit = omit,
+        headers: Dict[str, str] | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
+        timeout_ms: int | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WebWebScrapeBytesResponse:
+        """Downloads a resource and returns its bytes as base64.
+
+        Supports images, PDFs,
+        HTML pages, and any other content type without image conversion, text
+        extraction, or character-encoding changes. HTTP compression is decoded before
+        base64 encoding. HTML is the original HTTP response; JavaScript is not rendered.
+        Follows public redirects and retries failed downloads through ISP and
+        residential proxies, with a direct fallback. When country is specified, only a
+        residential proxy in that country is used. Supply headers such as Referer for
+        images that require a referring page. Downloads are not cached. Maximum decoded
+        resource size: 20 MiB (20971520 bytes), before base64 encoding. Successful
+        requests cost 1 credit; errors are not billed.
+
+        Args:
+          url: Full HTTP(S) URL of the resource to download, such as an image, PDF, or page.
+
+          country: Fetch the target page through a residential proxy in this country (ISO 3166-1
+              alpha-2).
+
+          headers: Optional outbound HTTP headers, such as Referer, Cookie, or Authorization. Send
+              as a JSON object or deep-object query params such as
+              headers[Referer]=https://example.com/. Host, Content-Length, and hop-by-hop
+              transport headers are rejected. Authorization and cookies are removed when a
+              redirect changes origin.
+
+          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
+              characters.
+
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Requires zero data retention to be enabled for your
+              organization (contact support@context.dev), otherwise the request fails with
+              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._get(
+            "/web/scrape/bytes",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "url": url,
+                        "country": country,
+                        "headers": headers,
+                        "tags": tags,
+                        "timeout_ms": timeout_ms,
+                        "zdr": zdr,
+                    },
+                    web_web_scrape_bytes_params.WebWebScrapeBytesParams,
+                ),
+            ),
+            cast_to=WebWebScrapeBytesResponse,
         )
 
     def web_scrape_html(
@@ -3793,6 +4084,295 @@ class AsyncWebResource(AsyncAPIResource):
             cast_to=WebWebCrawlMdResponse,
         )
 
+    async def web_scrape_bytes(
+        self,
+        *,
+        url: str,
+        country: Literal[
+            "ad",
+            "ae",
+            "af",
+            "ag",
+            "ai",
+            "al",
+            "am",
+            "ao",
+            "ar",
+            "at",
+            "au",
+            "aw",
+            "az",
+            "ba",
+            "bb",
+            "bd",
+            "be",
+            "bf",
+            "bg",
+            "bh",
+            "bi",
+            "bj",
+            "bm",
+            "bn",
+            "bo",
+            "bq",
+            "br",
+            "bs",
+            "bw",
+            "by",
+            "bz",
+            "ca",
+            "cd",
+            "cf",
+            "cg",
+            "ch",
+            "ci",
+            "cl",
+            "cm",
+            "cn",
+            "co",
+            "cr",
+            "cv",
+            "cw",
+            "cy",
+            "cz",
+            "de",
+            "dj",
+            "dk",
+            "dm",
+            "do",
+            "dz",
+            "ec",
+            "ee",
+            "eg",
+            "es",
+            "et",
+            "fi",
+            "fj",
+            "fr",
+            "ga",
+            "gb",
+            "gd",
+            "ge",
+            "gf",
+            "gg",
+            "gh",
+            "gm",
+            "gn",
+            "gp",
+            "gq",
+            "gr",
+            "gt",
+            "gu",
+            "gw",
+            "gy",
+            "hk",
+            "hn",
+            "hr",
+            "ht",
+            "hu",
+            "id",
+            "ie",
+            "il",
+            "im",
+            "in",
+            "iq",
+            "ir",
+            "is",
+            "it",
+            "je",
+            "jm",
+            "jo",
+            "jp",
+            "ke",
+            "kg",
+            "kh",
+            "kn",
+            "kr",
+            "kw",
+            "ky",
+            "kz",
+            "la",
+            "lb",
+            "lc",
+            "lk",
+            "lr",
+            "ls",
+            "lt",
+            "lu",
+            "lv",
+            "ly",
+            "ma",
+            "mc",
+            "md",
+            "me",
+            "mf",
+            "mg",
+            "mk",
+            "ml",
+            "mm",
+            "mn",
+            "mo",
+            "mq",
+            "mr",
+            "mt",
+            "mu",
+            "mv",
+            "mw",
+            "mx",
+            "my",
+            "mz",
+            "na",
+            "nc",
+            "ne",
+            "ng",
+            "ni",
+            "nl",
+            "no",
+            "np",
+            "nz",
+            "om",
+            "pa",
+            "pe",
+            "pf",
+            "pg",
+            "ph",
+            "pk",
+            "pl",
+            "pr",
+            "ps",
+            "pt",
+            "py",
+            "qa",
+            "re",
+            "ro",
+            "rs",
+            "ru",
+            "rw",
+            "sa",
+            "sc",
+            "sd",
+            "se",
+            "sg",
+            "si",
+            "sk",
+            "sl",
+            "sm",
+            "sn",
+            "so",
+            "sr",
+            "ss",
+            "st",
+            "sv",
+            "sx",
+            "sy",
+            "sz",
+            "tc",
+            "td",
+            "tg",
+            "th",
+            "tj",
+            "tl",
+            "tm",
+            "tn",
+            "tr",
+            "tt",
+            "tw",
+            "tz",
+            "ua",
+            "ug",
+            "us",
+            "uy",
+            "uz",
+            "vc",
+            "ve",
+            "vg",
+            "vi",
+            "vn",
+            "ye",
+            "yt",
+            "za",
+            "zm",
+            "zw",
+        ]
+        | Omit = omit,
+        headers: Dict[str, str] | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
+        timeout_ms: int | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WebWebScrapeBytesResponse:
+        """Downloads a resource and returns its bytes as base64.
+
+        Supports images, PDFs,
+        HTML pages, and any other content type without image conversion, text
+        extraction, or character-encoding changes. HTTP compression is decoded before
+        base64 encoding. HTML is the original HTTP response; JavaScript is not rendered.
+        Follows public redirects and retries failed downloads through ISP and
+        residential proxies, with a direct fallback. When country is specified, only a
+        residential proxy in that country is used. Supply headers such as Referer for
+        images that require a referring page. Downloads are not cached. Maximum decoded
+        resource size: 20 MiB (20971520 bytes), before base64 encoding. Successful
+        requests cost 1 credit; errors are not billed.
+
+        Args:
+          url: Full HTTP(S) URL of the resource to download, such as an image, PDF, or page.
+
+          country: Fetch the target page through a residential proxy in this country (ISO 3166-1
+              alpha-2).
+
+          headers: Optional outbound HTTP headers, such as Referer, Cookie, or Authorization. Send
+              as a JSON object or deep-object query params such as
+              headers[Referer]=https://example.com/. Host, Content-Length, and hop-by-hop
+              transport headers are rejected. Authorization and cookies are removed when a
+              redirect changes origin.
+
+          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
+              characters.
+
+          timeout_ms: Optional timeout in milliseconds for the request. If the request takes longer
+              than this value, it will be aborted with a 408 status code. Maximum allowed
+              value is 300000ms (5 minutes).
+
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Requires zero data retention to be enabled for your
+              organization (contact support@context.dev), otherwise the request fails with
+              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._get(
+            "/web/scrape/bytes",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "url": url,
+                        "country": country,
+                        "headers": headers,
+                        "tags": tags,
+                        "timeout_ms": timeout_ms,
+                        "zdr": zdr,
+                    },
+                    web_web_scrape_bytes_params.WebWebScrapeBytesParams,
+                ),
+            ),
+            cast_to=WebWebScrapeBytesResponse,
+        )
+
     async def web_scrape_html(
         self,
         *,
@@ -4720,6 +5300,9 @@ class WebResourceWithRawResponse:
         self.web_crawl_md = to_raw_response_wrapper(
             web.web_crawl_md,
         )
+        self.web_scrape_bytes = to_raw_response_wrapper(
+            web.web_scrape_bytes,
+        )
         self.web_scrape_html = to_raw_response_wrapper(
             web.web_scrape_html,
         )
@@ -4761,6 +5344,9 @@ class AsyncWebResourceWithRawResponse:
         )
         self.web_crawl_md = async_to_raw_response_wrapper(
             web.web_crawl_md,
+        )
+        self.web_scrape_bytes = async_to_raw_response_wrapper(
+            web.web_scrape_bytes,
         )
         self.web_scrape_html = async_to_raw_response_wrapper(
             web.web_scrape_html,
@@ -4804,6 +5390,9 @@ class WebResourceWithStreamingResponse:
         self.web_crawl_md = to_streamed_response_wrapper(
             web.web_crawl_md,
         )
+        self.web_scrape_bytes = to_streamed_response_wrapper(
+            web.web_scrape_bytes,
+        )
         self.web_scrape_html = to_streamed_response_wrapper(
             web.web_scrape_html,
         )
@@ -4845,6 +5434,9 @@ class AsyncWebResourceWithStreamingResponse:
         )
         self.web_crawl_md = async_to_streamed_response_wrapper(
             web.web_crawl_md,
+        )
+        self.web_scrape_bytes = async_to_streamed_response_wrapper(
+            web.web_scrape_bytes,
         )
         self.web_scrape_html = async_to_streamed_response_wrapper(
             web.web_scrape_html,
