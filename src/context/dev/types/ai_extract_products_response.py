@@ -110,5 +110,12 @@ class AIExtractProductsResponse(BaseModel):
     key_metadata: Optional[KeyMetadata] = None
     """Credit usage, included whenever a valid API key is provided."""
 
+    partial: Optional[bool] = None
+    """
+    True when timeoutOpts.behavior=return-partial returned the usable results
+    collected before the deadline. Partial collections are not cached as complete
+    results.
+    """
+
     products: Optional[List[Product]] = None
     """Array of products extracted from the website"""

@@ -50,7 +50,10 @@ class TestWeb:
             },
             mode="fast",
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(WebAnswersResponse, web, path=["response"])
 
@@ -126,7 +129,10 @@ class TestWeb:
             settle_animations=True,
             stop_after_ms=10000,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
             wait_for_ms=0,
         )
         assert_matches_type(WebExtractResponse, web, path=["response"])
@@ -184,7 +190,10 @@ class TestWeb:
             domain="xxx",
             num_competitors=1,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(WebExtractCompetitorsResponse, web, path=["response"])
 
@@ -228,7 +237,10 @@ class TestWeb:
             domain="xxx",
             max_age_ms=0,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(WebExtractFontsResponse, web, path=["response"])
 
@@ -269,7 +281,10 @@ class TestWeb:
             domain="xxx",
             max_age_ms=0,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(WebExtractStyleguideResponse, web, path=["response"])
 
@@ -316,7 +331,10 @@ class TestWeb:
             page="login",
             scroll_offset=0,
             tags=["production", "team-alpha"],
-            timeout_ms=1,
+            timeout_opts={
+                "milliseconds": 1,
+                "behavior": "fail",
+            },
             viewport={
                 "height": 240,
                 "width": 240,
@@ -377,14 +395,20 @@ class TestWeb:
                     "start": 1,
                 },
                 "shorten_base64_images": True,
-                "timeout_ms": 1000,
+                "timeout_opts": {
+                    "milliseconds": 1,
+                    "behavior": "fail",
+                },
                 "use_main_content_only": True,
                 "wait_for_ms": 0,
             },
             num_results=10,
             query_fanout=True,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(WebSearchResponse, web, path=["response"])
 
@@ -447,7 +471,10 @@ class TestWeb:
             shorten_base64_images=True,
             stop_after_ms=10000,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
             url_regex="^https?://[^/]+/blog/",
             use_main_content_only=True,
             wait_for_ms=0,
@@ -497,7 +524,10 @@ class TestWeb:
             country="de",
             headers={"foo": "J!"},
             tags=["production", "team-alpha"],
-            timeout_ms=1,
+            timeout_opts={
+                "milliseconds": 1,
+                "behavior": "fail",
+            },
             zdr="enabled",
         )
         assert_matches_type(WebWebScrapeBytesResponse, web, path=["response"])
@@ -561,7 +591,10 @@ class TestWeb:
             },
             settle_animations=True,
             tags=["production", "team-alpha"],
-            timeout_ms=1,
+            timeout_opts={
+                "milliseconds": 1,
+                "behavior": "fail",
+            },
             use_main_content_only=True,
             wait_for_ms=0,
             zdr="enabled",
@@ -623,7 +656,10 @@ class TestWeb:
             headers={"foo": "J!"},
             max_age_ms=0,
             tags=["production", "team-alpha"],
-            timeout_ms=1,
+            timeout_opts={
+                "milliseconds": 1,
+                "behavior": "fail",
+            },
             wait_for_ms=0,
         )
         assert_matches_type(WebWebScrapeImagesResponse, web, path=["response"])
@@ -691,7 +727,10 @@ class TestWeb:
             settle_animations=True,
             shorten_base64_images=True,
             tags=["production", "team-alpha"],
-            timeout_ms=1,
+            timeout_opts={
+                "milliseconds": 1,
+                "behavior": "fail",
+            },
             use_main_content_only=True,
             wait_for_ms=0,
             zdr="enabled",
@@ -743,7 +782,10 @@ class TestWeb:
             search="help center and troubleshooting articles",
             sitemap_url="https://example.com",
             tags=["production", "team-alpha"],
-            timeout_ms=1,
+            timeout_opts={
+                "milliseconds": 1,
+                "behavior": "fail",
+            },
             url_regex="^https?://[^/]+/blog/",
             zdr="enabled",
         )
@@ -800,7 +842,10 @@ class TestAsyncWeb:
             },
             mode="fast",
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(WebAnswersResponse, web, path=["response"])
 
@@ -876,7 +921,10 @@ class TestAsyncWeb:
             settle_animations=True,
             stop_after_ms=10000,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
             wait_for_ms=0,
         )
         assert_matches_type(WebExtractResponse, web, path=["response"])
@@ -934,7 +982,10 @@ class TestAsyncWeb:
             domain="xxx",
             num_competitors=1,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(WebExtractCompetitorsResponse, web, path=["response"])
 
@@ -978,7 +1029,10 @@ class TestAsyncWeb:
             domain="xxx",
             max_age_ms=0,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(WebExtractFontsResponse, web, path=["response"])
 
@@ -1019,7 +1073,10 @@ class TestAsyncWeb:
             domain="xxx",
             max_age_ms=0,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(WebExtractStyleguideResponse, web, path=["response"])
 
@@ -1066,7 +1123,10 @@ class TestAsyncWeb:
             page="login",
             scroll_offset=0,
             tags=["production", "team-alpha"],
-            timeout_ms=1,
+            timeout_opts={
+                "milliseconds": 1,
+                "behavior": "fail",
+            },
             viewport={
                 "height": 240,
                 "width": 240,
@@ -1127,14 +1187,20 @@ class TestAsyncWeb:
                     "start": 1,
                 },
                 "shorten_base64_images": True,
-                "timeout_ms": 1000,
+                "timeout_opts": {
+                    "milliseconds": 1,
+                    "behavior": "fail",
+                },
                 "use_main_content_only": True,
                 "wait_for_ms": 0,
             },
             num_results=10,
             query_fanout=True,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(WebSearchResponse, web, path=["response"])
 
@@ -1197,7 +1263,10 @@ class TestAsyncWeb:
             shorten_base64_images=True,
             stop_after_ms=10000,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
             url_regex="^https?://[^/]+/blog/",
             use_main_content_only=True,
             wait_for_ms=0,
@@ -1247,7 +1316,10 @@ class TestAsyncWeb:
             country="de",
             headers={"foo": "J!"},
             tags=["production", "team-alpha"],
-            timeout_ms=1,
+            timeout_opts={
+                "milliseconds": 1,
+                "behavior": "fail",
+            },
             zdr="enabled",
         )
         assert_matches_type(WebWebScrapeBytesResponse, web, path=["response"])
@@ -1311,7 +1383,10 @@ class TestAsyncWeb:
             },
             settle_animations=True,
             tags=["production", "team-alpha"],
-            timeout_ms=1,
+            timeout_opts={
+                "milliseconds": 1,
+                "behavior": "fail",
+            },
             use_main_content_only=True,
             wait_for_ms=0,
             zdr="enabled",
@@ -1373,7 +1448,10 @@ class TestAsyncWeb:
             headers={"foo": "J!"},
             max_age_ms=0,
             tags=["production", "team-alpha"],
-            timeout_ms=1,
+            timeout_opts={
+                "milliseconds": 1,
+                "behavior": "fail",
+            },
             wait_for_ms=0,
         )
         assert_matches_type(WebWebScrapeImagesResponse, web, path=["response"])
@@ -1441,7 +1519,10 @@ class TestAsyncWeb:
             settle_animations=True,
             shorten_base64_images=True,
             tags=["production", "team-alpha"],
-            timeout_ms=1,
+            timeout_opts={
+                "milliseconds": 1,
+                "behavior": "fail",
+            },
             use_main_content_only=True,
             wait_for_ms=0,
             zdr="enabled",
@@ -1493,7 +1574,10 @@ class TestAsyncWeb:
             search="help center and troubleshooting articles",
             sitemap_url="https://example.com",
             tags=["production", "team-alpha"],
-            timeout_ms=1,
+            timeout_opts={
+                "milliseconds": 1,
+                "behavior": "fail",
+            },
             url_regex="^https?://[^/]+/blog/",
             zdr="enabled",
         )

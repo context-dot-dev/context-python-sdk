@@ -177,5 +177,11 @@ class BrandRetrieveSimplifiedResponse(BaseModel):
     key_metadata: Optional[KeyMetadata] = None
     """Credit usage, included whenever a valid API key is provided."""
 
+    partial: Optional[bool] = None
+    """
+    True when the timeout ended processing and only completed brand data is
+    returned.
+    """
+
     status: Optional[str] = None
     """Status of the response, e.g., 'ok'"""

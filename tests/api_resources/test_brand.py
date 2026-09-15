@@ -40,7 +40,10 @@ class TestBrand:
             max_age_ms=0,
             max_speed=True,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
@@ -92,7 +95,10 @@ class TestBrand:
             max_age_ms=0,
             max_speed=True,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
@@ -143,7 +149,10 @@ class TestBrand:
             max_age_ms=0,
             max_speed=True,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
@@ -195,7 +204,10 @@ class TestBrand:
             max_speed=True,
             tags=["production", "team-alpha"],
             ticker_exchange="ticker_exchange",
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
@@ -243,7 +255,10 @@ class TestBrand:
             direct_url="https://example.com",
             type="by_direct_url",
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
@@ -298,7 +313,10 @@ class TestBrand:
             mcc="string",
             phone="string",
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
@@ -346,7 +364,10 @@ class TestBrand:
             max_age_ms=0,
             tags=["production", "team-alpha"],
             theme="light",
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(BrandRetrieveSimplifiedResponse, brand, path=["response"])
 
@@ -447,7 +468,10 @@ class TestAsyncBrand:
             max_age_ms=0,
             max_speed=True,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
@@ -499,7 +523,10 @@ class TestAsyncBrand:
             max_age_ms=0,
             max_speed=True,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
@@ -550,7 +577,10 @@ class TestAsyncBrand:
             max_age_ms=0,
             max_speed=True,
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
@@ -602,7 +632,10 @@ class TestAsyncBrand:
             max_speed=True,
             tags=["production", "team-alpha"],
             ticker_exchange="ticker_exchange",
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
@@ -650,7 +683,10 @@ class TestAsyncBrand:
             direct_url="https://example.com",
             type="by_direct_url",
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
@@ -705,7 +741,10 @@ class TestAsyncBrand:
             mcc="string",
             phone="string",
             tags=["production", "team-alpha"],
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
@@ -753,7 +792,10 @@ class TestAsyncBrand:
             max_age_ms=0,
             tags=["production", "team-alpha"],
             theme="light",
-            timeout_ms=1000,
+            timeout_opts={
+                "milliseconds": 1000,
+                "behavior": "fail",
+            },
         )
         assert_matches_type(BrandRetrieveSimplifiedResponse, brand, path=["response"])
 

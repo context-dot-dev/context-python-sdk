@@ -73,6 +73,12 @@ class IndustryRetrieveSicResponse(BaseModel):
     key_metadata: Optional[KeyMetadata] = None
     """Credit usage, included whenever a valid API key is provided."""
 
+    partial: Optional[bool] = None
+    """
+    True when the timeout ended processing and this response contains only usable
+    results completed so far. Unfinished results are omitted.
+    """
+
     status: Optional[str] = None
     """Status of the response, e.g., 'ok'"""
 

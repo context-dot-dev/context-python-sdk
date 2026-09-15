@@ -8,7 +8,7 @@ from typing_extensions import Literal, Required, Annotated, TypedDict
 from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
-__all__ = ["WebWebScrapeBytesParams"]
+__all__ = ["WebWebScrapeBytesParams", "TimeoutOpts"]
 
 
 class WebWebScrapeBytesParams(TypedDict, total=False):
@@ -241,11 +241,11 @@ class WebWebScrapeBytesParams(TypedDict, total=False):
     Up to 20 tags, each 1-50 characters.
     """
 
-    timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
-    """Optional timeout in milliseconds for the request.
+    timeout_opts: Annotated[TimeoutOpts, PropertyInfo(alias="timeoutOpts")]
+    """Optional request deadline and behavior on timeout.
 
-    If the request takes longer than this value, it will be aborted with a 408
-    status code. Maximum allowed value is 300000ms (5 minutes).
+    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail
+    or a JSON-encoded timeoutOpts object.
     """
 
     zdr: Literal["enabled", "disabled"]
@@ -254,4 +254,21 @@ class WebWebScrapeBytesParams(TypedDict, total=False):
     from retained usage logs. Requires zero data retention to be enabled for your
     organization (contact support@context.dev), otherwise the request fails with
     ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+    """
+
+
+class TimeoutOpts(TypedDict, total=False):
+    """Optional request deadline and behavior on timeout.
+
+    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded timeoutOpts object.
+    """
+
+    milliseconds: Required[int]
+    """Request deadline in milliseconds. Maximum: 300000 (5 minutes)."""
+
+    behavior: Literal["fail"]
+    """What to do at the deadline.
+
+    This endpoint supports "fail": return 408 REQUEST_TIMEOUT without charging
+    credits.
     """

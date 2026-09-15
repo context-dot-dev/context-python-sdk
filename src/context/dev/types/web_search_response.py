@@ -3,6 +3,8 @@
 from typing import List, Optional
 from typing_extensions import Literal
 
+from pydantic import Field as FieldInfo
+
 from .._models import BaseModel
 
 __all__ = ["WebSearchResponse", "CacheMetadata", "Result", "ResultMarkdown", "KeyMetadata"]
@@ -34,6 +36,16 @@ class ResultMarkdown(BaseModel):
     """GFM Markdown of the page.
 
     Null unless markdownOptions.enabled is true and scraping succeeded.
+    """
+
+    final_dom_state: Optional[Literal["loaded", "still-loading"]] = FieldInfo(alias="finalDOMState", default=None)
+    """How complete the returned content is.
+
+    `loaded` means the page finished the waits the request asked for.
+    `still-loading` only occurs with timeoutOpts.behavior=return-partial: the
+    timeoutOpts.milliseconds deadline was reached first, so the content reflects the
+    DOM at that moment and late-rendering parts may be missing. Partial results are
+    billed at the base request cost.
     """
 
 
@@ -85,3 +97,10 @@ class WebSearchResponse(BaseModel):
 
     key_metadata: Optional[KeyMetadata] = None
     """Credit usage, included whenever a valid API key is provided."""
+
+    partial: Optional[bool] = None
+    """
+    True when timeoutOpts.behavior=return-partial returned the usable results
+    collected before the deadline. Partial collections are not cached as complete
+    results.
+    """

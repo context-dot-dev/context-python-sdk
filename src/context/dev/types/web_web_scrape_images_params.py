@@ -15,6 +15,7 @@ __all__ = [
     "ActionWebScrapePerformAction",
     "ActionWebScrapeScrollAction",
     "Enrichment",
+    "TimeoutOpts",
 ]
 
 
@@ -63,19 +64,19 @@ class WebWebScrapeImagesParams(TypedDict, total=False):
     Up to 20 tags, each 1-50 characters.
     """
 
-    timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMS")]
-    """Optional timeout in milliseconds for the request.
+    timeout_opts: Annotated[TimeoutOpts, PropertyInfo(alias="timeoutOpts")]
+    """Optional request deadline and behavior on timeout.
 
-    If the request takes longer than this value, it will be aborted with a 408
-    status code. Maximum allowed value is 300000ms (5 minutes).
+    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail
+    or a JSON-encoded timeoutOpts object.
     """
 
     wait_for_ms: Annotated[Optional[int], PropertyInfo(alias="waitForMs")]
     """
     Optional browser wait time in milliseconds after initial page load before
     collecting images. Min: 0. Max: 30000 (30 seconds). When combined with
-    timeoutMS, timeoutMS must be at least waitForMs + 10000 ms; a shorter deadline
-    is rejected with 400 TIMEOUT_TOO_SHORT_FOR_WAIT.
+    timeoutOpts, timeoutOpts.milliseconds must be at least waitForMs + 10000 ms; a
+    shorter deadline is rejected with 400 TIMEOUT_TOO_SHORT_FOR_WAIT.
     """
 
 
@@ -143,3 +144,22 @@ class Enrichment(TypedDict, total=False):
 
     resolution: bool
     """Measure image width and height when possible."""
+
+
+class TimeoutOpts(TypedDict, total=False):
+    """Optional request deadline and behavior on timeout.
+
+    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded timeoutOpts object.
+    """
+
+    milliseconds: Required[int]
+    """Request deadline in milliseconds. Maximum: 300000 (5 minutes)."""
+
+    behavior: Literal["fail", "return-partial"]
+    """What to do at the deadline.
+
+    "fail" returns 408 REQUEST_TIMEOUT without charging credits. "return-partial"
+    returns usable results collected so far; if none are available, the request
+    still fails without charging credits. Partial results are not cached as complete
+    results. "return-partial" requires milliseconds of at least 15000.
+    """
