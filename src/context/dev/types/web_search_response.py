@@ -51,7 +51,10 @@ class ResultMarkdown(BaseModel):
 
 class Result(BaseModel):
     description: str
-    """Snippet excerpt from the page."""
+    """Snippet excerpt from the page.
+
+    Empty string when the search provider does not supply a snippet.
+    """
 
     markdown: ResultMarkdown
     """Markdown scrape status and content for this result."""
