@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.17.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.16.0...v2.17.0) (2026-09-15)
+
+
+### Features
+
+* **answers:** add live web research with fast and ultra modes ([#954](https://github.com/context-dot-dev/context-python-sdk/issues/954)) ([653bc8c](https://github.com/context-dot-dev/context-python-sdk/commit/653bc8c3f9dd7a2fd67845d156aeacf1f631eba3))
+* **api-keys:** enforce scoped API key permissions ([#1038](https://github.com/context-dot-dev/context-python-sdk/issues/1038)) ([f883f60](https://github.com/context-dot-dev/context-python-sdk/commit/f883f60c1b2a315c7d1a2907334b794db5d09c91))
+* **api:** unify timeout configuration and return partial results ([#1030](https://github.com/context-dot-dev/context-python-sdk/issues/1030)) ([3677eab](https://github.com/context-dot-dev/context-python-sdk/commit/3677eab5d7a1b56f54b41435d8d9a6db8617439f))
+* **monitors:** add page selector filters ([#1037](https://github.com/context-dot-dev/context-python-sdk/issues/1037)) ([b48d886](https://github.com/context-dot-dev/context-python-sdk/commit/b48d88645c1539cbbe76684497f8cbd175af2fb6))
+* **web:** add raw bytes scraping endpoint ([#1081](https://github.com/context-dot-dev/context-python-sdk/issues/1081)) ([7b4539c](https://github.com/context-dot-dev/context-python-sdk/commit/7b4539c1e311224a1d6bd05e2c2f23dc17993373))
+
+
+### Bug Fixes
+
+* **api:** guarantee search descriptions and align response types ([#1089](https://github.com/context-dot-dev/context-python-sdk/issues/1089)) ([9926fba](https://github.com/context-dot-dev/context-python-sdk/commit/9926fba2f00f919068138382d655b8d201e25a68))
+* **api:** honour maxAgeMs=0 on brand retrieve, styleguide and fonts endpoints ([#998](https://github.com/context-dot-dev/context-python-sdk/issues/998)) ([85ac787](https://github.com/context-dot-dev/context-python-sdk/commit/85ac787bd7381d39c0aafa6a4c58f44699c462b7))
+* **webhooks:** format Slack webhook notifications ([#1045](https://github.com/context-dot-dev/context-python-sdk/issues/1045)) ([309f8f9](https://github.com/context-dot-dev/context-python-sdk/commit/309f8f91a7689648eb02809516448f795771ef45))
+
 ## [2.16.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.15.0...v2.16.0) (2026-09-11)
 
 
