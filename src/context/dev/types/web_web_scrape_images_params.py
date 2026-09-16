@@ -161,5 +161,5 @@ class TimeoutOpts(TypedDict, total=False):
     "fail" returns 408 REQUEST_TIMEOUT without charging credits. "return-partial"
     returns usable results collected so far; if none are available, the request
     still fails without charging credits. Partial results are not cached as complete
-    results. "return-partial" requires milliseconds of at least 15000.
+    results. "return-partial" requires milliseconds of at least 5000.
     """
