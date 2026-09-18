@@ -23,6 +23,7 @@ from context.dev.types import (
     WebWebScrapeSitemapResponse,
     WebExtractStyleguideResponse,
     WebExtractCompetitorsResponse,
+    WebWebScrapeScreenshotResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -767,6 +768,66 @@ class TestWeb:
 
             web = response.parse()
             assert_matches_type(WebWebScrapeMdResponse, web, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_web_scrape_screenshot(self, client: ContextDev) -> None:
+        web = client.web.web_scrape_screenshot(
+            url="https://example.com",
+        )
+        assert_matches_type(WebWebScrapeScreenshotResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_web_scrape_screenshot_with_all_params(self, client: ContextDev) -> None:
+        web = client.web.web_scrape_screenshot(
+            url="https://example.com",
+            clear_popups=True,
+            color_scheme="light",
+            country="de",
+            full_screenshot="true",
+            handle_cookie_popup=True,
+            max_age_ms=0,
+            scroll_offset=0,
+            tags=["production", "team-alpha"],
+            timeout_opts={
+                "milliseconds": 1,
+                "behavior": "fail",
+            },
+            viewport={
+                "height": 240,
+                "width": 240,
+            },
+            wait_for_ms=0,
+            zdr="enabled",
+        )
+        assert_matches_type(WebWebScrapeScreenshotResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_web_scrape_screenshot(self, client: ContextDev) -> None:
+        response = client.web.with_raw_response.web_scrape_screenshot(
+            url="https://example.com",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        web = response.parse()
+        assert_matches_type(WebWebScrapeScreenshotResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_web_scrape_screenshot(self, client: ContextDev) -> None:
+        with client.web.with_streaming_response.web_scrape_screenshot(
+            url="https://example.com",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            web = response.parse()
+            assert_matches_type(WebWebScrapeScreenshotResponse, web, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -1566,6 +1627,66 @@ class TestAsyncWeb:
 
             web = await response.parse()
             assert_matches_type(WebWebScrapeMdResponse, web, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_web_scrape_screenshot(self, async_client: AsyncContextDev) -> None:
+        web = await async_client.web.web_scrape_screenshot(
+            url="https://example.com",
+        )
+        assert_matches_type(WebWebScrapeScreenshotResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_web_scrape_screenshot_with_all_params(self, async_client: AsyncContextDev) -> None:
+        web = await async_client.web.web_scrape_screenshot(
+            url="https://example.com",
+            clear_popups=True,
+            color_scheme="light",
+            country="de",
+            full_screenshot="true",
+            handle_cookie_popup=True,
+            max_age_ms=0,
+            scroll_offset=0,
+            tags=["production", "team-alpha"],
+            timeout_opts={
+                "milliseconds": 1,
+                "behavior": "fail",
+            },
+            viewport={
+                "height": 240,
+                "width": 240,
+            },
+            wait_for_ms=0,
+            zdr="enabled",
+        )
+        assert_matches_type(WebWebScrapeScreenshotResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_web_scrape_screenshot(self, async_client: AsyncContextDev) -> None:
+        response = await async_client.web.with_raw_response.web_scrape_screenshot(
+            url="https://example.com",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        web = await response.parse()
+        assert_matches_type(WebWebScrapeScreenshotResponse, web, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_web_scrape_screenshot(self, async_client: AsyncContextDev) -> None:
+        async with async_client.web.with_streaming_response.web_scrape_screenshot(
+            url="https://example.com",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            web = await response.parse()
+            assert_matches_type(WebWebScrapeScreenshotResponse, web, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

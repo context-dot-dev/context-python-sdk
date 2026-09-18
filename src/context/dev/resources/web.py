@@ -21,6 +21,7 @@ from ..types import (
     web_extract_styleguide_params,
     web_web_scrape_sitemap_params,
     web_extract_competitors_params,
+    web_web_scrape_screenshot_params,
 )
 from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
@@ -46,6 +47,7 @@ from ..types.web_web_scrape_images_response import WebWebScrapeImagesResponse
 from ..types.web_extract_styleguide_response import WebExtractStyleguideResponse
 from ..types.web_web_scrape_sitemap_response import WebWebScrapeSitemapResponse
 from ..types.web_extract_competitors_response import WebExtractCompetitorsResponse
+from ..types.web_web_scrape_screenshot_response import WebWebScrapeScreenshotResponse
 
 __all__ = ["WebResource", "AsyncWebResource"]
 
@@ -2632,6 +2634,333 @@ class WebResource(SyncAPIResource):
                 ),
             ),
             cast_to=WebWebScrapeMdResponse,
+        )
+
+    def web_scrape_screenshot(
+        self,
+        *,
+        url: str,
+        clear_popups: bool | Omit = omit,
+        color_scheme: Literal["light", "dark"] | Omit = omit,
+        country: Literal[
+            "ad",
+            "ae",
+            "af",
+            "ag",
+            "ai",
+            "al",
+            "am",
+            "ao",
+            "ar",
+            "at",
+            "au",
+            "aw",
+            "az",
+            "ba",
+            "bb",
+            "bd",
+            "be",
+            "bf",
+            "bg",
+            "bh",
+            "bi",
+            "bj",
+            "bm",
+            "bn",
+            "bo",
+            "bq",
+            "br",
+            "bs",
+            "bw",
+            "by",
+            "bz",
+            "ca",
+            "cd",
+            "cf",
+            "cg",
+            "ch",
+            "ci",
+            "cl",
+            "cm",
+            "cn",
+            "co",
+            "cr",
+            "cv",
+            "cw",
+            "cy",
+            "cz",
+            "de",
+            "dj",
+            "dk",
+            "dm",
+            "do",
+            "dz",
+            "ec",
+            "ee",
+            "eg",
+            "es",
+            "et",
+            "fi",
+            "fj",
+            "fr",
+            "ga",
+            "gb",
+            "gd",
+            "ge",
+            "gf",
+            "gg",
+            "gh",
+            "gm",
+            "gn",
+            "gp",
+            "gq",
+            "gr",
+            "gt",
+            "gu",
+            "gw",
+            "gy",
+            "hk",
+            "hn",
+            "hr",
+            "ht",
+            "hu",
+            "id",
+            "ie",
+            "il",
+            "im",
+            "in",
+            "iq",
+            "ir",
+            "is",
+            "it",
+            "je",
+            "jm",
+            "jo",
+            "jp",
+            "ke",
+            "kg",
+            "kh",
+            "kn",
+            "kr",
+            "kw",
+            "ky",
+            "kz",
+            "la",
+            "lb",
+            "lc",
+            "lk",
+            "lr",
+            "ls",
+            "lt",
+            "lu",
+            "lv",
+            "ly",
+            "ma",
+            "mc",
+            "md",
+            "me",
+            "mf",
+            "mg",
+            "mk",
+            "ml",
+            "mm",
+            "mn",
+            "mo",
+            "mq",
+            "mr",
+            "mt",
+            "mu",
+            "mv",
+            "mw",
+            "mx",
+            "my",
+            "mz",
+            "na",
+            "nc",
+            "ne",
+            "ng",
+            "ni",
+            "nl",
+            "no",
+            "np",
+            "nz",
+            "om",
+            "pa",
+            "pe",
+            "pf",
+            "pg",
+            "ph",
+            "pk",
+            "pl",
+            "pr",
+            "ps",
+            "pt",
+            "py",
+            "qa",
+            "re",
+            "ro",
+            "rs",
+            "ru",
+            "rw",
+            "sa",
+            "sc",
+            "sd",
+            "se",
+            "sg",
+            "si",
+            "sk",
+            "sl",
+            "sm",
+            "sn",
+            "so",
+            "sr",
+            "ss",
+            "st",
+            "sv",
+            "sx",
+            "sy",
+            "sz",
+            "tc",
+            "td",
+            "tg",
+            "th",
+            "tj",
+            "tl",
+            "tm",
+            "tn",
+            "tr",
+            "tt",
+            "tw",
+            "tz",
+            "ua",
+            "ug",
+            "us",
+            "uy",
+            "uz",
+            "vc",
+            "ve",
+            "vg",
+            "vi",
+            "vn",
+            "ye",
+            "yt",
+            "za",
+            "zm",
+            "zw",
+        ]
+        | Omit = omit,
+        full_screenshot: Literal["true", "false"] | Omit = omit,
+        handle_cookie_popup: bool | Omit = omit,
+        max_age_ms: Optional[int] | Omit = omit,
+        scroll_offset: Optional[int] | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
+        timeout_opts: web_web_scrape_screenshot_params.TimeoutOpts | Omit = omit,
+        viewport: web_web_scrape_screenshot_params.Viewport | Omit = omit,
+        wait_for_ms: Optional[int] | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WebWebScrapeScreenshotResponse:
+        """
+        Capture the given HTTP or HTTPS URL with configurable viewport, full-page
+        capture, wait time, popup handling, theme, scroll offset, cache age, country,
+        and request timeout. Defaults to a 1920x1080 viewport, a 3-second wait, and a
+        cache age of 1 day. With timeoutOpts.behavior=return-partial, a screenshot of
+        the page rendered so far may be returned; inspect finalDOMState to identify an
+        incomplete render. Successful requests cost 1 credit; errors are not billed.
+
+        Args:
+          clear_popups: Optional parameter for comprehensive popup cleanup. If 'true', the browser
+              dismisses detected cookie/consent UI and clears other detected obstructive
+              popups and overlays before capture. If 'false' or not provided, this parameter
+              requests no cleanup; handleCookiePopup can still request cookie/consent handling
+              independently.
+
+          color_scheme: Optional parameter to choose the site's visual theme in the screenshot. Use
+              'light' or 'dark' when the site offers both appearances.
+
+          country: Fetch the target page through a residential proxy in this country (ISO 3166-1
+              alpha-2).
+
+          full_screenshot: Optional parameter to determine screenshot type. If 'true', takes a full page
+              screenshot capturing all content. If 'false' or not provided, takes a viewport
+              screenshot (standard browser view).
+
+          handle_cookie_popup: Optional parameter to control cookie/consent popup handling. If 'true', we
+              dismiss cookie banner before capture. If 'false' or not provided, captures the
+              page without that step.
+
+          max_age_ms: Return a cached screenshot if a prior screenshot for the same parameters exists
+              and is younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
+              omitted. Max is 30 days (2592000000 ms). Set to 0 to always capture fresh.
+
+          scroll_offset: Optional vertical scroll offset in pixels for capturing a long page in
+              viewport-sized chunks. When provided, the full page is captured once and the
+              returned image is the viewport-sized slice that begins at this Y offset (e.g.
+              request scrollOffset=0, then 1080, then 2160 to walk a 1920x1080 landing page
+              top to bottom). The final slice may be shorter than the viewport height. Takes
+              precedence over fullScreenshot. Max: 100000.
+
+          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
+              characters.
+
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
+
+          viewport: Optional browser viewport dimensions for the screenshot. Defaults to 1920x1080.
+
+          wait_for_ms: Optional browser wait time in milliseconds after initial page load before taking
+              the screenshot. Min: 0. Max: 30000 (30 seconds). Defaults to 3000 ms when
+              omitted. When combined with timeoutOpts, timeoutOpts.milliseconds must be at
+              least waitForMs + 10000 ms; a shorter deadline is rejected with 400
+              TIMEOUT_TOO_SHORT_FOR_WAIT.
+
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._get(
+            "/web/scrape/screenshot",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "url": url,
+                        "clear_popups": clear_popups,
+                        "color_scheme": color_scheme,
+                        "country": country,
+                        "full_screenshot": full_screenshot,
+                        "handle_cookie_popup": handle_cookie_popup,
+                        "max_age_ms": max_age_ms,
+                        "scroll_offset": scroll_offset,
+                        "tags": tags,
+                        "timeout_opts": timeout_opts,
+                        "viewport": viewport,
+                        "wait_for_ms": wait_for_ms,
+                        "zdr": zdr,
+                    },
+                    web_web_scrape_screenshot_params.WebWebScrapeScreenshotParams,
+                ),
+            ),
+            cast_to=WebWebScrapeScreenshotResponse,
         )
 
     def web_scrape_sitemap(
@@ -5318,6 +5647,333 @@ class AsyncWebResource(AsyncAPIResource):
             cast_to=WebWebScrapeMdResponse,
         )
 
+    async def web_scrape_screenshot(
+        self,
+        *,
+        url: str,
+        clear_popups: bool | Omit = omit,
+        color_scheme: Literal["light", "dark"] | Omit = omit,
+        country: Literal[
+            "ad",
+            "ae",
+            "af",
+            "ag",
+            "ai",
+            "al",
+            "am",
+            "ao",
+            "ar",
+            "at",
+            "au",
+            "aw",
+            "az",
+            "ba",
+            "bb",
+            "bd",
+            "be",
+            "bf",
+            "bg",
+            "bh",
+            "bi",
+            "bj",
+            "bm",
+            "bn",
+            "bo",
+            "bq",
+            "br",
+            "bs",
+            "bw",
+            "by",
+            "bz",
+            "ca",
+            "cd",
+            "cf",
+            "cg",
+            "ch",
+            "ci",
+            "cl",
+            "cm",
+            "cn",
+            "co",
+            "cr",
+            "cv",
+            "cw",
+            "cy",
+            "cz",
+            "de",
+            "dj",
+            "dk",
+            "dm",
+            "do",
+            "dz",
+            "ec",
+            "ee",
+            "eg",
+            "es",
+            "et",
+            "fi",
+            "fj",
+            "fr",
+            "ga",
+            "gb",
+            "gd",
+            "ge",
+            "gf",
+            "gg",
+            "gh",
+            "gm",
+            "gn",
+            "gp",
+            "gq",
+            "gr",
+            "gt",
+            "gu",
+            "gw",
+            "gy",
+            "hk",
+            "hn",
+            "hr",
+            "ht",
+            "hu",
+            "id",
+            "ie",
+            "il",
+            "im",
+            "in",
+            "iq",
+            "ir",
+            "is",
+            "it",
+            "je",
+            "jm",
+            "jo",
+            "jp",
+            "ke",
+            "kg",
+            "kh",
+            "kn",
+            "kr",
+            "kw",
+            "ky",
+            "kz",
+            "la",
+            "lb",
+            "lc",
+            "lk",
+            "lr",
+            "ls",
+            "lt",
+            "lu",
+            "lv",
+            "ly",
+            "ma",
+            "mc",
+            "md",
+            "me",
+            "mf",
+            "mg",
+            "mk",
+            "ml",
+            "mm",
+            "mn",
+            "mo",
+            "mq",
+            "mr",
+            "mt",
+            "mu",
+            "mv",
+            "mw",
+            "mx",
+            "my",
+            "mz",
+            "na",
+            "nc",
+            "ne",
+            "ng",
+            "ni",
+            "nl",
+            "no",
+            "np",
+            "nz",
+            "om",
+            "pa",
+            "pe",
+            "pf",
+            "pg",
+            "ph",
+            "pk",
+            "pl",
+            "pr",
+            "ps",
+            "pt",
+            "py",
+            "qa",
+            "re",
+            "ro",
+            "rs",
+            "ru",
+            "rw",
+            "sa",
+            "sc",
+            "sd",
+            "se",
+            "sg",
+            "si",
+            "sk",
+            "sl",
+            "sm",
+            "sn",
+            "so",
+            "sr",
+            "ss",
+            "st",
+            "sv",
+            "sx",
+            "sy",
+            "sz",
+            "tc",
+            "td",
+            "tg",
+            "th",
+            "tj",
+            "tl",
+            "tm",
+            "tn",
+            "tr",
+            "tt",
+            "tw",
+            "tz",
+            "ua",
+            "ug",
+            "us",
+            "uy",
+            "uz",
+            "vc",
+            "ve",
+            "vg",
+            "vi",
+            "vn",
+            "ye",
+            "yt",
+            "za",
+            "zm",
+            "zw",
+        ]
+        | Omit = omit,
+        full_screenshot: Literal["true", "false"] | Omit = omit,
+        handle_cookie_popup: bool | Omit = omit,
+        max_age_ms: Optional[int] | Omit = omit,
+        scroll_offset: Optional[int] | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
+        timeout_opts: web_web_scrape_screenshot_params.TimeoutOpts | Omit = omit,
+        viewport: web_web_scrape_screenshot_params.Viewport | Omit = omit,
+        wait_for_ms: Optional[int] | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WebWebScrapeScreenshotResponse:
+        """
+        Capture the given HTTP or HTTPS URL with configurable viewport, full-page
+        capture, wait time, popup handling, theme, scroll offset, cache age, country,
+        and request timeout. Defaults to a 1920x1080 viewport, a 3-second wait, and a
+        cache age of 1 day. With timeoutOpts.behavior=return-partial, a screenshot of
+        the page rendered so far may be returned; inspect finalDOMState to identify an
+        incomplete render. Successful requests cost 1 credit; errors are not billed.
+
+        Args:
+          clear_popups: Optional parameter for comprehensive popup cleanup. If 'true', the browser
+              dismisses detected cookie/consent UI and clears other detected obstructive
+              popups and overlays before capture. If 'false' or not provided, this parameter
+              requests no cleanup; handleCookiePopup can still request cookie/consent handling
+              independently.
+
+          color_scheme: Optional parameter to choose the site's visual theme in the screenshot. Use
+              'light' or 'dark' when the site offers both appearances.
+
+          country: Fetch the target page through a residential proxy in this country (ISO 3166-1
+              alpha-2).
+
+          full_screenshot: Optional parameter to determine screenshot type. If 'true', takes a full page
+              screenshot capturing all content. If 'false' or not provided, takes a viewport
+              screenshot (standard browser view).
+
+          handle_cookie_popup: Optional parameter to control cookie/consent popup handling. If 'true', we
+              dismiss cookie banner before capture. If 'false' or not provided, captures the
+              page without that step.
+
+          max_age_ms: Return a cached screenshot if a prior screenshot for the same parameters exists
+              and is younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
+              omitted. Max is 30 days (2592000000 ms). Set to 0 to always capture fresh.
+
+          scroll_offset: Optional vertical scroll offset in pixels for capturing a long page in
+              viewport-sized chunks. When provided, the full page is captured once and the
+              returned image is the viewport-sized slice that begins at this Y offset (e.g.
+              request scrollOffset=0, then 1080, then 2160 to walk a 1920x1080 landing page
+              top to bottom). The final slice may be shorter than the viewport height. Takes
+              precedence over fullScreenshot. Max: 100000.
+
+          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
+              characters.
+
+          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
+              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
+              timeoutOpts object.
+
+          viewport: Optional browser viewport dimensions for the screenshot. Defaults to 1920x1080.
+
+          wait_for_ms: Optional browser wait time in milliseconds after initial page load before taking
+              the screenshot. Min: 0. Max: 30000 (30 seconds). Defaults to 3000 ms when
+              omitted. When combined with timeoutOpts, timeoutOpts.milliseconds must be at
+              least waitForMs + 10000 ms; a shorter deadline is rejected with 400
+              TIMEOUT_TOO_SHORT_FOR_WAIT.
+
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._get(
+            "/web/scrape/screenshot",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "url": url,
+                        "clear_popups": clear_popups,
+                        "color_scheme": color_scheme,
+                        "country": country,
+                        "full_screenshot": full_screenshot,
+                        "handle_cookie_popup": handle_cookie_popup,
+                        "max_age_ms": max_age_ms,
+                        "scroll_offset": scroll_offset,
+                        "tags": tags,
+                        "timeout_opts": timeout_opts,
+                        "viewport": viewport,
+                        "wait_for_ms": wait_for_ms,
+                        "zdr": zdr,
+                    },
+                    web_web_scrape_screenshot_params.WebWebScrapeScreenshotParams,
+                ),
+            ),
+            cast_to=WebWebScrapeScreenshotResponse,
+        )
+
     async def web_scrape_sitemap(
         self,
         *,
@@ -5458,6 +6114,9 @@ class WebResourceWithRawResponse:
         self.web_scrape_md = to_raw_response_wrapper(
             web.web_scrape_md,
         )
+        self.web_scrape_screenshot = to_raw_response_wrapper(
+            web.web_scrape_screenshot,
+        )
         self.web_scrape_sitemap = to_raw_response_wrapper(
             web.web_scrape_sitemap,
         )
@@ -5502,6 +6161,9 @@ class AsyncWebResourceWithRawResponse:
         )
         self.web_scrape_md = async_to_raw_response_wrapper(
             web.web_scrape_md,
+        )
+        self.web_scrape_screenshot = async_to_raw_response_wrapper(
+            web.web_scrape_screenshot,
         )
         self.web_scrape_sitemap = async_to_raw_response_wrapper(
             web.web_scrape_sitemap,
@@ -5548,6 +6210,9 @@ class WebResourceWithStreamingResponse:
         self.web_scrape_md = to_streamed_response_wrapper(
             web.web_scrape_md,
         )
+        self.web_scrape_screenshot = to_streamed_response_wrapper(
+            web.web_scrape_screenshot,
+        )
         self.web_scrape_sitemap = to_streamed_response_wrapper(
             web.web_scrape_sitemap,
         )
@@ -5592,6 +6257,9 @@ class AsyncWebResourceWithStreamingResponse:
         )
         self.web_scrape_md = async_to_streamed_response_wrapper(
             web.web_scrape_md,
+        )
+        self.web_scrape_screenshot = async_to_streamed_response_wrapper(
+            web.web_scrape_screenshot,
         )
         self.web_scrape_sitemap = async_to_streamed_response_wrapper(
             web.web_scrape_sitemap,

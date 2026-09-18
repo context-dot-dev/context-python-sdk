@@ -28,6 +28,7 @@ from context.dev.types import (
     WebWebScrapeHTMLResponse,
     WebWebScrapeImagesResponse,
     WebWebScrapeMdResponse,
+    WebWebScrapeScreenshotResponse,
     WebWebScrapeSitemapResponse,
 )
 ```
@@ -46,6 +47,7 @@ Methods:
 - <code title="get /web/scrape/html">client.web.<a href="./src/context/dev/resources/web.py">web_scrape_html</a>(\*\*<a href="src/context/dev/types/web_web_scrape_html_params.py">params</a>) -> <a href="./src/context/dev/types/web_web_scrape_html_response.py">WebWebScrapeHTMLResponse</a></code>
 - <code title="get /web/scrape/images">client.web.<a href="./src/context/dev/resources/web.py">web_scrape_images</a>(\*\*<a href="src/context/dev/types/web_web_scrape_images_params.py">params</a>) -> <a href="./src/context/dev/types/web_web_scrape_images_response.py">WebWebScrapeImagesResponse</a></code>
 - <code title="get /web/scrape/markdown">client.web.<a href="./src/context/dev/resources/web.py">web_scrape_md</a>(\*\*<a href="src/context/dev/types/web_web_scrape_md_params.py">params</a>) -> <a href="./src/context/dev/types/web_web_scrape_md_response.py">WebWebScrapeMdResponse</a></code>
+- <code title="get /web/scrape/screenshot">client.web.<a href="./src/context/dev/resources/web.py">web_scrape_screenshot</a>(\*\*<a href="src/context/dev/types/web_web_scrape_screenshot_params.py">params</a>) -> <a href="./src/context/dev/types/web_web_scrape_screenshot_response.py">WebWebScrapeScreenshotResponse</a></code>
 - <code title="get /web/scrape/sitemap">client.web.<a href="./src/context/dev/resources/web.py">web_scrape_sitemap</a>(\*\*<a href="src/context/dev/types/web_web_scrape_sitemap_params.py">params</a>) -> <a href="./src/context/dev/types/web_web_scrape_sitemap_response.py">WebWebScrapeSitemapResponse</a></code>
 
 # AI
