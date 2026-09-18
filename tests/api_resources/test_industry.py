@@ -40,6 +40,7 @@ class TestIndustry:
                 "milliseconds": 1000,
                 "behavior": "fail",
             },
+            zdr="enabled",
         )
         assert_matches_type(IndustryRetrieveNaicsResponse, industry, path=["response"])
 
@@ -90,6 +91,7 @@ class TestIndustry:
                 "behavior": "fail",
             },
             type="original_sic",
+            zdr="enabled",
         )
         assert_matches_type(IndustryRetrieveSicResponse, industry, path=["response"])
 
@@ -145,6 +147,7 @@ class TestAsyncIndustry:
                 "milliseconds": 1000,
                 "behavior": "fail",
             },
+            zdr="enabled",
         )
         assert_matches_type(IndustryRetrieveNaicsResponse, industry, path=["response"])
 
@@ -195,6 +198,7 @@ class TestAsyncIndustry:
                 "behavior": "fail",
             },
             type="original_sic",
+            zdr="enabled",
         )
         assert_matches_type(IndustryRetrieveSicResponse, industry, path=["response"])
 

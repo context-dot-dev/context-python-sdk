@@ -54,6 +54,7 @@ class TestWeb:
                 "milliseconds": 1000,
                 "behavior": "fail",
             },
+            zdr="enabled",
         )
         assert_matches_type(WebAnswersResponse, web, path=["response"])
 
@@ -134,6 +135,7 @@ class TestWeb:
                 "behavior": "fail",
             },
             wait_for_ms=0,
+            zdr="enabled",
         )
         assert_matches_type(WebExtractResponse, web, path=["response"])
 
@@ -194,6 +196,7 @@ class TestWeb:
                 "milliseconds": 1000,
                 "behavior": "fail",
             },
+            zdr="enabled",
         )
         assert_matches_type(WebExtractCompetitorsResponse, web, path=["response"])
 
@@ -285,6 +288,7 @@ class TestWeb:
                 "milliseconds": 1,
                 "behavior": "fail",
             },
+            zdr="enabled",
         )
         assert_matches_type(WebExtractStyleguideResponse, web, path=["response"])
 
@@ -409,6 +413,7 @@ class TestWeb:
                 "milliseconds": 1000,
                 "behavior": "fail",
             },
+            zdr="enabled",
         )
         assert_matches_type(WebSearchResponse, web, path=["response"])
 
@@ -662,6 +667,7 @@ class TestWeb:
                 "behavior": "fail",
             },
             wait_for_ms=0,
+            zdr="enabled",
         )
         assert_matches_type(WebWebScrapeImagesResponse, web, path=["response"])
 
@@ -847,6 +853,7 @@ class TestAsyncWeb:
                 "milliseconds": 1000,
                 "behavior": "fail",
             },
+            zdr="enabled",
         )
         assert_matches_type(WebAnswersResponse, web, path=["response"])
 
@@ -927,6 +934,7 @@ class TestAsyncWeb:
                 "behavior": "fail",
             },
             wait_for_ms=0,
+            zdr="enabled",
         )
         assert_matches_type(WebExtractResponse, web, path=["response"])
 
@@ -987,6 +995,7 @@ class TestAsyncWeb:
                 "milliseconds": 1000,
                 "behavior": "fail",
             },
+            zdr="enabled",
         )
         assert_matches_type(WebExtractCompetitorsResponse, web, path=["response"])
 
@@ -1078,6 +1087,7 @@ class TestAsyncWeb:
                 "milliseconds": 1,
                 "behavior": "fail",
             },
+            zdr="enabled",
         )
         assert_matches_type(WebExtractStyleguideResponse, web, path=["response"])
 
@@ -1202,6 +1212,7 @@ class TestAsyncWeb:
                 "milliseconds": 1000,
                 "behavior": "fail",
             },
+            zdr="enabled",
         )
         assert_matches_type(WebSearchResponse, web, path=["response"])
 
@@ -1455,6 +1466,7 @@ class TestAsyncWeb:
                 "behavior": "fail",
             },
             wait_for_ms=0,
+            zdr="enabled",
         )
         assert_matches_type(WebWebScrapeImagesResponse, web, path=["response"])
 

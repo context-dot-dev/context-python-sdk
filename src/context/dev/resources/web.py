@@ -78,6 +78,7 @@ class WebResource(SyncAPIResource):
         mode: Literal["fast", "ultra"] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: web_answers_params.TimeoutOpts | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -112,6 +113,12 @@ class WebResource(SyncAPIResource):
               timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
               timeoutOpts object.
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -129,6 +136,7 @@ class WebResource(SyncAPIResource):
                     "mode": mode,
                     "tags": tags,
                     "timeout_opts": timeout_opts,
+                    "zdr": zdr,
                 },
                 web_answers_params.WebAnswersParams,
             ),
@@ -157,6 +165,7 @@ class WebResource(SyncAPIResource):
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: web_extract_params.TimeoutOpts | Omit = omit,
         wait_for_ms: int | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -222,6 +231,12 @@ class WebResource(SyncAPIResource):
           wait_for_ms: Optional browser wait time in milliseconds after initial page load for each
               crawled page.
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -250,6 +265,7 @@ class WebResource(SyncAPIResource):
                     "tags": tags,
                     "timeout_opts": timeout_opts,
                     "wait_for_ms": wait_for_ms,
+                    "zdr": zdr,
                 },
                 web_extract_params.WebExtractParams,
             ),
@@ -266,6 +282,7 @@ class WebResource(SyncAPIResource):
         num_competitors: int | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: web_extract_competitors_params.TimeoutOpts | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -290,6 +307,12 @@ class WebResource(SyncAPIResource):
               timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
               timeoutOpts object.
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -311,6 +334,7 @@ class WebResource(SyncAPIResource):
                         "num_competitors": num_competitors,
                         "tags": tags,
                         "timeout_opts": timeout_opts,
+                        "zdr": zdr,
                     },
                     web_extract_competitors_params.WebExtractCompetitorsParams,
                 ),
@@ -396,6 +420,7 @@ class WebResource(SyncAPIResource):
         max_age_ms: Optional[int] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: web_extract_styleguide_params.TimeoutOpts | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -432,6 +457,12 @@ class WebResource(SyncAPIResource):
               timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
               timeoutOpts object.
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -455,6 +486,7 @@ class WebResource(SyncAPIResource):
                         "max_age_ms": max_age_ms,
                         "tags": tags,
                         "timeout_opts": timeout_opts,
+                        "zdr": zdr,
                     },
                     web_extract_styleguide_params.WebExtractStyleguideParams,
                 ),
@@ -758,9 +790,10 @@ class WebResource(SyncAPIResource):
               TIMEOUT_TOO_SHORT_FOR_WAIT.
 
           zdr: Set to enabled to bypass shared caches and omit request and response content
-              from retained usage logs. Requires zero data retention to be enabled for your
-              organization (contact support@context.dev), otherwise the request fails with
-              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
 
           extra_headers: Send extra headers
 
@@ -1055,6 +1088,7 @@ class WebResource(SyncAPIResource):
         query_fanout: bool | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: web_search_params.TimeoutOpts | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1092,6 +1126,12 @@ class WebResource(SyncAPIResource):
               timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
               timeoutOpts object.
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -1114,6 +1154,7 @@ class WebResource(SyncAPIResource):
                     "query_fanout": query_fanout,
                     "tags": tags,
                     "timeout_opts": timeout_opts,
+                    "zdr": zdr,
                 },
                 web_search_params.WebSearchParams,
             ),
@@ -1730,9 +1771,10 @@ class WebResource(SyncAPIResource):
               timeoutOpts object.
 
           zdr: Set to enabled to bypass shared caches and omit request and response content
-              from retained usage logs. Requires zero data retention to be enabled for your
-              organization (contact support@context.dev), otherwise the request fails with
-              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
 
           extra_headers: Send extra headers
 
@@ -2069,9 +2111,10 @@ class WebResource(SyncAPIResource):
               TIMEOUT_TOO_SHORT_FOR_WAIT.
 
           zdr: Set to enabled to bypass shared caches and omit request and response content
-              from retained usage logs. Requires zero data retention to be enabled for your
-              organization (contact support@context.dev), otherwise the request fails with
-              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
 
           extra_headers: Send extra headers
 
@@ -2125,6 +2168,7 @@ class WebResource(SyncAPIResource):
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: web_web_scrape_images_params.TimeoutOpts | Omit = omit,
         wait_for_ms: Optional[int] | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -2173,6 +2217,12 @@ class WebResource(SyncAPIResource):
               timeoutOpts, timeoutOpts.milliseconds must be at least waitForMs + 10000 ms; a
               shorter deadline is rejected with 400 TIMEOUT_TOO_SHORT_FOR_WAIT.
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -2199,6 +2249,7 @@ class WebResource(SyncAPIResource):
                         "tags": tags,
                         "timeout_opts": timeout_opts,
                         "wait_for_ms": wait_for_ms,
+                        "zdr": zdr,
                     },
                     web_web_scrape_images_params.WebWebScrapeImagesParams,
                 ),
@@ -2535,9 +2586,10 @@ class WebResource(SyncAPIResource):
               ms; a shorter deadline is rejected with 400 TIMEOUT_TOO_SHORT_FOR_WAIT.
 
           zdr: Set to enabled to bypass shared caches and omit request and response content
-              from retained usage logs. Requires zero data retention to be enabled for your
-              organization (contact support@context.dev), otherwise the request fails with
-              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
 
           extra_headers: Send extra headers
 
@@ -2642,9 +2694,10 @@ class WebResource(SyncAPIResource):
               returned and counted against maxLinks.
 
           zdr: Set to enabled to bypass shared caches and omit request and response content
-              from retained usage logs. Requires zero data retention to be enabled for your
-              organization (contact support@context.dev), otherwise the request fails with
-              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
 
           extra_headers: Send extra headers
 
@@ -2709,6 +2762,7 @@ class AsyncWebResource(AsyncAPIResource):
         mode: Literal["fast", "ultra"] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: web_answers_params.TimeoutOpts | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -2743,6 +2797,12 @@ class AsyncWebResource(AsyncAPIResource):
               timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
               timeoutOpts object.
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -2760,6 +2820,7 @@ class AsyncWebResource(AsyncAPIResource):
                     "mode": mode,
                     "tags": tags,
                     "timeout_opts": timeout_opts,
+                    "zdr": zdr,
                 },
                 web_answers_params.WebAnswersParams,
             ),
@@ -2788,6 +2849,7 @@ class AsyncWebResource(AsyncAPIResource):
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: web_extract_params.TimeoutOpts | Omit = omit,
         wait_for_ms: int | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -2853,6 +2915,12 @@ class AsyncWebResource(AsyncAPIResource):
           wait_for_ms: Optional browser wait time in milliseconds after initial page load for each
               crawled page.
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -2881,6 +2949,7 @@ class AsyncWebResource(AsyncAPIResource):
                     "tags": tags,
                     "timeout_opts": timeout_opts,
                     "wait_for_ms": wait_for_ms,
+                    "zdr": zdr,
                 },
                 web_extract_params.WebExtractParams,
             ),
@@ -2897,6 +2966,7 @@ class AsyncWebResource(AsyncAPIResource):
         num_competitors: int | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: web_extract_competitors_params.TimeoutOpts | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -2921,6 +2991,12 @@ class AsyncWebResource(AsyncAPIResource):
               timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
               timeoutOpts object.
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -2942,6 +3018,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "num_competitors": num_competitors,
                         "tags": tags,
                         "timeout_opts": timeout_opts,
+                        "zdr": zdr,
                     },
                     web_extract_competitors_params.WebExtractCompetitorsParams,
                 ),
@@ -3027,6 +3104,7 @@ class AsyncWebResource(AsyncAPIResource):
         max_age_ms: Optional[int] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: web_extract_styleguide_params.TimeoutOpts | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -3063,6 +3141,12 @@ class AsyncWebResource(AsyncAPIResource):
               timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
               timeoutOpts object.
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -3086,6 +3170,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "max_age_ms": max_age_ms,
                         "tags": tags,
                         "timeout_opts": timeout_opts,
+                        "zdr": zdr,
                     },
                     web_extract_styleguide_params.WebExtractStyleguideParams,
                 ),
@@ -3389,9 +3474,10 @@ class AsyncWebResource(AsyncAPIResource):
               TIMEOUT_TOO_SHORT_FOR_WAIT.
 
           zdr: Set to enabled to bypass shared caches and omit request and response content
-              from retained usage logs. Requires zero data retention to be enabled for your
-              organization (contact support@context.dev), otherwise the request fails with
-              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
 
           extra_headers: Send extra headers
 
@@ -3686,6 +3772,7 @@ class AsyncWebResource(AsyncAPIResource):
         query_fanout: bool | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: web_search_params.TimeoutOpts | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -3723,6 +3810,12 @@ class AsyncWebResource(AsyncAPIResource):
               timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
               timeoutOpts object.
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -3745,6 +3838,7 @@ class AsyncWebResource(AsyncAPIResource):
                     "query_fanout": query_fanout,
                     "tags": tags,
                     "timeout_opts": timeout_opts,
+                    "zdr": zdr,
                 },
                 web_search_params.WebSearchParams,
             ),
@@ -4361,9 +4455,10 @@ class AsyncWebResource(AsyncAPIResource):
               timeoutOpts object.
 
           zdr: Set to enabled to bypass shared caches and omit request and response content
-              from retained usage logs. Requires zero data retention to be enabled for your
-              organization (contact support@context.dev), otherwise the request fails with
-              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
 
           extra_headers: Send extra headers
 
@@ -4700,9 +4795,10 @@ class AsyncWebResource(AsyncAPIResource):
               TIMEOUT_TOO_SHORT_FOR_WAIT.
 
           zdr: Set to enabled to bypass shared caches and omit request and response content
-              from retained usage logs. Requires zero data retention to be enabled for your
-              organization (contact support@context.dev), otherwise the request fails with
-              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
 
           extra_headers: Send extra headers
 
@@ -4756,6 +4852,7 @@ class AsyncWebResource(AsyncAPIResource):
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: web_web_scrape_images_params.TimeoutOpts | Omit = omit,
         wait_for_ms: Optional[int] | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -4804,6 +4901,12 @@ class AsyncWebResource(AsyncAPIResource):
               timeoutOpts, timeoutOpts.milliseconds must be at least waitForMs + 10000 ms; a
               shorter deadline is rejected with 400 TIMEOUT_TOO_SHORT_FOR_WAIT.
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -4830,6 +4933,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "tags": tags,
                         "timeout_opts": timeout_opts,
                         "wait_for_ms": wait_for_ms,
+                        "zdr": zdr,
                     },
                     web_web_scrape_images_params.WebWebScrapeImagesParams,
                 ),
@@ -5166,9 +5270,10 @@ class AsyncWebResource(AsyncAPIResource):
               ms; a shorter deadline is rejected with 400 TIMEOUT_TOO_SHORT_FOR_WAIT.
 
           zdr: Set to enabled to bypass shared caches and omit request and response content
-              from retained usage logs. Requires zero data retention to be enabled for your
-              organization (contact support@context.dev), otherwise the request fails with
-              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
 
           extra_headers: Send extra headers
 
@@ -5273,9 +5378,10 @@ class AsyncWebResource(AsyncAPIResource):
               returned and counted against maxLinks.
 
           zdr: Set to enabled to bypass shared caches and omit request and response content
-              from retained usage logs. Requires zero data retention to be enabled for your
-              organization (contact support@context.dev), otherwise the request fails with
-              ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
 
           extra_headers: Send extra headers
 

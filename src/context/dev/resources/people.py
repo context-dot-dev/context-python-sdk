@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from typing import Iterable
+from typing_extensions import Literal
 
 import httpx
 
@@ -54,6 +55,7 @@ class PeopleResource(SyncAPIResource):
         social_urls: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: person_enrich_params.TimeoutOpts | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -73,6 +75,12 @@ class PeopleResource(SyncAPIResource):
           timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
               timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
               timeoutOpts object.
+
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
 
           extra_headers: Send extra headers
 
@@ -94,6 +102,7 @@ class PeopleResource(SyncAPIResource):
                     "social_urls": social_urls,
                     "tags": tags,
                     "timeout_opts": timeout_opts,
+                    "zdr": zdr,
                 },
                 person_enrich_params.PersonEnrichParams,
             ),
@@ -135,6 +144,7 @@ class AsyncPeopleResource(AsyncAPIResource):
         social_urls: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: person_enrich_params.TimeoutOpts | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -154,6 +164,12 @@ class AsyncPeopleResource(AsyncAPIResource):
           timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
               timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
               timeoutOpts object.
+
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
 
           extra_headers: Send extra headers
 
@@ -175,6 +191,7 @@ class AsyncPeopleResource(AsyncAPIResource):
                     "social_urls": social_urls,
                     "tags": tags,
                     "timeout_opts": timeout_opts,
+                    "zdr": zdr,
                 },
                 person_enrich_params.PersonEnrichParams,
             ),

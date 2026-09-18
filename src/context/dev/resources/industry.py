@@ -52,6 +52,7 @@ class IndustryResource(SyncAPIResource):
         min_results: int | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: industry_retrieve_naics_params.TimeoutOpts | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -79,6 +80,12 @@ class IndustryResource(SyncAPIResource):
               timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
               timeoutOpts object.
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -101,6 +108,7 @@ class IndustryResource(SyncAPIResource):
                         "min_results": min_results,
                         "tags": tags,
                         "timeout_opts": timeout_opts,
+                        "zdr": zdr,
                     },
                     industry_retrieve_naics_params.IndustryRetrieveNaicsParams,
                 ),
@@ -117,6 +125,7 @@ class IndustryResource(SyncAPIResource):
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: industry_retrieve_sic_params.TimeoutOpts | Omit = omit,
         type: Literal["original_sic", "latest_sec"] | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -149,6 +158,12 @@ class IndustryResource(SyncAPIResource):
               Industrial Classification system; `latest_sec` uses the current SIC list as
               published by the SEC. Defaults to `original_sic`.
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -172,6 +187,7 @@ class IndustryResource(SyncAPIResource):
                         "tags": tags,
                         "timeout_opts": timeout_opts,
                         "type": type,
+                        "zdr": zdr,
                     },
                     industry_retrieve_sic_params.IndustryRetrieveSicParams,
                 ),
@@ -208,6 +224,7 @@ class AsyncIndustryResource(AsyncAPIResource):
         min_results: int | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: industry_retrieve_naics_params.TimeoutOpts | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -235,6 +252,12 @@ class AsyncIndustryResource(AsyncAPIResource):
               timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
               timeoutOpts object.
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -257,6 +280,7 @@ class AsyncIndustryResource(AsyncAPIResource):
                         "min_results": min_results,
                         "tags": tags,
                         "timeout_opts": timeout_opts,
+                        "zdr": zdr,
                     },
                     industry_retrieve_naics_params.IndustryRetrieveNaicsParams,
                 ),
@@ -273,6 +297,7 @@ class AsyncIndustryResource(AsyncAPIResource):
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: industry_retrieve_sic_params.TimeoutOpts | Omit = omit,
         type: Literal["original_sic", "latest_sec"] | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -305,6 +330,12 @@ class AsyncIndustryResource(AsyncAPIResource):
               Industrial Classification system; `latest_sec` uses the current SIC list as
               published by the SEC. Defaults to `original_sic`.
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -328,6 +359,7 @@ class AsyncIndustryResource(AsyncAPIResource):
                         "tags": tags,
                         "timeout_opts": timeout_opts,
                         "type": type,
+                        "zdr": zdr,
                     },
                     industry_retrieve_sic_params.IndustryRetrieveSicParams,
                 ),
