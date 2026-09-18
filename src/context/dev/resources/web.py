@@ -1977,6 +1977,7 @@ class WebResource(SyncAPIResource):
         ]
         | Omit = omit,
         exclude_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
+        extract_rules: Dict[str, web_web_scrape_html_params.ExtractRules] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
         include_frames: bool | Omit = omit,
         include_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
@@ -1995,14 +1996,18 @@ class WebResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebWebScrapeHTMLResponse:
-        """Scrapes the given URL and returns the raw HTML content of the page.
+        """Scrapes the given URL and returns the HTML content of the page.
 
-        The base
-        request costs 1 credit; requests with browser actions cost 2 credits. A request
-        that hits its timeoutOpts.milliseconds deadline fails with 408 and is not
-        billed, unless timeoutOpts.behavior=return-partial is set — then the page as
-        rendered so far is returned with `finalDOMState: "still-loading"` and billed at
-        the base cost of 1 credit.
+        Optional
+        extractRules return deterministic structured data in extracted using CSS
+        selectors, attributes, lists, and nested rules, without an LLM or additional
+        credits. Rules run on the returned HTML after selector and main-content
+        filtering. Send extractRules as a JSON-encoded query parameter. The base request
+        costs 1 credit; requests with browser actions cost 2 credits. A request that
+        hits its timeoutOpts.milliseconds deadline fails with 408 and is not billed,
+        unless timeoutOpts.behavior=return-partial is set — then the page as rendered so
+        far is returned with `finalDOMState: "still-loading"` and billed at the base
+        cost of 1 credit.
 
         Args:
           url: Full URL to scrape (must include http:// or https:// protocol)
@@ -2017,6 +2022,14 @@ class WebResource(SyncAPIResource):
           exclude_selectors: CSS selectors to remove from the result. Applied after includeSelectors.
               Exclusion takes precedence: an element matching both is removed. Examples:
               "nav", "footer", ".ad-banner", "[aria-hidden=true]".
+
+          extract_rules: Optional CSS extraction rules applied to the returned HTML after selector and
+              main-content filtering. Use selector strings ("h1", "a@href") or objects with
+              selector, type (item or list), and output (text, html, @attribute, or nested
+              rules). Text whitespace is normalized; html includes the matched element;
+              attributes are returned as written. Missing items are null and missing lists are
+              empty. CSS only; XPath is not supported. Maximum: 100 fields across 5 levels.
+              Send a JSON-encoded string in the extractRules query parameter.
 
           headers: Optional outbound HTTP headers forwarded only to the target URL, sent as
               deep-object query params such as headers[X-Custom]=value. When provided, caching
@@ -2081,6 +2094,7 @@ class WebResource(SyncAPIResource):
                         "actions": actions,
                         "country": country,
                         "exclude_selectors": exclude_selectors,
+                        "extract_rules": extract_rules,
                         "headers": headers,
                         "include_frames": include_frames,
                         "include_selectors": include_selectors,
@@ -4594,6 +4608,7 @@ class AsyncWebResource(AsyncAPIResource):
         ]
         | Omit = omit,
         exclude_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
+        extract_rules: Dict[str, web_web_scrape_html_params.ExtractRules] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
         include_frames: bool | Omit = omit,
         include_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
@@ -4612,14 +4627,18 @@ class AsyncWebResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebWebScrapeHTMLResponse:
-        """Scrapes the given URL and returns the raw HTML content of the page.
+        """Scrapes the given URL and returns the HTML content of the page.
 
-        The base
-        request costs 1 credit; requests with browser actions cost 2 credits. A request
-        that hits its timeoutOpts.milliseconds deadline fails with 408 and is not
-        billed, unless timeoutOpts.behavior=return-partial is set — then the page as
-        rendered so far is returned with `finalDOMState: "still-loading"` and billed at
-        the base cost of 1 credit.
+        Optional
+        extractRules return deterministic structured data in extracted using CSS
+        selectors, attributes, lists, and nested rules, without an LLM or additional
+        credits. Rules run on the returned HTML after selector and main-content
+        filtering. Send extractRules as a JSON-encoded query parameter. The base request
+        costs 1 credit; requests with browser actions cost 2 credits. A request that
+        hits its timeoutOpts.milliseconds deadline fails with 408 and is not billed,
+        unless timeoutOpts.behavior=return-partial is set — then the page as rendered so
+        far is returned with `finalDOMState: "still-loading"` and billed at the base
+        cost of 1 credit.
 
         Args:
           url: Full URL to scrape (must include http:// or https:// protocol)
@@ -4634,6 +4653,14 @@ class AsyncWebResource(AsyncAPIResource):
           exclude_selectors: CSS selectors to remove from the result. Applied after includeSelectors.
               Exclusion takes precedence: an element matching both is removed. Examples:
               "nav", "footer", ".ad-banner", "[aria-hidden=true]".
+
+          extract_rules: Optional CSS extraction rules applied to the returned HTML after selector and
+              main-content filtering. Use selector strings ("h1", "a@href") or objects with
+              selector, type (item or list), and output (text, html, @attribute, or nested
+              rules). Text whitespace is normalized; html includes the matched element;
+              attributes are returned as written. Missing items are null and missing lists are
+              empty. CSS only; XPath is not supported. Maximum: 100 fields across 5 levels.
+              Send a JSON-encoded string in the extractRules query parameter.
 
           headers: Optional outbound HTTP headers forwarded only to the target URL, sent as
               deep-object query params such as headers[X-Custom]=value. When provided, caching
@@ -4698,6 +4725,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "actions": actions,
                         "country": country,
                         "exclude_selectors": exclude_selectors,
+                        "extract_rules": extract_rules,
                         "headers": headers,
                         "include_frames": include_frames,
                         "include_selectors": include_selectors,
