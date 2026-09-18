@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.18.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.17.0...v2.18.0) (2026-09-18)
+
+
+### Features
+
+* **api:** enable ZDR on remaining AI endpoints via OpenAI ([#1099](https://github.com/context-dot-dev/context-python-sdk/issues/1099)) ([0dcc693](https://github.com/context-dot-dev/context-python-sdk/commit/0dcc6937508fc0307c41e7d4b0b088d9adb96feb))
+* **products:** extract ProductGroup variants with images ([#1124](https://github.com/context-dot-dev/context-python-sdk/issues/1124)) ([2fdcf25](https://github.com/context-dot-dev/context-python-sdk/commit/2fdcf259a99b97d1f4a64c19f20594fa23324208))
+* **scrape:** add CSS extraction rules to HTML scraping ([#1146](https://github.com/context-dot-dev/context-python-sdk/issues/1146)) ([53fa41c](https://github.com/context-dot-dev/context-python-sdk/commit/53fa41c8209fba265ed7fdc292ce6dabdd72c3e1))
+* **web:** add URL-based scrape screenshot endpoint ([#1150](https://github.com/context-dot-dev/context-python-sdk/issues/1150)) ([25975e2](https://github.com/context-dot-dev/context-python-sdk/commit/25975e2d0b490c3ca94b957448826897458881a3))
+
+
+### Bug Fixes
+
+* **api:** lower partial scrape timeout minimum to five seconds ([#1118](https://github.com/context-dot-dev/context-python-sdk/issues/1118)) ([c8c4975](https://github.com/context-dot-dev/context-python-sdk/commit/c8c49750ea15c1941149fbc401a432aa3fd5084b))
+
 ## [2.17.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.16.0...v2.17.0) (2026-09-15)
 
 
