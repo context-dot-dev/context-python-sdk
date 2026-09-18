@@ -1,6 +1,6 @@
 [project]
 name = "context.dev"
-version = "2.17.0"
+version = "2.18.0"
 description = "The official Python library for the context.dev API"
 dynamic = ["readme"]
 license = "Apache-2.0"
