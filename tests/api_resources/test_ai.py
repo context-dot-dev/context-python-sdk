@@ -39,6 +39,7 @@ class TestAI:
                 "milliseconds": 1000,
                 "behavior": "fail",
             },
+            zdr="enabled",
         )
         assert_matches_type(AIExtractProductResponse, ai, path=["response"])
 
@@ -191,6 +192,7 @@ class TestAsyncAI:
                 "milliseconds": 1000,
                 "behavior": "fail",
             },
+            zdr="enabled",
         )
         assert_matches_type(AIExtractProductResponse, ai, path=["response"])
 

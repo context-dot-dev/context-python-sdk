@@ -1,11 +1,11 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Optional
+from typing import Dict, List, Optional
 from typing_extensions import Literal
 
 from .._models import BaseModel
 
-__all__ = ["AIExtractProductResponse", "CacheMetadata", "KeyMetadata", "Product"]
+__all__ = ["AIExtractProductResponse", "CacheMetadata", "KeyMetadata", "Product", "ProductVariant"]
 
 
 class CacheMetadata(BaseModel):
@@ -32,6 +32,22 @@ class KeyMetadata(BaseModel):
 
     credits_remaining: int
     """Credits remaining for your organization."""
+
+
+class ProductVariant(BaseModel):
+    attributes: Dict[str, str]
+    """
+    Explicit variant attributes such as color, size, material, pattern and
+    properties declared by page.
+    """
+
+    images: List[str]
+    """Original source image URLs explicitly attached to this variant."""
+
+    sku: Optional[str] = None
+
+    url: Optional[str] = None
+    """Variant or offer URL when provided by the source. May be shared by variants."""
 
 
 class Product(BaseModel):
@@ -93,6 +109,13 @@ class Product(BaseModel):
 
     url: Optional[str] = None
     """URL to the product page"""
+
+    variants: Optional[List[ProductVariant]] = None
+    """
+    Product variations, such as different colors or sizes, with their attributes and
+    images. Empty if none are found. May not include every variation offered by the
+    store.
+    """
 
 
 class AIExtractProductResponse(BaseModel):

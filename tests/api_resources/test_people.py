@@ -58,6 +58,7 @@ class TestPeople:
                 "milliseconds": 1000,
                 "behavior": "fail",
             },
+            zdr="enabled",
         )
         assert_matches_type(PersonEnrichResponse, person, path=["response"])
 
@@ -130,6 +131,7 @@ class TestAsyncPeople:
                 "milliseconds": 1000,
                 "behavior": "fail",
             },
+            zdr="enabled",
         )
         assert_matches_type(PersonEnrichResponse, person, path=["response"])
 

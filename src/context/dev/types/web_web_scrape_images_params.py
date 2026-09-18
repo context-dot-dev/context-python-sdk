@@ -79,6 +79,15 @@ class WebWebScrapeImagesParams(TypedDict, total=False):
     shorter deadline is rejected with 400 TIMEOUT_TOO_SHORT_FOR_WAIT.
     """
 
+    zdr: Literal["enabled", "disabled"]
+    """
+    Set to enabled to bypass shared caches and omit request and response content
+    from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+    omitted. Requires zero data retention to be enabled for your organization
+    (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+    Successful ZDR responses include X-Context-ZDR: true.
+    """
+
 
 class ActionWebScrapeWaitAction(TypedDict, total=False):
     """Pause for a fixed number of milliseconds before continuing to the next action."""
@@ -136,7 +145,7 @@ class Enrichment(TypedDict, total=False):
     hosted_url: Annotated[bool, PropertyInfo(alias="hostedUrl")]
     """
     Host materializable images on the Brand.dev CDN and return their URL and MIME
-    type.
+    type. Ignored when zero data retention is enabled.
     """
 
     max_time_per_ms: Annotated[int, PropertyInfo(alias="maxTimePerMs")]

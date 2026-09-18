@@ -218,5 +218,13 @@ class WebWebScrapeHTMLResponse(BaseModel):
     afterward.
     """
 
+    extracted: Optional[Dict[str, Union[str, List[Union[str, object, None]], object, None]]] = None
+    """Present only when extractRules is supplied.
+
+    Keys match the requested fields. Values are normalized text, raw attribute
+    strings, outer HTML, nested objects, or lists. Missing items are null; lists
+    with no matches are empty. Rules run on the returned HTML after filtering.
+    """
+
     key_metadata: Optional[KeyMetadata] = None
     """Credit usage, included whenever a valid API key is provided."""

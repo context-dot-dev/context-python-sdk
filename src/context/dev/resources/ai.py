@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing_extensions import overload
+from typing_extensions import Literal, overload
 
 import httpx
 
@@ -51,6 +51,7 @@ class AIResource(SyncAPIResource):
         max_age_ms: int | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: ai_extract_product_params.TimeoutOpts | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -75,6 +76,12 @@ class AIResource(SyncAPIResource):
               timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
               timeoutOpts object.
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -91,6 +98,7 @@ class AIResource(SyncAPIResource):
                     "max_age_ms": max_age_ms,
                     "tags": tags,
                     "timeout_opts": timeout_opts,
+                    "zdr": zdr,
                 },
                 ai_extract_product_params.AIExtractProductParams,
             ),
@@ -261,6 +269,7 @@ class AsyncAIResource(AsyncAPIResource):
         max_age_ms: int | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: ai_extract_product_params.TimeoutOpts | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -285,6 +294,12 @@ class AsyncAIResource(AsyncAPIResource):
               timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
               timeoutOpts object.
 
+          zdr: Set to enabled to bypass shared caches and omit request and response content
+              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+              omitted. Requires zero data retention to be enabled for your organization
+              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+              Successful ZDR responses include X-Context-ZDR: true.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -301,6 +316,7 @@ class AsyncAIResource(AsyncAPIResource):
                     "max_age_ms": max_age_ms,
                     "tags": tags,
                     "timeout_opts": timeout_opts,
+                    "zdr": zdr,
                 },
                 ai_extract_product_params.AIExtractProductParams,
             ),

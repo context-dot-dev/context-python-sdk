@@ -14,6 +14,10 @@ __all__ = [
     "ActionWebScrapeWaitAction",
     "ActionWebScrapePerformAction",
     "ActionWebScrapeScrollAction",
+    "ExtractRules",
+    "ExtractRulesUnionMember1",
+    "ExtractRulesUnionMember1OutputHTMLExtractionRulesExtractRulesUnionMember1OutputHTMLExtractionRulesItem",
+    "ExtractRulesUnionMember1OutputHTMLExtractionRulesExtractRulesUnionMember1OutputHTMLExtractionRulesItemUnionMember1",
     "Pdf",
     "TimeoutOpts",
 ]
@@ -248,6 +252,17 @@ class WebWebScrapeHTMLParams(TypedDict, total=False):
     both is removed. Examples: "nav", "footer", ".ad-banner", "[aria-hidden=true]".
     """
 
+    extract_rules: Annotated[Dict[str, ExtractRules], PropertyInfo(alias="extractRules")]
+    """
+    Optional CSS extraction rules applied to the returned HTML after selector and
+    main-content filtering. Use selector strings ("h1", "a@href") or objects with
+    selector, type (item or list), and output (text, html, @attribute, or nested
+    rules). Text whitespace is normalized; html includes the matched element;
+    attributes are returned as written. Missing items are null and missing lists are
+    empty. CSS only; XPath is not supported. Maximum: 100 fields across 5 levels.
+    Send a JSON-encoded string in the extractRules query parameter.
+    """
+
     headers: Dict[str, str]
     """
     Optional outbound HTTP headers forwarded only to the target URL, sent as
@@ -317,9 +332,10 @@ class WebWebScrapeHTMLParams(TypedDict, total=False):
     zdr: Literal["enabled", "disabled"]
     """
     Set to enabled to bypass shared caches and omit request and response content
-    from retained usage logs. Requires zero data retention to be enabled for your
-    organization (contact support@context.dev), otherwise the request fails with
-    ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+    from retained usage logs. Asset uploads are skipped, so hosted image URLs are
+    omitted. Requires zero data retention to be enabled for your organization
+    (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
+    Successful ZDR responses include X-Context-ZDR: true.
     """
 
 
@@ -366,6 +382,39 @@ class ActionWebScrapeScrollAction(TypedDict, total=False):
 
 
 Action: TypeAlias = Union[ActionWebScrapeWaitAction, ActionWebScrapePerformAction, ActionWebScrapeScrollAction]
+
+
+class ExtractRulesUnionMember1OutputHTMLExtractionRulesExtractRulesUnionMember1OutputHTMLExtractionRulesItemUnionMember1(
+    TypedDict, total=False
+):
+    selector: Required[str]
+
+    output: Union[Literal["text", "html"], str, object]
+
+    type: Literal["item", "list"]
+
+
+ExtractRulesUnionMember1OutputHTMLExtractionRulesExtractRulesUnionMember1OutputHTMLExtractionRulesItem: TypeAlias = Union[
+    str,
+    ExtractRulesUnionMember1OutputHTMLExtractionRulesExtractRulesUnionMember1OutputHTMLExtractionRulesItemUnionMember1,
+]
+
+
+class ExtractRulesUnionMember1(TypedDict, total=False):
+    selector: Required[str]
+
+    output: Union[
+        Literal["text", "html"],
+        str,
+        Dict[
+            str, ExtractRulesUnionMember1OutputHTMLExtractionRulesExtractRulesUnionMember1OutputHTMLExtractionRulesItem
+        ],
+    ]
+
+    type: Literal["item", "list"]
+
+
+ExtractRules: TypeAlias = Union[str, ExtractRulesUnionMember1]
 
 
 class Pdf(TypedDict, total=False):
