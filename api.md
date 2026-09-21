@@ -21,6 +21,7 @@ from context.dev.types import (
     WebExtractCompetitorsResponse,
     WebExtractFontsResponse,
     WebExtractStyleguideResponse,
+    WebScrapeResponse,
     WebScreenshotResponse,
     WebSearchResponse,
     WebWebCrawlMdResponse,
@@ -40,6 +41,7 @@ Methods:
 - <code title="get /web/competitors">client.web.<a href="./src/context/dev/resources/web.py">extract_competitors</a>(\*\*<a href="src/context/dev/types/web_extract_competitors_params.py">params</a>) -> <a href="./src/context/dev/types/web_extract_competitors_response.py">WebExtractCompetitorsResponse</a></code>
 - <code title="get /web/fonts">client.web.<a href="./src/context/dev/resources/web.py">extract_fonts</a>(\*\*<a href="src/context/dev/types/web_extract_fonts_params.py">params</a>) -> <a href="./src/context/dev/types/web_extract_fonts_response.py">WebExtractFontsResponse</a></code>
 - <code title="get /web/styleguide">client.web.<a href="./src/context/dev/resources/web.py">extract_styleguide</a>(\*\*<a href="src/context/dev/types/web_extract_styleguide_params.py">params</a>) -> <a href="./src/context/dev/types/web_extract_styleguide_response.py">WebExtractStyleguideResponse</a></code>
+- <code title="post /web/scrape">client.web.<a href="./src/context/dev/resources/web.py">scrape</a>(\*\*<a href="src/context/dev/types/web_scrape_params.py">params</a>) -> <a href="./src/context/dev/types/web_scrape_response.py">WebScrapeResponse</a></code>
 - <code title="get /web/screenshot">client.web.<a href="./src/context/dev/resources/web.py">screenshot</a>(\*\*<a href="src/context/dev/types/web_screenshot_params.py">params</a>) -> <a href="./src/context/dev/types/web_screenshot_response.py">WebScreenshotResponse</a></code>
 - <code title="post /web/search">client.web.<a href="./src/context/dev/resources/web.py">search</a>(\*\*<a href="src/context/dev/types/web_search_params.py">params</a>) -> <a href="./src/context/dev/types/web_search_response.py">WebSearchResponse</a></code>
 - <code title="post /web/crawl">client.web.<a href="./src/context/dev/resources/web.py">web_crawl_md</a>(\*\*<a href="src/context/dev/types/web_web_crawl_md_params.py">params</a>) -> <a href="./src/context/dev/types/web_web_crawl_md_response.py">WebWebCrawlMdResponse</a></code>

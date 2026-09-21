@@ -8,6 +8,7 @@ from typing_extensions import Literal
 import httpx
 
 from ..types import (
+    web_scrape_params,
     web_search_params,
     web_answers_params,
     web_extract_params,
@@ -34,6 +35,7 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from ..types.web_scrape_response import WebScrapeResponse
 from ..types.web_search_response import WebSearchResponse
 from ..types.web_answers_response import WebAnswersResponse
 from ..types.web_extract_response import WebExtractResponse
@@ -494,6 +496,93 @@ class WebResource(SyncAPIResource):
                 ),
             ),
             cast_to=WebExtractStyleguideResponse,
+        )
+
+    def scrape(
+        self,
+        *,
+        formats: web_scrape_params.Formats,
+        url: str,
+        image_params: web_scrape_params.ImageParams | Omit = omit,
+        markdown_params: web_scrape_params.MarkdownParams | Omit = omit,
+        max_age_ms: int | Omit = omit,
+        parse_params: web_scrape_params.ParseParams | Omit = omit,
+        screenshot_params: web_scrape_params.ScreenshotParams | Omit = omit,
+        shared_params: web_scrape_params.SharedParams | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
+        timeout_ms: int | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WebScrapeResponse:
+        """Capture the requested formats from one page visit.
+
+        Shared settings apply once.
+        HTML-only requests use the existing fast acquisition path. One credit per
+        capture, or two with browser actions; PDF OCR adds one credit per recovered
+        page. Original response bytes and screenshots are limited to 20 MiB each,
+        screenshots to 40 megapixels, and the combined browser capture to 60 MiB.
+
+        Args:
+          formats: Outputs to return. Enable at least one; omitted formats are false.
+
+          url: The URL to scrape.
+
+          image_params: Image options. Requires formats.images: true.
+
+          markdown_params: Markdown options. Requires formats.markdown: true.
+
+          max_age_ms: Maximum age for the entire capture, including bytes. Defaults to 1 day; 0
+              fetches fresh. Captures with hosted image files refresh after 23 hours.
+
+          parse_params: Required when formats.parse is true.
+
+          screenshot_params: Screenshot options. Requires formats.screenshot: true.
+
+          shared_params: Shared browser and content settings. Content filters leave screenshots and
+              original bytes unchanged.
+
+          tags: Labels for tracking request usage. Not retained when zdr is enabled.
+
+          timeout_ms: Total deadline, including navigation, actions, waiting, and all outputs.
+
+          zdr: Zero data retention. Bypasses caches and uploads; excludes request/response
+              content and tags from logs. Must be enabled for your organization.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/web/scrape",
+            body=maybe_transform(
+                {
+                    "formats": formats,
+                    "url": url,
+                    "image_params": image_params,
+                    "markdown_params": markdown_params,
+                    "max_age_ms": max_age_ms,
+                    "parse_params": parse_params,
+                    "screenshot_params": screenshot_params,
+                    "shared_params": shared_params,
+                    "tags": tags,
+                    "timeout_ms": timeout_ms,
+                    "zdr": zdr,
+                },
+                web_scrape_params.WebScrapeParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=WebScrapeResponse,
         )
 
     def screenshot(
@@ -3761,6 +3850,93 @@ class AsyncWebResource(AsyncAPIResource):
             cast_to=WebExtractStyleguideResponse,
         )
 
+    async def scrape(
+        self,
+        *,
+        formats: web_scrape_params.Formats,
+        url: str,
+        image_params: web_scrape_params.ImageParams | Omit = omit,
+        markdown_params: web_scrape_params.MarkdownParams | Omit = omit,
+        max_age_ms: int | Omit = omit,
+        parse_params: web_scrape_params.ParseParams | Omit = omit,
+        screenshot_params: web_scrape_params.ScreenshotParams | Omit = omit,
+        shared_params: web_scrape_params.SharedParams | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
+        timeout_ms: int | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WebScrapeResponse:
+        """Capture the requested formats from one page visit.
+
+        Shared settings apply once.
+        HTML-only requests use the existing fast acquisition path. One credit per
+        capture, or two with browser actions; PDF OCR adds one credit per recovered
+        page. Original response bytes and screenshots are limited to 20 MiB each,
+        screenshots to 40 megapixels, and the combined browser capture to 60 MiB.
+
+        Args:
+          formats: Outputs to return. Enable at least one; omitted formats are false.
+
+          url: The URL to scrape.
+
+          image_params: Image options. Requires formats.images: true.
+
+          markdown_params: Markdown options. Requires formats.markdown: true.
+
+          max_age_ms: Maximum age for the entire capture, including bytes. Defaults to 1 day; 0
+              fetches fresh. Captures with hosted image files refresh after 23 hours.
+
+          parse_params: Required when formats.parse is true.
+
+          screenshot_params: Screenshot options. Requires formats.screenshot: true.
+
+          shared_params: Shared browser and content settings. Content filters leave screenshots and
+              original bytes unchanged.
+
+          tags: Labels for tracking request usage. Not retained when zdr is enabled.
+
+          timeout_ms: Total deadline, including navigation, actions, waiting, and all outputs.
+
+          zdr: Zero data retention. Bypasses caches and uploads; excludes request/response
+              content and tags from logs. Must be enabled for your organization.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/web/scrape",
+            body=await async_maybe_transform(
+                {
+                    "formats": formats,
+                    "url": url,
+                    "image_params": image_params,
+                    "markdown_params": markdown_params,
+                    "max_age_ms": max_age_ms,
+                    "parse_params": parse_params,
+                    "screenshot_params": screenshot_params,
+                    "shared_params": shared_params,
+                    "tags": tags,
+                    "timeout_ms": timeout_ms,
+                    "zdr": zdr,
+                },
+                web_scrape_params.WebScrapeParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=WebScrapeResponse,
+        )
+
     async def screenshot(
         self,
         *,
@@ -6601,6 +6777,9 @@ class WebResourceWithRawResponse:
         self.extract_styleguide = to_raw_response_wrapper(
             web.extract_styleguide,
         )
+        self.scrape = to_raw_response_wrapper(
+            web.scrape,
+        )
         self.screenshot = to_raw_response_wrapper(
             web.screenshot,
         )
@@ -6648,6 +6827,9 @@ class AsyncWebResourceWithRawResponse:
         )
         self.extract_styleguide = async_to_raw_response_wrapper(
             web.extract_styleguide,
+        )
+        self.scrape = async_to_raw_response_wrapper(
+            web.scrape,
         )
         self.screenshot = async_to_raw_response_wrapper(
             web.screenshot,
@@ -6697,6 +6879,9 @@ class WebResourceWithStreamingResponse:
         self.extract_styleguide = to_streamed_response_wrapper(
             web.extract_styleguide,
         )
+        self.scrape = to_streamed_response_wrapper(
+            web.scrape,
+        )
         self.screenshot = to_streamed_response_wrapper(
             web.screenshot,
         )
@@ -6744,6 +6929,9 @@ class AsyncWebResourceWithStreamingResponse:
         )
         self.extract_styleguide = async_to_streamed_response_wrapper(
             web.extract_styleguide,
+        )
+        self.scrape = async_to_streamed_response_wrapper(
+            web.scrape,
         )
         self.screenshot = async_to_streamed_response_wrapper(
             web.screenshot,

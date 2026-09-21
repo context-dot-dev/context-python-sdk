@@ -1,0 +1,304 @@
+# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+from __future__ import annotations
+
+from typing import Dict, List, Union, Iterable
+from typing_extensions import Literal, Required, Annotated, TypeAlias, TypedDict
+
+from .._types import SequenceNotStr
+from .._utils import PropertyInfo
+
+__all__ = [
+    "WebScrapeParams",
+    "Formats",
+    "ImageParams",
+    "MarkdownParams",
+    "ParseParams",
+    "ParseParamsRules",
+    "ParseParamsRulesUnionMember1",
+    "ScreenshotParams",
+    "ScreenshotParamsArea",
+    "ScreenshotParamsAreaElement",
+    "ScreenshotParamsAreaRectangle",
+    "SharedParams",
+    "SharedParamsAction",
+    "SharedParamsActionPerform",
+    "SharedParamsActionScroll",
+    "SharedParamsActionWait",
+    "SharedParamsActionWaitFor",
+    "SharedParamsParsers",
+    "SharedParamsParsersPdf",
+    "SharedParamsViewport",
+]
+
+
+class WebScrapeParams(TypedDict, total=False):
+    formats: Required[Formats]
+    """Outputs to return. Enable at least one; omitted formats are false."""
+
+    url: Required[str]
+    """The URL to scrape."""
+
+    image_params: Annotated[ImageParams, PropertyInfo(alias="imageParams")]
+    """Image options. Requires formats.images: true."""
+
+    markdown_params: Annotated[MarkdownParams, PropertyInfo(alias="markdownParams")]
+    """Markdown options. Requires formats.markdown: true."""
+
+    max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
+    """Maximum age for the entire capture, including bytes.
+
+    Defaults to 1 day; 0 fetches fresh. Captures with hosted image files refresh
+    after 23 hours.
+    """
+
+    parse_params: Annotated[ParseParams, PropertyInfo(alias="parseParams")]
+    """Required when formats.parse is true."""
+
+    screenshot_params: Annotated[ScreenshotParams, PropertyInfo(alias="screenshotParams")]
+    """Screenshot options. Requires formats.screenshot: true."""
+
+    shared_params: Annotated[SharedParams, PropertyInfo(alias="sharedParams")]
+    """Shared browser and content settings.
+
+    Content filters leave screenshots and original bytes unchanged.
+    """
+
+    tags: SequenceNotStr[str]
+    """Labels for tracking request usage. Not retained when zdr is enabled."""
+
+    timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMs")]
+    """Total deadline, including navigation, actions, waiting, and all outputs."""
+
+    zdr: Literal["enabled", "disabled"]
+    """Zero data retention.
+
+    Bypasses caches and uploads; excludes request/response content and tags from
+    logs. Must be enabled for your organization.
+    """
+
+
+class Formats(TypedDict, total=False):
+    """Outputs to return. Enable at least one; omitted formats are false."""
+
+    bytes: bool
+    """The original HTTP response body."""
+
+    html: bool
+    """Rendered HTML."""
+
+    images: bool
+    """Images found on the page."""
+
+    markdown: bool
+    """Page content as Markdown."""
+
+    parse: bool
+    """Fields selected by parseParams.rules."""
+
+    screenshot: bool
+    """An inline image of the page."""
+
+
+class ImageParams(TypedDict, total=False):
+    """Image options. Requires formats.images: true."""
+
+    dedupe: Literal["none", "visual"]
+    """For visual duplicates, keep the largest image."""
+
+    enrich: List[Literal["dimensions", "classification", "file"]]
+    """Add dimensions, a visual category, or a hosted file URL."""
+
+
+class MarkdownParams(TypedDict, total=False):
+    """Markdown options. Requires formats.markdown: true."""
+
+    include_images: Annotated[bool, PropertyInfo(alias="includeImages")]
+
+    include_links: Annotated[bool, PropertyInfo(alias="includeLinks")]
+
+    inline_images: Annotated[Literal["placeholder", "preserve"], PropertyInfo(alias="inlineImages")]
+    """Base64 images use placeholders by default. Requires includeImages: true."""
+
+
+class ParseParamsRulesUnionMember1(TypedDict, total=False):
+    selector: Required[str]
+
+    output: Union[Literal["text", "html"], str, object]
+
+    type: Literal["item", "list"]
+
+
+ParseParamsRules: TypeAlias = Union[str, ParseParamsRulesUnionMember1]
+
+
+class ParseParams(TypedDict, total=False):
+    """Required when formats.parse is true."""
+
+    rules: Required[Dict[str, ParseParamsRules]]
+    """Map field names to CSS selectors or rules.
+
+    Missing items return null; missing lists return [].
+    """
+
+
+class ScreenshotParamsAreaElement(TypedDict, total=False):
+    selector: Required[str]
+    """Must match one visible element."""
+
+
+class ScreenshotParamsAreaRectangle(TypedDict, total=False):
+    """Pixels from the document origin."""
+
+    height: Required[int]
+
+    width: Required[int]
+
+    x: Required[int]
+
+    y: Required[int]
+
+
+ScreenshotParamsArea: TypeAlias = Union[
+    Literal["viewport", "fullPage"], ScreenshotParamsAreaElement, ScreenshotParamsAreaRectangle
+]
+
+
+class ScreenshotParams(TypedDict, total=False):
+    """Screenshot options. Requires formats.screenshot: true."""
+
+    area: ScreenshotParamsArea
+    """Viewport, full page, one visible element, or a rectangle.
+
+    Maximum 40 megapixels.
+    """
+
+    format: Literal["png", "jpeg", "webp"]
+
+
+class SharedParamsActionPerform(TypedDict, total=False):
+    action: Required[str]
+
+    type: Required[Literal["perform"]]
+
+
+class SharedParamsActionScroll(TypedDict, total=False):
+    type: Required[Literal["scroll"]]
+
+    amount: Union[int, Literal["viewport", "max"]]
+
+    direction: Literal["down", "up", "left", "right"]
+
+    max_scrolls: Annotated[int, PropertyInfo(alias="maxScrolls")]
+
+    selector: str
+    """Scroll this container. Omit to scroll the page."""
+
+
+class SharedParamsActionWait(TypedDict, total=False):
+    milliseconds: Required[int]
+
+    type: Required[Literal["wait"]]
+
+
+class SharedParamsActionWaitFor(TypedDict, total=False):
+    selector: Required[str]
+
+    type: Required[Literal["waitFor"]]
+
+
+SharedParamsAction: TypeAlias = Union[
+    SharedParamsActionPerform, SharedParamsActionScroll, SharedParamsActionWait, SharedParamsActionWaitFor
+]
+
+
+class SharedParamsParsersPdf(TypedDict, total=False):
+    """PDF text options for HTML, Markdown, and parsed fields."""
+
+    end_page: Annotated[int, PropertyInfo(alias="endPage")]
+    """Last page to parse. Must be at least startPage."""
+
+    ocr: Literal["off", "auto"]
+    """Read text from scanned pages."""
+
+    start_page: Annotated[int, PropertyInfo(alias="startPage")]
+    """First page to parse, starting at 1."""
+
+
+class SharedParamsParsers(TypedDict, total=False):
+    """Document parsing options."""
+
+    pdf: SharedParamsParsersPdf
+    """PDF text options for HTML, Markdown, and parsed fields."""
+
+
+class SharedParamsViewport(TypedDict, total=False):
+    """Browser dimensions in pixels."""
+
+    height: int
+
+    width: int
+
+
+class SharedParams(TypedDict, total=False):
+    """Shared browser and content settings.
+
+    Content filters leave screenshots and original bytes unchanged.
+    """
+
+    actions: Iterable[SharedParamsAction]
+    """Run in order before capture.
+
+    A failed action fails the request. Bypasses caching.
+    """
+
+    country: str
+    """Supported two-letter country code, case-insensitive.
+
+    Applies to every output, including image downloads.
+    """
+
+    dismiss_cookies: Annotated[bool, PropertyInfo(alias="dismissCookies")]
+    """Dismiss cookie banners by accepting cookies before actions."""
+
+    dismiss_popups: Annotated[bool, PropertyInfo(alias="dismissPopups")]
+    """Dismiss other popups before actions."""
+
+    exclude_selectors: Annotated[SequenceNotStr[str], PropertyInfo(alias="excludeSelectors")]
+    """Remove matching content. Exclusions win."""
+
+    headers: Dict[str, str]
+    """Headers for the target origin. Requests with custom headers bypass caching."""
+
+    include_frames: Annotated[bool, PropertyInfo(alias="includeFrames")]
+    """Include iframe content in extraction.
+
+    Screenshots show visible frames regardless.
+    """
+
+    include_selectors: Annotated[SequenceNotStr[str], PropertyInfo(alias="includeSelectors")]
+    """Keep matching content after mainContentOnly."""
+
+    main_content_only: Annotated[bool, PropertyInfo(alias="mainContentOnly")]
+    """Keep only main content in HTML, Markdown, images, and parsed fields."""
+
+    parsers: SharedParamsParsers
+    """Document parsing options."""
+
+    settle_animations: Annotated[bool, PropertyInfo(alias="settleAnimations")]
+    """Settle animations before capture.
+
+    Defaults to true with screenshots, otherwise false.
+    """
+
+    theme: Literal["light", "dark"]
+    """Override the browser color scheme."""
+
+    viewport: SharedParamsViewport
+    """Browser dimensions in pixels."""
+
+    wait_for: Annotated[Union[int, str], PropertyInfo(alias="waitFor")]
+    """After actions, wait this many milliseconds or until a CSS selector is visible.
+
+    Defaults to 500 ms, or 2000 ms with frames or an XML URL. Set 0 to skip.
+    """
