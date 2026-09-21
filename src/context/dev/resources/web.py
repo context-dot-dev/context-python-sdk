@@ -712,6 +712,7 @@ class WebResource(SyncAPIResource):
         domain: str | Omit = omit,
         full_screenshot: Literal["true", "false"] | Omit = omit,
         handle_cookie_popup: bool | Omit = omit,
+        headers: Dict[str, str] | Omit = omit,
         max_age_ms: Optional[int] | Omit = omit,
         page: Literal["login", "signup", "blog", "careers", "pricing", "terms", "privacy", "contact"] | Omit = omit,
         scroll_offset: Optional[int] | Omit = omit,
@@ -758,6 +759,14 @@ class WebResource(SyncAPIResource):
           handle_cookie_popup: Optional parameter to control cookie/consent popup handling. If 'true', we
               dismiss cookie banner before capture. If 'false' or not provided, captures the
               page without that step.
+
+          headers: Optional outbound HTTP headers, using the same JSON object or deep-object query
+              format as other scrape endpoints (for example headers[Authorization]=Bearer
+              token). Headers are scoped to the target origin during capture. For domain/page
+              requests, discovery receives no custom headers and only pages on the resolved
+              origin are eligible. Non-empty headers bypass screenshot caching and return an
+              in-memory data URL; no screenshot is uploaded. Empty objects behave like omitted
+              headers.
 
           max_age_ms: Return a cached screenshot if a prior screenshot for the same parameters exists
               and is younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
@@ -821,6 +830,7 @@ class WebResource(SyncAPIResource):
                         "domain": domain,
                         "full_screenshot": full_screenshot,
                         "handle_cookie_popup": handle_cookie_popup,
+                        "headers": headers,
                         "max_age_ms": max_age_ms,
                         "page": page,
                         "scroll_offset": scroll_offset,
@@ -2862,6 +2872,7 @@ class WebResource(SyncAPIResource):
         | Omit = omit,
         full_screenshot: Literal["true", "false"] | Omit = omit,
         handle_cookie_popup: bool | Omit = omit,
+        headers: Dict[str, str] | Omit = omit,
         max_age_ms: Optional[int] | Omit = omit,
         scroll_offset: Optional[int] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
@@ -2904,6 +2915,14 @@ class WebResource(SyncAPIResource):
           handle_cookie_popup: Optional parameter to control cookie/consent popup handling. If 'true', we
               dismiss cookie banner before capture. If 'false' or not provided, captures the
               page without that step.
+
+          headers: Optional outbound HTTP headers, using the same JSON object or deep-object query
+              format as other scrape endpoints (for example headers[Authorization]=Bearer
+              token). Headers are scoped to the target origin during capture. For domain/page
+              requests, discovery receives no custom headers and only pages on the resolved
+              origin are eligible. Non-empty headers bypass screenshot caching and return an
+              in-memory data URL; no screenshot is uploaded. Empty objects behave like omitted
+              headers.
 
           max_age_ms: Return a cached screenshot if a prior screenshot for the same parameters exists
               and is younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
@@ -2960,6 +2979,7 @@ class WebResource(SyncAPIResource):
                         "country": country,
                         "full_screenshot": full_screenshot,
                         "handle_cookie_popup": handle_cookie_popup,
+                        "headers": headers,
                         "max_age_ms": max_age_ms,
                         "scroll_offset": scroll_offset,
                         "tags": tags,
@@ -3734,6 +3754,7 @@ class AsyncWebResource(AsyncAPIResource):
         domain: str | Omit = omit,
         full_screenshot: Literal["true", "false"] | Omit = omit,
         handle_cookie_popup: bool | Omit = omit,
+        headers: Dict[str, str] | Omit = omit,
         max_age_ms: Optional[int] | Omit = omit,
         page: Literal["login", "signup", "blog", "careers", "pricing", "terms", "privacy", "contact"] | Omit = omit,
         scroll_offset: Optional[int] | Omit = omit,
@@ -3780,6 +3801,14 @@ class AsyncWebResource(AsyncAPIResource):
           handle_cookie_popup: Optional parameter to control cookie/consent popup handling. If 'true', we
               dismiss cookie banner before capture. If 'false' or not provided, captures the
               page without that step.
+
+          headers: Optional outbound HTTP headers, using the same JSON object or deep-object query
+              format as other scrape endpoints (for example headers[Authorization]=Bearer
+              token). Headers are scoped to the target origin during capture. For domain/page
+              requests, discovery receives no custom headers and only pages on the resolved
+              origin are eligible. Non-empty headers bypass screenshot caching and return an
+              in-memory data URL; no screenshot is uploaded. Empty objects behave like omitted
+              headers.
 
           max_age_ms: Return a cached screenshot if a prior screenshot for the same parameters exists
               and is younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
@@ -3843,6 +3872,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "domain": domain,
                         "full_screenshot": full_screenshot,
                         "handle_cookie_popup": handle_cookie_popup,
+                        "headers": headers,
                         "max_age_ms": max_age_ms,
                         "page": page,
                         "scroll_offset": scroll_offset,
@@ -5884,6 +5914,7 @@ class AsyncWebResource(AsyncAPIResource):
         | Omit = omit,
         full_screenshot: Literal["true", "false"] | Omit = omit,
         handle_cookie_popup: bool | Omit = omit,
+        headers: Dict[str, str] | Omit = omit,
         max_age_ms: Optional[int] | Omit = omit,
         scroll_offset: Optional[int] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
@@ -5926,6 +5957,14 @@ class AsyncWebResource(AsyncAPIResource):
           handle_cookie_popup: Optional parameter to control cookie/consent popup handling. If 'true', we
               dismiss cookie banner before capture. If 'false' or not provided, captures the
               page without that step.
+
+          headers: Optional outbound HTTP headers, using the same JSON object or deep-object query
+              format as other scrape endpoints (for example headers[Authorization]=Bearer
+              token). Headers are scoped to the target origin during capture. For domain/page
+              requests, discovery receives no custom headers and only pages on the resolved
+              origin are eligible. Non-empty headers bypass screenshot caching and return an
+              in-memory data URL; no screenshot is uploaded. Empty objects behave like omitted
+              headers.
 
           max_age_ms: Return a cached screenshot if a prior screenshot for the same parameters exists
               and is younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
@@ -5982,6 +6021,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "country": country,
                         "full_screenshot": full_screenshot,
                         "handle_cookie_popup": handle_cookie_popup,
+                        "headers": headers,
                         "max_age_ms": max_age_ms,
                         "scroll_offset": scroll_offset,
                         "tags": tags,

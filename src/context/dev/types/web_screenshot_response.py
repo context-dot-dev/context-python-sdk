@@ -74,8 +74,8 @@ class WebScreenshotResponse(BaseModel):
 
     screenshot: Optional[str] = None
     """
-    Public image URL for standard requests, or an in-memory data URL when ZDR is
-    enabled.
+    Public image URL for standard requests, or an in-memory data URL when ZDR or
+    non-empty custom headers are supplied.
     """
 
     screenshot_type: Optional[Literal["viewport", "fullPage"]] = FieldInfo(alias="screenshotType", default=None)
