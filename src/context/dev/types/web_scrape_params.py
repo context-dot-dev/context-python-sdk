@@ -46,10 +46,11 @@ class WebScrapeParams(TypedDict, total=False):
     """Markdown options. Requires formats.markdown: true."""
 
     max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
-    """Maximum age for the entire capture, including bytes.
+    """Maximum age of each cached output.
 
-    Defaults to 1 day; 0 fetches fresh. Captures with hosted image files refresh
-    after 23 hours.
+    Defaults to 1 day; 0 fetches fresh and updates the requested outputs. Compatible
+    outputs are shared with the individual scrape endpoints. Image results with
+    hosted files refresh after 23 hours; other outputs retain their own freshness.
     """
 
     parse_params: Annotated[ParseParams, PropertyInfo(alias="parseParams")]
