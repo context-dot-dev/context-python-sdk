@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict
+from typing import Dict, Optional
 from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from .._types import SequenceNotStr
@@ -246,6 +246,16 @@ class WebWebScrapeBytesParams(TypedDict, total=False):
 
     For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail
     or a JSON-encoded timeoutOpts object.
+    """
+
+    wait_for_ms: Annotated[Optional[int], PropertyInfo(alias="waitForMs")]
+    """
+    Optional browser wait time after initial page load, in milliseconds (0–30000; 0
+    uses 500). When supplied, HTML is rendered with JavaScript and returned as UTF-8
+    bytes. Other resources keep their original bytes without a browser wait. Omit to
+    download the original HTTP response. When combined with timeoutOpts,
+    timeoutOpts.milliseconds must be at least waitForMs + 10000 ms; a shorter
+    deadline is rejected with 400 TIMEOUT_TOO_SHORT_FOR_WAIT.
     """
 
     zdr: Literal["enabled", "disabled"]

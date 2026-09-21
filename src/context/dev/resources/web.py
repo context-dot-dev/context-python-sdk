@@ -1732,6 +1732,7 @@ class WebResource(SyncAPIResource):
         headers: Dict[str, str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: web_web_scrape_bytes_params.TimeoutOpts | Omit = omit,
+        wait_for_ms: Optional[int] | Omit = omit,
         zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -1742,10 +1743,12 @@ class WebResource(SyncAPIResource):
     ) -> WebWebScrapeBytesResponse:
         """Downloads a resource and returns its bytes as base64.
 
-        Supports images, PDFs,
-        HTML pages, and any other content type without image conversion, text
-        extraction, or character-encoding changes. HTTP compression is decoded before
-        base64 encoding. HTML is the original HTTP response; JavaScript is not rendered.
+        Without waitForMs, returns
+        the original HTTP response without image conversion, text extraction, or
+        character-encoding changes. HTTP compression is decoded before base64 encoding.
+        Supply waitForMs to render HTML with JavaScript in the browser and return the
+        resulting HTML as UTF-8 bytes after the wait. Non-HTML resources, including
+        images and PDFs, keep their original bytes and do not incur a browser wait.
         Follows public redirects and retries failed downloads through ISP and
         residential proxies, with a direct fallback. When country is specified, only a
         residential proxy in that country is used. Supply headers such as Referer for
@@ -1771,6 +1774,13 @@ class WebResource(SyncAPIResource):
           timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
               timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
               timeoutOpts object.
+
+          wait_for_ms: Optional browser wait time after initial page load, in milliseconds (0–30000; 0
+              uses 500). When supplied, HTML is rendered with JavaScript and returned as UTF-8
+              bytes. Other resources keep their original bytes without a browser wait. Omit to
+              download the original HTTP response. When combined with timeoutOpts,
+              timeoutOpts.milliseconds must be at least waitForMs + 10000 ms; a shorter
+              deadline is rejected with 400 TIMEOUT_TOO_SHORT_FOR_WAIT.
 
           zdr: Set to enabled to bypass shared caches and omit request and response content
               from retained usage logs. Asset uploads are skipped, so hosted image URLs are
@@ -1800,6 +1810,7 @@ class WebResource(SyncAPIResource):
                         "headers": headers,
                         "tags": tags,
                         "timeout_opts": timeout_opts,
+                        "wait_for_ms": wait_for_ms,
                         "zdr": zdr,
                     },
                     web_web_scrape_bytes_params.WebWebScrapeBytesParams,
@@ -4743,6 +4754,7 @@ class AsyncWebResource(AsyncAPIResource):
         headers: Dict[str, str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: web_web_scrape_bytes_params.TimeoutOpts | Omit = omit,
+        wait_for_ms: Optional[int] | Omit = omit,
         zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -4753,10 +4765,12 @@ class AsyncWebResource(AsyncAPIResource):
     ) -> WebWebScrapeBytesResponse:
         """Downloads a resource and returns its bytes as base64.
 
-        Supports images, PDFs,
-        HTML pages, and any other content type without image conversion, text
-        extraction, or character-encoding changes. HTTP compression is decoded before
-        base64 encoding. HTML is the original HTTP response; JavaScript is not rendered.
+        Without waitForMs, returns
+        the original HTTP response without image conversion, text extraction, or
+        character-encoding changes. HTTP compression is decoded before base64 encoding.
+        Supply waitForMs to render HTML with JavaScript in the browser and return the
+        resulting HTML as UTF-8 bytes after the wait. Non-HTML resources, including
+        images and PDFs, keep their original bytes and do not incur a browser wait.
         Follows public redirects and retries failed downloads through ISP and
         residential proxies, with a direct fallback. When country is specified, only a
         residential proxy in that country is used. Supply headers such as Referer for
@@ -4782,6 +4796,13 @@ class AsyncWebResource(AsyncAPIResource):
           timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
               timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
               timeoutOpts object.
+
+          wait_for_ms: Optional browser wait time after initial page load, in milliseconds (0–30000; 0
+              uses 500). When supplied, HTML is rendered with JavaScript and returned as UTF-8
+              bytes. Other resources keep their original bytes without a browser wait. Omit to
+              download the original HTTP response. When combined with timeoutOpts,
+              timeoutOpts.milliseconds must be at least waitForMs + 10000 ms; a shorter
+              deadline is rejected with 400 TIMEOUT_TOO_SHORT_FOR_WAIT.
 
           zdr: Set to enabled to bypass shared caches and omit request and response content
               from retained usage logs. Asset uploads are skipped, so hosted image URLs are
@@ -4811,6 +4832,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "headers": headers,
                         "tags": tags,
                         "timeout_opts": timeout_opts,
+                        "wait_for_ms": wait_for_ms,
                         "zdr": zdr,
                     },
                     web_web_scrape_bytes_params.WebWebScrapeBytesParams,

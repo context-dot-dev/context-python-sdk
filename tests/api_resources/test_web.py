@@ -534,6 +534,7 @@ class TestWeb:
                 "milliseconds": 1,
                 "behavior": "fail",
             },
+            wait_for_ms=0,
             zdr="enabled",
         )
         assert_matches_type(WebWebScrapeBytesResponse, web, path=["response"])
@@ -1393,6 +1394,7 @@ class TestAsyncWeb:
                 "milliseconds": 1,
                 "behavior": "fail",
             },
+            wait_for_ms=0,
             zdr="enabled",
         )
         assert_matches_type(WebWebScrapeBytesResponse, web, path=["response"])
