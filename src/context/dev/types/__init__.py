@@ -11,6 +11,7 @@ from .page_error_count import PageErrorCount as PageErrorCount
 from .webhook_delivery import WebhookDelivery as WebhookDelivery
 from .batch_list_params import BatchListParams as BatchListParams
 from .log_list_response import LogListResponse as LogListResponse
+from .web_scrape_params import WebScrapeParams as WebScrapeParams
 from .web_search_params import WebSearchParams as WebSearchParams
 from .news_search_params import NewsSearchParams as NewsSearchParams
 from .retry_config_param import RetryConfigParam as RetryConfigParam
@@ -21,6 +22,7 @@ from .batch_submit_params import BatchSubmitParams as BatchSubmitParams
 from .brand_search_params import BrandSearchParams as BrandSearchParams
 from .monitor_list_params import MonitorListParams as MonitorListParams
 from .parse_handle_params import ParseHandleParams as ParseHandleParams
+from .web_scrape_response import WebScrapeResponse as WebScrapeResponse
 from .web_search_response import WebSearchResponse as WebSearchResponse
 from .monitor_run_response import MonitorRunResponse as MonitorRunResponse
 from .news_search_response import NewsSearchResponse as NewsSearchResponse
