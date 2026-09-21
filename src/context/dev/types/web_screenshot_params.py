@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import Dict, Optional
 from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from .._types import SequenceNotStr
@@ -264,6 +264,17 @@ class WebScreenshotParams(TypedDict, total=False):
 
     If 'true', we dismiss cookie banner before capture. If 'false' or not provided,
     captures the page without that step.
+    """
+
+    headers: Dict[str, str]
+    """
+    Optional outbound HTTP headers, using the same JSON object or deep-object query
+    format as other scrape endpoints (for example headers[Authorization]=Bearer
+    token). Headers are scoped to the target origin during capture. For domain/page
+    requests, discovery receives no custom headers and only pages on the resolved
+    origin are eligible. Non-empty headers bypass screenshot caching and return an
+    in-memory data URL; no screenshot is uploaded. Empty objects behave like omitted
+    headers.
     """
 
     max_age_ms: Annotated[Optional[int], PropertyInfo(alias="maxAgeMs")]

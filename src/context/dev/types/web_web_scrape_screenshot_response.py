@@ -55,8 +55,8 @@ class WebWebScrapeScreenshotResponse(BaseModel):
 
     screenshot: str
     """
-    Public image URL for standard requests, or an in-memory data URL when ZDR is
-    enabled.
+    Public image URL for standard requests, or an in-memory data URL when ZDR or
+    non-empty custom headers are supplied.
     """
 
     url: str

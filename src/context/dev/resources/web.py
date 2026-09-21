@@ -712,6 +712,7 @@ class WebResource(SyncAPIResource):
         domain: str | Omit = omit,
         full_screenshot: Literal["true", "false"] | Omit = omit,
         handle_cookie_popup: bool | Omit = omit,
+        headers: Dict[str, str] | Omit = omit,
         max_age_ms: Optional[int] | Omit = omit,
         page: Literal["login", "signup", "blog", "careers", "pricing", "terms", "privacy", "contact"] | Omit = omit,
         scroll_offset: Optional[int] | Omit = omit,
@@ -758,6 +759,14 @@ class WebResource(SyncAPIResource):
           handle_cookie_popup: Optional parameter to control cookie/consent popup handling. If 'true', we
               dismiss cookie banner before capture. If 'false' or not provided, captures the
               page without that step.
+
+          headers: Optional outbound HTTP headers, using the same JSON object or deep-object query
+              format as other scrape endpoints (for example headers[Authorization]=Bearer
+              token). Headers are scoped to the target origin during capture. For domain/page
+              requests, discovery receives no custom headers and only pages on the resolved
+              origin are eligible. Non-empty headers bypass screenshot caching and return an
+              in-memory data URL; no screenshot is uploaded. Empty objects behave like omitted
+              headers.
 
           max_age_ms: Return a cached screenshot if a prior screenshot for the same parameters exists
               and is younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
@@ -821,6 +830,7 @@ class WebResource(SyncAPIResource):
                         "domain": domain,
                         "full_screenshot": full_screenshot,
                         "handle_cookie_popup": handle_cookie_popup,
+                        "headers": headers,
                         "max_age_ms": max_age_ms,
                         "page": page,
                         "scroll_offset": scroll_offset,
@@ -1730,8 +1740,10 @@ class WebResource(SyncAPIResource):
         ]
         | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
+        max_age_ms: Optional[int] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: web_web_scrape_bytes_params.TimeoutOpts | Omit = omit,
+        wait_for_ms: Optional[int] | Omit = omit,
         zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -1742,16 +1754,23 @@ class WebResource(SyncAPIResource):
     ) -> WebWebScrapeBytesResponse:
         """Downloads a resource and returns its bytes as base64.
 
-        Supports images, PDFs,
-        HTML pages, and any other content type without image conversion, text
-        extraction, or character-encoding changes. HTTP compression is decoded before
-        base64 encoding. HTML is the original HTTP response; JavaScript is not rendered.
+        Without waitForMs, returns
+        the original HTTP response without image conversion, text extraction, or
+        character-encoding changes. HTTP compression is decoded before base64 encoding.
+        Supply waitForMs to render HTML with JavaScript in the browser and return the
+        resulting HTML as UTF-8 bytes after the wait. Non-HTML resources, including
+        images and PDFs, keep their original bytes and do not incur a browser wait.
         Follows public redirects and retries failed downloads through ISP and
         residential proxies, with a direct fallback. When country is specified, only a
         residential proxy in that country is used. Supply headers such as Referer for
-        images that require a referring page. Downloads are not cached. Maximum decoded
-        resource size: 20 MiB (20971520 bytes), before base64 encoding. Successful
-        requests cost 1 credit; errors are not billed.
+        images that require a referring page. Cached results are reused according to
+        maxAgeMs (default: 1 day; maximum: 30 days). Set maxAgeMs=0 to fetch fresh and
+        refresh the cache. Cache identity includes the exact URL, country, waitForMs,
+        and normalized outbound headers. Credential-bearing headers and zero data
+        retention bypass cache reads and writes. cache_metadata reports hit, miss, or
+        zdr and the cached result age in milliseconds. Maximum decoded resource size: 20
+        MiB (20971520 bytes), before base64 encoding. Successful requests cost 1 credit;
+        errors are not billed.
 
         Args:
           url: Full HTTP(S) URL of the resource to download, such as an image, PDF, or page.
@@ -1763,7 +1782,12 @@ class WebResource(SyncAPIResource):
               as a JSON object or deep-object query params such as
               headers[Referer]=https://example.com/. Host, Content-Length, and hop-by-hop
               transport headers are rejected. Authorization and cookies are removed when a
-              redirect changes origin.
+              redirect changes origin. Credential-bearing headers bypass cache reads and
+              writes; other headers are included in the cache key.
+
+          max_age_ms: Return a cached result if a prior scrape for the same parameters exists and is
+              younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
+              omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
 
           tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
               characters.
@@ -1771,6 +1795,13 @@ class WebResource(SyncAPIResource):
           timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
               timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
               timeoutOpts object.
+
+          wait_for_ms: Optional browser wait time after initial page load, in milliseconds (0–30000; 0
+              uses 500). When supplied, HTML is rendered with JavaScript and returned as UTF-8
+              bytes. Other resources keep their original bytes without a browser wait. Omit to
+              download the original HTTP response. When combined with timeoutOpts,
+              timeoutOpts.milliseconds must be at least waitForMs + 10000 ms; a shorter
+              deadline is rejected with 400 TIMEOUT_TOO_SHORT_FOR_WAIT.
 
           zdr: Set to enabled to bypass shared caches and omit request and response content
               from retained usage logs. Asset uploads are skipped, so hosted image URLs are
@@ -1798,8 +1829,10 @@ class WebResource(SyncAPIResource):
                         "url": url,
                         "country": country,
                         "headers": headers,
+                        "max_age_ms": max_age_ms,
                         "tags": tags,
                         "timeout_opts": timeout_opts,
+                        "wait_for_ms": wait_for_ms,
                         "zdr": zdr,
                     },
                     web_web_scrape_bytes_params.WebWebScrapeBytesParams,
@@ -2163,6 +2196,213 @@ class WebResource(SyncAPIResource):
         *,
         url: str,
         actions: Optional[Iterable[web_web_scrape_images_params.Action]] | Omit = omit,
+        country: Literal[
+            "ad",
+            "ae",
+            "af",
+            "ag",
+            "ai",
+            "al",
+            "am",
+            "ao",
+            "ar",
+            "at",
+            "au",
+            "aw",
+            "az",
+            "ba",
+            "bb",
+            "bd",
+            "be",
+            "bf",
+            "bg",
+            "bh",
+            "bi",
+            "bj",
+            "bm",
+            "bn",
+            "bo",
+            "bq",
+            "br",
+            "bs",
+            "bw",
+            "by",
+            "bz",
+            "ca",
+            "cd",
+            "cf",
+            "cg",
+            "ch",
+            "ci",
+            "cl",
+            "cm",
+            "cn",
+            "co",
+            "cr",
+            "cv",
+            "cw",
+            "cy",
+            "cz",
+            "de",
+            "dj",
+            "dk",
+            "dm",
+            "do",
+            "dz",
+            "ec",
+            "ee",
+            "eg",
+            "es",
+            "et",
+            "fi",
+            "fj",
+            "fr",
+            "ga",
+            "gb",
+            "gd",
+            "ge",
+            "gf",
+            "gg",
+            "gh",
+            "gm",
+            "gn",
+            "gp",
+            "gq",
+            "gr",
+            "gt",
+            "gu",
+            "gw",
+            "gy",
+            "hk",
+            "hn",
+            "hr",
+            "ht",
+            "hu",
+            "id",
+            "ie",
+            "il",
+            "im",
+            "in",
+            "iq",
+            "ir",
+            "is",
+            "it",
+            "je",
+            "jm",
+            "jo",
+            "jp",
+            "ke",
+            "kg",
+            "kh",
+            "kn",
+            "kr",
+            "kw",
+            "ky",
+            "kz",
+            "la",
+            "lb",
+            "lc",
+            "lk",
+            "lr",
+            "ls",
+            "lt",
+            "lu",
+            "lv",
+            "ly",
+            "ma",
+            "mc",
+            "md",
+            "me",
+            "mf",
+            "mg",
+            "mk",
+            "ml",
+            "mm",
+            "mn",
+            "mo",
+            "mq",
+            "mr",
+            "mt",
+            "mu",
+            "mv",
+            "mw",
+            "mx",
+            "my",
+            "mz",
+            "na",
+            "nc",
+            "ne",
+            "ng",
+            "ni",
+            "nl",
+            "no",
+            "np",
+            "nz",
+            "om",
+            "pa",
+            "pe",
+            "pf",
+            "pg",
+            "ph",
+            "pk",
+            "pl",
+            "pr",
+            "ps",
+            "pt",
+            "py",
+            "qa",
+            "re",
+            "ro",
+            "rs",
+            "ru",
+            "rw",
+            "sa",
+            "sc",
+            "sd",
+            "se",
+            "sg",
+            "si",
+            "sk",
+            "sl",
+            "sm",
+            "sn",
+            "so",
+            "sr",
+            "ss",
+            "st",
+            "sv",
+            "sx",
+            "sy",
+            "sz",
+            "tc",
+            "td",
+            "tg",
+            "th",
+            "tj",
+            "tl",
+            "tm",
+            "tn",
+            "tr",
+            "tt",
+            "tw",
+            "tz",
+            "ua",
+            "ug",
+            "us",
+            "uy",
+            "uz",
+            "vc",
+            "ve",
+            "vg",
+            "vi",
+            "vn",
+            "ye",
+            "yt",
+            "za",
+            "zm",
+            "zw",
+        ]
+        | Omit = omit,
         dedupe: bool | Omit = omit,
         enrichment: Optional[web_web_scrape_images_params.Enrichment] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
@@ -2191,6 +2431,9 @@ class WebResource(SyncAPIResource):
           actions: Optional browser actions executed in array order after the page loads and before
               content is captured. Requires a paid plan. Send a JSON array in the query
               parameter. Maximum: 5 actions.
+
+          country: Fetch the target page through a residential proxy in this country (ISO 3166-1
+              alpha-2).
 
           dedupe: When true, visually duplicate images are removed: every image is loaded and
               perceptually hashed, and only the highest-resolution copy of each duplicate
@@ -2244,6 +2487,7 @@ class WebResource(SyncAPIResource):
                     {
                         "url": url,
                         "actions": actions,
+                        "country": country,
                         "dedupe": dedupe,
                         "enrichment": enrichment,
                         "headers": headers,
@@ -2851,6 +3095,7 @@ class WebResource(SyncAPIResource):
         | Omit = omit,
         full_screenshot: Literal["true", "false"] | Omit = omit,
         handle_cookie_popup: bool | Omit = omit,
+        headers: Dict[str, str] | Omit = omit,
         max_age_ms: Optional[int] | Omit = omit,
         scroll_offset: Optional[int] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
@@ -2893,6 +3138,14 @@ class WebResource(SyncAPIResource):
           handle_cookie_popup: Optional parameter to control cookie/consent popup handling. If 'true', we
               dismiss cookie banner before capture. If 'false' or not provided, captures the
               page without that step.
+
+          headers: Optional outbound HTTP headers, using the same JSON object or deep-object query
+              format as other scrape endpoints (for example headers[Authorization]=Bearer
+              token). Headers are scoped to the target origin during capture. For domain/page
+              requests, discovery receives no custom headers and only pages on the resolved
+              origin are eligible. Non-empty headers bypass screenshot caching and return an
+              in-memory data URL; no screenshot is uploaded. Empty objects behave like omitted
+              headers.
 
           max_age_ms: Return a cached screenshot if a prior screenshot for the same parameters exists
               and is younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
@@ -2949,6 +3202,7 @@ class WebResource(SyncAPIResource):
                         "country": country,
                         "full_screenshot": full_screenshot,
                         "handle_cookie_popup": handle_cookie_popup,
+                        "headers": headers,
                         "max_age_ms": max_age_ms,
                         "scroll_offset": scroll_offset,
                         "tags": tags,
@@ -3723,6 +3977,7 @@ class AsyncWebResource(AsyncAPIResource):
         domain: str | Omit = omit,
         full_screenshot: Literal["true", "false"] | Omit = omit,
         handle_cookie_popup: bool | Omit = omit,
+        headers: Dict[str, str] | Omit = omit,
         max_age_ms: Optional[int] | Omit = omit,
         page: Literal["login", "signup", "blog", "careers", "pricing", "terms", "privacy", "contact"] | Omit = omit,
         scroll_offset: Optional[int] | Omit = omit,
@@ -3769,6 +4024,14 @@ class AsyncWebResource(AsyncAPIResource):
           handle_cookie_popup: Optional parameter to control cookie/consent popup handling. If 'true', we
               dismiss cookie banner before capture. If 'false' or not provided, captures the
               page without that step.
+
+          headers: Optional outbound HTTP headers, using the same JSON object or deep-object query
+              format as other scrape endpoints (for example headers[Authorization]=Bearer
+              token). Headers are scoped to the target origin during capture. For domain/page
+              requests, discovery receives no custom headers and only pages on the resolved
+              origin are eligible. Non-empty headers bypass screenshot caching and return an
+              in-memory data URL; no screenshot is uploaded. Empty objects behave like omitted
+              headers.
 
           max_age_ms: Return a cached screenshot if a prior screenshot for the same parameters exists
               and is younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
@@ -3832,6 +4095,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "domain": domain,
                         "full_screenshot": full_screenshot,
                         "handle_cookie_popup": handle_cookie_popup,
+                        "headers": headers,
                         "max_age_ms": max_age_ms,
                         "page": page,
                         "scroll_offset": scroll_offset,
@@ -4741,8 +5005,10 @@ class AsyncWebResource(AsyncAPIResource):
         ]
         | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
+        max_age_ms: Optional[int] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: web_web_scrape_bytes_params.TimeoutOpts | Omit = omit,
+        wait_for_ms: Optional[int] | Omit = omit,
         zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -4753,16 +5019,23 @@ class AsyncWebResource(AsyncAPIResource):
     ) -> WebWebScrapeBytesResponse:
         """Downloads a resource and returns its bytes as base64.
 
-        Supports images, PDFs,
-        HTML pages, and any other content type without image conversion, text
-        extraction, or character-encoding changes. HTTP compression is decoded before
-        base64 encoding. HTML is the original HTTP response; JavaScript is not rendered.
+        Without waitForMs, returns
+        the original HTTP response without image conversion, text extraction, or
+        character-encoding changes. HTTP compression is decoded before base64 encoding.
+        Supply waitForMs to render HTML with JavaScript in the browser and return the
+        resulting HTML as UTF-8 bytes after the wait. Non-HTML resources, including
+        images and PDFs, keep their original bytes and do not incur a browser wait.
         Follows public redirects and retries failed downloads through ISP and
         residential proxies, with a direct fallback. When country is specified, only a
         residential proxy in that country is used. Supply headers such as Referer for
-        images that require a referring page. Downloads are not cached. Maximum decoded
-        resource size: 20 MiB (20971520 bytes), before base64 encoding. Successful
-        requests cost 1 credit; errors are not billed.
+        images that require a referring page. Cached results are reused according to
+        maxAgeMs (default: 1 day; maximum: 30 days). Set maxAgeMs=0 to fetch fresh and
+        refresh the cache. Cache identity includes the exact URL, country, waitForMs,
+        and normalized outbound headers. Credential-bearing headers and zero data
+        retention bypass cache reads and writes. cache_metadata reports hit, miss, or
+        zdr and the cached result age in milliseconds. Maximum decoded resource size: 20
+        MiB (20971520 bytes), before base64 encoding. Successful requests cost 1 credit;
+        errors are not billed.
 
         Args:
           url: Full HTTP(S) URL of the resource to download, such as an image, PDF, or page.
@@ -4774,7 +5047,12 @@ class AsyncWebResource(AsyncAPIResource):
               as a JSON object or deep-object query params such as
               headers[Referer]=https://example.com/. Host, Content-Length, and hop-by-hop
               transport headers are rejected. Authorization and cookies are removed when a
-              redirect changes origin.
+              redirect changes origin. Credential-bearing headers bypass cache reads and
+              writes; other headers are included in the cache key.
+
+          max_age_ms: Return a cached result if a prior scrape for the same parameters exists and is
+              younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
+              omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
 
           tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
               characters.
@@ -4782,6 +5060,13 @@ class AsyncWebResource(AsyncAPIResource):
           timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
               timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
               timeoutOpts object.
+
+          wait_for_ms: Optional browser wait time after initial page load, in milliseconds (0–30000; 0
+              uses 500). When supplied, HTML is rendered with JavaScript and returned as UTF-8
+              bytes. Other resources keep their original bytes without a browser wait. Omit to
+              download the original HTTP response. When combined with timeoutOpts,
+              timeoutOpts.milliseconds must be at least waitForMs + 10000 ms; a shorter
+              deadline is rejected with 400 TIMEOUT_TOO_SHORT_FOR_WAIT.
 
           zdr: Set to enabled to bypass shared caches and omit request and response content
               from retained usage logs. Asset uploads are skipped, so hosted image URLs are
@@ -4809,8 +5094,10 @@ class AsyncWebResource(AsyncAPIResource):
                         "url": url,
                         "country": country,
                         "headers": headers,
+                        "max_age_ms": max_age_ms,
                         "tags": tags,
                         "timeout_opts": timeout_opts,
+                        "wait_for_ms": wait_for_ms,
                         "zdr": zdr,
                     },
                     web_web_scrape_bytes_params.WebWebScrapeBytesParams,
@@ -5174,6 +5461,213 @@ class AsyncWebResource(AsyncAPIResource):
         *,
         url: str,
         actions: Optional[Iterable[web_web_scrape_images_params.Action]] | Omit = omit,
+        country: Literal[
+            "ad",
+            "ae",
+            "af",
+            "ag",
+            "ai",
+            "al",
+            "am",
+            "ao",
+            "ar",
+            "at",
+            "au",
+            "aw",
+            "az",
+            "ba",
+            "bb",
+            "bd",
+            "be",
+            "bf",
+            "bg",
+            "bh",
+            "bi",
+            "bj",
+            "bm",
+            "bn",
+            "bo",
+            "bq",
+            "br",
+            "bs",
+            "bw",
+            "by",
+            "bz",
+            "ca",
+            "cd",
+            "cf",
+            "cg",
+            "ch",
+            "ci",
+            "cl",
+            "cm",
+            "cn",
+            "co",
+            "cr",
+            "cv",
+            "cw",
+            "cy",
+            "cz",
+            "de",
+            "dj",
+            "dk",
+            "dm",
+            "do",
+            "dz",
+            "ec",
+            "ee",
+            "eg",
+            "es",
+            "et",
+            "fi",
+            "fj",
+            "fr",
+            "ga",
+            "gb",
+            "gd",
+            "ge",
+            "gf",
+            "gg",
+            "gh",
+            "gm",
+            "gn",
+            "gp",
+            "gq",
+            "gr",
+            "gt",
+            "gu",
+            "gw",
+            "gy",
+            "hk",
+            "hn",
+            "hr",
+            "ht",
+            "hu",
+            "id",
+            "ie",
+            "il",
+            "im",
+            "in",
+            "iq",
+            "ir",
+            "is",
+            "it",
+            "je",
+            "jm",
+            "jo",
+            "jp",
+            "ke",
+            "kg",
+            "kh",
+            "kn",
+            "kr",
+            "kw",
+            "ky",
+            "kz",
+            "la",
+            "lb",
+            "lc",
+            "lk",
+            "lr",
+            "ls",
+            "lt",
+            "lu",
+            "lv",
+            "ly",
+            "ma",
+            "mc",
+            "md",
+            "me",
+            "mf",
+            "mg",
+            "mk",
+            "ml",
+            "mm",
+            "mn",
+            "mo",
+            "mq",
+            "mr",
+            "mt",
+            "mu",
+            "mv",
+            "mw",
+            "mx",
+            "my",
+            "mz",
+            "na",
+            "nc",
+            "ne",
+            "ng",
+            "ni",
+            "nl",
+            "no",
+            "np",
+            "nz",
+            "om",
+            "pa",
+            "pe",
+            "pf",
+            "pg",
+            "ph",
+            "pk",
+            "pl",
+            "pr",
+            "ps",
+            "pt",
+            "py",
+            "qa",
+            "re",
+            "ro",
+            "rs",
+            "ru",
+            "rw",
+            "sa",
+            "sc",
+            "sd",
+            "se",
+            "sg",
+            "si",
+            "sk",
+            "sl",
+            "sm",
+            "sn",
+            "so",
+            "sr",
+            "ss",
+            "st",
+            "sv",
+            "sx",
+            "sy",
+            "sz",
+            "tc",
+            "td",
+            "tg",
+            "th",
+            "tj",
+            "tl",
+            "tm",
+            "tn",
+            "tr",
+            "tt",
+            "tw",
+            "tz",
+            "ua",
+            "ug",
+            "us",
+            "uy",
+            "uz",
+            "vc",
+            "ve",
+            "vg",
+            "vi",
+            "vn",
+            "ye",
+            "yt",
+            "za",
+            "zm",
+            "zw",
+        ]
+        | Omit = omit,
         dedupe: bool | Omit = omit,
         enrichment: Optional[web_web_scrape_images_params.Enrichment] | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
@@ -5202,6 +5696,9 @@ class AsyncWebResource(AsyncAPIResource):
           actions: Optional browser actions executed in array order after the page loads and before
               content is captured. Requires a paid plan. Send a JSON array in the query
               parameter. Maximum: 5 actions.
+
+          country: Fetch the target page through a residential proxy in this country (ISO 3166-1
+              alpha-2).
 
           dedupe: When true, visually duplicate images are removed: every image is loaded and
               perceptually hashed, and only the highest-resolution copy of each duplicate
@@ -5255,6 +5752,7 @@ class AsyncWebResource(AsyncAPIResource):
                     {
                         "url": url,
                         "actions": actions,
+                        "country": country,
                         "dedupe": dedupe,
                         "enrichment": enrichment,
                         "headers": headers,
@@ -5862,6 +6360,7 @@ class AsyncWebResource(AsyncAPIResource):
         | Omit = omit,
         full_screenshot: Literal["true", "false"] | Omit = omit,
         handle_cookie_popup: bool | Omit = omit,
+        headers: Dict[str, str] | Omit = omit,
         max_age_ms: Optional[int] | Omit = omit,
         scroll_offset: Optional[int] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
@@ -5904,6 +6403,14 @@ class AsyncWebResource(AsyncAPIResource):
           handle_cookie_popup: Optional parameter to control cookie/consent popup handling. If 'true', we
               dismiss cookie banner before capture. If 'false' or not provided, captures the
               page without that step.
+
+          headers: Optional outbound HTTP headers, using the same JSON object or deep-object query
+              format as other scrape endpoints (for example headers[Authorization]=Bearer
+              token). Headers are scoped to the target origin during capture. For domain/page
+              requests, discovery receives no custom headers and only pages on the resolved
+              origin are eligible. Non-empty headers bypass screenshot caching and return an
+              in-memory data URL; no screenshot is uploaded. Empty objects behave like omitted
+              headers.
 
           max_age_ms: Return a cached screenshot if a prior screenshot for the same parameters exists
               and is younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
@@ -5960,6 +6467,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "country": country,
                         "full_screenshot": full_screenshot,
                         "handle_cookie_popup": handle_cookie_popup,
+                        "headers": headers,
                         "max_age_ms": max_age_ms,
                         "scroll_offset": scroll_offset,
                         "tags": tags,

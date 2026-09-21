@@ -332,6 +332,7 @@ class TestWeb:
             domain="xxx",
             full_screenshot="true",
             handle_cookie_popup=True,
+            headers={"foo": "J!"},
             max_age_ms=0,
             page="login",
             scroll_offset=0,
@@ -529,11 +530,13 @@ class TestWeb:
             url="https://example.com",
             country="de",
             headers={"foo": "J!"},
+            max_age_ms=0,
             tags=["production", "team-alpha"],
             timeout_opts={
                 "milliseconds": 1,
                 "behavior": "fail",
             },
+            wait_for_ms=0,
             zdr="enabled",
         )
         assert_matches_type(WebWebScrapeBytesResponse, web, path=["response"])
@@ -653,6 +656,7 @@ class TestWeb:
                     "time_ms": 0,
                 }
             ],
+            country="de",
             dedupe=True,
             enrichment={
                 "classification": True,
@@ -789,6 +793,7 @@ class TestWeb:
             country="de",
             full_screenshot="true",
             handle_cookie_popup=True,
+            headers={"foo": "J!"},
             max_age_ms=0,
             scroll_offset=0,
             tags=["production", "team-alpha"],
@@ -1191,6 +1196,7 @@ class TestAsyncWeb:
             domain="xxx",
             full_screenshot="true",
             handle_cookie_popup=True,
+            headers={"foo": "J!"},
             max_age_ms=0,
             page="login",
             scroll_offset=0,
@@ -1388,11 +1394,13 @@ class TestAsyncWeb:
             url="https://example.com",
             country="de",
             headers={"foo": "J!"},
+            max_age_ms=0,
             tags=["production", "team-alpha"],
             timeout_opts={
                 "milliseconds": 1,
                 "behavior": "fail",
             },
+            wait_for_ms=0,
             zdr="enabled",
         )
         assert_matches_type(WebWebScrapeBytesResponse, web, path=["response"])
@@ -1512,6 +1520,7 @@ class TestAsyncWeb:
                     "time_ms": 0,
                 }
             ],
+            country="de",
             dedupe=True,
             enrichment={
                 "classification": True,
@@ -1648,6 +1657,7 @@ class TestAsyncWeb:
             country="de",
             full_screenshot="true",
             handle_cookie_popup=True,
+            headers={"foo": "J!"},
             max_age_ms=0,
             scroll_offset=0,
             tags=["production", "team-alpha"],

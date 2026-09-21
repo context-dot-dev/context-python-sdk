@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict
+from typing import Dict, Optional
 from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from .._types import SequenceNotStr
@@ -232,7 +232,15 @@ class WebWebScrapeBytesParams(TypedDict, total=False):
     Send as a JSON object or deep-object query params such as
     headers[Referer]=https://example.com/. Host, Content-Length, and hop-by-hop
     transport headers are rejected. Authorization and cookies are removed when a
-    redirect changes origin.
+    redirect changes origin. Credential-bearing headers bypass cache reads and
+    writes; other headers are included in the cache key.
+    """
+
+    max_age_ms: Annotated[Optional[int], PropertyInfo(alias="maxAgeMs")]
+    """
+    Return a cached result if a prior scrape for the same parameters exists and is
+    younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
+    omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
     """
 
     tags: SequenceNotStr[str]
@@ -246,6 +254,16 @@ class WebWebScrapeBytesParams(TypedDict, total=False):
 
     For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail
     or a JSON-encoded timeoutOpts object.
+    """
+
+    wait_for_ms: Annotated[Optional[int], PropertyInfo(alias="waitForMs")]
+    """
+    Optional browser wait time after initial page load, in milliseconds (0–30000; 0
+    uses 500). When supplied, HTML is rendered with JavaScript and returned as UTF-8
+    bytes. Other resources keep their original bytes without a browser wait. Omit to
+    download the original HTTP response. When combined with timeoutOpts,
+    timeoutOpts.milliseconds must be at least waitForMs + 10000 ms; a shorter
+    deadline is rejected with 400 TIMEOUT_TOO_SHORT_FOR_WAIT.
     """
 
     zdr: Literal["enabled", "disabled"]
