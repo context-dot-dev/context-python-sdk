@@ -530,6 +530,7 @@ class TestWeb:
             url="https://example.com",
             country="de",
             headers={"foo": "J!"},
+            max_age_ms=0,
             tags=["production", "team-alpha"],
             timeout_opts={
                 "milliseconds": 1,
@@ -655,6 +656,7 @@ class TestWeb:
                     "time_ms": 0,
                 }
             ],
+            country="de",
             dedupe=True,
             enrichment={
                 "classification": True,
@@ -1392,6 +1394,7 @@ class TestAsyncWeb:
             url="https://example.com",
             country="de",
             headers={"foo": "J!"},
+            max_age_ms=0,
             tags=["production", "team-alpha"],
             timeout_opts={
                 "milliseconds": 1,
@@ -1517,6 +1520,7 @@ class TestAsyncWeb:
                     "time_ms": 0,
                 }
             ],
+            country="de",
             dedupe=True,
             enrichment={
                 "classification": True,

@@ -232,7 +232,15 @@ class WebWebScrapeBytesParams(TypedDict, total=False):
     Send as a JSON object or deep-object query params such as
     headers[Referer]=https://example.com/. Host, Content-Length, and hop-by-hop
     transport headers are rejected. Authorization and cookies are removed when a
-    redirect changes origin.
+    redirect changes origin. Credential-bearing headers bypass cache reads and
+    writes; other headers are included in the cache key.
+    """
+
+    max_age_ms: Annotated[Optional[int], PropertyInfo(alias="maxAgeMs")]
+    """
+    Return a cached result if a prior scrape for the same parameters exists and is
+    younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
+    omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
     """
 
     tags: SequenceNotStr[str]
