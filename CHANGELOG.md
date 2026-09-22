@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.19.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.18.0...v2.19.0) (2026-09-22)
+
+
+### Features
+
+* **billing:** charge for 404s and skip fraud accounting ([#1152](https://github.com/context-dot-dev/context-python-sdk/issues/1152)) ([fc642b8](https://github.com/context-dot-dev/context-python-sdk/commit/fc642b80cb4254d33cec07df305a262b1f8dbe00))
+* **scrape:** add cache age support to byte downloads ([#1171](https://github.com/context-dot-dev/context-python-sdk/issues/1171)) ([542c639](https://github.com/context-dot-dev/context-python-sdk/commit/542c639df7fb516215c476429ddc9d2017cbcf57))
+* **scrape:** add unified scrape API ([#1182](https://github.com/context-dot-dev/context-python-sdk/issues/1182)) ([cfec05f](https://github.com/context-dot-dev/context-python-sdk/commit/cfec05fc01888c6e48529baf01993c2a5dc664ec))
+* **scrape:** align timeout options and public SDK methods ([#1207](https://github.com/context-dot-dev/context-python-sdk/issues/1207)) ([d95d38f](https://github.com/context-dot-dev/context-python-sdk/commit/d95d38fb37bbadfd414437c9b89415ea428bc229))
+* **scrape:** support country for image scraping ([#1172](https://github.com/context-dot-dev/context-python-sdk/issues/1172)) ([542c639](https://github.com/context-dot-dev/context-python-sdk/commit/542c639df7fb516215c476429ddc9d2017cbcf57))
+* **scrape:** support custom screenshot headers ([#1169](https://github.com/context-dot-dev/context-python-sdk/issues/1169)) ([f8b192d](https://github.com/context-dot-dev/context-python-sdk/commit/f8b192d6c2683af20b300a804bcb1f91e166914f))
+* **scrape:** support waitForMs for byte downloads ([#1170](https://github.com/context-dot-dev/context-python-sdk/issues/1170)) ([65fa0fe](https://github.com/context-dot-dev/context-python-sdk/commit/65fa0fe649a7cb28a0609643ac386e7b201b8d0f))
+
+
+### Bug Fixes
+
+* **scrape:** reuse legacy caches across all output formats ([#1197](https://github.com/context-dot-dev/context-python-sdk/issues/1197)) ([71ad00b](https://github.com/context-dot-dev/context-python-sdk/commit/71ad00b0376aa20db8c2ecc6d42379bbeff396a1))
+
 ## [2.18.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.17.0...v2.18.0) (2026-09-18)
 
 
