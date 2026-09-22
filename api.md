@@ -17,70 +17,38 @@ Types:
 ```python
 from context.dev.types import (
     WebAnswersResponse,
-    WebExtractResponse,
     WebExtractCompetitorsResponse,
-    WebExtractFontsResponse,
     WebExtractStyleguideResponse,
+    WebMapURLsResponse,
     WebScrapeResponse,
     WebScreenshotResponse,
     WebSearchResponse,
     WebWebCrawlMdResponse,
-    WebWebScrapeBytesResponse,
-    WebWebScrapeHTMLResponse,
-    WebWebScrapeImagesResponse,
-    WebWebScrapeMdResponse,
-    WebWebScrapeScreenshotResponse,
-    WebWebScrapeSitemapResponse,
 )
 ```
 
 Methods:
 
 - <code title="post /web/answers">client.web.<a href="./src/context/dev/resources/web.py">answers</a>(\*\*<a href="src/context/dev/types/web_answers_params.py">params</a>) -> <a href="./src/context/dev/types/web_answers_response.py">WebAnswersResponse</a></code>
-- <code title="post /web/extract">client.web.<a href="./src/context/dev/resources/web.py">extract</a>(\*\*<a href="src/context/dev/types/web_extract_params.py">params</a>) -> <a href="./src/context/dev/types/web_extract_response.py">WebExtractResponse</a></code>
 - <code title="get /web/competitors">client.web.<a href="./src/context/dev/resources/web.py">extract_competitors</a>(\*\*<a href="src/context/dev/types/web_extract_competitors_params.py">params</a>) -> <a href="./src/context/dev/types/web_extract_competitors_response.py">WebExtractCompetitorsResponse</a></code>
-- <code title="get /web/fonts">client.web.<a href="./src/context/dev/resources/web.py">extract_fonts</a>(\*\*<a href="src/context/dev/types/web_extract_fonts_params.py">params</a>) -> <a href="./src/context/dev/types/web_extract_fonts_response.py">WebExtractFontsResponse</a></code>
 - <code title="get /web/styleguide">client.web.<a href="./src/context/dev/resources/web.py">extract_styleguide</a>(\*\*<a href="src/context/dev/types/web_extract_styleguide_params.py">params</a>) -> <a href="./src/context/dev/types/web_extract_styleguide_response.py">WebExtractStyleguideResponse</a></code>
+- <code title="get /web/urls">client.web.<a href="./src/context/dev/resources/web.py">map_urls</a>(\*\*<a href="src/context/dev/types/web_map_urls_params.py">params</a>) -> <a href="./src/context/dev/types/web_map_urls_response.py">WebMapURLsResponse</a></code>
 - <code title="post /web/scrape">client.web.<a href="./src/context/dev/resources/web.py">scrape</a>(\*\*<a href="src/context/dev/types/web_scrape_params.py">params</a>) -> <a href="./src/context/dev/types/web_scrape_response.py">WebScrapeResponse</a></code>
 - <code title="get /web/screenshot">client.web.<a href="./src/context/dev/resources/web.py">screenshot</a>(\*\*<a href="src/context/dev/types/web_screenshot_params.py">params</a>) -> <a href="./src/context/dev/types/web_screenshot_response.py">WebScreenshotResponse</a></code>
 - <code title="post /web/search">client.web.<a href="./src/context/dev/resources/web.py">search</a>(\*\*<a href="src/context/dev/types/web_search_params.py">params</a>) -> <a href="./src/context/dev/types/web_search_response.py">WebSearchResponse</a></code>
 - <code title="post /web/crawl">client.web.<a href="./src/context/dev/resources/web.py">web_crawl_md</a>(\*\*<a href="src/context/dev/types/web_web_crawl_md_params.py">params</a>) -> <a href="./src/context/dev/types/web_web_crawl_md_response.py">WebWebCrawlMdResponse</a></code>
-- <code title="get /web/scrape/bytes">client.web.<a href="./src/context/dev/resources/web.py">web_scrape_bytes</a>(\*\*<a href="src/context/dev/types/web_web_scrape_bytes_params.py">params</a>) -> <a href="./src/context/dev/types/web_web_scrape_bytes_response.py">WebWebScrapeBytesResponse</a></code>
-- <code title="get /web/scrape/html">client.web.<a href="./src/context/dev/resources/web.py">web_scrape_html</a>(\*\*<a href="src/context/dev/types/web_web_scrape_html_params.py">params</a>) -> <a href="./src/context/dev/types/web_web_scrape_html_response.py">WebWebScrapeHTMLResponse</a></code>
-- <code title="get /web/scrape/images">client.web.<a href="./src/context/dev/resources/web.py">web_scrape_images</a>(\*\*<a href="src/context/dev/types/web_web_scrape_images_params.py">params</a>) -> <a href="./src/context/dev/types/web_web_scrape_images_response.py">WebWebScrapeImagesResponse</a></code>
-- <code title="get /web/scrape/markdown">client.web.<a href="./src/context/dev/resources/web.py">web_scrape_md</a>(\*\*<a href="src/context/dev/types/web_web_scrape_md_params.py">params</a>) -> <a href="./src/context/dev/types/web_web_scrape_md_response.py">WebWebScrapeMdResponse</a></code>
-- <code title="get /web/scrape/screenshot">client.web.<a href="./src/context/dev/resources/web.py">web_scrape_screenshot</a>(\*\*<a href="src/context/dev/types/web_web_scrape_screenshot_params.py">params</a>) -> <a href="./src/context/dev/types/web_web_scrape_screenshot_response.py">WebWebScrapeScreenshotResponse</a></code>
-- <code title="get /web/scrape/sitemap">client.web.<a href="./src/context/dev/resources/web.py">web_scrape_sitemap</a>(\*\*<a href="src/context/dev/types/web_web_scrape_sitemap_params.py">params</a>) -> <a href="./src/context/dev/types/web_web_scrape_sitemap_response.py">WebWebScrapeSitemapResponse</a></code>
-
-# AI
-
-Types:
-
-```python
-from context.dev.types import AIExtractProductResponse, AIExtractProductsResponse
-```
-
-Methods:
-
-- <code title="post /brand/ai/product">client.ai.<a href="./src/context/dev/resources/ai.py">extract_product</a>(\*\*<a href="src/context/dev/types/ai_extract_product_params.py">params</a>) -> <a href="./src/context/dev/types/ai_extract_product_response.py">AIExtractProductResponse</a></code>
-- <code title="post /brand/ai/products">client.ai.<a href="./src/context/dev/resources/ai.py">extract_products</a>(\*\*<a href="src/context/dev/types/ai_extract_products_params.py">params</a>) -> <a href="./src/context/dev/types/ai_extract_products_response.py">AIExtractProductsResponse</a></code>
 
 # Brand
 
 Types:
 
 ```python
-from context.dev.types import (
-    BrandRetrieveResponse,
-    BrandRetrieveSimplifiedResponse,
-    BrandSearchResponse,
-)
+from context.dev.types import BrandRetrieveResponse, BrandSearchResponse
 ```
 
 Methods:
 
 - <code title="post /brand/retrieve">client.brand.<a href="./src/context/dev/resources/brand.py">retrieve</a>(\*\*<a href="src/context/dev/types/brand_retrieve_params.py">params</a>) -> <a href="./src/context/dev/types/brand_retrieve_response.py">BrandRetrieveResponse</a></code>
-- <code title="get /brand/retrieve-simplified">client.brand.<a href="./src/context/dev/resources/brand.py">retrieve_simplified</a>(\*\*<a href="src/context/dev/types/brand_retrieve_simplified_params.py">params</a>) -> <a href="./src/context/dev/types/brand_retrieve_simplified_response.py">BrandRetrieveSimplifiedResponse</a></code>
 - <code title="get /brand/search">client.brand.<a href="./src/context/dev/resources/brand.py">search</a>(\*\*<a href="src/context/dev/types/brand_search_params.py">params</a>) -> <a href="./src/context/dev/types/brand_search_response.py">BrandSearchResponse</a></code>
 
 # Industry
@@ -127,6 +95,8 @@ from context.dev.types import (
     MonitorListChangesResponse,
     MonitorListRunsResponse,
     MonitorRetrieveChangeResponse,
+    MonitorRetrieveRunResponse,
+    MonitorRotateWebhookSecretResponse,
     MonitorRunResponse,
 )
 ```
@@ -145,6 +115,8 @@ Methods:
 - <code title="get /monitors/{monitor_id}/changes">client.monitors.<a href="./src/context/dev/resources/monitors.py">list_changes</a>(monitor_id, \*\*<a href="src/context/dev/types/monitor_list_changes_params.py">params</a>) -> <a href="./src/context/dev/types/monitor_list_changes_response.py">MonitorListChangesResponse</a></code>
 - <code title="get /monitors/{monitor_id}/runs">client.monitors.<a href="./src/context/dev/resources/monitors.py">list_runs</a>(monitor_id, \*\*<a href="src/context/dev/types/monitor_list_runs_params.py">params</a>) -> <a href="./src/context/dev/types/monitor_list_runs_response.py">MonitorListRunsResponse</a></code>
 - <code title="get /monitors/changes/{change_id}">client.monitors.<a href="./src/context/dev/resources/monitors.py">retrieve_change</a>(change_id) -> <a href="./src/context/dev/types/monitor_retrieve_change_response.py">MonitorRetrieveChangeResponse</a></code>
+- <code title="get /monitors/{monitor_id}/runs/{run_id}">client.monitors.<a href="./src/context/dev/resources/monitors.py">retrieve_run</a>(run_id, \*, monitor_id) -> <a href="./src/context/dev/types/monitor_retrieve_run_response.py">MonitorRetrieveRunResponse</a></code>
+- <code title="post /monitors/{monitor_id}/webhook/rotate-secret">client.monitors.<a href="./src/context/dev/resources/monitors.py">rotate_webhook_secret</a>(monitor_id) -> <a href="./src/context/dev/types/monitor_rotate_webhook_secret_response.py">MonitorRotateWebhookSecretResponse</a></code>
 - <code title="post /monitors/{monitor_id}/run">client.monitors.<a href="./src/context/dev/resources/monitors.py">run</a>(monitor_id) -> <a href="./src/context/dev/types/monitor_run_response.py">MonitorRunResponse</a></code>
 
 # Batch

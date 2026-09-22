@@ -2,33 +2,69 @@
 
 from __future__ import annotations
 
+from typing import Dict
 from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
-__all__ = ["AIExtractProductParams", "TimeoutOpts"]
+__all__ = ["WebMapURLsParams", "TimeoutOpts"]
 
 
-class AIExtractProductParams(TypedDict, total=False):
-    url: Required[str]
-    """The product page URL to extract product data from."""
+class WebMapURLsParams(TypedDict, total=False):
+    domain: Required[str]
+    """Domain to build a sitemap for"""
 
-    max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
+    headers: Dict[str, str]
     """
-    Return a cached result if a prior scrape for the same parameters exists and is
-    younger than this many milliseconds. Defaults to 7 days (604800000 ms) when
-    omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
+    Optional outbound HTTP headers forwarded only to the target URL, sent as
+    deep-object query params such as headers[X-Custom]=value. When provided, caching
+    is bypassed: the result is neither read from nor written to cache.
+    """
+
+    include_subdomains: Annotated[bool, PropertyInfo(alias="includeSubdomains")]
+    """
+    When true, discover and include public pages and sitemaps on subdomains of the
+    requested domain. Defaults to false.
+    """
+
+    max_links: Annotated[int, PropertyInfo(alias="maxLinks")]
+    """Maximum number of links to return from the sitemap crawl.
+
+    Defaults to 10,000. Minimum is 1, maximum is 100,000.
+    """
+
+    search: str
+    """Optional search phrase.
+
+    When provided, the crawled sitemap is filtered to the pages whose URLs are about
+    that phrase, most relevant first, and the request costs 2 credits instead of 1.
+    """
+
+    sitemap_url: Annotated[str, PropertyInfo(alias="sitemapUrl")]
+    """Optional explicit sitemap URL.
+
+    When provided, exactly this sitemap is crawled instead of discovering the
+    domain's sitemaps.
     """
 
     tags: SequenceNotStr[str]
-    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
+    """Comma-separated tags for tracking request usage.
+
+    Up to 20 tags, each 1-50 characters.
+    """
 
     timeout_opts: Annotated[TimeoutOpts, PropertyInfo(alias="timeoutOpts")]
     """Optional request deadline and behavior on timeout.
 
     For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail
     or a JSON-encoded timeoutOpts object.
+    """
+
+    url_regex: Annotated[str, PropertyInfo(alias="urlRegex")]
+    """Optional RE2-compatible regex pattern.
+
+    Only URLs matching this pattern are returned and counted against maxLinks.
     """
 
     zdr: Literal["enabled", "disabled"]

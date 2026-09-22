@@ -35,8 +35,7 @@ from ._base_client import (
 )
 
 if TYPE_CHECKING:
-    from .resources import ai, web, logs, news, batch, brand, parse, people, utility, industry, monitors, webhooks
-    from .resources.ai import AIResource, AsyncAIResource
+    from .resources import web, logs, news, batch, brand, parse, people, utility, industry, monitors, webhooks
     from .resources.web import WebResource, AsyncWebResource
     from .resources.logs import LogsResource, AsyncLogsResource
     from .resources.news import NewsResource, AsyncNewsResource
@@ -136,12 +135,6 @@ class ContextDev(SyncAPIClient):
         from .resources.web import WebResource
 
         return WebResource(self)
-
-    @cached_property
-    def ai(self) -> AIResource:
-        from .resources.ai import AIResource
-
-        return AIResource(self)
 
     @cached_property
     def brand(self) -> BrandResource:
@@ -396,12 +389,6 @@ class AsyncContextDev(AsyncAPIClient):
         return AsyncWebResource(self)
 
     @cached_property
-    def ai(self) -> AsyncAIResource:
-        from .resources.ai import AsyncAIResource
-
-        return AsyncAIResource(self)
-
-    @cached_property
     def brand(self) -> AsyncBrandResource:
         from .resources.brand import AsyncBrandResource
 
@@ -596,12 +583,6 @@ class ContextDevWithRawResponse:
         return WebResourceWithRawResponse(self._client.web)
 
     @cached_property
-    def ai(self) -> ai.AIResourceWithRawResponse:
-        from .resources.ai import AIResourceWithRawResponse
-
-        return AIResourceWithRawResponse(self._client.ai)
-
-    @cached_property
     def brand(self) -> brand.BrandResourceWithRawResponse:
         from .resources.brand import BrandResourceWithRawResponse
 
@@ -682,12 +663,6 @@ class AsyncContextDevWithRawResponse:
         from .resources.web import AsyncWebResourceWithRawResponse
 
         return AsyncWebResourceWithRawResponse(self._client.web)
-
-    @cached_property
-    def ai(self) -> ai.AsyncAIResourceWithRawResponse:
-        from .resources.ai import AsyncAIResourceWithRawResponse
-
-        return AsyncAIResourceWithRawResponse(self._client.ai)
 
     @cached_property
     def brand(self) -> brand.AsyncBrandResourceWithRawResponse:
@@ -772,12 +747,6 @@ class ContextDevWithStreamedResponse:
         return WebResourceWithStreamingResponse(self._client.web)
 
     @cached_property
-    def ai(self) -> ai.AIResourceWithStreamingResponse:
-        from .resources.ai import AIResourceWithStreamingResponse
-
-        return AIResourceWithStreamingResponse(self._client.ai)
-
-    @cached_property
     def brand(self) -> brand.BrandResourceWithStreamingResponse:
         from .resources.brand import BrandResourceWithStreamingResponse
 
@@ -858,12 +827,6 @@ class AsyncContextDevWithStreamedResponse:
         from .resources.web import AsyncWebResourceWithStreamingResponse
 
         return AsyncWebResourceWithStreamingResponse(self._client.web)
-
-    @cached_property
-    def ai(self) -> ai.AsyncAIResourceWithStreamingResponse:
-        from .resources.ai import AsyncAIResourceWithStreamingResponse
-
-        return AsyncAIResourceWithStreamingResponse(self._client.ai)
 
     @cached_property
     def brand(self) -> brand.AsyncBrandResourceWithStreamingResponse:
