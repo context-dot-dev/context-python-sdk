@@ -19,10 +19,12 @@ from context.dev.types import (
     MonitorRetrieveResponse,
     MonitorGetLimitsResponse,
     MonitorListChangesResponse,
+    MonitorRetrieveRunResponse,
     MonitorGetCreditUsageResponse,
     MonitorRetrieveChangeResponse,
     MonitorListAccountRunsResponse,
     MonitorListAccountChangesResponse,
+    MonitorRotateWebhookSecretResponse,
 )
 from context.dev._utils import parse_datetime
 
@@ -601,6 +603,100 @@ class TestMonitors:
     def test_path_params_retrieve_change(self, client: ContextDev) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `change_id` but received ''"):
             client.monitors.with_raw_response.retrieve_change(
+                "",
+            )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_retrieve_run(self, client: ContextDev) -> None:
+        monitor = client.monitors.retrieve_run(
+            run_id="run_123",
+            monitor_id="mon_123",
+        )
+        assert_matches_type(MonitorRetrieveRunResponse, monitor, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_retrieve_run(self, client: ContextDev) -> None:
+        response = client.monitors.with_raw_response.retrieve_run(
+            run_id="run_123",
+            monitor_id="mon_123",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        monitor = response.parse()
+        assert_matches_type(MonitorRetrieveRunResponse, monitor, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_retrieve_run(self, client: ContextDev) -> None:
+        with client.monitors.with_streaming_response.retrieve_run(
+            run_id="run_123",
+            monitor_id="mon_123",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            monitor = response.parse()
+            assert_matches_type(MonitorRetrieveRunResponse, monitor, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_path_params_retrieve_run(self, client: ContextDev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `monitor_id` but received ''"):
+            client.monitors.with_raw_response.retrieve_run(
+                run_id="run_123",
+                monitor_id="",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `run_id` but received ''"):
+            client.monitors.with_raw_response.retrieve_run(
+                run_id="",
+                monitor_id="mon_123",
+            )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_rotate_webhook_secret(self, client: ContextDev) -> None:
+        monitor = client.monitors.rotate_webhook_secret(
+            "mon_123",
+        )
+        assert_matches_type(MonitorRotateWebhookSecretResponse, monitor, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_rotate_webhook_secret(self, client: ContextDev) -> None:
+        response = client.monitors.with_raw_response.rotate_webhook_secret(
+            "mon_123",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        monitor = response.parse()
+        assert_matches_type(MonitorRotateWebhookSecretResponse, monitor, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_rotate_webhook_secret(self, client: ContextDev) -> None:
+        with client.monitors.with_streaming_response.rotate_webhook_secret(
+            "mon_123",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            monitor = response.parse()
+            assert_matches_type(MonitorRotateWebhookSecretResponse, monitor, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_path_params_rotate_webhook_secret(self, client: ContextDev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `monitor_id` but received ''"):
+            client.monitors.with_raw_response.rotate_webhook_secret(
                 "",
             )
 
@@ -1221,6 +1317,100 @@ class TestAsyncMonitors:
     async def test_path_params_retrieve_change(self, async_client: AsyncContextDev) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `change_id` but received ''"):
             await async_client.monitors.with_raw_response.retrieve_change(
+                "",
+            )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_retrieve_run(self, async_client: AsyncContextDev) -> None:
+        monitor = await async_client.monitors.retrieve_run(
+            run_id="run_123",
+            monitor_id="mon_123",
+        )
+        assert_matches_type(MonitorRetrieveRunResponse, monitor, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_retrieve_run(self, async_client: AsyncContextDev) -> None:
+        response = await async_client.monitors.with_raw_response.retrieve_run(
+            run_id="run_123",
+            monitor_id="mon_123",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        monitor = await response.parse()
+        assert_matches_type(MonitorRetrieveRunResponse, monitor, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_retrieve_run(self, async_client: AsyncContextDev) -> None:
+        async with async_client.monitors.with_streaming_response.retrieve_run(
+            run_id="run_123",
+            monitor_id="mon_123",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            monitor = await response.parse()
+            assert_matches_type(MonitorRetrieveRunResponse, monitor, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_path_params_retrieve_run(self, async_client: AsyncContextDev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `monitor_id` but received ''"):
+            await async_client.monitors.with_raw_response.retrieve_run(
+                run_id="run_123",
+                monitor_id="",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `run_id` but received ''"):
+            await async_client.monitors.with_raw_response.retrieve_run(
+                run_id="",
+                monitor_id="mon_123",
+            )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_rotate_webhook_secret(self, async_client: AsyncContextDev) -> None:
+        monitor = await async_client.monitors.rotate_webhook_secret(
+            "mon_123",
+        )
+        assert_matches_type(MonitorRotateWebhookSecretResponse, monitor, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_rotate_webhook_secret(self, async_client: AsyncContextDev) -> None:
+        response = await async_client.monitors.with_raw_response.rotate_webhook_secret(
+            "mon_123",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        monitor = await response.parse()
+        assert_matches_type(MonitorRotateWebhookSecretResponse, monitor, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_rotate_webhook_secret(self, async_client: AsyncContextDev) -> None:
+        async with async_client.monitors.with_streaming_response.rotate_webhook_secret(
+            "mon_123",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            monitor = await response.parse()
+            assert_matches_type(MonitorRotateWebhookSecretResponse, monitor, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_path_params_rotate_webhook_secret(self, async_client: AsyncContextDev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `monitor_id` but received ''"):
+            await async_client.monitors.with_raw_response.rotate_webhook_secret(
                 "",
             )
 

@@ -38,10 +38,12 @@ from ..types.monitor_retrieve_response import MonitorRetrieveResponse
 from ..types.monitor_list_runs_response import MonitorListRunsResponse
 from ..types.monitor_get_limits_response import MonitorGetLimitsResponse
 from ..types.monitor_list_changes_response import MonitorListChangesResponse
+from ..types.monitor_retrieve_run_response import MonitorRetrieveRunResponse
 from ..types.monitor_retrieve_change_response import MonitorRetrieveChangeResponse
 from ..types.monitor_get_credit_usage_response import MonitorGetCreditUsageResponse
 from ..types.monitor_list_account_runs_response import MonitorListAccountRunsResponse
 from ..types.monitor_list_account_changes_response import MonitorListAccountChangesResponse
+from ..types.monitor_rotate_webhook_secret_response import MonitorRotateWebhookSecretResponse
 
 __all__ = ["MonitorsResource", "AsyncMonitorsResource"]
 
@@ -684,6 +686,78 @@ class MonitorsResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=MonitorRetrieveChangeResponse,
+        )
+
+    def retrieve_run(
+        self,
+        run_id: str,
+        *,
+        monitor_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> MonitorRetrieveRunResponse:
+        """
+        Fetches one run for a monitor, including lifecycle status, timing, credits
+        charged, and any detected change.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not monitor_id:
+            raise ValueError(f"Expected a non-empty value for `monitor_id` but received {monitor_id!r}")
+        if not run_id:
+            raise ValueError(f"Expected a non-empty value for `run_id` but received {run_id!r}")
+        return self._get(
+            path_template("/monitors/{monitor_id}/runs/{run_id}", monitor_id=monitor_id, run_id=run_id),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=MonitorRetrieveRunResponse,
+        )
+
+    def rotate_webhook_secret(
+        self,
+        monitor_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> MonitorRotateWebhookSecretResponse:
+        """
+        Generates a new signing secret for the monitor's webhook and returns the updated
+        monitor (including the new `webhook.secret`). The previous secret stops signing
+        deliveries immediately, so update your endpoint before rotating.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not monitor_id:
+            raise ValueError(f"Expected a non-empty value for `monitor_id` but received {monitor_id!r}")
+        return self._post(
+            path_template("/monitors/{monitor_id}/webhook/rotate-secret", monitor_id=monitor_id),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=MonitorRotateWebhookSecretResponse,
         )
 
     def run(
@@ -1362,6 +1436,78 @@ class AsyncMonitorsResource(AsyncAPIResource):
             cast_to=MonitorRetrieveChangeResponse,
         )
 
+    async def retrieve_run(
+        self,
+        run_id: str,
+        *,
+        monitor_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> MonitorRetrieveRunResponse:
+        """
+        Fetches one run for a monitor, including lifecycle status, timing, credits
+        charged, and any detected change.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not monitor_id:
+            raise ValueError(f"Expected a non-empty value for `monitor_id` but received {monitor_id!r}")
+        if not run_id:
+            raise ValueError(f"Expected a non-empty value for `run_id` but received {run_id!r}")
+        return await self._get(
+            path_template("/monitors/{monitor_id}/runs/{run_id}", monitor_id=monitor_id, run_id=run_id),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=MonitorRetrieveRunResponse,
+        )
+
+    async def rotate_webhook_secret(
+        self,
+        monitor_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> MonitorRotateWebhookSecretResponse:
+        """
+        Generates a new signing secret for the monitor's webhook and returns the updated
+        monitor (including the new `webhook.secret`). The previous secret stops signing
+        deliveries immediately, so update your endpoint before rotating.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not monitor_id:
+            raise ValueError(f"Expected a non-empty value for `monitor_id` but received {monitor_id!r}")
+        return await self._post(
+            path_template("/monitors/{monitor_id}/webhook/rotate-secret", monitor_id=monitor_id),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=MonitorRotateWebhookSecretResponse,
+        )
+
     async def run(
         self,
         monitor_id: str,
@@ -1438,6 +1584,12 @@ class MonitorsResourceWithRawResponse:
         self.retrieve_change = to_raw_response_wrapper(
             monitors.retrieve_change,
         )
+        self.retrieve_run = to_raw_response_wrapper(
+            monitors.retrieve_run,
+        )
+        self.rotate_webhook_secret = to_raw_response_wrapper(
+            monitors.rotate_webhook_secret,
+        )
         self.run = to_raw_response_wrapper(
             monitors.run,
         )
@@ -1482,6 +1634,12 @@ class AsyncMonitorsResourceWithRawResponse:
         )
         self.retrieve_change = async_to_raw_response_wrapper(
             monitors.retrieve_change,
+        )
+        self.retrieve_run = async_to_raw_response_wrapper(
+            monitors.retrieve_run,
+        )
+        self.rotate_webhook_secret = async_to_raw_response_wrapper(
+            monitors.rotate_webhook_secret,
         )
         self.run = async_to_raw_response_wrapper(
             monitors.run,
@@ -1528,6 +1686,12 @@ class MonitorsResourceWithStreamingResponse:
         self.retrieve_change = to_streamed_response_wrapper(
             monitors.retrieve_change,
         )
+        self.retrieve_run = to_streamed_response_wrapper(
+            monitors.retrieve_run,
+        )
+        self.rotate_webhook_secret = to_streamed_response_wrapper(
+            monitors.rotate_webhook_secret,
+        )
         self.run = to_streamed_response_wrapper(
             monitors.run,
         )
@@ -1572,6 +1736,12 @@ class AsyncMonitorsResourceWithStreamingResponse:
         )
         self.retrieve_change = async_to_streamed_response_wrapper(
             monitors.retrieve_change,
+        )
+        self.retrieve_run = async_to_streamed_response_wrapper(
+            monitors.retrieve_run,
+        )
+        self.rotate_webhook_secret = async_to_streamed_response_wrapper(
+            monitors.rotate_webhook_secret,
         )
         self.run = async_to_streamed_response_wrapper(
             monitors.run,

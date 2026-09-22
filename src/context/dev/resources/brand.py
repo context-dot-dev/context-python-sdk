@@ -7,7 +7,7 @@ from typing_extensions import Literal, overload
 
 import httpx
 
-from ..types import brand_search_params, brand_retrieve_params, brand_retrieve_simplified_params
+from ..types import brand_search_params, brand_retrieve_params
 from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import required_args, maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -21,7 +21,6 @@ from .._response import (
 from .._base_client import make_request_options
 from ..types.brand_search_response import BrandSearchResponse
 from ..types.brand_retrieve_response import BrandRetrieveResponse
-from ..types.brand_retrieve_simplified_response import BrandRetrieveSimplifiedResponse
 
 __all__ = ["BrandResource", "AsyncBrandResource"]
 
@@ -1211,72 +1210,6 @@ class BrandResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=BrandRetrieveResponse,
-        )
-
-    def retrieve_simplified(
-        self,
-        *,
-        domain: str,
-        max_age_ms: Optional[int] | Omit = omit,
-        tags: SequenceNotStr[str] | Omit = omit,
-        theme: Literal["light", "dark"] | Omit = omit,
-        timeout_opts: brand_retrieve_simplified_params.TimeoutOpts | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> BrandRetrieveSimplifiedResponse:
-        """
-        Returns a simplified version of brand data containing only essential
-        information: domain, title, colors, logos, and backdrops. Optimized for faster
-        responses and reduced data transfer.
-
-        Args:
-          domain: Domain name to retrieve simplified brand data for
-
-          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
-              refresh. Defaults to 3 months (7776000000 ms). Set to 0 to always perform a hard
-              refresh. Negative values are clamped to 0; values above 1 year (31536000000 ms)
-              are clamped to 1 year.
-
-          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
-              characters.
-
-          theme: Optional theme preference used when selecting brand assets.
-
-          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
-              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
-              timeoutOpts object.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._get(
-            "/brand/retrieve-simplified",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "domain": domain,
-                        "max_age_ms": max_age_ms,
-                        "tags": tags,
-                        "theme": theme,
-                        "timeout_opts": timeout_opts,
-                    },
-                    brand_retrieve_simplified_params.BrandRetrieveSimplifiedParams,
-                ),
-            ),
-            cast_to=BrandRetrieveSimplifiedResponse,
         )
 
     def search(
@@ -2530,72 +2463,6 @@ class AsyncBrandResource(AsyncAPIResource):
             cast_to=BrandRetrieveResponse,
         )
 
-    async def retrieve_simplified(
-        self,
-        *,
-        domain: str,
-        max_age_ms: Optional[int] | Omit = omit,
-        tags: SequenceNotStr[str] | Omit = omit,
-        theme: Literal["light", "dark"] | Omit = omit,
-        timeout_opts: brand_retrieve_simplified_params.TimeoutOpts | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> BrandRetrieveSimplifiedResponse:
-        """
-        Returns a simplified version of brand data containing only essential
-        information: domain, title, colors, logos, and backdrops. Optimized for faster
-        responses and reduced data transfer.
-
-        Args:
-          domain: Domain name to retrieve simplified brand data for
-
-          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
-              refresh. Defaults to 3 months (7776000000 ms). Set to 0 to always perform a hard
-              refresh. Negative values are clamped to 0; values above 1 year (31536000000 ms)
-              are clamped to 1 year.
-
-          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
-              characters.
-
-          theme: Optional theme preference used when selecting brand assets.
-
-          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
-              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
-              timeoutOpts object.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._get(
-            "/brand/retrieve-simplified",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "domain": domain,
-                        "max_age_ms": max_age_ms,
-                        "tags": tags,
-                        "theme": theme,
-                        "timeout_opts": timeout_opts,
-                    },
-                    brand_retrieve_simplified_params.BrandRetrieveSimplifiedParams,
-                ),
-            ),
-            cast_to=BrandRetrieveSimplifiedResponse,
-        )
-
     async def search(
         self,
         *,
@@ -2667,9 +2534,6 @@ class BrandResourceWithRawResponse:
         self.retrieve = to_raw_response_wrapper(
             brand.retrieve,
         )
-        self.retrieve_simplified = to_raw_response_wrapper(
-            brand.retrieve_simplified,
-        )
         self.search = to_raw_response_wrapper(
             brand.search,
         )
@@ -2681,9 +2545,6 @@ class AsyncBrandResourceWithRawResponse:
 
         self.retrieve = async_to_raw_response_wrapper(
             brand.retrieve,
-        )
-        self.retrieve_simplified = async_to_raw_response_wrapper(
-            brand.retrieve_simplified,
         )
         self.search = async_to_raw_response_wrapper(
             brand.search,
@@ -2697,9 +2558,6 @@ class BrandResourceWithStreamingResponse:
         self.retrieve = to_streamed_response_wrapper(
             brand.retrieve,
         )
-        self.retrieve_simplified = to_streamed_response_wrapper(
-            brand.retrieve_simplified,
-        )
         self.search = to_streamed_response_wrapper(
             brand.search,
         )
@@ -2711,9 +2569,6 @@ class AsyncBrandResourceWithStreamingResponse:
 
         self.retrieve = async_to_streamed_response_wrapper(
             brand.retrieve,
-        )
-        self.retrieve_simplified = async_to_streamed_response_wrapper(
-            brand.retrieve_simplified,
         )
         self.search = async_to_streamed_response_wrapper(
             brand.search,

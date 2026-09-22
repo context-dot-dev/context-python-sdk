@@ -9,11 +9,7 @@ import pytest
 
 from context.dev import ContextDev, AsyncContextDev
 from tests.utils import assert_matches_type
-from context.dev.types import (
-    BrandSearchResponse,
-    BrandRetrieveResponse,
-    BrandRetrieveSimplifiedResponse,
-)
+from context.dev.types import BrandSearchResponse, BrandRetrieveResponse
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -345,55 +341,6 @@ class TestBrand:
 
             brand = response.parse()
             assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_retrieve_simplified(self, client: ContextDev) -> None:
-        brand = client.brand.retrieve_simplified(
-            domain="xxx",
-        )
-        assert_matches_type(BrandRetrieveSimplifiedResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_retrieve_simplified_with_all_params(self, client: ContextDev) -> None:
-        brand = client.brand.retrieve_simplified(
-            domain="xxx",
-            max_age_ms=0,
-            tags=["production", "team-alpha"],
-            theme="light",
-            timeout_opts={
-                "milliseconds": 1000,
-                "behavior": "fail",
-            },
-        )
-        assert_matches_type(BrandRetrieveSimplifiedResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_raw_response_retrieve_simplified(self, client: ContextDev) -> None:
-        response = client.brand.with_raw_response.retrieve_simplified(
-            domain="xxx",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        brand = response.parse()
-        assert_matches_type(BrandRetrieveSimplifiedResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_streaming_response_retrieve_simplified(self, client: ContextDev) -> None:
-        with client.brand.with_streaming_response.retrieve_simplified(
-            domain="xxx",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            brand = response.parse()
-            assert_matches_type(BrandRetrieveSimplifiedResponse, brand, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -773,55 +720,6 @@ class TestAsyncBrand:
 
             brand = await response.parse()
             assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_retrieve_simplified(self, async_client: AsyncContextDev) -> None:
-        brand = await async_client.brand.retrieve_simplified(
-            domain="xxx",
-        )
-        assert_matches_type(BrandRetrieveSimplifiedResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_retrieve_simplified_with_all_params(self, async_client: AsyncContextDev) -> None:
-        brand = await async_client.brand.retrieve_simplified(
-            domain="xxx",
-            max_age_ms=0,
-            tags=["production", "team-alpha"],
-            theme="light",
-            timeout_opts={
-                "milliseconds": 1000,
-                "behavior": "fail",
-            },
-        )
-        assert_matches_type(BrandRetrieveSimplifiedResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_raw_response_retrieve_simplified(self, async_client: AsyncContextDev) -> None:
-        response = await async_client.brand.with_raw_response.retrieve_simplified(
-            domain="xxx",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        brand = await response.parse()
-        assert_matches_type(BrandRetrieveSimplifiedResponse, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_streaming_response_retrieve_simplified(self, async_client: AsyncContextDev) -> None:
-        async with async_client.brand.with_streaming_response.retrieve_simplified(
-            domain="xxx",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            brand = await response.parse()
-            assert_matches_type(BrandRetrieveSimplifiedResponse, brand, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

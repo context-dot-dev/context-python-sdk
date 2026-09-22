@@ -1,13 +1,5 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from .ai import (
-    AIResource,
-    AsyncAIResource,
-    AIResourceWithRawResponse,
-    AsyncAIResourceWithRawResponse,
-    AIResourceWithStreamingResponse,
-    AsyncAIResourceWithStreamingResponse,
-)
 from .web import (
     WebResource,
     AsyncWebResource,
@@ -110,12 +102,6 @@ __all__ = [
     "AsyncWebResourceWithRawResponse",
     "WebResourceWithStreamingResponse",
     "AsyncWebResourceWithStreamingResponse",
-    "AIResource",
-    "AsyncAIResource",
-    "AIResourceWithRawResponse",
-    "AsyncAIResourceWithRawResponse",
-    "AIResourceWithStreamingResponse",
-    "AsyncAIResourceWithStreamingResponse",
     "BrandResource",
     "AsyncBrandResource",
     "BrandResourceWithRawResponse",

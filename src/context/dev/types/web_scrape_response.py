@@ -258,5 +258,11 @@ class WebScrapeResponse(BaseModel):
     url: str
     """Final URL after redirects and browser actions."""
 
+    is_partial: Optional[Literal[True]] = FieldInfo(alias="isPartial", default=None)
+    """
+    Present when return-partial captures a page that is still loading or returns
+    images before image processing finishes. Partial responses are not cached.
+    """
+
     key_metadata: Optional[KeyMetadata] = None
     """Credit usage, included whenever a valid API key is provided."""

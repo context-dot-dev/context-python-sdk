@@ -29,6 +29,7 @@ __all__ = [
     "SharedParamsParsers",
     "SharedParamsParsersPdf",
     "SharedParamsViewport",
+    "TimeoutOpts",
 ]
 
 
@@ -68,8 +69,16 @@ class WebScrapeParams(TypedDict, total=False):
     tags: SequenceNotStr[str]
     """Labels for tracking request usage. Not retained when zdr is enabled."""
 
-    timeout_ms: Annotated[int, PropertyInfo(alias="timeoutMs")]
-    """Total deadline, including navigation, actions, waiting, and all outputs."""
+    timeout_opts: Annotated[TimeoutOpts, PropertyInfo(alias="timeoutOpts")]
+    """Total deadline, including navigation, actions, waiting, and all outputs.
+
+    Defaults to 60000 milliseconds with behavior fail. Use return-partial to capture
+    the current page state and return captured images if image processing cannot
+    finish before the deadline; these responses set isPartial and are not cached.
+    Every requested format must still be available. Fixed waits must fit before a
+    response reserve of up to 5000 milliseconds (at most one quarter of the timeout)
+    when using return-partial.
+    """
 
     zdr: Literal["enabled", "disabled"]
     """Zero data retention.
@@ -108,7 +117,11 @@ class ImageParams(TypedDict, total=False):
     """For visual duplicates, keep the largest image."""
 
     enrich: List[Literal["dimensions", "classification", "file"]]
-    """Add dimensions, a visual category, or a hosted file URL."""
+    """Add dimensions, a visual category, or a hosted file URL.
+
+    Each image has a maximum processing time of 30000 milliseconds, bounded by the
+    remaining request deadline.
+    """
 
 
 class MarkdownParams(TypedDict, total=False):
@@ -302,4 +315,23 @@ class SharedParams(TypedDict, total=False):
     """After actions, wait this many milliseconds or until a CSS selector is visible.
 
     Defaults to 500 ms, or 2000 ms with frames or an XML URL. Set 0 to skip.
+    """
+
+
+class TimeoutOpts(TypedDict, total=False):
+    """Total deadline, including navigation, actions, waiting, and all outputs.
+
+    Defaults to 60000 milliseconds with behavior fail. Use return-partial to capture the current page state and return captured images if image processing cannot finish before the deadline; these responses set isPartial and are not cached. Every requested format must still be available. Fixed waits must fit before a response reserve of up to 5000 milliseconds (at most one quarter of the timeout) when using return-partial.
+    """
+
+    milliseconds: Required[int]
+    """Request deadline in milliseconds. Maximum: 300000 (5 minutes)."""
+
+    behavior: Literal["fail", "return-partial"]
+    """What to do at the deadline.
+
+    "fail" returns 408 REQUEST_TIMEOUT without charging credits. "return-partial"
+    returns usable results collected so far; if none are available, the request
+    still fails without charging credits. Partial results are not cached as complete
+    results. "return-partial" requires milliseconds of at least 5000.
     """
