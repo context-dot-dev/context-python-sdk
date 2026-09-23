@@ -242,6 +242,7 @@ class TestWeb:
         web = client.web.scrape(
             formats={
                 "bytes": True,
+                "highlights": True,
                 "html": True,
                 "images": True,
                 "json": True,
@@ -250,6 +251,10 @@ class TestWeb:
                 "screenshot": True,
             },
             url="https://example.com",
+            highlights_params={
+                "query": "x",
+                "max_characters": 100,
+            },
             image_params={
                 "dedupe": "none",
                 "enrich": ["dimensions"],
@@ -772,6 +777,7 @@ class TestAsyncWeb:
         web = await async_client.web.scrape(
             formats={
                 "bytes": True,
+                "highlights": True,
                 "html": True,
                 "images": True,
                 "json": True,
@@ -780,6 +786,10 @@ class TestAsyncWeb:
                 "screenshot": True,
             },
             url="https://example.com",
+            highlights_params={
+                "query": "x",
+                "max_characters": 100,
+            },
             image_params={
                 "dedupe": "none",
                 "enrich": ["dimensions"],

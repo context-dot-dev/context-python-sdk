@@ -12,6 +12,7 @@ __all__ = [
     "Bytes",
     "BytesData",
     "CacheMetadata",
+    "Highlights",
     "HTML",
     "Images",
     "ImagesData",
@@ -61,6 +62,16 @@ class CacheMetadata(BaseModel):
     Whether the response was served from cache, required fresh work, or honored
     zero-data-retention cache bypass.
     """
+
+
+class Highlights(BaseModel):
+    """
+    Plain-text passages relevant to highlightsParams.query, in page order, each prefixed with its section heading in square brackets. Empty when the page has no text.
+    """
+
+    data: Optional[List[str]] = None
+
+    requested: bool
 
 
 class HTML(BaseModel):
@@ -241,6 +252,13 @@ class WebScrapeResponse(BaseModel):
 
     Composite responses are hits only when every cache-controlled fetch contributing
     to the output was a hit; age_ms is the oldest contributing hit.
+    """
+
+    highlights: Highlights
+    """
+    Plain-text passages relevant to highlightsParams.query, in page order, each
+    prefixed with its section heading in square brackets. Empty when the page has no
+    text.
     """
 
     html: HTML

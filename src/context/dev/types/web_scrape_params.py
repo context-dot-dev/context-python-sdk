@@ -11,6 +11,7 @@ from .._utils import PropertyInfo
 __all__ = [
     "WebScrapeParams",
     "Formats",
+    "HighlightsParams",
     "ImageParams",
     "JsonParams",
     "MarkdownParams",
@@ -40,6 +41,9 @@ class WebScrapeParams(TypedDict, total=False):
 
     url: Required[str]
     """The URL to scrape."""
+
+    highlights_params: Annotated[HighlightsParams, PropertyInfo(alias="highlightsParams")]
+    """Highlight options. Requires formats.highlights: true."""
 
     image_params: Annotated[ImageParams, PropertyInfo(alias="imageParams")]
     """Image options. Requires formats.images: true."""
@@ -88,7 +92,8 @@ class WebScrapeParams(TypedDict, total=False):
     """Zero data retention.
 
     Bypasses caches and uploads; excludes request/response content and tags from
-    logs. Must be enabled for your organization.
+    logs. Must be enabled for your organization. Not available with the highlights
+    output.
     """
 
 
@@ -97,6 +102,13 @@ class Formats(TypedDict, total=False):
 
     bytes: bool
     """The original HTTP response body."""
+
+    highlights: bool
+    """
+    Plain-text passages from the page that are most relevant to
+    highlightsParams.query, each prefixed with its section heading. Adds 3 credits.
+    Not available with zdr enabled.
+    """
 
     html: bool
     """Rendered HTML."""
@@ -120,6 +132,16 @@ class Formats(TypedDict, total=False):
 
     screenshot: bool
     """An inline image of the page."""
+
+
+class HighlightsParams(TypedDict, total=False):
+    """Highlight options. Requires formats.highlights: true."""
+
+    query: Required[str]
+    """The question or topic to find passages for."""
+
+    max_characters: Annotated[int, PropertyInfo(alias="maxCharacters")]
+    """Maximum combined length of the returned passages, in characters."""
 
 
 class ImageParams(TypedDict, total=False):

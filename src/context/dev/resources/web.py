@@ -391,6 +391,7 @@ class WebResource(SyncAPIResource):
         *,
         formats: web_scrape_params.Formats,
         url: str,
+        highlights_params: web_scrape_params.HighlightsParams | Omit = omit,
         image_params: web_scrape_params.ImageParams | Omit = omit,
         json_params: web_scrape_params.JsonParams | Omit = omit,
         markdown_params: web_scrape_params.MarkdownParams | Omit = omit,
@@ -412,19 +413,23 @@ class WebResource(SyncAPIResource):
         visit.
 
         Each cache key includes only the settings that affect that output. HTML
-        is shared with Markdown, parsed fields, and JSON extraction. Cached outputs can
-        come from different visits within maxAgeMs; use 0 for a fresh capture. HTML-only
-        requests use the existing fast acquisition path. One credit per request,
-        including cache hits and missing pages, or two with browser actions; JSON
-        extraction adds four credits and runs an LLM over the page Markdown on every
-        request that has text to extract; PDF OCR adds one credit per recovered page on
-        fresh extraction. Original response bytes and screenshots are limited to 20 MiB
-        each, screenshots to 40 megapixels, and the combined browser capture to 60 MiB.
+        is shared with Markdown, parsed fields, highlights, and JSON extraction. Cached
+        outputs can come from different visits within maxAgeMs; use 0 for a fresh
+        capture. HTML-only requests use the existing fast acquisition path. Highlights
+        return the plain-text passages most relevant to highlightsParams.query. One
+        credit per request, including cache hits and missing pages, or two with browser
+        actions; highlights add 3 credits when passages are returned; JSON extraction
+        adds four credits and runs an LLM over the page Markdown on every request that
+        has text to extract; PDF OCR adds one credit per recovered page on fresh
+        extraction. Original response bytes and screenshots are limited to 20 MiB each,
+        screenshots to 40 megapixels, and the combined browser capture to 60 MiB.
 
         Args:
           formats: Outputs to return. Enable at least one; omitted formats are false.
 
           url: The URL to scrape.
+
+          highlights_params: Highlight options. Requires formats.highlights: true.
 
           image_params: Image options. Requires formats.images: true.
 
@@ -455,7 +460,8 @@ class WebResource(SyncAPIResource):
               when using return-partial.
 
           zdr: Zero data retention. Bypasses caches and uploads; excludes request/response
-              content and tags from logs. Must be enabled for your organization.
+              content and tags from logs. Must be enabled for your organization. Not available
+              with the highlights output.
 
           extra_headers: Send extra headers
 
@@ -471,6 +477,7 @@ class WebResource(SyncAPIResource):
                 {
                     "formats": formats,
                     "url": url,
+                    "highlights_params": highlights_params,
                     "image_params": image_params,
                     "json_params": json_params,
                     "markdown_params": markdown_params,
@@ -1874,6 +1881,7 @@ class AsyncWebResource(AsyncAPIResource):
         *,
         formats: web_scrape_params.Formats,
         url: str,
+        highlights_params: web_scrape_params.HighlightsParams | Omit = omit,
         image_params: web_scrape_params.ImageParams | Omit = omit,
         json_params: web_scrape_params.JsonParams | Omit = omit,
         markdown_params: web_scrape_params.MarkdownParams | Omit = omit,
@@ -1895,19 +1903,23 @@ class AsyncWebResource(AsyncAPIResource):
         visit.
 
         Each cache key includes only the settings that affect that output. HTML
-        is shared with Markdown, parsed fields, and JSON extraction. Cached outputs can
-        come from different visits within maxAgeMs; use 0 for a fresh capture. HTML-only
-        requests use the existing fast acquisition path. One credit per request,
-        including cache hits and missing pages, or two with browser actions; JSON
-        extraction adds four credits and runs an LLM over the page Markdown on every
-        request that has text to extract; PDF OCR adds one credit per recovered page on
-        fresh extraction. Original response bytes and screenshots are limited to 20 MiB
-        each, screenshots to 40 megapixels, and the combined browser capture to 60 MiB.
+        is shared with Markdown, parsed fields, highlights, and JSON extraction. Cached
+        outputs can come from different visits within maxAgeMs; use 0 for a fresh
+        capture. HTML-only requests use the existing fast acquisition path. Highlights
+        return the plain-text passages most relevant to highlightsParams.query. One
+        credit per request, including cache hits and missing pages, or two with browser
+        actions; highlights add 3 credits when passages are returned; JSON extraction
+        adds four credits and runs an LLM over the page Markdown on every request that
+        has text to extract; PDF OCR adds one credit per recovered page on fresh
+        extraction. Original response bytes and screenshots are limited to 20 MiB each,
+        screenshots to 40 megapixels, and the combined browser capture to 60 MiB.
 
         Args:
           formats: Outputs to return. Enable at least one; omitted formats are false.
 
           url: The URL to scrape.
+
+          highlights_params: Highlight options. Requires formats.highlights: true.
 
           image_params: Image options. Requires formats.images: true.
 
@@ -1938,7 +1950,8 @@ class AsyncWebResource(AsyncAPIResource):
               when using return-partial.
 
           zdr: Zero data retention. Bypasses caches and uploads; excludes request/response
-              content and tags from logs. Must be enabled for your organization.
+              content and tags from logs. Must be enabled for your organization. Not available
+              with the highlights output.
 
           extra_headers: Send extra headers
 
@@ -1954,6 +1967,7 @@ class AsyncWebResource(AsyncAPIResource):
                 {
                     "formats": formats,
                     "url": url,
+                    "highlights_params": highlights_params,
                     "image_params": image_params,
                     "json_params": json_params,
                     "markdown_params": markdown_params,
