@@ -397,6 +397,7 @@ class WebResource(SyncAPIResource):
         markdown_params: web_scrape_params.MarkdownParams | Omit = omit,
         max_age_ms: int | Omit = omit,
         parse_params: web_scrape_params.ParseParams | Omit = omit,
+        product_params: web_scrape_params.ProductParams | Omit = omit,
         screenshot_params: web_scrape_params.ScreenshotParams | Omit = omit,
         shared_params: web_scrape_params.SharedParams | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
@@ -413,16 +414,18 @@ class WebResource(SyncAPIResource):
         visit.
 
         Each cache key includes only the settings that affect that output. HTML
-        is shared with Markdown, parsed fields, highlights, and JSON extraction. Cached
-        outputs can come from different visits within maxAgeMs; use 0 for a fresh
-        capture. HTML-only requests use the existing fast acquisition path. Highlights
-        return the plain-text passages most relevant to highlightsParams.query. One
-        credit per request, including cache hits and missing pages, or two with browser
-        actions; highlights add 3 credits when passages are returned; JSON extraction
-        adds four credits and runs an LLM over the page Markdown on every request that
-        has text to extract; PDF OCR adds one credit per recovered page on fresh
-        extraction. Original response bytes and screenshots are limited to 20 MiB each,
-        screenshots to 40 megapixels, and the combined browser capture to 60 MiB.
+        is shared with Markdown, parsed fields, product data, highlights, and JSON
+        extraction. Cached outputs can come from different visits within maxAgeMs; use 0
+        for a fresh capture. HTML-only requests use the existing fast acquisition path.
+        Highlights return the plain-text passages most relevant to
+        highlightsParams.query. One credit per request, including cache hits and missing
+        pages, or two with browser actions; highlights add 3 credits when passages are
+        returned; JSON extraction adds four credits and runs an LLM over the page
+        Markdown on every request that has text to extract; PDF OCR adds one credit per
+        recovered page on fresh extraction; the product output adds one credit, plus six
+        more when the specialized model is used. Original response bytes and screenshots
+        are limited to 20 MiB each, screenshots to 40 megapixels, and the combined
+        browser capture to 60 MiB.
 
         Args:
           formats: Outputs to return. Enable at least one; omitted formats are false.
@@ -443,6 +446,8 @@ class WebResource(SyncAPIResource):
               outputs retain their own freshness.
 
           parse_params: Required when formats.parse is true.
+
+          product_params: Product options. Requires formats.product: true.
 
           screenshot_params: Screenshot options. Requires formats.screenshot: true.
 
@@ -483,6 +488,7 @@ class WebResource(SyncAPIResource):
                     "markdown_params": markdown_params,
                     "max_age_ms": max_age_ms,
                     "parse_params": parse_params,
+                    "product_params": product_params,
                     "screenshot_params": screenshot_params,
                     "shared_params": shared_params,
                     "tags": tags,
@@ -1887,6 +1893,7 @@ class AsyncWebResource(AsyncAPIResource):
         markdown_params: web_scrape_params.MarkdownParams | Omit = omit,
         max_age_ms: int | Omit = omit,
         parse_params: web_scrape_params.ParseParams | Omit = omit,
+        product_params: web_scrape_params.ProductParams | Omit = omit,
         screenshot_params: web_scrape_params.ScreenshotParams | Omit = omit,
         shared_params: web_scrape_params.SharedParams | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
@@ -1903,16 +1910,18 @@ class AsyncWebResource(AsyncAPIResource):
         visit.
 
         Each cache key includes only the settings that affect that output. HTML
-        is shared with Markdown, parsed fields, highlights, and JSON extraction. Cached
-        outputs can come from different visits within maxAgeMs; use 0 for a fresh
-        capture. HTML-only requests use the existing fast acquisition path. Highlights
-        return the plain-text passages most relevant to highlightsParams.query. One
-        credit per request, including cache hits and missing pages, or two with browser
-        actions; highlights add 3 credits when passages are returned; JSON extraction
-        adds four credits and runs an LLM over the page Markdown on every request that
-        has text to extract; PDF OCR adds one credit per recovered page on fresh
-        extraction. Original response bytes and screenshots are limited to 20 MiB each,
-        screenshots to 40 megapixels, and the combined browser capture to 60 MiB.
+        is shared with Markdown, parsed fields, product data, highlights, and JSON
+        extraction. Cached outputs can come from different visits within maxAgeMs; use 0
+        for a fresh capture. HTML-only requests use the existing fast acquisition path.
+        Highlights return the plain-text passages most relevant to
+        highlightsParams.query. One credit per request, including cache hits and missing
+        pages, or two with browser actions; highlights add 3 credits when passages are
+        returned; JSON extraction adds four credits and runs an LLM over the page
+        Markdown on every request that has text to extract; PDF OCR adds one credit per
+        recovered page on fresh extraction; the product output adds one credit, plus six
+        more when the specialized model is used. Original response bytes and screenshots
+        are limited to 20 MiB each, screenshots to 40 megapixels, and the combined
+        browser capture to 60 MiB.
 
         Args:
           formats: Outputs to return. Enable at least one; omitted formats are false.
@@ -1933,6 +1942,8 @@ class AsyncWebResource(AsyncAPIResource):
               outputs retain their own freshness.
 
           parse_params: Required when formats.parse is true.
+
+          product_params: Product options. Requires formats.product: true.
 
           screenshot_params: Screenshot options. Requires formats.screenshot: true.
 
@@ -1973,6 +1984,7 @@ class AsyncWebResource(AsyncAPIResource):
                     "markdown_params": markdown_params,
                     "max_age_ms": max_age_ms,
                     "parse_params": parse_params,
+                    "product_params": product_params,
                     "screenshot_params": screenshot_params,
                     "shared_params": shared_params,
                     "tags": tags,

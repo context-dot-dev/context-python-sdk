@@ -248,6 +248,7 @@ class TestWeb:
                 "json": True,
                 "markdown": True,
                 "parse": True,
+                "product": True,
                 "screenshot": True,
             },
             url="https://example.com",
@@ -284,6 +285,7 @@ class TestWeb:
                     },
                 }
             },
+            product_params={"use_ai_fallback": True},
             screenshot_params={
                 "area": "viewport",
                 "format": "png",
@@ -783,6 +785,7 @@ class TestAsyncWeb:
                 "json": True,
                 "markdown": True,
                 "parse": True,
+                "product": True,
                 "screenshot": True,
             },
             url="https://example.com",
@@ -819,6 +822,7 @@ class TestAsyncWeb:
                     },
                 }
             },
+            product_params={"use_ai_fallback": True},
             screenshot_params={
                 "area": "viewport",
                 "format": "png",

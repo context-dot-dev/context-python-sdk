@@ -22,6 +22,10 @@ __all__ = [
     "MetadataAlternate",
     "MetadataHeading",
     "Parsed",
+    "Product",
+    "ProductData",
+    "ProductDataProduct",
+    "ProductDataProductVariant",
     "Screenshot",
     "KeyMetadata",
 ]
@@ -222,6 +226,98 @@ class Parsed(BaseModel):
     requested: bool
 
 
+class ProductDataProductVariant(BaseModel):
+    attributes: Dict[str, str]
+    """
+    Explicit variant attributes such as color, size, material, pattern and
+    properties declared by page.
+    """
+
+    images: List[str]
+    """Original source image URLs explicitly attached to this variant."""
+
+    sku: Optional[str] = None
+
+    url: Optional[str] = None
+    """Variant or offer URL when provided by the source. May be shared by variants."""
+
+
+class ProductDataProduct(BaseModel):
+    """The extracted product, or null when the page is not a product detail page."""
+
+    availability: Optional[
+        Literal[
+            "in_stock", "out_of_stock", "limited_availability", "preorder", "backorder", "made_to_order", "discontinued"
+        ]
+    ] = None
+    """Stock or ordering availability."""
+
+    brand: Optional[str] = None
+    """Brand or vendor."""
+
+    category: Optional[str] = None
+    """Product category."""
+
+    currency: Optional[str] = None
+    """ISO 4217 currency code."""
+
+    description: Optional[str] = None
+    """Product description."""
+
+    dimensions: List[str]
+    """Product dimensions as shown on the page."""
+
+    features: List[str]
+    """Key features and specifications."""
+
+    images: List[str]
+    """Product image URLs, main image first."""
+
+    image_url: Optional[str] = FieldInfo(alias="imageUrl", default=None)
+    """Main product image URL."""
+
+    name: str
+    """Product name."""
+
+    price: Optional[float] = None
+    """Current price."""
+
+    regular_price: Optional[float] = FieldInfo(alias="regularPrice", default=None)
+    """List price before any discount."""
+
+    sku: Optional[str] = None
+    """Product identifier such as a SKU or model number."""
+
+    tags: List[str]
+    """Product tags."""
+
+    target_audience: List[str] = FieldInfo(alias="targetAudience")
+    """Intended audience."""
+
+    variants: List[ProductDataProductVariant]
+    """
+    Product variations, such as different colors or sizes, with their attributes and
+    images. Empty if none are found. May not include every variation offered by the
+    store.
+    """
+
+
+class ProductData(BaseModel):
+    is_product_page: bool = FieldInfo(alias="isProductPage")
+    """Whether the page is a product detail page."""
+
+    product: Optional[ProductDataProduct] = None
+    """The extracted product, or null when the page is not a product detail page."""
+
+
+class Product(BaseModel):
+    """Product detail page classification and the extracted product."""
+
+    data: Optional[ProductData] = None
+
+    requested: bool
+
+
 class Screenshot(BaseModel):
     """An image data URL. Use directly as an image src."""
 
@@ -284,6 +380,9 @@ class WebScrapeResponse(BaseModel):
     parsed: Parsed
     """Fields produced by parseParams.rules, after shared content filters."""
 
+    product: Product
+    """Product detail page classification and the extracted product."""
+
     request_id: str
     """Unique id of this API call, also sent in the X-Request-Id response header.
 
@@ -298,8 +397,10 @@ class WebScrapeResponse(BaseModel):
 
     is_partial: Optional[Literal[True]] = FieldInfo(alias="isPartial", default=None)
     """
-    Present when return-partial captures a page that is still loading or returns
-    images before image processing finishes. Partial responses are not cached.
+    Present when return-partial captures a page that is still loading, returns
+    images before image processing finishes, or cuts product AI extraction short.
+    Also present if the optional product AI fallback fails. Partial responses are
+    not cached.
     """
 
     key_metadata: Optional[KeyMetadata] = None
