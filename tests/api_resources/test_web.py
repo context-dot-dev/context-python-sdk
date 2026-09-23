@@ -244,6 +244,7 @@ class TestWeb:
                 "bytes": True,
                 "html": True,
                 "images": True,
+                "json": True,
                 "markdown": True,
                 "parse": True,
                 "screenshot": True,
@@ -252,6 +253,15 @@ class TestWeb:
             image_params={
                 "dedupe": "none",
                 "enrich": ["dimensions"],
+            },
+            json_params={
+                "schema": {
+                    "type": "bar",
+                    "properties": "bar",
+                    "required": "bar",
+                    "additionalProperties": "bar",
+                },
+                "instructions": "instructions",
             },
             markdown_params={
                 "include_images": True,
@@ -764,6 +774,7 @@ class TestAsyncWeb:
                 "bytes": True,
                 "html": True,
                 "images": True,
+                "json": True,
                 "markdown": True,
                 "parse": True,
                 "screenshot": True,
@@ -772,6 +783,15 @@ class TestAsyncWeb:
             image_params={
                 "dedupe": "none",
                 "enrich": ["dimensions"],
+            },
+            json_params={
+                "schema": {
+                    "type": "bar",
+                    "properties": "bar",
+                    "required": "bar",
+                    "additionalProperties": "bar",
+                },
+                "instructions": "instructions",
             },
             markdown_params={
                 "include_images": True,

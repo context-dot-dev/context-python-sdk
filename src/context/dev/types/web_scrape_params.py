@@ -12,6 +12,7 @@ __all__ = [
     "WebScrapeParams",
     "Formats",
     "ImageParams",
+    "JsonParams",
     "MarkdownParams",
     "ParseParams",
     "ParseParamsRules",
@@ -42,6 +43,9 @@ class WebScrapeParams(TypedDict, total=False):
 
     image_params: Annotated[ImageParams, PropertyInfo(alias="imageParams")]
     """Image options. Requires formats.images: true."""
+
+    json_params: Annotated[JsonParams, PropertyInfo(alias="jsonParams")]
+    """Required when formats.json is true."""
 
     markdown_params: Annotated[MarkdownParams, PropertyInfo(alias="markdownParams")]
     """Markdown options. Requires formats.markdown: true."""
@@ -100,6 +104,14 @@ class Formats(TypedDict, total=False):
     images: bool
     """Images found on the page."""
 
+    json: bool
+    """
+    Page data extracted by an LLM from the page Markdown into jsonParams.schema;
+    values carried only in attributes or CSS classes need formats.parse instead.
+    Adds four credits when the page has text to extract; when shared content filters
+    leave no text the result is an empty object and only the base price applies.
+    """
+
     markdown: bool
     """Page content as Markdown."""
 
@@ -121,6 +133,26 @@ class ImageParams(TypedDict, total=False):
 
     Each image has a maximum processing time of 30000 milliseconds, bounded by the
     remaining request deadline.
+    """
+
+
+class JsonParams(TypedDict, total=False):
+    """Required when formats.json is true."""
+
+    schema: Required[Dict[str, object]]
+    """JSON Schema for the returned object.
+
+    Must describe a top-level object; at most 50 KB serialized. Optional fields the
+    page does not state are omitted, or null when their type allows null, while
+    required non-nullable fields always receive a best-effort value, so prefer
+    nullable or optional fields for data a page may omit. Zod users can pass the
+    output of z.toJSONSchema().
+    """
+
+    instructions: str
+    """
+    Optional guidance on which facts to prioritize or how to interpret schema
+    fields.
     """
 
 
