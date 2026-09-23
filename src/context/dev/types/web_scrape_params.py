@@ -96,8 +96,7 @@ class WebScrapeParams(TypedDict, total=False):
     """Zero data retention.
 
     Bypasses caches and uploads; excludes request/response content and tags from
-    logs. Must be enabled for your organization. Not available with the highlights
-    output.
+    logs. Must be enabled for your organization.
     """
 
 
@@ -108,11 +107,7 @@ class Formats(TypedDict, total=False):
     """The original HTTP response body."""
 
     highlights: bool
-    """
-    Plain-text passages from the page that are most relevant to
-    highlightsParams.query, each prefixed with its section heading. Adds 3 credits.
-    Not available with zdr enabled.
-    """
+    """Relevant passages for your question or topic. Adds 3 credits."""
 
     html: bool
     """Rendered HTML."""
@@ -121,12 +116,7 @@ class Formats(TypedDict, total=False):
     """Images found on the page."""
 
     json: bool
-    """
-    Page data extracted by an LLM from the page Markdown into jsonParams.schema;
-    values carried only in attributes or CSS classes need formats.parse instead.
-    Adds four credits when the page has text to extract; when shared content filters
-    leave no text the result is an empty object and only the base price applies.
-    """
+    """Page data extracted using your schema. Adds 4 credits."""
 
     markdown: bool
     """Page content as Markdown."""
@@ -135,7 +125,7 @@ class Formats(TypedDict, total=False):
     """Fields selected by parseParams.rules."""
 
     product: bool
-    """Structured product data for product detail pages. Adds one credit."""
+    """Product details such as name, price, and availability. Adds 1 credit."""
 
     screenshot: bool
     """An inline image of the page."""
