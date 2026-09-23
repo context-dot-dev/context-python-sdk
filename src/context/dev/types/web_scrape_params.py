@@ -107,7 +107,10 @@ class Formats(TypedDict, total=False):
     """The original HTTP response body."""
 
     highlights: bool
-    """Relevant passages for your question or topic. Adds 3 credits."""
+    """
+    Relevant passages for your question or topic, with headings included when needed
+    for context. Adds 3 credits.
+    """
 
     html: bool
     """Rendered HTML."""
