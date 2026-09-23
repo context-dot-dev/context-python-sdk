@@ -69,7 +69,10 @@ class CacheMetadata(BaseModel):
 
 
 class Highlights(BaseModel):
-    """Relevant passages for your question or topic."""
+    """Relevant passages for your question or topic, in page order.
+
+    A heading in square brackets is included when needed to interpret a passage. Empty when the page has no text.
+    """
 
     data: Optional[List[str]] = None
 
@@ -346,7 +349,11 @@ class WebScrapeResponse(BaseModel):
     """
 
     highlights: Highlights
-    """Relevant passages for your question or topic."""
+    """Relevant passages for your question or topic, in page order.
+
+    A heading in square brackets is included when needed to interpret a passage.
+    Empty when the page has no text.
+    """
 
     html: HTML
     """Rendered HTML after content filters."""
