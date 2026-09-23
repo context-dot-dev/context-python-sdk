@@ -392,6 +392,7 @@ class WebResource(SyncAPIResource):
         formats: web_scrape_params.Formats,
         url: str,
         image_params: web_scrape_params.ImageParams | Omit = omit,
+        json_params: web_scrape_params.JsonParams | Omit = omit,
         markdown_params: web_scrape_params.MarkdownParams | Omit = omit,
         max_age_ms: int | Omit = omit,
         parse_params: web_scrape_params.ParseParams | Omit = omit,
@@ -411,10 +412,12 @@ class WebResource(SyncAPIResource):
         visit.
 
         Each cache key includes only the settings that affect that output. HTML
-        is shared with Markdown and parsed fields. Cached outputs can come from
-        different visits within maxAgeMs; use 0 for a fresh capture. HTML-only requests
-        use the existing fast acquisition path. One credit per request, including cache
-        hits, or two with browser actions; PDF OCR adds one credit per recovered page on
+        is shared with Markdown, parsed fields, and JSON extraction. Cached outputs can
+        come from different visits within maxAgeMs; use 0 for a fresh capture. HTML-only
+        requests use the existing fast acquisition path. One credit per request,
+        including cache hits and missing pages, or two with browser actions; JSON
+        extraction adds four credits and runs an LLM over the page Markdown on every
+        request that has text to extract; PDF OCR adds one credit per recovered page on
         fresh extraction. Original response bytes and screenshots are limited to 20 MiB
         each, screenshots to 40 megapixels, and the combined browser capture to 60 MiB.
 
@@ -424,6 +427,8 @@ class WebResource(SyncAPIResource):
           url: The URL to scrape.
 
           image_params: Image options. Requires formats.images: true.
+
+          json_params: Required when formats.json is true.
 
           markdown_params: Markdown options. Requires formats.markdown: true.
 
@@ -467,6 +472,7 @@ class WebResource(SyncAPIResource):
                     "formats": formats,
                     "url": url,
                     "image_params": image_params,
+                    "json_params": json_params,
                     "markdown_params": markdown_params,
                     "max_age_ms": max_age_ms,
                     "parse_params": parse_params,
@@ -1869,6 +1875,7 @@ class AsyncWebResource(AsyncAPIResource):
         formats: web_scrape_params.Formats,
         url: str,
         image_params: web_scrape_params.ImageParams | Omit = omit,
+        json_params: web_scrape_params.JsonParams | Omit = omit,
         markdown_params: web_scrape_params.MarkdownParams | Omit = omit,
         max_age_ms: int | Omit = omit,
         parse_params: web_scrape_params.ParseParams | Omit = omit,
@@ -1888,10 +1895,12 @@ class AsyncWebResource(AsyncAPIResource):
         visit.
 
         Each cache key includes only the settings that affect that output. HTML
-        is shared with Markdown and parsed fields. Cached outputs can come from
-        different visits within maxAgeMs; use 0 for a fresh capture. HTML-only requests
-        use the existing fast acquisition path. One credit per request, including cache
-        hits, or two with browser actions; PDF OCR adds one credit per recovered page on
+        is shared with Markdown, parsed fields, and JSON extraction. Cached outputs can
+        come from different visits within maxAgeMs; use 0 for a fresh capture. HTML-only
+        requests use the existing fast acquisition path. One credit per request,
+        including cache hits and missing pages, or two with browser actions; JSON
+        extraction adds four credits and runs an LLM over the page Markdown on every
+        request that has text to extract; PDF OCR adds one credit per recovered page on
         fresh extraction. Original response bytes and screenshots are limited to 20 MiB
         each, screenshots to 40 megapixels, and the combined browser capture to 60 MiB.
 
@@ -1901,6 +1910,8 @@ class AsyncWebResource(AsyncAPIResource):
           url: The URL to scrape.
 
           image_params: Image options. Requires formats.images: true.
+
+          json_params: Required when formats.json is true.
 
           markdown_params: Markdown options. Requires formats.markdown: true.
 
@@ -1944,6 +1955,7 @@ class AsyncWebResource(AsyncAPIResource):
                     "formats": formats,
                     "url": url,
                     "image_params": image_params,
+                    "json_params": json_params,
                     "markdown_params": markdown_params,
                     "max_age_ms": max_age_ms,
                     "parse_params": parse_params,

@@ -15,6 +15,7 @@ __all__ = [
     "HTML",
     "Images",
     "ImagesData",
+    "Json",
     "Markdown",
     "Metadata",
     "MetadataAlternate",
@@ -96,6 +97,17 @@ class Images(BaseModel):
     """Images after content filters. Empty when none are found."""
 
     data: Optional[List[ImagesData]] = None
+
+    requested: bool
+
+
+class Json(BaseModel):
+    """Page data extracted into jsonParams.schema, after shared content filters.
+
+    Values are grounded in the page; optional fields the page does not state are omitted, or null when their type allows null. An empty object when the filters leave no text.
+    """
+
+    data: Optional[Dict[str, object]] = None
 
     requested: bool
 
@@ -236,6 +248,14 @@ class WebScrapeResponse(BaseModel):
 
     images: Images
     """Images after content filters. Empty when none are found."""
+
+    json_: Json = FieldInfo(alias="json")
+    """Page data extracted into jsonParams.schema, after shared content filters.
+
+    Values are grounded in the page; optional fields the page does not state are
+    omitted, or null when their type allows null. An empty object when the filters
+    leave no text.
+    """
 
     markdown: Markdown
     """Markdown after content filters."""
