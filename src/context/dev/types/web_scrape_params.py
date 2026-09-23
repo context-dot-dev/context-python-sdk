@@ -18,6 +18,7 @@ __all__ = [
     "ParseParams",
     "ParseParamsRules",
     "ParseParamsRulesUnionMember1",
+    "ProductParams",
     "ScreenshotParams",
     "ScreenshotParamsArea",
     "ScreenshotParamsAreaElement",
@@ -64,6 +65,9 @@ class WebScrapeParams(TypedDict, total=False):
 
     parse_params: Annotated[ParseParams, PropertyInfo(alias="parseParams")]
     """Required when formats.parse is true."""
+
+    product_params: Annotated[ProductParams, PropertyInfo(alias="productParams")]
+    """Product options. Requires formats.product: true."""
 
     screenshot_params: Annotated[ScreenshotParams, PropertyInfo(alias="screenshotParams")]
     """Screenshot options. Requires formats.screenshot: true."""
@@ -129,6 +133,9 @@ class Formats(TypedDict, total=False):
 
     parse: bool
     """Fields selected by parseParams.rules."""
+
+    product: bool
+    """Structured product data for product detail pages. Adds one credit."""
 
     screenshot: bool
     """An inline image of the page."""
@@ -207,6 +214,18 @@ class ParseParams(TypedDict, total=False):
     """Map field names to CSS selectors or rules.
 
     Missing items return null; missing lists return [].
+    """
+
+
+class ProductParams(TypedDict, total=False):
+    """Product options. Requires formats.product: true."""
+
+    use_ai_fallback: Annotated[bool, PropertyInfo(alias="useAIFallback")]
+    """
+    Extract the product with a specialized model when the page has no structured
+    product data. Adds six credits when the model returns a verdict. If the fallback
+    fails, returns a partial response with the deterministic result and no fallback
+    charge. Request deadlines and client disconnects still apply.
     """
 
 
