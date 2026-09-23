@@ -69,9 +69,7 @@ class CacheMetadata(BaseModel):
 
 
 class Highlights(BaseModel):
-    """
-    Plain-text passages relevant to highlightsParams.query, in page order, each prefixed with its section heading in square brackets. Empty when the page has no text.
-    """
+    """Relevant passages for your question or topic."""
 
     data: Optional[List[str]] = None
 
@@ -117,10 +115,7 @@ class Images(BaseModel):
 
 
 class Json(BaseModel):
-    """Page data extracted into jsonParams.schema, after shared content filters.
-
-    Values are grounded in the page; optional fields the page does not state are omitted, or null when their type allows null. An empty object when the filters leave no text.
-    """
+    """Page data extracted using your schema."""
 
     data: Optional[Dict[str, object]] = None
 
@@ -311,7 +306,7 @@ class ProductData(BaseModel):
 
 
 class Product(BaseModel):
-    """Product detail page classification and the extracted product."""
+    """Product details found on the page."""
 
     data: Optional[ProductData] = None
 
@@ -351,11 +346,7 @@ class WebScrapeResponse(BaseModel):
     """
 
     highlights: Highlights
-    """
-    Plain-text passages relevant to highlightsParams.query, in page order, each
-    prefixed with its section heading in square brackets. Empty when the page has no
-    text.
-    """
+    """Relevant passages for your question or topic."""
 
     html: HTML
     """Rendered HTML after content filters."""
@@ -364,12 +355,7 @@ class WebScrapeResponse(BaseModel):
     """Images after content filters. Empty when none are found."""
 
     json_: Json = FieldInfo(alias="json")
-    """Page data extracted into jsonParams.schema, after shared content filters.
-
-    Values are grounded in the page; optional fields the page does not state are
-    omitted, or null when their type allows null. An empty object when the filters
-    leave no text.
-    """
+    """Page data extracted using your schema."""
 
     markdown: Markdown
     """Markdown after content filters."""
@@ -381,7 +367,7 @@ class WebScrapeResponse(BaseModel):
     """Fields produced by parseParams.rules, after shared content filters."""
 
     product: Product
-    """Product detail page classification and the extracted product."""
+    """Product details found on the page."""
 
     request_id: str
     """Unique id of this API call, also sent in the X-Request-Id response header.

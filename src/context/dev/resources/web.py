@@ -465,8 +465,7 @@ class WebResource(SyncAPIResource):
               when using return-partial.
 
           zdr: Zero data retention. Bypasses caches and uploads; excludes request/response
-              content and tags from logs. Must be enabled for your organization. Not available
-              with the highlights output.
+              content and tags from logs. Must be enabled for your organization.
 
           extra_headers: Send extra headers
 
@@ -1961,8 +1960,7 @@ class AsyncWebResource(AsyncAPIResource):
               when using return-partial.
 
           zdr: Zero data retention. Bypasses caches and uploads; excludes request/response
-              content and tags from logs. Must be enabled for your organization. Not available
-              with the highlights output.
+              content and tags from logs. Must be enabled for your organization.
 
           extra_headers: Send extra headers
 
