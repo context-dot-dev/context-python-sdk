@@ -51,6 +51,9 @@ class Bytes(BaseModel):
 
     requested: bool
 
+    success: Optional[bool] = None
+    """True when retrieved, false when retrieval failed, and null when not requested."""
+
 
 class CacheMetadata(BaseModel):
     """Cache outcome for this response.
@@ -78,6 +81,9 @@ class Highlights(BaseModel):
 
     requested: bool
 
+    success: Optional[bool] = None
+    """True when retrieved, false when retrieval failed, and null when not requested."""
+
 
 class HTML(BaseModel):
     """Rendered HTML after content filters."""
@@ -85,6 +91,9 @@ class HTML(BaseModel):
     data: Optional[str] = None
 
     requested: bool
+
+    success: Optional[bool] = None
+    """True when retrieved, false when retrieval failed, and null when not requested."""
 
 
 class ImagesData(BaseModel):
@@ -116,6 +125,9 @@ class Images(BaseModel):
 
     requested: bool
 
+    success: Optional[bool] = None
+    """True when retrieved, false when retrieval failed, and null when not requested."""
+
 
 class Json(BaseModel):
     """Page data extracted using your schema."""
@@ -124,6 +136,9 @@ class Json(BaseModel):
 
     requested: bool
 
+    success: Optional[bool] = None
+    """True when retrieved, false when retrieval failed, and null when not requested."""
+
 
 class Markdown(BaseModel):
     """Markdown after content filters."""
@@ -131,6 +146,9 @@ class Markdown(BaseModel):
     data: Optional[str] = None
 
     requested: bool
+
+    success: Optional[bool] = None
+    """True when retrieved, false when retrieval failed, and null when not requested."""
 
 
 class MetadataAlternate(BaseModel):
@@ -222,6 +240,9 @@ class Parsed(BaseModel):
     data: Optional[Dict[str, object]] = None
 
     requested: bool
+
+    success: Optional[bool] = None
+    """True when retrieved, false when retrieval failed, and null when not requested."""
 
 
 class ProductDataProductVariant(BaseModel):
@@ -315,6 +336,9 @@ class Product(BaseModel):
 
     requested: bool
 
+    success: Optional[bool] = None
+    """True when retrieved, false when retrieval failed, and null when not requested."""
+
 
 class Screenshot(BaseModel):
     """An image data URL. Use directly as an image src."""
@@ -322,6 +346,9 @@ class Screenshot(BaseModel):
     data: Optional[str] = None
 
     requested: bool
+
+    success: Optional[bool] = None
+    """True when retrieved, false when retrieval failed, and null when not requested."""
 
 
 class KeyMetadata(BaseModel):
@@ -390,10 +417,11 @@ class WebScrapeResponse(BaseModel):
 
     is_partial: Optional[Literal[True]] = FieldInfo(alias="isPartial", default=None)
     """
-    Present when return-partial captures a page that is still loading, returns
-    images before image processing finishes, or cuts product AI extraction short.
-    Also present if the optional product AI fallback fails. Partial responses are
-    not cached.
+    Present when a requested output fails, capture returns a page that is still
+    loading, images return before processing finishes, or the optional product AI
+    fallback fails or is cut short. Check each output's success field for its
+    result. Valid captured pieces may be cached independently; failed retrievals and
+    incomplete captures are not cached.
     """
 
     key_metadata: Optional[KeyMetadata] = None
