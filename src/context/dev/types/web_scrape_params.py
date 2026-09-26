@@ -112,8 +112,9 @@ class Formats(TypedDict, total=False):
 
     highlights: bool
     """
-    Relevant passages for your question or topic, with headings included when needed
-    for context. Adds 3 credits when passages are returned.
+    Relevant Markdown excerpts for your question or topic, preserving code, lists,
+    and tables, with headings included when needed for context. Adds 3 credits when
+    passages are returned.
     """
 
     html: bool
