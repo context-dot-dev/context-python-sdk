@@ -30,7 +30,11 @@ class NewsSearchParams(TypedDict, total=False):
     """Opaque next_cursor from the previous response, or null for the first page."""
 
     filter_by: Annotated[FilterBy, PropertyInfo(alias="filterBy")]
-    """Optional result filters."""
+    """Optional result filters.
+
+    Use at most one of sourceDomain, sourceCountry, articleLanguage, or articleType.
+    A date range may accompany that category; date.from must not exceed date.to.
+    """
 
     limit: int
     """Maximum results to return. Defaults to 10."""
@@ -185,14 +189,17 @@ _FilterByDateReservedKeywords = TypedDict(
 
 
 class FilterByDate(_FilterByDateReservedKeywords, total=False):
-    """Published-at window in epoch milliseconds."""
+    """Published-at window in epoch milliseconds. from must be before or equal to to."""
 
     to: int
     """Inclusive end of the published-at window, in epoch milliseconds."""
 
 
 class FilterBy(TypedDict, total=False):
-    """Optional result filters."""
+    """Optional result filters.
+
+    Use at most one of sourceDomain, sourceCountry, articleLanguage, or articleType. A date range may accompany that category; date.from must not exceed date.to.
+    """
 
     article_language: Annotated[
         List[Literal["ar", "de", "en", "es", "fr", "hi", "it", "ja", "ko", "nl", "pt", "ru", "zh"]],
@@ -206,7 +213,7 @@ class FilterBy(TypedDict, total=False):
     """Article types to include. Up to 3."""
 
     date: FilterByDate
-    """Published-at window in epoch milliseconds."""
+    """Published-at window in epoch milliseconds. from must be before or equal to to."""
 
     source_country: Annotated[
         List[
