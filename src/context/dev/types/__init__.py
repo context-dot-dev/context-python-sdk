@@ -40,6 +40,7 @@ from .monitor_update_params import MonitorUpdateParams as MonitorUpdateParams
 from .parse_handle_response import ParseHandleResponse as ParseHandleResponse
 from .web_map_urls_response import WebMapURLsResponse as WebMapURLsResponse
 from .web_screenshot_params import WebScreenshotParams as WebScreenshotParams
+from .feedback_submit_params import FeedbackSubmitParams as FeedbackSubmitParams
 from .person_enrich_response import PersonEnrichResponse as PersonEnrichResponse
 from .batch_retrieve_response import BatchRetrieveResponse as BatchRetrieveResponse
 from .brand_retrieve_response import BrandRetrieveResponse as BrandRetrieveResponse
@@ -50,6 +51,7 @@ from .utility_prefetch_params import UtilityPrefetchParams as UtilityPrefetchPar
 from .web_screenshot_response import WebScreenshotResponse as WebScreenshotResponse
 from .web_web_crawl_md_params import WebWebCrawlMdParams as WebWebCrawlMdParams
 from .batch_get_results_params import BatchGetResultsParams as BatchGetResultsParams
+from .feedback_submit_response import FeedbackSubmitResponse as FeedbackSubmitResponse
 from .monitor_list_runs_params import MonitorListRunsParams as MonitorListRunsParams
 from .monitor_retrieve_response import MonitorRetrieveResponse as MonitorRetrieveResponse
 from .utility_prefetch_response import UtilityPrefetchResponse as UtilityPrefetchResponse

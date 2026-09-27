@@ -64,6 +64,14 @@ from .utility import (
     UtilityResourceWithStreamingResponse,
     AsyncUtilityResourceWithStreamingResponse,
 )
+from .feedback import (
+    FeedbackResource,
+    AsyncFeedbackResource,
+    FeedbackResourceWithRawResponse,
+    AsyncFeedbackResourceWithRawResponse,
+    FeedbackResourceWithStreamingResponse,
+    AsyncFeedbackResourceWithStreamingResponse,
+)
 from .industry import (
     IndustryResource,
     AsyncIndustryResource,
@@ -156,4 +164,10 @@ __all__ = [
     "AsyncLogsResourceWithRawResponse",
     "LogsResourceWithStreamingResponse",
     "AsyncLogsResourceWithStreamingResponse",
+    "FeedbackResource",
+    "AsyncFeedbackResource",
+    "FeedbackResourceWithRawResponse",
+    "AsyncFeedbackResourceWithRawResponse",
+    "FeedbackResourceWithStreamingResponse",
+    "AsyncFeedbackResourceWithStreamingResponse",
 ]
