@@ -82,12 +82,14 @@ class WebResource(SyncAPIResource):
         for a short task or `ultra` for deeper research.
 
         Args:
-          task: Research task. Name a domain to have it read before searching.
+          task: Research task. The agent selects company/profile lookups, web searches, or page
+              reads. Include domains or URLs to focus the research.
 
           json_format: Example answer object, not JSON Schema. Up to 8 levels, 500 values, and 16000
               characters; unknowns may be null.
 
-          mode: `fast` for short tasks; `ultra` for deeper research (default).
+          mode: `fast` prioritizes speed, with extra verification for people and companies;
+              `ultra` supports deeper research (default).
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -1480,12 +1482,14 @@ class AsyncWebResource(AsyncAPIResource):
         for a short task or `ultra` for deeper research.
 
         Args:
-          task: Research task. Name a domain to have it read before searching.
+          task: Research task. The agent selects company/profile lookups, web searches, or page
+              reads. Include domains or URLs to focus the research.
 
           json_format: Example answer object, not JSON Schema. Up to 8 levels, 500 values, and 16000
               characters; unknowns may be null.
 
-          mode: `fast` for short tasks; `ultra` for deeper research (default).
+          mode: `fast` prioritizes speed, with extra verification for people and companies;
+              `ultra` supports deeper research (default).
 
           tags: Labels for filtering usage in the dashboard.
 
