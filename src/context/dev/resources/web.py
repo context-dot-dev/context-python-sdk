@@ -361,10 +361,10 @@ class WebResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebScrapeResponse:
-        """Returns the outputs you enable in `formats` from one visit to a URL.
+        """Scrape anything from a URL on the internet.
 
-        Each output
-        reports its own `success`, so a failed output does not fail the request.
+        Returns the outputs you enable in
+        formats. Handles PDFs, DOCX, PPT, XLSX, and 40 other file formats.
 
         Args:
           formats: Outputs to return. Set at least one to `true`.
@@ -1759,10 +1759,10 @@ class AsyncWebResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebScrapeResponse:
-        """Returns the outputs you enable in `formats` from one visit to a URL.
+        """Scrape anything from a URL on the internet.
 
-        Each output
-        reports its own `success`, so a failed output does not fail the request.
+        Returns the outputs you enable in
+        formats. Handles PDFs, DOCX, PPT, XLSX, and 40 other file formats.
 
         Args:
           formats: Outputs to return. Set at least one to `true`.
