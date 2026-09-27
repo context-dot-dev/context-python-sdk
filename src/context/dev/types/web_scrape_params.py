@@ -58,7 +58,8 @@ class WebScrapeParams(TypedDict, total=False):
     max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
     """Maximum age of a cached output, in milliseconds.
 
-    `0` fetches fresh. Defaults to 1 day.
+    `0` fetches fresh. Defaults to 3 days (259200000 ms). Maximum: 1 year
+    (31536000000 ms).
     """
 
     parse_params: Annotated[ParseParams, PropertyInfo(alias="parseParams")]
