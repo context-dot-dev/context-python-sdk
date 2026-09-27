@@ -130,6 +130,12 @@ class Json(BaseModel):
     success: Optional[bool] = None
     """`true` if returned, `false` if it failed, `null` if not requested."""
 
+    error_code: Optional[str] = None
+    """Cause of a failed JSON extraction, when available."""
+
+    message: Optional[str] = None
+    """Explanation of the JSON extraction failure and possible next steps."""
+
 
 class Markdown(BaseModel):
     """Markdown after content filters."""
