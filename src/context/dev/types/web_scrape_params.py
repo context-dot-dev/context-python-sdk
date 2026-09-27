@@ -38,13 +38,13 @@ __all__ = [
 
 class WebScrapeParams(TypedDict, total=False):
     formats: Required[Formats]
-    """Outputs to return. Enable at least one; omitted formats are false."""
+    """Outputs to return. Set at least one to `true`."""
 
     url: Required[str]
-    """The URL to scrape."""
+    """Public HTTP or HTTPS URL to scrape."""
 
     highlights_params: Annotated[HighlightsParams, PropertyInfo(alias="highlightsParams")]
-    """Highlight options. Requires formats.highlights: true."""
+    """Required when `formats.highlights` is `true`."""
 
     image_params: Annotated[ImageParams, PropertyInfo(alias="imageParams")]
     """Image options. Requires formats.images: true."""
@@ -53,14 +53,12 @@ class WebScrapeParams(TypedDict, total=False):
     """Required when formats.json is true."""
 
     markdown_params: Annotated[MarkdownParams, PropertyInfo(alias="markdownParams")]
-    """Markdown options. Requires formats.markdown: true."""
+    """Markdown options. Requires `formats.markdown`."""
 
     max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
-    """Maximum age of each cached output.
+    """Maximum age of a cached output, in milliseconds.
 
-    Defaults to 1 day; 0 fetches fresh and updates the requested outputs. Compatible
-    outputs are shared with the individual scrape endpoints. Image results with
-    hosted files refresh after 23 hours; other outputs retain their own freshness.
+    `0` fetches fresh. Defaults to 1 day.
     """
 
     parse_params: Annotated[ParseParams, PropertyInfo(alias="parseParams")]
@@ -73,49 +71,32 @@ class WebScrapeParams(TypedDict, total=False):
     """Screenshot options. Requires formats.screenshot: true."""
 
     shared_params: Annotated[SharedParams, PropertyInfo(alias="sharedParams")]
-    """Shared browser and content settings.
-
-    Content filters leave screenshots and original bytes unchanged.
-    """
+    """Browser and content settings shared by all outputs."""
 
     tags: SequenceNotStr[str]
     """Labels for tracking request usage. Not retained when zdr is enabled."""
 
     timeout_opts: Annotated[TimeoutOpts, PropertyInfo(alias="timeoutOpts")]
-    """Total deadline, including navigation, actions, waiting, and all outputs.
+    """Deadline for the whole request.
 
-    Defaults to 60000 milliseconds with behavior fail. Individual outputs have
-    internal deadlines that reserve time to return completed outputs; timed-out
-    outputs have success: false and data: null under either behavior. The overall
-    request deadline remains enforced: fail returns an error if that deadline is
-    reached. Use return-partial to allow the current page state and available
-    outputs when the page is still loading. Partial responses set isPartial. Failed
-    retrievals and incomplete captures are not cached; valid captured pieces may be
-    cached independently. Fixed waits must fit before a response reserve of up to
-    5000 milliseconds (at most one quarter of the timeout) when using
-    return-partial.
+    Defaults to 60000 ms with `fail`. Fixed waits must end before it.
     """
 
     zdr: Literal["enabled", "disabled"]
-    """Zero data retention.
+    """`enabled` turns on zero data retention.
 
-    Bypasses caches and uploads; excludes request/response content and tags from
-    logs. Must be enabled for your organization.
+    Your organization must have ZDR enabled.
     """
 
 
 class Formats(TypedDict, total=False):
-    """Outputs to return. Enable at least one; omitted formats are false."""
+    """Outputs to return. Set at least one to `true`."""
 
     bytes: bool
     """The original HTTP response body."""
 
     highlights: bool
-    """
-    Relevant Markdown excerpts for your question or topic, preserving code, lists,
-    and tables, with headings included when needed for context. Adds 3 credits when
-    passages are returned.
-    """
+    """Markdown excerpts relevant to `highlightsParams.query`."""
 
     html: bool
     """Rendered HTML."""
@@ -124,89 +105,82 @@ class Formats(TypedDict, total=False):
     """Images found on the page."""
 
     json: bool
-    """Page data extracted using your schema.
-
-    Adds 4 credits when extraction succeeds and its result is returned.
-    """
+    """An object matching `jsonParams.schema`, extracted from the page."""
 
     markdown: bool
     """Page content as Markdown."""
 
     parse: bool
-    """Fields selected by parseParams.rules."""
+    """Fields extracted with `parseParams.rules`, returned as `parsed`."""
 
     product: bool
-    """Product details such as name, price, and availability.
-
-    Adds 1 credit when its successful result is returned or the target page is
-    missing.
-    """
+    """Product details such as name, price, and availability."""
 
     screenshot: bool
-    """An inline image of the page."""
+    """A screenshot of the page."""
 
 
 class HighlightsParams(TypedDict, total=False):
-    """Highlight options. Requires formats.highlights: true."""
+    """Required when `formats.highlights` is `true`."""
 
     query: Required[str]
     """The question or topic to find passages for."""
 
     max_characters: Annotated[int, PropertyInfo(alias="maxCharacters")]
-    """Maximum combined length of the returned passages, in characters."""
+    """Maximum combined length of returned passages."""
 
 
 class ImageParams(TypedDict, total=False):
     """Image options. Requires formats.images: true."""
 
     dedupe: Literal["none", "visual"]
-    """For visual duplicates, keep the largest image."""
+    """Set `visual` to drop visual duplicates, keeping the largest copy."""
 
     enrich: List[Literal["dimensions", "classification", "file"]]
-    """Add dimensions, a visual category, or a hosted file URL.
-
-    Each image has a maximum processing time of 30000 milliseconds, bounded by the
-    remaining request deadline.
-    """
+    """Extra data per image: `dimensions`, `classification`, or a hosted `file` URL."""
 
 
 class JsonParams(TypedDict, total=False):
     """Required when formats.json is true."""
 
     schema: Required[Dict[str, object]]
-    """JSON Schema for the returned object.
+    """JSON Schema for a top-level object, up to 50 KB.
 
-    Must describe a top-level object; at most 50 KB serialized. Optional fields the
-    page does not state are omitted, or null when their type allows null, while
-    required non-nullable fields always receive a best-effort value, so prefer
-    nullable or optional fields for data a page may omit. Zod users can pass the
-    output of z.toJSONSchema().
+    Use optional or nullable fields for missing facts.
     """
 
     instructions: str
-    """
-    Optional guidance on which facts to prioritize or how to interpret schema
-    fields.
-    """
+    """Extra guidance, such as which facts to prefer or how to read a field."""
 
 
 class MarkdownParams(TypedDict, total=False):
-    """Markdown options. Requires formats.markdown: true."""
+    """Markdown options. Requires `formats.markdown`."""
 
     include_images: Annotated[bool, PropertyInfo(alias="includeImages")]
+    """Include images in the Markdown using image syntax with URLs and alt text."""
 
     include_links: Annotated[bool, PropertyInfo(alias="includeLinks")]
+    """Keep link URLs in the Markdown. Set false to return link text without URLs."""
 
     inline_images: Annotated[Literal["placeholder", "preserve"], PropertyInfo(alias="inlineImages")]
-    """Base64 images use placeholders by default. Requires includeImages: true."""
+    """How base64 images appear: `placeholder` (default) or `preserve`.
+
+    Requires `includeImages`.
+    """
 
 
 class ParseParamsRulesUnionMember1(TypedDict, total=False):
     selector: Required[str]
+    """CSS selector to match within the current page or parent rule."""
 
     output: Union[Literal["text", "html"], str, object]
+    """Return text, HTML, an attribute such as `@href`, or nested field rules.
+
+    Defaults to text.
+    """
 
     type: Literal["item", "list"]
+    """Return the first match with `item` or all matches with `list`."""
 
 
 ParseParamsRules: TypeAlias = Union[str, ParseParamsRulesUnionMember1]
@@ -216,9 +190,9 @@ class ParseParams(TypedDict, total=False):
     """Required when formats.parse is true."""
 
     rules: Required[Dict[str, ParseParamsRules]]
-    """Map field names to CSS selectors or rules.
+    """Field names mapped to CSS selectors (`h1`, `a@href`) or rule objects.
 
-    Missing items return null; missing lists return [].
+    Max 100 fields, 5 levels.
     """
 
 
@@ -226,30 +200,28 @@ class ProductParams(TypedDict, total=False):
     """Product options. Requires formats.product: true."""
 
     use_ai_fallback: Annotated[bool, PropertyInfo(alias="useAIFallback")]
-    """
-    Extract the product with a specialized model when the page has no structured
-    product data. Adds six credits when the model verdict is returned successfully.
-    If the fallback fails, the product output has success: false and data: null with
-    no fallback charge; other outputs remain available. Request deadlines and client
-    disconnects still apply.
-    """
+    """Use an AI model when the page has no structured product data."""
 
 
 class ScreenshotParamsAreaElement(TypedDict, total=False):
     selector: Required[str]
-    """Must match one visible element."""
+    """CSS selector matching exactly one visible element."""
 
 
 class ScreenshotParamsAreaRectangle(TypedDict, total=False):
     """Pixels from the document origin."""
 
     height: Required[int]
+    """Height of the capture in pixels."""
 
     width: Required[int]
+    """Width of the capture in pixels."""
 
     x: Required[int]
+    """Left edge of the capture, in pixels from the document origin."""
 
     y: Required[int]
+    """Top edge of the capture, in pixels from the document origin."""
 
 
 ScreenshotParamsArea: TypeAlias = Union[
@@ -261,28 +233,35 @@ class ScreenshotParams(TypedDict, total=False):
     """Screenshot options. Requires formats.screenshot: true."""
 
     area: ScreenshotParamsArea
-    """Viewport, full page, one visible element, or a rectangle.
+    """What to capture: `viewport`, `fullPage`, one element, or a rectangle.
 
-    Maximum 40 megapixels.
+    Max 40 megapixels.
     """
 
     format: Literal["png", "jpeg", "webp"]
+    """Image format for the screenshot."""
 
 
 class SharedParamsActionPerform(TypedDict, total=False):
     action: Required[str]
+    """One browser instruction, such as clicking a button or entering text."""
 
     type: Required[Literal["perform"]]
+    """Use `perform` for a plain-language browser instruction."""
 
 
 class SharedParamsActionScroll(TypedDict, total=False):
     type: Required[Literal["scroll"]]
+    """Use `scroll` to move through the page or a container."""
 
     amount: Union[int, Literal["viewport", "max"]]
+    """Distance per scroll: pixels, one `viewport`, or `max` to reach the end."""
 
     direction: Literal["down", "up", "left", "right"]
+    """Direction to scroll."""
 
     max_scrolls: Annotated[int, PropertyInfo(alias="maxScrolls")]
+    """Maximum number of scroll steps for this action."""
 
     selector: str
     """Scroll this container. Omit to scroll the page."""
@@ -290,14 +269,18 @@ class SharedParamsActionScroll(TypedDict, total=False):
 
 class SharedParamsActionWait(TypedDict, total=False):
     milliseconds: Required[int]
+    """Time to pause in milliseconds before the next action."""
 
     type: Required[Literal["wait"]]
+    """Use `wait` to pause for a fixed duration."""
 
 
 class SharedParamsActionWaitFor(TypedDict, total=False):
     selector: Required[str]
+    """CSS selector to wait for before continuing."""
 
     type: Required[Literal["waitFor"]]
+    """Use `waitFor` to wait for a matching element."""
 
 
 SharedParamsAction: TypeAlias = Union[
@@ -306,13 +289,13 @@ SharedParamsAction: TypeAlias = Union[
 
 
 class SharedParamsParsersPdf(TypedDict, total=False):
-    """PDF text options for HTML, Markdown, and parsed fields."""
+    """PDF page range and OCR."""
 
     end_page: Annotated[int, PropertyInfo(alias="endPage")]
-    """Last page to parse. Must be at least startPage."""
+    """Last page to parse. Must be at least `startPage`."""
 
     ocr: Literal["off", "auto"]
-    """Read text from scanned pages."""
+    """Set `auto` to read scanned pages with OCR."""
 
     start_page: Annotated[int, PropertyInfo(alias="startPage")]
     """First page to parse, starting at 1."""
@@ -322,95 +305,95 @@ class SharedParamsParsers(TypedDict, total=False):
     """Document parsing options."""
 
     pdf: SharedParamsParsersPdf
-    """PDF text options for HTML, Markdown, and parsed fields."""
+    """PDF page range and OCR."""
 
 
 class SharedParamsViewport(TypedDict, total=False):
-    """Browser dimensions in pixels."""
+    """Browser size in pixels.
+
+    Omit for 1920 × 1080. When provided, missing dimensions default to 1440 × 900.
+    """
 
     height: int
+    """Browser viewport height in pixels."""
 
     width: int
+    """Browser viewport width in pixels."""
 
 
 class SharedParams(TypedDict, total=False):
-    """Shared browser and content settings.
-
-    Content filters leave screenshots and original bytes unchanged.
-    """
+    """Browser and content settings shared by all outputs."""
 
     actions: Iterable[SharedParamsAction]
-    """Run in order before capture.
+    """Browser steps run in order before capture.
 
-    A failed action fails the request. Bypasses caching.
+    Requires a paid plan. Skips the cache.
     """
 
     country: str
-    """Supported two-letter country code, case-insensitive.
-
-    Applies to every output, including image downloads.
-    """
+    """Proxy country as a two-letter code, such as `US`. Case-insensitive."""
 
     dismiss_cookies: Annotated[bool, PropertyInfo(alias="dismissCookies")]
-    """Dismiss cookie banners by accepting cookies before actions."""
+    """Accept cookie banners before actions and capture."""
 
     dismiss_popups: Annotated[bool, PropertyInfo(alias="dismissPopups")]
-    """Dismiss other popups before actions."""
+    """Close other popups before actions and capture."""
 
     exclude_selectors: Annotated[SequenceNotStr[str], PropertyInfo(alias="excludeSelectors")]
-    """Remove matching content. Exclusions win."""
+    """Remove elements matching these CSS selectors. Overrides `includeSelectors`."""
 
     headers: Dict[str, str]
-    """Headers for the target origin. Requests with custom headers bypass caching."""
+    """HTTP headers to send to the target site. Requests with headers skip the cache."""
 
     include_frames: Annotated[bool, PropertyInfo(alias="includeFrames")]
-    """Include iframe content in extraction.
+    """Include iframe content in HTML and text outputs.
 
-    Screenshots show visible frames regardless.
+    Screenshots always show visible frames.
     """
 
     include_selectors: Annotated[SequenceNotStr[str], PropertyInfo(alias="includeSelectors")]
-    """Keep matching content after mainContentOnly."""
+    """Keep only elements matching these CSS selectors."""
 
     main_content_only: Annotated[bool, PropertyInfo(alias="mainContentOnly")]
-    """Keep only main content in HTML, Markdown, images, and parsed fields."""
+    """Keep only the main content. Doesn't affect `screenshot`, `bytes`, or `product`."""
 
     parsers: SharedParamsParsers
     """Document parsing options."""
 
     settle_animations: Annotated[bool, PropertyInfo(alias="settleAnimations")]
-    """Settle animations before capture.
+    """Wait for CSS animations to finish before capture.
 
-    Defaults to true with screenshots, otherwise false.
+    Defaults to `true` when `screenshot` is requested.
     """
 
     theme: Literal["light", "dark"]
-    """Override the browser color scheme."""
+    """Emulate a light or dark color scheme."""
 
     viewport: SharedParamsViewport
-    """Browser dimensions in pixels."""
+    """Browser size in pixels.
+
+    Omit for 1920 × 1080. When provided, missing dimensions default to 1440 × 900.
+    """
 
     wait_for: Annotated[Union[int, str], PropertyInfo(alias="waitFor")]
-    """After actions, wait this many milliseconds or until a CSS selector is visible.
+    """Milliseconds, or a CSS selector to wait for, after actions.
 
-    Defaults to 500 ms, or 2000 ms with frames or an XML URL. Set 0 to skip.
+    Defaults to 500 (2000 with frames or XML).
     """
 
 
 class TimeoutOpts(TypedDict, total=False):
-    """Total deadline, including navigation, actions, waiting, and all outputs.
+    """Deadline for the whole request.
 
-    Defaults to 60000 milliseconds with behavior fail. Individual outputs have internal deadlines that reserve time to return completed outputs; timed-out outputs have success: false and data: null under either behavior. The overall request deadline remains enforced: fail returns an error if that deadline is reached. Use return-partial to allow the current page state and available outputs when the page is still loading. Partial responses set isPartial. Failed retrievals and incomplete captures are not cached; valid captured pieces may be cached independently. Fixed waits must fit before a response reserve of up to 5000 milliseconds (at most one quarter of the timeout) when using return-partial.
+    Defaults to 60000 ms with `fail`. Fixed waits must end before it.
     """
 
     milliseconds: Required[int]
-    """Request deadline in milliseconds. Maximum: 300000 (5 minutes)."""
+    """Deadline in milliseconds."""
 
     behavior: Literal["fail", "return-partial"]
-    """What to do at the deadline.
+    """\"fail" returns 408 at the deadline.
 
-    "fail" returns 408 REQUEST_TIMEOUT without charging credits. "return-partial"
-    returns usable results collected so far; if none are available, the request
-    still fails without charging credits. Partial results are not cached as complete
-    results. "return-partial" requires milliseconds of at least 5000.
+    "return-partial" returns available results; inspect the response’s partial flag.
+    "return-partial" requires at least 5000 ms.
     """

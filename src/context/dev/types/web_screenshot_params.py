@@ -233,10 +233,7 @@ class WebScreenshotParams(TypedDict, total=False):
         "zm",
         "zw",
     ]
-    """
-    Fetch the target page through a residential proxy in this country (ISO 3166-1
-    alpha-2).
-    """
+    """Fetch from this country (ISO 3166-1 alpha-2)."""
 
     direct_url: Annotated[str, PropertyInfo(alias="directUrl")]
     """
@@ -304,17 +301,10 @@ class WebScreenshotParams(TypedDict, total=False):
     """
 
     tags: SequenceNotStr[str]
-    """Comma-separated tags for tracking request usage.
-
-    Up to 20 tags, each 1-50 characters.
-    """
+    """Comma-separated labels for filtering usage, e.g. `production,team-alpha`."""
 
     timeout_opts: Annotated[TimeoutOpts, PropertyInfo(alias="timeoutOpts")]
-    """Optional request deadline and behavior on timeout.
-
-    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail
-    or a JSON-encoded timeoutOpts object.
-    """
+    """Request deadline and what to return when it passes."""
 
     viewport: Viewport
     """Optional browser viewport dimensions for the screenshot. Defaults to 1920x1080."""
@@ -329,31 +319,23 @@ class WebScreenshotParams(TypedDict, total=False):
     """
 
     zdr: Literal["enabled", "disabled"]
-    """
-    Set to enabled to bypass shared caches and omit request and response content
-    from retained usage logs. Asset uploads are skipped, so hosted image URLs are
-    omitted. Requires zero data retention to be enabled for your organization
-    (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
-    Successful ZDR responses include X-Context-ZDR: true.
+    """`enabled` turns on zero data retention.
+
+    Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
     """
 
 
 class TimeoutOpts(TypedDict, total=False):
-    """Optional request deadline and behavior on timeout.
-
-    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded timeoutOpts object.
-    """
+    """Request deadline and what to return when it passes."""
 
     milliseconds: Required[int]
-    """Request deadline in milliseconds. Maximum: 300000 (5 minutes)."""
+    """Deadline in milliseconds."""
 
     behavior: Literal["fail", "return-partial"]
-    """What to do at the deadline.
+    """\"fail" returns 408 at the deadline.
 
-    "fail" returns 408 REQUEST_TIMEOUT without charging credits. "return-partial"
-    returns usable results collected so far; if none are available, the request
-    still fails without charging credits. Partial results are not cached as complete
-    results. "return-partial" requires milliseconds of at least 5000.
+    "return-partial" returns available results; inspect the response’s partial flag.
+    "return-partial" requires at least 5000 ms.
     """
 
 

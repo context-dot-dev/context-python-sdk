@@ -36,7 +36,7 @@ class Attempt(BaseModel):
     """Attempt start time."""
 
     trigger: Literal["initial", "automatic", "manual"]
-    """What started this attempt."""
+    """`initial`, `automatic` (scheduled retry), or `manual` (Retry endpoint)."""
 
     url: str
     """URL used for this attempt."""

@@ -6,7 +6,7 @@ from typing_extensions import Literal
 
 from .._models import BaseModel
 
-__all__ = ["MonitorRetrieveChangeResponse", "Evidence"]
+__all__ = ["MonitorRetrieveChangeResponse", "Evidence", "KeyMetadata"]
 
 
 class Evidence(BaseModel):
@@ -20,12 +20,17 @@ class Evidence(BaseModel):
     """Optional URL the evidence relates to. Absent for whole-target diffs."""
 
 
+class KeyMetadata(BaseModel):
+    """Credits this request used and your remaining balance."""
+
+    credits_consumed: int
+    """Credits charged for this request."""
+
+    credits_remaining: int
+    """Credits remaining for your organization."""
+
+
 class MonitorRetrieveChangeResponse(BaseModel):
-    """A detected change.
-
-    `mode` is the constant `web`; `target_type` and `change_detection_type` describe the change, and which optional fields are present depends on them (page: `diff` + excerpts; sitemap: `added_urls`/`removed_urls`; semantic: `confidence`/`importance`/`evidence`/`matched_urls`).
-    """
-
     id: str
 
     change_detection_type: Literal["exact", "semantic"]
@@ -33,13 +38,15 @@ class MonitorRetrieveChangeResponse(BaseModel):
     detected_at: datetime
 
     mode: Literal["web"]
-    """Top-level monitor category.
-
-    Always `web` today; the concrete behavior is described by `target` and
-    `change_detection`.
-    """
+    """Always `web`. Optional."""
 
     monitor_id: str
+
+    request_id: str
+    """Unique ID of this request, also in `X-Request-Id`.
+
+    Include it when contacting support.
+    """
 
     run_id: str
     """The run that detected this change."""
@@ -47,10 +54,7 @@ class MonitorRetrieveChangeResponse(BaseModel):
     summary: str
 
     tags: List[str]
-    """User-defined tags for grouping and filtering monitors and their changes.
-
-    Duplicates are removed.
-    """
+    """Labels for filtering monitors, their changes, and their usage."""
 
     target_type: Literal["page", "sitemap", "extract"]
 
@@ -75,6 +79,9 @@ class MonitorRetrieveChangeResponse(BaseModel):
     evidence: Optional[List[Evidence]] = None
 
     importance: Optional[Literal["low", "medium", "high"]] = None
+
+    key_metadata: Optional[KeyMetadata] = None
+    """Credits this request used and your remaining balance."""
 
     matched_url_count: Optional[int] = None
 

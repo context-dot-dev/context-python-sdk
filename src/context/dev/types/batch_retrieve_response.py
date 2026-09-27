@@ -22,31 +22,19 @@ __all__ = [
 
 
 class Credits(BaseModel):
-    """What this batch has done to your credit balance."""
+    """Batch credit usage and settlement."""
 
     net: int
-    """`reserved` minus `refunded` plus `ocr_charged` — what the batch has cost so far.
-
-    Equal to `reserved` until the batch settles.
-    """
+    """`reserved` minus `refunded` plus `ocr_charged`."""
 
     ocr_charged: int
-    """
-    Credits charged for PDF pages recovered by OCR (pdf.ocr=true), 1 per recovered
-    page, on top of `reserved`. Stays 0 until the batch settles.
-    """
+    """OCR usage charged when the batch settles."""
 
     refunded: int
-    """Credits returned for pages that did not succeed.
-
-    Stays 0 until the batch reaches a final status, then settles in one movement.
-    """
+    """Credits returned for unsuccessful pages when the batch settles."""
 
     reserved: int
-    """Credits debited from your balance the moment the batch was accepted.
-
-    This is a charge, not a forecast — the whole amount leaves the balance up front.
-    """
+    """Credits held when the batch was accepted."""
 
 
 class InvalidURL(BaseModel):
@@ -64,11 +52,9 @@ class Progress(BaseModel):
     """Pages that could not be scraped."""
 
     pending: int
-    """Reserved pages not yet attempted.
+    """Accepted pages not yet attempted.
 
-    A cancelled batch keeps reporting the URLs it never reached; a crawl whose
-    `input.reserved_is_ceiling` is true reports 0 once final, because its unspent
-    budget was never real pages.
+    Unused crawl capacity is excluded after completion.
     """
 
     succeeded: int
@@ -87,12 +73,13 @@ class ResultsFile(BaseModel):
 
 
 class Results(BaseModel):
-    """
-    Download links, available once the batch reaches a final status and null before then. GET /batch/{batch_id}/results serves the same records as paginated JSON.
+    """Result download links; null until the batch finishes.
+
+    Files are deleted 7 days after the batch finishes.
     """
 
     expires_at: str
-    """When the download URLs expire."""
+    """When these links expire (24 hours after this response)."""
 
     files: List[ResultsFile]
     """Result files. Order is not guaranteed."""
@@ -113,7 +100,7 @@ class KeyMetadata(BaseModel):
     """API key usage for this request."""
 
     credits_consumed: int
-    """Credits used by this request."""
+    """Credits charged for this request."""
 
     credits_remaining: int
     """Credits remaining for your organization."""
@@ -121,16 +108,13 @@ class KeyMetadata(BaseModel):
 
 class BatchRetrieveResponse(BaseModel):
     id: str
-    """Batch ID used to retrieve or cancel the job."""
+    """Batch ID."""
 
     crawl: Optional[CrawlControls] = None
-    """
-    The crawl controls as submitted, so the limits requested can be compared against
-    what the crawl reached.
-    """
+    """Crawl settings as submitted."""
 
     credits: Credits
-    """What this batch has done to your credit balance."""
+    """Batch credit usage and settlement."""
 
     failure: Optional[Failure] = None
     """
@@ -145,13 +129,13 @@ class BatchRetrieveResponse(BaseModel):
     """
 
     input: Intake
-    """What submission took in, and what it charged for."""
+    """What the submission accepted."""
 
     invalid_urls: List[InvalidURL]
-    """Rejected URLs, up to 100. These are not charged."""
+    """Rejected URLs (first 100)."""
 
     mode: Literal["scrape", "crawl"]
-    """How pages were selected. Matches `input.mode` on the submit request."""
+    """`scrape` (URL list) or `crawl`."""
 
     page_errors: List[PageErrorCount]
     """Individual page failures grouped by error code, sorted by count.
@@ -163,15 +147,15 @@ class BatchRetrieveResponse(BaseModel):
     """Pages attempted so far. Use `status` to check completion."""
 
     request_id: str
-    """Unique id of this API call, also sent in the X-Request-Id response header.
+    """Unique ID of this request, also in `X-Request-Id`.
 
-    Quote it when contacting support about a failed request.
+    Include it when contacting support.
     """
 
     results: Optional[Results] = None
-    """
-    Download links, available once the batch reaches a final status and null before
-    then. GET /batch/{batch_id}/results serves the same records as paginated JSON.
+    """Result download links; null until the batch finishes.
+
+    Files are deleted 7 days after the batch finishes.
     """
 
     status: Literal["queued", "running", "cancelling", "completed", "cancelled", "failed"]

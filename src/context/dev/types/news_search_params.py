@@ -43,7 +43,7 @@ class NewsSearchParams(TypedDict, total=False):
     """Result ordering. Defaults to newest."""
 
     tags: SequenceNotStr[str]
-    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
+    """Labels for filtering usage in the dashboard."""
 
 
 class SearchByEntityNewsSearchEntityByName(TypedDict, total=False):
@@ -53,6 +53,7 @@ class SearchByEntityNewsSearchEntityByName(TypedDict, total=False):
     """Company name."""
 
     type: Required[Literal["name"]]
+    """Use `name` to identify the company by name."""
 
 
 class SearchByEntityNewsSearchEntityByDomain(TypedDict, total=False):
@@ -62,6 +63,7 @@ class SearchByEntityNewsSearchEntityByDomain(TypedDict, total=False):
     """Company website domain, such as apple.com."""
 
     type: Required[Literal["domain"]]
+    """Use `domain` to identify the company by website domain."""
 
 
 class SearchByEntityNewsSearchEntityByTicker(TypedDict, total=False):
@@ -71,6 +73,7 @@ class SearchByEntityNewsSearchEntityByTicker(TypedDict, total=False):
     """Public-company ticker."""
 
     type: Required[Literal["ticker"]]
+    """Use `ticker` to identify a publicly traded company."""
 
     exchange: Literal[
         "AMEX",
@@ -159,6 +162,7 @@ class SearchByEntityNewsSearchEntityByIsin(TypedDict, total=False):
     """International Securities Identification Number."""
 
     type: Required[Literal["isin"]]
+    """Use `isin` to identify the company by its securities identifier."""
 
 
 SearchByEntity: TypeAlias = Union[

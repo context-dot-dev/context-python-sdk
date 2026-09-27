@@ -187,33 +187,25 @@ class BrandResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandRetrieveResponse:
-        """Retrieve logos, backdrops, colors, industry, description, and more.
-
-        Provide
-        exactly one lookup identifier in the request body: a domain, company name, email
-        address, stock ticker, transaction descriptor, or direct URL. Note:
-        `by_direct_url` fetches brand data only from the provided URL — not from the
-        entire internet.
+        """
+        Retrieve logos, colors, company details, and social links using one lookup
+        identifier. A direct URL limits extraction to that page.
 
         Args:
           domain: Domain name to retrieve brand data for (e.g., 'stripe.com').
 
           type: Discriminator for domain-based brand retrieval.
 
-          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
-              refresh. Defaults to 3 months (7776000000 ms). Set to 0 to always perform a hard
-              refresh. Negative values are clamped to 0; values above 1 year (31536000000 ms)
-              are clamped to 1 year.
+          max_age_ms: Maximum age of cached brand data in ms. Defaults to 3 months; clamped to 0–1
+              year. `0` refreshes.
 
           max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
 
-          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          tags: Labels for filtering usage in the dashboard.
 
-          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
-              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
-              timeoutOpts object.
+          timeout_opts: Request deadline and what to return when it passes.
 
           extra_headers: Send extra headers
 
@@ -368,13 +360,9 @@ class BrandResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandRetrieveResponse:
-        """Retrieve logos, backdrops, colors, industry, description, and more.
-
-        Provide
-        exactly one lookup identifier in the request body: a domain, company name, email
-        address, stock ticker, transaction descriptor, or direct URL. Note:
-        `by_direct_url` fetches brand data only from the provided URL — not from the
-        entire internet.
+        """
+        Retrieve logos, colors, company details, and social links using one lookup
+        identifier. A direct URL limits extraction to that page.
 
         Args:
           name: Company name to retrieve brand data for (e.g., 'Apple Inc').
@@ -384,20 +372,16 @@ class BrandResource(SyncAPIResource):
           country_gl: Optional country code hint (GL parameter) to specify the country when looking up
               by company name.
 
-          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
-              refresh. Defaults to 3 months (7776000000 ms). Set to 0 to always perform a hard
-              refresh. Negative values are clamped to 0; values above 1 year (31536000000 ms)
-              are clamped to 1 year.
+          max_age_ms: Maximum age of cached brand data in ms. Defaults to 3 months; clamped to 0–1
+              year. `0` refreshes.
 
           max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
 
-          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          tags: Labels for filtering usage in the dashboard.
 
-          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
-              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
-              timeoutOpts object.
+          timeout_opts: Request deadline and what to return when it passes.
 
           extra_headers: Send extra headers
 
@@ -551,33 +535,25 @@ class BrandResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandRetrieveResponse:
-        """Retrieve logos, backdrops, colors, industry, description, and more.
-
-        Provide
-        exactly one lookup identifier in the request body: a domain, company name, email
-        address, stock ticker, transaction descriptor, or direct URL. Note:
-        `by_direct_url` fetches brand data only from the provided URL — not from the
-        entire internet.
+        """
+        Retrieve logos, colors, company details, and social links using one lookup
+        identifier. A direct URL limits extraction to that page.
 
         Args:
           email: Email address to retrieve brand data for (e.g., 'jane@stripe.com').
 
           type: Discriminator for email-based brand retrieval.
 
-          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
-              refresh. Defaults to 3 months (7776000000 ms). Set to 0 to always perform a hard
-              refresh. Negative values are clamped to 0; values above 1 year (31536000000 ms)
-              are clamped to 1 year.
+          max_age_ms: Maximum age of cached brand data in ms. Defaults to 3 months; clamped to 0–1
+              year. `0` refreshes.
 
           max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
 
-          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          tags: Labels for filtering usage in the dashboard.
 
-          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
-              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
-              timeoutOpts object.
+          timeout_opts: Request deadline and what to return when it passes.
 
           extra_headers: Send extra headers
 
@@ -732,35 +708,27 @@ class BrandResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandRetrieveResponse:
-        """Retrieve logos, backdrops, colors, industry, description, and more.
-
-        Provide
-        exactly one lookup identifier in the request body: a domain, company name, email
-        address, stock ticker, transaction descriptor, or direct URL. Note:
-        `by_direct_url` fetches brand data only from the provided URL — not from the
-        entire internet.
+        """
+        Retrieve logos, colors, company details, and social links using one lookup
+        identifier. A direct URL limits extraction to that page.
 
         Args:
           ticker: Stock ticker symbol to retrieve brand data for (e.g., 'AAPL').
 
           type: Discriminator for ticker-based brand retrieval.
 
-          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
-              refresh. Defaults to 3 months (7776000000 ms). Set to 0 to always perform a hard
-              refresh. Negative values are clamped to 0; values above 1 year (31536000000 ms)
-              are clamped to 1 year.
+          max_age_ms: Maximum age of cached brand data in ms. Defaults to 3 months; clamped to 0–1
+              year. `0` refreshes.
 
           max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
 
-          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          tags: Labels for filtering usage in the dashboard.
 
           ticker_exchange: Optional stock exchange for the ticker. Defaults to NASDAQ if not specified.
 
-          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
-              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
-              timeoutOpts object.
+          timeout_opts: Request deadline and what to return when it passes.
 
           extra_headers: Send extra headers
 
@@ -787,13 +755,9 @@ class BrandResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandRetrieveResponse:
-        """Retrieve logos, backdrops, colors, industry, description, and more.
-
-        Provide
-        exactly one lookup identifier in the request body: a domain, company name, email
-        address, stock ticker, transaction descriptor, or direct URL. Note:
-        `by_direct_url` fetches brand data only from the provided URL — not from the
-        entire internet.
+        """
+        Retrieve logos, colors, company details, and social links using one lookup
+        identifier. A direct URL limits extraction to that page.
 
         Args:
           direct_url: Full http(s) URL to fetch brand data from (e.g.,
@@ -802,11 +766,9 @@ class BrandResource(SyncAPIResource):
 
           type: Discriminator for direct-URL-based brand retrieval.
 
-          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          tags: Labels for filtering usage in the dashboard.
 
-          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
-              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
-              timeoutOpts object.
+          timeout_opts: Request deadline and what to return when it passes.
 
           extra_headers: Send extra headers
 
@@ -964,13 +926,9 @@ class BrandResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandRetrieveResponse:
-        """Retrieve logos, backdrops, colors, industry, description, and more.
-
-        Provide
-        exactly one lookup identifier in the request body: a domain, company name, email
-        address, stock ticker, transaction descriptor, or direct URL. Note:
-        `by_direct_url` fetches brand data only from the provided URL — not from the
-        entire internet.
+        """
+        Retrieve logos, colors, company details, and social links using one lookup
+        identifier. A direct URL limits extraction to that page.
 
         Args:
           transaction_info: Transaction information to identify the brand.
@@ -994,11 +952,9 @@ class BrandResource(SyncAPIResource):
 
           phone: Optional phone number from the transaction to help verify brand match.
 
-          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          tags: Labels for filtering usage in the dashboard.
 
-          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
-              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
-              timeoutOpts object.
+          timeout_opts: Request deadline and what to return when it passes.
 
           extra_headers: Send extra headers
 
@@ -1227,8 +1183,10 @@ class BrandResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandSearchResponse:
-        """
-        Search indexed brands by name or domain
+        """Find up to 10 brands by name or domain, ordered by popularity.
+
+        Use the returned
+        domain to retrieve a full brand profile.
 
         Args:
           query: Search term, matched against the fields selected by queryBy (e.g. 'nike',
@@ -1240,8 +1198,7 @@ class BrandResource(SyncAPIResource):
           query_by: Fields to match the search term against, as a comma-separated list or repeated
               parameter: 'name', 'domain', or both. Defaults to both.
 
-          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
-              characters.
+          tags: Comma-separated labels for filtering usage, e.g. `production,team-alpha`.
 
           typo_tolerance: Maximum number of typos tolerated when matching, from 0 to 2. Defaults to 0 (no
               typo tolerance).
@@ -1438,33 +1395,25 @@ class AsyncBrandResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandRetrieveResponse:
-        """Retrieve logos, backdrops, colors, industry, description, and more.
-
-        Provide
-        exactly one lookup identifier in the request body: a domain, company name, email
-        address, stock ticker, transaction descriptor, or direct URL. Note:
-        `by_direct_url` fetches brand data only from the provided URL — not from the
-        entire internet.
+        """
+        Retrieve logos, colors, company details, and social links using one lookup
+        identifier. A direct URL limits extraction to that page.
 
         Args:
           domain: Domain name to retrieve brand data for (e.g., 'stripe.com').
 
           type: Discriminator for domain-based brand retrieval.
 
-          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
-              refresh. Defaults to 3 months (7776000000 ms). Set to 0 to always perform a hard
-              refresh. Negative values are clamped to 0; values above 1 year (31536000000 ms)
-              are clamped to 1 year.
+          max_age_ms: Maximum age of cached brand data in ms. Defaults to 3 months; clamped to 0–1
+              year. `0` refreshes.
 
           max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
 
-          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          tags: Labels for filtering usage in the dashboard.
 
-          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
-              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
-              timeoutOpts object.
+          timeout_opts: Request deadline and what to return when it passes.
 
           extra_headers: Send extra headers
 
@@ -1619,13 +1568,9 @@ class AsyncBrandResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandRetrieveResponse:
-        """Retrieve logos, backdrops, colors, industry, description, and more.
-
-        Provide
-        exactly one lookup identifier in the request body: a domain, company name, email
-        address, stock ticker, transaction descriptor, or direct URL. Note:
-        `by_direct_url` fetches brand data only from the provided URL — not from the
-        entire internet.
+        """
+        Retrieve logos, colors, company details, and social links using one lookup
+        identifier. A direct URL limits extraction to that page.
 
         Args:
           name: Company name to retrieve brand data for (e.g., 'Apple Inc').
@@ -1635,20 +1580,16 @@ class AsyncBrandResource(AsyncAPIResource):
           country_gl: Optional country code hint (GL parameter) to specify the country when looking up
               by company name.
 
-          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
-              refresh. Defaults to 3 months (7776000000 ms). Set to 0 to always perform a hard
-              refresh. Negative values are clamped to 0; values above 1 year (31536000000 ms)
-              are clamped to 1 year.
+          max_age_ms: Maximum age of cached brand data in ms. Defaults to 3 months; clamped to 0–1
+              year. `0` refreshes.
 
           max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
 
-          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          tags: Labels for filtering usage in the dashboard.
 
-          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
-              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
-              timeoutOpts object.
+          timeout_opts: Request deadline and what to return when it passes.
 
           extra_headers: Send extra headers
 
@@ -1802,33 +1743,25 @@ class AsyncBrandResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandRetrieveResponse:
-        """Retrieve logos, backdrops, colors, industry, description, and more.
-
-        Provide
-        exactly one lookup identifier in the request body: a domain, company name, email
-        address, stock ticker, transaction descriptor, or direct URL. Note:
-        `by_direct_url` fetches brand data only from the provided URL — not from the
-        entire internet.
+        """
+        Retrieve logos, colors, company details, and social links using one lookup
+        identifier. A direct URL limits extraction to that page.
 
         Args:
           email: Email address to retrieve brand data for (e.g., 'jane@stripe.com').
 
           type: Discriminator for email-based brand retrieval.
 
-          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
-              refresh. Defaults to 3 months (7776000000 ms). Set to 0 to always perform a hard
-              refresh. Negative values are clamped to 0; values above 1 year (31536000000 ms)
-              are clamped to 1 year.
+          max_age_ms: Maximum age of cached brand data in ms. Defaults to 3 months; clamped to 0–1
+              year. `0` refreshes.
 
           max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
 
-          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          tags: Labels for filtering usage in the dashboard.
 
-          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
-              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
-              timeoutOpts object.
+          timeout_opts: Request deadline and what to return when it passes.
 
           extra_headers: Send extra headers
 
@@ -1983,35 +1916,27 @@ class AsyncBrandResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandRetrieveResponse:
-        """Retrieve logos, backdrops, colors, industry, description, and more.
-
-        Provide
-        exactly one lookup identifier in the request body: a domain, company name, email
-        address, stock ticker, transaction descriptor, or direct URL. Note:
-        `by_direct_url` fetches brand data only from the provided URL — not from the
-        entire internet.
+        """
+        Retrieve logos, colors, company details, and social links using one lookup
+        identifier. A direct URL limits extraction to that page.
 
         Args:
           ticker: Stock ticker symbol to retrieve brand data for (e.g., 'AAPL').
 
           type: Discriminator for ticker-based brand retrieval.
 
-          max_age_ms: Maximum age in milliseconds for cached brand data before the API performs a hard
-              refresh. Defaults to 3 months (7776000000 ms). Set to 0 to always perform a hard
-              refresh. Negative values are clamped to 0; values above 1 year (31536000000 ms)
-              are clamped to 1 year.
+          max_age_ms: Maximum age of cached brand data in ms. Defaults to 3 months; clamped to 0–1
+              year. `0` refreshes.
 
           max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
 
-          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          tags: Labels for filtering usage in the dashboard.
 
           ticker_exchange: Optional stock exchange for the ticker. Defaults to NASDAQ if not specified.
 
-          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
-              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
-              timeoutOpts object.
+          timeout_opts: Request deadline and what to return when it passes.
 
           extra_headers: Send extra headers
 
@@ -2038,13 +1963,9 @@ class AsyncBrandResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandRetrieveResponse:
-        """Retrieve logos, backdrops, colors, industry, description, and more.
-
-        Provide
-        exactly one lookup identifier in the request body: a domain, company name, email
-        address, stock ticker, transaction descriptor, or direct URL. Note:
-        `by_direct_url` fetches brand data only from the provided URL — not from the
-        entire internet.
+        """
+        Retrieve logos, colors, company details, and social links using one lookup
+        identifier. A direct URL limits extraction to that page.
 
         Args:
           direct_url: Full http(s) URL to fetch brand data from (e.g.,
@@ -2053,11 +1974,9 @@ class AsyncBrandResource(AsyncAPIResource):
 
           type: Discriminator for direct-URL-based brand retrieval.
 
-          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          tags: Labels for filtering usage in the dashboard.
 
-          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
-              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
-              timeoutOpts object.
+          timeout_opts: Request deadline and what to return when it passes.
 
           extra_headers: Send extra headers
 
@@ -2215,13 +2134,9 @@ class AsyncBrandResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandRetrieveResponse:
-        """Retrieve logos, backdrops, colors, industry, description, and more.
-
-        Provide
-        exactly one lookup identifier in the request body: a domain, company name, email
-        address, stock ticker, transaction descriptor, or direct URL. Note:
-        `by_direct_url` fetches brand data only from the provided URL — not from the
-        entire internet.
+        """
+        Retrieve logos, colors, company details, and social links using one lookup
+        identifier. A direct URL limits extraction to that page.
 
         Args:
           transaction_info: Transaction information to identify the brand.
@@ -2245,11 +2160,9 @@ class AsyncBrandResource(AsyncAPIResource):
 
           phone: Optional phone number from the transaction to help verify brand match.
 
-          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          tags: Labels for filtering usage in the dashboard.
 
-          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
-              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
-              timeoutOpts object.
+          timeout_opts: Request deadline and what to return when it passes.
 
           extra_headers: Send extra headers
 
@@ -2478,8 +2391,10 @@ class AsyncBrandResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandSearchResponse:
-        """
-        Search indexed brands by name or domain
+        """Find up to 10 brands by name or domain, ordered by popularity.
+
+        Use the returned
+        domain to retrieve a full brand profile.
 
         Args:
           query: Search term, matched against the fields selected by queryBy (e.g. 'nike',
@@ -2491,8 +2406,7 @@ class AsyncBrandResource(AsyncAPIResource):
           query_by: Fields to match the search term against, as a comma-separated list or repeated
               parameter: 'name', 'domain', or both. Defaults to both.
 
-          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
-              characters.
+          tags: Comma-separated labels for filtering usage, e.g. `production,team-alpha`.
 
           typo_tolerance: Maximum number of typos tolerated when matching, from 0 to 2. Defaults to 0 (no
               typo tolerance).

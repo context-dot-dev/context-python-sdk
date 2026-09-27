@@ -11,7 +11,4 @@ __all__ = ["DeliveryRetrieveParams"]
 
 class DeliveryRetrieveParams(TypedDict, total=False):
     tags: SequenceNotStr[str]
-    """Comma-separated tags for tracking request usage.
-
-    Up to 20 tags, each 1-50 characters.
-    """
+    """Comma-separated labels for filtering usage, e.g. `production,team-alpha`."""

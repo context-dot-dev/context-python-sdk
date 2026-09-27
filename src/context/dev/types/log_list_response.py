@@ -22,7 +22,10 @@ class Data(BaseModel):
     """Server-side processing time in milliseconds."""
 
     method: str
-    """HTTP method."""
+    """
+    HTTP method, or `MONITOR` / `BATCH` for monitor-run and batch-settlement
+    entries.
+    """
 
     path: str
     """Endpoint path as called."""
@@ -44,10 +47,10 @@ class Data(BaseModel):
 
 
 class KeyMetadata(BaseModel):
-    """Credit usage, included whenever a valid API key is provided."""
+    """Credits this request used and your remaining balance."""
 
     credits_consumed: int
-    """Credits used by this request."""
+    """Credits charged for this request."""
 
     credits_remaining: int
     """Credits remaining for your organization."""
@@ -67,10 +70,10 @@ class LogListResponse(BaseModel):
     """Current page number."""
 
     request_id: str
-    """Unique id of this API call, also sent in the X-Request-Id response header.
+    """Unique ID of this request, also in `X-Request-Id`.
 
-    Quote it when contacting support about a failed request.
+    Include it when contacting support.
     """
 
     key_metadata: Optional[KeyMetadata] = None
-    """Credit usage, included whenever a valid API key is provided."""
+    """Credits this request used and your remaining balance."""

@@ -36,12 +36,7 @@ class WebhookDelivery(BaseModel):
     """
 
     status: Literal["delivered", "rejected", "failed", "skipped_unsafe_url"]
-    """Delivery outcome.
-
-    delivered means any 2xx response; rejected means a non-2xx response; failed
-    means no HTTP response was received; skipped_unsafe_url means the URL failed the
-    public-endpoint safety check.
-    """
+    """Outcome of the delivery attempt. Any 2xx response counts as delivered."""
 
     delivery_id: Optional[str] = None
     """Delivery ID for status checks and retries, when available."""

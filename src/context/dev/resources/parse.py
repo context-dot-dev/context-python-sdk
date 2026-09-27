@@ -151,8 +151,7 @@ class ParseResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ParseHandleResponse:
         """
-        Converts raw text, source code, web/data, PDF, Microsoft Office, and image bytes
-        into LLM-usable Markdown.
+        Convert uploaded file bytes into Markdown and optional HTML.
 
         Args:
           client: Optional client identifier used for usage attribution.
@@ -164,26 +163,18 @@ class ParseResource(SyncAPIResource):
 
           include_links: Preserve hyperlinks in Markdown output
 
-          ocr: When true for PDF inputs, OCR the selected pages that have no usable text layer
-              (scans), replacing each recovered page's text with the OCR result while pages
-              with a real text layer keep it. pdf.start/pdf.end limit the inclusive page
-              range. Billed at 1 credit per page OCR actually recovered, on top of the base
-              request cost. When false, no OCR runs.
+          ocr: Read text from images and scanned PDF pages. PDF page ranges still apply.
 
           pdf: PDF page-range options as a JSON object, e.g. {"start": 2, "end": 5}.
 
           shorten_base64_images: Shorten base64-encoded image data in the Markdown output
 
-          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
-              characters.
+          tags: Comma-separated labels for filtering usage, e.g. `production,team-alpha`.
 
           use_main_content_only: Extract only the main content from HTML-like inputs
 
-          zdr: Set to enabled to bypass shared caches and omit request and response content
-              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
-              omitted. Requires zero data retention to be enabled for your organization
-              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
-              Successful ZDR responses include X-Context-ZDR: true.
+          zdr: `enabled` turns on zero data retention. Returns 403 `ZDR_NOT_ENABLED` unless
+              your organization has ZDR.
 
           extra_headers: Send extra headers
 
@@ -336,8 +327,7 @@ class AsyncParseResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ParseHandleResponse:
         """
-        Converts raw text, source code, web/data, PDF, Microsoft Office, and image bytes
-        into LLM-usable Markdown.
+        Convert uploaded file bytes into Markdown and optional HTML.
 
         Args:
           client: Optional client identifier used for usage attribution.
@@ -349,26 +339,18 @@ class AsyncParseResource(AsyncAPIResource):
 
           include_links: Preserve hyperlinks in Markdown output
 
-          ocr: When true for PDF inputs, OCR the selected pages that have no usable text layer
-              (scans), replacing each recovered page's text with the OCR result while pages
-              with a real text layer keep it. pdf.start/pdf.end limit the inclusive page
-              range. Billed at 1 credit per page OCR actually recovered, on top of the base
-              request cost. When false, no OCR runs.
+          ocr: Read text from images and scanned PDF pages. PDF page ranges still apply.
 
           pdf: PDF page-range options as a JSON object, e.g. {"start": 2, "end": 5}.
 
           shorten_base64_images: Shorten base64-encoded image data in the Markdown output
 
-          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
-              characters.
+          tags: Comma-separated labels for filtering usage, e.g. `production,team-alpha`.
 
           use_main_content_only: Extract only the main content from HTML-like inputs
 
-          zdr: Set to enabled to bypass shared caches and omit request and response content
-              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
-              omitted. Requires zero data retention to be enabled for your organization
-              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
-              Successful ZDR responses include X-Context-ZDR: true.
+          zdr: `enabled` turns on zero data retention. Returns 403 `ZDR_NOT_ENABLED` unless
+              your organization has ZDR.
 
           extra_headers: Send extra headers
 

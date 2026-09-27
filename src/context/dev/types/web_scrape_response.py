@@ -33,33 +33,24 @@ __all__ = [
 
 class BytesData(BaseModel):
     base64: str
-    """Original response body as base64, after HTTP decompression.
-
-    Maximum decoded size: 20 MiB.
-    """
+    """Body as base64, after HTTP decompression. Up to 20 MiB decoded."""
 
     content_type: str = FieldInfo(alias="contentType")
 
 
 class Bytes(BaseModel):
-    """Original HTTP response body.
-
-    Waiting, actions, and content filters never change it.
-    """
+    """The original HTTP response body, unchanged by waits, actions, and filters."""
 
     data: Optional[BytesData] = None
 
     requested: bool
 
     success: Optional[bool] = None
-    """True when retrieved, false when retrieval failed, and null when not requested."""
+    """`true` if returned, `false` if it failed, `null` if not requested."""
 
 
 class CacheMetadata(BaseModel):
-    """Cache outcome for this response.
-
-    Composite responses are hits only when every cache-controlled fetch contributing to the output was a hit; age_ms is the oldest contributing hit.
-    """
+    """Whether this response came from cache."""
 
     age_ms: int
     """Age of the cached data in milliseconds. Zero for miss and zdr responses."""
@@ -72,9 +63,9 @@ class CacheMetadata(BaseModel):
 
 
 class Highlights(BaseModel):
-    """Relevant Markdown excerpts for your question or topic, in page order.
+    """Relevant Markdown excerpts in page order.
 
-    Headings in square brackets supply necessary context; ellipses mark omitted portions. Empty when the page has no text.
+    `[Heading]` adds context; `…` marks omitted text.
     """
 
     data: Optional[List[str]] = None
@@ -82,7 +73,7 @@ class Highlights(BaseModel):
     requested: bool
 
     success: Optional[bool] = None
-    """True when retrieved, false when retrieval failed, and null when not requested."""
+    """`true` if returned, `false` if it failed, `null` if not requested."""
 
 
 class HTML(BaseModel):
@@ -93,7 +84,7 @@ class HTML(BaseModel):
     requested: bool
 
     success: Optional[bool] = None
-    """True when retrieved, false when retrieval failed, and null when not requested."""
+    """`true` if returned, `false` if it failed, `null` if not requested."""
 
 
 class ImagesData(BaseModel):
@@ -108,9 +99,9 @@ class ImagesData(BaseModel):
     ] = None
 
     file_url: Optional[str] = FieldInfo(alias="fileUrl", default=None)
-    """Hosted copy when file enrichment is requested and zdr is disabled.
+    """Hosted image URL, valid for 24 hours after capture.
 
-    Valid for 24 hours from the original capture.
+    Requires `file` enrichment and ZDR disabled.
     """
 
     height: Optional[int] = None
@@ -119,25 +110,25 @@ class ImagesData(BaseModel):
 
 
 class Images(BaseModel):
-    """Images after content filters. Empty when none are found."""
+    """Images after content filters. `[]` when none are found."""
 
     data: Optional[List[ImagesData]] = None
 
     requested: bool
 
     success: Optional[bool] = None
-    """True when retrieved, false when retrieval failed, and null when not requested."""
+    """`true` if returned, `false` if it failed, `null` if not requested."""
 
 
 class Json(BaseModel):
-    """Page data extracted using your schema."""
+    """Object matching `jsonParams.schema`."""
 
     data: Optional[Dict[str, object]] = None
 
     requested: bool
 
     success: Optional[bool] = None
-    """True when retrieved, false when retrieval failed, and null when not requested."""
+    """`true` if returned, `false` if it failed, `null` if not requested."""
 
 
 class Markdown(BaseModel):
@@ -148,7 +139,7 @@ class Markdown(BaseModel):
     requested: bool
 
     success: Optional[bool] = None
-    """True when retrieved, false when retrieval failed, and null when not requested."""
+    """`true` if returned, `false` if it failed, `null` if not requested."""
 
 
 class MetadataAlternate(BaseModel):
@@ -174,7 +165,7 @@ class MetadataHeading(BaseModel):
 
 
 class Metadata(BaseModel):
-    """Page details, when available."""
+    """Page metadata. Fields are omitted when not found."""
 
     additional_meta: Optional[Dict[str, Union[str, List[str]]]] = FieldInfo(alias="additionalMeta", default=None)
     """Additional non-social meta tags not promoted to top-level metadata fields."""
@@ -195,10 +186,7 @@ class Metadata(BaseModel):
     """Resolved favicon URL, when present."""
 
     headings: Optional[List[MetadataHeading]] = None
-    """Page headings (h1–h6) in document order, extracted from the unfiltered document.
-
-    Capped at the first 500 headings. Omitted when the page has none.
-    """
+    """Up to 500 h1–h6 headings in document order, before content filtering."""
 
     image: Optional[str] = None
     """Primary resolved preview image from Open Graph, Twitter, or image metadata."""
@@ -235,14 +223,17 @@ class Metadata(BaseModel):
 
 
 class Parsed(BaseModel):
-    """Fields produced by parseParams.rules, after shared content filters."""
+    """Fields from `parseParams.rules`, after content filters.
+
+    Unmatched fields are `null` (`[]` for lists).
+    """
 
     data: Optional[Dict[str, object]] = None
 
     requested: bool
 
     success: Optional[bool] = None
-    """True when retrieved, false when retrieval failed, and null when not requested."""
+    """`true` if returned, `false` if it failed, `null` if not requested."""
 
 
 class ProductDataProductVariant(BaseModel):
@@ -337,25 +328,25 @@ class Product(BaseModel):
     requested: bool
 
     success: Optional[bool] = None
-    """True when retrieved, false when retrieval failed, and null when not requested."""
+    """`true` if returned, `false` if it failed, `null` if not requested."""
 
 
 class Screenshot(BaseModel):
-    """An image data URL. Use directly as an image src."""
+    """Screenshot as a base64 image data URL."""
 
     data: Optional[str] = None
 
     requested: bool
 
     success: Optional[bool] = None
-    """True when retrieved, false when retrieval failed, and null when not requested."""
+    """`true` if returned, `false` if it failed, `null` if not requested."""
 
 
 class KeyMetadata(BaseModel):
-    """Credit usage, included whenever a valid API key is provided."""
+    """Credits this request used and your remaining balance."""
 
     credits_consumed: int
-    """Credits used by this request."""
+    """Credits charged for this request."""
 
     credits_remaining: int
     """Credits remaining for your organization."""
@@ -363,66 +354,58 @@ class KeyMetadata(BaseModel):
 
 class WebScrapeResponse(BaseModel):
     bytes: Bytes
-    """Original HTTP response body.
-
-    Waiting, actions, and content filters never change it.
-    """
+    """The original HTTP response body, unchanged by waits, actions, and filters."""
 
     cache_metadata: CacheMetadata
-    """Cache outcome for this response.
-
-    Composite responses are hits only when every cache-controlled fetch contributing
-    to the output was a hit; age_ms is the oldest contributing hit.
-    """
+    """Whether this response came from cache."""
 
     highlights: Highlights
-    """Relevant Markdown excerpts for your question or topic, in page order.
+    """Relevant Markdown excerpts in page order.
 
-    Headings in square brackets supply necessary context; ellipses mark omitted
-    portions. Empty when the page has no text.
+    `[Heading]` adds context; `…` marks omitted text.
     """
 
     html: HTML
     """Rendered HTML after content filters."""
 
     images: Images
-    """Images after content filters. Empty when none are found."""
+    """Images after content filters. `[]` when none are found."""
 
     json_: Json = FieldInfo(alias="json")
-    """Page data extracted using your schema."""
+    """Object matching `jsonParams.schema`."""
 
     markdown: Markdown
     """Markdown after content filters."""
 
     metadata: Metadata
-    """Page details, when available."""
+    """Page metadata. Fields are omitted when not found."""
 
     parsed: Parsed
-    """Fields produced by parseParams.rules, after shared content filters."""
+    """Fields from `parseParams.rules`, after content filters.
+
+    Unmatched fields are `null` (`[]` for lists).
+    """
 
     product: Product
     """Product details found on the page."""
 
     request_id: str
-    """Unique id of this API call, also sent in the X-Request-Id response header.
+    """Unique ID of this request, also in `X-Request-Id`.
 
-    Quote it when contacting support about a failed request.
+    Include it when contacting support.
     """
 
     screenshot: Screenshot
-    """An image data URL. Use directly as an image src."""
+    """Screenshot as a base64 image data URL."""
 
     url: str
     """Final URL after redirects and browser actions."""
 
     is_partial: Optional[Literal[True]] = FieldInfo(alias="isPartial", default=None)
     """
-    Present when at least one requested output succeeds while another fails, or when
-    successful outputs come from a page that is still loading or images returned
-    before processing finished. Absent when every requested output fails. Check each
-    output's success field for its result. Valid captured pieces may be cached
-    independently; failed retrievals and incomplete captures are not cached.
+    True when at least one requested output succeeds but the response has failed or
+    incomplete outputs. Absent when all requested outputs fail.
     """
 
     key_metadata: Optional[KeyMetadata] = None
-    """Credit usage, included whenever a valid API key is provided."""
+    """Credits this request used and your remaining balance."""

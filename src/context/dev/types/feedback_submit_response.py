@@ -8,10 +8,10 @@ __all__ = ["FeedbackSubmitResponse", "KeyMetadata"]
 
 
 class KeyMetadata(BaseModel):
-    """Credit usage, included whenever a valid API key is provided."""
+    """Credits this request used and your remaining balance."""
 
     credits_consumed: int
-    """Credits used by this request."""
+    """Credits charged for this request."""
 
     credits_remaining: int
     """Credits remaining for your organization."""
@@ -28,10 +28,10 @@ class FeedbackSubmitResponse(BaseModel):
     """ID of the stored feedback."""
 
     request_id: str
-    """Unique id of this API call, also sent in the X-Request-Id response header.
+    """Unique ID of this request, also in `X-Request-Id`.
 
-    Quote it when contacting support about a failed request.
+    Include it when contacting support.
     """
 
     key_metadata: Optional[KeyMetadata] = None
-    """Credit usage, included whenever a valid API key is provided."""
+    """Credits this request used and your remaining balance."""

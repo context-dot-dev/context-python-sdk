@@ -5,7 +5,7 @@ from datetime import datetime
 
 from .._models import BaseModel
 
-__all__ = ["LogRetrieveResponse", "Data", "DataInput", "DataKeyMetadata", "KeyMetadata"]
+__all__ = ["LogRetrieveResponse", "Data", "DataInput", "KeyMetadata"]
 
 
 class DataInput(BaseModel):
@@ -16,16 +16,6 @@ class DataInput(BaseModel):
 
     body: Optional[object] = None
     """Request body with credentials and uploaded content redacted."""
-
-
-class DataKeyMetadata(BaseModel):
-    """Credit usage, included whenever a valid API key is provided."""
-
-    credits_consumed: int
-    """Credits used by this request."""
-
-    credits_remaining: int
-    """Credits remaining for your organization."""
 
 
 class Data(BaseModel):
@@ -45,7 +35,10 @@ class Data(BaseModel):
     """Server-side processing time in milliseconds."""
 
     method: str
-    """HTTP method."""
+    """
+    HTTP method, or `MONITOR` / `BATCH` for monitor-run and batch-settlement
+    entries.
+    """
 
     path: str
     """Endpoint path as called."""
@@ -68,18 +61,15 @@ class Data(BaseModel):
     zdr: bool
     """Whether the request was made under zero data retention."""
 
-    key_metadata: Optional[DataKeyMetadata] = None
-    """Credit usage, included whenever a valid API key is provided."""
-
     response: Optional[object] = None
     """The retained JSON response with credentials redacted, or null when unavailable."""
 
 
 class KeyMetadata(BaseModel):
-    """Credit usage, included whenever a valid API key is provided."""
+    """Credits this request used and your remaining balance."""
 
     credits_consumed: int
-    """Credits used by this request."""
+    """Credits charged for this request."""
 
     credits_remaining: int
     """Credits remaining for your organization."""
@@ -89,10 +79,10 @@ class LogRetrieveResponse(BaseModel):
     data: Data
 
     request_id: str
-    """Unique id of this API call, also sent in the X-Request-Id response header.
+    """Unique ID of this request, also in `X-Request-Id`.
 
-    Quote it when contacting support about a failed request.
+    Include it when contacting support.
     """
 
     key_metadata: Optional[KeyMetadata] = None
-    """Credit usage, included whenever a valid API key is provided."""
+    """Credits this request used and your remaining balance."""

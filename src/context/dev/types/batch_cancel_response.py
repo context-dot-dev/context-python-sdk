@@ -15,11 +15,7 @@ class Credits(BaseModel):
     """What this batch cost so far."""
 
     reserved: int
-    """Credits debited at submission.
-
-    The unspent remainder is refunded once the batch settles — read
-    `credits.refunded` from GET /batch/{batch_id} then.
-    """
+    """Credits held at submission; unused credits are refunded when the batch settles."""
 
 
 class Progress(BaseModel):
@@ -29,14 +25,14 @@ class Progress(BaseModel):
     """Pages that could not be scraped before the request landed."""
 
     pending: int
-    """Reserved pages that will now be skipped, and refunded when the batch settles."""
+    """Pages that will be skipped."""
 
     succeeded: int
     """Pages scraped successfully before the request landed."""
 
 
 class Timing(BaseModel):
-    """There is no finish time yet — the batch is still winding down."""
+    """Batch timestamps."""
 
     created_at: str
     """When the batch was created."""
@@ -49,7 +45,7 @@ class KeyMetadata(BaseModel):
     """API key usage for this request."""
 
     credits_consumed: int
-    """Credits used by this request."""
+    """Credits charged for this request."""
 
     credits_remaining: int
     """Credits remaining for your organization."""
@@ -60,10 +56,7 @@ class BatchCancelResponse(BaseModel):
     """Batch ID."""
 
     crawl: Optional[CrawlControls] = None
-    """
-    The crawl controls as submitted, so the limits requested can be compared against
-    what the crawl reached.
-    """
+    """Crawl settings as submitted."""
 
     credits: Credits
     """What this batch cost so far."""
@@ -72,7 +65,7 @@ class BatchCancelResponse(BaseModel):
     """What each page is returned as."""
 
     input: Intake
-    """What submission took in, and what it charged for."""
+    """What the submission accepted."""
 
     mode: Literal["scrape", "crawl"]
     """How pages were selected."""
@@ -84,9 +77,9 @@ class BatchCancelResponse(BaseModel):
     """How far the batch got before cancellation."""
 
     request_id: str
-    """Unique id of this API call, also sent in the X-Request-Id response header.
+    """Unique ID of this request, also in `X-Request-Id`.
 
-    Quote it when contacting support about a failed request.
+    Include it when contacting support.
     """
 
     status: Literal["cancelling"]
@@ -99,7 +92,7 @@ class BatchCancelResponse(BaseModel):
     """Tags stored on the batch at submission."""
 
     timing: Timing
-    """There is no finish time yet — the batch is still winding down."""
+    """Batch timestamps."""
 
     key_metadata: Optional[KeyMetadata] = None
     """API key usage for this request."""

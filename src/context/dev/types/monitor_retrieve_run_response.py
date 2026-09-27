@@ -7,13 +7,23 @@ from typing_extensions import Literal
 from .._models import BaseModel
 from .webhook_delivery import WebhookDelivery
 
-__all__ = ["MonitorRetrieveRunResponse", "Error"]
+__all__ = ["MonitorRetrieveRunResponse", "Error", "KeyMetadata"]
 
 
 class Error(BaseModel):
     code: str
 
     message: str
+
+
+class KeyMetadata(BaseModel):
+    """Credits this request used and your remaining balance."""
+
+    credits_consumed: int
+    """Credits charged for this request."""
+
+    credits_remaining: int
+    """Credits remaining for your organization."""
 
 
 class MonitorRetrieveRunResponse(BaseModel):
@@ -34,8 +44,14 @@ class MonitorRetrieveRunResponse(BaseModel):
 
     monitor_id: str
 
+    request_id: str
+    """Unique ID of this request, also in `X-Request-Id`.
+
+    Include it when contacting support.
+    """
+
     run_type: Literal["baseline", "scheduled"]
-    """The first run after monitor creation is a baseline run."""
+    """A baseline run follows creation or a target or detection change."""
 
     status: Literal["queued", "running", "completed", "failed", "skipped"]
     """Lifecycle status of a run.
@@ -52,6 +68,9 @@ class MonitorRetrieveRunResponse(BaseModel):
 
     error: Optional[Error] = None
 
+    key_metadata: Optional[KeyMetadata] = None
+    """Credits this request used and your remaining balance."""
+
     skip_reason: Optional[Literal["insufficient_credits", "monitor_paused", "superseded"]] = None
     """Why a skipped run never executed; null unless status is `skipped`."""
 
@@ -65,11 +84,7 @@ class MonitorRetrieveRunResponse(BaseModel):
     """
 
     webhook_delivery: Optional[WebhookDelivery] = None
-    """
-    Deprecated: use `webhook_deliveries`, which records every attempt now that a run
-    can deliver multiple events. Omitted when no webhook was attempted, including
-    historical runs created before delivery tracking was added.
-    """
+    """Deprecated. Use `webhook_deliveries` for all attempts."""
 
     webhook_delivery_ids: Optional[List[str]] = None
     """Webhook delivery IDs for this run."""

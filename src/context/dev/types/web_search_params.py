@@ -286,25 +286,18 @@ class WebSearchParams(TypedDict, total=False):
     """Number of results to request and return (10–100). Defaults to 10."""
 
     query_fanout: Annotated[bool, PropertyInfo(alias="queryFanout")]
-    """Expand the query into multiple parallel variants for broader recall."""
+    """Currently has no effect."""
 
     tags: SequenceNotStr[str]
-    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
+    """Labels for filtering usage in the dashboard."""
 
     timeout_opts: Annotated[TimeoutOpts, PropertyInfo(alias="timeoutOpts")]
-    """Optional request deadline and behavior on timeout.
-
-    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail
-    or a JSON-encoded timeoutOpts object.
-    """
+    """Request deadline and what to return when it passes."""
 
     zdr: Literal["enabled", "disabled"]
-    """
-    Set to enabled to bypass shared caches and omit request and response content
-    from retained usage logs. Asset uploads are skipped, so hosted image URLs are
-    omitted. Requires zero data retention to be enabled for your organization
-    (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
-    Successful ZDR responses include X-Context-ZDR: true.
+    """`enabled` turns on zero data retention.
+
+    Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
     """
 
 
@@ -325,21 +318,16 @@ class MarkdownOptionsPdf(TypedDict, total=False):
 
 
 class MarkdownOptionsTimeoutOpts(TypedDict, total=False):
-    """Optional request deadline and behavior on timeout.
-
-    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded timeoutOpts object.
-    """
+    """Request deadline and what to return when it passes."""
 
     milliseconds: Required[int]
-    """Request deadline in milliseconds. Maximum: 300000 (5 minutes)."""
+    """Deadline in milliseconds."""
 
     behavior: Literal["fail", "return-partial"]
-    """What to do at the deadline.
+    """\"fail" returns 408 at the deadline.
 
-    "fail" returns 408 REQUEST_TIMEOUT without charging credits. "return-partial"
-    returns usable results collected so far; if none are available, the request
-    still fails without charging credits. Partial results are not cached as complete
-    results. "return-partial" requires milliseconds of at least 5000.
+    "return-partial" returns available results; inspect the response’s partial flag.
+    "return-partial" requires at least 5000 ms.
     """
 
 
@@ -371,11 +359,7 @@ class MarkdownOptions(TypedDict, total=False):
     """Truncate inline base64 image payloads to keep responses small."""
 
     timeout_opts: Annotated[MarkdownOptionsTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
-    """Optional request deadline and behavior on timeout.
-
-    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail
-    or a JSON-encoded timeoutOpts object.
-    """
+    """Request deadline and what to return when it passes."""
 
     use_main_content_only: Annotated[bool, PropertyInfo(alias="useMainContentOnly")]
     """Strip nav, header, footer, and sidebar — keep only the primary article content."""
@@ -388,19 +372,13 @@ class MarkdownOptions(TypedDict, total=False):
 
 
 class TimeoutOpts(TypedDict, total=False):
-    """Optional request deadline and behavior on timeout.
-
-    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded timeoutOpts object.
-    """
+    """Request deadline and what to return when it passes."""
 
     milliseconds: Required[int]
-    """Request deadline in milliseconds. Maximum: 300000 (5 minutes)."""
+    """Deadline in milliseconds."""
 
     behavior: Literal["fail", "return-partial"]
-    """What to do at the deadline.
+    """\"fail" returns 408 at the deadline.
 
-    "fail" returns 408 REQUEST_TIMEOUT without charging credits. "return-partial"
-    returns usable results collected so far; if none are available, the request
-    still fails without charging credits. Partial results are not cached as complete
-    results.
+    "return-partial" returns available results; inspect the response’s partial flag.
     """

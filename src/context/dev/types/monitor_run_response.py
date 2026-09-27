@@ -1,8 +1,20 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+from typing import Optional
+
 from .._models import BaseModel
 
-__all__ = ["MonitorRunResponse"]
+__all__ = ["MonitorRunResponse", "KeyMetadata"]
+
+
+class KeyMetadata(BaseModel):
+    """Credits this request used and your remaining balance."""
+
+    credits_consumed: int
+    """Credits charged for this request."""
+
+    credits_remaining: int
+    """Credits remaining for your organization."""
 
 
 class MonitorRunResponse(BaseModel):
@@ -10,8 +22,14 @@ class MonitorRunResponse(BaseModel):
 
     queued: bool
 
-    run_id: str
-    """The queued run.
+    request_id: str
+    """Unique ID of this request, also in `X-Request-Id`.
 
-    Poll GET /monitors/{monitor_id}/runs or use it to correlate results.
+    Include it when contacting support.
     """
+
+    run_id: str
+    """ID of the queued run; pass it to Retrieve a monitor run."""
+
+    key_metadata: Optional[KeyMetadata] = None
+    """Credits this request used and your remaining balance."""

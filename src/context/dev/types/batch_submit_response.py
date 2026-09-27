@@ -11,10 +11,7 @@ __all__ = ["BatchSubmitResponse", "CacheMetadata", "Credits", "InvalidURL", "Key
 
 
 class CacheMetadata(BaseModel):
-    """Cache outcome for this response.
-
-    Composite responses are hits only when every cache-controlled fetch contributing to the output was a hit; age_ms is the oldest contributing hit.
-    """
+    """Whether this response came from cache."""
 
     age_ms: int
     """Age of the cached data in milliseconds. Zero for miss and zdr responses."""
@@ -30,10 +27,7 @@ class Credits(BaseModel):
     """What accepting this batch cost."""
 
     reserved: int
-    """Credits just debited from your balance.
-
-    Whatever the batch does not spend is refunded when it settles.
-    """
+    """Credits held at submission."""
 
 
 class InvalidURL(BaseModel):
@@ -48,7 +42,7 @@ class KeyMetadata(BaseModel):
     """API key usage for this request."""
 
     credits_consumed: int
-    """Credits used by this request."""
+    """Credits charged for this request."""
 
     credits_remaining: int
     """Credits remaining for your organization."""
@@ -59,17 +53,10 @@ class BatchSubmitResponse(BaseModel):
     """Batch ID. Poll GET /batch/{batch_id} with it."""
 
     cache_metadata: CacheMetadata
-    """Cache outcome for this response.
-
-    Composite responses are hits only when every cache-controlled fetch contributing
-    to the output was a hit; age_ms is the oldest contributing hit.
-    """
+    """Whether this response came from cache."""
 
     crawl: Optional[CrawlControls] = None
-    """
-    The crawl controls as submitted, so the limits requested can be compared against
-    what the crawl reached.
-    """
+    """Crawl settings as submitted."""
 
     created_at: str
     """When the batch was created."""
@@ -81,18 +68,18 @@ class BatchSubmitResponse(BaseModel):
     """What each page will be returned as."""
 
     input: Intake
-    """What submission took in, and what it charged for."""
+    """What the submission accepted."""
 
     invalid_urls: List[InvalidURL]
-    """Rejected URLs, up to 100. These are not charged."""
+    """Rejected URLs (first 100)."""
 
     mode: Literal["scrape", "crawl"]
     """How pages will be selected."""
 
     request_id: str
-    """Unique id of this API call, also sent in the X-Request-Id response header.
+    """Unique ID of this request, also in `X-Request-Id`.
 
-    Quote it when contacting support about a failed request.
+    Include it when contacting support.
     """
 
     status: Literal["queued"]
@@ -105,7 +92,7 @@ class BatchSubmitResponse(BaseModel):
     """API key usage for this request."""
 
     webhook_secret: Optional[str] = None
-    """Signing secret for the completion webhook, returned only here and never again.
+    """Secret for verifying `X-Context-Signature`.
 
-    Store it now; it is not repeated by GET /batch/{batch_id}.
+    Only submit returns it, so store it.
     """

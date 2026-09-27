@@ -24,9 +24,14 @@ __all__ = [
 
 class MonitorUpdateParams(TypedDict, total=False):
     change_detection: ChangeDetection
-    """Discriminated union describing how changes are detected."""
+    """How changes are judged.
+
+    Defaults to `semantic` for extract targets and page targets with `instructions`,
+    otherwise `exact`.
+    """
 
     name: str
+    """Display name for the monitor."""
 
     schedule: Schedule
     """Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
@@ -36,18 +41,16 @@ class MonitorUpdateParams(TypedDict, total=False):
     """
 
     status: Literal["active", "paused"]
+    """Set `paused` to stop scheduled runs or `active` to resume them."""
 
     tags: SequenceNotStr[str]
-    """User-defined tags for grouping and filtering monitors and their changes.
-
-    Duplicates are removed.
-    """
+    """Labels for filtering monitors, their changes, and their usage."""
 
     target: Target
-    """Discriminated union describing what the monitor watches."""
+    """What to watch: a page, a sitemap, or data extracted from a site."""
 
     webhook: Optional[Webhook]
-    """Set to null to remove the webhook."""
+    """Set to null to remove the webhook. Changing `url` issues a new secret."""
 
 
 class ChangeDetectionMonitorsExactChangeDetection(TypedDict, total=False):
@@ -57,16 +60,19 @@ class ChangeDetectionMonitorsExactChangeDetection(TypedDict, total=False):
     """
 
     type: Required[Literal["exact"]]
+    """Use `exact` to compare visible text or sitemap URLs."""
 
 
 class ChangeDetectionMonitorsSemanticChangeDetection(TypedDict, total=False):
     """
-    Detect meaning-level changes to page content, ignoring cosmetic or instruction-irrelevant differences. Which changes are meaningful is judged against the page or extract target's `instructions` (and an extract target's `schema`, when provided).
+    Detect meaningful content changes using the target’s instructions and optional schema.
     """
 
     type: Required[Literal["semantic"]]
+    """Use `semantic` to judge changes against the target instructions."""
 
     confidence_threshold: float
+    """Minimum confidence required to report a meaningful change, from 0 to 1."""
 
 
 ChangeDetection: TypeAlias = Union[
@@ -89,8 +95,10 @@ class Schedule(TypedDict, total=False):
     """
 
     type: Required[Literal["interval"]]
+    """Use `interval` to run on a repeating schedule."""
 
     unit: Required[Literal["minutes", "hours", "days"]]
+    """Time unit used with `frequency` to set the run interval."""
 
 
 class TargetMonitorsPageTarget(TypedDict, total=False):
@@ -100,25 +108,18 @@ class TargetMonitorsPageTarget(TypedDict, total=False):
     """
 
     type: Required[Literal["page"]]
+    """Use `page` to watch one web page."""
 
     url: Required[str]
+    """Public HTTP(S) page URL to monitor."""
 
     exclude_selectors: SequenceNotStr[str]
-    """CSS selectors for HTML regions to remove before text extraction.
-
-    Applied after include_selectors; exclusion takes precedence when an element
-    matches both. Omit or pass an empty array to apply no explicit exclusions.
-    Changing these selectors creates a new baseline.
-    """
+    """Remove matching regions after inclusions. Changes create a new baseline."""
 
     include_selectors: SequenceNotStr[str]
-    """CSS selectors defining the HTML regions to monitor.
+    """Monitor these CSS-selected regions.
 
-    Matching subtrees are combined in document order before text extraction, instead
-    of automatic main-content selection. Omit or pass an empty array to use
-    automatic main-content extraction. If the filtered page has no usable text, the
-    run fails without replacing the baseline. Changing these selectors creates a new
-    baseline.
+    Empty or omitted uses main content. Changes create a new baseline.
     """
 
     instructions: str
@@ -132,12 +133,10 @@ class TargetMonitorsPageTarget(TypedDict, total=False):
 
 
 class TargetMonitorsSitemapTarget(TypedDict, total=False):
-    """Watch a sitemap for URL additions and removals.
-
-    Crawled URLs are normalized (lowercased host, no trailing slash/fragment) and scoped to the monitored site and its subdomains before comparison. On a detected difference the sitemap is re-fetched within the same run and only URLs both observations agree on are reported, suppressing transient crawl flaps.
-    """
+    """Watch a site’s URL inventory for confirmed additions and removals."""
 
     type: Required[Literal["sitemap"]]
+    """Use `sitemap` to watch a site for added or removed URLs."""
 
     url: Required[str]
     """Sitemap URL to monitor."""
@@ -153,9 +152,8 @@ class TargetMonitorsSitemapTarget(TypedDict, total=False):
 
 
 class TargetMonitorsExtractTarget(TypedDict, total=False):
-    """Watch the monitor-relevant pages of a site for meaningful changes.
-
-    A crawl guided by `schema`/`instructions` selects up to `max_pages` relevant pages to track; each run re-checks exactly those pages, and confirmed content changes are judged for relevance against the monitor's `instructions` (and `schema`, when provided). The tracked page set is refreshed by a periodic re-discovery crawl.
+    """
+    Track relevant pages selected by `schema` and `instructions`; refresh the page set periodically.
     """
 
     instructions: Required[str]
@@ -165,11 +163,13 @@ class TargetMonitorsExtractTarget(TypedDict, total=False):
     """
 
     type: Required[Literal["extract"]]
+    """Use `extract` to watch structured data across selected pages."""
 
     url: Required[str]
     """Root URL to extract structured data from."""
 
     follow_subdomains: bool
+    """Allow page discovery on subdomains of the target site."""
 
     max_depth: int
     """Optional maximum link depth from the starting URL (0 = only the starting page)."""
@@ -178,15 +178,9 @@ class TargetMonitorsExtractTarget(TypedDict, total=False):
     """Maximum number of pages to track."""
 
     schema: Dict[str, object]
-    """JSON Schema describing the data you care about.
+    """JSON Schema for page selection and the baseline snapshot.
 
-    It is used three ways: it guides which pages are selected for tracking, it gives
-    the change judge extra context on which changes matter (alongside
-    `instructions`), and it defines the shape of the baseline `data` snapshot on GET
-    /monitors/{monitor_id} (refreshed at most about once a day). It is not a
-    response format for changes: change events and webhook payloads always contain
-    diffs, summaries, and evidence excerpts — never data in this schema's shape. If
-    omitted, a default summary + key-points schema is used.
+    Changes return diffs and evidence.
     """
 
 
@@ -194,20 +188,18 @@ Target: TypeAlias = Union[TargetMonitorsPageTarget, TargetMonitorsSitemapTarget,
 
 
 class Webhook(TypedDict, total=False):
-    """Set to null to remove the webhook."""
+    """Set to null to remove the webhook. Changing `url` issues a new secret."""
 
     url: Required[str]
-    """Webhook URL events are delivered to.
+    """Public HTTP(S) URL that receives events.
 
-    Slack incoming webhook URLs are automatically formatted as Slack messages.
+    Slack and GovSlack URLs get formatted messages.
     """
 
     events: List[Literal["change.detected", "run.completed"]]
-    """Events delivered to this endpoint.
+    """Events to deliver.
 
-    `change.detected` fires only when a run detects a change; `run.completed` fires
-    on every completed run — including runs that detected no change — and embeds the
-    change when one was detected. Defaults to `["change.detected"]` when omitted.
+    Defaults to `change.detected`; `run.completed` also includes unchanged runs.
     """
 
     retry: RetryConfigParam

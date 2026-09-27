@@ -24,7 +24,7 @@ class SourceBatch(BaseModel):
     """Batch ID."""
 
     type: Literal["batch"]
-    """Delivery source."""
+    """Which deliveries to list: `batch` or `monitor`."""
 
 
 class SourceMonitor(BaseModel):
@@ -35,7 +35,7 @@ class SourceMonitor(BaseModel):
     """Monitor run ID."""
 
     type: Literal["monitor"]
-    """Delivery source."""
+    """Which deliveries to list: `batch` or `monitor`."""
 
 
 Source: TypeAlias = Union[SourceBatch, SourceMonitor]
@@ -61,13 +61,16 @@ class DeliverySummary(BaseModel):
     """Next scheduled attempt, or null if none."""
 
     retry_expires_at: datetime
-    """Manual retry deadline, seven days after event creation."""
+    """Last time you can retry manually (7 days after the event)."""
 
     source: Source
     """Batch or monitor run that produced the event."""
 
     status: Literal["pending", "delivering", "retrying", "delivered", "failed", "cancelled"]
-    """Current delivery status."""
+    """
+    `pending`, `delivering`, `retrying`, `delivered`, `failed`, or `cancelled`
+    (source or its webhook was removed).
+    """
 
     url: str
     """Webhook destination URL."""

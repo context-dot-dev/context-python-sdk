@@ -157,9 +157,7 @@ class ContextDev(SyncAPIClient):
 
     @cached_property
     def monitors(self) -> MonitorsResource:
-        """
-        Monitor pages, sitemaps, and extracted website data for exact or semantic changes. Webhook payloads are documented by the MonitorsChangeDetectedWebhookPayload and MonitorsRunCompletedWebhookPayload schemas.
-        """
+        """Watch websites for exact or meaningful changes."""
         from .resources.monitors import MonitorsResource
 
         return MonitorsResource(self)
@@ -185,27 +183,21 @@ class ContextDev(SyncAPIClient):
 
     @cached_property
     def news(self) -> NewsResource:
-        """Search live first-party RSS and free historical news data by company identity."""
+        """Search live and historical news about a company."""
         from .resources.news import NewsResource
 
         return NewsResource(self)
 
     @cached_property
     def logs(self) -> LogsResource:
-        """Read your organization's API request logs to debug failed calls.
-
-        These endpoints cost no credits and use a separate rate limit.
-        """
+        """Read your organization's API request logs."""
         from .resources.logs import LogsResource
 
         return LogsResource(self)
 
     @cached_property
     def feedback(self) -> FeedbackResource:
-        """Report bugs, docs mismatches, and friction with any Context.dev API.
-
-        Submissions cost no credits and use a separate rate limit.
-        """
+        """Report API issues and documentation mismatches."""
         from .resources.feedback import FeedbackResource
 
         return FeedbackResource(self)
@@ -419,9 +411,7 @@ class AsyncContextDev(AsyncAPIClient):
 
     @cached_property
     def monitors(self) -> AsyncMonitorsResource:
-        """
-        Monitor pages, sitemaps, and extracted website data for exact or semantic changes. Webhook payloads are documented by the MonitorsChangeDetectedWebhookPayload and MonitorsRunCompletedWebhookPayload schemas.
-        """
+        """Watch websites for exact or meaningful changes."""
         from .resources.monitors import AsyncMonitorsResource
 
         return AsyncMonitorsResource(self)
@@ -447,27 +437,21 @@ class AsyncContextDev(AsyncAPIClient):
 
     @cached_property
     def news(self) -> AsyncNewsResource:
-        """Search live first-party RSS and free historical news data by company identity."""
+        """Search live and historical news about a company."""
         from .resources.news import AsyncNewsResource
 
         return AsyncNewsResource(self)
 
     @cached_property
     def logs(self) -> AsyncLogsResource:
-        """Read your organization's API request logs to debug failed calls.
-
-        These endpoints cost no credits and use a separate rate limit.
-        """
+        """Read your organization's API request logs."""
         from .resources.logs import AsyncLogsResource
 
         return AsyncLogsResource(self)
 
     @cached_property
     def feedback(self) -> AsyncFeedbackResource:
-        """Report bugs, docs mismatches, and friction with any Context.dev API.
-
-        Submissions cost no credits and use a separate rate limit.
-        """
+        """Report API issues and documentation mismatches."""
         from .resources.feedback import AsyncFeedbackResource
 
         return AsyncFeedbackResource(self)
@@ -623,9 +607,7 @@ class ContextDevWithRawResponse:
 
     @cached_property
     def monitors(self) -> monitors.MonitorsResourceWithRawResponse:
-        """
-        Monitor pages, sitemaps, and extracted website data for exact or semantic changes. Webhook payloads are documented by the MonitorsChangeDetectedWebhookPayload and MonitorsRunCompletedWebhookPayload schemas.
-        """
+        """Watch websites for exact or meaningful changes."""
         from .resources.monitors import MonitorsResourceWithRawResponse
 
         return MonitorsResourceWithRawResponse(self._client.monitors)
@@ -651,27 +633,21 @@ class ContextDevWithRawResponse:
 
     @cached_property
     def news(self) -> news.NewsResourceWithRawResponse:
-        """Search live first-party RSS and free historical news data by company identity."""
+        """Search live and historical news about a company."""
         from .resources.news import NewsResourceWithRawResponse
 
         return NewsResourceWithRawResponse(self._client.news)
 
     @cached_property
     def logs(self) -> logs.LogsResourceWithRawResponse:
-        """Read your organization's API request logs to debug failed calls.
-
-        These endpoints cost no credits and use a separate rate limit.
-        """
+        """Read your organization's API request logs."""
         from .resources.logs import LogsResourceWithRawResponse
 
         return LogsResourceWithRawResponse(self._client.logs)
 
     @cached_property
     def feedback(self) -> feedback.FeedbackResourceWithRawResponse:
-        """Report bugs, docs mismatches, and friction with any Context.dev API.
-
-        Submissions cost no credits and use a separate rate limit.
-        """
+        """Report API issues and documentation mismatches."""
         from .resources.feedback import FeedbackResourceWithRawResponse
 
         return FeedbackResourceWithRawResponse(self._client.feedback)
@@ -715,9 +691,7 @@ class AsyncContextDevWithRawResponse:
 
     @cached_property
     def monitors(self) -> monitors.AsyncMonitorsResourceWithRawResponse:
-        """
-        Monitor pages, sitemaps, and extracted website data for exact or semantic changes. Webhook payloads are documented by the MonitorsChangeDetectedWebhookPayload and MonitorsRunCompletedWebhookPayload schemas.
-        """
+        """Watch websites for exact or meaningful changes."""
         from .resources.monitors import AsyncMonitorsResourceWithRawResponse
 
         return AsyncMonitorsResourceWithRawResponse(self._client.monitors)
@@ -743,27 +717,21 @@ class AsyncContextDevWithRawResponse:
 
     @cached_property
     def news(self) -> news.AsyncNewsResourceWithRawResponse:
-        """Search live first-party RSS and free historical news data by company identity."""
+        """Search live and historical news about a company."""
         from .resources.news import AsyncNewsResourceWithRawResponse
 
         return AsyncNewsResourceWithRawResponse(self._client.news)
 
     @cached_property
     def logs(self) -> logs.AsyncLogsResourceWithRawResponse:
-        """Read your organization's API request logs to debug failed calls.
-
-        These endpoints cost no credits and use a separate rate limit.
-        """
+        """Read your organization's API request logs."""
         from .resources.logs import AsyncLogsResourceWithRawResponse
 
         return AsyncLogsResourceWithRawResponse(self._client.logs)
 
     @cached_property
     def feedback(self) -> feedback.AsyncFeedbackResourceWithRawResponse:
-        """Report bugs, docs mismatches, and friction with any Context.dev API.
-
-        Submissions cost no credits and use a separate rate limit.
-        """
+        """Report API issues and documentation mismatches."""
         from .resources.feedback import AsyncFeedbackResourceWithRawResponse
 
         return AsyncFeedbackResourceWithRawResponse(self._client.feedback)
@@ -807,9 +775,7 @@ class ContextDevWithStreamedResponse:
 
     @cached_property
     def monitors(self) -> monitors.MonitorsResourceWithStreamingResponse:
-        """
-        Monitor pages, sitemaps, and extracted website data for exact or semantic changes. Webhook payloads are documented by the MonitorsChangeDetectedWebhookPayload and MonitorsRunCompletedWebhookPayload schemas.
-        """
+        """Watch websites for exact or meaningful changes."""
         from .resources.monitors import MonitorsResourceWithStreamingResponse
 
         return MonitorsResourceWithStreamingResponse(self._client.monitors)
@@ -835,27 +801,21 @@ class ContextDevWithStreamedResponse:
 
     @cached_property
     def news(self) -> news.NewsResourceWithStreamingResponse:
-        """Search live first-party RSS and free historical news data by company identity."""
+        """Search live and historical news about a company."""
         from .resources.news import NewsResourceWithStreamingResponse
 
         return NewsResourceWithStreamingResponse(self._client.news)
 
     @cached_property
     def logs(self) -> logs.LogsResourceWithStreamingResponse:
-        """Read your organization's API request logs to debug failed calls.
-
-        These endpoints cost no credits and use a separate rate limit.
-        """
+        """Read your organization's API request logs."""
         from .resources.logs import LogsResourceWithStreamingResponse
 
         return LogsResourceWithStreamingResponse(self._client.logs)
 
     @cached_property
     def feedback(self) -> feedback.FeedbackResourceWithStreamingResponse:
-        """Report bugs, docs mismatches, and friction with any Context.dev API.
-
-        Submissions cost no credits and use a separate rate limit.
-        """
+        """Report API issues and documentation mismatches."""
         from .resources.feedback import FeedbackResourceWithStreamingResponse
 
         return FeedbackResourceWithStreamingResponse(self._client.feedback)
@@ -899,9 +859,7 @@ class AsyncContextDevWithStreamedResponse:
 
     @cached_property
     def monitors(self) -> monitors.AsyncMonitorsResourceWithStreamingResponse:
-        """
-        Monitor pages, sitemaps, and extracted website data for exact or semantic changes. Webhook payloads are documented by the MonitorsChangeDetectedWebhookPayload and MonitorsRunCompletedWebhookPayload schemas.
-        """
+        """Watch websites for exact or meaningful changes."""
         from .resources.monitors import AsyncMonitorsResourceWithStreamingResponse
 
         return AsyncMonitorsResourceWithStreamingResponse(self._client.monitors)
@@ -927,27 +885,21 @@ class AsyncContextDevWithStreamedResponse:
 
     @cached_property
     def news(self) -> news.AsyncNewsResourceWithStreamingResponse:
-        """Search live first-party RSS and free historical news data by company identity."""
+        """Search live and historical news about a company."""
         from .resources.news import AsyncNewsResourceWithStreamingResponse
 
         return AsyncNewsResourceWithStreamingResponse(self._client.news)
 
     @cached_property
     def logs(self) -> logs.AsyncLogsResourceWithStreamingResponse:
-        """Read your organization's API request logs to debug failed calls.
-
-        These endpoints cost no credits and use a separate rate limit.
-        """
+        """Read your organization's API request logs."""
         from .resources.logs import AsyncLogsResourceWithStreamingResponse
 
         return AsyncLogsResourceWithStreamingResponse(self._client.logs)
 
     @cached_property
     def feedback(self) -> feedback.AsyncFeedbackResourceWithStreamingResponse:
-        """Report bugs, docs mismatches, and friction with any Context.dev API.
-
-        Submissions cost no credits and use a separate rate limit.
-        """
+        """Report API issues and documentation mismatches."""
         from .resources.feedback import AsyncFeedbackResourceWithStreamingResponse
 
         return AsyncFeedbackResourceWithStreamingResponse(self._client.feedback)

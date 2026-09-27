@@ -57,25 +57,17 @@ class UtilityResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UtilityPrefetchResponse:
-        """Signal that you may fetch data soon to improve latency.
-
-        The type field selects
-        what to prefetch ('brand' queues a brand data fetch, 'styleguide' queues a
-        styleguide extraction) and identifier carries exactly one lookup key: a domain,
-        or an email whose domain is extracted and validated (free email providers and
-        disposable email addresses are not allowed).
+        """
+        Queue brand or styleguide data so a later lookup can return sooner.
 
         Args:
           identifier: Identifier of the target to prefetch. Provide exactly one of domain or email.
 
-          type: What to prefetch: 'brand' warms the brand data cache, 'styleguide' warms the
-              styleguide cache.
+          type: Data to prefetch.
 
-          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          tags: Labels for filtering usage in the dashboard.
 
-          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
-              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
-              timeoutOpts object.
+          timeout_opts: Request deadline and what to return when it passes.
 
           extra_headers: Send extra headers
 
@@ -137,25 +129,17 @@ class AsyncUtilityResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UtilityPrefetchResponse:
-        """Signal that you may fetch data soon to improve latency.
-
-        The type field selects
-        what to prefetch ('brand' queues a brand data fetch, 'styleguide' queues a
-        styleguide extraction) and identifier carries exactly one lookup key: a domain,
-        or an email whose domain is extracted and validated (free email providers and
-        disposable email addresses are not allowed).
+        """
+        Queue brand or styleguide data so a later lookup can return sooner.
 
         Args:
           identifier: Identifier of the target to prefetch. Provide exactly one of domain or email.
 
-          type: What to prefetch: 'brand' warms the brand data cache, 'styleguide' warms the
-              styleguide cache.
+          type: Data to prefetch.
 
-          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          tags: Labels for filtering usage in the dashboard.
 
-          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
-              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
-              timeoutOpts object.
+          timeout_opts: Request deadline and what to return when it passes.
 
           extra_headers: Send extra headers
 

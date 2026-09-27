@@ -49,9 +49,7 @@ __all__ = ["MonitorsResource", "AsyncMonitorsResource"]
 
 
 class MonitorsResource(SyncAPIResource):
-    """
-    Monitor pages, sitemaps, and extracted website data for exact or semantic changes. Webhook payloads are documented by the MonitorsChangeDetectedWebhookPayload and MonitorsRunCompletedWebhookPayload schemas.
-    """
+    """Watch websites for exact or meaningful changes."""
 
     @cached_property
     def with_raw_response(self) -> MonitorsResourceWithRawResponse:
@@ -89,26 +87,28 @@ class MonitorsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorCreateResponse:
-        """Creates a monitor.
+        """Watch a page, URL inventory, or extracted website data on a schedule.
 
-        The request body is a union of the supported target/change
-        detection combinations. The monitor runs immediately after creation to create
-        its initial baseline.
+        A run
+        starts immediately to capture the baseline.
 
         Args:
-          target: Discriminated union describing what the monitor watches.
+          name: Display name for the monitor.
 
-          change_detection: Discriminated union describing how changes are detected.
+          target: What to watch: a page, a sitemap, or data extracted from a site.
 
-          mode: Top-level monitor category. Always `web` today; the concrete behavior is
-              described by `target` and `change_detection`.
+          change_detection: How changes are judged. Defaults to `semantic` for extract targets and page
+              targets with `instructions`, otherwise `exact`.
+
+          mode: Always `web`. Optional.
 
           schedule: Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
               every 6 hours or every 2 days. The total interval (frequency × unit) must be
               between 10 minutes and 1 year.
 
-          tags: User-defined tags for grouping and filtering monitors and their changes.
-              Duplicates are removed.
+          tags: Labels for filtering monitors, their changes, and their usage.
+
+          webhook: Webhook destination and delivery settings. Null means no webhook is configured.
 
           extra_headers: Send extra headers
 
@@ -150,9 +150,11 @@ class MonitorsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorRetrieveResponse:
         """
-        Get a monitor
+        Retrieve a monitor’s configuration and current state.
 
         Args:
+          monitor_id: ID of the monitor.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -189,25 +191,30 @@ class MonitorsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorUpdateResponse:
-        """Updates a monitor.
+        """Update a monitor.
 
-        If `target` or `change_detection` changes, the monitor
-        creates a new baseline. Unsupported target/change detection combinations are
-        rejected.
+        Changing its target or change detection replaces the baseline
+        and queues a new baseline run.
 
         Args:
-          change_detection: Discriminated union describing how changes are detected.
+          monitor_id: ID of the monitor.
+
+          change_detection: How changes are judged. Defaults to `semantic` for extract targets and page
+              targets with `instructions`, otherwise `exact`.
+
+          name: Display name for the monitor.
 
           schedule: Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
               every 6 hours or every 2 days. The total interval (frequency × unit) must be
               between 10 minutes and 1 year.
 
-          tags: User-defined tags for grouping and filtering monitors and their changes.
-              Duplicates are removed.
+          status: Set `paused` to stop scheduled runs or `active` to resume them.
 
-          target: Discriminated union describing what the monitor watches.
+          tags: Labels for filtering monitors, their changes, and their usage.
 
-          webhook: Set to null to remove the webhook.
+          target: What to watch: a page, a sitemap, or data extracted from a site.
+
+          webhook: Set to null to remove the webhook. Changing `url` issues a new secret.
 
           extra_headers: Send extra headers
 
@@ -259,11 +266,8 @@ class MonitorsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorListResponse:
-        """Lists monitors for the authenticated organization.
-
-        Supports free-text search
-        (`q` over `search_by` fields, `prefix` or `exact` via `search_type`) plus
-        status/type/tag filters. Results are paginated via the opaque `cursor`.
+        """
+        List your monitors with optional search and filters.
 
         Args:
           change_detection_type: Filter by change detection type.
@@ -274,8 +278,8 @@ class MonitorsResource(SyncAPIResource):
 
           q: Free-text search term, matched against the fields named in `search_by`.
 
-          search_by: Comma-separated fields to search with `q`. Defaults to all of them. Note
-              `instructions` only exists on extract monitors.
+          search_by: Fields to search with `q`. Defaults to all fields; page and extract targets can
+              have instructions.
 
           search_type: `prefix` for as-you-type prefix matching (default), `exact` for full-token
               matching.
@@ -334,9 +338,11 @@ class MonitorsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorDeleteResponse:
         """
-        Delete a monitor
+        Delete a monitor and stop future runs and webhook retries.
 
         Args:
+          monitor_id: ID of the monitor.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -368,8 +374,8 @@ class MonitorsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorGetCreditUsageResponse:
         """
-        Returns credits charged per monitor over an optional [since, until] window,
-        newest spenders first.
+        Return usage per monitor, highest first, for up to the 10,000 most recent runs
+        in the requested window.
 
         Args:
           since: Only include items at or after this ISO 8601 timestamp.
@@ -412,7 +418,7 @@ class MonitorsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorGetLimitsResponse:
-        """Returns how many monitors the account has and the maximum it allows."""
+        """Retrieve your organization’s monitor allowance and usage."""
         return self._get(
             "/monitors/limits",
             options=make_request_options(
@@ -440,7 +446,7 @@ class MonitorsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorListAccountChangesResponse:
         """
-        Returns an account-wide feed of detected changes across monitors.
+        List full change records across your monitors, newest first.
 
         Args:
           change_detection_type: Filter by change detection type.
@@ -505,7 +511,7 @@ class MonitorsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorListAccountRunsResponse:
         """
-        Returns an account-wide feed of monitor runs across all monitors.
+        List runs across your monitors, newest first.
 
         Args:
           cursor: Opaque pagination cursor from a previous response.
@@ -558,9 +564,11 @@ class MonitorsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorListChangesResponse:
         """
-        List changes for a monitor
+        List full change records for a monitor, newest first.
 
         Args:
+          monitor_id: ID of the monitor.
+
           cursor: Opaque pagination cursor from a previous response.
 
           limit: Maximum number of items to return per page (1-100). Defaults to 25.
@@ -617,9 +625,11 @@ class MonitorsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorListRunsResponse:
         """
-        List monitor runs
+        List a monitor’s runs, newest first.
 
         Args:
+          monitor_id: ID of the monitor.
+
           cursor: Opaque pagination cursor from a previous response.
 
           limit: Maximum number of items to return per page (1-100). Defaults to 25.
@@ -667,9 +677,11 @@ class MonitorsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorRetrieveChangeResponse:
         """
-        Get a change
+        Retrieve a detected change, including its diff and available evidence.
 
         Args:
+          change_id: ID of the detected change.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -701,10 +713,13 @@ class MonitorsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorRetrieveRunResponse:
         """
-        Fetches one run for a monitor, including lifecycle status, timing, credits
-        charged, and any detected change.
+        Retrieve the status, timing, and results of one monitor run.
 
         Args:
+          monitor_id: ID of the monitor.
+
+          run_id: ID of the monitor run.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -736,12 +751,14 @@ class MonitorsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorRotateWebhookSecretResponse:
-        """
-        Generates a new signing secret for the monitor's webhook and returns the updated
-        monitor (including the new `webhook.secret`). The previous secret stops signing
-        deliveries immediately, so update your endpoint before rotating.
+        """Generate and return a new signing secret.
+
+        It takes effect immediately for all
+        subsequent delivery attempts.
 
         Args:
+          monitor_id: ID of the monitor.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -771,12 +788,13 @@ class MonitorsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorRunResponse:
-        """Triggers an immediate run of the monitor outside its normal schedule.
+        """Queue a run without changing the regular schedule.
 
-        The run is
-        queued and processed asynchronously.
+        Paused monitors return 409.
 
         Args:
+          monitor_id: ID of the monitor.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -797,9 +815,7 @@ class MonitorsResource(SyncAPIResource):
 
 
 class AsyncMonitorsResource(AsyncAPIResource):
-    """
-    Monitor pages, sitemaps, and extracted website data for exact or semantic changes. Webhook payloads are documented by the MonitorsChangeDetectedWebhookPayload and MonitorsRunCompletedWebhookPayload schemas.
-    """
+    """Watch websites for exact or meaningful changes."""
 
     @cached_property
     def with_raw_response(self) -> AsyncMonitorsResourceWithRawResponse:
@@ -837,26 +853,28 @@ class AsyncMonitorsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorCreateResponse:
-        """Creates a monitor.
+        """Watch a page, URL inventory, or extracted website data on a schedule.
 
-        The request body is a union of the supported target/change
-        detection combinations. The monitor runs immediately after creation to create
-        its initial baseline.
+        A run
+        starts immediately to capture the baseline.
 
         Args:
-          target: Discriminated union describing what the monitor watches.
+          name: Display name for the monitor.
 
-          change_detection: Discriminated union describing how changes are detected.
+          target: What to watch: a page, a sitemap, or data extracted from a site.
 
-          mode: Top-level monitor category. Always `web` today; the concrete behavior is
-              described by `target` and `change_detection`.
+          change_detection: How changes are judged. Defaults to `semantic` for extract targets and page
+              targets with `instructions`, otherwise `exact`.
+
+          mode: Always `web`. Optional.
 
           schedule: Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
               every 6 hours or every 2 days. The total interval (frequency × unit) must be
               between 10 minutes and 1 year.
 
-          tags: User-defined tags for grouping and filtering monitors and their changes.
-              Duplicates are removed.
+          tags: Labels for filtering monitors, their changes, and their usage.
+
+          webhook: Webhook destination and delivery settings. Null means no webhook is configured.
 
           extra_headers: Send extra headers
 
@@ -898,9 +916,11 @@ class AsyncMonitorsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorRetrieveResponse:
         """
-        Get a monitor
+        Retrieve a monitor’s configuration and current state.
 
         Args:
+          monitor_id: ID of the monitor.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -937,25 +957,30 @@ class AsyncMonitorsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorUpdateResponse:
-        """Updates a monitor.
+        """Update a monitor.
 
-        If `target` or `change_detection` changes, the monitor
-        creates a new baseline. Unsupported target/change detection combinations are
-        rejected.
+        Changing its target or change detection replaces the baseline
+        and queues a new baseline run.
 
         Args:
-          change_detection: Discriminated union describing how changes are detected.
+          monitor_id: ID of the monitor.
+
+          change_detection: How changes are judged. Defaults to `semantic` for extract targets and page
+              targets with `instructions`, otherwise `exact`.
+
+          name: Display name for the monitor.
 
           schedule: Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
               every 6 hours or every 2 days. The total interval (frequency × unit) must be
               between 10 minutes and 1 year.
 
-          tags: User-defined tags for grouping and filtering monitors and their changes.
-              Duplicates are removed.
+          status: Set `paused` to stop scheduled runs or `active` to resume them.
 
-          target: Discriminated union describing what the monitor watches.
+          tags: Labels for filtering monitors, their changes, and their usage.
 
-          webhook: Set to null to remove the webhook.
+          target: What to watch: a page, a sitemap, or data extracted from a site.
+
+          webhook: Set to null to remove the webhook. Changing `url` issues a new secret.
 
           extra_headers: Send extra headers
 
@@ -1007,11 +1032,8 @@ class AsyncMonitorsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorListResponse:
-        """Lists monitors for the authenticated organization.
-
-        Supports free-text search
-        (`q` over `search_by` fields, `prefix` or `exact` via `search_type`) plus
-        status/type/tag filters. Results are paginated via the opaque `cursor`.
+        """
+        List your monitors with optional search and filters.
 
         Args:
           change_detection_type: Filter by change detection type.
@@ -1022,8 +1044,8 @@ class AsyncMonitorsResource(AsyncAPIResource):
 
           q: Free-text search term, matched against the fields named in `search_by`.
 
-          search_by: Comma-separated fields to search with `q`. Defaults to all of them. Note
-              `instructions` only exists on extract monitors.
+          search_by: Fields to search with `q`. Defaults to all fields; page and extract targets can
+              have instructions.
 
           search_type: `prefix` for as-you-type prefix matching (default), `exact` for full-token
               matching.
@@ -1082,9 +1104,11 @@ class AsyncMonitorsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorDeleteResponse:
         """
-        Delete a monitor
+        Delete a monitor and stop future runs and webhook retries.
 
         Args:
+          monitor_id: ID of the monitor.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -1116,8 +1140,8 @@ class AsyncMonitorsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorGetCreditUsageResponse:
         """
-        Returns credits charged per monitor over an optional [since, until] window,
-        newest spenders first.
+        Return usage per monitor, highest first, for up to the 10,000 most recent runs
+        in the requested window.
 
         Args:
           since: Only include items at or after this ISO 8601 timestamp.
@@ -1160,7 +1184,7 @@ class AsyncMonitorsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorGetLimitsResponse:
-        """Returns how many monitors the account has and the maximum it allows."""
+        """Retrieve your organization’s monitor allowance and usage."""
         return await self._get(
             "/monitors/limits",
             options=make_request_options(
@@ -1188,7 +1212,7 @@ class AsyncMonitorsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorListAccountChangesResponse:
         """
-        Returns an account-wide feed of detected changes across monitors.
+        List full change records across your monitors, newest first.
 
         Args:
           change_detection_type: Filter by change detection type.
@@ -1253,7 +1277,7 @@ class AsyncMonitorsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorListAccountRunsResponse:
         """
-        Returns an account-wide feed of monitor runs across all monitors.
+        List runs across your monitors, newest first.
 
         Args:
           cursor: Opaque pagination cursor from a previous response.
@@ -1306,9 +1330,11 @@ class AsyncMonitorsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorListChangesResponse:
         """
-        List changes for a monitor
+        List full change records for a monitor, newest first.
 
         Args:
+          monitor_id: ID of the monitor.
+
           cursor: Opaque pagination cursor from a previous response.
 
           limit: Maximum number of items to return per page (1-100). Defaults to 25.
@@ -1365,9 +1391,11 @@ class AsyncMonitorsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorListRunsResponse:
         """
-        List monitor runs
+        List a monitor’s runs, newest first.
 
         Args:
+          monitor_id: ID of the monitor.
+
           cursor: Opaque pagination cursor from a previous response.
 
           limit: Maximum number of items to return per page (1-100). Defaults to 25.
@@ -1415,9 +1443,11 @@ class AsyncMonitorsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorRetrieveChangeResponse:
         """
-        Get a change
+        Retrieve a detected change, including its diff and available evidence.
 
         Args:
+          change_id: ID of the detected change.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -1449,10 +1479,13 @@ class AsyncMonitorsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorRetrieveRunResponse:
         """
-        Fetches one run for a monitor, including lifecycle status, timing, credits
-        charged, and any detected change.
+        Retrieve the status, timing, and results of one monitor run.
 
         Args:
+          monitor_id: ID of the monitor.
+
+          run_id: ID of the monitor run.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -1484,12 +1517,14 @@ class AsyncMonitorsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorRotateWebhookSecretResponse:
-        """
-        Generates a new signing secret for the monitor's webhook and returns the updated
-        monitor (including the new `webhook.secret`). The previous secret stops signing
-        deliveries immediately, so update your endpoint before rotating.
+        """Generate and return a new signing secret.
+
+        It takes effect immediately for all
+        subsequent delivery attempts.
 
         Args:
+          monitor_id: ID of the monitor.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -1519,12 +1554,13 @@ class AsyncMonitorsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MonitorRunResponse:
-        """Triggers an immediate run of the monitor outside its normal schedule.
+        """Queue a run without changing the regular schedule.
 
-        The run is
-        queued and processed asynchronously.
+        Paused monitors return 409.
 
         Args:
+          monitor_id: ID of the monitor.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
