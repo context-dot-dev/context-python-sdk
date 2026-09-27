@@ -24,9 +24,9 @@ class MonitorListParams(TypedDict, total=False):
     """Free-text search term, matched against the fields named in `search_by`."""
 
     search_by: Optional[List[Literal["name", "url", "instructions", "tags"]]]
-    """Comma-separated fields to search with `q`.
+    """Fields to search with `q`.
 
-    Defaults to all of them. Note `instructions` only exists on extract monitors.
+    Defaults to all fields; page and extract targets can have instructions.
     """
 
     search_type: Literal["exact", "prefix"]

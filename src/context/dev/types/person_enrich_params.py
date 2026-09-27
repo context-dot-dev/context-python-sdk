@@ -13,87 +13,117 @@ __all__ = ["PersonEnrichParams", "Company", "Education", "EducationInstitution",
 
 class PersonEnrichParams(TypedDict, total=False):
     company: Company
+    """Company context to help identify the person. Provide a name or domain."""
 
     education: Iterable[Education]
+    """Education history to help distinguish people with similar names."""
 
     email: str
+    """Email address of the person to find."""
 
     location: Location
+    """Location context to help identify the person.
+
+    Provide a city, region, or country.
+    """
 
     name: Name
+    """Person name.
+
+    Without an email or person-profile URL, provide both first and last name plus
+    company, education, or location.
+    """
 
     social_urls: SequenceNotStr[str]
+    """Public profile URLs for the person.
+
+    A person-profile URL can identify the person without a name.
+    """
 
     tags: SequenceNotStr[str]
-    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
+    """Labels for filtering usage in the dashboard."""
 
     timeout_opts: Annotated[TimeoutOpts, PropertyInfo(alias="timeoutOpts")]
-    """Optional request deadline and behavior on timeout.
-
-    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail
-    or a JSON-encoded timeoutOpts object.
-    """
+    """Request deadline and what to return when it passes."""
 
     zdr: Literal["enabled", "disabled"]
-    """
-    Set to enabled to bypass shared caches and omit request and response content
-    from retained usage logs. Asset uploads are skipped, so hosted image URLs are
-    omitted. Requires zero data retention to be enabled for your organization
-    (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
-    Successful ZDR responses include X-Context-ZDR: true.
+    """`enabled` turns on zero data retention.
+
+    Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
     """
 
 
 class Company(TypedDict, total=False):
+    """Company context to help identify the person. Provide a name or domain."""
+
     domain: str
+    """Website domain of a company associated with the person."""
 
     name: str
+    """Name of a company associated with the person."""
 
 
 class EducationInstitution(TypedDict, total=False):
+    """School or university, identified by name or domain."""
+
     domain: str
+    """Website domain of the school or university."""
 
     name: str
+    """Name of the school or university."""
 
 
 class Education(TypedDict, total=False):
     degree: str
+    """Degree or qualification earned."""
 
     field_of_study: str
+    """Subject or major studied."""
 
     graduation_year: int
+    """Four-digit graduation year."""
 
     institution: EducationInstitution
+    """School or university, identified by name or domain."""
 
 
 class Location(TypedDict, total=False):
+    """Location context to help identify the person.
+
+    Provide a city, region, or country.
+    """
+
     city: str
+    """City associated with the person."""
 
     country: str
+    """Country associated with the person."""
 
     region: str
+    """State, province, or region associated with the person."""
 
 
 class Name(TypedDict, total=False):
+    """Person name.
+
+    Without an email or person-profile URL, provide both first and last name plus company, education, or location.
+    """
+
     first: str
+    """First or given name."""
 
     last: str
+    """Last or family name."""
 
 
 class TimeoutOpts(TypedDict, total=False):
-    """Optional request deadline and behavior on timeout.
-
-    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded timeoutOpts object.
-    """
+    """Request deadline and what to return when it passes."""
 
     milliseconds: Required[int]
-    """Request deadline in milliseconds. Maximum: 300000 (5 minutes)."""
+    """Deadline in milliseconds."""
 
     behavior: Literal["fail", "return-partial"]
-    """What to do at the deadline.
+    """\"fail" returns 408 at the deadline.
 
-    "fail" returns 408 REQUEST_TIMEOUT without charging credits. "return-partial"
-    returns usable results collected so far; if none are available, the request
-    still fails without charging credits. Partial results are not cached as complete
-    results.
+    "return-partial" returns available results; inspect the response’s partial flag.
     """

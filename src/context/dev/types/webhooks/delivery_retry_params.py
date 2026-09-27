@@ -12,10 +12,10 @@ __all__ = ["DeliveryRetryParams"]
 
 class DeliveryRetryParams(TypedDict, total=False):
     force: bool
-    """Resend a delivery that already succeeded."""
+    """Resend even if the delivery already succeeded. Defaults to false."""
 
     tags: SequenceNotStr[str]
-    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
+    """Labels for filtering usage in the dashboard."""
 
     idempotency_key: Annotated[str, PropertyInfo(alias="Idempotency-Key")]
     """Unique key to prevent duplicate retry requests."""

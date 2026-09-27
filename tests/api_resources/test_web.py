@@ -177,7 +177,7 @@ class TestWeb:
     @parametrize
     def test_method_map_urls(self, client: ContextDev) -> None:
         web = client.web.map_urls(
-            domain="xxx",
+            domain="stripe.com",
         )
         assert_matches_type(WebMapURLsResponse, web, path=["response"])
 
@@ -185,7 +185,7 @@ class TestWeb:
     @parametrize
     def test_method_map_urls_with_all_params(self, client: ContextDev) -> None:
         web = client.web.map_urls(
-            domain="xxx",
+            domain="stripe.com",
             headers={"foo": "J!"},
             include_subdomains=True,
             max_links=1,
@@ -205,7 +205,7 @@ class TestWeb:
     @parametrize
     def test_raw_response_map_urls(self, client: ContextDev) -> None:
         response = client.web.with_raw_response.map_urls(
-            domain="xxx",
+            domain="stripe.com",
         )
 
         assert response.is_closed is True
@@ -217,7 +217,7 @@ class TestWeb:
     @parametrize
     def test_streaming_response_map_urls(self, client: ContextDev) -> None:
         with client.web.with_streaming_response.map_urls(
-            domain="xxx",
+            domain="stripe.com",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -418,7 +418,7 @@ class TestWeb:
     @parametrize
     def test_method_search(self, client: ContextDev) -> None:
         web = client.web.search(
-            query="x",
+            query="Stripe API authentication",
         )
         assert_matches_type(WebSearchResponse, web, path=["response"])
 
@@ -426,7 +426,7 @@ class TestWeb:
     @parametrize
     def test_method_search_with_all_params(self, client: ContextDev) -> None:
         web = client.web.search(
-            query="x",
+            query="Stripe API authentication",
             country="af",
             exclude_domains=["string"],
             freshness="last_24_hours",
@@ -465,7 +465,7 @@ class TestWeb:
     @parametrize
     def test_raw_response_search(self, client: ContextDev) -> None:
         response = client.web.with_raw_response.search(
-            query="x",
+            query="Stripe API authentication",
         )
 
         assert response.is_closed is True
@@ -477,7 +477,7 @@ class TestWeb:
     @parametrize
     def test_streaming_response_search(self, client: ContextDev) -> None:
         with client.web.with_streaming_response.search(
-            query="x",
+            query="Stripe API authentication",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -509,7 +509,7 @@ class TestWeb:
             include_selectors=["string"],
             max_age_ms=0,
             max_depth=0,
-            max_pages=1,
+            max_pages=10,
             pdf={
                 "end": 1,
                 "ocr": True,
@@ -714,7 +714,7 @@ class TestAsyncWeb:
     @parametrize
     async def test_method_map_urls(self, async_client: AsyncContextDev) -> None:
         web = await async_client.web.map_urls(
-            domain="xxx",
+            domain="stripe.com",
         )
         assert_matches_type(WebMapURLsResponse, web, path=["response"])
 
@@ -722,7 +722,7 @@ class TestAsyncWeb:
     @parametrize
     async def test_method_map_urls_with_all_params(self, async_client: AsyncContextDev) -> None:
         web = await async_client.web.map_urls(
-            domain="xxx",
+            domain="stripe.com",
             headers={"foo": "J!"},
             include_subdomains=True,
             max_links=1,
@@ -742,7 +742,7 @@ class TestAsyncWeb:
     @parametrize
     async def test_raw_response_map_urls(self, async_client: AsyncContextDev) -> None:
         response = await async_client.web.with_raw_response.map_urls(
-            domain="xxx",
+            domain="stripe.com",
         )
 
         assert response.is_closed is True
@@ -754,7 +754,7 @@ class TestAsyncWeb:
     @parametrize
     async def test_streaming_response_map_urls(self, async_client: AsyncContextDev) -> None:
         async with async_client.web.with_streaming_response.map_urls(
-            domain="xxx",
+            domain="stripe.com",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -955,7 +955,7 @@ class TestAsyncWeb:
     @parametrize
     async def test_method_search(self, async_client: AsyncContextDev) -> None:
         web = await async_client.web.search(
-            query="x",
+            query="Stripe API authentication",
         )
         assert_matches_type(WebSearchResponse, web, path=["response"])
 
@@ -963,7 +963,7 @@ class TestAsyncWeb:
     @parametrize
     async def test_method_search_with_all_params(self, async_client: AsyncContextDev) -> None:
         web = await async_client.web.search(
-            query="x",
+            query="Stripe API authentication",
             country="af",
             exclude_domains=["string"],
             freshness="last_24_hours",
@@ -1002,7 +1002,7 @@ class TestAsyncWeb:
     @parametrize
     async def test_raw_response_search(self, async_client: AsyncContextDev) -> None:
         response = await async_client.web.with_raw_response.search(
-            query="x",
+            query="Stripe API authentication",
         )
 
         assert response.is_closed is True
@@ -1014,7 +1014,7 @@ class TestAsyncWeb:
     @parametrize
     async def test_streaming_response_search(self, async_client: AsyncContextDev) -> None:
         async with async_client.web.with_streaming_response.search(
-            query="x",
+            query="Stripe API authentication",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -1046,7 +1046,7 @@ class TestAsyncWeb:
             include_selectors=["string"],
             max_age_ms=0,
             max_depth=0,
-            max_pages=1,
+            max_pages=10,
             pdf={
                 "end": 1,
                 "ocr": True,

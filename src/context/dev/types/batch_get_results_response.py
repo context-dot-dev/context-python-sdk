@@ -22,10 +22,7 @@ __all__ = [
 
 
 class DataOkCacheMetadata(BaseModel):
-    """Cache outcome for this response.
-
-    Composite responses are hits only when every cache-controlled fetch contributing to the output was a hit; age_ms is the oldest contributing hit.
-    """
+    """Whether this response came from cache."""
 
     age_ms: int
     """Age of the cached data in milliseconds. Zero for miss and zdr responses."""
@@ -133,11 +130,7 @@ class DataOk(BaseModel):
     """A page the batch fetched successfully."""
 
     cache_metadata: DataOkCacheMetadata
-    """Cache outcome for this response.
-
-    Composite responses are hits only when every cache-controlled fetch contributing
-    to the output was a hit; age_ms is the oldest contributing hit.
-    """
+    """Whether this response came from cache."""
 
     final_url: str
     """URL the content was read from, after redirects."""
@@ -162,7 +155,7 @@ class DataOk(BaseModel):
     """
 
     item_id: Optional[str] = FieldInfo(alias="itemId", default=None)
-    """Caller-supplied identifier echoed from submission."""
+    """Your `itemId` from submission."""
 
     markdown: Optional[str] = None
     """Page content as Markdown. Present on markdown batches."""
@@ -171,11 +164,7 @@ class DataOk(BaseModel):
     """Caller-supplied metadata echoed from submission."""
 
     ocr_pages: Optional[int] = None
-    """PDF pages of this document recovered by OCR (pdf.ocr=true).
-
-    Each recovered page bills 1 credit on top of the page base credit; absent when
-    no OCR ran.
-    """
+    """Number of PDF pages recovered by OCR. Omitted when OCR did not run."""
 
 
 class DataError(BaseModel):
@@ -194,7 +183,7 @@ class DataError(BaseModel):
     """URL as submitted, or as discovered by the crawl."""
 
     item_id: Optional[str] = FieldInfo(alias="itemId", default=None)
-    """Caller-supplied identifier echoed from submission."""
+    """Your `itemId` from submission."""
 
     meta: Optional[Dict[str, object]] = None
     """Caller-supplied metadata echoed from submission."""
@@ -204,10 +193,10 @@ Data: TypeAlias = Annotated[Union[DataOk, DataError], PropertyInfo(discriminator
 
 
 class KeyMetadata(BaseModel):
-    """Credit usage, included whenever a valid API key is provided."""
+    """Credits this request used and your remaining balance."""
 
     credits_consumed: int
-    """Credits used by this request."""
+    """Credits charged for this request."""
 
     credits_remaining: int
     """Credits remaining for your organization."""
@@ -215,9 +204,9 @@ class KeyMetadata(BaseModel):
 
 class BatchGetResultsResponse(BaseModel):
     request_id: str
-    """Unique id of this API call, also sent in the X-Request-Id response header.
+    """Unique ID of this request, also in `X-Request-Id`.
 
-    Quote it when contacting support about a failed request.
+    Include it when contacting support.
     """
 
     data: Optional[List[Data]] = None
@@ -227,7 +216,7 @@ class BatchGetResultsResponse(BaseModel):
     """Whether another page is available."""
 
     key_metadata: Optional[KeyMetadata] = None
-    """Credit usage, included whenever a valid API key is provided."""
+    """Credits this request used and your remaining balance."""
 
     next_cursor: Optional[str] = None
     """Cursor for the next page."""

@@ -98,13 +98,7 @@ class ParseHandleParams(TypedDict, total=False):
     """Preserve hyperlinks in Markdown output"""
 
     ocr: bool
-    """
-    When true for PDF inputs, OCR the selected pages that have no usable text layer
-    (scans), replacing each recovered page's text with the OCR result while pages
-    with a real text layer keep it. pdf.start/pdf.end limit the inclusive page
-    range. Billed at 1 credit per page OCR actually recovered, on top of the base
-    request cost. When false, no OCR runs.
-    """
+    """Read text from images and scanned PDF pages. PDF page ranges still apply."""
 
     pdf: Pdf
     """PDF page-range options as a JSON object, e.g. {"start": 2, "end": 5}."""
@@ -113,21 +107,15 @@ class ParseHandleParams(TypedDict, total=False):
     """Shorten base64-encoded image data in the Markdown output"""
 
     tags: SequenceNotStr[str]
-    """Comma-separated tags for tracking request usage.
-
-    Up to 20 tags, each 1-50 characters.
-    """
+    """Comma-separated labels for filtering usage, e.g. `production,team-alpha`."""
 
     use_main_content_only: Annotated[bool, PropertyInfo(alias="useMainContentOnly")]
     """Extract only the main content from HTML-like inputs"""
 
     zdr: Literal["enabled", "disabled"]
-    """
-    Set to enabled to bypass shared caches and omit request and response content
-    from retained usage logs. Asset uploads are skipped, so hosted image URLs are
-    omitted. Requires zero data retention to be enabled for your organization
-    (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
-    Successful ZDR responses include X-Context-ZDR: true.
+    """`enabled` turns on zero data retention.
+
+    Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
     """
 
 

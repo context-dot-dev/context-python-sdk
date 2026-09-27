@@ -12,7 +12,7 @@ __all__ = ["WebWebCrawlMdParams", "Pdf", "TimeoutOpts"]
 
 class WebWebCrawlMdParams(TypedDict, total=False):
     url: Required[str]
-    """The starting URL for the crawl (must include http:// or https:// protocol)"""
+    """Start URL, including `http://` or `https://`."""
 
     country: Literal[
         "ad",
@@ -220,17 +220,10 @@ class WebWebCrawlMdParams(TypedDict, total=False):
         "zm",
         "zw",
     ]
-    """
-    Fetch the target page through a residential proxy in this country (ISO 3166-1
-    alpha-2).
-    """
+    """Fetch from this country (ISO 3166-1 alpha-2)."""
 
     exclude_selectors: Annotated[SequenceNotStr[str], PropertyInfo(alias="excludeSelectors")]
-    """CSS selectors to remove before each crawled page is converted to Markdown.
-
-    Applied after includeSelectors. Exclusion takes precedence: an element matching
-    both is removed. Examples: "nav", "footer", ".ad-banner", "[aria-hidden=true]".
-    """
+    """Remove matching elements after inclusions. Exclusions take precedence."""
 
     follow_subdomains: Annotated[bool, PropertyInfo(alias="followSubdomains")]
     """When true, follow links on subdomains of the starting URL's domain (e.g.
@@ -252,60 +245,40 @@ class WebWebCrawlMdParams(TypedDict, total=False):
     """Preserve hyperlinks in the Markdown output"""
 
     include_selectors: Annotated[SequenceNotStr[str], PropertyInfo(alias="includeSelectors")]
-    """CSS selectors.
-
-    When provided, only matching HTML subtrees (and their descendants) are kept
-    before each crawled page is converted to Markdown. When omitted, the entire
-    document is kept. Examples: "article.main", "#content", "[role=main]".
-    """
+    """Keep matching HTML subtrees before converting each page to Markdown."""
 
     max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
-    """
-    Return a cached result if a prior scrape for the same parameters exists and is
-    younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
-    omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
-    """
+    """Maximum cache age in milliseconds. Defaults to 1 day; `0` fetches fresh."""
 
     max_depth: Annotated[int, PropertyInfo(alias="maxDepth")]
     """Maximum link depth from the starting URL (0 = only the starting page)"""
 
     max_pages: Annotated[int, PropertyInfo(alias="maxPages")]
-    """Maximum number of pages to crawl. Hard cap: 500."""
+    """Maximum pages to crawl."""
 
     pdf: Pdf
-    """PDF parsing controls.
-
-    Use start/end to limit text extraction and embedded-image detection/OCR to an
-    inclusive 1-based page range.
-    """
+    """PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range."""
 
     settle_animations: Annotated[bool, PropertyInfo(alias="settleAnimations")]
     """
-    When true, waits briefly for CSS and transition animations to settle before
-    extracting each crawled page. Defaults to false. This adds a bit of latency in
-    exchange for more stable output on animated pages.
+    Wait briefly for CSS animations and transitions to settle before reading each
+    page.
     """
 
     shorten_base64_images: Annotated[bool, PropertyInfo(alias="shortenBase64Images")]
     """Truncate base64-encoded image data in the Markdown output"""
 
     stop_after_ms: Annotated[int, PropertyInfo(alias="stopAfterMs")]
-    """Soft time budget for the crawl in milliseconds.
+    """Soft crawl deadline in milliseconds.
 
-    After each scrape, the crawler checks the elapsed time and, if exceeded, returns
-    the pages collected so far instead of continuing. Min: 10000 (10s). Max: 110000
-    (110s). Default: 80000 (80s).
+    Returns pages collected before the next deadline check.
     """
 
     tags: SequenceNotStr[str]
-    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
+    """Labels for filtering usage in the dashboard."""
 
     timeout_opts: Annotated[TimeoutOpts, PropertyInfo(alias="timeoutOpts")]
-    """Optional request deadline and behavior on timeout.
-
-    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail
-    or a JSON-encoded timeoutOpts object.
-    """
+    """Request deadline and what to return when it passes."""
 
     url_regex: Annotated[str, PropertyInfo(alias="urlRegex")]
     """Regex pattern.
@@ -328,19 +301,14 @@ class WebWebCrawlMdParams(TypedDict, total=False):
     """
 
     zdr: Literal["enabled", "disabled"]
-    """
-    Set to enabled to bypass shared caches and omit request and response content
-    from retained usage logs. Requires zero data retention to be enabled for your
-    organization (contact support@context.dev), otherwise the request fails with
-    ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+    """`enabled` turns on zero data retention.
+
+    Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
     """
 
 
 class Pdf(TypedDict, total=False):
-    """PDF parsing controls.
-
-    Use start/end to limit text extraction and embedded-image detection/OCR to an inclusive 1-based page range.
-    """
+    """PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range."""
 
     end: int
     """Last 1-based PDF page to parse.
@@ -350,12 +318,7 @@ class Pdf(TypedDict, total=False):
     """
 
     ocr: bool
-    """
-    When true, OCR the selected PDF pages that have no usable text layer (scans),
-    replacing each recovered page's text with the OCR result while pages with a real
-    text layer keep it. Billed at 1 credit per page OCR actually recovered, on top
-    of the base request cost.
-    """
+    """Read scanned PDF pages with OCR; preserve pages that already contain text."""
 
     should_parse: Annotated[bool, PropertyInfo(alias="shouldParse")]
     """When true, PDF pages are fetched and parsed.
@@ -372,19 +335,13 @@ class Pdf(TypedDict, total=False):
 
 
 class TimeoutOpts(TypedDict, total=False):
-    """Optional request deadline and behavior on timeout.
-
-    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded timeoutOpts object.
-    """
+    """Request deadline and what to return when it passes."""
 
     milliseconds: Required[int]
-    """Request deadline in milliseconds. Maximum: 300000 (5 minutes)."""
+    """Deadline in milliseconds."""
 
     behavior: Literal["fail", "return-partial"]
-    """What to do at the deadline.
+    """\"fail" returns 408 at the deadline.
 
-    "fail" returns 408 REQUEST_TIMEOUT without charging credits. "return-partial"
-    returns usable results collected so far; if none are available, the request
-    still fails without charging credits. Partial results are not cached as complete
-    results.
+    "return-partial" returns available results; inspect the response’s partial flag.
     """

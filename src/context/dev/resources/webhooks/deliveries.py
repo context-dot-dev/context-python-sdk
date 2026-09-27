@@ -34,7 +34,7 @@ __all__ = ["DeliveriesResource", "AsyncDeliveriesResource"]
 
 
 class DeliveriesResource(SyncAPIResource):
-    """Inspect and retry webhook deliveries. These endpoints cost no credits."""
+    """Inspect and retry batch and monitor webhook deliveries."""
 
     @cached_property
     def with_raw_response(self) -> DeliveriesResourceWithRawResponse:
@@ -68,13 +68,12 @@ class DeliveriesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DeliveryRetrieveResponse:
         """
-        Get a webhook delivery, including its status and latest attempt.
+        Retrieve a webhook delivery’s status and original payload.
 
         Args:
           delivery_id: Delivery ID.
 
-          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
-              characters.
+          tags: Comma-separated labels for filtering usage, e.g. `production,team-alpha`.
 
           extra_headers: Send extra headers
 
@@ -117,7 +116,7 @@ class DeliveriesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DeliveryListResponse:
         """
-        List your batch or monitor webhook deliveries, newest first.
+        List batch and monitor webhook deliveries from the last 30 days.
 
         Args:
           type: Delivery source.
@@ -132,7 +131,7 @@ class DeliveriesResource(SyncAPIResource):
 
           status: Filter by delivery status.
 
-          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          tags: Labels for filtering usage in the dashboard.
 
           extra_headers: Send extra headers
 
@@ -164,7 +163,7 @@ class DeliveriesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DeliveryListResponse:
         """
-        List your batch or monitor webhook deliveries, newest first.
+        List batch and monitor webhook deliveries from the last 30 days.
 
         Args:
           type: Delivery source.
@@ -181,7 +180,7 @@ class DeliveriesResource(SyncAPIResource):
 
           status: Filter by delivery status.
 
-          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          tags: Labels for filtering usage in the dashboard.
 
           extra_headers: Send extra headers
 
@@ -250,7 +249,7 @@ class DeliveriesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DeliveryListAttemptsResponse:
         """
-        List delivery attempts, newest first.
+        List a delivery’s attempts, newest first.
 
         Args:
           delivery_id: Delivery ID.
@@ -259,8 +258,7 @@ class DeliveriesResource(SyncAPIResource):
 
           limit: Number of attempts to return.
 
-          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
-              characters.
+          tags: Comma-separated labels for filtering usage, e.g. `production,team-alpha`.
 
           extra_headers: Send extra headers
 
@@ -305,15 +303,17 @@ class DeliveriesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DeliveryRetryResponse:
-        """
-        Retry a webhook delivery within seven days of creation.
+        """Resend the original payload using the source’s current URL and secret.
+
+        Available
+        for 7 days after the event.
 
         Args:
           delivery_id: Delivery ID.
 
-          force: Resend a delivery that already succeeded.
+          force: Resend even if the delivery already succeeded. Defaults to false.
 
-          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          tags: Labels for filtering usage in the dashboard.
 
           idempotency_key: Unique key to prevent duplicate retry requests.
 
@@ -345,7 +345,7 @@ class DeliveriesResource(SyncAPIResource):
 
 
 class AsyncDeliveriesResource(AsyncAPIResource):
-    """Inspect and retry webhook deliveries. These endpoints cost no credits."""
+    """Inspect and retry batch and monitor webhook deliveries."""
 
     @cached_property
     def with_raw_response(self) -> AsyncDeliveriesResourceWithRawResponse:
@@ -379,13 +379,12 @@ class AsyncDeliveriesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DeliveryRetrieveResponse:
         """
-        Get a webhook delivery, including its status and latest attempt.
+        Retrieve a webhook delivery’s status and original payload.
 
         Args:
           delivery_id: Delivery ID.
 
-          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
-              characters.
+          tags: Comma-separated labels for filtering usage, e.g. `production,team-alpha`.
 
           extra_headers: Send extra headers
 
@@ -428,7 +427,7 @@ class AsyncDeliveriesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DeliveryListResponse:
         """
-        List your batch or monitor webhook deliveries, newest first.
+        List batch and monitor webhook deliveries from the last 30 days.
 
         Args:
           type: Delivery source.
@@ -443,7 +442,7 @@ class AsyncDeliveriesResource(AsyncAPIResource):
 
           status: Filter by delivery status.
 
-          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          tags: Labels for filtering usage in the dashboard.
 
           extra_headers: Send extra headers
 
@@ -475,7 +474,7 @@ class AsyncDeliveriesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DeliveryListResponse:
         """
-        List your batch or monitor webhook deliveries, newest first.
+        List batch and monitor webhook deliveries from the last 30 days.
 
         Args:
           type: Delivery source.
@@ -492,7 +491,7 @@ class AsyncDeliveriesResource(AsyncAPIResource):
 
           status: Filter by delivery status.
 
-          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          tags: Labels for filtering usage in the dashboard.
 
           extra_headers: Send extra headers
 
@@ -561,7 +560,7 @@ class AsyncDeliveriesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DeliveryListAttemptsResponse:
         """
-        List delivery attempts, newest first.
+        List a delivery’s attempts, newest first.
 
         Args:
           delivery_id: Delivery ID.
@@ -570,8 +569,7 @@ class AsyncDeliveriesResource(AsyncAPIResource):
 
           limit: Number of attempts to return.
 
-          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
-              characters.
+          tags: Comma-separated labels for filtering usage, e.g. `production,team-alpha`.
 
           extra_headers: Send extra headers
 
@@ -616,15 +614,17 @@ class AsyncDeliveriesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DeliveryRetryResponse:
-        """
-        Retry a webhook delivery within seven days of creation.
+        """Resend the original payload using the source’s current URL and secret.
+
+        Available
+        for 7 days after the event.
 
         Args:
           delivery_id: Delivery ID.
 
-          force: Resend a delivery that already succeeded.
+          force: Resend even if the delivery already succeeded. Defaults to false.
 
-          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          tags: Labels for filtering usage in the dashboard.
 
           idempotency_key: Unique key to prevent duplicate retry requests.
 

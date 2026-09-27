@@ -30,9 +30,7 @@ Source: TypeAlias = Union[SourceStartURL, SourceSitemap]
 
 
 class CrawlControls(BaseModel):
-    """
-    The crawl controls as submitted, so the limits requested can be compared against what the crawl reached.
-    """
+    """Crawl settings as submitted."""
 
     follow_subdomains: bool
     """Whether links to subdomains were followed. Always false for a sitemap crawl."""

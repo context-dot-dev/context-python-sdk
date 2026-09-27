@@ -23,8 +23,8 @@ class TestNews:
         news = client.news.search(
             search_by={
                 "entity": {
-                    "name": "xx",
-                    "type": "name",
+                    "domain": "stripe.com",
+                    "type": "domain",
                 },
                 "type": "entity",
             },
@@ -37,8 +37,8 @@ class TestNews:
         news = client.news.search(
             search_by={
                 "entity": {
-                    "name": "xx",
-                    "type": "name",
+                    "domain": "stripe.com",
+                    "type": "domain",
                 },
                 "type": "entity",
             },
@@ -65,8 +65,8 @@ class TestNews:
         response = client.news.with_raw_response.search(
             search_by={
                 "entity": {
-                    "name": "xx",
-                    "type": "name",
+                    "domain": "stripe.com",
+                    "type": "domain",
                 },
                 "type": "entity",
             },
@@ -83,8 +83,8 @@ class TestNews:
         with client.news.with_streaming_response.search(
             search_by={
                 "entity": {
-                    "name": "xx",
-                    "type": "name",
+                    "domain": "stripe.com",
+                    "type": "domain",
                 },
                 "type": "entity",
             },
@@ -109,8 +109,8 @@ class TestAsyncNews:
         news = await async_client.news.search(
             search_by={
                 "entity": {
-                    "name": "xx",
-                    "type": "name",
+                    "domain": "stripe.com",
+                    "type": "domain",
                 },
                 "type": "entity",
             },
@@ -123,8 +123,8 @@ class TestAsyncNews:
         news = await async_client.news.search(
             search_by={
                 "entity": {
-                    "name": "xx",
-                    "type": "name",
+                    "domain": "stripe.com",
+                    "type": "domain",
                 },
                 "type": "entity",
             },
@@ -151,8 +151,8 @@ class TestAsyncNews:
         response = await async_client.news.with_raw_response.search(
             search_by={
                 "entity": {
-                    "name": "xx",
-                    "type": "name",
+                    "domain": "stripe.com",
+                    "type": "domain",
                 },
                 "type": "entity",
             },
@@ -169,8 +169,8 @@ class TestAsyncNews:
         async with async_client.news.with_streaming_response.search(
             search_by={
                 "entity": {
-                    "name": "xx",
-                    "type": "name",
+                    "domain": "stripe.com",
+                    "type": "domain",
                 },
                 "type": "entity",
             },

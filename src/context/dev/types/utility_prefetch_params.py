@@ -22,27 +22,20 @@ class UtilityPrefetchParams(TypedDict, total=False):
     """Identifier of the target to prefetch. Provide exactly one of domain or email."""
 
     type: Required[Literal["brand", "styleguide"]]
-    """
-    What to prefetch: 'brand' warms the brand data cache, 'styleguide' warms the
-    styleguide cache.
-    """
+    """Data to prefetch."""
 
     tags: SequenceNotStr[str]
-    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
+    """Labels for filtering usage in the dashboard."""
 
     timeout_opts: Annotated[TimeoutOpts, PropertyInfo(alias="timeoutOpts")]
-    """Optional request deadline and behavior on timeout.
-
-    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail
-    or a JSON-encoded timeoutOpts object.
-    """
+    """Request deadline and what to return when it passes."""
 
 
 class IdentifierUtilityPrefetchDomainIdentifier(TypedDict, total=False):
     """Prefetch by domain."""
 
     domain: Required[str]
-    """Domain name to prefetch data for"""
+    """Domain, e.g. `stripe.com`."""
 
 
 class IdentifierUtilityPrefetchEmailIdentifier(TypedDict, total=False):
@@ -60,17 +53,10 @@ Identifier: TypeAlias = Union[IdentifierUtilityPrefetchDomainIdentifier, Identif
 
 
 class TimeoutOpts(TypedDict, total=False):
-    """Optional request deadline and behavior on timeout.
-
-    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded timeoutOpts object.
-    """
+    """Request deadline and what to return when it passes."""
 
     milliseconds: Required[int]
-    """Request deadline in milliseconds. Maximum: 300000 (5 minutes)."""
+    """Deadline in milliseconds."""
 
     behavior: Literal["fail"]
-    """What to do at the deadline.
-
-    This endpoint supports "fail": return 408 REQUEST_TIMEOUT without charging
-    credits.
-    """
+    """Only "fail" is supported: return 408 at the deadline."""

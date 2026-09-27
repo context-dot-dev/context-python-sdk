@@ -61,11 +61,13 @@ class BatchResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BatchRetrieveResponse:
-        """
-        Check progress, and get download links once the batch finishes.
+        """Get batch progress and result download links.
+
+        Result files are deleted 7 days
+        after the batch finishes.
 
         Args:
-          batch_id: ID of the batch to retrieve or cancel.
+          batch_id: Batch ID.
 
           extra_headers: Send extra headers
 
@@ -101,10 +103,8 @@ class BatchResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BatchListResponse:
-        """List your batches from newest to oldest.
-
-        Filter by status or continue with a
-        cursor.
+        """
+        List your batches, newest first, with optional filters.
 
         Args:
           cursor: Cursor from the previous page.
@@ -162,13 +162,13 @@ class BatchResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BatchDeleteResponse:
-        """Permanently delete a finished batch and its stored results.
+        """Permanently delete a finished batch and its results.
 
-        Active batches must
-        settle first.
+        Its webhook deliveries can
+        no longer be retried.
 
         Args:
-          batch_id: ID of the batch to retrieve or cancel.
+          batch_id: Batch ID.
 
           extra_headers: Send extra headers
 
@@ -201,11 +201,11 @@ class BatchResource(SyncAPIResource):
     ) -> BatchCancelResponse:
         """Stop a batch from starting new pages.
 
-        In-progress pages finish, and unused
-        credits are refunded.
+        Pages already in progress finish before
+        the batch becomes cancelled.
 
         Args:
-          batch_id: ID of the batch to retrieve or cancel.
+          batch_id: Batch ID.
 
           extra_headers: Send extra headers
 
@@ -238,12 +238,13 @@ class BatchResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BatchGetResultsResponse:
-        """
-        Page through a finished batch's results as JSON instead of downloading the
-        NDJSON files.
+        """Page through a finished batch’s results as JSON.
+
+        Results remain available for 7
+        days.
 
         Args:
-          batch_id: ID of the batch to retrieve or cancel.
+          batch_id: Batch ID.
 
           cursor: next_cursor from the previous page.
 
@@ -293,22 +294,24 @@ class BatchResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BatchSubmitResponse:
-        """
-        Scrape 25K URLs or crawl large websites asynchronously.
+        """Scrape up to 25,000 URLs, or crawl a site, asynchronously.
+
+        Poll the batch ID or
+        receive a webhook when it finishes.
 
         Args:
           input: Choose a URL list or a site crawl.
 
           tags: Tags stored on the batch. Filter the batch list by them later.
 
-          webhook: Completion webhook settings. Cannot be combined with webhookUrl. Omitting retry
-              preserves legacy delivery; retry: {} opts into durable retries.
+          webhook: Where to send the batch's final-status event. Omit `retry` for one attempt; `{}`
+              uses the default retry schedule.
 
           webhook_url: Legacy URL notified when the batch finishes. Preserves one best-effort attempt.
               Cannot be combined with webhook.
 
-          idempotency_key: Any string unique to this submission. Retries with the same key return the
-              original batch.
+          idempotency_key: Unique key per submission. Retrying with the same key and body returns the
+              original batch; a different body returns `409`.
 
           extra_headers: Send extra headers
 
@@ -370,11 +373,13 @@ class AsyncBatchResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BatchRetrieveResponse:
-        """
-        Check progress, and get download links once the batch finishes.
+        """Get batch progress and result download links.
+
+        Result files are deleted 7 days
+        after the batch finishes.
 
         Args:
-          batch_id: ID of the batch to retrieve or cancel.
+          batch_id: Batch ID.
 
           extra_headers: Send extra headers
 
@@ -410,10 +415,8 @@ class AsyncBatchResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BatchListResponse:
-        """List your batches from newest to oldest.
-
-        Filter by status or continue with a
-        cursor.
+        """
+        List your batches, newest first, with optional filters.
 
         Args:
           cursor: Cursor from the previous page.
@@ -471,13 +474,13 @@ class AsyncBatchResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BatchDeleteResponse:
-        """Permanently delete a finished batch and its stored results.
+        """Permanently delete a finished batch and its results.
 
-        Active batches must
-        settle first.
+        Its webhook deliveries can
+        no longer be retried.
 
         Args:
-          batch_id: ID of the batch to retrieve or cancel.
+          batch_id: Batch ID.
 
           extra_headers: Send extra headers
 
@@ -510,11 +513,11 @@ class AsyncBatchResource(AsyncAPIResource):
     ) -> BatchCancelResponse:
         """Stop a batch from starting new pages.
 
-        In-progress pages finish, and unused
-        credits are refunded.
+        Pages already in progress finish before
+        the batch becomes cancelled.
 
         Args:
-          batch_id: ID of the batch to retrieve or cancel.
+          batch_id: Batch ID.
 
           extra_headers: Send extra headers
 
@@ -547,12 +550,13 @@ class AsyncBatchResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BatchGetResultsResponse:
-        """
-        Page through a finished batch's results as JSON instead of downloading the
-        NDJSON files.
+        """Page through a finished batch’s results as JSON.
+
+        Results remain available for 7
+        days.
 
         Args:
-          batch_id: ID of the batch to retrieve or cancel.
+          batch_id: Batch ID.
 
           cursor: next_cursor from the previous page.
 
@@ -602,22 +606,24 @@ class AsyncBatchResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BatchSubmitResponse:
-        """
-        Scrape 25K URLs or crawl large websites asynchronously.
+        """Scrape up to 25,000 URLs, or crawl a site, asynchronously.
+
+        Poll the batch ID or
+        receive a webhook when it finishes.
 
         Args:
           input: Choose a URL list or a site crawl.
 
           tags: Tags stored on the batch. Filter the batch list by them later.
 
-          webhook: Completion webhook settings. Cannot be combined with webhookUrl. Omitting retry
-              preserves legacy delivery; retry: {} opts into durable retries.
+          webhook: Where to send the batch's final-status event. Omit `retry` for one attempt; `{}`
+              uses the default retry schedule.
 
           webhook_url: Legacy URL notified when the batch finishes. Preserves one best-effort attempt.
               Cannot be combined with webhook.
 
-          idempotency_key: Any string unique to this submission. Retries with the same key return the
-              original batch.
+          idempotency_key: Unique key per submission. Retrying with the same key and body returns the
+              original batch; a different body returns `409`.
 
           extra_headers: Send extra headers
 

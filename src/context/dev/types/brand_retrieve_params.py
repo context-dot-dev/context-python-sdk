@@ -158,11 +158,9 @@ class BrandRetrieveByDomainRequest(TypedDict, total=False):
     ]
 
     max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
-    """
-    Maximum age in milliseconds for cached brand data before the API performs a hard
-    refresh. Defaults to 3 months (7776000000 ms). Set to 0 to always perform a hard
-    refresh. Negative values are clamped to 0; values above 1 year (31536000000 ms)
-    are clamped to 1 year.
+    """Maximum age of cached brand data in ms.
+
+    Defaults to 3 months; clamped to 0–1 year. `0` refreshes.
     """
 
     max_speed: Annotated[bool, PropertyInfo(alias="maxSpeed")]
@@ -173,32 +171,22 @@ class BrandRetrieveByDomainRequest(TypedDict, total=False):
     """
 
     tags: SequenceNotStr[str]
-    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
+    """Labels for filtering usage in the dashboard."""
 
     timeout_opts: Annotated[BrandRetrieveByDomainRequestTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
-    """Optional request deadline and behavior on timeout.
-
-    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail
-    or a JSON-encoded timeoutOpts object.
-    """
+    """Request deadline and what to return when it passes."""
 
 
 class BrandRetrieveByDomainRequestTimeoutOpts(TypedDict, total=False):
-    """Optional request deadline and behavior on timeout.
-
-    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded timeoutOpts object.
-    """
+    """Request deadline and what to return when it passes."""
 
     milliseconds: Required[int]
-    """Request deadline in milliseconds. Maximum: 300000 (5 minutes)."""
+    """Deadline in milliseconds."""
 
     behavior: Literal["fail", "return-partial"]
-    """What to do at the deadline.
+    """\"fail" returns 408 at the deadline.
 
-    "fail" returns 408 REQUEST_TIMEOUT without charging credits. "return-partial"
-    returns usable results collected so far; if none are available, the request
-    still fails without charging credits. Partial results are not cached as complete
-    results.
+    "return-partial" returns available results; inspect the response’s partial flag.
     """
 
 
@@ -341,11 +329,9 @@ class BrandRetrieveByNameRequest(TypedDict, total=False):
     ]
 
     max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
-    """
-    Maximum age in milliseconds for cached brand data before the API performs a hard
-    refresh. Defaults to 3 months (7776000000 ms). Set to 0 to always perform a hard
-    refresh. Negative values are clamped to 0; values above 1 year (31536000000 ms)
-    are clamped to 1 year.
+    """Maximum age of cached brand data in ms.
+
+    Defaults to 3 months; clamped to 0–1 year. `0` refreshes.
     """
 
     max_speed: Annotated[bool, PropertyInfo(alias="maxSpeed")]
@@ -356,32 +342,22 @@ class BrandRetrieveByNameRequest(TypedDict, total=False):
     """
 
     tags: SequenceNotStr[str]
-    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
+    """Labels for filtering usage in the dashboard."""
 
     timeout_opts: Annotated[BrandRetrieveByNameRequestTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
-    """Optional request deadline and behavior on timeout.
-
-    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail
-    or a JSON-encoded timeoutOpts object.
-    """
+    """Request deadline and what to return when it passes."""
 
 
 class BrandRetrieveByNameRequestTimeoutOpts(TypedDict, total=False):
-    """Optional request deadline and behavior on timeout.
-
-    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded timeoutOpts object.
-    """
+    """Request deadline and what to return when it passes."""
 
     milliseconds: Required[int]
-    """Request deadline in milliseconds. Maximum: 300000 (5 minutes)."""
+    """Deadline in milliseconds."""
 
     behavior: Literal["fail", "return-partial"]
-    """What to do at the deadline.
+    """\"fail" returns 408 at the deadline.
 
-    "fail" returns 408 REQUEST_TIMEOUT without charging credits. "return-partial"
-    returns usable results collected so far; if none are available, the request
-    still fails without charging credits. Partial results are not cached as complete
-    results.
+    "return-partial" returns available results; inspect the response’s partial flag.
     """
 
 
@@ -518,11 +494,9 @@ class BrandRetrieveByEmailRequest(TypedDict, total=False):
     ]
 
     max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
-    """
-    Maximum age in milliseconds for cached brand data before the API performs a hard
-    refresh. Defaults to 3 months (7776000000 ms). Set to 0 to always perform a hard
-    refresh. Negative values are clamped to 0; values above 1 year (31536000000 ms)
-    are clamped to 1 year.
+    """Maximum age of cached brand data in ms.
+
+    Defaults to 3 months; clamped to 0–1 year. `0` refreshes.
     """
 
     max_speed: Annotated[bool, PropertyInfo(alias="maxSpeed")]
@@ -533,32 +507,22 @@ class BrandRetrieveByEmailRequest(TypedDict, total=False):
     """
 
     tags: SequenceNotStr[str]
-    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
+    """Labels for filtering usage in the dashboard."""
 
     timeout_opts: Annotated[BrandRetrieveByEmailRequestTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
-    """Optional request deadline and behavior on timeout.
-
-    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail
-    or a JSON-encoded timeoutOpts object.
-    """
+    """Request deadline and what to return when it passes."""
 
 
 class BrandRetrieveByEmailRequestTimeoutOpts(TypedDict, total=False):
-    """Optional request deadline and behavior on timeout.
-
-    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded timeoutOpts object.
-    """
+    """Request deadline and what to return when it passes."""
 
     milliseconds: Required[int]
-    """Request deadline in milliseconds. Maximum: 300000 (5 minutes)."""
+    """Deadline in milliseconds."""
 
     behavior: Literal["fail", "return-partial"]
-    """What to do at the deadline.
+    """\"fail" returns 408 at the deadline.
 
-    "fail" returns 408 REQUEST_TIMEOUT without charging credits. "return-partial"
-    returns usable results collected so far; if none are available, the request
-    still fails without charging credits. Partial results are not cached as complete
-    results.
+    "return-partial" returns available results; inspect the response’s partial flag.
     """
 
 
@@ -695,11 +659,9 @@ class BrandRetrieveByTickerRequest(TypedDict, total=False):
     ]
 
     max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
-    """
-    Maximum age in milliseconds for cached brand data before the API performs a hard
-    refresh. Defaults to 3 months (7776000000 ms). Set to 0 to always perform a hard
-    refresh. Negative values are clamped to 0; values above 1 year (31536000000 ms)
-    are clamped to 1 year.
+    """Maximum age of cached brand data in ms.
+
+    Defaults to 3 months; clamped to 0–1 year. `0` refreshes.
     """
 
     max_speed: Annotated[bool, PropertyInfo(alias="maxSpeed")]
@@ -710,35 +672,25 @@ class BrandRetrieveByTickerRequest(TypedDict, total=False):
     """
 
     tags: SequenceNotStr[str]
-    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
+    """Labels for filtering usage in the dashboard."""
 
     ticker_exchange: str
     """Optional stock exchange for the ticker. Defaults to NASDAQ if not specified."""
 
     timeout_opts: Annotated[BrandRetrieveByTickerRequestTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
-    """Optional request deadline and behavior on timeout.
-
-    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail
-    or a JSON-encoded timeoutOpts object.
-    """
+    """Request deadline and what to return when it passes."""
 
 
 class BrandRetrieveByTickerRequestTimeoutOpts(TypedDict, total=False):
-    """Optional request deadline and behavior on timeout.
-
-    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded timeoutOpts object.
-    """
+    """Request deadline and what to return when it passes."""
 
     milliseconds: Required[int]
-    """Request deadline in milliseconds. Maximum: 300000 (5 minutes)."""
+    """Deadline in milliseconds."""
 
     behavior: Literal["fail", "return-partial"]
-    """What to do at the deadline.
+    """\"fail" returns 408 at the deadline.
 
-    "fail" returns 408 REQUEST_TIMEOUT without charging credits. "return-partial"
-    returns usable results collected so far; if none are available, the request
-    still fails without charging credits. Partial results are not cached as complete
-    results.
+    "return-partial" returns available results; inspect the response’s partial flag.
     """
 
 
@@ -754,32 +706,22 @@ class BrandRetrieveByDirectURLRequest(TypedDict, total=False):
     """Discriminator for direct-URL-based brand retrieval."""
 
     tags: SequenceNotStr[str]
-    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
+    """Labels for filtering usage in the dashboard."""
 
     timeout_opts: Annotated[BrandRetrieveByDirectURLRequestTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
-    """Optional request deadline and behavior on timeout.
-
-    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail
-    or a JSON-encoded timeoutOpts object.
-    """
+    """Request deadline and what to return when it passes."""
 
 
 class BrandRetrieveByDirectURLRequestTimeoutOpts(TypedDict, total=False):
-    """Optional request deadline and behavior on timeout.
-
-    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded timeoutOpts object.
-    """
+    """Request deadline and what to return when it passes."""
 
     milliseconds: Required[int]
-    """Request deadline in milliseconds. Maximum: 300000 (5 minutes)."""
+    """Deadline in milliseconds."""
 
     behavior: Literal["fail", "return-partial"]
-    """What to do at the deadline.
+    """\"fail" returns 408 at the deadline.
 
-    "fail" returns 408 REQUEST_TIMEOUT without charging credits. "return-partial"
-    returns usable results collected so far; if none are available, the request
-    still fails without charging credits. Partial results are not cached as complete
-    results.
+    "return-partial" returns available results; inspect the response’s partial flag.
     """
 
 
@@ -947,32 +889,22 @@ class BrandRetrieveFromTransactionRequest(TypedDict, total=False):
     """Optional phone number from the transaction to help verify brand match."""
 
     tags: SequenceNotStr[str]
-    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
+    """Labels for filtering usage in the dashboard."""
 
     timeout_opts: Annotated[BrandRetrieveFromTransactionRequestTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
-    """Optional request deadline and behavior on timeout.
-
-    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail
-    or a JSON-encoded timeoutOpts object.
-    """
+    """Request deadline and what to return when it passes."""
 
 
 class BrandRetrieveFromTransactionRequestTimeoutOpts(TypedDict, total=False):
-    """Optional request deadline and behavior on timeout.
-
-    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded timeoutOpts object.
-    """
+    """Request deadline and what to return when it passes."""
 
     milliseconds: Required[int]
-    """Request deadline in milliseconds. Maximum: 300000 (5 minutes)."""
+    """Deadline in milliseconds."""
 
     behavior: Literal["fail", "return-partial"]
-    """What to do at the deadline.
+    """\"fail" returns 408 at the deadline.
 
-    "fail" returns 408 REQUEST_TIMEOUT without charging credits. "return-partial"
-    returns usable results collected so far; if none are available, the request
-    still fails without charging credits. Partial results are not cached as complete
-    results.
+    "return-partial" returns available results; inspect the response’s partial flag.
     """
 
 

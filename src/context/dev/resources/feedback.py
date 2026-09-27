@@ -24,10 +24,7 @@ __all__ = ["FeedbackResource", "AsyncFeedbackResource"]
 
 
 class FeedbackResource(SyncAPIResource):
-    """Report bugs, docs mismatches, and friction with any Context.dev API.
-
-    Submissions cost no credits and use a separate rate limit.
-    """
+    """Report API issues and documentation mismatches."""
 
     @cached_property
     def with_raw_response(self) -> FeedbackResourceWithRawResponse:
@@ -63,10 +60,9 @@ class FeedbackResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FeedbackSubmitResponse:
-        """Report a problem with a Context.dev API call, docs page, SDK, or CLI.
-
-        Include
-        request_id, url, or both.
+        """
+        Report an API issue or documentation mismatch, including request IDs when
+        available.
 
         Args:
           category: Kind of issue.
@@ -76,7 +72,7 @@ class FeedbackResource(SyncAPIResource):
           request_id: The request_id of the API call the feedback is about, from its response body or
               X-Request-Id header.
 
-          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          tags: Labels for filtering usage in the dashboard.
 
           url: The page the feedback is about, such as one page of a crawl or a docs page.
 
@@ -108,10 +104,7 @@ class FeedbackResource(SyncAPIResource):
 
 
 class AsyncFeedbackResource(AsyncAPIResource):
-    """Report bugs, docs mismatches, and friction with any Context.dev API.
-
-    Submissions cost no credits and use a separate rate limit.
-    """
+    """Report API issues and documentation mismatches."""
 
     @cached_property
     def with_raw_response(self) -> AsyncFeedbackResourceWithRawResponse:
@@ -147,10 +140,9 @@ class AsyncFeedbackResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FeedbackSubmitResponse:
-        """Report a problem with a Context.dev API call, docs page, SDK, or CLI.
-
-        Include
-        request_id, url, or both.
+        """
+        Report an API issue or documentation mismatch, including request IDs when
+        available.
 
         Args:
           category: Kind of issue.
@@ -160,7 +152,7 @@ class AsyncFeedbackResource(AsyncAPIResource):
           request_id: The request_id of the API call the feedback is about, from its response body or
               X-Request-Id header.
 
-          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          tags: Labels for filtering usage in the dashboard.
 
           url: The page the feedback is about, such as one page of a crawl or a docs page.
 

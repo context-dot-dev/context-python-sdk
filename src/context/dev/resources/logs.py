@@ -26,10 +26,7 @@ __all__ = ["LogsResource", "AsyncLogsResource"]
 
 
 class LogsResource(SyncAPIResource):
-    """Read your organization's API request logs to debug failed calls.
-
-    These endpoints cost no credits and use a separate rate limit.
-    """
+    """Read your organization's API request logs."""
 
     @cached_property
     def with_raw_response(self) -> LogsResourceWithRawResponse:
@@ -62,7 +59,7 @@ class LogsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> LogRetrieveResponse:
         """
-        Get one logged API call, including its request input and response body.
+        Retrieve a request’s metadata, retained input, and response.
 
         Args:
           request_id: The request ID of the logged API call.
@@ -106,10 +103,10 @@ class LogsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> LogListResponse:
-        """List your organization's API requests, newest first.
+        """List your organization’s request logs with filters and pagination.
 
-        Defaults to the last 24
-        hours.
+        Logs also
+        include batch settlements and monitor runs.
 
         Args:
           error_code: Filter by the `error_code` returned in the response.
@@ -174,10 +171,7 @@ class LogsResource(SyncAPIResource):
 
 
 class AsyncLogsResource(AsyncAPIResource):
-    """Read your organization's API request logs to debug failed calls.
-
-    These endpoints cost no credits and use a separate rate limit.
-    """
+    """Read your organization's API request logs."""
 
     @cached_property
     def with_raw_response(self) -> AsyncLogsResourceWithRawResponse:
@@ -210,7 +204,7 @@ class AsyncLogsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> LogRetrieveResponse:
         """
-        Get one logged API call, including its request input and response body.
+        Retrieve a request’s metadata, retained input, and response.
 
         Args:
           request_id: The request ID of the logged API call.
@@ -254,10 +248,10 @@ class AsyncLogsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> LogListResponse:
-        """List your organization's API requests, newest first.
+        """List your organization’s request logs with filters and pagination.
 
-        Defaults to the last 24
-        hours.
+        Logs also
+        include batch settlements and monitor runs.
 
         Args:
           error_code: Filter by the `error_code` returned in the response.

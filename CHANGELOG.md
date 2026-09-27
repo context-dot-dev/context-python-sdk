@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.21.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.20.0...v2.21.0) (2026-09-27)
+
+
+### Features
+
+* **feedback:** add agent feedback endpoint ([#1322](https://github.com/context-dot-dev/context-python-sdk/issues/1322)) ([959b17f](https://github.com/context-dot-dev/context-python-sdk/commit/959b17f9efdad40c29091bc8b7429b01984b27ca))
+* **highlights:** preserve Markdown structure in scrape excerpts ([#1236](https://github.com/context-dot-dev/context-python-sdk/issues/1236)) ([d002c89](https://github.com/context-dot-dev/context-python-sdk/commit/d002c89acd4b227769cfadb65da0558196e0dc65))
+* **scrape:** enable highlights with zero data retention ([#1246](https://github.com/context-dot-dev/context-python-sdk/issues/1246)) ([0459b42](https://github.com/context-dot-dev/context-python-sdk/commit/0459b4230713eff50beb67a903fe8bdd65bb92b8))
+
+
+### Bug Fixes
+
+* **openapi:** document exclusive news filters ([#1265](https://github.com/context-dot-dev/context-python-sdk/issues/1265)) ([4e63b62](https://github.com/context-dot-dev/context-python-sdk/commit/4e63b620b7e8203bba480acca745d50b037150f9))
+* **scrape:** only flag partial success when a requested format succeeds ([#1325](https://github.com/context-dot-dev/context-python-sdk/issues/1325)) ([9a5597d](https://github.com/context-dot-dev/context-python-sdk/commit/9a5597dcc1faf9cf4e452337464e020833d02d42))
+* **scrape:** preserve successful formats when other outputs fail ([#1263](https://github.com/context-dot-dev/context-python-sdk/issues/1263)) ([e1761c5](https://github.com/context-dot-dev/context-python-sdk/commit/e1761c5c1ec14d6c0276e933f0aa388e056f36de))
+* **scrape:** retain highlight headings only when needed ([#1245](https://github.com/context-dot-dev/context-python-sdk/issues/1245)) ([a76377d](https://github.com/context-dot-dev/context-python-sdk/commit/a76377ddf7f9cc5baa002ac87ee3e0c032601a91))
+
 ## [2.20.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.19.0...v2.20.0) (2026-09-23)
 
 

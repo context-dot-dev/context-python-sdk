@@ -23,7 +23,7 @@ class FeedbackSubmitParams(TypedDict, total=False):
     """
 
     tags: SequenceNotStr[str]
-    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
+    """Labels for filtering usage in the dashboard."""
 
     url: str
     """The page the feedback is about, such as one page of a crawl or a docs page."""

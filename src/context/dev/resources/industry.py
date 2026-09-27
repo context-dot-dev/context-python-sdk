@@ -61,7 +61,7 @@ class IndustryResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> IndustryRetrieveNaicsResponse:
         """
-        Classify any brand into 2022 NAICS industry codes from its domain or name.
+        Classify a company into NAICS industry codes.
 
         Args:
           input: Brand domain or title to retrieve NAICS code for. If a valid domain is provided,
@@ -73,18 +73,12 @@ class IndustryResource(SyncAPIResource):
 
           min_results: Minimum number of NAICS codes to return. Must be at least 1. Defaults to 1.
 
-          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
-              characters.
+          tags: Comma-separated labels for filtering usage, e.g. `production,team-alpha`.
 
-          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
-              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
-              timeoutOpts object.
+          timeout_opts: Request deadline and what to return when it passes.
 
-          zdr: Set to enabled to bypass shared caches and omit request and response content
-              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
-              omitted. Requires zero data retention to be enabled for your organization
-              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
-              Successful ZDR responses include X-Context-ZDR: true.
+          zdr: `enabled` turns on zero data retention. Returns 403 `ZDR_NOT_ENABLED` unless
+              your organization has ZDR.
 
           extra_headers: Send extra headers
 
@@ -134,9 +128,7 @@ class IndustryResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> IndustryRetrieveSicResponse:
         """
-        Classify any brand into Standard Industrial Classification (SIC) codes from its
-        domain or name. Choose between the original SIC system (`original_sic`) or the
-        latest SIC list maintained by the SEC (`latest_sec`).
+        Classify a company into SIC industry codes.
 
         Args:
           input: Brand domain or title to retrieve SIC code for. If a valid domain is provided,
@@ -147,22 +139,14 @@ class IndustryResource(SyncAPIResource):
 
           min_results: Minimum number of SIC codes to return. Must be at least 1. Defaults to 1.
 
-          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
-              characters.
+          tags: Comma-separated labels for filtering usage, e.g. `production,team-alpha`.
 
-          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
-              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
-              timeoutOpts object.
+          timeout_opts: Request deadline and what to return when it passes.
 
-          type: Which SIC dataset to classify against. `original_sic` uses the 1987 Standard
-              Industrial Classification system; `latest_sec` uses the current SIC list as
-              published by the SEC. Defaults to `original_sic`.
+          type: SIC dataset: `original_sic` (1987) or `latest_sec` (current SEC list).
 
-          zdr: Set to enabled to bypass shared caches and omit request and response content
-              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
-              omitted. Requires zero data retention to be enabled for your organization
-              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
-              Successful ZDR responses include X-Context-ZDR: true.
+          zdr: `enabled` turns on zero data retention. Returns 403 `ZDR_NOT_ENABLED` unless
+              your organization has ZDR.
 
           extra_headers: Send extra headers
 
@@ -233,7 +217,7 @@ class AsyncIndustryResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> IndustryRetrieveNaicsResponse:
         """
-        Classify any brand into 2022 NAICS industry codes from its domain or name.
+        Classify a company into NAICS industry codes.
 
         Args:
           input: Brand domain or title to retrieve NAICS code for. If a valid domain is provided,
@@ -245,18 +229,12 @@ class AsyncIndustryResource(AsyncAPIResource):
 
           min_results: Minimum number of NAICS codes to return. Must be at least 1. Defaults to 1.
 
-          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
-              characters.
+          tags: Comma-separated labels for filtering usage, e.g. `production,team-alpha`.
 
-          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
-              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
-              timeoutOpts object.
+          timeout_opts: Request deadline and what to return when it passes.
 
-          zdr: Set to enabled to bypass shared caches and omit request and response content
-              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
-              omitted. Requires zero data retention to be enabled for your organization
-              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
-              Successful ZDR responses include X-Context-ZDR: true.
+          zdr: `enabled` turns on zero data retention. Returns 403 `ZDR_NOT_ENABLED` unless
+              your organization has ZDR.
 
           extra_headers: Send extra headers
 
@@ -306,9 +284,7 @@ class AsyncIndustryResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> IndustryRetrieveSicResponse:
         """
-        Classify any brand into Standard Industrial Classification (SIC) codes from its
-        domain or name. Choose between the original SIC system (`original_sic`) or the
-        latest SIC list maintained by the SEC (`latest_sec`).
+        Classify a company into SIC industry codes.
 
         Args:
           input: Brand domain or title to retrieve SIC code for. If a valid domain is provided,
@@ -319,22 +295,14 @@ class AsyncIndustryResource(AsyncAPIResource):
 
           min_results: Minimum number of SIC codes to return. Must be at least 1. Defaults to 1.
 
-          tags: Comma-separated tags for tracking request usage. Up to 20 tags, each 1-50
-              characters.
+          tags: Comma-separated labels for filtering usage, e.g. `production,team-alpha`.
 
-          timeout_opts: Optional request deadline and behavior on timeout. For GET requests, use
-              timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded
-              timeoutOpts object.
+          timeout_opts: Request deadline and what to return when it passes.
 
-          type: Which SIC dataset to classify against. `original_sic` uses the 1987 Standard
-              Industrial Classification system; `latest_sec` uses the current SIC list as
-              published by the SEC. Defaults to `original_sic`.
+          type: SIC dataset: `original_sic` (1987) or `latest_sec` (current SEC list).
 
-          zdr: Set to enabled to bypass shared caches and omit request and response content
-              from retained usage logs. Asset uploads are skipped, so hosted image URLs are
-              omitted. Requires zero data retention to be enabled for your organization
-              (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
-              Successful ZDR responses include X-Context-ZDR: true.
+          zdr: `enabled` turns on zero data retention. Returns 403 `ZDR_NOT_ENABLED` unless
+              your organization has ZDR.
 
           extra_headers: Send extra headers
 

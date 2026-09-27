@@ -31,10 +31,7 @@ class BrandSearchParams(TypedDict, total=False):
     """
 
     tags: SequenceNotStr[str]
-    """Comma-separated tags for tracking request usage.
-
-    Up to 20 tags, each 1-50 characters.
-    """
+    """Comma-separated labels for filtering usage, e.g. `production,team-alpha`."""
 
     typo_tolerance: Annotated[int, PropertyInfo(alias="typoTolerance")]
     """Maximum number of typos tolerated when matching, from 0 to 2.

@@ -52,10 +52,9 @@ class BatchSubmitParams(TypedDict, total=False):
     """Tags stored on the batch. Filter the batch list by them later."""
 
     webhook: Webhook
-    """Completion webhook settings.
+    """Where to send the batch's final-status event.
 
-    Cannot be combined with webhookUrl. Omitting retry preserves legacy delivery;
-    retry: {} opts into durable retries.
+    Omit `retry` for one attempt; `{}` uses the default retry schedule.
     """
 
     webhook_url: Annotated[str, PropertyInfo(alias="webhookUrl")]
@@ -65,9 +64,10 @@ class BatchSubmitParams(TypedDict, total=False):
     """
 
     idempotency_key: Annotated[str, PropertyInfo(alias="Idempotency-Key")]
-    """Any string unique to this submission.
+    """Unique key per submission.
 
-    Retries with the same key return the original batch.
+    Retrying with the same key and body returns the original batch; a different body
+    returns `409`.
     """
 
 
@@ -101,18 +101,10 @@ class InputScrapeDataMarkdownOptionsPdf(TypedDict, total=False):
     """
 
     ocr: bool
-    """
-    When true, OCR the selected PDF pages that have no usable text layer (scans),
-    replacing each recovered page's text with the OCR result while pages with a real
-    text layer keep it. Billed at 1 credit per page OCR actually recovered, on top
-    of the base request cost. When false, no OCR runs.
-    """
+    """Read scanned PDF pages with OCR; preserve pages that already have text."""
 
     should_parse: Annotated[bool, PropertyInfo(alias="shouldParse")]
-    """When true, PDF URLs are fetched and parsed.
-
-    When false, PDF URLs are skipped and a 400 PDF_SKIPPED is returned.
-    """
+    """Parse PDF URLs. When false, PDFs fail with `PDF_SKIPPED`."""
 
     start: int
     """First 1-based PDF page to parse.
@@ -330,10 +322,7 @@ class InputScrapeDataMarkdownOptions(TypedDict, total=False):
         "zm",
         "zw",
     ]
-    """
-    Fetch the target page through a residential proxy in this country (ISO 3166-1
-    alpha-2).
-    """
+    """Fetch from this country (ISO 3166-1 alpha-2)."""
 
     exclude_selectors: Annotated[Optional[SequenceNotStr[str]], PropertyInfo(alias="excludeSelectors")]
     """Remove elements matching these CSS selectors.
@@ -342,10 +331,7 @@ class InputScrapeDataMarkdownOptions(TypedDict, total=False):
     """
 
     include_html: Annotated[bool, PropertyInfo(alias="includeHTML")]
-    """
-    Also include each page's HTML in its result record, as an `html` field alongside
-    the Markdown.
-    """
+    """Also return each page's HTML in `html`."""
 
     include_images: Annotated[bool, PropertyInfo(alias="includeImages")]
     """Include image references in the Markdown."""
@@ -354,17 +340,13 @@ class InputScrapeDataMarkdownOptions(TypedDict, total=False):
     """Include links in the Markdown."""
 
     include_selectors: Annotated[Optional[SequenceNotStr[str]], PropertyInfo(alias="includeSelectors")]
-    """Keep only the subtrees matching these CSS selectors.
+    """Keep only elements matching these CSS selectors.
 
-    Filtered pages are always fetched fresh, ignoring `maxAgeMs`.
+    Filtered pages ignore `maxAgeMs`.
     """
 
     max_age_ms: Annotated[Optional[int], PropertyInfo(alias="maxAgeMs")]
-    """
-    Return a cached result if a prior scrape for the same parameters exists and is
-    younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
-    omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
-    """
+    """Maximum cache age in milliseconds. Defaults to 1 day. `0` fetches fresh."""
 
     pdf: InputScrapeDataMarkdownOptionsPdf
     """PDF parsing controls.
@@ -374,10 +356,7 @@ class InputScrapeDataMarkdownOptions(TypedDict, total=False):
     """
 
     settle_animations: Annotated[bool, PropertyInfo(alias="settleAnimations")]
-    """
-    Wait briefly for CSS and transition animations to settle before extraction, on
-    pages that render in a browser.
-    """
+    """Wait for CSS animations to finish before extracting, on browser-rendered pages."""
 
     shorten_base64_images: Annotated[bool, PropertyInfo(alias="shortenBase64Images")]
     """Shorten inline base64 image data."""
@@ -432,18 +411,10 @@ class InputScrapeDataHTMLOptionsPdf(TypedDict, total=False):
     """
 
     ocr: bool
-    """
-    When true, OCR the selected PDF pages that have no usable text layer (scans),
-    replacing each recovered page's text with the OCR result while pages with a real
-    text layer keep it. Billed at 1 credit per page OCR actually recovered, on top
-    of the base request cost. When false, no OCR runs.
-    """
+    """Read scanned PDF pages with OCR; preserve pages that already have text."""
 
     should_parse: Annotated[bool, PropertyInfo(alias="shouldParse")]
-    """When true, PDF URLs are fetched and parsed.
-
-    When false, PDF URLs are skipped and a 400 PDF_SKIPPED is returned.
-    """
+    """Parse PDF URLs. When false, PDFs fail with `PDF_SKIPPED`."""
 
     start: int
     """First 1-based PDF page to parse.
@@ -661,10 +632,7 @@ class InputScrapeDataHTMLOptions(TypedDict, total=False):
         "zm",
         "zw",
     ]
-    """
-    Fetch the target page through a residential proxy in this country (ISO 3166-1
-    alpha-2).
-    """
+    """Fetch from this country (ISO 3166-1 alpha-2)."""
 
     exclude_selectors: Annotated[Optional[SequenceNotStr[str]], PropertyInfo(alias="excludeSelectors")]
     """Remove elements matching these CSS selectors.
@@ -673,17 +641,13 @@ class InputScrapeDataHTMLOptions(TypedDict, total=False):
     """
 
     include_selectors: Annotated[Optional[SequenceNotStr[str]], PropertyInfo(alias="includeSelectors")]
-    """Keep only the subtrees matching these CSS selectors.
+    """Keep only elements matching these CSS selectors.
 
-    Filtered pages are always fetched fresh, ignoring `maxAgeMs`.
+    Filtered pages ignore `maxAgeMs`.
     """
 
     max_age_ms: Annotated[Optional[int], PropertyInfo(alias="maxAgeMs")]
-    """
-    Return a cached result if a prior scrape for the same parameters exists and is
-    younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
-    omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
-    """
+    """Maximum cache age in milliseconds. Defaults to 1 day. `0` fetches fresh."""
 
     pdf: InputScrapeDataHTMLOptionsPdf
     """PDF parsing controls.
@@ -693,10 +657,7 @@ class InputScrapeDataHTMLOptions(TypedDict, total=False):
     """
 
     settle_animations: Annotated[bool, PropertyInfo(alias="settleAnimations")]
-    """
-    Wait briefly for CSS and transition animations to settle before extraction, on
-    pages that render in a browser.
-    """
+    """Wait for CSS animations to finish before extracting, on browser-rendered pages."""
 
     use_main_content_only: Annotated[bool, PropertyInfo(alias="useMainContentOnly")]
     """Return the main content without navigation or footers."""
@@ -722,7 +683,7 @@ InputScrapeData: TypeAlias = Union[InputScrapeDataMarkdown, InputScrapeDataHTML]
 
 
 class InputScrape(TypedDict, total=False):
-    """Scrape up to 25K URLs in one batch."""
+    """Scrape a list of up to 25,000 URLs."""
 
     data: Required[InputScrapeData]
     """Pages to scrape and their output format."""
@@ -815,18 +776,10 @@ class InputCrawlDataMarkdownOptionsPdf(TypedDict, total=False):
     """
 
     ocr: bool
-    """
-    When true, OCR the selected PDF pages that have no usable text layer (scans),
-    replacing each recovered page's text with the OCR result while pages with a real
-    text layer keep it. Billed at 1 credit per page OCR actually recovered, on top
-    of the base request cost. When false, no OCR runs.
-    """
+    """Read scanned PDF pages with OCR; preserve pages that already have text."""
 
     should_parse: Annotated[bool, PropertyInfo(alias="shouldParse")]
-    """When true, PDF URLs are fetched and parsed.
-
-    When false, PDF URLs are skipped and a 400 PDF_SKIPPED is returned.
-    """
+    """Parse PDF URLs. When false, PDFs fail with `PDF_SKIPPED`."""
 
     start: int
     """First 1-based PDF page to parse.
@@ -1044,10 +997,7 @@ class InputCrawlDataMarkdownOptions(TypedDict, total=False):
         "zm",
         "zw",
     ]
-    """
-    Fetch the target page through a residential proxy in this country (ISO 3166-1
-    alpha-2).
-    """
+    """Fetch from this country (ISO 3166-1 alpha-2)."""
 
     exclude_selectors: Annotated[Optional[SequenceNotStr[str]], PropertyInfo(alias="excludeSelectors")]
     """Remove elements matching these CSS selectors.
@@ -1056,10 +1006,7 @@ class InputCrawlDataMarkdownOptions(TypedDict, total=False):
     """
 
     include_html: Annotated[bool, PropertyInfo(alias="includeHTML")]
-    """
-    Also include each page's HTML in its result record, as an `html` field alongside
-    the Markdown.
-    """
+    """Also return each page's HTML in `html`."""
 
     include_images: Annotated[bool, PropertyInfo(alias="includeImages")]
     """Include image references in the Markdown."""
@@ -1068,17 +1015,13 @@ class InputCrawlDataMarkdownOptions(TypedDict, total=False):
     """Include links in the Markdown."""
 
     include_selectors: Annotated[Optional[SequenceNotStr[str]], PropertyInfo(alias="includeSelectors")]
-    """Keep only the subtrees matching these CSS selectors.
+    """Keep only elements matching these CSS selectors.
 
-    Filtered pages are always fetched fresh, ignoring `maxAgeMs`.
+    Filtered pages ignore `maxAgeMs`.
     """
 
     max_age_ms: Annotated[Optional[int], PropertyInfo(alias="maxAgeMs")]
-    """
-    Return a cached result if a prior scrape for the same parameters exists and is
-    younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
-    omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
-    """
+    """Maximum cache age in milliseconds. Defaults to 1 day. `0` fetches fresh."""
 
     pdf: InputCrawlDataMarkdownOptionsPdf
     """PDF parsing controls.
@@ -1088,10 +1031,7 @@ class InputCrawlDataMarkdownOptions(TypedDict, total=False):
     """
 
     settle_animations: Annotated[bool, PropertyInfo(alias="settleAnimations")]
-    """
-    Wait briefly for CSS and transition animations to settle before extraction, on
-    pages that render in a browser.
-    """
+    """Wait for CSS animations to finish before extracting, on browser-rendered pages."""
 
     shorten_base64_images: Annotated[bool, PropertyInfo(alias="shortenBase64Images")]
     """Shorten inline base64 image data."""
@@ -1198,18 +1138,10 @@ class InputCrawlDataHTMLOptionsPdf(TypedDict, total=False):
     """
 
     ocr: bool
-    """
-    When true, OCR the selected PDF pages that have no usable text layer (scans),
-    replacing each recovered page's text with the OCR result while pages with a real
-    text layer keep it. Billed at 1 credit per page OCR actually recovered, on top
-    of the base request cost. When false, no OCR runs.
-    """
+    """Read scanned PDF pages with OCR; preserve pages that already have text."""
 
     should_parse: Annotated[bool, PropertyInfo(alias="shouldParse")]
-    """When true, PDF URLs are fetched and parsed.
-
-    When false, PDF URLs are skipped and a 400 PDF_SKIPPED is returned.
-    """
+    """Parse PDF URLs. When false, PDFs fail with `PDF_SKIPPED`."""
 
     start: int
     """First 1-based PDF page to parse.
@@ -1427,10 +1359,7 @@ class InputCrawlDataHTMLOptions(TypedDict, total=False):
         "zm",
         "zw",
     ]
-    """
-    Fetch the target page through a residential proxy in this country (ISO 3166-1
-    alpha-2).
-    """
+    """Fetch from this country (ISO 3166-1 alpha-2)."""
 
     exclude_selectors: Annotated[Optional[SequenceNotStr[str]], PropertyInfo(alias="excludeSelectors")]
     """Remove elements matching these CSS selectors.
@@ -1439,17 +1368,13 @@ class InputCrawlDataHTMLOptions(TypedDict, total=False):
     """
 
     include_selectors: Annotated[Optional[SequenceNotStr[str]], PropertyInfo(alias="includeSelectors")]
-    """Keep only the subtrees matching these CSS selectors.
+    """Keep only elements matching these CSS selectors.
 
-    Filtered pages are always fetched fresh, ignoring `maxAgeMs`.
+    Filtered pages ignore `maxAgeMs`.
     """
 
     max_age_ms: Annotated[Optional[int], PropertyInfo(alias="maxAgeMs")]
-    """
-    Return a cached result if a prior scrape for the same parameters exists and is
-    younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
-    omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
-    """
+    """Maximum cache age in milliseconds. Defaults to 1 day. `0` fetches fresh."""
 
     pdf: InputCrawlDataHTMLOptionsPdf
     """PDF parsing controls.
@@ -1459,10 +1384,7 @@ class InputCrawlDataHTMLOptions(TypedDict, total=False):
     """
 
     settle_animations: Annotated[bool, PropertyInfo(alias="settleAnimations")]
-    """
-    Wait briefly for CSS and transition animations to settle before extraction, on
-    pages that render in a browser.
-    """
+    """Wait for CSS animations to finish before extracting, on browser-rendered pages."""
 
     use_main_content_only: Annotated[bool, PropertyInfo(alias="useMainContentOnly")]
     """Return the main content without navigation or footers."""
@@ -1501,12 +1423,16 @@ Input: TypeAlias = Union[InputScrape, InputCrawl]
 
 
 class Webhook(TypedDict, total=False):
-    """Completion webhook settings.
+    """Where to send the batch's final-status event.
 
-    Cannot be combined with webhookUrl. Omitting retry preserves legacy delivery; retry: {} opts into durable retries.
+    Omit `retry` for one attempt; `{}` uses the default retry schedule.
     """
 
     url: Required[str]
+    """
+    Public HTTP(S) URL that receives batch completion, failure, or cancellation
+    events.
+    """
 
     retry: RetryConfigParam
     """Webhook retry settings. Use {} for the default schedule."""

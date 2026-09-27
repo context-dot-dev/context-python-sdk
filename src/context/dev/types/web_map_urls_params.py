@@ -13,53 +13,31 @@ __all__ = ["WebMapURLsParams", "TimeoutOpts"]
 
 class WebMapURLsParams(TypedDict, total=False):
     domain: Required[str]
-    """Domain to build a sitemap for"""
+    """Domain to map, e.g. `stripe.com`."""
 
     headers: Dict[str, str]
-    """
-    Optional outbound HTTP headers forwarded only to the target URL, sent as
-    deep-object query params such as headers[X-Custom]=value. When provided, caching
-    is bypassed: the result is neither read from nor written to cache.
-    """
+    """HTTP headers for the target origin. Non-empty headers bypass caching."""
 
     include_subdomains: Annotated[bool, PropertyInfo(alias="includeSubdomains")]
-    """
-    When true, discover and include public pages and sitemaps on subdomains of the
-    requested domain. Defaults to false.
-    """
+    """Include URLs on subdomains."""
 
     max_links: Annotated[int, PropertyInfo(alias="maxLinks")]
-    """Maximum number of links to return from the sitemap crawl.
-
-    Defaults to 10,000. Minimum is 1, maximum is 100,000.
-    """
+    """Maximum number of URLs to return."""
 
     search: str
-    """Optional search phrase.
-
-    When provided, the crawled sitemap is filtered to the pages whose URLs are about
-    that phrase, most relevant first, and the request costs 2 credits instead of 1.
-    """
+    """Filter URLs by a topic or phrase, most relevant first."""
 
     sitemap_url: Annotated[str, PropertyInfo(alias="sitemapUrl")]
-    """Optional explicit sitemap URL.
+    """Fetch this sitemap instead of discovering sitemaps.
 
-    When provided, exactly this sitemap is crawled instead of discovering the
-    domain's sitemaps.
+    Must belong to the domain or a subdomain.
     """
 
     tags: SequenceNotStr[str]
-    """Comma-separated tags for tracking request usage.
-
-    Up to 20 tags, each 1-50 characters.
-    """
+    """Comma-separated labels for filtering usage, e.g. `production,team-alpha`."""
 
     timeout_opts: Annotated[TimeoutOpts, PropertyInfo(alias="timeoutOpts")]
-    """Optional request deadline and behavior on timeout.
-
-    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail
-    or a JSON-encoded timeoutOpts object.
-    """
+    """Request deadline and what to return when it passes."""
 
     url_regex: Annotated[str, PropertyInfo(alias="urlRegex")]
     """Optional RE2-compatible regex pattern.
@@ -68,29 +46,20 @@ class WebMapURLsParams(TypedDict, total=False):
     """
 
     zdr: Literal["enabled", "disabled"]
-    """
-    Set to enabled to bypass shared caches and omit request and response content
-    from retained usage logs. Asset uploads are skipped, so hosted image URLs are
-    omitted. Requires zero data retention to be enabled for your organization
-    (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
-    Successful ZDR responses include X-Context-ZDR: true.
+    """`enabled` turns on zero data retention.
+
+    Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
     """
 
 
 class TimeoutOpts(TypedDict, total=False):
-    """Optional request deadline and behavior on timeout.
-
-    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded timeoutOpts object.
-    """
+    """Request deadline and what to return when it passes."""
 
     milliseconds: Required[int]
-    """Request deadline in milliseconds. Maximum: 300000 (5 minutes)."""
+    """Deadline in milliseconds."""
 
     behavior: Literal["fail", "return-partial"]
-    """What to do at the deadline.
+    """\"fail" returns 408 at the deadline.
 
-    "fail" returns 408 REQUEST_TIMEOUT without charging credits. "return-partial"
-    returns usable results collected so far; if none are available, the request
-    still fails without charging credits. Partial results are not cached as complete
-    results.
+    "return-partial" returns available results; inspect the response’s partial flag.
     """

@@ -24,7 +24,7 @@ __all__ = ["NewsResource", "AsyncNewsResource"]
 
 
 class NewsResource(SyncAPIResource):
-    """Search live first-party RSS and free historical news data by company identity."""
+    """Search live and historical news about a company."""
 
     @cached_property
     def with_raw_response(self) -> NewsResourceWithRawResponse:
@@ -61,13 +61,10 @@ class NewsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> NewsSearchResponse:
-        """
-        Searches live and historical company news for one company, identified in
-        searchBy by name, domain, ticker (optionally disambiguated by exchange), or
-        ISIN. Results can be filtered by one of publisher domain, publisher country,
-        article language, or article type, optionally combined with a published-at date
-        range, and include stable story IDs, source metadata, verified entity relevance,
-        and cursor pagination.
+        """Find company news by name, domain, ticker, or ISIN.
+
+        Filter articles and continue
+        through results with a cursor.
 
         Args:
           search_by: What to search for.
@@ -82,7 +79,7 @@ class NewsResource(SyncAPIResource):
 
           sort_by: Result ordering. Defaults to newest.
 
-          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          tags: Labels for filtering usage in the dashboard.
 
           extra_headers: Send extra headers
 
@@ -113,7 +110,7 @@ class NewsResource(SyncAPIResource):
 
 
 class AsyncNewsResource(AsyncAPIResource):
-    """Search live first-party RSS and free historical news data by company identity."""
+    """Search live and historical news about a company."""
 
     @cached_property
     def with_raw_response(self) -> AsyncNewsResourceWithRawResponse:
@@ -150,13 +147,10 @@ class AsyncNewsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> NewsSearchResponse:
-        """
-        Searches live and historical company news for one company, identified in
-        searchBy by name, domain, ticker (optionally disambiguated by exchange), or
-        ISIN. Results can be filtered by one of publisher domain, publisher country,
-        article language, or article type, optionally combined with a published-at date
-        range, and include stable story IDs, source metadata, verified entity relevance,
-        and cursor pagination.
+        """Find company news by name, domain, ticker, or ISIN.
+
+        Filter articles and continue
+        through results with a cursor.
 
         Args:
           search_by: What to search for.
@@ -171,7 +165,7 @@ class AsyncNewsResource(AsyncAPIResource):
 
           sort_by: Result ordering. Defaults to newest.
 
-          tags: Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          tags: Labels for filtering usage in the dashboard.
 
           extra_headers: Send extra headers
 

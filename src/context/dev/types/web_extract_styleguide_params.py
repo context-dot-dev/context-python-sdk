@@ -19,12 +19,7 @@ class WebExtractStyleguideParams(TypedDict, total=False):
     """
 
     direct_url: Annotated[str, PropertyInfo(alias="directUrl")]
-    """
-    A specific URL to fetch the styleguide from directly, bypassing domain
-    resolution (e.g., 'https://example.com/design-system'). When provided, the
-    styleguide is extracted from this exact URL. You must provide either 'domain' or
-    'directUrl', but not both.
-    """
+    """Exact URL to inspect. Provide either `domain` or `directUrl`, not both."""
 
     domain: str
     """Domain name to extract styleguide from (e.g., 'example.com', 'google.com').
@@ -34,50 +29,33 @@ class WebExtractStyleguideParams(TypedDict, total=False):
     """
 
     max_age_ms: Annotated[Optional[int], PropertyInfo(alias="maxAgeMs")]
-    """
-    Maximum age in milliseconds for cached brand data before the API performs a hard
-    refresh. Defaults to 3 months (7776000000 ms). Set to 0 to always perform a hard
-    refresh. Negative values are clamped to 0; values above 1 year (31536000000 ms)
-    are clamped to 1 year.
+    """Maximum age of cached brand data in ms.
+
+    Defaults to 3 months; clamped to 0–1 year. `0` refreshes.
     """
 
     tags: SequenceNotStr[str]
-    """Comma-separated tags for tracking request usage.
-
-    Up to 20 tags, each 1-50 characters.
-    """
+    """Comma-separated labels for filtering usage, e.g. `production,team-alpha`."""
 
     timeout_opts: Annotated[TimeoutOpts, PropertyInfo(alias="timeoutOpts")]
-    """Optional request deadline and behavior on timeout.
-
-    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail
-    or a JSON-encoded timeoutOpts object.
-    """
+    """Request deadline and what to return when it passes."""
 
     zdr: Literal["enabled", "disabled"]
-    """
-    Set to enabled to bypass shared caches and omit request and response content
-    from retained usage logs. Asset uploads are skipped, so hosted image URLs are
-    omitted. Requires zero data retention to be enabled for your organization
-    (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED.
-    Successful ZDR responses include X-Context-ZDR: true.
+    """`enabled` turns on zero data retention.
+
+    Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
     """
 
 
 class TimeoutOpts(TypedDict, total=False):
-    """Optional request deadline and behavior on timeout.
-
-    For GET requests, use timeoutOpts[milliseconds]=30000&timeoutOpts[behavior]=fail or a JSON-encoded timeoutOpts object.
-    """
+    """Request deadline and what to return when it passes."""
 
     milliseconds: Required[int]
-    """Request deadline in milliseconds. Maximum: 300000 (5 minutes)."""
+    """Deadline in milliseconds."""
 
     behavior: Literal["fail", "return-partial"]
-    """What to do at the deadline.
+    """\"fail" returns 408 at the deadline.
 
-    "fail" returns 408 REQUEST_TIMEOUT without charging credits. "return-partial"
-    returns usable results collected so far; if none are available, the request
-    still fails without charging credits. Partial results are not cached as complete
-    results. "return-partial" requires milliseconds of at least 5000.
+    "return-partial" returns available results; inspect the response’s partial flag.
+    "return-partial" requires at least 5000 ms.
     """

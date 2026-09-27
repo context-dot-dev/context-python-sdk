@@ -6,14 +6,22 @@ from typing_extensions import Literal
 
 from .._models import BaseModel
 
-__all__ = ["MonitorListChangesResponse", "Data"]
+__all__ = ["MonitorListChangesResponse", "Data", "DataEvidence", "KeyMetadata"]
+
+
+class DataEvidence(BaseModel):
+    after: str
+    """Snapshot of the content after the change."""
+
+    before: str
+    """Snapshot of the content before the change."""
+
+    url: Optional[str] = None
+    """Optional URL the evidence relates to. Absent for whole-target diffs."""
 
 
 class Data(BaseModel):
-    """A lightweight change summary.
-
-    `mode` is the constant `web`; `target_type` and `change_detection_type` describe the change, and which optional fields are present depends on them (e.g. sitemap changes include `added_url_count`/`removed_url_count`; semantic changes include `confidence`/`importance`).
-    """
+    """Detected change, including applicable diffs, URLs, and supporting evidence."""
 
     id: str
 
@@ -22,15 +30,17 @@ class Data(BaseModel):
     detected_at: datetime
 
     mode: Literal["web"]
-    """Top-level monitor category.
-
-    Always `web` today; the concrete behavior is described by `target` and
-    `change_detection`.
-    """
+    """Always `web`. Optional."""
 
     monitor_id: str
 
+    run_id: str
+    """The run that detected this change."""
+
     summary: str
+
+    tags: List[str]
+    """Labels for filtering monitors, their changes, and their usage."""
 
     target_type: Literal["page", "sitemap", "extract"]
 
@@ -40,19 +50,41 @@ class Data(BaseModel):
 
     added_url_count: Optional[int] = None
 
+    added_urls: Optional[List[str]] = None
+    """At most 500 URLs are included; the corresponding count field is always exact."""
+
+    after_text_excerpt: Optional[str] = None
+
+    before_text_excerpt: Optional[str] = None
+
     confidence: Optional[float] = None
+
+    diff: Optional[str] = None
+    """Text diff between the previous and current page baseline (page targets)."""
+
+    evidence: Optional[List[DataEvidence]] = None
 
     importance: Optional[Literal["low", "medium", "high"]] = None
 
     matched_url_count: Optional[int] = None
 
+    matched_urls: Optional[List[str]] = None
+    """At most 500 URLs are included; the corresponding count field is always exact."""
+
     removed_url_count: Optional[int] = None
 
-    tags: Optional[List[str]] = None
-    """User-defined tags for grouping and filtering monitors and their changes.
+    removed_urls: Optional[List[str]] = None
+    """At most 500 URLs are included; the corresponding count field is always exact."""
 
-    Duplicates are removed.
-    """
+
+class KeyMetadata(BaseModel):
+    """Credits this request used and your remaining balance."""
+
+    credits_consumed: int
+    """Credits charged for this request."""
+
+    credits_remaining: int
+    """Credits remaining for your organization."""
 
 
 class MonitorListChangesResponse(BaseModel):
@@ -61,3 +93,12 @@ class MonitorListChangesResponse(BaseModel):
     has_more: bool
 
     next_cursor: Optional[str] = None
+
+    request_id: str
+    """Unique ID of this request, also in `X-Request-Id`.
+
+    Include it when contacting support.
+    """
+
+    key_metadata: Optional[KeyMetadata] = None
+    """Credits this request used and your remaining balance."""

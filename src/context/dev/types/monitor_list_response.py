@@ -28,6 +28,7 @@ __all__ = [
     "DataLastError",
     "DataWebhook",
     "DataWebhookFailure",
+    "KeyMetadata",
 ]
 
 
@@ -38,16 +39,19 @@ class DataChangeDetectionMonitorsExactChangeDetection(BaseModel):
     """
 
     type: Literal["exact"]
+    """Use `exact` to compare visible text or sitemap URLs."""
 
 
 class DataChangeDetectionMonitorsSemanticChangeDetection(BaseModel):
     """
-    Detect meaning-level changes to page content, ignoring cosmetic or instruction-irrelevant differences. Which changes are meaningful is judged against the page or extract target's `instructions` (and an extract target's `schema`, when provided).
+    Detect meaningful content changes using the target’s instructions and optional schema.
     """
 
     type: Literal["semantic"]
+    """Use `semantic` to judge changes against the target instructions."""
 
     confidence_threshold: Optional[float] = None
+    """Minimum confidence required to report a meaningful change, from 0 to 1."""
 
 
 DataChangeDetection: TypeAlias = Annotated[
@@ -71,8 +75,10 @@ class DataSchedule(BaseModel):
     """
 
     type: Literal["interval"]
+    """Use `interval` to run on a repeating schedule."""
 
     unit: Literal["minutes", "hours", "days"]
+    """Time unit used with `frequency` to set the run interval."""
 
 
 class DataTargetMonitorsPageTarget(BaseModel):
@@ -82,25 +88,18 @@ class DataTargetMonitorsPageTarget(BaseModel):
     """
 
     type: Literal["page"]
+    """Use `page` to watch one web page."""
 
     url: str
+    """Public HTTP(S) page URL to monitor."""
 
     exclude_selectors: Optional[List[str]] = None
-    """CSS selectors for HTML regions to remove before text extraction.
-
-    Applied after include_selectors; exclusion takes precedence when an element
-    matches both. Omit or pass an empty array to apply no explicit exclusions.
-    Changing these selectors creates a new baseline.
-    """
+    """Remove matching regions after inclusions. Changes create a new baseline."""
 
     include_selectors: Optional[List[str]] = None
-    """CSS selectors defining the HTML regions to monitor.
+    """Monitor these CSS-selected regions.
 
-    Matching subtrees are combined in document order before text extraction, instead
-    of automatic main-content selection. Omit or pass an empty array to use
-    automatic main-content extraction. If the filtered page has no usable text, the
-    run fails without replacing the baseline. Changing these selectors creates a new
-    baseline.
+    Empty or omitted uses main content. Changes create a new baseline.
     """
 
     instructions: Optional[str] = None
@@ -114,12 +113,10 @@ class DataTargetMonitorsPageTarget(BaseModel):
 
 
 class DataTargetMonitorsSitemapTarget(BaseModel):
-    """Watch a sitemap for URL additions and removals.
-
-    Crawled URLs are normalized (lowercased host, no trailing slash/fragment) and scoped to the monitored site and its subdomains before comparison. On a detected difference the sitemap is re-fetched within the same run and only URLs both observations agree on are reported, suppressing transient crawl flaps.
-    """
+    """Watch a site’s URL inventory for confirmed additions and removals."""
 
     type: Literal["sitemap"]
+    """Use `sitemap` to watch a site for added or removed URLs."""
 
     url: str
     """Sitemap URL to monitor."""
@@ -135,9 +132,8 @@ class DataTargetMonitorsSitemapTarget(BaseModel):
 
 
 class DataTargetMonitorsExtractTarget(BaseModel):
-    """Watch the monitor-relevant pages of a site for meaningful changes.
-
-    A crawl guided by `schema`/`instructions` selects up to `max_pages` relevant pages to track; each run re-checks exactly those pages, and confirmed content changes are judged for relevance against the monitor's `instructions` (and `schema`, when provided). The tracked page set is refreshed by a periodic re-discovery crawl.
+    """
+    Track relevant pages selected by `schema` and `instructions`; refresh the page set periodically.
     """
 
     instructions: str
@@ -147,11 +143,13 @@ class DataTargetMonitorsExtractTarget(BaseModel):
     """
 
     type: Literal["extract"]
+    """Use `extract` to watch structured data across selected pages."""
 
     url: str
     """Root URL to extract structured data from."""
 
     follow_subdomains: Optional[bool] = None
+    """Allow page discovery on subdomains of the target site."""
 
     max_depth: Optional[int] = None
     """Optional maximum link depth from the starting URL (0 = only the starting page)."""
@@ -160,15 +158,9 @@ class DataTargetMonitorsExtractTarget(BaseModel):
     """Maximum number of pages to track."""
 
     schema_: Optional[Dict[str, object]] = FieldInfo(alias="schema", default=None)
-    """JSON Schema describing the data you care about.
+    """JSON Schema for page selection and the baseline snapshot.
 
-    It is used three ways: it guides which pages are selected for tracking, it gives
-    the change judge extra context on which changes matter (alongside
-    `instructions`), and it defines the shape of the baseline `data` snapshot on GET
-    /monitors/{monitor_id} (refreshed at most about once a day). It is not a
-    response format for changes: change events and webhook payloads always contain
-    diffs, summaries, and evidence excerpts — never data in this schema's shape. If
-    omitted, a default summary + key-points schema is used.
+    Changes return diffs and evidence.
     """
 
 
@@ -213,10 +205,8 @@ class DataBaselineMonitorsExtractBaseline(BaseModel):
 
     data: object
     """
-    The extracted structured data, matching the monitor's extraction schema (same
-    shape as the /web/extract endpoint's `data`). Refreshed when the monitor
-    re-discovers its page set (at most about once a day); `null` when no extraction
-    has been captured yet.
+    Latest structured snapshot matching the extraction schema, refreshed at most
+    daily; `null` before capture.
     """
 
     urls_analyzed: List[str]
@@ -237,31 +227,27 @@ class DataLastError(BaseModel):
 
 
 class DataWebhook(BaseModel):
-    url: str
-    """Webhook URL events are delivered to.
+    """Webhook destination and delivery settings. Null means no webhook is configured."""
 
-    Slack incoming webhook URLs are automatically formatted as Slack messages.
+    url: str
+    """Public HTTP(S) URL that receives events.
+
+    Slack and GovSlack URLs get formatted messages.
     """
 
     events: Optional[List[Literal["change.detected", "run.completed"]]] = None
-    """Events delivered to this endpoint.
+    """Events to deliver.
 
-    `change.detected` fires only when a run detects a change; `run.completed` fires
-    on every completed run — including runs that detected no change — and embeds the
-    change when one was detected. Defaults to `["change.detected"]` when omitted.
+    Defaults to `change.detected`; `run.completed` also includes unchanged runs.
     """
 
     retry: Optional[RetryConfig] = None
     """Webhook retry settings. Use {} for the default schedule."""
 
     secret: Optional[str] = None
-    """Signing secret used to verify webhook authenticity.
+    """API-generated signing secret.
 
-    Omitted unless the API key has monitors:write permission or full access. Each
-    delivery includes an `X-Context-Signature: t=<unix>,v1=<hmac>` header, where the
-    HMAC is SHA-256 over `"{t}.{rawRequestBody}"` keyed by this secret. Recompute it
-    with a constant-time compare and reject stale timestamps to prevent replay.
-    Generated by the API; cannot be set by clients.
+    Visible only with full access or `monitors:write` permission.
     """
 
 
@@ -295,16 +281,16 @@ class Data(BaseModel):
     id: str
 
     change_detection: DataChangeDetection
-    """Discriminated union describing how changes are detected."""
+    """How changes are judged.
+
+    Defaults to `semantic` for extract targets and page targets with `instructions`,
+    otherwise `exact`.
+    """
 
     created_at: datetime
 
     mode: Literal["web"]
-    """Top-level monitor category.
-
-    Always `web` today; the concrete behavior is described by `target` and
-    `change_detection`.
-    """
+    """Always `web`. Optional."""
 
     name: str
 
@@ -316,25 +302,21 @@ class Data(BaseModel):
     """
 
     status: Literal["active", "paused", "failed"]
-    """Monitor lifecycle status.
+    """Current state.
 
-    `failed` means the most recent run failed (see the monitor's `last_error`);
-    failed monitors keep running on schedule and flip back to `active` on the next
-    successful run. Monitors are auto-`paused` after repeated consecutive failures
-    or insufficient-credit skips; resume by PATCHing status to `active`.
+    Failed monitors keep running; paused monitors must be resumed with
+    `status: "active"`.
     """
 
     target: DataTarget
-    """Discriminated union describing what the monitor watches."""
+    """What to watch: a page, a sitemap, or data extracted from a site."""
 
     updated_at: datetime
 
     baseline: Optional[DataBaseline] = None
-    """
-    Current baseline: the last observed value the monitor compares new snapshots
-    against. Its shape follows `target.type` (page/sitemap/extract). Only populated
-    on GET /monitors/{monitor_id}; null until the first baseline run completes (and
-    after a target or change_detection update, which resets the baseline).
+    """Comparison baseline, included on Retrieve.
+
+    Null until capture completes or after target changes.
     """
 
     last_change_at: Optional[datetime] = None
@@ -345,15 +327,13 @@ class Data(BaseModel):
     last_run_at: Optional[datetime] = None
 
     next_run_at: Optional[datetime] = None
-    """When the next scheduled run is due."""
+    """When the next scheduled run is due; null while paused."""
 
     tags: Optional[List[str]] = None
-    """User-defined tags for grouping and filtering monitors and their changes.
-
-    Duplicates are removed.
-    """
+    """Labels for filtering monitors, their changes, and their usage."""
 
     webhook: Optional[DataWebhook] = None
+    """Webhook destination and delivery settings. Null means no webhook is configured."""
 
     webhook_failure: Optional[DataWebhookFailure] = None
     """
@@ -363,9 +343,28 @@ class Data(BaseModel):
     """
 
 
+class KeyMetadata(BaseModel):
+    """Credits this request used and your remaining balance."""
+
+    credits_consumed: int
+    """Credits charged for this request."""
+
+    credits_remaining: int
+    """Credits remaining for your organization."""
+
+
 class MonitorListResponse(BaseModel):
     data: List[Data]
 
     has_more: bool
 
     next_cursor: Optional[str] = None
+
+    request_id: str
+    """Unique ID of this request, also in `X-Request-Id`.
+
+    Include it when contacting support.
+    """
+
+    key_metadata: Optional[KeyMetadata] = None
+    """Credits this request used and your remaining balance."""

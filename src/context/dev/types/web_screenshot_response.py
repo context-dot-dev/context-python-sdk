@@ -11,10 +11,7 @@ __all__ = ["WebScreenshotResponse", "CacheMetadata", "KeyMetadata"]
 
 
 class CacheMetadata(BaseModel):
-    """Cache outcome for this response.
-
-    Composite responses are hits only when every cache-controlled fetch contributing to the output was a hit; age_ms is the oldest contributing hit.
-    """
+    """Whether this response came from cache."""
 
     age_ms: int
     """Age of the cached data in milliseconds. Zero for miss and zdr responses."""
@@ -27,10 +24,10 @@ class CacheMetadata(BaseModel):
 
 
 class KeyMetadata(BaseModel):
-    """Credit usage, included whenever a valid API key is provided."""
+    """Credits this request used and your remaining balance."""
 
     credits_consumed: int
-    """Credits used by this request."""
+    """Credits charged for this request."""
 
     credits_remaining: int
     """Credits remaining for your organization."""
@@ -38,16 +35,12 @@ class KeyMetadata(BaseModel):
 
 class WebScreenshotResponse(BaseModel):
     cache_metadata: CacheMetadata
-    """Cache outcome for this response.
-
-    Composite responses are hits only when every cache-controlled fetch contributing
-    to the output was a hit; age_ms is the oldest contributing hit.
-    """
+    """Whether this response came from cache."""
 
     request_id: str
-    """Unique id of this API call, also sent in the X-Request-Id response header.
+    """Unique ID of this request, also in `X-Request-Id`.
 
-    Quote it when contacting support about a failed request.
+    Include it when contacting support.
     """
 
     code: Optional[int] = None
@@ -57,20 +50,16 @@ class WebScreenshotResponse(BaseModel):
     """The normalized domain that was processed"""
 
     final_dom_state: Optional[Literal["loaded", "still-loading"]] = FieldInfo(alias="finalDOMState", default=None)
-    """How complete the returned content is.
-
-    `loaded` means the page finished the waits the request asked for.
-    `still-loading` only occurs with timeoutOpts.behavior=return-partial: the
-    timeoutOpts.milliseconds deadline was reached first, so the content reflects the
-    DOM at that moment and late-rendering parts may be missing. Partial results are
-    billed at the base request cost.
+    """
+    `loaded`, or `still-loading` when capture ended before the page finished
+    loading.
     """
 
     height: Optional[int] = None
     """Height in pixels of the returned screenshot image"""
 
     key_metadata: Optional[KeyMetadata] = None
-    """Credit usage, included whenever a valid API key is provided."""
+    """Credits this request used and your remaining balance."""
 
     screenshot: Optional[str] = None
     """
@@ -82,7 +71,7 @@ class WebScreenshotResponse(BaseModel):
     """Type of screenshot that was captured"""
 
     status: Optional[str] = None
-    """Status of the response, e.g., 'ok'"""
+    """Always `ok` on success."""
 
     width: Optional[int] = None
     """Width in pixels of the returned screenshot image"""

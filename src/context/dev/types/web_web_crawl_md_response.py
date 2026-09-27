@@ -20,10 +20,7 @@ __all__ = [
 
 
 class CacheMetadata(BaseModel):
-    """Cache outcome for this response.
-
-    Composite responses are hits only when every cache-controlled fetch contributing to the output was a hit; age_ms is the oldest contributing hit.
-    """
+    """Whether this response came from cache."""
 
     age_ms: int
     """Age of the cached data in milliseconds. Zero for miss and zdr responses."""
@@ -165,10 +162,10 @@ class Result(BaseModel):
 
 
 class KeyMetadata(BaseModel):
-    """Credit usage, included whenever a valid API key is provided."""
+    """Credits this request used and your remaining balance."""
 
     credits_consumed: int
-    """Credits used by this request."""
+    """Credits charged for this request."""
 
     credits_remaining: int
     """Credits remaining for your organization."""
@@ -176,24 +173,20 @@ class KeyMetadata(BaseModel):
 
 class WebWebCrawlMdResponse(BaseModel):
     cache_metadata: CacheMetadata
-    """Cache outcome for this response.
-
-    Composite responses are hits only when every cache-controlled fetch contributing
-    to the output was a hit; age_ms is the oldest contributing hit.
-    """
+    """Whether this response came from cache."""
 
     metadata: Metadata
 
     request_id: str
-    """Unique id of this API call, also sent in the X-Request-Id response header.
+    """Unique ID of this request, also in `X-Request-Id`.
 
-    Quote it when contacting support about a failed request.
+    Include it when contacting support.
     """
 
     results: List[Result]
 
     key_metadata: Optional[KeyMetadata] = None
-    """Credit usage, included whenever a valid API key is provided."""
+    """Credits this request used and your remaining balance."""
 
     partial: Optional[bool] = None
     """

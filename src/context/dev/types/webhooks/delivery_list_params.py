@@ -32,7 +32,7 @@ class ByBatch(TypedDict, total=False):
     """Filter by delivery status."""
 
     tags: SequenceNotStr[str]
-    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
+    """Labels for filtering usage in the dashboard."""
 
 
 class ByMonitor(TypedDict, total=False):
@@ -58,7 +58,7 @@ class ByMonitor(TypedDict, total=False):
     """Filter by delivery status."""
 
     tags: SequenceNotStr[str]
-    """Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters."""
+    """Labels for filtering usage in the dashboard."""
 
 
 DeliveryListParams: TypeAlias = Union[ByBatch, ByMonitor]
