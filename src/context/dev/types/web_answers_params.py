@@ -13,7 +13,11 @@ __all__ = ["WebAnswersParams", "TimeoutOpts"]
 
 class WebAnswersParams(TypedDict, total=False):
     task: Required[str]
-    """Research task. Name a domain to have it read before searching."""
+    """Research task.
+
+    The agent selects company/profile lookups, web searches, or page reads. Include
+    domains or URLs to focus the research.
+    """
 
     json_format: Dict[str, object]
     """Example answer object, not JSON Schema.
@@ -22,7 +26,10 @@ class WebAnswersParams(TypedDict, total=False):
     """
 
     mode: Literal["fast", "ultra"]
-    """`fast` for short tasks; `ultra` for deeper research (default)."""
+    """
+    `fast` prioritizes speed, with extra verification for people and companies;
+    `ultra` supports deeper research (default).
+    """
 
     tags: SequenceNotStr[str]
     """Labels for filtering usage in the dashboard."""

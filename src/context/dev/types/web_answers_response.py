@@ -22,9 +22,10 @@ class WebAnswersResponse(BaseModel):
     """The answer, in the shape requested by json_format."""
 
     sources: List[str]
-    """URLs that supplied search results or readable page content, in first-seen order.
-
-    Unreadable pages are excluded.
+    """
+    Public evidence URLs from searches, pages, or company/profile records, in
+    first-seen order. A listed URL may identify a record without its page being
+    read.
     """
 
     key_metadata: Optional[KeyMetadata] = None
