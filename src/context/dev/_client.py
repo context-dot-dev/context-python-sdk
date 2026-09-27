@@ -35,7 +35,7 @@ from ._base_client import (
 )
 
 if TYPE_CHECKING:
-    from .resources import web, logs, news, batch, brand, parse, people, utility, industry, monitors, webhooks
+    from .resources import web, logs, news, batch, brand, parse, people, utility, feedback, industry, monitors, webhooks
     from .resources.web import WebResource, AsyncWebResource
     from .resources.logs import LogsResource, AsyncLogsResource
     from .resources.news import NewsResource, AsyncNewsResource
@@ -44,6 +44,7 @@ if TYPE_CHECKING:
     from .resources.parse import ParseResource, AsyncParseResource
     from .resources.people import PeopleResource, AsyncPeopleResource
     from .resources.utility import UtilityResource, AsyncUtilityResource
+    from .resources.feedback import FeedbackResource, AsyncFeedbackResource
     from .resources.industry import IndustryResource, AsyncIndustryResource
     from .resources.monitors import MonitorsResource, AsyncMonitorsResource
     from .resources.webhooks.webhooks import WebhooksResource, AsyncWebhooksResource
@@ -198,6 +199,16 @@ class ContextDev(SyncAPIClient):
         from .resources.logs import LogsResource
 
         return LogsResource(self)
+
+    @cached_property
+    def feedback(self) -> FeedbackResource:
+        """Report bugs, docs mismatches, and friction with any Context.dev API.
+
+        Submissions cost no credits and use a separate rate limit.
+        """
+        from .resources.feedback import FeedbackResource
+
+        return FeedbackResource(self)
 
     @cached_property
     def with_raw_response(self) -> ContextDevWithRawResponse:
@@ -452,6 +463,16 @@ class AsyncContextDev(AsyncAPIClient):
         return AsyncLogsResource(self)
 
     @cached_property
+    def feedback(self) -> AsyncFeedbackResource:
+        """Report bugs, docs mismatches, and friction with any Context.dev API.
+
+        Submissions cost no credits and use a separate rate limit.
+        """
+        from .resources.feedback import AsyncFeedbackResource
+
+        return AsyncFeedbackResource(self)
+
+    @cached_property
     def with_raw_response(self) -> AsyncContextDevWithRawResponse:
         return AsyncContextDevWithRawResponse(self)
 
@@ -645,6 +666,16 @@ class ContextDevWithRawResponse:
 
         return LogsResourceWithRawResponse(self._client.logs)
 
+    @cached_property
+    def feedback(self) -> feedback.FeedbackResourceWithRawResponse:
+        """Report bugs, docs mismatches, and friction with any Context.dev API.
+
+        Submissions cost no credits and use a separate rate limit.
+        """
+        from .resources.feedback import FeedbackResourceWithRawResponse
+
+        return FeedbackResourceWithRawResponse(self._client.feedback)
+
 
 class AsyncContextDevWithRawResponse:
     _client: AsyncContextDev
@@ -726,6 +757,16 @@ class AsyncContextDevWithRawResponse:
         from .resources.logs import AsyncLogsResourceWithRawResponse
 
         return AsyncLogsResourceWithRawResponse(self._client.logs)
+
+    @cached_property
+    def feedback(self) -> feedback.AsyncFeedbackResourceWithRawResponse:
+        """Report bugs, docs mismatches, and friction with any Context.dev API.
+
+        Submissions cost no credits and use a separate rate limit.
+        """
+        from .resources.feedback import AsyncFeedbackResourceWithRawResponse
+
+        return AsyncFeedbackResourceWithRawResponse(self._client.feedback)
 
 
 class ContextDevWithStreamedResponse:
@@ -809,6 +850,16 @@ class ContextDevWithStreamedResponse:
 
         return LogsResourceWithStreamingResponse(self._client.logs)
 
+    @cached_property
+    def feedback(self) -> feedback.FeedbackResourceWithStreamingResponse:
+        """Report bugs, docs mismatches, and friction with any Context.dev API.
+
+        Submissions cost no credits and use a separate rate limit.
+        """
+        from .resources.feedback import FeedbackResourceWithStreamingResponse
+
+        return FeedbackResourceWithStreamingResponse(self._client.feedback)
+
 
 class AsyncContextDevWithStreamedResponse:
     _client: AsyncContextDev
@@ -890,6 +941,16 @@ class AsyncContextDevWithStreamedResponse:
         from .resources.logs import AsyncLogsResourceWithStreamingResponse
 
         return AsyncLogsResourceWithStreamingResponse(self._client.logs)
+
+    @cached_property
+    def feedback(self) -> feedback.AsyncFeedbackResourceWithStreamingResponse:
+        """Report bugs, docs mismatches, and friction with any Context.dev API.
+
+        Submissions cost no credits and use a separate rate limit.
+        """
+        from .resources.feedback import AsyncFeedbackResourceWithStreamingResponse
+
+        return AsyncFeedbackResourceWithStreamingResponse(self._client.feedback)
 
 
 Client = ContextDev

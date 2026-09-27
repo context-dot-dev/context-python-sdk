@@ -214,3 +214,15 @@ Methods:
 
 - <code title="get /logs/{request_id}">client.logs.<a href="./src/context/dev/resources/logs.py">retrieve</a>(request_id) -> <a href="./src/context/dev/types/log_retrieve_response.py">LogRetrieveResponse</a></code>
 - <code title="get /logs">client.logs.<a href="./src/context/dev/resources/logs.py">list</a>(\*\*<a href="src/context/dev/types/log_list_params.py">params</a>) -> <a href="./src/context/dev/types/log_list_response.py">LogListResponse</a></code>
+
+# Feedback
+
+Types:
+
+```python
+from context.dev.types import FeedbackSubmitResponse
+```
+
+Methods:
+
+- <code title="post /feedback">client.feedback.<a href="./src/context/dev/resources/feedback.py">submit</a>(\*\*<a href="src/context/dev/types/feedback_submit_params.py">params</a>) -> <a href="./src/context/dev/types/feedback_submit_response.py">FeedbackSubmitResponse</a></code>
