@@ -346,7 +346,11 @@ class InputScrapeDataMarkdownOptions(TypedDict, total=False):
     """
 
     max_age_ms: Annotated[Optional[int], PropertyInfo(alias="maxAgeMs")]
-    """Maximum cache age in milliseconds. Defaults to 1 day. `0` fetches fresh."""
+    """Maximum cache age in milliseconds.
+
+    Defaults to 3 days (259200000 ms). Maximum: 1 year (31536000000 ms). `0` fetches
+    fresh.
+    """
 
     pdf: InputScrapeDataMarkdownOptionsPdf
     """PDF parsing controls.
@@ -647,7 +651,11 @@ class InputScrapeDataHTMLOptions(TypedDict, total=False):
     """
 
     max_age_ms: Annotated[Optional[int], PropertyInfo(alias="maxAgeMs")]
-    """Maximum cache age in milliseconds. Defaults to 1 day. `0` fetches fresh."""
+    """Maximum cache age in milliseconds.
+
+    Defaults to 3 days (259200000 ms). Maximum: 1 year (31536000000 ms). `0` fetches
+    fresh.
+    """
 
     pdf: InputScrapeDataHTMLOptionsPdf
     """PDF parsing controls.
@@ -1021,7 +1029,11 @@ class InputCrawlDataMarkdownOptions(TypedDict, total=False):
     """
 
     max_age_ms: Annotated[Optional[int], PropertyInfo(alias="maxAgeMs")]
-    """Maximum cache age in milliseconds. Defaults to 1 day. `0` fetches fresh."""
+    """Maximum cache age in milliseconds.
+
+    Defaults to 3 days (259200000 ms). Maximum: 1 year (31536000000 ms). `0` fetches
+    fresh.
+    """
 
     pdf: InputCrawlDataMarkdownOptionsPdf
     """PDF parsing controls.
@@ -1374,7 +1386,11 @@ class InputCrawlDataHTMLOptions(TypedDict, total=False):
     """
 
     max_age_ms: Annotated[Optional[int], PropertyInfo(alias="maxAgeMs")]
-    """Maximum cache age in milliseconds. Defaults to 1 day. `0` fetches fresh."""
+    """Maximum cache age in milliseconds.
+
+    Defaults to 3 days (259200000 ms). Maximum: 1 year (31536000000 ms). `0` fetches
+    fresh.
+    """
 
     pdf: InputCrawlDataHTMLOptionsPdf
     """PDF parsing controls.
