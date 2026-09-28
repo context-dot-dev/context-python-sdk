@@ -48,6 +48,12 @@ class Bytes(BaseModel):
     success: Optional[bool] = None
     """`true` if returned, `false` if it failed, `null` if not requested."""
 
+    error_code: Optional[str] = None
+    """Why the output failed. Present only when `success` is `false`."""
+
+    message: Optional[str] = None
+    """Explanation of the failure and possible next steps."""
+
 
 class CacheMetadata(BaseModel):
     """Whether this response came from cache."""
@@ -75,6 +81,12 @@ class Highlights(BaseModel):
     success: Optional[bool] = None
     """`true` if returned, `false` if it failed, `null` if not requested."""
 
+    error_code: Optional[str] = None
+    """Why the output failed. Present only when `success` is `false`."""
+
+    message: Optional[str] = None
+    """Explanation of the failure and possible next steps."""
+
 
 class HTML(BaseModel):
     """Rendered HTML after content filters."""
@@ -85,6 +97,12 @@ class HTML(BaseModel):
 
     success: Optional[bool] = None
     """`true` if returned, `false` if it failed, `null` if not requested."""
+
+    error_code: Optional[str] = None
+    """Why the output failed. Present only when `success` is `false`."""
+
+    message: Optional[str] = None
+    """Explanation of the failure and possible next steps."""
 
 
 class ImagesData(BaseModel):
@@ -119,6 +137,12 @@ class Images(BaseModel):
     success: Optional[bool] = None
     """`true` if returned, `false` if it failed, `null` if not requested."""
 
+    error_code: Optional[str] = None
+    """Why the output failed. Present only when `success` is `false`."""
+
+    message: Optional[str] = None
+    """Explanation of the failure and possible next steps."""
+
 
 class Json(BaseModel):
     """Object matching `jsonParams.schema`."""
@@ -131,10 +155,10 @@ class Json(BaseModel):
     """`true` if returned, `false` if it failed, `null` if not requested."""
 
     error_code: Optional[str] = None
-    """Cause of a failed JSON extraction, when available."""
+    """Why the output failed. Present only when `success` is `false`."""
 
     message: Optional[str] = None
-    """Explanation of the JSON extraction failure and possible next steps."""
+    """Explanation of the failure and possible next steps."""
 
 
 class Markdown(BaseModel):
@@ -146,6 +170,12 @@ class Markdown(BaseModel):
 
     success: Optional[bool] = None
     """`true` if returned, `false` if it failed, `null` if not requested."""
+
+    error_code: Optional[str] = None
+    """Why the output failed. Present only when `success` is `false`."""
+
+    message: Optional[str] = None
+    """Explanation of the failure and possible next steps."""
 
 
 class MetadataAlternate(BaseModel):
@@ -240,6 +270,12 @@ class Parsed(BaseModel):
 
     success: Optional[bool] = None
     """`true` if returned, `false` if it failed, `null` if not requested."""
+
+    error_code: Optional[str] = None
+    """Why the output failed. Present only when `success` is `false`."""
+
+    message: Optional[str] = None
+    """Explanation of the failure and possible next steps."""
 
 
 class ProductDataProductVariant(BaseModel):
@@ -336,6 +372,12 @@ class Product(BaseModel):
     success: Optional[bool] = None
     """`true` if returned, `false` if it failed, `null` if not requested."""
 
+    error_code: Optional[str] = None
+    """Why the output failed. Present only when `success` is `false`."""
+
+    message: Optional[str] = None
+    """Explanation of the failure and possible next steps."""
+
 
 class Screenshot(BaseModel):
     """Screenshot as a base64 image data URL."""
@@ -346,6 +388,12 @@ class Screenshot(BaseModel):
 
     success: Optional[bool] = None
     """`true` if returned, `false` if it failed, `null` if not requested."""
+
+    error_code: Optional[str] = None
+    """Why the output failed. Present only when `success` is `false`."""
+
+    message: Optional[str] = None
+    """Explanation of the failure and possible next steps."""
 
 
 class KeyMetadata(BaseModel):
