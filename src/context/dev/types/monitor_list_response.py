@@ -19,6 +19,10 @@ __all__ = [
     "DataSchedule",
     "DataTarget",
     "DataTargetMonitorsPageTarget",
+    "DataTargetMonitorsPageTargetAction",
+    "DataTargetMonitorsPageTargetActionWebScrapeWaitAction",
+    "DataTargetMonitorsPageTargetActionWebScrapePerformAction",
+    "DataTargetMonitorsPageTargetActionWebScrapeScrollAction",
     "DataTargetMonitorsSitemapTarget",
     "DataTargetMonitorsExtractTarget",
     "DataBaseline",
@@ -81,6 +85,63 @@ class DataSchedule(BaseModel):
     """Time unit used with `frequency` to set the run interval."""
 
 
+class DataTargetMonitorsPageTargetActionWebScrapeWaitAction(BaseModel):
+    """Pause for a fixed number of milliseconds before continuing to the next action."""
+
+    do: Literal["wait"]
+    """Use `wait` to pause for a fixed duration."""
+
+    time_ms: int = FieldInfo(alias="timeMs")
+    """Time to pause in milliseconds before the next action."""
+
+
+class DataTargetMonitorsPageTargetActionWebScrapePerformAction(BaseModel):
+    """Resolve and perform one natural-language browser action."""
+
+    action: str
+    """One browser instruction, such as clicking a button or entering text."""
+
+    do: Literal["perform"]
+    """Use `perform` for a plain-language browser instruction."""
+
+
+class DataTargetMonitorsPageTargetActionWebScrapeScrollAction(BaseModel):
+    """
+    Scroll the page or a selected scrollable container, waiting adaptively for content and dimensions to settle after each iteration.
+    """
+
+    do: Literal["scroll"]
+    """Use `scroll` to move through the page or a container."""
+
+    amount: Union[int, Literal["viewport", "max"], None] = None
+    """Pixels per scroll, one visible viewport, or the current scroll boundary.
+
+    Defaults to viewport.
+    """
+
+    container: Optional[str] = None
+    """CSS selector for the first matching scroll container. Defaults to the page."""
+
+    direction: Optional[Literal["up", "down", "left", "right"]] = None
+    """Direction to scroll. Defaults to down."""
+
+    max_scrolls: Optional[int] = FieldInfo(alias="maxScrolls", default=None)
+    """Maximum scroll iterations.
+
+    Stops early when scrolling and scrollable extent stop changing. Defaults to 1.
+    """
+
+
+DataTargetMonitorsPageTargetAction: TypeAlias = Annotated[
+    Union[
+        DataTargetMonitorsPageTargetActionWebScrapeWaitAction,
+        DataTargetMonitorsPageTargetActionWebScrapePerformAction,
+        DataTargetMonitorsPageTargetActionWebScrapeScrollAction,
+    ],
+    PropertyInfo(discriminator="do"),
+]
+
+
 class DataTargetMonitorsPageTarget(BaseModel):
     """Watch a single web page.
 
@@ -92,6 +153,13 @@ class DataTargetMonitorsPageTarget(BaseModel):
 
     url: str
     """Public HTTP(S) page URL to monitor."""
+
+    actions: Optional[List[DataTargetMonitorsPageTargetAction]] = None
+    """
+    Optional browser actions executed in array order after the page loads, before
+    content is captured, on every run. Requires a paid plan. Maximum: 5 actions.
+    Changes create a new baseline.
+    """
 
     exclude_selectors: Optional[List[str]] = None
     """Remove matching regions after inclusions. Changes create a new baseline."""

@@ -54,6 +54,12 @@ class TestMonitors:
             target={
                 "type": "page",
                 "url": "https://acme.com/pricing",
+                "actions": [
+                    {
+                        "do": "wait",
+                        "time_ms": 0,
+                    }
+                ],
                 "exclude_selectors": [".carousel", '[id^="TA_"]'],
                 "include_selectors": ["#attraction-details"],
                 "instructions": "Report pricing or plan availability changes. Ignore counters, timestamps, testimonials, and navigation.",
@@ -176,6 +182,12 @@ class TestMonitors:
             target={
                 "type": "page",
                 "url": "https://acme.com/pricing",
+                "actions": [
+                    {
+                        "do": "wait",
+                        "time_ms": 0,
+                    }
+                ],
                 "exclude_selectors": [".carousel", '[id^="TA_"]'],
                 "include_selectors": ["#attraction-details"],
                 "instructions": "Report pricing or plan availability changes. Ignore counters, timestamps, testimonials, and navigation.",
@@ -768,6 +780,12 @@ class TestAsyncMonitors:
             target={
                 "type": "page",
                 "url": "https://acme.com/pricing",
+                "actions": [
+                    {
+                        "do": "wait",
+                        "time_ms": 0,
+                    }
+                ],
                 "exclude_selectors": [".carousel", '[id^="TA_"]'],
                 "include_selectors": ["#attraction-details"],
                 "instructions": "Report pricing or plan availability changes. Ignore counters, timestamps, testimonials, and navigation.",
@@ -890,6 +908,12 @@ class TestAsyncMonitors:
             target={
                 "type": "page",
                 "url": "https://acme.com/pricing",
+                "actions": [
+                    {
+                        "do": "wait",
+                        "time_ms": 0,
+                    }
+                ],
                 "exclude_selectors": [".carousel", '[id^="TA_"]'],
                 "include_selectors": ["#attraction-details"],
                 "instructions": "Report pricing or plan availability changes. Ignore counters, timestamps, testimonials, and navigation.",
