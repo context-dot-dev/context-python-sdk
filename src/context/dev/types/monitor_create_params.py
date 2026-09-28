@@ -2,16 +2,21 @@
 
 from __future__ import annotations
 
-from typing import Dict, List, Union, Optional
-from typing_extensions import Literal, Required, TypeAlias, TypedDict
+from typing import Dict, List, Union, Iterable, Optional
+from typing_extensions import Literal, Required, Annotated, TypeAlias, TypedDict
 
 from .._types import SequenceNotStr
+from .._utils import PropertyInfo
 from .retry_config_param import RetryConfigParam
 
 __all__ = [
     "MonitorCreateParams",
     "Target",
     "TargetMonitorsPageTarget",
+    "TargetMonitorsPageTargetAction",
+    "TargetMonitorsPageTargetActionWebScrapeWaitAction",
+    "TargetMonitorsPageTargetActionWebScrapePerformAction",
+    "TargetMonitorsPageTargetActionWebScrapeScrollAction",
     "TargetMonitorsSitemapTarget",
     "TargetMonitorsExtractTarget",
     "ChangeDetection",
@@ -53,6 +58,60 @@ class MonitorCreateParams(TypedDict, total=False):
     """Webhook destination and delivery settings. Null means no webhook is configured."""
 
 
+class TargetMonitorsPageTargetActionWebScrapeWaitAction(TypedDict, total=False):
+    """Pause for a fixed number of milliseconds before continuing to the next action."""
+
+    do: Required[Literal["wait"]]
+    """Use `wait` to pause for a fixed duration."""
+
+    time_ms: Required[Annotated[int, PropertyInfo(alias="timeMs")]]
+    """Time to pause in milliseconds before the next action."""
+
+
+class TargetMonitorsPageTargetActionWebScrapePerformAction(TypedDict, total=False):
+    """Resolve and perform one natural-language browser action."""
+
+    action: Required[str]
+    """One browser instruction, such as clicking a button or entering text."""
+
+    do: Required[Literal["perform"]]
+    """Use `perform` for a plain-language browser instruction."""
+
+
+class TargetMonitorsPageTargetActionWebScrapeScrollAction(TypedDict, total=False):
+    """
+    Scroll the page or a selected scrollable container, waiting adaptively for content and dimensions to settle after each iteration.
+    """
+
+    do: Required[Literal["scroll"]]
+    """Use `scroll` to move through the page or a container."""
+
+    amount: Union[int, Literal["viewport", "max"]]
+    """Pixels per scroll, one visible viewport, or the current scroll boundary.
+
+    Defaults to viewport.
+    """
+
+    container: str
+    """CSS selector for the first matching scroll container. Defaults to the page."""
+
+    direction: Literal["up", "down", "left", "right"]
+    """Direction to scroll. Defaults to down."""
+
+    max_scrolls: Annotated[int, PropertyInfo(alias="maxScrolls")]
+    """Maximum scroll iterations.
+
+    Stops early when scrolling and scrollable extent stop changing. Defaults to 1.
+    """
+
+
+TargetMonitorsPageTargetAction: TypeAlias = Union[
+    TargetMonitorsPageTargetActionWebScrapeWaitAction,
+    TargetMonitorsPageTargetActionWebScrapePerformAction,
+    TargetMonitorsPageTargetActionWebScrapeScrollAction,
+]
+
+
 class TargetMonitorsPageTarget(TypedDict, total=False):
     """Watch a single web page.
 
@@ -64,6 +123,13 @@ class TargetMonitorsPageTarget(TypedDict, total=False):
 
     url: Required[str]
     """Public HTTP(S) page URL to monitor."""
+
+    actions: Optional[Iterable[TargetMonitorsPageTargetAction]]
+    """
+    Optional browser actions executed in array order after the page loads, before
+    content is captured, on every run. Requires a paid plan. Maximum: 5 actions.
+    Changes create a new baseline.
+    """
 
     exclude_selectors: SequenceNotStr[str]
     """Remove matching regions after inclusions. Changes create a new baseline."""
