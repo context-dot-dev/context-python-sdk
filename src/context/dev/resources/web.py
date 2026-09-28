@@ -1025,6 +1025,7 @@ class WebResource(SyncAPIResource):
         | Omit = omit,
         exclude_domains: SequenceNotStr[str] | Omit = omit,
         freshness: Literal["last_24_hours", "last_week", "last_month", "last_year"] | Omit = omit,
+        highlights_options: web_search_params.HighlightsOptions | Omit = omit,
         include_domains: SequenceNotStr[str] | Omit = omit,
         markdown_options: web_search_params.MarkdownOptions | Omit = omit,
         num_results: int | Omit = omit,
@@ -1040,7 +1041,8 @@ class WebResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebSearchResponse:
         """
-        Search the web and optionally return page content with each result.
+        Search the web and optionally return page content or relevant passages with each
+        result.
 
         Args:
           query: Search query. Accepts natural language as well as Google-style search operators
@@ -1053,6 +1055,9 @@ class WebResource(SyncAPIResource):
               "reddit.com"].
 
           freshness: Restrict results to content published within this window.
+
+          highlights_options: Passages from each result page that are relevant to the query. Pages are read
+              with the `markdownOptions` settings.
 
           include_domains: Allowlist — only return results from these domains. Example: ["arxiv.org",
               "github.com"].
@@ -1086,6 +1091,7 @@ class WebResource(SyncAPIResource):
                     "country": country,
                     "exclude_domains": exclude_domains,
                     "freshness": freshness,
+                    "highlights_options": highlights_options,
                     "include_domains": include_domains,
                     "markdown_options": markdown_options,
                     "num_results": num_results,
@@ -2425,6 +2431,7 @@ class AsyncWebResource(AsyncAPIResource):
         | Omit = omit,
         exclude_domains: SequenceNotStr[str] | Omit = omit,
         freshness: Literal["last_24_hours", "last_week", "last_month", "last_year"] | Omit = omit,
+        highlights_options: web_search_params.HighlightsOptions | Omit = omit,
         include_domains: SequenceNotStr[str] | Omit = omit,
         markdown_options: web_search_params.MarkdownOptions | Omit = omit,
         num_results: int | Omit = omit,
@@ -2440,7 +2447,8 @@ class AsyncWebResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WebSearchResponse:
         """
-        Search the web and optionally return page content with each result.
+        Search the web and optionally return page content or relevant passages with each
+        result.
 
         Args:
           query: Search query. Accepts natural language as well as Google-style search operators
@@ -2453,6 +2461,9 @@ class AsyncWebResource(AsyncAPIResource):
               "reddit.com"].
 
           freshness: Restrict results to content published within this window.
+
+          highlights_options: Passages from each result page that are relevant to the query. Pages are read
+              with the `markdownOptions` settings.
 
           include_domains: Allowlist — only return results from these domains. Example: ["arxiv.org",
               "github.com"].
@@ -2486,6 +2497,7 @@ class AsyncWebResource(AsyncAPIResource):
                     "country": country,
                     "exclude_domains": exclude_domains,
                     "freshness": freshness,
+                    "highlights_options": highlights_options,
                     "include_domains": include_domains,
                     "markdown_options": markdown_options,
                     "num_results": num_results,

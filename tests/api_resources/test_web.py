@@ -430,6 +430,10 @@ class TestWeb:
             country="af",
             exclude_domains=["string"],
             freshness="last_24_hours",
+            highlights_options={
+                "enabled": True,
+                "max_characters": 100,
+            },
             include_domains=["string"],
             markdown_options={
                 "enabled": True,
@@ -967,6 +971,10 @@ class TestAsyncWeb:
             country="af",
             exclude_domains=["string"],
             freshness="last_24_hours",
+            highlights_options={
+                "enabled": True,
+                "max_characters": 100,
+            },
             include_domains=["string"],
             markdown_options={
                 "enabled": True,

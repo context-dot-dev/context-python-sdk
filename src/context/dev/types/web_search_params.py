@@ -7,7 +7,14 @@ from typing_extensions import Literal, Required, Annotated, TypedDict
 from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
-__all__ = ["WebSearchParams", "MarkdownOptions", "MarkdownOptionsPdf", "MarkdownOptionsTimeoutOpts", "TimeoutOpts"]
+__all__ = [
+    "WebSearchParams",
+    "HighlightsOptions",
+    "MarkdownOptions",
+    "MarkdownOptionsPdf",
+    "MarkdownOptionsTimeoutOpts",
+    "TimeoutOpts",
+]
 
 
 class WebSearchParams(TypedDict, total=False):
@@ -273,6 +280,12 @@ class WebSearchParams(TypedDict, total=False):
     freshness: Literal["last_24_hours", "last_week", "last_month", "last_year"]
     """Restrict results to content published within this window."""
 
+    highlights_options: Annotated[HighlightsOptions, PropertyInfo(alias="highlightsOptions")]
+    """Passages from each result page that are relevant to the query.
+
+    Pages are read with the `markdownOptions` settings.
+    """
+
     include_domains: Annotated[SequenceNotStr[str], PropertyInfo(alias="includeDomains")]
     """Allowlist — only return results from these domains.
 
@@ -299,6 +312,19 @@ class WebSearchParams(TypedDict, total=False):
 
     Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
     """
+
+
+class HighlightsOptions(TypedDict, total=False):
+    """Passages from each result page that are relevant to the query.
+
+    Pages are read with the `markdownOptions` settings.
+    """
+
+    enabled: bool
+    """Return relevant passages for each result. Adds 1 credit per 10 results."""
+
+    max_characters: Annotated[int, PropertyInfo(alias="maxCharacters")]
+    """Maximum combined length of passages per result."""
 
 
 class MarkdownOptionsPdf(TypedDict, total=False):
@@ -335,7 +361,7 @@ class MarkdownOptions(TypedDict, total=False):
     """Inline Markdown scraping for each result. Set `enabled: true` to activate."""
 
     enabled: bool
-    """Scrape each result to Markdown. Off by default to keep search cheap and fast."""
+    """Scrape each result to Markdown. Adds 1 credit per 10 results."""
 
     include_frames: Annotated[bool, PropertyInfo(alias="includeFrames")]
     """Render iframe contents into the Markdown."""
@@ -349,7 +375,7 @@ class MarkdownOptions(TypedDict, total=False):
     max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
     """Cache TTL in ms for scraped Markdown keyed by URL + options.
 
-    Default 1 day, max 30 days. Set to 0 to force a fresh scrape.
+    Default 15 days, max 30 days. Set to 0 to force a fresh scrape.
     """
 
     pdf: MarkdownOptionsPdf
