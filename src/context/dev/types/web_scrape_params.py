@@ -200,8 +200,8 @@ class ParseParams(TypedDict, total=False):
 class ProductParams(TypedDict, total=False):
     """Product options. Requires formats.product: true."""
 
-    use_ai_fallback: Annotated[bool, PropertyInfo(alias="useAIFallback")]
-    """Use an AI model when the page has no structured product data."""
+    dedupe_images: Annotated[bool, PropertyInfo(alias="dedupeImages")]
+    """Drop visually duplicate product images, keeping the largest copy."""
 
 
 class ScreenshotParamsAreaElement(TypedDict, total=False):
