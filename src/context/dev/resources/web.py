@@ -373,18 +373,18 @@ class WebResource(SyncAPIResource):
 
           url: Public HTTP or HTTPS URL to scrape.
 
-          highlights_params: Required when `formats.highlights` is `true`.
+          highlights_params: Requires `formats.highlights: true`; required when it is set.
 
           image_params: Image options. Requires formats.images: true.
 
-          json_params: Required when formats.json is true.
+          json_params: Requires `formats.json: true`; required when it is set.
 
           markdown_params: Markdown options. Requires `formats.markdown`.
 
           max_age_ms: Maximum age of a cached output, in milliseconds. `0` fetches fresh. Defaults to
               3 days (259200000 ms). Maximum: 1 year (31536000000 ms).
 
-          parse_params: Required when formats.parse is true.
+          parse_params: Requires `formats.parse: true`; required when it is set.
 
           product_params: Product options. Requires formats.product: true.
 
@@ -1051,16 +1051,18 @@ class WebResource(SyncAPIResource):
           country: Two-letter ISO 3166-1 alpha-2 country code to localize results to a specific
               country (maps to Google's `gl` parameter). Example: "us", "gb", "de".
 
-          exclude_domains: Blocklist — drop results from these domains. Example: ["pinterest.com",
-              "reddit.com"].
+          exclude_domains:
+              Blocklist — drop results from these domains. Up to 100 domains. Example:
+              ["pinterest.com", "reddit.com"].
 
           freshness: Restrict results to content published within this window.
 
           highlights_options: Passages from each result page that are relevant to the query. Pages are read
               with the `markdownOptions` settings.
 
-          include_domains: Allowlist — only return results from these domains. Example: ["arxiv.org",
-              "github.com"].
+          include_domains:
+              Allowlist — only return results from these domains. Up to 100 domains. Example:
+              ["arxiv.org", "github.com"].
 
           markdown_options: Inline Markdown scraping for each result. Set `enabled: true` to activate.
 
@@ -1779,18 +1781,18 @@ class AsyncWebResource(AsyncAPIResource):
 
           url: Public HTTP or HTTPS URL to scrape.
 
-          highlights_params: Required when `formats.highlights` is `true`.
+          highlights_params: Requires `formats.highlights: true`; required when it is set.
 
           image_params: Image options. Requires formats.images: true.
 
-          json_params: Required when formats.json is true.
+          json_params: Requires `formats.json: true`; required when it is set.
 
           markdown_params: Markdown options. Requires `formats.markdown`.
 
           max_age_ms: Maximum age of a cached output, in milliseconds. `0` fetches fresh. Defaults to
               3 days (259200000 ms). Maximum: 1 year (31536000000 ms).
 
-          parse_params: Required when formats.parse is true.
+          parse_params: Requires `formats.parse: true`; required when it is set.
 
           product_params: Product options. Requires formats.product: true.
 
@@ -2457,16 +2459,18 @@ class AsyncWebResource(AsyncAPIResource):
           country: Two-letter ISO 3166-1 alpha-2 country code to localize results to a specific
               country (maps to Google's `gl` parameter). Example: "us", "gb", "de".
 
-          exclude_domains: Blocklist — drop results from these domains. Example: ["pinterest.com",
-              "reddit.com"].
+          exclude_domains:
+              Blocklist — drop results from these domains. Up to 100 domains. Example:
+              ["pinterest.com", "reddit.com"].
 
           freshness: Restrict results to content published within this window.
 
           highlights_options: Passages from each result page that are relevant to the query. Pages are read
               with the `markdownOptions` settings.
 
-          include_domains: Allowlist — only return results from these domains. Example: ["arxiv.org",
-              "github.com"].
+          include_domains:
+              Allowlist — only return results from these domains. Up to 100 domains. Example:
+              ["arxiv.org", "github.com"].
 
           markdown_options: Inline Markdown scraping for each result. Set `enabled: true` to activate.
 
