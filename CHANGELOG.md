@@ -1,5 +1,29 @@
 # Changelog
 
+## [2.22.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.21.0...v2.22.0) (2026-09-29)
+
+
+### Features
+
+* **answers:** route people and company research with faster answers ([#1336](https://github.com/context-dot-dev/context-python-sdk/issues/1336)) ([d4d0af6](https://github.com/context-dot-dev/context-python-sdk/commit/d4d0af6e3e04dbf1380290a9c01c67836081317b))
+* **api:** explain failed scrape outputs and fix agent-reported bugs ([#1360](https://github.com/context-dot-dev/context-python-sdk/issues/1360)) ([1a159d4](https://github.com/context-dot-dev/context-python-sdk/commit/1a159d49ceae5908d69829bbb3db722b772d5076))
+* **monitors:** support browser actions on page monitors ([#1365](https://github.com/context-dot-dev/context-python-sdk/issues/1365)) ([7918ce8](https://github.com/context-dot-dev/context-python-sdk/commit/7918ce89df06e6f08aa702702c19eda9be64ac62))
+* **scrape:** default cache age to three days and allow one year ([#1339](https://github.com/context-dot-dev/context-python-sdk/issues/1339)) ([a954487](https://github.com/context-dot-dev/context-python-sdk/commit/a9544875d35781ec4c525b1e486a8c09897ba732))
+* **search:** add highlights to web search and bill page reads per 10 results ([#1387](https://github.com/context-dot-dev/context-python-sdk/issues/1387)) ([ade0fa2](https://github.com/context-dot-dev/context-python-sdk/commit/ade0fa2100288446b36a3b0f427495ee33738007))
+* **web-search:** extend page cache defaults ([#1408](https://github.com/context-dot-dev/context-python-sdk/issues/1408)) ([e7cd1ff](https://github.com/context-dot-dev/context-python-sdk/commit/e7cd1ff866998f2fea75381aa98207fceeed073c))
+
+
+### Bug Fixes
+
+* **api:** document search domain limits and clarify scrape parameter errors ([#1388](https://github.com/context-dot-dev/context-python-sdk/issues/1388)) ([2a68e19](https://github.com/context-dot-dev/context-python-sdk/commit/2a68e199736b36ac9cfba3b57bbe9985846c4da9))
+* **scrape:** resolve extracted URLs from source references ([#1333](https://github.com/context-dot-dev/context-python-sdk/issues/1333)) ([f5ec408](https://github.com/context-dot-dev/context-python-sdk/commit/f5ec408f31a347b345c21e741a8d5a5a760f38c9))
+
+
+### Documentation
+
+* **openapi:** complete concise API reference metadata ([#1329](https://github.com/context-dot-dev/context-python-sdk/issues/1329)) ([b19d687](https://github.com/context-dot-dev/context-python-sdk/commit/b19d687995b13dfe3b495ef839356cd9c0b6bf32))
+* **scrape:** rename endpoint to Scrape Anything ([#1341](https://github.com/context-dot-dev/context-python-sdk/issues/1341)) ([928e7f5](https://github.com/context-dot-dev/context-python-sdk/commit/928e7f5daac3582442bf28bfcdff4d2435d4a2f4))
+
 ## [2.21.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.20.0...v2.21.0) (2026-09-27)
 
 
