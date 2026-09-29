@@ -373,9 +373,11 @@ class MarkdownOptions(TypedDict, total=False):
     """Keep hyperlinks in the Markdown."""
 
     max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
-    """Cache TTL in ms for scraped Markdown keyed by URL + options.
+    """Maximum cache age in milliseconds for result page content.
 
-    Default 15 days, max 30 days. Set to 0 to force a fresh scrape.
+    Defaults to 180 days (15552000000 ms) when Markdown is requested, or 365 days
+    (31536000000 ms) when only highlights are requested. Explicit values override
+    either default. Maximum: 365 days. Set to 0 to force a fresh scrape.
     """
 
     pdf: MarkdownOptionsPdf
