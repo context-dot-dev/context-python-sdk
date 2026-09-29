@@ -394,7 +394,7 @@ class WebResource(SyncAPIResource):
 
           tags: Labels for tracking request usage. Not retained when zdr is enabled.
 
-          timeout_opts: Deadline for the whole request. Defaults to 60000 ms with `fail`. Fixed waits
+          timeout_opts: Deadline for the whole request. Defaults to 90000 ms with `fail`. Fixed waits
               must end before it.
 
           zdr: `enabled` turns on zero data retention. Your organization must have ZDR enabled.
@@ -1802,7 +1802,7 @@ class AsyncWebResource(AsyncAPIResource):
 
           tags: Labels for tracking request usage. Not retained when zdr is enabled.
 
-          timeout_opts: Deadline for the whole request. Defaults to 60000 ms with `fail`. Fixed waits
+          timeout_opts: Deadline for the whole request. Defaults to 90000 ms with `fail`. Fixed waits
               must end before it.
 
           zdr: `enabled` turns on zero data retention. Your organization must have ZDR enabled.

@@ -80,7 +80,7 @@ class WebScrapeParams(TypedDict, total=False):
     timeout_opts: Annotated[TimeoutOpts, PropertyInfo(alias="timeoutOpts")]
     """Deadline for the whole request.
 
-    Defaults to 60000 ms with `fail`. Fixed waits must end before it.
+    Defaults to 90000 ms with `fail`. Fixed waits must end before it.
     """
 
     zdr: Literal["enabled", "disabled"]
@@ -386,7 +386,7 @@ class SharedParams(TypedDict, total=False):
 class TimeoutOpts(TypedDict, total=False):
     """Deadline for the whole request.
 
-    Defaults to 60000 ms with `fail`. Fixed waits must end before it.
+    Defaults to 90000 ms with `fail`. Fixed waits must end before it.
     """
 
     milliseconds: Required[int]
