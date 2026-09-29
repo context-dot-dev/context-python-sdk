@@ -285,7 +285,7 @@ class TestWeb:
                     },
                 }
             },
-            product_params={"use_ai_fallback": True},
+            product_params={"dedupe_images": True},
             screenshot_params={
                 "area": "viewport",
                 "format": "png",
@@ -826,7 +826,7 @@ class TestAsyncWeb:
                     },
                 }
             },
-            product_params={"use_ai_fallback": True},
+            product_params={"dedupe_images": True},
             screenshot_params={
                 "area": "viewport",
                 "format": "png",
