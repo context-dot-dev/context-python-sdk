@@ -274,7 +274,7 @@ class WebSearchParams(TypedDict, total=False):
     exclude_domains: Annotated[SequenceNotStr[str], PropertyInfo(alias="excludeDomains")]
     """Blocklist — drop results from these domains.
 
-    Example: ["pinterest.com", "reddit.com"].
+    Up to 100 domains. Example: ["pinterest.com", "reddit.com"].
     """
 
     freshness: Literal["last_24_hours", "last_week", "last_month", "last_year"]
@@ -289,7 +289,7 @@ class WebSearchParams(TypedDict, total=False):
     include_domains: Annotated[SequenceNotStr[str], PropertyInfo(alias="includeDomains")]
     """Allowlist — only return results from these domains.
 
-    Example: ["arxiv.org", "github.com"].
+    Up to 100 domains. Example: ["arxiv.org", "github.com"].
     """
 
     markdown_options: Annotated[MarkdownOptions, PropertyInfo(alias="markdownOptions")]

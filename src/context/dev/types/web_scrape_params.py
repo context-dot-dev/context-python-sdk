@@ -44,13 +44,13 @@ class WebScrapeParams(TypedDict, total=False):
     """Public HTTP or HTTPS URL to scrape."""
 
     highlights_params: Annotated[HighlightsParams, PropertyInfo(alias="highlightsParams")]
-    """Required when `formats.highlights` is `true`."""
+    """Requires `formats.highlights: true`; required when it is set."""
 
     image_params: Annotated[ImageParams, PropertyInfo(alias="imageParams")]
     """Image options. Requires formats.images: true."""
 
     json_params: Annotated[JsonParams, PropertyInfo(alias="jsonParams")]
-    """Required when formats.json is true."""
+    """Requires `formats.json: true`; required when it is set."""
 
     markdown_params: Annotated[MarkdownParams, PropertyInfo(alias="markdownParams")]
     """Markdown options. Requires `formats.markdown`."""
@@ -63,7 +63,7 @@ class WebScrapeParams(TypedDict, total=False):
     """
 
     parse_params: Annotated[ParseParams, PropertyInfo(alias="parseParams")]
-    """Required when formats.parse is true."""
+    """Requires `formats.parse: true`; required when it is set."""
 
     product_params: Annotated[ProductParams, PropertyInfo(alias="productParams")]
     """Product options. Requires formats.product: true."""
@@ -122,7 +122,7 @@ class Formats(TypedDict, total=False):
 
 
 class HighlightsParams(TypedDict, total=False):
-    """Required when `formats.highlights` is `true`."""
+    """Requires `formats.highlights: true`; required when it is set."""
 
     query: Required[str]
     """The question or topic to find passages for."""
@@ -142,10 +142,10 @@ class ImageParams(TypedDict, total=False):
 
 
 class JsonParams(TypedDict, total=False):
-    """Required when formats.json is true."""
+    """Requires `formats.json: true`; required when it is set."""
 
     schema: Required[Dict[str, object]]
-    """JSON Schema for a top-level object, up to 50 KB.
+    """JSON Schema (not an example object) for a top-level object, up to 50 KB.
 
     Use optional or nullable fields for missing facts.
     """
@@ -188,7 +188,7 @@ ParseParamsRules: TypeAlias = Union[str, ParseParamsRulesUnionMember1]
 
 
 class ParseParams(TypedDict, total=False):
-    """Required when formats.parse is true."""
+    """Requires `formats.parse: true`; required when it is set."""
 
     rules: Required[Dict[str, ParseParamsRules]]
     """Field names mapped to CSS selectors (`h1`, `a@href`) or rule objects.
