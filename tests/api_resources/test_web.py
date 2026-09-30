@@ -428,13 +428,13 @@ class TestWeb:
         web = client.web.search(
             query="Stripe API authentication",
             country="af",
-            exclude_domains=["string"],
+            exclude_domains=["xxx"],
             freshness="last_24_hours",
             highlights_options={
                 "enabled": True,
                 "max_characters": 100,
             },
-            include_domains=["string"],
+            include_domains=["xxx"],
             markdown_options={
                 "enabled": True,
                 "include_frames": True,
@@ -505,12 +505,12 @@ class TestWeb:
         web = client.web.web_crawl_md(
             url="https://example.com",
             country="de",
-            exclude_selectors=["string"],
+            exclude_selectors=["x"],
             follow_subdomains=True,
             include_frames=True,
             include_images=True,
             include_links=True,
-            include_selectors=["string"],
+            include_selectors=["x"],
             max_age_ms=0,
             max_depth=0,
             max_pages=10,
@@ -969,13 +969,13 @@ class TestAsyncWeb:
         web = await async_client.web.search(
             query="Stripe API authentication",
             country="af",
-            exclude_domains=["string"],
+            exclude_domains=["xxx"],
             freshness="last_24_hours",
             highlights_options={
                 "enabled": True,
                 "max_characters": 100,
             },
-            include_domains=["string"],
+            include_domains=["xxx"],
             markdown_options={
                 "enabled": True,
                 "include_frames": True,
@@ -1046,12 +1046,12 @@ class TestAsyncWeb:
         web = await async_client.web.web_crawl_md(
             url="https://example.com",
             country="de",
-            exclude_selectors=["string"],
+            exclude_selectors=["x"],
             follow_subdomains=True,
             include_frames=True,
             include_images=True,
             include_links=True,
-            include_selectors=["string"],
+            include_selectors=["x"],
             max_age_ms=0,
             max_depth=0,
             max_pages=10,

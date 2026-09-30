@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from typing import Optional
 from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from .._types import SequenceNotStr
@@ -280,7 +281,7 @@ class WebSearchParams(TypedDict, total=False):
     freshness: Literal["last_24_hours", "last_week", "last_month", "last_year"]
     """Restrict results to content published within this window."""
 
-    highlights_options: Annotated[HighlightsOptions, PropertyInfo(alias="highlightsOptions")]
+    highlights_options: Annotated[Optional[HighlightsOptions], PropertyInfo(alias="highlightsOptions")]
     """Passages from each result page that are relevant to the query.
 
     Pages are read with the `markdownOptions` settings.
@@ -292,7 +293,7 @@ class WebSearchParams(TypedDict, total=False):
     Up to 100 domains. Example: ["arxiv.org", "github.com"].
     """
 
-    markdown_options: Annotated[MarkdownOptions, PropertyInfo(alias="markdownOptions")]
+    markdown_options: Annotated[Optional[MarkdownOptions], PropertyInfo(alias="markdownOptions")]
     """Inline Markdown scraping for each result. Set `enabled: true` to activate."""
 
     num_results: Annotated[int, PropertyInfo(alias="numResults")]
@@ -328,7 +329,7 @@ class HighlightsOptions(TypedDict, total=False):
 
 
 class MarkdownOptionsPdf(TypedDict, total=False):
-    """PDF handling. Use start/end to bound text extraction and OCR to a page range."""
+    """PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range."""
 
     end: int
     """Last PDF page to parse (1-based, inclusive).
@@ -340,7 +341,7 @@ class MarkdownOptionsPdf(TypedDict, total=False):
     """Parse PDF URLs. When false, PDF results are skipped with WEBSITE_ACCESS_ERROR."""
 
     start: int
-    """First PDF page to parse (1-based, inclusive). Defaults to page 1."""
+    """First 1-based PDF page to parse."""
 
 
 class MarkdownOptionsTimeoutOpts(TypedDict, total=False):
@@ -372,7 +373,7 @@ class MarkdownOptions(TypedDict, total=False):
     include_links: Annotated[bool, PropertyInfo(alias="includeLinks")]
     """Keep hyperlinks in the Markdown."""
 
-    max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
+    max_age_ms: Annotated[Optional[int], PropertyInfo(alias="maxAgeMs")]
     """Maximum cache age in milliseconds for result page content.
 
     Defaults to 180 days (15552000000 ms) when Markdown is requested, or 365 days
@@ -381,7 +382,7 @@ class MarkdownOptions(TypedDict, total=False):
     """
 
     pdf: MarkdownOptionsPdf
-    """PDF handling. Use start/end to bound text extraction and OCR to a page range."""
+    """PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range."""
 
     shorten_base64_images: Annotated[bool, PropertyInfo(alias="shortenBase64Images")]
     """Truncate inline base64 image payloads to keep responses small."""
@@ -392,7 +393,7 @@ class MarkdownOptions(TypedDict, total=False):
     use_main_content_only: Annotated[bool, PropertyInfo(alias="useMainContentOnly")]
     """Strip nav, header, footer, and sidebar — keep only the primary article content."""
 
-    wait_for_ms: Annotated[int, PropertyInfo(alias="waitForMs")]
+    wait_for_ms: Annotated[Optional[int], PropertyInfo(alias="waitForMs")]
     """Extra wait after page load before rendering, in ms (0–30000).
 
     Useful for JS-heavy pages.

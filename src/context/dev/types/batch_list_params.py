@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
+from typing import Union
 from typing_extensions import Literal, TypedDict
+
+from .._types import SequenceNotStr
 
 __all__ = ["BatchListParams"]
 
@@ -29,5 +32,9 @@ class BatchListParams(TypedDict, total=False):
     status: Literal["queued", "running", "cancelling", "completed", "cancelled", "failed"]
     """Filter by status."""
 
-    tags: str
-    """Comma-separated list of tags to filter by (matches batches having any of them)."""
+    tags: Union[str, SequenceNotStr[str]]
+    """Tags to filter by (matches batches having any of them).
+
+    Pass repeated `tags` params or one comma-separated list, e.g.
+    `tags=docs,competitor`.
+    """

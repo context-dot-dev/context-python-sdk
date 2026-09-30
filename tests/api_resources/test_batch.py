@@ -204,7 +204,7 @@ class TestBatch:
     def test_method_get_results_with_all_params(self, client: ContextDev) -> None:
         batch = client.batch.get_results(
             batch_id="batch_9f2c8a",
-            cursor="cursor",
+            cursor="321669910225:155771193",
             limit=1,
         )
         assert_matches_type(BatchGetResultsResponse, batch, path=["response"])
@@ -306,7 +306,7 @@ class TestBatch:
                 "url": "https://example.com",
                 "retry": {"delays_seconds": [10, 60, 300, 1800, 7200, 21600, 57600]},
             },
-            webhook_url="webhookUrl",
+            webhook_url="https://example.com",
             idempotency_key="Idempotency-Key",
         )
         assert_matches_type(BatchSubmitResponse, batch, path=["response"])
@@ -541,7 +541,7 @@ class TestAsyncBatch:
     async def test_method_get_results_with_all_params(self, async_client: AsyncContextDev) -> None:
         batch = await async_client.batch.get_results(
             batch_id="batch_9f2c8a",
-            cursor="cursor",
+            cursor="321669910225:155771193",
             limit=1,
         )
         assert_matches_type(BatchGetResultsResponse, batch, path=["response"])
@@ -643,7 +643,7 @@ class TestAsyncBatch:
                 "url": "https://example.com",
                 "retry": {"delays_seconds": [10, 60, 300, 1800, 7200, 21600, 57600]},
             },
-            webhook_url="webhookUrl",
+            webhook_url="https://example.com",
             idempotency_key="Idempotency-Key",
         )
         assert_matches_type(BatchSubmitResponse, batch, path=["response"])

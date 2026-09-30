@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from typing import Union
 from typing_extensions import Literal
 
 import httpx
@@ -95,7 +96,7 @@ class BatchResource(SyncAPIResource):
         q: str | Omit = omit,
         search_type: Literal["exact", "prefix"] | Omit = omit,
         status: Literal["queued", "running", "cancelling", "completed", "cancelled", "failed"] | Omit = omit,
-        tags: str | Omit = omit,
+        tags: Union[str, SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -119,7 +120,8 @@ class BatchResource(SyncAPIResource):
 
           status: Filter by status.
 
-          tags: Comma-separated list of tags to filter by (matches batches having any of them).
+          tags: Tags to filter by (matches batches having any of them). Pass repeated `tags`
+              params or one comma-separated list, e.g. `tags=docs,competitor`.
 
           extra_headers: Send extra headers
 
@@ -407,7 +409,7 @@ class AsyncBatchResource(AsyncAPIResource):
         q: str | Omit = omit,
         search_type: Literal["exact", "prefix"] | Omit = omit,
         status: Literal["queued", "running", "cancelling", "completed", "cancelled", "failed"] | Omit = omit,
-        tags: str | Omit = omit,
+        tags: Union[str, SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -431,7 +433,8 @@ class AsyncBatchResource(AsyncAPIResource):
 
           status: Filter by status.
 
-          tags: Comma-separated list of tags to filter by (matches batches having any of them).
+          tags: Tags to filter by (matches batches having any of them). Pass repeated `tags`
+              params or one comma-separated list, e.g. `tags=docs,competitor`.
 
           extra_headers: Send extra headers
 

@@ -86,7 +86,7 @@ class TestBrand:
         brand = client.brand.retrieve(
             name="xxx",
             type="by_name",
-            country_gl="country_gl",
+            country_gl="af",
             force_language="afrikaans",
             max_age_ms=0,
             max_speed=True,
@@ -199,7 +199,7 @@ class TestBrand:
             max_age_ms=0,
             max_speed=True,
             tags=["production", "team-alpha"],
-            ticker_exchange="ticker_exchange",
+            ticker_exchange="AMEX",
             timeout_opts={
                 "milliseconds": 1000,
                 "behavior": "fail",
@@ -302,7 +302,7 @@ class TestBrand:
             transaction_info="xxx",
             type="by_transaction",
             city="city",
-            country_gl="country_gl",
+            country_gl="af",
             force_language="afrikaans",
             high_confidence_only=True,
             max_speed=True,
@@ -465,7 +465,7 @@ class TestAsyncBrand:
         brand = await async_client.brand.retrieve(
             name="xxx",
             type="by_name",
-            country_gl="country_gl",
+            country_gl="af",
             force_language="afrikaans",
             max_age_ms=0,
             max_speed=True,
@@ -578,7 +578,7 @@ class TestAsyncBrand:
             max_age_ms=0,
             max_speed=True,
             tags=["production", "team-alpha"],
-            ticker_exchange="ticker_exchange",
+            ticker_exchange="AMEX",
             timeout_opts={
                 "milliseconds": 1000,
                 "behavior": "fail",
@@ -681,7 +681,7 @@ class TestAsyncBrand:
             transaction_info="xxx",
             type="by_transaction",
             city="city",
-            country_gl="country_gl",
+            country_gl="af",
             force_language="afrikaans",
             high_confidence_only=True,
             max_speed=True,
