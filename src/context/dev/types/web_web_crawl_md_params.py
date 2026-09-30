@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from typing import Optional
 from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from .._types import SequenceNotStr
@@ -222,7 +223,7 @@ class WebWebCrawlMdParams(TypedDict, total=False):
     ]
     """Fetch from this country (ISO 3166-1 alpha-2)."""
 
-    exclude_selectors: Annotated[SequenceNotStr[str], PropertyInfo(alias="excludeSelectors")]
+    exclude_selectors: Annotated[Optional[SequenceNotStr[str]], PropertyInfo(alias="excludeSelectors")]
     """Remove matching elements after inclusions. Exclusions take precedence."""
 
     follow_subdomains: Annotated[bool, PropertyInfo(alias="followSubdomains")]
@@ -244,10 +245,10 @@ class WebWebCrawlMdParams(TypedDict, total=False):
     include_links: Annotated[bool, PropertyInfo(alias="includeLinks")]
     """Preserve hyperlinks in the Markdown output"""
 
-    include_selectors: Annotated[SequenceNotStr[str], PropertyInfo(alias="includeSelectors")]
+    include_selectors: Annotated[Optional[SequenceNotStr[str]], PropertyInfo(alias="includeSelectors")]
     """Keep matching HTML subtrees before converting each page to Markdown."""
 
-    max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
+    max_age_ms: Annotated[Optional[int], PropertyInfo(alias="maxAgeMs")]
     """Maximum cache age in milliseconds. Defaults to 1 day; `0` fetches fresh."""
 
     max_depth: Annotated[int, PropertyInfo(alias="maxDepth")]
@@ -294,7 +295,7 @@ class WebWebCrawlMdParams(TypedDict, total=False):
     navigation
     """
 
-    wait_for_ms: Annotated[int, PropertyInfo(alias="waitForMs")]
+    wait_for_ms: Annotated[Optional[int], PropertyInfo(alias="waitForMs")]
     """Browser wait time in milliseconds after initial page load for each crawled page.
 
     Defaults to 3500 (3.5 seconds). Min: 0. Max: 30000 (30 seconds).
@@ -311,14 +312,13 @@ class Pdf(TypedDict, total=False):
     """PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range."""
 
     end: int
-    """Last 1-based PDF page to parse.
+    """Last PDF page to parse (1-based, inclusive).
 
-    When omitted, parsing ends at the last page. Must be greater than or equal to
-    start when both are provided.
+    Defaults to the final page. Must be >= start.
     """
 
     ocr: bool
-    """Read scanned PDF pages with OCR; preserve pages that already contain text."""
+    """Read scanned PDF pages with OCR; preserve pages that already have text."""
 
     should_parse: Annotated[bool, PropertyInfo(alias="shouldParse")]
     """When true, PDF pages are fetched and parsed.
@@ -328,10 +328,7 @@ class Pdf(TypedDict, total=False):
     """
 
     start: int
-    """First 1-based PDF page to parse.
-
-    When omitted, parsing starts at the first page.
-    """
+    """First 1-based PDF page to parse."""
 
 
 class TimeoutOpts(TypedDict, total=False):

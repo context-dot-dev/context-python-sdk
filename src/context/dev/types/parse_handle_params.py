@@ -123,14 +123,10 @@ class Pdf(TypedDict, total=False):
     """PDF page-range options as a JSON object, e.g. {"start": 2, "end": 5}."""
 
     end: int
-    """Last 1-based PDF page to parse.
+    """Last PDF page to parse (1-based, inclusive).
 
-    When omitted, parsing ends at the last page. Must be greater than or equal to
-    start when both are provided.
+    Defaults to the final page. Must be >= start.
     """
 
     start: int
-    """First 1-based PDF page to parse.
-
-    When omitted, parsing starts at the first page.
-    """
+    """First 1-based PDF page to parse."""

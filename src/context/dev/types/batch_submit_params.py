@@ -88,16 +88,12 @@ class InputScrapeDataMarkdownURL(TypedDict, total=False):
 
 
 class InputScrapeDataMarkdownOptionsPdf(TypedDict, total=False):
-    """PDF parsing controls.
-
-    Use start/end to limit text extraction and embedded-image detection/OCR to an inclusive 1-based page range.
-    """
+    """PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range."""
 
     end: int
-    """Last 1-based PDF page to parse.
+    """Last PDF page to parse (1-based, inclusive).
 
-    When omitted, parsing ends at the last page. Must be greater than or equal to
-    start when both are provided.
+    Defaults to the final page. Must be >= start.
     """
 
     ocr: bool
@@ -107,10 +103,7 @@ class InputScrapeDataMarkdownOptionsPdf(TypedDict, total=False):
     """Parse PDF URLs. When false, PDFs fail with `PDF_SKIPPED`."""
 
     start: int
-    """First 1-based PDF page to parse.
-
-    When omitted, parsing starts at the first page.
-    """
+    """First 1-based PDF page to parse."""
 
 
 class InputScrapeDataMarkdownOptions(TypedDict, total=False):
@@ -353,11 +346,7 @@ class InputScrapeDataMarkdownOptions(TypedDict, total=False):
     """
 
     pdf: InputScrapeDataMarkdownOptionsPdf
-    """PDF parsing controls.
-
-    Use start/end to limit text extraction and embedded-image detection/OCR to an
-    inclusive 1-based page range.
-    """
+    """PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range."""
 
     settle_animations: Annotated[bool, PropertyInfo(alias="settleAnimations")]
     """Wait for CSS animations to finish before extracting, on browser-rendered pages."""
@@ -402,16 +391,12 @@ class InputScrapeDataHtmlurL(TypedDict, total=False):
 
 
 class InputScrapeDataHTMLOptionsPdf(TypedDict, total=False):
-    """PDF parsing controls.
-
-    Use start/end to limit text extraction and embedded-image detection/OCR to an inclusive 1-based page range.
-    """
+    """PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range."""
 
     end: int
-    """Last 1-based PDF page to parse.
+    """Last PDF page to parse (1-based, inclusive).
 
-    When omitted, parsing ends at the last page. Must be greater than or equal to
-    start when both are provided.
+    Defaults to the final page. Must be >= start.
     """
 
     ocr: bool
@@ -421,10 +406,7 @@ class InputScrapeDataHTMLOptionsPdf(TypedDict, total=False):
     """Parse PDF URLs. When false, PDFs fail with `PDF_SKIPPED`."""
 
     start: int
-    """First 1-based PDF page to parse.
-
-    When omitted, parsing starts at the first page.
-    """
+    """First 1-based PDF page to parse."""
 
 
 class InputScrapeDataHTMLOptions(TypedDict, total=False):
@@ -658,11 +640,7 @@ class InputScrapeDataHTMLOptions(TypedDict, total=False):
     """
 
     pdf: InputScrapeDataHTMLOptionsPdf
-    """PDF parsing controls.
-
-    Use start/end to limit text extraction and embedded-image detection/OCR to an
-    inclusive 1-based page range.
-    """
+    """PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range."""
 
     settle_animations: Annotated[bool, PropertyInfo(alias="settleAnimations")]
     """Wait for CSS animations to finish before extracting, on browser-rendered pages."""
@@ -771,16 +749,12 @@ InputCrawlDataMarkdownSource: TypeAlias = Union[
 
 
 class InputCrawlDataMarkdownOptionsPdf(TypedDict, total=False):
-    """PDF parsing controls.
-
-    Use start/end to limit text extraction and embedded-image detection/OCR to an inclusive 1-based page range.
-    """
+    """PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range."""
 
     end: int
-    """Last 1-based PDF page to parse.
+    """Last PDF page to parse (1-based, inclusive).
 
-    When omitted, parsing ends at the last page. Must be greater than or equal to
-    start when both are provided.
+    Defaults to the final page. Must be >= start.
     """
 
     ocr: bool
@@ -790,10 +764,7 @@ class InputCrawlDataMarkdownOptionsPdf(TypedDict, total=False):
     """Parse PDF URLs. When false, PDFs fail with `PDF_SKIPPED`."""
 
     start: int
-    """First 1-based PDF page to parse.
-
-    When omitted, parsing starts at the first page.
-    """
+    """First 1-based PDF page to parse."""
 
 
 class InputCrawlDataMarkdownOptions(TypedDict, total=False):
@@ -1036,11 +1007,7 @@ class InputCrawlDataMarkdownOptions(TypedDict, total=False):
     """
 
     pdf: InputCrawlDataMarkdownOptionsPdf
-    """PDF parsing controls.
-
-    Use start/end to limit text extraction and embedded-image detection/OCR to an
-    inclusive 1-based page range.
-    """
+    """PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range."""
 
     settle_animations: Annotated[bool, PropertyInfo(alias="settleAnimations")]
     """Wait for CSS animations to finish before extracting, on browser-rendered pages."""
@@ -1137,16 +1104,12 @@ InputCrawlDataHTMLSource: TypeAlias = Union[InputCrawlDataHTMLSourceStartURL, In
 
 
 class InputCrawlDataHTMLOptionsPdf(TypedDict, total=False):
-    """PDF parsing controls.
-
-    Use start/end to limit text extraction and embedded-image detection/OCR to an inclusive 1-based page range.
-    """
+    """PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range."""
 
     end: int
-    """Last 1-based PDF page to parse.
+    """Last PDF page to parse (1-based, inclusive).
 
-    When omitted, parsing ends at the last page. Must be greater than or equal to
-    start when both are provided.
+    Defaults to the final page. Must be >= start.
     """
 
     ocr: bool
@@ -1156,10 +1119,7 @@ class InputCrawlDataHTMLOptionsPdf(TypedDict, total=False):
     """Parse PDF URLs. When false, PDFs fail with `PDF_SKIPPED`."""
 
     start: int
-    """First 1-based PDF page to parse.
-
-    When omitted, parsing starts at the first page.
-    """
+    """First 1-based PDF page to parse."""
 
 
 class InputCrawlDataHTMLOptions(TypedDict, total=False):
@@ -1393,11 +1353,7 @@ class InputCrawlDataHTMLOptions(TypedDict, total=False):
     """
 
     pdf: InputCrawlDataHTMLOptionsPdf
-    """PDF parsing controls.
-
-    Use start/end to limit text extraction and embedded-image detection/OCR to an
-    inclusive 1-based page range.
-    """
+    """PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range."""
 
     settle_animations: Annotated[bool, PropertyInfo(alias="settleAnimations")]
     """Wait for CSS animations to finish before extracting, on browser-rendered pages."""
