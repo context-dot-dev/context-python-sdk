@@ -33,7 +33,7 @@ __all__ = [
 
 class BytesData(BaseModel):
     base64: str
-    """Body as base64, after HTTP decompression. Up to 20 MiB decoded."""
+    """Body as base64, after HTTP decompression. Up to 50 MiB decoded."""
 
     content_type: str = FieldInfo(alias="contentType")
 
