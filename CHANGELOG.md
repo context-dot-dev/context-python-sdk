@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.23.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.22.0...v2.23.0) (2026-09-30)
+
+
+### Features
+
+* **logs:** serve request logs at /org/logs ([#1442](https://github.com/context-dot-dev/context-python-sdk/issues/1442)) ([6bf1a78](https://github.com/context-dot-dev/context-python-sdk/commit/6bf1a789258cf81002a924b68c767ea54f16cea8))
+* **scrape:** accept documents up to 50 MB ([#1436](https://github.com/context-dot-dev/context-python-sdk/issues/1436)) ([da38d3c](https://github.com/context-dot-dev/context-python-sdk/commit/da38d3c46c444f157697e4056062f235968f948d))
+* **scrape:** add productParams.dedupeImages, always run product AI fallback ([#1423](https://github.com/context-dot-dev/context-python-sdk/issues/1423)) ([c3581f5](https://github.com/context-dot-dev/context-python-sdk/commit/c3581f52a077901a6ee751087ea7617f40aa5c07))
+* **scrape:** default POST /web/scrape deadline to 90s ([#1428](https://github.com/context-dot-dev/context-python-sdk/issues/1428)) ([64ee998](https://github.com/context-dot-dev/context-python-sdk/commit/64ee998898b3dadc8a8e215cfcc6c84255ada77e))
+
+
+### Bug Fixes
+
+* **api:** derive OpenAPI request docs from runtime Zod schemas ([#1421](https://github.com/context-dot-dev/context-python-sdk/issues/1421)) ([5408b40](https://github.com/context-dot-dev/context-python-sdk/commit/5408b4015672d8864e26ca53b44643699f4823fe))
+
 ## [2.22.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.21.0...v2.22.0) (2026-09-29)
 
 
