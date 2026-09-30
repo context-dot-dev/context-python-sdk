@@ -75,7 +75,7 @@ class LogsResource(SyncAPIResource):
         if not request_id:
             raise ValueError(f"Expected a non-empty value for `request_id` but received {request_id!r}")
         return self._get(
-            path_template("/logs/{request_id}", request_id=request_id),
+            path_template("/org/logs/{request_id}", request_id=request_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -143,7 +143,7 @@ class LogsResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._get(
-            "/logs",
+            "/org/logs",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -220,7 +220,7 @@ class AsyncLogsResource(AsyncAPIResource):
         if not request_id:
             raise ValueError(f"Expected a non-empty value for `request_id` but received {request_id!r}")
         return await self._get(
-            path_template("/logs/{request_id}", request_id=request_id),
+            path_template("/org/logs/{request_id}", request_id=request_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -288,7 +288,7 @@ class AsyncLogsResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return await self._get(
-            "/logs",
+            "/org/logs",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
