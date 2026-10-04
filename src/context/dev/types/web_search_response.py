@@ -26,7 +26,9 @@ class CacheMetadata(BaseModel):
 class ResultHighlights(BaseModel):
     """Highlights status and passages for this result."""
 
-    code: Literal["SUCCESS", "NOT_REQUESTED", "TIMEOUT", "CONTENT_TOO_LARGE", "WEBSITE_ACCESS_ERROR", "ERROR"]
+    code: Literal[
+        "SUCCESS", "NOT_REQUESTED", "TIMEOUT", "CONTENT_TOO_LARGE", "WEBSITE_ACCESS_ERROR", "WEBSITE_BLOCKED", "ERROR"
+    ]
     """Per-result highlights outcome. Inspect this before reading `highlights`."""
 
     highlights: Optional[List[str]] = None
@@ -39,7 +41,9 @@ class ResultHighlights(BaseModel):
 class ResultMarkdown(BaseModel):
     """Markdown scrape status and content for this result."""
 
-    code: Literal["SUCCESS", "NOT_REQUESTED", "TIMEOUT", "CONTENT_TOO_LARGE", "WEBSITE_ACCESS_ERROR", "ERROR"]
+    code: Literal[
+        "SUCCESS", "NOT_REQUESTED", "TIMEOUT", "CONTENT_TOO_LARGE", "WEBSITE_ACCESS_ERROR", "WEBSITE_BLOCKED", "ERROR"
+    ]
     """Per-result scrape outcome. Inspect this before reading `markdown`."""
 
     markdown: Optional[str] = None
