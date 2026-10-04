@@ -157,6 +157,12 @@ class Json(BaseModel):
     error_code: Optional[str] = None
     """Why the output failed. Present only when `success` is `false`."""
 
+    is_truncated: Optional[Literal[True]] = FieldInfo(alias="isTruncated", default=None)
+    """
+    True when the page was too long to read in full, so values found only in the
+    unread parts may be missing.
+    """
+
     message: Optional[str] = None
     """Explanation of the failure and possible next steps."""
 
