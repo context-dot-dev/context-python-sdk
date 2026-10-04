@@ -23,9 +23,8 @@ class WebAnswersResponse(BaseModel):
 
     sources: List[str]
     """
-    Public evidence URLs from searches, pages, or company/profile records, in
-    first-seen order. A listed URL may identify a record without its page being
-    read.
+    URLs of the pages and company/profile records read for the answer, followed by
+    URLs cited in json_content.
     """
 
     key_metadata: Optional[KeyMetadata] = None
