@@ -272,6 +272,9 @@ class WebSearchParams(TypedDict, total=False):
     country (maps to Google's `gl` parameter). Example: "us", "gb", "de".
     """
 
+    description_max_characters: Annotated[Optional[int], PropertyInfo(alias="descriptionMaxCharacters")]
+    """Maximum length of each result's `description`, in characters."""
+
     exclude_domains: Annotated[SequenceNotStr[str], PropertyInfo(alias="excludeDomains")]
     """Blocklist — drop results from these domains.
 

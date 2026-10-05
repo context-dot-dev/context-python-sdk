@@ -428,6 +428,7 @@ class TestWeb:
         web = client.web.search(
             query="Stripe API authentication",
             country="af",
+            description_max_characters=0,
             exclude_domains=["xxx"],
             freshness="last_24_hours",
             highlights_options={
@@ -969,6 +970,7 @@ class TestAsyncWeb:
         web = await async_client.web.search(
             query="Stripe API authentication",
             country="af",
+            description_max_characters=0,
             exclude_domains=["xxx"],
             freshness="last_24_hours",
             highlights_options={

@@ -1023,6 +1023,7 @@ class WebResource(SyncAPIResource):
             "zw",
         ]
         | Omit = omit,
+        description_max_characters: Optional[int] | Omit = omit,
         exclude_domains: SequenceNotStr[str] | Omit = omit,
         freshness: Literal["last_24_hours", "last_week", "last_month", "last_year"] | Omit = omit,
         highlights_options: Optional[web_search_params.HighlightsOptions] | Omit = omit,
@@ -1050,6 +1051,8 @@ class WebResource(SyncAPIResource):
 
           country: Two-letter ISO 3166-1 alpha-2 country code to localize results to a specific
               country (maps to Google's `gl` parameter). Example: "us", "gb", "de".
+
+          description_max_characters: Maximum length of each result's `description`, in characters.
 
           exclude_domains:
               Blocklist — drop results from these domains. Up to 100 domains. Example:
@@ -1091,6 +1094,7 @@ class WebResource(SyncAPIResource):
                 {
                     "query": query,
                     "country": country,
+                    "description_max_characters": description_max_characters,
                     "exclude_domains": exclude_domains,
                     "freshness": freshness,
                     "highlights_options": highlights_options,
@@ -2431,6 +2435,7 @@ class AsyncWebResource(AsyncAPIResource):
             "zw",
         ]
         | Omit = omit,
+        description_max_characters: Optional[int] | Omit = omit,
         exclude_domains: SequenceNotStr[str] | Omit = omit,
         freshness: Literal["last_24_hours", "last_week", "last_month", "last_year"] | Omit = omit,
         highlights_options: Optional[web_search_params.HighlightsOptions] | Omit = omit,
@@ -2458,6 +2463,8 @@ class AsyncWebResource(AsyncAPIResource):
 
           country: Two-letter ISO 3166-1 alpha-2 country code to localize results to a specific
               country (maps to Google's `gl` parameter). Example: "us", "gb", "de".
+
+          description_max_characters: Maximum length of each result's `description`, in characters.
 
           exclude_domains:
               Blocklist — drop results from these domains. Up to 100 domains. Example:
@@ -2499,6 +2506,7 @@ class AsyncWebResource(AsyncAPIResource):
                 {
                     "query": query,
                     "country": country,
+                    "description_max_characters": description_max_characters,
                     "exclude_domains": exclude_domains,
                     "freshness": freshness,
                     "highlights_options": highlights_options,
