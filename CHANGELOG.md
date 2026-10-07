@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.24.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.23.0...v2.24.0) (2026-10-07)
+
+
+### Features
+
+* **batches:** keep batch result files for 180 days ([#1638](https://github.com/context-dot-dev/context-python-sdk/issues/1638)) ([255e82e](https://github.com/context-dot-dev/context-python-sdk/commit/255e82e4a8d40cab7ae22f28d894100daa4f9978))
+* **news:** add Google News sitemap feeds for 52 sites from the NEEDLE 4-star gaps ([#1612](https://github.com/context-dot-dev/context-python-sdk/issues/1612)) ([b62ca82](https://github.com/context-dot-dev/context-python-sdk/commit/b62ca8209e698447583ae71384f1750a868d3ee2))
+* **search:** /web/search - for news results extend description with matching passages from article. ([7d9457b](https://github.com/context-dot-dev/context-python-sdk/commit/7d9457b59e14c7b71b98d161d9a2ecb9ebba6439))
+
+
+### Bug Fixes
+
+* **answers:** keep page links for the agent and only cite URLs it actually saw ([#1571](https://github.com/context-dot-dev/context-python-sdk/issues/1571)) ([7efb4e2](https://github.com/context-dot-dev/context-python-sdk/commit/7efb4e2fea19d36b7f6eee16c52d2abee4ceb0b6))
+* **scrape:** keep the relevant sections of long pages for JSON extraction ([#1582](https://github.com/context-dot-dev/context-python-sdk/issues/1582)) ([18c86ae](https://github.com/context-dot-dev/context-python-sdk/commit/18c86ae79d1505f3c473a5f5a278b71a0e12e2d4))
+* **search:** shorter default page-read budget and blocked-page codes for search results ([#1573](https://github.com/context-dot-dev/context-python-sdk/issues/1573)) ([70af317](https://github.com/context-dot-dev/context-python-sdk/commit/70af3174133f10758be00737e70ab049267f45ff))
+
 ## [2.23.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.22.0...v2.23.0) (2026-09-30)
 
 
