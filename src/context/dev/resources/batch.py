@@ -64,7 +64,7 @@ class BatchResource(SyncAPIResource):
     ) -> BatchRetrieveResponse:
         """Get batch progress and result download links.
 
-        Result files are deleted 7 days
+        Result files are deleted 180 days
         after the batch finishes.
 
         Args:
@@ -242,8 +242,8 @@ class BatchResource(SyncAPIResource):
     ) -> BatchGetResultsResponse:
         """Page through a finished batch’s results as JSON.
 
-        Results remain available for 7
-        days.
+        Results remain available for
+        180 days.
 
         Args:
           batch_id: Batch ID.
@@ -377,7 +377,7 @@ class AsyncBatchResource(AsyncAPIResource):
     ) -> BatchRetrieveResponse:
         """Get batch progress and result download links.
 
-        Result files are deleted 7 days
+        Result files are deleted 180 days
         after the batch finishes.
 
         Args:
@@ -555,8 +555,8 @@ class AsyncBatchResource(AsyncAPIResource):
     ) -> BatchGetResultsResponse:
         """Page through a finished batch’s results as JSON.
 
-        Results remain available for 7
-        days.
+        Results remain available for
+        180 days.
 
         Args:
           batch_id: Batch ID.
