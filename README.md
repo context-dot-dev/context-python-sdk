@@ -18,21 +18,23 @@ pip install context.dev
 
 ## Usage
 
+Set `CONTEXT_DEV_API_KEY` to your API key; the client reads it automatically.
+
+### Scrape markdown and HTML
+
 The full API of this library can be found in [api.md](api.md).
 
 ```python
-import os
 from context.dev import ContextDev
 
-client = ContextDev(
-    api_key=os.environ.get("CONTEXT_DEV_API_KEY"),  # This is the default and can be omitted
-)
+client = ContextDev()
 
-brand = client.brand.retrieve(
-    domain="REPLACE_ME",
-    type="by_domain",
+page = client.web.scrape(
+    url="https://example.com",
+    formats={"markdown": True, "html": True},
 )
-print(brand.request_id)
+print(page.markdown.data)
+print(page.html.data)
 ```
 
 ### Extract structured JSON
@@ -60,11 +62,44 @@ page = client.web.scrape(
 print(page.json_.data)
 ```
 
+### Extract relevant highlights
+
+Return the passages that answer a question about the page.
+
+```python
+from context.dev import ContextDev
+
+client = ContextDev()
+
+page = client.web.scrape(
+    url="https://example.com",
+    formats={"highlights": True},
+    highlights_params={"query": "What is this domain used for?"},
+)
+print(page.highlights.data)
+```
+
+### Take a screenshot
+
+The screenshot is returned as a base64 image data URL.
+
+```python
+from context.dev import ContextDev
+
+client = ContextDev()
+
+page = client.web.scrape(
+    url="https://example.com",
+    formats={"screenshot": True},
+)
+print(page.screenshot.data)
+```
+
 ## What you can do
 
 | Task | Method |
 | --- | --- |
-| Scrape a URL to markdown, HTML, JSON or a screenshot | `client.web.scrape` |
+| Scrape a URL to markdown, HTML, JSON, highlights or a screenshot | `client.web.scrape` |
 | Crawl a site and get every page as markdown | `client.web.web_crawl_md` |
 | Map every URL on a domain | `client.web.map_urls` |
 | Search the web | `client.web.search` |
@@ -98,11 +133,11 @@ client = AsyncContextDev(
 
 
 async def main() -> None:
-    brand = await client.brand.retrieve(
-        domain="REPLACE_ME",
-        type="by_domain",
+    page = await client.web.scrape(
+        url="https://example.com",
+        formats={"markdown": True},
     )
-    print(brand.request_id)
+    print(page.markdown.data)
 
 
 asyncio.run(main())
@@ -135,11 +170,11 @@ async def main() -> None:
         api_key=os.environ.get("CONTEXT_DEV_API_KEY"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
-        brand = await client.brand.retrieve(
-            domain="REPLACE_ME",
-            type="by_domain",
+        page = await client.web.scrape(
+            url="https://example.com",
+            formats={"markdown": True},
         )
-        print(brand.request_id)
+        print(page.markdown.data)
 
 
 asyncio.run(main())
@@ -163,12 +198,12 @@ from context.dev import ContextDev
 
 client = ContextDev()
 
-brand = client.brand.retrieve(
-    domain="xxx",
-    type="by_domain",
+page = client.web.scrape(
+    url="https://example.com",
+    formats={"markdown": True},
     timeout_opts={"milliseconds": 1000},
 )
-print(brand.timeout_opts)
+print(page.markdown.data)
 ```
 
 ## Handling errors
@@ -187,9 +222,9 @@ from context.dev import ContextDev
 client = ContextDev()
 
 try:
-    client.brand.retrieve(
-        domain="REPLACE_ME",
-        type="by_domain",
+    client.web.scrape(
+        url="https://example.com",
+        formats={"markdown": True},
     )
 except context.dev.APIConnectionError as e:
     print("The server could not be reached")
@@ -233,9 +268,9 @@ client = ContextDev(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).brand.retrieve(
-    domain="REPLACE_ME",
-    type="by_domain",
+client.with_options(max_retries=5).web.scrape(
+    url="https://example.com",
+    formats={"markdown": True},
 )
 ```
 
@@ -245,6 +280,7 @@ By default requests time out after 1 minute. You can configure this with a `time
 which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/timeouts/#fine-tuning-the-configuration) object:
 
 ```python
+import httpx
 from context.dev import ContextDev
 
 # Configure the default for all requests:
@@ -259,9 +295,9 @@ client = ContextDev(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).brand.retrieve(
-    domain="REPLACE_ME",
-    type="by_domain",
+client.with_options(timeout=5.0).web.scrape(
+    url="https://example.com",
+    formats={"markdown": True},
 )
 ```
 
@@ -303,14 +339,14 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from context.dev import ContextDev
 
 client = ContextDev()
-response = client.brand.with_raw_response.retrieve(
-    domain="REPLACE_ME",
-    type="by_domain",
+response = client.web.with_raw_response.scrape(
+    url="https://example.com",
+    formats={"markdown": True},
 )
 print(response.headers.get('X-My-Header'))
 
-brand = response.parse()  # get the object that `brand.retrieve()` would have returned
-print(brand.request_id)
+page = response.parse()
+print(page.markdown.data)
 ```
 
 These methods return an [`APIResponse`](https://github.com/context-dot-dev/context-python-sdk/tree/main/src/context/dev/_response.py) object.
@@ -324,9 +360,9 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.brand.with_streaming_response.retrieve(
-    domain="REPLACE_ME",
-    type="by_domain",
+with client.web.with_streaming_response.scrape(
+    url="https://example.com",
+    formats={"markdown": True},
 ) as response:
     print(response.headers.get("X-My-Header"))
 
