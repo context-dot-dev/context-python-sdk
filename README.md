@@ -1,9 +1,9 @@
-# Context Dev Python API library
+# Context.dev Python SDK API library
 
 <!-- prettier-ignore -->
 [![PyPI version](https://img.shields.io/pypi/v/context.dev.svg?label=pypi%20(stable))](https://pypi.org/project/context.dev/)
 
-The Context Dev Python library provides convenient access to the Context Dev REST API from any Python 3.9+
+The Context.dev Python SDK library provides convenient access to the Context Dev REST API from any Python 3.9+
 application. The library includes type definitions for all request params and response fields,
 and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
 
@@ -32,11 +32,11 @@ client = ContextDev(
     api_key=os.environ.get("CONTEXT_DEV_API_KEY"),  # This is the default and can be omitted
 )
 
-brand = client.brand.retrieve(
-    domain="REPLACE_ME",
-    type="by_domain",
+page = client.web.scrape(
+    formats={"markdown": True},
+    url="https://example.com",
 )
-print(brand.request_id)
+print(page.request_id)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -59,11 +59,11 @@ client = AsyncContextDev(
 
 
 async def main() -> None:
-    brand = await client.brand.retrieve(
-        domain="REPLACE_ME",
-        type="by_domain",
+    page = await client.web.scrape(
+        formats={"markdown": True},
+        url="https://example.com",
     )
-    print(brand.request_id)
+    print(page.request_id)
 
 
 asyncio.run(main())
@@ -96,11 +96,11 @@ async def main() -> None:
         api_key=os.environ.get("CONTEXT_DEV_API_KEY"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
-        brand = await client.brand.retrieve(
-            domain="REPLACE_ME",
-            type="by_domain",
+        page = await client.web.scrape(
+            formats={"markdown": True},
+            url="https://example.com",
         )
-        print(brand.request_id)
+        print(page.request_id)
 
 
 asyncio.run(main())
@@ -124,12 +124,11 @@ from context.dev import ContextDev
 
 client = ContextDev()
 
-brand = client.brand.retrieve(
-    domain="xxx",
-    type="by_domain",
-    timeout_opts={"milliseconds": 1000},
+response = client.web.scrape(
+    formats={"markdown": True},
+    url="https://example.com",
 )
-print(brand.timeout_opts)
+print(response.formats)
 ```
 
 ## Handling errors
