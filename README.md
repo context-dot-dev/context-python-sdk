@@ -3,11 +3,7 @@
 <!-- prettier-ignore -->
 [![PyPI version](https://img.shields.io/pypi/v/context.dev.svg?label=pypi%20(stable))](https://pypi.org/project/context.dev/)
 
-The Context.dev Python SDK library provides convenient access to the Context Dev REST API from any Python 3.9+
-application. The library includes type definitions for all request params and response fields,
-and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
-
-It is generated with [Stainless](https://www.stainless.com/).
+Context.dev is a web scraping API for AI agents and LLMs. This SDK turns any URL into clean, LLM-ready markdown, crawls whole sites, searches the web, takes screenshots and extracts structured JSON against a schema you define, all with one API key. Proxies, JavaScript rendering and anti-bot handling run on Context.dev's side, so there is no headless browser to host.
 
 ## Documentation
 
@@ -22,25 +18,100 @@ pip install context.dev
 
 ## Usage
 
+Set `CONTEXT_DEV_API_KEY` to your API key; the client reads it automatically.
+
+### Scrape markdown and HTML
+
 The full API of this library can be found in [api.md](api.md).
 
 ```python
-import os
 from context.dev import ContextDev
 
-client = ContextDev(
-    api_key=os.environ.get("CONTEXT_DEV_API_KEY"),  # This is the default and can be omitted
-)
+client = ContextDev()
 
 page = client.web.scrape(
-    formats={
-        "markdown": True,
-        "html": True,
-    },
     url="https://example.com",
+    formats={"markdown": True, "html": True},
 )
-print(page.request_id)
+print(page.markdown.data)
+print(page.html.data)
 ```
+
+### Extract structured JSON
+
+```python
+from context.dev import ContextDev
+
+client = ContextDev()
+
+page = client.web.scrape(
+    url="https://example.com",
+    formats={"json": True},
+    json_params={
+        "schema": {
+            "type": "object",
+            "properties": {
+                "title": {"type": ["string", "null"]},
+                "description": {"type": ["string", "null"]},
+            },
+            "required": ["title", "description"],
+            "additionalProperties": False,
+        },
+    },
+)
+print(page.json_.data)
+```
+
+### Extract relevant highlights
+
+Return the passages that answer a question about the page.
+
+```python
+from context.dev import ContextDev
+
+client = ContextDev()
+
+page = client.web.scrape(
+    url="https://example.com",
+    formats={"highlights": True},
+    highlights_params={"query": "What is this domain used for?"},
+)
+print(page.highlights.data)
+```
+
+### Take a screenshot
+
+The screenshot is returned as a base64 image data URL.
+
+```python
+from context.dev import ContextDev
+
+client = ContextDev()
+
+page = client.web.scrape(
+    url="https://example.com",
+    formats={"screenshot": True},
+)
+print(page.screenshot.data)
+```
+
+## What you can do
+
+| Task | Method |
+| --- | --- |
+| Scrape a URL to markdown, HTML, JSON, highlights or a screenshot | `client.web.scrape` |
+| Crawl a site and get every page as markdown | `client.web.web_crawl_md` |
+| Map every URL on a domain | `client.web.map_urls` |
+| Search the web | `client.web.search` |
+| Take a screenshot of a page | `client.web.screenshot` |
+| Parse PDFs and documents | `client.parse.handle` |
+| Run thousands of URLs as a batch | `client.batch.submit` |
+| Watch a page for changes | `client.monitors.create` |
+| Look up a company's logo, colors and brand data | `client.brand.retrieve` |
+
+## Use it from an AI agent
+
+Context.dev also ships as a plugin for [Claude](https://github.com/context-dot-dev/claude-plugin), [Cursor](https://github.com/context-dot-dev/cursor-plugin) and [Gemini CLI](https://github.com/context-dot-dev/gemini-cli-context), and as tools for [LangChain](https://github.com/context-dot-dev/langchain-context) and [Haystack](https://github.com/context-dot-dev/context-haystack).
 
 While you can provide an `api_key` keyword argument,
 we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
@@ -63,13 +134,10 @@ client = AsyncContextDev(
 
 async def main() -> None:
     page = await client.web.scrape(
-        formats={
-            "markdown": True,
-            "html": True,
-        },
         url="https://example.com",
+        formats={"markdown": True},
     )
-    print(page.request_id)
+    print(page.markdown.data)
 
 
 asyncio.run(main())
@@ -103,13 +171,10 @@ async def main() -> None:
         http_client=DefaultAioHttpClient(),
     ) as client:
         page = await client.web.scrape(
-            formats={
-                "markdown": True,
-                "html": True,
-            },
             url="https://example.com",
+            formats={"markdown": True},
         )
-        print(page.request_id)
+        print(page.markdown.data)
 
 
 asyncio.run(main())
@@ -133,11 +198,12 @@ from context.dev import ContextDev
 
 client = ContextDev()
 
-response = client.web.scrape(
-    formats={"markdown": True},
+page = client.web.scrape(
     url="https://example.com",
+    formats={"markdown": True},
+    timeout_opts={"milliseconds": 1000},
 )
-print(response.formats)
+print(page.markdown.data)
 ```
 
 ## Handling errors
@@ -157,8 +223,8 @@ client = ContextDev()
 
 try:
     client.web.scrape(
-        formats={"markdown": True},
         url="https://example.com",
+        formats={"markdown": True},
     )
 except context.dev.APIConnectionError as e:
     print("The server could not be reached")
@@ -203,8 +269,8 @@ client = ContextDev(
 
 # Or, configure per-request:
 client.with_options(max_retries=5).web.scrape(
-    formats={"markdown": True},
     url="https://example.com",
+    formats={"markdown": True},
 )
 ```
 
@@ -214,6 +280,7 @@ By default requests time out after 1 minute. You can configure this with a `time
 which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/timeouts/#fine-tuning-the-configuration) object:
 
 ```python
+import httpx
 from context.dev import ContextDev
 
 # Configure the default for all requests:
@@ -229,8 +296,8 @@ client = ContextDev(
 
 # Override per-request:
 client.with_options(timeout=5.0).web.scrape(
-    formats={"markdown": True},
     url="https://example.com",
+    formats={"markdown": True},
 )
 ```
 
@@ -273,15 +340,13 @@ from context.dev import ContextDev
 
 client = ContextDev()
 response = client.web.with_raw_response.scrape(
-    formats={
-        "markdown": True
-    },
     url="https://example.com",
+    formats={"markdown": True},
 )
 print(response.headers.get('X-My-Header'))
 
-web = response.parse()  # get the object that `web.scrape()` would have returned
-print(web.request_id)
+page = response.parse()
+print(page.markdown.data)
 ```
 
 These methods return an [`APIResponse`](https://github.com/context-dot-dev/context-python-sdk/tree/main/src/context/dev/_response.py) object.
@@ -296,8 +361,8 @@ To stream the response body, use `.with_streaming_response` instead, which requi
 
 ```python
 with client.web.with_streaming_response.scrape(
-    formats={"markdown": True},
     url="https://example.com",
+    formats={"markdown": True},
 ) as response:
     print(response.headers.get("X-My-Header"))
 
