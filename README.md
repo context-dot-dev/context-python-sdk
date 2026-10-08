@@ -1,9 +1,9 @@
-# Context Dev Python API library
+# Context.dev Python SDK API library
 
 <!-- prettier-ignore -->
 [![PyPI version](https://img.shields.io/pypi/v/context.dev.svg?label=pypi%20(stable))](https://pypi.org/project/context.dev/)
 
-The Context Dev Python library provides convenient access to the Context Dev REST API from any Python 3.9+
+The Context.dev Python SDK library provides convenient access to the Context Dev REST API from any Python 3.9+
 application. The library includes type definitions for all request params and response fields,
 and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
 
@@ -32,11 +32,14 @@ client = ContextDev(
     api_key=os.environ.get("CONTEXT_DEV_API_KEY"),  # This is the default and can be omitted
 )
 
-brand = client.brand.retrieve(
-    domain="REPLACE_ME",
-    type="by_domain",
+page = client.web.scrape(
+    formats={
+        "markdown": True,
+        "html": True,
+    },
+    url="https://example.com",
 )
-print(brand.request_id)
+print(page.request_id)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -59,11 +62,14 @@ client = AsyncContextDev(
 
 
 async def main() -> None:
-    brand = await client.brand.retrieve(
-        domain="REPLACE_ME",
-        type="by_domain",
+    page = await client.web.scrape(
+        formats={
+            "markdown": True,
+            "html": True,
+        },
+        url="https://example.com",
     )
-    print(brand.request_id)
+    print(page.request_id)
 
 
 asyncio.run(main())
@@ -96,11 +102,14 @@ async def main() -> None:
         api_key=os.environ.get("CONTEXT_DEV_API_KEY"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
-        brand = await client.brand.retrieve(
-            domain="REPLACE_ME",
-            type="by_domain",
+        page = await client.web.scrape(
+            formats={
+                "markdown": True,
+                "html": True,
+            },
+            url="https://example.com",
         )
-        print(brand.request_id)
+        print(page.request_id)
 
 
 asyncio.run(main())
@@ -124,12 +133,11 @@ from context.dev import ContextDev
 
 client = ContextDev()
 
-brand = client.brand.retrieve(
-    domain="xxx",
-    type="by_domain",
-    timeout_opts={"milliseconds": 1000},
+response = client.web.scrape(
+    formats={"markdown": True},
+    url="https://example.com",
 )
-print(brand.timeout_opts)
+print(response.formats)
 ```
 
 ## Handling errors
@@ -148,9 +156,9 @@ from context.dev import ContextDev
 client = ContextDev()
 
 try:
-    client.brand.retrieve(
-        domain="REPLACE_ME",
-        type="by_domain",
+    client.web.scrape(
+        formats={"markdown": True},
+        url="https://example.com",
     )
 except context.dev.APIConnectionError as e:
     print("The server could not be reached")
@@ -194,9 +202,9 @@ client = ContextDev(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).brand.retrieve(
-    domain="REPLACE_ME",
-    type="by_domain",
+client.with_options(max_retries=5).web.scrape(
+    formats={"markdown": True},
+    url="https://example.com",
 )
 ```
 
@@ -220,9 +228,9 @@ client = ContextDev(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).brand.retrieve(
-    domain="REPLACE_ME",
-    type="by_domain",
+client.with_options(timeout=5.0).web.scrape(
+    formats={"markdown": True},
+    url="https://example.com",
 )
 ```
 
@@ -264,14 +272,16 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from context.dev import ContextDev
 
 client = ContextDev()
-response = client.brand.with_raw_response.retrieve(
-    domain="REPLACE_ME",
-    type="by_domain",
+response = client.web.with_raw_response.scrape(
+    formats={
+        "markdown": True
+    },
+    url="https://example.com",
 )
 print(response.headers.get('X-My-Header'))
 
-brand = response.parse()  # get the object that `brand.retrieve()` would have returned
-print(brand.request_id)
+web = response.parse()  # get the object that `web.scrape()` would have returned
+print(web.request_id)
 ```
 
 These methods return an [`APIResponse`](https://github.com/context-dot-dev/context-python-sdk/tree/main/src/context/dev/_response.py) object.
@@ -285,9 +295,9 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.brand.with_streaming_response.retrieve(
-    domain="REPLACE_ME",
-    type="by_domain",
+with client.web.with_streaming_response.scrape(
+    formats={"markdown": True},
+    url="https://example.com",
 ) as response:
     print(response.headers.get("X-My-Header"))
 
