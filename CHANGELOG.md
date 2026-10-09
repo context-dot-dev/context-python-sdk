@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.25.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.24.0...v2.25.0) (2026-10-09)
+
+
+### Features
+
+* **web-search:** charge markdown per delivered page ([#1729](https://github.com/context-dot-dev/context-python-sdk/issues/1729)) ([75faef0](https://github.com/context-dot-dev/context-python-sdk/commit/75faef03014da39510e01c016306edd2e4a5c70f))
+
+
+### Documentation
+
+* demonstrate scraping formats throughout README ([78920ab](https://github.com/context-dot-dev/context-python-sdk/commit/78920ab980591450b5059e92fc4fa08291f2a05c))
+* lead README with Context.dev capabilities ([fb0da87](https://github.com/context-dot-dev/context-python-sdk/commit/fb0da8704d73a7cb8dca63f8721f669ba0a49ef8))
+* reconcile custom scraping README with generated examples ([b131ee5](https://github.com/context-dot-dev/context-python-sdk/commit/b131ee58a529d8de1791dd9d968dfb02eeb7f374))
+* remove Stainless README attribution ([a11a64a](https://github.com/context-dot-dev/context-python-sdk/commit/a11a64a55740717c8dc63a1056a8c5f3a69f1159))
+
 ## [2.24.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.23.0...v2.24.0) (2026-10-07)
 
 
