@@ -365,7 +365,7 @@ class MarkdownOptions(TypedDict, total=False):
     """Inline Markdown scraping for each result. Set `enabled: true` to activate."""
 
     enabled: bool
-    """Scrape each result to Markdown. Adds 1 credit per 10 results."""
+    """Scrape each result to Markdown. Adds 1 credit per result with Markdown."""
 
     include_frames: Annotated[bool, PropertyInfo(alias="includeFrames")]
     """Render iframe contents into the Markdown."""
