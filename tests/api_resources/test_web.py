@@ -283,7 +283,8 @@ class TestWeb:
                         "output": "@href",
                         "type": "list",
                     },
-                }
+                },
+                "type": "custom",
             },
             product_params={"dedupe_images": True},
             screenshot_params={
@@ -829,7 +830,8 @@ class TestAsyncWeb:
                         "output": "@href",
                         "type": "list",
                     },
-                }
+                },
+                "type": "custom",
             },
             product_params={"dedupe_images": True},
             screenshot_params={

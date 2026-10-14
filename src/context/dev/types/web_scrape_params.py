@@ -16,8 +16,10 @@ __all__ = [
     "JsonParams",
     "MarkdownParams",
     "ParseParams",
-    "ParseParamsRules",
-    "ParseParamsRulesUnionMember1",
+    "ParseParamsCustomParser",
+    "ParseParamsCustomParserRules",
+    "ParseParamsCustomParserRulesUnionMember1",
+    "ParseParamsPrebuiltParser",
     "ProductParams",
     "ScreenshotParams",
     "ScreenshotParamsArea",
@@ -115,7 +117,7 @@ class Formats(TypedDict, total=False):
     """Page content as Markdown."""
 
     parse: bool
-    """Fields extracted with `parseParams.rules`, returned as `parsed`."""
+    """Fields extracted with custom rules or a prebuilt parser, returned as `parsed`."""
 
     product: bool
     """Product details such as name, price, and availability."""
@@ -173,7 +175,7 @@ class MarkdownParams(TypedDict, total=False):
     """
 
 
-class ParseParamsRulesUnionMember1(TypedDict, total=False):
+class ParseParamsCustomParserRulesUnionMember1(TypedDict, total=False):
     selector: Required[str]
     """CSS selector to match within the current page or parent rule."""
 
@@ -187,17 +189,37 @@ class ParseParamsRulesUnionMember1(TypedDict, total=False):
     """Return the first match with `item` or all matches with `list`."""
 
 
-ParseParamsRules: TypeAlias = Union[str, ParseParamsRulesUnionMember1]
+ParseParamsCustomParserRules: TypeAlias = Union[str, ParseParamsCustomParserRulesUnionMember1]
 
 
-class ParseParams(TypedDict, total=False):
-    """Requires `formats.parse: true`; required when it is set."""
-
-    rules: Required[Dict[str, ParseParamsRules]]
+class ParseParamsCustomParser(TypedDict, total=False):
+    rules: Required[Dict[str, ParseParamsCustomParserRules]]
     """Field names mapped to CSS selectors (`h1`, `a@href`) or rule objects.
 
     Max 100 fields, 5 levels.
     """
+
+    type: Literal["custom"]
+    """Extract fields using custom CSS rules.
+
+    This is the default when type is omitted.
+    """
+
+
+class ParseParamsPrebuiltParser(TypedDict, total=False):
+    parser: Required[Literal["google-maps"]]
+    """Parse Google Maps business data into data.results.
+
+    Accepts Maps place, search, and internal data URLs. Uses a US exit and English
+    labels regardless of hl or Accept-Language, and reads Maps data independently of
+    DOM filters.
+    """
+
+    type: Required[Literal["prebuilt"]]
+    """Use a prebuilt parser instead of custom rules."""
+
+
+ParseParams: TypeAlias = Union[ParseParamsCustomParser, ParseParamsPrebuiltParser]
 
 
 class ProductParams(TypedDict, total=False):
@@ -390,7 +412,8 @@ class SharedParams(TypedDict, total=False):
     """Create or reuse an authenticated browser profile.
 
     Requires a paid plan and an HTTPS target. Profiles persist session state, bypass
-    shared caches, and cannot be combined with ZDR, custom headers, or raw bytes.
+    shared caches, and cannot be combined with ZDR, custom headers, raw bytes, or
+    prebuilt parsers.
     """
 
     settle_animations: Annotated[bool, PropertyInfo(alias="settleAnimations")]
