@@ -300,7 +300,7 @@ class WebSearchParams(TypedDict, total=False):
     """Inline Markdown scraping for each result. Set `enabled: true` to activate."""
 
     num_results: Annotated[int, PropertyInfo(alias="numResults")]
-    """Number of results to request and return (10–100). Defaults to 10."""
+    """Number of results to request and return (1–100). Defaults to 10."""
 
     query_fanout: Annotated[bool, PropertyInfo(alias="queryFanout")]
     """Currently has no effect."""

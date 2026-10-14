@@ -1069,7 +1069,7 @@ class WebResource(SyncAPIResource):
 
           markdown_options: Inline Markdown scraping for each result. Set `enabled: true` to activate.
 
-          num_results: Number of results to request and return (10–100). Defaults to 10.
+          num_results: Number of results to request and return (1–100). Defaults to 10.
 
           query_fanout: Currently has no effect.
 
@@ -2481,7 +2481,7 @@ class AsyncWebResource(AsyncAPIResource):
 
           markdown_options: Inline Markdown scraping for each result. Set `enabled: true` to activate.
 
-          num_results: Number of results to request and return (10–100). Defaults to 10.
+          num_results: Number of results to request and return (1–100). Defaults to 10.
 
           query_fanout: Currently has no effect.
 
