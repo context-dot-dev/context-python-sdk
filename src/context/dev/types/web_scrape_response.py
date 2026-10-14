@@ -26,6 +26,7 @@ __all__ = [
     "ProductData",
     "ProductDataProduct",
     "ProductDataProductVariant",
+    "Profile",
     "Screenshot",
     "KeyMetadata",
 ]
@@ -385,6 +386,18 @@ class Product(BaseModel):
     """Explanation of the failure and possible next steps."""
 
 
+class Profile(BaseModel):
+    """
+    Authenticated browser profile used for this scrape, or null when no profile was requested. New and existing profile requests both return the profile ID.
+    """
+
+    id: str
+    """
+    Save this ID after creating a profile, then reuse it as
+    sharedParams.profile.profileId with type "existing".
+    """
+
+
 class Screenshot(BaseModel):
     """Screenshot as a base64 image data URL."""
 
@@ -448,6 +461,12 @@ class WebScrapeResponse(BaseModel):
 
     product: Product
     """Product details found on the page."""
+
+    profile: Optional[Profile] = None
+    """
+    Authenticated browser profile used for this scrape, or null when no profile was
+    requested. New and existing profile requests both return the profile ID.
+    """
 
     request_id: str
     """Unique ID of this request, also in `X-Request-Id`.

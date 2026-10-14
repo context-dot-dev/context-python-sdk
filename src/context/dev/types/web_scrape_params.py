@@ -31,6 +31,9 @@ __all__ = [
     "SharedParamsActionWaitFor",
     "SharedParamsParsers",
     "SharedParamsParsersPdf",
+    "SharedParamsProfile",
+    "SharedParamsProfileExisting",
+    "SharedParamsProfileNew",
     "SharedParamsViewport",
     "TimeoutOpts",
 ]
@@ -309,6 +312,28 @@ class SharedParamsParsers(TypedDict, total=False):
     """PDF page range and OCR."""
 
 
+class SharedParamsProfileExisting(TypedDict, total=False):
+    profile_id: Required[Annotated[str, PropertyInfo(alias="profileId")]]
+    """The ID returned in profile.id by an earlier scrape."""
+
+    type: Required[Literal["existing"]]
+    """Reuse a saved browser profile."""
+
+
+class SharedParamsProfileNew(TypedDict, total=False):
+    identifier: Required[str]
+    """Username or email for the target website."""
+
+    password: Required[str]
+    """Password used to sign in. It is never stored in the profile."""
+
+    type: Required[Literal["new"]]
+    """Sign in and create a browser profile."""
+
+
+SharedParamsProfile: TypeAlias = Union[SharedParamsProfileExisting, SharedParamsProfileNew]
+
+
 class SharedParamsViewport(TypedDict, total=False):
     """Browser size in pixels.
 
@@ -360,6 +385,13 @@ class SharedParams(TypedDict, total=False):
 
     parsers: SharedParamsParsers
     """Document parsing options."""
+
+    profile: SharedParamsProfile
+    """Create or reuse an authenticated browser profile.
+
+    Requires a paid plan and an HTTPS target. Profiles persist session state, bypass
+    shared caches, and cannot be combined with ZDR, custom headers, or raw bytes.
+    """
 
     settle_animations: Annotated[bool, PropertyInfo(alias="settleAnimations")]
     """Wait for CSS animations to finish before capture.

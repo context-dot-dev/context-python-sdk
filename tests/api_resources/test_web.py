@@ -312,6 +312,10 @@ class TestWeb:
                         "start_page": 1,
                     }
                 },
+                "profile": {
+                    "profile_id": "prof_210b9798eb53baa4e69d31c1071cf03d",
+                    "type": "existing",
+                },
                 "settle_animations": True,
                 "theme": "light",
                 "viewport": {
@@ -853,6 +857,10 @@ class TestAsyncWeb:
                         "ocr": "off",
                         "start_page": 1,
                     }
+                },
+                "profile": {
+                    "profile_id": "prof_210b9798eb53baa4e69d31c1071cf03d",
+                    "type": "existing",
                 },
                 "settle_animations": True,
                 "theme": "light",
