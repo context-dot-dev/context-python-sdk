@@ -267,7 +267,7 @@ class Metadata(BaseModel):
 
 class Parsed(BaseModel):
     """
-    Custom rules return fields after content filters; unmatched fields are null ([] for lists). The google-maps parser returns business records in data.results and reads Maps data directly, independently of DOM filters and other outputs.
+    Custom rules return fields after content filters; unmatched fields are null ([] for lists). The google-maps parser returns business records in data.results, and the google-play parser returns one app record as data, google-play-reviews returns data.reviews, app-store and app-store-reviews do the same for the App Store, emails, phone-numbers, and links return data.emails, data.phone_numbers, and data.links from the rendered page; the store and Maps parsers read their data directly, independently of DOM filters and other outputs.
     """
 
     data: Optional[Dict[str, object]] = None
@@ -277,7 +277,17 @@ class Parsed(BaseModel):
     success: Optional[bool] = None
     """`true` if returned, `false` if it failed, `null` if not requested."""
 
-    type: Literal["custom", "google-maps"]
+    type: Literal[
+        "custom",
+        "google-maps",
+        "google-play",
+        "google-play-reviews",
+        "app-store",
+        "app-store-reviews",
+        "emails",
+        "phone-numbers",
+        "links",
+    ]
     """
     The selected prebuilt parser name, or custom when type is omitted, custom rules
     are used, or parsing is not requested.
@@ -461,8 +471,12 @@ class WebScrapeResponse(BaseModel):
     parsed: Parsed
     """
     Custom rules return fields after content filters; unmatched fields are null ([]
-    for lists). The google-maps parser returns business records in data.results and
-    reads Maps data directly, independently of DOM filters and other outputs.
+    for lists). The google-maps parser returns business records in data.results, and
+    the google-play parser returns one app record as data, google-play-reviews
+    returns data.reviews, app-store and app-store-reviews do the same for the App
+    Store, emails, phone-numbers, and links return data.emails, data.phone_numbers,
+    and data.links from the rendered page; the store and Maps parsers read their
+    data directly, independently of DOM filters and other outputs.
     """
 
     product: Product
