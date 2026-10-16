@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.26.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.25.0...v2.26.0) (2026-10-16)
+
+
+### Features
+
+* **batch:** support Scrape Anything batches up to 100k URLs ([#1883](https://github.com/context-dot-dev/context-python-sdk/issues/1883)) ([f73f73b](https://github.com/context-dot-dev/context-python-sdk/commit/f73f73bc02b2b2838aad3a4ea1e05651cc688300))
+* **scrape:** add App Store app and reviews prebuilt parsers ([#1859](https://github.com/context-dot-dev/context-python-sdk/issues/1859)) ([f54ba9d](https://github.com/context-dot-dev/context-python-sdk/commit/f54ba9d5fa61675848d01c26b25ce0cda8a5e67b))
+* **scrape:** add emails prebuilt parser ([#1862](https://github.com/context-dot-dev/context-python-sdk/issues/1862)) ([f54ba9d](https://github.com/context-dot-dev/context-python-sdk/commit/f54ba9d5fa61675848d01c26b25ce0cda8a5e67b))
+* **scrape:** add Google Play app and reviews prebuilt parsers ([#1857](https://github.com/context-dot-dev/context-python-sdk/issues/1857)) ([f54ba9d](https://github.com/context-dot-dev/context-python-sdk/commit/f54ba9d5fa61675848d01c26b25ce0cda8a5e67b))
+* **scrape:** add links prebuilt parser ([#1865](https://github.com/context-dot-dev/context-python-sdk/issues/1865)) ([f54ba9d](https://github.com/context-dot-dev/context-python-sdk/commit/f54ba9d5fa61675848d01c26b25ce0cda8a5e67b))
+* **scrape:** add phone-numbers prebuilt parser ([#1863](https://github.com/context-dot-dev/context-python-sdk/issues/1863)) ([f54ba9d](https://github.com/context-dot-dev/context-python-sdk/commit/f54ba9d5fa61675848d01c26b25ce0cda8a5e67b))
+* **scrape:** list browser profiles and label them with descriptions ([#1914](https://github.com/context-dot-dev/context-python-sdk/issues/1914)) ([55aee7f](https://github.com/context-dot-dev/context-python-sdk/commit/55aee7fd589e4e9e4db5c6f9a31920c3a5b61da1))
+* **search:** allow requesting a single result ([#1880](https://github.com/context-dot-dev/context-python-sdk/issues/1880)) ([c8faea0](https://github.com/context-dot-dev/context-python-sdk/commit/c8faea08299cb891d620b9db81f29d263f4b8279))
+
 ## [2.25.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.24.0...v2.25.0) (2026-10-14)
 
 
