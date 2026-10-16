@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 from typing import Union
-from typing_extensions import Literal, TypedDict
+from typing_extensions import Literal, Annotated, TypedDict
 
 from .._types import SequenceNotStr
+from .._utils import PropertyInfo
 
 __all__ = ["BatchListParams"]
 
@@ -28,6 +29,9 @@ class BatchListParams(TypedDict, total=False):
     `prefix` for as-you-type prefix matching (default), `exact` for full-token
     matching.
     """
+
+    should_include_unified: Annotated[bool, PropertyInfo(alias="shouldIncludeUnified")]
+    """Include batches submitted with Scrape Anything formats. Defaults to false."""
 
     status: Literal["queued", "running", "cancelling", "completed", "cancelled", "failed"]
     """Filter by status."""

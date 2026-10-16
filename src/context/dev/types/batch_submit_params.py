@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, Union, Iterable, Optional
+from typing import Dict, List, Union, Iterable
 from typing_extensions import Literal, Required, Annotated, TypeAlias, TypedDict
 
 from .._types import SequenceNotStr
@@ -14,32 +14,70 @@ __all__ = [
     "Input",
     "InputScrape",
     "InputScrapeData",
-    "InputScrapeDataMarkdown",
-    "InputScrapeDataMarkdownURL",
-    "InputScrapeDataMarkdownOptions",
-    "InputScrapeDataMarkdownOptionsPdf",
-    "InputScrapeDataHTML",
-    "InputScrapeDataHtmlurL",
-    "InputScrapeDataHTMLOptions",
-    "InputScrapeDataHTMLOptionsPdf",
+    "InputScrapeDataFormats",
+    "InputScrapeDataURL",
+    "InputScrapeDataHighlightsParams",
+    "InputScrapeDataImageParams",
+    "InputScrapeDataJsonParams",
+    "InputScrapeDataMarkdownParams",
+    "InputScrapeDataParseParams",
+    "InputScrapeDataParseParamsCustomParser",
+    "InputScrapeDataParseParamsCustomParserRules",
+    "InputScrapeDataParseParamsCustomParserRulesUnionMember1",
+    "InputScrapeDataParseParamsPrebuiltParser",
+    "InputScrapeDataProductParams",
+    "InputScrapeDataScreenshotParams",
+    "InputScrapeDataScreenshotParamsArea",
+    "InputScrapeDataScreenshotParamsAreaElement",
+    "InputScrapeDataScreenshotParamsAreaRectangle",
+    "InputScrapeDataSharedParams",
+    "InputScrapeDataSharedParamsAction",
+    "InputScrapeDataSharedParamsActionPerform",
+    "InputScrapeDataSharedParamsActionScroll",
+    "InputScrapeDataSharedParamsActionWait",
+    "InputScrapeDataSharedParamsActionWaitFor",
+    "InputScrapeDataSharedParamsParsers",
+    "InputScrapeDataSharedParamsParsersPdf",
+    "InputScrapeDataSharedParamsProfile",
+    "InputScrapeDataSharedParamsProfileExisting",
+    "InputScrapeDataSharedParamsProfileNew",
+    "InputScrapeDataSharedParamsViewport",
+    "InputScrapeDataTimeoutOpts",
     "InputCrawl",
     "InputCrawlData",
-    "InputCrawlDataMarkdown",
-    "InputCrawlDataMarkdownSource",
-    "InputCrawlDataMarkdownSourceStartURL",
-    "InputCrawlDataMarkdownSourceStartURLControls",
-    "InputCrawlDataMarkdownSourceSitemap",
-    "InputCrawlDataMarkdownSourceSitemapControls",
-    "InputCrawlDataMarkdownOptions",
-    "InputCrawlDataMarkdownOptionsPdf",
-    "InputCrawlDataHTML",
-    "InputCrawlDataHTMLSource",
-    "InputCrawlDataHTMLSourceStartURL",
-    "InputCrawlDataHTMLSourceStartURLControls",
-    "InputCrawlDataHTMLSourceSitemap",
-    "InputCrawlDataHTMLSourceSitemapControls",
-    "InputCrawlDataHTMLOptions",
-    "InputCrawlDataHTMLOptionsPdf",
+    "InputCrawlDataFormats",
+    "InputCrawlDataSource",
+    "InputCrawlDataSourceStartURL",
+    "InputCrawlDataSourceStartURLControls",
+    "InputCrawlDataSourceSitemap",
+    "InputCrawlDataSourceSitemapControls",
+    "InputCrawlDataHighlightsParams",
+    "InputCrawlDataImageParams",
+    "InputCrawlDataJsonParams",
+    "InputCrawlDataMarkdownParams",
+    "InputCrawlDataParseParams",
+    "InputCrawlDataParseParamsCustomParser",
+    "InputCrawlDataParseParamsCustomParserRules",
+    "InputCrawlDataParseParamsCustomParserRulesUnionMember1",
+    "InputCrawlDataParseParamsPrebuiltParser",
+    "InputCrawlDataProductParams",
+    "InputCrawlDataScreenshotParams",
+    "InputCrawlDataScreenshotParamsArea",
+    "InputCrawlDataScreenshotParamsAreaElement",
+    "InputCrawlDataScreenshotParamsAreaRectangle",
+    "InputCrawlDataSharedParams",
+    "InputCrawlDataSharedParamsAction",
+    "InputCrawlDataSharedParamsActionPerform",
+    "InputCrawlDataSharedParamsActionScroll",
+    "InputCrawlDataSharedParamsActionWait",
+    "InputCrawlDataSharedParamsActionWaitFor",
+    "InputCrawlDataSharedParamsParsers",
+    "InputCrawlDataSharedParamsParsersPdf",
+    "InputCrawlDataSharedParamsProfile",
+    "InputCrawlDataSharedParamsProfileExisting",
+    "InputCrawlDataSharedParamsProfileNew",
+    "InputCrawlDataSharedParamsViewport",
+    "InputCrawlDataTimeoutOpts",
     "Webhook",
 ]
 
@@ -71,7 +109,38 @@ class BatchSubmitParams(TypedDict, total=False):
     """
 
 
-class InputScrapeDataMarkdownURL(TypedDict, total=False):
+class InputScrapeDataFormats(TypedDict, total=False):
+    """Outputs to return. Set at least one to `true`."""
+
+    bytes: bool
+    """The original HTTP response body."""
+
+    highlights: bool
+    """Markdown excerpts relevant to `highlightsParams.query`."""
+
+    html: bool
+    """Rendered HTML."""
+
+    images: bool
+    """Images found on the page."""
+
+    json: bool
+    """An object matching `jsonParams.schema`, extracted from the page."""
+
+    markdown: bool
+    """Page content as Markdown."""
+
+    parse: bool
+    """Fields extracted with custom rules or a prebuilt parser, returned as `parsed`."""
+
+    product: bool
+    """Product details such as name, price, and availability."""
+
+    screenshot: bool
+    """A screenshot of the page."""
+
+
+class InputScrapeDataURL(TypedDict, total=False):
     """A page to scrape, with optional data for matching results."""
 
     url: Required[str]
@@ -87,598 +156,482 @@ class InputScrapeDataMarkdownURL(TypedDict, total=False):
     """Custom JSON returned unchanged with this page result."""
 
 
-class InputScrapeDataMarkdownOptionsPdf(TypedDict, total=False):
-    """PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range."""
+class InputScrapeDataHighlightsParams(TypedDict, total=False):
+    """Requires `formats.highlights: true`; required when it is set."""
 
-    end: int
-    """Last PDF page to parse (1-based, inclusive).
+    query: Required[str]
+    """The question or topic to find passages for."""
 
-    Defaults to the final page. Must be >= start.
+    max_characters: Annotated[int, PropertyInfo(alias="maxCharacters")]
+    """Maximum combined length of returned passages."""
+
+
+class InputScrapeDataImageParams(TypedDict, total=False):
+    """Image options. Requires formats.images: true."""
+
+    dedupe: Literal["none", "visual"]
+    """Set `visual` to drop visual duplicates, keeping the largest copy."""
+
+    enrich: List[Literal["dimensions", "classification", "file"]]
+    """Extra data per image: `dimensions`, `classification`, or a hosted `file` URL."""
+
+
+class InputScrapeDataJsonParams(TypedDict, total=False):
+    """Requires `formats.json: true`; required when it is set."""
+
+    schema: Required[Dict[str, object]]
+    """JSON Schema (not an example object) for a top-level object, up to 50 KB.
+
+    Use optional or nullable fields for missing facts.
     """
 
-    ocr: bool
-    """Read scanned PDF pages with OCR; preserve pages that already have text."""
-
-    should_parse: Annotated[bool, PropertyInfo(alias="shouldParse")]
-    """Parse PDF URLs. When false, PDFs fail with `PDF_SKIPPED`."""
-
-    start: int
-    """First 1-based PDF page to parse."""
+    instructions: str
+    """Extra guidance, such as which facts to prefer or how to read a field."""
 
 
-class InputScrapeDataMarkdownOptions(TypedDict, total=False):
-    """Options for Markdown output."""
-
-    country: Literal[
-        "ad",
-        "ae",
-        "af",
-        "ag",
-        "ai",
-        "al",
-        "am",
-        "ao",
-        "ar",
-        "at",
-        "au",
-        "aw",
-        "az",
-        "ba",
-        "bb",
-        "bd",
-        "be",
-        "bf",
-        "bg",
-        "bh",
-        "bi",
-        "bj",
-        "bm",
-        "bn",
-        "bo",
-        "bq",
-        "br",
-        "bs",
-        "bw",
-        "by",
-        "bz",
-        "ca",
-        "cd",
-        "cf",
-        "cg",
-        "ch",
-        "ci",
-        "cl",
-        "cm",
-        "cn",
-        "co",
-        "cr",
-        "cv",
-        "cw",
-        "cy",
-        "cz",
-        "de",
-        "dj",
-        "dk",
-        "dm",
-        "do",
-        "dz",
-        "ec",
-        "ee",
-        "eg",
-        "es",
-        "et",
-        "fi",
-        "fj",
-        "fr",
-        "ga",
-        "gb",
-        "gd",
-        "ge",
-        "gf",
-        "gg",
-        "gh",
-        "gm",
-        "gn",
-        "gp",
-        "gq",
-        "gr",
-        "gt",
-        "gu",
-        "gw",
-        "gy",
-        "hk",
-        "hn",
-        "hr",
-        "ht",
-        "hu",
-        "id",
-        "ie",
-        "il",
-        "im",
-        "in",
-        "iq",
-        "ir",
-        "is",
-        "it",
-        "je",
-        "jm",
-        "jo",
-        "jp",
-        "ke",
-        "kg",
-        "kh",
-        "kn",
-        "kr",
-        "kw",
-        "ky",
-        "kz",
-        "la",
-        "lb",
-        "lc",
-        "lk",
-        "lr",
-        "ls",
-        "lt",
-        "lu",
-        "lv",
-        "ly",
-        "ma",
-        "mc",
-        "md",
-        "me",
-        "mf",
-        "mg",
-        "mk",
-        "ml",
-        "mm",
-        "mn",
-        "mo",
-        "mq",
-        "mr",
-        "mt",
-        "mu",
-        "mv",
-        "mw",
-        "mx",
-        "my",
-        "mz",
-        "na",
-        "nc",
-        "ne",
-        "ng",
-        "ni",
-        "nl",
-        "no",
-        "np",
-        "nz",
-        "om",
-        "pa",
-        "pe",
-        "pf",
-        "pg",
-        "ph",
-        "pk",
-        "pl",
-        "pr",
-        "ps",
-        "pt",
-        "py",
-        "qa",
-        "re",
-        "ro",
-        "rs",
-        "ru",
-        "rw",
-        "sa",
-        "sc",
-        "sd",
-        "se",
-        "sg",
-        "si",
-        "sk",
-        "sl",
-        "sm",
-        "sn",
-        "so",
-        "sr",
-        "ss",
-        "st",
-        "sv",
-        "sx",
-        "sy",
-        "sz",
-        "tc",
-        "td",
-        "tg",
-        "th",
-        "tj",
-        "tl",
-        "tm",
-        "tn",
-        "tr",
-        "tt",
-        "tw",
-        "tz",
-        "ua",
-        "ug",
-        "us",
-        "uy",
-        "uz",
-        "vc",
-        "ve",
-        "vg",
-        "vi",
-        "vn",
-        "ye",
-        "yt",
-        "za",
-        "zm",
-        "zw",
-    ]
-    """Fetch from this country (ISO 3166-1 alpha-2)."""
-
-    exclude_selectors: Annotated[Optional[SequenceNotStr[str]], PropertyInfo(alias="excludeSelectors")]
-    """Remove elements matching these CSS selectors.
-
-    Applied after `includeSelectors`, so an element matching both is removed.
-    """
-
-    include_html: Annotated[bool, PropertyInfo(alias="includeHTML")]
-    """Also return each page's HTML in `html`."""
+class InputScrapeDataMarkdownParams(TypedDict, total=False):
+    """Markdown options. Requires `formats.markdown`."""
 
     include_images: Annotated[bool, PropertyInfo(alias="includeImages")]
-    """Include image references in the Markdown."""
+    """Include images in the Markdown using image syntax with URLs and alt text."""
 
     include_links: Annotated[bool, PropertyInfo(alias="includeLinks")]
-    """Include links in the Markdown."""
+    """Keep link URLs in the Markdown. Set false to return link text without URLs."""
 
-    include_selectors: Annotated[Optional[SequenceNotStr[str]], PropertyInfo(alias="includeSelectors")]
-    """Keep only elements matching these CSS selectors.
+    inline_images: Annotated[Literal["placeholder", "preserve"], PropertyInfo(alias="inlineImages")]
+    """How base64 images appear: `placeholder` (default) or `preserve`.
 
-    Filtered pages ignore `maxAgeMs`.
+    Requires `includeImages`.
     """
 
-    max_age_ms: Annotated[Optional[int], PropertyInfo(alias="maxAgeMs")]
-    """Maximum cache age in milliseconds.
 
-    Defaults to 3 days (259200000 ms). Maximum: 1 year (31536000000 ms). `0` fetches
-    fresh.
+class InputScrapeDataParseParamsCustomParserRulesUnionMember1(TypedDict, total=False):
+    selector: Required[str]
+    """CSS selector to match within the current page or parent rule."""
+
+    output: Union[Literal["text", "html"], str, object]
+    """Return text, HTML, an attribute such as `@href`, or nested field rules.
+
+    Defaults to text.
     """
 
-    pdf: InputScrapeDataMarkdownOptionsPdf
-    """PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range."""
-
-    settle_animations: Annotated[bool, PropertyInfo(alias="settleAnimations")]
-    """Wait for CSS animations to finish before extracting, on browser-rendered pages."""
-
-    shorten_base64_images: Annotated[bool, PropertyInfo(alias="shortenBase64Images")]
-    """Shorten inline base64 image data."""
-
-    use_main_content_only: Annotated[bool, PropertyInfo(alias="useMainContentOnly")]
-    """Return the main content without navigation or footers."""
-
-    wait_for_ms: Annotated[int, PropertyInfo(alias="waitForMs")]
-    """How long to wait after initial page load, in milliseconds. `0` waits 500 ms."""
+    type: Literal["item", "list"]
+    """Return the first match with `item` or all matches with `list`."""
 
 
-class InputScrapeDataMarkdown(TypedDict, total=False):
-    """Scrape the listed pages as Markdown."""
-
-    format: Required[Literal["markdown"]]
-    """Return page content as Markdown."""
-
-    urls: Required[Iterable[InputScrapeDataMarkdownURL]]
-    """Pages to scrape. Maximum 25000."""
-
-    options: InputScrapeDataMarkdownOptions
-    """Options for Markdown output."""
+InputScrapeDataParseParamsCustomParserRules: TypeAlias = Union[
+    str, InputScrapeDataParseParamsCustomParserRulesUnionMember1
+]
 
 
-class InputScrapeDataHtmlurL(TypedDict, total=False):
-    """A page to scrape, with optional data for matching results."""
+class InputScrapeDataParseParamsCustomParser(TypedDict, total=False):
+    rules: Required[Dict[str, InputScrapeDataParseParamsCustomParserRules]]
+    """Field names mapped to CSS selectors (`h1`, `a@href`) or rule objects.
 
-    url: Required[str]
-    """Page URL to scrape."""
-
-    item_id: Annotated[str, PropertyInfo(alias="itemId")]
-    """Your ID for this page, returned with its result.
-
-    The same URL can use different IDs.
+    Max 100 fields, 5 levels.
     """
 
-    meta: Dict[str, object]
-    """Custom JSON returned unchanged with this page result."""
+    type: Literal["custom"]
+    """Extract fields using custom CSS rules.
 
-
-class InputScrapeDataHTMLOptionsPdf(TypedDict, total=False):
-    """PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range."""
-
-    end: int
-    """Last PDF page to parse (1-based, inclusive).
-
-    Defaults to the final page. Must be >= start.
+    This is the default when type is omitted.
     """
 
-    ocr: bool
-    """Read scanned PDF pages with OCR; preserve pages that already have text."""
 
-    should_parse: Annotated[bool, PropertyInfo(alias="shouldParse")]
-    """Parse PDF URLs. When false, PDFs fail with `PDF_SKIPPED`."""
-
-    start: int
-    """First 1-based PDF page to parse."""
-
-
-class InputScrapeDataHTMLOptions(TypedDict, total=False):
-    """Options for HTML output."""
-
-    country: Literal[
-        "ad",
-        "ae",
-        "af",
-        "ag",
-        "ai",
-        "al",
-        "am",
-        "ao",
-        "ar",
-        "at",
-        "au",
-        "aw",
-        "az",
-        "ba",
-        "bb",
-        "bd",
-        "be",
-        "bf",
-        "bg",
-        "bh",
-        "bi",
-        "bj",
-        "bm",
-        "bn",
-        "bo",
-        "bq",
-        "br",
-        "bs",
-        "bw",
-        "by",
-        "bz",
-        "ca",
-        "cd",
-        "cf",
-        "cg",
-        "ch",
-        "ci",
-        "cl",
-        "cm",
-        "cn",
-        "co",
-        "cr",
-        "cv",
-        "cw",
-        "cy",
-        "cz",
-        "de",
-        "dj",
-        "dk",
-        "dm",
-        "do",
-        "dz",
-        "ec",
-        "ee",
-        "eg",
-        "es",
-        "et",
-        "fi",
-        "fj",
-        "fr",
-        "ga",
-        "gb",
-        "gd",
-        "ge",
-        "gf",
-        "gg",
-        "gh",
-        "gm",
-        "gn",
-        "gp",
-        "gq",
-        "gr",
-        "gt",
-        "gu",
-        "gw",
-        "gy",
-        "hk",
-        "hn",
-        "hr",
-        "ht",
-        "hu",
-        "id",
-        "ie",
-        "il",
-        "im",
-        "in",
-        "iq",
-        "ir",
-        "is",
-        "it",
-        "je",
-        "jm",
-        "jo",
-        "jp",
-        "ke",
-        "kg",
-        "kh",
-        "kn",
-        "kr",
-        "kw",
-        "ky",
-        "kz",
-        "la",
-        "lb",
-        "lc",
-        "lk",
-        "lr",
-        "ls",
-        "lt",
-        "lu",
-        "lv",
-        "ly",
-        "ma",
-        "mc",
-        "md",
-        "me",
-        "mf",
-        "mg",
-        "mk",
-        "ml",
-        "mm",
-        "mn",
-        "mo",
-        "mq",
-        "mr",
-        "mt",
-        "mu",
-        "mv",
-        "mw",
-        "mx",
-        "my",
-        "mz",
-        "na",
-        "nc",
-        "ne",
-        "ng",
-        "ni",
-        "nl",
-        "no",
-        "np",
-        "nz",
-        "om",
-        "pa",
-        "pe",
-        "pf",
-        "pg",
-        "ph",
-        "pk",
-        "pl",
-        "pr",
-        "ps",
-        "pt",
-        "py",
-        "qa",
-        "re",
-        "ro",
-        "rs",
-        "ru",
-        "rw",
-        "sa",
-        "sc",
-        "sd",
-        "se",
-        "sg",
-        "si",
-        "sk",
-        "sl",
-        "sm",
-        "sn",
-        "so",
-        "sr",
-        "ss",
-        "st",
-        "sv",
-        "sx",
-        "sy",
-        "sz",
-        "tc",
-        "td",
-        "tg",
-        "th",
-        "tj",
-        "tl",
-        "tm",
-        "tn",
-        "tr",
-        "tt",
-        "tw",
-        "tz",
-        "ua",
-        "ug",
-        "us",
-        "uy",
-        "uz",
-        "vc",
-        "ve",
-        "vg",
-        "vi",
-        "vn",
-        "ye",
-        "yt",
-        "za",
-        "zm",
-        "zw",
+class InputScrapeDataParseParamsPrebuiltParser(TypedDict, total=False):
+    parser: Required[
+        Literal[
+            "google-maps",
+            "google-play",
+            "google-play-reviews",
+            "app-store",
+            "app-store-reviews",
+            "emails",
+            "phone-numbers",
+            "links",
+        ]
     ]
-    """Fetch from this country (ISO 3166-1 alpha-2)."""
+    """google-maps parses Google Maps business data into data.results.
 
-    exclude_selectors: Annotated[Optional[SequenceNotStr[str]], PropertyInfo(alias="excludeSelectors")]
-    """Remove elements matching these CSS selectors.
-
-    Applied after `includeSelectors`, so an element matching both is removed.
+    Accepts Maps place, search, and internal data URLs. Uses a US exit and English
+    labels regardless of hl or Accept-Language. google-play parses a Play Store app
+    into data: details, developer contact, ratings, price, permissions, and data
+    safety. google-play-reviews returns the 200 newest reviews of the app, with
+    developer replies, in data.reviews. Both Play parsers accept app details URLs
+    (play.google.com/store/apps/details?id=…); hl and gl set the language and
+    storefront, defaulting to en and us. app-store parses an App Store app into
+    data: details, developer, ratings, price, version, and screenshots.
+    app-store-reviews returns up to the 500 newest reviews in data.reviews. Both App
+    Store parsers accept app URLs (apps.apple.com/us/app/…/id…); the country in the
+    path sets the storefront, defaulting to us. emails accepts any page and returns
+    its email addresses as data.emails ([{ email }]), read from mailto links,
+    Cloudflare-protected addresses, and visible text. phone-numbers accepts any page
+    and returns its valid phone numbers in E.164 as data.phone_numbers ([{ phone
+    }]), read from tel links and visible text; numbers without a country code are
+    read for the country of the site TLD, defaulting to US. links accepts any page
+    and returns its unique http(s) links as data.links ([{ url, text }]), with
+    absolute URLs; text falls back to aria-label or image alt and is null when a
+    link has none. The emails parser reads the rendered page and respects content
+    filters; the other prebuilt parsers read their data independently of DOM
+    filters.
     """
 
-    include_selectors: Annotated[Optional[SequenceNotStr[str]], PropertyInfo(alias="includeSelectors")]
-    """Keep only elements matching these CSS selectors.
+    type: Required[Literal["prebuilt"]]
+    """Use a prebuilt parser instead of custom rules."""
 
-    Filtered pages ignore `maxAgeMs`.
+
+InputScrapeDataParseParams: TypeAlias = Union[
+    InputScrapeDataParseParamsCustomParser, InputScrapeDataParseParamsPrebuiltParser
+]
+
+
+class InputScrapeDataProductParams(TypedDict, total=False):
+    """Product options. Requires formats.product: true."""
+
+    dedupe_images: Annotated[bool, PropertyInfo(alias="dedupeImages")]
+    """Drop visually duplicate product images, keeping the largest copy."""
+
+
+class InputScrapeDataScreenshotParamsAreaElement(TypedDict, total=False):
+    selector: Required[str]
+    """CSS selector matching exactly one visible element."""
+
+
+class InputScrapeDataScreenshotParamsAreaRectangle(TypedDict, total=False):
+    """Pixels from the document origin."""
+
+    height: Required[int]
+    """Height of the capture in pixels."""
+
+    width: Required[int]
+    """Width of the capture in pixels."""
+
+    x: Required[int]
+    """Left edge of the capture, in pixels from the document origin."""
+
+    y: Required[int]
+    """Top edge of the capture, in pixels from the document origin."""
+
+
+InputScrapeDataScreenshotParamsArea: TypeAlias = Union[
+    Literal["viewport", "fullPage"],
+    InputScrapeDataScreenshotParamsAreaElement,
+    InputScrapeDataScreenshotParamsAreaRectangle,
+]
+
+
+class InputScrapeDataScreenshotParams(TypedDict, total=False):
+    """Screenshot options. Requires formats.screenshot: true."""
+
+    area: InputScrapeDataScreenshotParamsArea
+    """What to capture: `viewport`, `fullPage`, one element, or a rectangle.
+
+    Max 40 megapixels.
     """
 
-    max_age_ms: Annotated[Optional[int], PropertyInfo(alias="maxAgeMs")]
-    """Maximum cache age in milliseconds.
+    format: Literal["png", "jpeg", "webp"]
+    """Image format for the screenshot."""
 
-    Defaults to 3 days (259200000 ms). Maximum: 1 year (31536000000 ms). `0` fetches
-    fresh.
+
+class InputScrapeDataSharedParamsActionPerform(TypedDict, total=False):
+    action: Required[str]
+    """One browser instruction, such as clicking a button or entering text."""
+
+    type: Required[Literal["perform"]]
+    """Use `perform` for a plain-language browser instruction."""
+
+
+class InputScrapeDataSharedParamsActionScroll(TypedDict, total=False):
+    type: Required[Literal["scroll"]]
+    """Use `scroll` to move through the page or a container."""
+
+    amount: Union[int, Literal["viewport", "max"]]
+    """Distance per scroll: pixels, one `viewport`, or `max` to reach the end."""
+
+    direction: Literal["down", "up", "left", "right"]
+    """Direction to scroll."""
+
+    max_scrolls: Annotated[int, PropertyInfo(alias="maxScrolls")]
+    """Maximum number of scroll steps for this action."""
+
+    selector: str
+    """Scroll this container. Omit to scroll the page."""
+
+
+class InputScrapeDataSharedParamsActionWait(TypedDict, total=False):
+    milliseconds: Required[int]
+    """Time to pause in milliseconds before the next action."""
+
+    type: Required[Literal["wait"]]
+    """Use `wait` to pause for a fixed duration."""
+
+
+class InputScrapeDataSharedParamsActionWaitFor(TypedDict, total=False):
+    selector: Required[str]
+    """CSS selector to wait for before continuing."""
+
+    type: Required[Literal["waitFor"]]
+    """Use `waitFor` to wait for a matching element."""
+
+
+InputScrapeDataSharedParamsAction: TypeAlias = Union[
+    InputScrapeDataSharedParamsActionPerform,
+    InputScrapeDataSharedParamsActionScroll,
+    InputScrapeDataSharedParamsActionWait,
+    InputScrapeDataSharedParamsActionWaitFor,
+]
+
+
+class InputScrapeDataSharedParamsParsersPdf(TypedDict, total=False):
+    """PDF page range and OCR."""
+
+    end_page: Annotated[int, PropertyInfo(alias="endPage")]
+    """Last page to parse. Must be at least `startPage`."""
+
+    ocr: Literal["off", "auto"]
+    """Set `auto` to read scanned pages with OCR."""
+
+    start_page: Annotated[int, PropertyInfo(alias="startPage")]
+    """First page to parse, starting at 1."""
+
+
+class InputScrapeDataSharedParamsParsers(TypedDict, total=False):
+    """Document parsing options."""
+
+    pdf: InputScrapeDataSharedParamsParsersPdf
+    """PDF page range and OCR."""
+
+
+class InputScrapeDataSharedParamsProfileExisting(TypedDict, total=False):
+    profile_id: Required[Annotated[str, PropertyInfo(alias="profileId")]]
+    """The ID returned in profile.id by an earlier scrape."""
+
+    type: Required[Literal["existing"]]
+    """Reuse a saved browser profile."""
+
+
+class InputScrapeDataSharedParamsProfileNew(TypedDict, total=False):
+    identifier: Required[str]
+    """Username or email for the target website."""
+
+    password: Required[str]
+    """Password used to sign in. It is never stored in the profile."""
+
+    type: Required[Literal["new"]]
+    """Sign in and create a browser profile."""
+
+    description: str
+    """Optional label shown when listing profiles with `GET /org/browser/profiles`."""
+
+
+InputScrapeDataSharedParamsProfile: TypeAlias = Union[
+    InputScrapeDataSharedParamsProfileExisting, InputScrapeDataSharedParamsProfileNew
+]
+
+
+class InputScrapeDataSharedParamsViewport(TypedDict, total=False):
+    """Browser size in pixels.
+
+    Omit for 1920 × 1080. When provided, missing dimensions default to 1440 × 900.
     """
 
-    pdf: InputScrapeDataHTMLOptionsPdf
-    """PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range."""
+    height: int
+    """Browser viewport height in pixels."""
+
+    width: int
+    """Browser viewport width in pixels."""
+
+
+class InputScrapeDataSharedParams(TypedDict, total=False):
+    """Browser and content settings shared by all outputs."""
+
+    actions: Iterable[InputScrapeDataSharedParamsAction]
+    """Browser steps run in order before capture.
+
+    Requires a paid plan. Skips the cache.
+    """
+
+    country: str
+    """Proxy country as a two-letter code, such as `US`. Case-insensitive."""
+
+    dismiss_cookies: Annotated[bool, PropertyInfo(alias="dismissCookies")]
+    """Accept cookie banners before actions and capture."""
+
+    dismiss_popups: Annotated[bool, PropertyInfo(alias="dismissPopups")]
+    """Close other popups before actions and capture."""
+
+    exclude_selectors: Annotated[SequenceNotStr[str], PropertyInfo(alias="excludeSelectors")]
+    """Remove elements matching these CSS selectors. Overrides `includeSelectors`."""
+
+    headers: Dict[str, str]
+    """HTTP headers to send to the target site. Requests with headers skip the cache."""
+
+    include_frames: Annotated[bool, PropertyInfo(alias="includeFrames")]
+    """Include iframe content in HTML and text outputs.
+
+    Screenshots always show visible frames.
+    """
+
+    include_selectors: Annotated[SequenceNotStr[str], PropertyInfo(alias="includeSelectors")]
+    """Keep only elements matching these CSS selectors."""
+
+    main_content_only: Annotated[bool, PropertyInfo(alias="mainContentOnly")]
+    """Keep only the main content. Doesn't affect `screenshot`, `bytes`, or `product`."""
+
+    parsers: InputScrapeDataSharedParamsParsers
+    """Document parsing options."""
+
+    profile: InputScrapeDataSharedParamsProfile
+    """Create or reuse an authenticated browser profile.
+
+    Requires a paid plan and an HTTPS target. Profiles persist session state, bypass
+    shared caches, and cannot be combined with ZDR, custom headers, raw bytes, or
+    prebuilt parsers.
+    """
 
     settle_animations: Annotated[bool, PropertyInfo(alias="settleAnimations")]
-    """Wait for CSS animations to finish before extracting, on browser-rendered pages."""
+    """Wait for CSS animations to finish before capture.
 
-    use_main_content_only: Annotated[bool, PropertyInfo(alias="useMainContentOnly")]
-    """Return the main content without navigation or footers."""
+    Defaults to `true` when `screenshot` is requested.
+    """
 
-    wait_for_ms: Annotated[int, PropertyInfo(alias="waitForMs")]
-    """How long to wait after initial page load, in milliseconds. `0` waits 500 ms."""
+    theme: Literal["light", "dark"]
+    """Emulate a light or dark color scheme."""
+
+    viewport: InputScrapeDataSharedParamsViewport
+    """Browser size in pixels.
+
+    Omit for 1920 × 1080. When provided, missing dimensions default to 1440 × 900.
+    """
+
+    wait_for: Annotated[Union[int, str], PropertyInfo(alias="waitFor")]
+    """Milliseconds, or a CSS selector to wait for, after actions.
+
+    Defaults to 500 (2000 with frames or XML).
+    """
 
 
-class InputScrapeDataHTML(TypedDict, total=False):
-    """Scrape the listed pages as HTML."""
+class InputScrapeDataTimeoutOpts(TypedDict, total=False):
+    """
+    Deadline for each page, using the same behavior and defaults as POST /web/scrape.
+    """
 
-    format: Required[Literal["html"]]
-    """Return page content as HTML."""
+    milliseconds: Required[int]
+    """Deadline in milliseconds."""
 
-    urls: Required[Iterable[InputScrapeDataHtmlurL]]
-    """Pages to scrape. Maximum 25000."""
+    behavior: Literal["fail", "return-partial"]
+    """\"fail" returns 408 at the deadline.
 
-    options: InputScrapeDataHTMLOptions
-    """Options for HTML output."""
+    "return-partial" returns available results; inspect the response’s partial flag.
+    "return-partial" requires at least 5000 ms.
+    """
 
 
-InputScrapeData: TypeAlias = Union[InputScrapeDataMarkdown, InputScrapeDataHTML]
+class InputScrapeData(TypedDict, total=False):
+    """Use the same formats and parameters as POST /web/scrape, replacing url with urls.
+
+    Options apply to every page.
+    """
+
+    formats: Required[InputScrapeDataFormats]
+    """Outputs to return. Set at least one to `true`."""
+
+    urls: Required[Iterable[InputScrapeDataURL]]
+    """Pages to scrape. Maximum 100000."""
+
+    highlights_params: Annotated[InputScrapeDataHighlightsParams, PropertyInfo(alias="highlightsParams")]
+    """Requires `formats.highlights: true`; required when it is set."""
+
+    image_params: Annotated[InputScrapeDataImageParams, PropertyInfo(alias="imageParams")]
+    """Image options. Requires formats.images: true."""
+
+    json_params: Annotated[InputScrapeDataJsonParams, PropertyInfo(alias="jsonParams")]
+    """Requires `formats.json: true`; required when it is set."""
+
+    markdown_params: Annotated[InputScrapeDataMarkdownParams, PropertyInfo(alias="markdownParams")]
+    """Markdown options. Requires `formats.markdown`."""
+
+    max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
+    """Maximum age of a cached output, in milliseconds.
+
+    `0` fetches fresh. Defaults to 3 days (259200000 ms). Maximum: 1 year
+    (31536000000 ms).
+    """
+
+    parse_params: Annotated[InputScrapeDataParseParams, PropertyInfo(alias="parseParams")]
+    """Requires `formats.parse: true`; required when it is set."""
+
+    product_params: Annotated[InputScrapeDataProductParams, PropertyInfo(alias="productParams")]
+    """Product options. Requires formats.product: true."""
+
+    screenshot_params: Annotated[InputScrapeDataScreenshotParams, PropertyInfo(alias="screenshotParams")]
+    """Screenshot options. Requires formats.screenshot: true."""
+
+    shared_params: Annotated[InputScrapeDataSharedParams, PropertyInfo(alias="sharedParams")]
+    """Browser and content settings shared by all outputs."""
+
+    tags: SequenceNotStr[str]
+    """Labels for tracking request usage. Not retained when zdr is enabled."""
+
+    timeout_opts: Annotated[InputScrapeDataTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
+    """
+    Deadline for each page, using the same behavior and defaults as POST
+    /web/scrape.
+    """
+
+    zdr: Literal["disabled"]
+    """Batches persist their results.
+
+    Only disabled is supported; enabled returns ZDR_NOT_SUPPORTED.
+    """
 
 
 class InputScrape(TypedDict, total=False):
-    """Scrape a list of up to 25,000 URLs."""
+    """Scrape a list of up to 100,000 URLs."""
 
     data: Required[InputScrapeData]
-    """Pages to scrape and their output format."""
+    """Use the same formats and parameters as POST /web/scrape, replacing url with
+    urls.
+
+    Options apply to every page.
+    """
 
     mode: Required[Literal["scrape"]]
     """Scrape the pages in `data.urls`."""
 
 
-class InputCrawlDataMarkdownSourceStartURLControls(TypedDict, total=False):
+class InputCrawlDataFormats(TypedDict, total=False):
+    """Outputs to return. Set at least one to `true`."""
+
+    bytes: bool
+    """The original HTTP response body."""
+
+    highlights: bool
+    """Markdown excerpts relevant to `highlightsParams.query`."""
+
+    html: bool
+    """Rendered HTML."""
+
+    images: bool
+    """Images found on the page."""
+
+    json: bool
+    """An object matching `jsonParams.schema`, extracted from the page."""
+
+    markdown: bool
+    """Page content as Markdown."""
+
+    parse: bool
+    """Fields extracted with custom rules or a prebuilt parser, returned as `parsed`."""
+
+    product: bool
+    """Product details such as name, price, and availability."""
+
+    screenshot: bool
+    """A screenshot of the page."""
+
+
+class InputCrawlDataSourceStartURLControls(TypedDict, total=False):
     """Limits and filters for page discovery."""
 
     follow_subdomains: Annotated[bool, PropertyInfo(alias="followSubdomains")]
@@ -688,13 +641,13 @@ class InputCrawlDataMarkdownSourceStartURLControls(TypedDict, total=False):
     """Maximum link depth. Source pages are depth 0. No limit when omitted."""
 
     max_urls: Annotated[int, PropertyInfo(alias="maxUrls")]
-    """Maximum pages to fetch. Unused reserved credits are refunded. Maximum 25000."""
+    """Maximum pages to fetch. Unused reserved credits are refunded. Maximum 100000."""
 
     regex: str
     """RE2 pattern for URLs to include. The `start_url` itself is always included."""
 
 
-class InputCrawlDataMarkdownSourceStartURL(TypedDict, total=False):
+class InputCrawlDataSourceStartURL(TypedDict, total=False):
     """Discover pages by following links from one URL."""
 
     type: Required[Literal["start_url"]]
@@ -703,24 +656,24 @@ class InputCrawlDataMarkdownSourceStartURL(TypedDict, total=False):
     url: Required[str]
     """Page where crawling begins. A URL without a scheme is read as https://."""
 
-    controls: InputCrawlDataMarkdownSourceStartURLControls
+    controls: InputCrawlDataSourceStartURLControls
     """Limits and filters for page discovery."""
 
 
-class InputCrawlDataMarkdownSourceSitemapControls(TypedDict, total=False):
+class InputCrawlDataSourceSitemapControls(TypedDict, total=False):
     """Limits and filters for the sitemap URLs.
 
     A sitemap batch scrapes exactly those URLs and never follows links off them, so there is no crawl depth here.
     """
 
     max_urls: Annotated[int, PropertyInfo(alias="maxUrls")]
-    """Maximum pages to fetch. Unused reserved credits are refunded. Maximum 25000."""
+    """Maximum pages to fetch. Unused reserved credits are refunded. Maximum 100000."""
 
     regex: str
     """RE2 pattern; only sitemap URLs matching it are scraped."""
 
 
-class InputCrawlDataMarkdownSourceSitemap(TypedDict, total=False):
+class InputCrawlDataSourceSitemap(TypedDict, total=False):
     """Scrape the pages listed in a domain's sitemap.
 
     Links on those pages are not followed.
@@ -735,7 +688,7 @@ class InputCrawlDataMarkdownSourceSitemap(TypedDict, total=False):
     type: Required[Literal["sitemap"]]
     """Scrape the URLs in the domain's sitemap."""
 
-    controls: InputCrawlDataMarkdownSourceSitemapControls
+    controls: InputCrawlDataSourceSitemapControls
     """Limits and filters for the sitemap URLs.
 
     A sitemap batch scrapes exactly those URLs and never follows links off them, so
@@ -743,649 +696,446 @@ class InputCrawlDataMarkdownSourceSitemap(TypedDict, total=False):
     """
 
 
-InputCrawlDataMarkdownSource: TypeAlias = Union[
-    InputCrawlDataMarkdownSourceStartURL, InputCrawlDataMarkdownSourceSitemap
+InputCrawlDataSource: TypeAlias = Union[InputCrawlDataSourceStartURL, InputCrawlDataSourceSitemap]
+
+
+class InputCrawlDataHighlightsParams(TypedDict, total=False):
+    """Requires `formats.highlights: true`; required when it is set."""
+
+    query: Required[str]
+    """The question or topic to find passages for."""
+
+    max_characters: Annotated[int, PropertyInfo(alias="maxCharacters")]
+    """Maximum combined length of returned passages."""
+
+
+class InputCrawlDataImageParams(TypedDict, total=False):
+    """Image options. Requires formats.images: true."""
+
+    dedupe: Literal["none", "visual"]
+    """Set `visual` to drop visual duplicates, keeping the largest copy."""
+
+    enrich: List[Literal["dimensions", "classification", "file"]]
+    """Extra data per image: `dimensions`, `classification`, or a hosted `file` URL."""
+
+
+class InputCrawlDataJsonParams(TypedDict, total=False):
+    """Requires `formats.json: true`; required when it is set."""
+
+    schema: Required[Dict[str, object]]
+    """JSON Schema (not an example object) for a top-level object, up to 50 KB.
+
+    Use optional or nullable fields for missing facts.
+    """
+
+    instructions: str
+    """Extra guidance, such as which facts to prefer or how to read a field."""
+
+
+class InputCrawlDataMarkdownParams(TypedDict, total=False):
+    """Markdown options. Requires `formats.markdown`."""
+
+    include_images: Annotated[bool, PropertyInfo(alias="includeImages")]
+    """Include images in the Markdown using image syntax with URLs and alt text."""
+
+    include_links: Annotated[bool, PropertyInfo(alias="includeLinks")]
+    """Keep link URLs in the Markdown. Set false to return link text without URLs."""
+
+    inline_images: Annotated[Literal["placeholder", "preserve"], PropertyInfo(alias="inlineImages")]
+    """How base64 images appear: `placeholder` (default) or `preserve`.
+
+    Requires `includeImages`.
+    """
+
+
+class InputCrawlDataParseParamsCustomParserRulesUnionMember1(TypedDict, total=False):
+    selector: Required[str]
+    """CSS selector to match within the current page or parent rule."""
+
+    output: Union[Literal["text", "html"], str, object]
+    """Return text, HTML, an attribute such as `@href`, or nested field rules.
+
+    Defaults to text.
+    """
+
+    type: Literal["item", "list"]
+    """Return the first match with `item` or all matches with `list`."""
+
+
+InputCrawlDataParseParamsCustomParserRules: TypeAlias = Union[
+    str, InputCrawlDataParseParamsCustomParserRulesUnionMember1
 ]
 
 
-class InputCrawlDataMarkdownOptionsPdf(TypedDict, total=False):
-    """PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range."""
+class InputCrawlDataParseParamsCustomParser(TypedDict, total=False):
+    rules: Required[Dict[str, InputCrawlDataParseParamsCustomParserRules]]
+    """Field names mapped to CSS selectors (`h1`, `a@href`) or rule objects.
 
-    end: int
-    """Last PDF page to parse (1-based, inclusive).
-
-    Defaults to the final page. Must be >= start.
+    Max 100 fields, 5 levels.
     """
 
-    ocr: bool
-    """Read scanned PDF pages with OCR; preserve pages that already have text."""
+    type: Literal["custom"]
+    """Extract fields using custom CSS rules.
 
-    should_parse: Annotated[bool, PropertyInfo(alias="shouldParse")]
-    """Parse PDF URLs. When false, PDFs fail with `PDF_SKIPPED`."""
-
-    start: int
-    """First 1-based PDF page to parse."""
+    This is the default when type is omitted.
+    """
 
 
-class InputCrawlDataMarkdownOptions(TypedDict, total=False):
-    """Options for Markdown output."""
-
-    country: Literal[
-        "ad",
-        "ae",
-        "af",
-        "ag",
-        "ai",
-        "al",
-        "am",
-        "ao",
-        "ar",
-        "at",
-        "au",
-        "aw",
-        "az",
-        "ba",
-        "bb",
-        "bd",
-        "be",
-        "bf",
-        "bg",
-        "bh",
-        "bi",
-        "bj",
-        "bm",
-        "bn",
-        "bo",
-        "bq",
-        "br",
-        "bs",
-        "bw",
-        "by",
-        "bz",
-        "ca",
-        "cd",
-        "cf",
-        "cg",
-        "ch",
-        "ci",
-        "cl",
-        "cm",
-        "cn",
-        "co",
-        "cr",
-        "cv",
-        "cw",
-        "cy",
-        "cz",
-        "de",
-        "dj",
-        "dk",
-        "dm",
-        "do",
-        "dz",
-        "ec",
-        "ee",
-        "eg",
-        "es",
-        "et",
-        "fi",
-        "fj",
-        "fr",
-        "ga",
-        "gb",
-        "gd",
-        "ge",
-        "gf",
-        "gg",
-        "gh",
-        "gm",
-        "gn",
-        "gp",
-        "gq",
-        "gr",
-        "gt",
-        "gu",
-        "gw",
-        "gy",
-        "hk",
-        "hn",
-        "hr",
-        "ht",
-        "hu",
-        "id",
-        "ie",
-        "il",
-        "im",
-        "in",
-        "iq",
-        "ir",
-        "is",
-        "it",
-        "je",
-        "jm",
-        "jo",
-        "jp",
-        "ke",
-        "kg",
-        "kh",
-        "kn",
-        "kr",
-        "kw",
-        "ky",
-        "kz",
-        "la",
-        "lb",
-        "lc",
-        "lk",
-        "lr",
-        "ls",
-        "lt",
-        "lu",
-        "lv",
-        "ly",
-        "ma",
-        "mc",
-        "md",
-        "me",
-        "mf",
-        "mg",
-        "mk",
-        "ml",
-        "mm",
-        "mn",
-        "mo",
-        "mq",
-        "mr",
-        "mt",
-        "mu",
-        "mv",
-        "mw",
-        "mx",
-        "my",
-        "mz",
-        "na",
-        "nc",
-        "ne",
-        "ng",
-        "ni",
-        "nl",
-        "no",
-        "np",
-        "nz",
-        "om",
-        "pa",
-        "pe",
-        "pf",
-        "pg",
-        "ph",
-        "pk",
-        "pl",
-        "pr",
-        "ps",
-        "pt",
-        "py",
-        "qa",
-        "re",
-        "ro",
-        "rs",
-        "ru",
-        "rw",
-        "sa",
-        "sc",
-        "sd",
-        "se",
-        "sg",
-        "si",
-        "sk",
-        "sl",
-        "sm",
-        "sn",
-        "so",
-        "sr",
-        "ss",
-        "st",
-        "sv",
-        "sx",
-        "sy",
-        "sz",
-        "tc",
-        "td",
-        "tg",
-        "th",
-        "tj",
-        "tl",
-        "tm",
-        "tn",
-        "tr",
-        "tt",
-        "tw",
-        "tz",
-        "ua",
-        "ug",
-        "us",
-        "uy",
-        "uz",
-        "vc",
-        "ve",
-        "vg",
-        "vi",
-        "vn",
-        "ye",
-        "yt",
-        "za",
-        "zm",
-        "zw",
+class InputCrawlDataParseParamsPrebuiltParser(TypedDict, total=False):
+    parser: Required[
+        Literal[
+            "google-maps",
+            "google-play",
+            "google-play-reviews",
+            "app-store",
+            "app-store-reviews",
+            "emails",
+            "phone-numbers",
+            "links",
+        ]
     ]
-    """Fetch from this country (ISO 3166-1 alpha-2)."""
+    """google-maps parses Google Maps business data into data.results.
 
-    exclude_selectors: Annotated[Optional[SequenceNotStr[str]], PropertyInfo(alias="excludeSelectors")]
-    """Remove elements matching these CSS selectors.
-
-    Applied after `includeSelectors`, so an element matching both is removed.
+    Accepts Maps place, search, and internal data URLs. Uses a US exit and English
+    labels regardless of hl or Accept-Language. google-play parses a Play Store app
+    into data: details, developer contact, ratings, price, permissions, and data
+    safety. google-play-reviews returns the 200 newest reviews of the app, with
+    developer replies, in data.reviews. Both Play parsers accept app details URLs
+    (play.google.com/store/apps/details?id=…); hl and gl set the language and
+    storefront, defaulting to en and us. app-store parses an App Store app into
+    data: details, developer, ratings, price, version, and screenshots.
+    app-store-reviews returns up to the 500 newest reviews in data.reviews. Both App
+    Store parsers accept app URLs (apps.apple.com/us/app/…/id…); the country in the
+    path sets the storefront, defaulting to us. emails accepts any page and returns
+    its email addresses as data.emails ([{ email }]), read from mailto links,
+    Cloudflare-protected addresses, and visible text. phone-numbers accepts any page
+    and returns its valid phone numbers in E.164 as data.phone_numbers ([{ phone
+    }]), read from tel links and visible text; numbers without a country code are
+    read for the country of the site TLD, defaulting to US. links accepts any page
+    and returns its unique http(s) links as data.links ([{ url, text }]), with
+    absolute URLs; text falls back to aria-label or image alt and is null when a
+    link has none. The emails parser reads the rendered page and respects content
+    filters; the other prebuilt parsers read their data independently of DOM
+    filters.
     """
 
-    include_html: Annotated[bool, PropertyInfo(alias="includeHTML")]
-    """Also return each page's HTML in `html`."""
+    type: Required[Literal["prebuilt"]]
+    """Use a prebuilt parser instead of custom rules."""
 
-    include_images: Annotated[bool, PropertyInfo(alias="includeImages")]
-    """Include image references in the Markdown."""
 
-    include_links: Annotated[bool, PropertyInfo(alias="includeLinks")]
-    """Include links in the Markdown."""
+InputCrawlDataParseParams: TypeAlias = Union[
+    InputCrawlDataParseParamsCustomParser, InputCrawlDataParseParamsPrebuiltParser
+]
 
-    include_selectors: Annotated[Optional[SequenceNotStr[str]], PropertyInfo(alias="includeSelectors")]
-    """Keep only elements matching these CSS selectors.
 
-    Filtered pages ignore `maxAgeMs`.
+class InputCrawlDataProductParams(TypedDict, total=False):
+    """Product options. Requires formats.product: true."""
+
+    dedupe_images: Annotated[bool, PropertyInfo(alias="dedupeImages")]
+    """Drop visually duplicate product images, keeping the largest copy."""
+
+
+class InputCrawlDataScreenshotParamsAreaElement(TypedDict, total=False):
+    selector: Required[str]
+    """CSS selector matching exactly one visible element."""
+
+
+class InputCrawlDataScreenshotParamsAreaRectangle(TypedDict, total=False):
+    """Pixels from the document origin."""
+
+    height: Required[int]
+    """Height of the capture in pixels."""
+
+    width: Required[int]
+    """Width of the capture in pixels."""
+
+    x: Required[int]
+    """Left edge of the capture, in pixels from the document origin."""
+
+    y: Required[int]
+    """Top edge of the capture, in pixels from the document origin."""
+
+
+InputCrawlDataScreenshotParamsArea: TypeAlias = Union[
+    Literal["viewport", "fullPage"],
+    InputCrawlDataScreenshotParamsAreaElement,
+    InputCrawlDataScreenshotParamsAreaRectangle,
+]
+
+
+class InputCrawlDataScreenshotParams(TypedDict, total=False):
+    """Screenshot options. Requires formats.screenshot: true."""
+
+    area: InputCrawlDataScreenshotParamsArea
+    """What to capture: `viewport`, `fullPage`, one element, or a rectangle.
+
+    Max 40 megapixels.
     """
 
-    max_age_ms: Annotated[Optional[int], PropertyInfo(alias="maxAgeMs")]
-    """Maximum cache age in milliseconds.
+    format: Literal["png", "jpeg", "webp"]
+    """Image format for the screenshot."""
 
-    Defaults to 3 days (259200000 ms). Maximum: 1 year (31536000000 ms). `0` fetches
-    fresh.
+
+class InputCrawlDataSharedParamsActionPerform(TypedDict, total=False):
+    action: Required[str]
+    """One browser instruction, such as clicking a button or entering text."""
+
+    type: Required[Literal["perform"]]
+    """Use `perform` for a plain-language browser instruction."""
+
+
+class InputCrawlDataSharedParamsActionScroll(TypedDict, total=False):
+    type: Required[Literal["scroll"]]
+    """Use `scroll` to move through the page or a container."""
+
+    amount: Union[int, Literal["viewport", "max"]]
+    """Distance per scroll: pixels, one `viewport`, or `max` to reach the end."""
+
+    direction: Literal["down", "up", "left", "right"]
+    """Direction to scroll."""
+
+    max_scrolls: Annotated[int, PropertyInfo(alias="maxScrolls")]
+    """Maximum number of scroll steps for this action."""
+
+    selector: str
+    """Scroll this container. Omit to scroll the page."""
+
+
+class InputCrawlDataSharedParamsActionWait(TypedDict, total=False):
+    milliseconds: Required[int]
+    """Time to pause in milliseconds before the next action."""
+
+    type: Required[Literal["wait"]]
+    """Use `wait` to pause for a fixed duration."""
+
+
+class InputCrawlDataSharedParamsActionWaitFor(TypedDict, total=False):
+    selector: Required[str]
+    """CSS selector to wait for before continuing."""
+
+    type: Required[Literal["waitFor"]]
+    """Use `waitFor` to wait for a matching element."""
+
+
+InputCrawlDataSharedParamsAction: TypeAlias = Union[
+    InputCrawlDataSharedParamsActionPerform,
+    InputCrawlDataSharedParamsActionScroll,
+    InputCrawlDataSharedParamsActionWait,
+    InputCrawlDataSharedParamsActionWaitFor,
+]
+
+
+class InputCrawlDataSharedParamsParsersPdf(TypedDict, total=False):
+    """PDF page range and OCR."""
+
+    end_page: Annotated[int, PropertyInfo(alias="endPage")]
+    """Last page to parse. Must be at least `startPage`."""
+
+    ocr: Literal["off", "auto"]
+    """Set `auto` to read scanned pages with OCR."""
+
+    start_page: Annotated[int, PropertyInfo(alias="startPage")]
+    """First page to parse, starting at 1."""
+
+
+class InputCrawlDataSharedParamsParsers(TypedDict, total=False):
+    """Document parsing options."""
+
+    pdf: InputCrawlDataSharedParamsParsersPdf
+    """PDF page range and OCR."""
+
+
+class InputCrawlDataSharedParamsProfileExisting(TypedDict, total=False):
+    profile_id: Required[Annotated[str, PropertyInfo(alias="profileId")]]
+    """The ID returned in profile.id by an earlier scrape."""
+
+    type: Required[Literal["existing"]]
+    """Reuse a saved browser profile."""
+
+
+class InputCrawlDataSharedParamsProfileNew(TypedDict, total=False):
+    identifier: Required[str]
+    """Username or email for the target website."""
+
+    password: Required[str]
+    """Password used to sign in. It is never stored in the profile."""
+
+    type: Required[Literal["new"]]
+    """Sign in and create a browser profile."""
+
+    description: str
+    """Optional label shown when listing profiles with `GET /org/browser/profiles`."""
+
+
+InputCrawlDataSharedParamsProfile: TypeAlias = Union[
+    InputCrawlDataSharedParamsProfileExisting, InputCrawlDataSharedParamsProfileNew
+]
+
+
+class InputCrawlDataSharedParamsViewport(TypedDict, total=False):
+    """Browser size in pixels.
+
+    Omit for 1920 × 1080. When provided, missing dimensions default to 1440 × 900.
     """
 
-    pdf: InputCrawlDataMarkdownOptionsPdf
-    """PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range."""
+    height: int
+    """Browser viewport height in pixels."""
+
+    width: int
+    """Browser viewport width in pixels."""
+
+
+class InputCrawlDataSharedParams(TypedDict, total=False):
+    """Browser and content settings shared by all outputs."""
+
+    actions: Iterable[InputCrawlDataSharedParamsAction]
+    """Browser steps run in order before capture.
+
+    Requires a paid plan. Skips the cache.
+    """
+
+    country: str
+    """Proxy country as a two-letter code, such as `US`. Case-insensitive."""
+
+    dismiss_cookies: Annotated[bool, PropertyInfo(alias="dismissCookies")]
+    """Accept cookie banners before actions and capture."""
+
+    dismiss_popups: Annotated[bool, PropertyInfo(alias="dismissPopups")]
+    """Close other popups before actions and capture."""
+
+    exclude_selectors: Annotated[SequenceNotStr[str], PropertyInfo(alias="excludeSelectors")]
+    """Remove elements matching these CSS selectors. Overrides `includeSelectors`."""
+
+    headers: Dict[str, str]
+    """HTTP headers to send to the target site. Requests with headers skip the cache."""
+
+    include_frames: Annotated[bool, PropertyInfo(alias="includeFrames")]
+    """Include iframe content in HTML and text outputs.
+
+    Screenshots always show visible frames.
+    """
+
+    include_selectors: Annotated[SequenceNotStr[str], PropertyInfo(alias="includeSelectors")]
+    """Keep only elements matching these CSS selectors."""
+
+    main_content_only: Annotated[bool, PropertyInfo(alias="mainContentOnly")]
+    """Keep only the main content. Doesn't affect `screenshot`, `bytes`, or `product`."""
+
+    parsers: InputCrawlDataSharedParamsParsers
+    """Document parsing options."""
+
+    profile: InputCrawlDataSharedParamsProfile
+    """Create or reuse an authenticated browser profile.
+
+    Requires a paid plan and an HTTPS target. Profiles persist session state, bypass
+    shared caches, and cannot be combined with ZDR, custom headers, raw bytes, or
+    prebuilt parsers.
+    """
 
     settle_animations: Annotated[bool, PropertyInfo(alias="settleAnimations")]
-    """Wait for CSS animations to finish before extracting, on browser-rendered pages."""
+    """Wait for CSS animations to finish before capture.
 
-    shorten_base64_images: Annotated[bool, PropertyInfo(alias="shortenBase64Images")]
-    """Shorten inline base64 image data."""
+    Defaults to `true` when `screenshot` is requested.
+    """
 
-    use_main_content_only: Annotated[bool, PropertyInfo(alias="useMainContentOnly")]
-    """Return the main content without navigation or footers."""
+    theme: Literal["light", "dark"]
+    """Emulate a light or dark color scheme."""
 
-    wait_for_ms: Annotated[int, PropertyInfo(alias="waitForMs")]
-    """How long to wait after initial page load, in milliseconds. `0` waits 500 ms."""
+    viewport: InputCrawlDataSharedParamsViewport
+    """Browser size in pixels.
+
+    Omit for 1920 × 1080. When provided, missing dimensions default to 1440 × 900.
+    """
+
+    wait_for: Annotated[Union[int, str], PropertyInfo(alias="waitFor")]
+    """Milliseconds, or a CSS selector to wait for, after actions.
+
+    Defaults to 500 (2000 with frames or XML).
+    """
 
 
-class InputCrawlDataMarkdown(TypedDict, total=False):
-    """Crawl pages and return Markdown."""
+class InputCrawlDataTimeoutOpts(TypedDict, total=False):
+    """
+    Deadline for each page, using the same behavior and defaults as POST /web/scrape.
+    """
 
-    format: Required[Literal["markdown"]]
-    """Return page content as Markdown."""
+    milliseconds: Required[int]
+    """Deadline in milliseconds."""
 
-    source: Required[InputCrawlDataMarkdownSource]
+    behavior: Literal["fail", "return-partial"]
+    """\"fail" returns 408 at the deadline.
+
+    "return-partial" returns available results; inspect the response’s partial flag.
+    "return-partial" requires at least 5000 ms.
+    """
+
+
+class InputCrawlData(TypedDict, total=False):
+    """
+    Use the same formats and parameters as POST /web/scrape, replacing url with source. Options apply to every page.
+    """
+
+    formats: Required[InputCrawlDataFormats]
+    """Outputs to return. Set at least one to `true`."""
+
+    source: Required[InputCrawlDataSource]
     """How to find pages to crawl."""
 
-    options: InputCrawlDataMarkdownOptions
-    """Options for Markdown output."""
+    highlights_params: Annotated[InputCrawlDataHighlightsParams, PropertyInfo(alias="highlightsParams")]
+    """Requires `formats.highlights: true`; required when it is set."""
 
+    image_params: Annotated[InputCrawlDataImageParams, PropertyInfo(alias="imageParams")]
+    """Image options. Requires formats.images: true."""
 
-class InputCrawlDataHTMLSourceStartURLControls(TypedDict, total=False):
-    """Limits and filters for page discovery."""
+    json_params: Annotated[InputCrawlDataJsonParams, PropertyInfo(alias="jsonParams")]
+    """Requires `formats.json: true`; required when it is set."""
 
-    follow_subdomains: Annotated[bool, PropertyInfo(alias="followSubdomains")]
-    """Follow links to subdomains."""
+    markdown_params: Annotated[InputCrawlDataMarkdownParams, PropertyInfo(alias="markdownParams")]
+    """Markdown options. Requires `formats.markdown`."""
 
-    max_depth: Annotated[int, PropertyInfo(alias="maxDepth")]
-    """Maximum link depth. Source pages are depth 0. No limit when omitted."""
+    max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
+    """Maximum age of a cached output, in milliseconds.
 
-    max_urls: Annotated[int, PropertyInfo(alias="maxUrls")]
-    """Maximum pages to fetch. Unused reserved credits are refunded. Maximum 25000."""
-
-    regex: str
-    """RE2 pattern for URLs to include. The `start_url` itself is always included."""
-
-
-class InputCrawlDataHTMLSourceStartURL(TypedDict, total=False):
-    """Discover pages by following links from one URL."""
-
-    type: Required[Literal["start_url"]]
-    """Start from one page."""
-
-    url: Required[str]
-    """Page where crawling begins. A URL without a scheme is read as https://."""
-
-    controls: InputCrawlDataHTMLSourceStartURLControls
-    """Limits and filters for page discovery."""
-
-
-class InputCrawlDataHTMLSourceSitemapControls(TypedDict, total=False):
-    """Limits and filters for the sitemap URLs.
-
-    A sitemap batch scrapes exactly those URLs and never follows links off them, so there is no crawl depth here.
+    `0` fetches fresh. Defaults to 3 days (259200000 ms). Maximum: 1 year
+    (31536000000 ms).
     """
 
-    max_urls: Annotated[int, PropertyInfo(alias="maxUrls")]
-    """Maximum pages to fetch. Unused reserved credits are refunded. Maximum 25000."""
+    parse_params: Annotated[InputCrawlDataParseParams, PropertyInfo(alias="parseParams")]
+    """Requires `formats.parse: true`; required when it is set."""
 
-    regex: str
-    """RE2 pattern; only sitemap URLs matching it are scraped."""
+    product_params: Annotated[InputCrawlDataProductParams, PropertyInfo(alias="productParams")]
+    """Product options. Requires formats.product: true."""
 
+    screenshot_params: Annotated[InputCrawlDataScreenshotParams, PropertyInfo(alias="screenshotParams")]
+    """Screenshot options. Requires formats.screenshot: true."""
 
-class InputCrawlDataHTMLSourceSitemap(TypedDict, total=False):
-    """Scrape the pages listed in a domain's sitemap.
+    shared_params: Annotated[InputCrawlDataSharedParams, PropertyInfo(alias="sharedParams")]
+    """Browser and content settings shared by all outputs."""
 
-    Links on those pages are not followed.
+    tags: SequenceNotStr[str]
+    """Labels for tracking request usage. Not retained when zdr is enabled."""
+
+    timeout_opts: Annotated[InputCrawlDataTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
+    """
+    Deadline for each page, using the same behavior and defaults as POST
+    /web/scrape.
     """
 
-    domain: Required[str]
-    """Domain whose sitemap lists the pages to scrape.
+    zdr: Literal["disabled"]
+    """Batches persist their results.
 
-    A full URL is reduced to its domain.
+    Only disabled is supported; enabled returns ZDR_NOT_SUPPORTED.
     """
-
-    type: Required[Literal["sitemap"]]
-    """Scrape the URLs in the domain's sitemap."""
-
-    controls: InputCrawlDataHTMLSourceSitemapControls
-    """Limits and filters for the sitemap URLs.
-
-    A sitemap batch scrapes exactly those URLs and never follows links off them, so
-    there is no crawl depth here.
-    """
-
-
-InputCrawlDataHTMLSource: TypeAlias = Union[InputCrawlDataHTMLSourceStartURL, InputCrawlDataHTMLSourceSitemap]
-
-
-class InputCrawlDataHTMLOptionsPdf(TypedDict, total=False):
-    """PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range."""
-
-    end: int
-    """Last PDF page to parse (1-based, inclusive).
-
-    Defaults to the final page. Must be >= start.
-    """
-
-    ocr: bool
-    """Read scanned PDF pages with OCR; preserve pages that already have text."""
-
-    should_parse: Annotated[bool, PropertyInfo(alias="shouldParse")]
-    """Parse PDF URLs. When false, PDFs fail with `PDF_SKIPPED`."""
-
-    start: int
-    """First 1-based PDF page to parse."""
-
-
-class InputCrawlDataHTMLOptions(TypedDict, total=False):
-    """Options for HTML output."""
-
-    country: Literal[
-        "ad",
-        "ae",
-        "af",
-        "ag",
-        "ai",
-        "al",
-        "am",
-        "ao",
-        "ar",
-        "at",
-        "au",
-        "aw",
-        "az",
-        "ba",
-        "bb",
-        "bd",
-        "be",
-        "bf",
-        "bg",
-        "bh",
-        "bi",
-        "bj",
-        "bm",
-        "bn",
-        "bo",
-        "bq",
-        "br",
-        "bs",
-        "bw",
-        "by",
-        "bz",
-        "ca",
-        "cd",
-        "cf",
-        "cg",
-        "ch",
-        "ci",
-        "cl",
-        "cm",
-        "cn",
-        "co",
-        "cr",
-        "cv",
-        "cw",
-        "cy",
-        "cz",
-        "de",
-        "dj",
-        "dk",
-        "dm",
-        "do",
-        "dz",
-        "ec",
-        "ee",
-        "eg",
-        "es",
-        "et",
-        "fi",
-        "fj",
-        "fr",
-        "ga",
-        "gb",
-        "gd",
-        "ge",
-        "gf",
-        "gg",
-        "gh",
-        "gm",
-        "gn",
-        "gp",
-        "gq",
-        "gr",
-        "gt",
-        "gu",
-        "gw",
-        "gy",
-        "hk",
-        "hn",
-        "hr",
-        "ht",
-        "hu",
-        "id",
-        "ie",
-        "il",
-        "im",
-        "in",
-        "iq",
-        "ir",
-        "is",
-        "it",
-        "je",
-        "jm",
-        "jo",
-        "jp",
-        "ke",
-        "kg",
-        "kh",
-        "kn",
-        "kr",
-        "kw",
-        "ky",
-        "kz",
-        "la",
-        "lb",
-        "lc",
-        "lk",
-        "lr",
-        "ls",
-        "lt",
-        "lu",
-        "lv",
-        "ly",
-        "ma",
-        "mc",
-        "md",
-        "me",
-        "mf",
-        "mg",
-        "mk",
-        "ml",
-        "mm",
-        "mn",
-        "mo",
-        "mq",
-        "mr",
-        "mt",
-        "mu",
-        "mv",
-        "mw",
-        "mx",
-        "my",
-        "mz",
-        "na",
-        "nc",
-        "ne",
-        "ng",
-        "ni",
-        "nl",
-        "no",
-        "np",
-        "nz",
-        "om",
-        "pa",
-        "pe",
-        "pf",
-        "pg",
-        "ph",
-        "pk",
-        "pl",
-        "pr",
-        "ps",
-        "pt",
-        "py",
-        "qa",
-        "re",
-        "ro",
-        "rs",
-        "ru",
-        "rw",
-        "sa",
-        "sc",
-        "sd",
-        "se",
-        "sg",
-        "si",
-        "sk",
-        "sl",
-        "sm",
-        "sn",
-        "so",
-        "sr",
-        "ss",
-        "st",
-        "sv",
-        "sx",
-        "sy",
-        "sz",
-        "tc",
-        "td",
-        "tg",
-        "th",
-        "tj",
-        "tl",
-        "tm",
-        "tn",
-        "tr",
-        "tt",
-        "tw",
-        "tz",
-        "ua",
-        "ug",
-        "us",
-        "uy",
-        "uz",
-        "vc",
-        "ve",
-        "vg",
-        "vi",
-        "vn",
-        "ye",
-        "yt",
-        "za",
-        "zm",
-        "zw",
-    ]
-    """Fetch from this country (ISO 3166-1 alpha-2)."""
-
-    exclude_selectors: Annotated[Optional[SequenceNotStr[str]], PropertyInfo(alias="excludeSelectors")]
-    """Remove elements matching these CSS selectors.
-
-    Applied after `includeSelectors`, so an element matching both is removed.
-    """
-
-    include_selectors: Annotated[Optional[SequenceNotStr[str]], PropertyInfo(alias="includeSelectors")]
-    """Keep only elements matching these CSS selectors.
-
-    Filtered pages ignore `maxAgeMs`.
-    """
-
-    max_age_ms: Annotated[Optional[int], PropertyInfo(alias="maxAgeMs")]
-    """Maximum cache age in milliseconds.
-
-    Defaults to 3 days (259200000 ms). Maximum: 1 year (31536000000 ms). `0` fetches
-    fresh.
-    """
-
-    pdf: InputCrawlDataHTMLOptionsPdf
-    """PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range."""
-
-    settle_animations: Annotated[bool, PropertyInfo(alias="settleAnimations")]
-    """Wait for CSS animations to finish before extracting, on browser-rendered pages."""
-
-    use_main_content_only: Annotated[bool, PropertyInfo(alias="useMainContentOnly")]
-    """Return the main content without navigation or footers."""
-
-    wait_for_ms: Annotated[int, PropertyInfo(alias="waitForMs")]
-    """How long to wait after initial page load, in milliseconds. `0` waits 500 ms."""
-
-
-class InputCrawlDataHTML(TypedDict, total=False):
-    """Crawl pages and return HTML."""
-
-    format: Required[Literal["html"]]
-    """Return page content as HTML."""
-
-    source: Required[InputCrawlDataHTMLSource]
-    """How to find pages to crawl."""
-
-    options: InputCrawlDataHTMLOptions
-    """Options for HTML output."""
-
-
-InputCrawlData: TypeAlias = Union[InputCrawlDataMarkdown, InputCrawlDataHTML]
 
 
 class InputCrawl(TypedDict, total=False):
     """Crawl pages starting from a URL or from a domain's sitemap."""
 
     data: Required[InputCrawlData]
-    """Crawl source and output format."""
+    """
+    Use the same formats and parameters as POST /web/scrape, replacing url with
+    source. Options apply to every page.
+    """
 
     mode: Required[Literal["crawl"]]
     """Discover and scrape pages from `data.source`."""

@@ -3,6 +3,8 @@
 from typing import List, Optional
 from typing_extensions import Literal
 
+from pydantic import Field as FieldInfo
+
 from .intake import Intake
 from .failure import Failure
 from .._models import BaseModel
@@ -12,6 +14,7 @@ from .page_error_count import PageErrorCount
 __all__ = [
     "BatchRetrieveResponse",
     "Credits",
+    "Formats",
     "InvalidURL",
     "Progress",
     "Results",
@@ -35,6 +38,37 @@ class Credits(BaseModel):
 
     reserved: int
     """Credits held when the batch was accepted."""
+
+
+class Formats(BaseModel):
+    """Outputs requested for each page. Matches input.data.formats on submission."""
+
+    bytes: Optional[bool] = None
+    """The original HTTP response body."""
+
+    highlights: Optional[bool] = None
+    """Markdown excerpts relevant to `highlightsParams.query`."""
+
+    html: Optional[bool] = None
+    """Rendered HTML."""
+
+    images: Optional[bool] = None
+    """Images found on the page."""
+
+    json_: Optional[bool] = FieldInfo(alias="json", default=None)
+    """An object matching `jsonParams.schema`, extracted from the page."""
+
+    markdown: Optional[bool] = None
+    """Page content as Markdown."""
+
+    parse: Optional[bool] = None
+    """Fields extracted with custom rules or a prebuilt parser, returned as `parsed`."""
+
+    product: Optional[bool] = None
+    """Product details such as name, price, and availability."""
+
+    screenshot: Optional[bool] = None
+    """A screenshot of the page."""
 
 
 class InvalidURL(BaseModel):
@@ -122,11 +156,8 @@ class BatchRetrieveResponse(BaseModel):
     `page_errors`.
     """
 
-    format: Literal["markdown", "html"]
-    """What each page is returned as.
-
-    Matches `input.data.format` on the submit request.
-    """
+    formats: Formats
+    """Outputs requested for each page. Matches input.data.formats on submission."""
 
     input: Intake
     """What the submission accepted."""

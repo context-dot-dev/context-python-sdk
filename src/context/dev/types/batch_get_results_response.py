@@ -12,16 +12,78 @@ __all__ = [
     "BatchGetResultsResponse",
     "Data",
     "DataOk",
-    "DataOkCacheMetadata",
-    "DataOkMetadata",
-    "DataOkMetadataAlternate",
-    "DataOkMetadataHeading",
+    "DataOkResult",
+    "DataOkResultBytes",
+    "DataOkResultBytesData",
+    "DataOkResultCacheMetadata",
+    "DataOkResultHighlights",
+    "DataOkResultHTML",
+    "DataOkResultImages",
+    "DataOkResultImagesData",
+    "DataOkResultJson",
+    "DataOkResultMarkdown",
+    "DataOkResultMetadata",
+    "DataOkResultMetadataAlternate",
+    "DataOkResultMetadataHeading",
+    "DataOkResultParsed",
+    "DataOkResultProduct",
+    "DataOkResultProductData",
+    "DataOkResultProductDataProduct",
+    "DataOkResultProductDataProductVariant",
+    "DataOkResultProfile",
+    "DataOkResultScreenshot",
+    "DataOkResultKeyMetadata",
     "DataError",
+    "DataErrorResult",
+    "DataErrorResultBytes",
+    "DataErrorResultBytesData",
+    "DataErrorResultCacheMetadata",
+    "DataErrorResultHighlights",
+    "DataErrorResultHTML",
+    "DataErrorResultImages",
+    "DataErrorResultImagesData",
+    "DataErrorResultJson",
+    "DataErrorResultMarkdown",
+    "DataErrorResultMetadata",
+    "DataErrorResultMetadataAlternate",
+    "DataErrorResultMetadataHeading",
+    "DataErrorResultParsed",
+    "DataErrorResultProduct",
+    "DataErrorResultProductData",
+    "DataErrorResultProductDataProduct",
+    "DataErrorResultProductDataProductVariant",
+    "DataErrorResultProfile",
+    "DataErrorResultScreenshot",
+    "DataErrorResultKeyMetadata",
     "KeyMetadata",
 ]
 
 
-class DataOkCacheMetadata(BaseModel):
+class DataOkResultBytesData(BaseModel):
+    base64: str
+    """Body as base64, after HTTP decompression. Up to 50 MiB decoded."""
+
+    content_type: str = FieldInfo(alias="contentType")
+
+
+class DataOkResultBytes(BaseModel):
+    """The original HTTP response body, unchanged by waits, actions, and filters."""
+
+    data: Optional[DataOkResultBytesData] = None
+
+    requested: bool
+
+    success: Optional[bool] = None
+    """`true` if returned, `false` if it failed, `null` if not requested."""
+
+    error_code: Optional[str] = None
+    """Why the output failed. Present only when `success` is `false`."""
+
+    message: Optional[str] = None
+    """Explanation of the failure and possible next steps."""
+
+
+class DataOkResultCacheMetadata(BaseModel):
     """Whether this response came from cache."""
 
     age_ms: int
@@ -34,7 +96,123 @@ class DataOkCacheMetadata(BaseModel):
     """
 
 
-class DataOkMetadataAlternate(BaseModel):
+class DataOkResultHighlights(BaseModel):
+    """Relevant Markdown excerpts in page order.
+
+    `[Heading]` adds context; `…` marks omitted text.
+    """
+
+    data: Optional[List[str]] = None
+
+    requested: bool
+
+    success: Optional[bool] = None
+    """`true` if returned, `false` if it failed, `null` if not requested."""
+
+    error_code: Optional[str] = None
+    """Why the output failed. Present only when `success` is `false`."""
+
+    message: Optional[str] = None
+    """Explanation of the failure and possible next steps."""
+
+
+class DataOkResultHTML(BaseModel):
+    """Rendered HTML after content filters."""
+
+    data: Optional[str] = None
+
+    requested: bool
+
+    success: Optional[bool] = None
+    """`true` if returned, `false` if it failed, `null` if not requested."""
+
+    error_code: Optional[str] = None
+    """Why the output failed. Present only when `success` is `false`."""
+
+    message: Optional[str] = None
+    """Explanation of the failure and possible next steps."""
+
+
+class DataOkResultImagesData(BaseModel):
+    alt: Optional[str] = None
+    """Alt text, if present."""
+
+    url: str
+    """Image URL, or a data URI for inline images."""
+
+    classification: Optional[
+        Literal["photography", "illustration", "logo", "wordmark", "icon", "pattern", "graphic", "other"]
+    ] = None
+
+    file_url: Optional[str] = FieldInfo(alias="fileUrl", default=None)
+    """Hosted image URL, valid for 24 hours after capture.
+
+    Requires `file` enrichment and ZDR disabled.
+    """
+
+    height: Optional[int] = None
+
+    width: Optional[int] = None
+
+
+class DataOkResultImages(BaseModel):
+    """Images after content filters. `[]` when none are found."""
+
+    data: Optional[List[DataOkResultImagesData]] = None
+
+    requested: bool
+
+    success: Optional[bool] = None
+    """`true` if returned, `false` if it failed, `null` if not requested."""
+
+    error_code: Optional[str] = None
+    """Why the output failed. Present only when `success` is `false`."""
+
+    message: Optional[str] = None
+    """Explanation of the failure and possible next steps."""
+
+
+class DataOkResultJson(BaseModel):
+    """Object matching `jsonParams.schema`."""
+
+    data: Optional[Dict[str, object]] = None
+
+    requested: bool
+
+    success: Optional[bool] = None
+    """`true` if returned, `false` if it failed, `null` if not requested."""
+
+    error_code: Optional[str] = None
+    """Why the output failed. Present only when `success` is `false`."""
+
+    is_truncated: Optional[Literal[True]] = FieldInfo(alias="isTruncated", default=None)
+    """
+    True when the page was too long to read in full, so values found only in the
+    unread parts may be missing.
+    """
+
+    message: Optional[str] = None
+    """Explanation of the failure and possible next steps."""
+
+
+class DataOkResultMarkdown(BaseModel):
+    """Markdown after content filters."""
+
+    data: Optional[str] = None
+
+    requested: bool
+
+    success: Optional[bool] = None
+    """`true` if returned, `false` if it failed, `null` if not requested."""
+
+    error_code: Optional[str] = None
+    """Why the output failed. Present only when `success` is `false`."""
+
+    message: Optional[str] = None
+    """Explanation of the failure and possible next steps."""
+
+
+class DataOkResultMetadataAlternate(BaseModel):
     href: str
     """Resolved alternate URL."""
 
@@ -48,7 +226,7 @@ class DataOkMetadataAlternate(BaseModel):
     """Alternate resource MIME type, when present."""
 
 
-class DataOkMetadataHeading(BaseModel):
+class DataOkResultMetadataHeading(BaseModel):
     level: int
     """Heading level, 1–6 (from h1–h6)."""
 
@@ -56,22 +234,13 @@ class DataOkMetadataHeading(BaseModel):
     """Heading text with whitespace collapsed, truncated to 1000 characters."""
 
 
-class DataOkMetadata(BaseModel):
-    """Metadata extracted from the scraped page HTML."""
-
-    final_url: str = FieldInfo(alias="finalUrl")
-    """Final URL scraped after redirects or scraper fallback, when known.
-
-    Falls back to sourceUrl when unavailable.
-    """
-
-    source_url: str = FieldInfo(alias="sourceUrl")
-    """Original URL requested by the caller."""
+class DataOkResultMetadata(BaseModel):
+    """Page metadata. Fields are omitted when not found."""
 
     additional_meta: Optional[Dict[str, Union[str, List[str]]]] = FieldInfo(alias="additionalMeta", default=None)
     """Additional non-social meta tags not promoted to top-level metadata fields."""
 
-    alternates: Optional[List[DataOkMetadataAlternate]] = None
+    alternates: Optional[List[DataOkResultMetadataAlternate]] = None
     """Resolved alternate links from link rel=alternate tags."""
 
     author: Optional[str] = None
@@ -86,11 +255,8 @@ class DataOkMetadata(BaseModel):
     favicon: Optional[str] = None
     """Resolved favicon URL, when present."""
 
-    headings: Optional[List[DataOkMetadataHeading]] = None
-    """Page headings (h1–h6) in document order, extracted from the unfiltered document.
-
-    Capped at the first 500 headings. Omitted when the page has none.
-    """
+    headings: Optional[List[DataOkResultMetadataHeading]] = None
+    """Up to 500 h1–h6 headings in document order, before content filtering."""
 
     image: Optional[str] = None
     """Primary resolved preview image from Open Graph, Twitter, or image metadata."""
@@ -126,45 +292,769 @@ class DataOkMetadata(BaseModel):
     """Twitter card metadata with the twitter: prefix removed and keys camel-cased."""
 
 
-class DataOk(BaseModel):
-    """A page the batch fetched successfully."""
+class DataOkResultParsed(BaseModel):
+    """
+    Custom rules return fields after content filters; unmatched fields are null ([] for lists). The google-maps parser returns business records in data.results, and the google-play parser returns one app record as data, google-play-reviews returns data.reviews, app-store and app-store-reviews do the same for the App Store, emails, phone-numbers, and links return data.emails, data.phone_numbers, and data.links from the rendered page; the store and Maps parsers read their data directly, independently of DOM filters and other outputs.
+    """
 
-    cache_metadata: DataOkCacheMetadata
+    data: Optional[Dict[str, object]] = None
+
+    requested: bool
+
+    success: Optional[bool] = None
+    """`true` if returned, `false` if it failed, `null` if not requested."""
+
+    type: Literal[
+        "custom",
+        "google-maps",
+        "google-play",
+        "google-play-reviews",
+        "app-store",
+        "app-store-reviews",
+        "emails",
+        "phone-numbers",
+        "links",
+    ]
+    """
+    The selected prebuilt parser name, or custom when type is omitted, custom rules
+    are used, or parsing is not requested.
+    """
+
+    error_code: Optional[str] = None
+    """Why the output failed. Present only when `success` is `false`."""
+
+    message: Optional[str] = None
+    """Explanation of the failure and possible next steps."""
+
+
+class DataOkResultProductDataProductVariant(BaseModel):
+    attributes: Dict[str, str]
+    """
+    Explicit variant attributes such as color, size, material, pattern and
+    properties declared by page.
+    """
+
+    images: List[str]
+    """Original source image URLs explicitly attached to this variant."""
+
+    sku: Optional[str] = None
+
+    url: Optional[str] = None
+    """Variant or offer URL when provided by the source. May be shared by variants."""
+
+
+class DataOkResultProductDataProduct(BaseModel):
+    """The extracted product, or null when the page is not a product detail page."""
+
+    availability: Optional[
+        Literal[
+            "in_stock", "out_of_stock", "limited_availability", "preorder", "backorder", "made_to_order", "discontinued"
+        ]
+    ] = None
+    """Stock or ordering availability."""
+
+    brand: Optional[str] = None
+    """Brand or vendor."""
+
+    category: Optional[str] = None
+    """Product category."""
+
+    currency: Optional[str] = None
+    """ISO 4217 currency code."""
+
+    description: Optional[str] = None
+    """Product description."""
+
+    dimensions: List[str]
+    """Product dimensions as shown on the page."""
+
+    features: List[str]
+    """Key features and specifications."""
+
+    images: List[str]
+    """Product image URLs, main image first."""
+
+    image_url: Optional[str] = FieldInfo(alias="imageUrl", default=None)
+    """Main product image URL."""
+
+    name: str
+    """Product name."""
+
+    price: Optional[float] = None
+    """Current price."""
+
+    regular_price: Optional[float] = FieldInfo(alias="regularPrice", default=None)
+    """List price before any discount."""
+
+    sku: Optional[str] = None
+    """Product identifier such as a SKU or model number."""
+
+    tags: List[str]
+    """Product tags."""
+
+    target_audience: List[str] = FieldInfo(alias="targetAudience")
+    """Intended audience."""
+
+    variants: List[DataOkResultProductDataProductVariant]
+    """
+    Product variations, such as different colors or sizes, with their attributes and
+    images. Empty if none are found. May not include every variation offered by the
+    store.
+    """
+
+
+class DataOkResultProductData(BaseModel):
+    is_product_page: bool = FieldInfo(alias="isProductPage")
+    """Whether the page is a product detail page."""
+
+    product: Optional[DataOkResultProductDataProduct] = None
+    """The extracted product, or null when the page is not a product detail page."""
+
+
+class DataOkResultProduct(BaseModel):
+    """Product details found on the page."""
+
+    data: Optional[DataOkResultProductData] = None
+
+    requested: bool
+
+    success: Optional[bool] = None
+    """`true` if returned, `false` if it failed, `null` if not requested."""
+
+    error_code: Optional[str] = None
+    """Why the output failed. Present only when `success` is `false`."""
+
+    message: Optional[str] = None
+    """Explanation of the failure and possible next steps."""
+
+
+class DataOkResultProfile(BaseModel):
+    """
+    Authenticated browser profile used for this scrape, or null when no profile was requested. New and existing profile requests both return the profile ID.
+    """
+
+    id: str
+    """
+    Save this ID after creating a profile, then reuse it as
+    sharedParams.profile.profileId with type "existing".
+    """
+
+
+class DataOkResultScreenshot(BaseModel):
+    """Screenshot as a base64 image data URL."""
+
+    data: Optional[str] = None
+
+    requested: bool
+
+    success: Optional[bool] = None
+    """`true` if returned, `false` if it failed, `null` if not requested."""
+
+    error_code: Optional[str] = None
+    """Why the output failed. Present only when `success` is `false`."""
+
+    message: Optional[str] = None
+    """Explanation of the failure and possible next steps."""
+
+
+class DataOkResultKeyMetadata(BaseModel):
+    """Credits this request used and your remaining balance."""
+
+    credits_consumed: int
+    """Credits charged for this request."""
+
+    credits_remaining: int
+    """Credits remaining for your organization."""
+
+
+class DataOkResult(BaseModel):
+    """
+    The same response as POST /web/scrape, including per-format success, failure, and partial results.
+    """
+
+    bytes: DataOkResultBytes
+    """The original HTTP response body, unchanged by waits, actions, and filters."""
+
+    cache_metadata: DataOkResultCacheMetadata
     """Whether this response came from cache."""
 
-    final_url: str
-    """URL the content was read from, after redirects."""
+    highlights: DataOkResultHighlights
+    """Relevant Markdown excerpts in page order.
 
-    http_status: Optional[int] = None
-    """HTTP status of the final response, when known."""
+    `[Heading]` adds context; `…` marks omitted text.
+    """
 
-    metadata: DataOkMetadata
-    """Metadata extracted from the scraped page HTML."""
+    html: DataOkResultHTML
+    """Rendered HTML after content filters."""
+
+    images: DataOkResultImages
+    """Images after content filters. `[]` when none are found."""
+
+    json_: DataOkResultJson = FieldInfo(alias="json")
+    """Object matching `jsonParams.schema`."""
+
+    markdown: DataOkResultMarkdown
+    """Markdown after content filters."""
+
+    metadata: DataOkResultMetadata
+    """Page metadata. Fields are omitted when not found."""
+
+    parsed: DataOkResultParsed
+    """
+    Custom rules return fields after content filters; unmatched fields are null ([]
+    for lists). The google-maps parser returns business records in data.results, and
+    the google-play parser returns one app record as data, google-play-reviews
+    returns data.reviews, app-store and app-store-reviews do the same for the App
+    Store, emails, phone-numbers, and links return data.emails, data.phone_numbers,
+    and data.links from the rendered page; the store and Maps parsers read their
+    data directly, independently of DOM filters and other outputs.
+    """
+
+    product: DataOkResultProduct
+    """Product details found on the page."""
+
+    profile: Optional[DataOkResultProfile] = None
+    """
+    Authenticated browser profile used for this scrape, or null when no profile was
+    requested. New and existing profile requests both return the profile ID.
+    """
+
+    request_id: str
+    """Unique ID of this request, also in `X-Request-Id`.
+
+    Include it when contacting support.
+    """
+
+    screenshot: DataOkResultScreenshot
+    """Screenshot as a base64 image data URL."""
+
+    url: str
+    """Final URL after redirects and browser actions."""
+
+    is_partial: Optional[Literal[True]] = FieldInfo(alias="isPartial", default=None)
+    """
+    True when at least one requested output succeeds but the response has failed or
+    incomplete outputs. Absent when all requested outputs fail.
+    """
+
+    key_metadata: Optional[DataOkResultKeyMetadata] = None
+    """Credits this request used and your remaining balance."""
+
+
+class DataOk(BaseModel):
+    """At least one requested output succeeded.
+
+    Check result.isPartial and each output success for incomplete results.
+    """
+
+    credits_used: int
+    """Credits charged for this page, including OCR.
+
+    Cached outputs use the same pricing as POST /web/scrape.
+    """
+
+    result: DataOkResult
+    """
+    The same response as POST /web/scrape, including per-format success, failure,
+    and partial results.
+    """
 
     status: Literal["ok"]
-    """The page was scraped."""
 
     url: str
     """URL as submitted, or as discovered by the crawl."""
 
-    html: Optional[str] = None
-    """Page HTML.
-
-    Present on html batches, and on markdown batches submitted with
-    `options.includeHTML`.
-    """
-
     item_id: Optional[str] = FieldInfo(alias="itemId", default=None)
     """Your `itemId` from submission."""
-
-    markdown: Optional[str] = None
-    """Page content as Markdown. Present on markdown batches."""
 
     meta: Optional[Dict[str, object]] = None
     """Caller-supplied metadata echoed from submission."""
 
     ocr_pages: Optional[int] = None
-    """Number of PDF pages recovered by OCR. Omitted when OCR did not run."""
+    """PDF pages recovered by OCR. Omitted when OCR did not run."""
+
+
+class DataErrorResultBytesData(BaseModel):
+    base64: str
+    """Body as base64, after HTTP decompression. Up to 50 MiB decoded."""
+
+    content_type: str = FieldInfo(alias="contentType")
+
+
+class DataErrorResultBytes(BaseModel):
+    """The original HTTP response body, unchanged by waits, actions, and filters."""
+
+    data: Optional[DataErrorResultBytesData] = None
+
+    requested: bool
+
+    success: Optional[bool] = None
+    """`true` if returned, `false` if it failed, `null` if not requested."""
+
+    error_code: Optional[str] = None
+    """Why the output failed. Present only when `success` is `false`."""
+
+    message: Optional[str] = None
+    """Explanation of the failure and possible next steps."""
+
+
+class DataErrorResultCacheMetadata(BaseModel):
+    """Whether this response came from cache."""
+
+    age_ms: int
+    """Age of the cached data in milliseconds. Zero for miss and zdr responses."""
+
+    status: Literal["hit", "miss", "zdr"]
+    """
+    Whether the response was served from cache, required fresh work, or honored
+    zero-data-retention cache bypass.
+    """
+
+
+class DataErrorResultHighlights(BaseModel):
+    """Relevant Markdown excerpts in page order.
+
+    `[Heading]` adds context; `…` marks omitted text.
+    """
+
+    data: Optional[List[str]] = None
+
+    requested: bool
+
+    success: Optional[bool] = None
+    """`true` if returned, `false` if it failed, `null` if not requested."""
+
+    error_code: Optional[str] = None
+    """Why the output failed. Present only when `success` is `false`."""
+
+    message: Optional[str] = None
+    """Explanation of the failure and possible next steps."""
+
+
+class DataErrorResultHTML(BaseModel):
+    """Rendered HTML after content filters."""
+
+    data: Optional[str] = None
+
+    requested: bool
+
+    success: Optional[bool] = None
+    """`true` if returned, `false` if it failed, `null` if not requested."""
+
+    error_code: Optional[str] = None
+    """Why the output failed. Present only when `success` is `false`."""
+
+    message: Optional[str] = None
+    """Explanation of the failure and possible next steps."""
+
+
+class DataErrorResultImagesData(BaseModel):
+    alt: Optional[str] = None
+    """Alt text, if present."""
+
+    url: str
+    """Image URL, or a data URI for inline images."""
+
+    classification: Optional[
+        Literal["photography", "illustration", "logo", "wordmark", "icon", "pattern", "graphic", "other"]
+    ] = None
+
+    file_url: Optional[str] = FieldInfo(alias="fileUrl", default=None)
+    """Hosted image URL, valid for 24 hours after capture.
+
+    Requires `file` enrichment and ZDR disabled.
+    """
+
+    height: Optional[int] = None
+
+    width: Optional[int] = None
+
+
+class DataErrorResultImages(BaseModel):
+    """Images after content filters. `[]` when none are found."""
+
+    data: Optional[List[DataErrorResultImagesData]] = None
+
+    requested: bool
+
+    success: Optional[bool] = None
+    """`true` if returned, `false` if it failed, `null` if not requested."""
+
+    error_code: Optional[str] = None
+    """Why the output failed. Present only when `success` is `false`."""
+
+    message: Optional[str] = None
+    """Explanation of the failure and possible next steps."""
+
+
+class DataErrorResultJson(BaseModel):
+    """Object matching `jsonParams.schema`."""
+
+    data: Optional[Dict[str, object]] = None
+
+    requested: bool
+
+    success: Optional[bool] = None
+    """`true` if returned, `false` if it failed, `null` if not requested."""
+
+    error_code: Optional[str] = None
+    """Why the output failed. Present only when `success` is `false`."""
+
+    is_truncated: Optional[Literal[True]] = FieldInfo(alias="isTruncated", default=None)
+    """
+    True when the page was too long to read in full, so values found only in the
+    unread parts may be missing.
+    """
+
+    message: Optional[str] = None
+    """Explanation of the failure and possible next steps."""
+
+
+class DataErrorResultMarkdown(BaseModel):
+    """Markdown after content filters."""
+
+    data: Optional[str] = None
+
+    requested: bool
+
+    success: Optional[bool] = None
+    """`true` if returned, `false` if it failed, `null` if not requested."""
+
+    error_code: Optional[str] = None
+    """Why the output failed. Present only when `success` is `false`."""
+
+    message: Optional[str] = None
+    """Explanation of the failure and possible next steps."""
+
+
+class DataErrorResultMetadataAlternate(BaseModel):
+    href: str
+    """Resolved alternate URL."""
+
+    hreflang: Optional[str] = None
+    """Language or locale for the alternate URL, when present."""
+
+    title: Optional[str] = None
+    """Alternate resource title, when present."""
+
+    type: Optional[str] = None
+    """Alternate resource MIME type, when present."""
+
+
+class DataErrorResultMetadataHeading(BaseModel):
+    level: int
+    """Heading level, 1–6 (from h1–h6)."""
+
+    text: str
+    """Heading text with whitespace collapsed, truncated to 1000 characters."""
+
+
+class DataErrorResultMetadata(BaseModel):
+    """Page metadata. Fields are omitted when not found."""
+
+    additional_meta: Optional[Dict[str, Union[str, List[str]]]] = FieldInfo(alias="additionalMeta", default=None)
+    """Additional non-social meta tags not promoted to top-level metadata fields."""
+
+    alternates: Optional[List[DataErrorResultMetadataAlternate]] = None
+    """Resolved alternate links from link rel=alternate tags."""
+
+    author: Optional[str] = None
+    """Author metadata, when present."""
+
+    canonical_url: Optional[str] = FieldInfo(alias="canonicalUrl", default=None)
+    """Resolved canonical URL, when present."""
+
+    description: Optional[str] = None
+    """Best description extracted from standard, Open Graph, or Twitter metadata."""
+
+    favicon: Optional[str] = None
+    """Resolved favicon URL, when present."""
+
+    headings: Optional[List[DataErrorResultMetadataHeading]] = None
+    """Up to 500 h1–h6 headings in document order, before content filtering."""
+
+    image: Optional[str] = None
+    """Primary resolved preview image from Open Graph, Twitter, or image metadata."""
+
+    json_ld: Optional[List[Dict[str, object]]] = FieldInfo(alias="jsonLd", default=None)
+    """JSON-LD structured data blocks parsed from the page."""
+
+    keywords: Optional[List[str]] = None
+    """Keywords extracted from the page's keywords meta tag."""
+
+    language: Optional[str] = None
+    """Language extracted from html lang or language meta tags."""
+
+    modified_time: Optional[str] = FieldInfo(alias="modifiedTime", default=None)
+    """Modified timestamp/date from page metadata, when present."""
+
+    open_graph: Optional[Dict[str, Union[str, List[str]]]] = FieldInfo(alias="openGraph", default=None)
+    """Open Graph metadata with the og: prefix removed and keys camel-cased."""
+
+    published_time: Optional[str] = FieldInfo(alias="publishedTime", default=None)
+    """Published timestamp/date from page metadata, when present."""
+
+    robots: Optional[str] = None
+    """Robots meta directive, when present."""
+
+    site_name: Optional[str] = FieldInfo(alias="siteName", default=None)
+    """Site or application name from page metadata."""
+
+    title: Optional[str] = None
+    """Best title extracted from the page."""
+
+    twitter: Optional[Dict[str, Union[str, List[str]]]] = None
+    """Twitter card metadata with the twitter: prefix removed and keys camel-cased."""
+
+
+class DataErrorResultParsed(BaseModel):
+    """
+    Custom rules return fields after content filters; unmatched fields are null ([] for lists). The google-maps parser returns business records in data.results, and the google-play parser returns one app record as data, google-play-reviews returns data.reviews, app-store and app-store-reviews do the same for the App Store, emails, phone-numbers, and links return data.emails, data.phone_numbers, and data.links from the rendered page; the store and Maps parsers read their data directly, independently of DOM filters and other outputs.
+    """
+
+    data: Optional[Dict[str, object]] = None
+
+    requested: bool
+
+    success: Optional[bool] = None
+    """`true` if returned, `false` if it failed, `null` if not requested."""
+
+    type: Literal[
+        "custom",
+        "google-maps",
+        "google-play",
+        "google-play-reviews",
+        "app-store",
+        "app-store-reviews",
+        "emails",
+        "phone-numbers",
+        "links",
+    ]
+    """
+    The selected prebuilt parser name, or custom when type is omitted, custom rules
+    are used, or parsing is not requested.
+    """
+
+    error_code: Optional[str] = None
+    """Why the output failed. Present only when `success` is `false`."""
+
+    message: Optional[str] = None
+    """Explanation of the failure and possible next steps."""
+
+
+class DataErrorResultProductDataProductVariant(BaseModel):
+    attributes: Dict[str, str]
+    """
+    Explicit variant attributes such as color, size, material, pattern and
+    properties declared by page.
+    """
+
+    images: List[str]
+    """Original source image URLs explicitly attached to this variant."""
+
+    sku: Optional[str] = None
+
+    url: Optional[str] = None
+    """Variant or offer URL when provided by the source. May be shared by variants."""
+
+
+class DataErrorResultProductDataProduct(BaseModel):
+    """The extracted product, or null when the page is not a product detail page."""
+
+    availability: Optional[
+        Literal[
+            "in_stock", "out_of_stock", "limited_availability", "preorder", "backorder", "made_to_order", "discontinued"
+        ]
+    ] = None
+    """Stock or ordering availability."""
+
+    brand: Optional[str] = None
+    """Brand or vendor."""
+
+    category: Optional[str] = None
+    """Product category."""
+
+    currency: Optional[str] = None
+    """ISO 4217 currency code."""
+
+    description: Optional[str] = None
+    """Product description."""
+
+    dimensions: List[str]
+    """Product dimensions as shown on the page."""
+
+    features: List[str]
+    """Key features and specifications."""
+
+    images: List[str]
+    """Product image URLs, main image first."""
+
+    image_url: Optional[str] = FieldInfo(alias="imageUrl", default=None)
+    """Main product image URL."""
+
+    name: str
+    """Product name."""
+
+    price: Optional[float] = None
+    """Current price."""
+
+    regular_price: Optional[float] = FieldInfo(alias="regularPrice", default=None)
+    """List price before any discount."""
+
+    sku: Optional[str] = None
+    """Product identifier such as a SKU or model number."""
+
+    tags: List[str]
+    """Product tags."""
+
+    target_audience: List[str] = FieldInfo(alias="targetAudience")
+    """Intended audience."""
+
+    variants: List[DataErrorResultProductDataProductVariant]
+    """
+    Product variations, such as different colors or sizes, with their attributes and
+    images. Empty if none are found. May not include every variation offered by the
+    store.
+    """
+
+
+class DataErrorResultProductData(BaseModel):
+    is_product_page: bool = FieldInfo(alias="isProductPage")
+    """Whether the page is a product detail page."""
+
+    product: Optional[DataErrorResultProductDataProduct] = None
+    """The extracted product, or null when the page is not a product detail page."""
+
+
+class DataErrorResultProduct(BaseModel):
+    """Product details found on the page."""
+
+    data: Optional[DataErrorResultProductData] = None
+
+    requested: bool
+
+    success: Optional[bool] = None
+    """`true` if returned, `false` if it failed, `null` if not requested."""
+
+    error_code: Optional[str] = None
+    """Why the output failed. Present only when `success` is `false`."""
+
+    message: Optional[str] = None
+    """Explanation of the failure and possible next steps."""
+
+
+class DataErrorResultProfile(BaseModel):
+    """
+    Authenticated browser profile used for this scrape, or null when no profile was requested. New and existing profile requests both return the profile ID.
+    """
+
+    id: str
+    """
+    Save this ID after creating a profile, then reuse it as
+    sharedParams.profile.profileId with type "existing".
+    """
+
+
+class DataErrorResultScreenshot(BaseModel):
+    """Screenshot as a base64 image data URL."""
+
+    data: Optional[str] = None
+
+    requested: bool
+
+    success: Optional[bool] = None
+    """`true` if returned, `false` if it failed, `null` if not requested."""
+
+    error_code: Optional[str] = None
+    """Why the output failed. Present only when `success` is `false`."""
+
+    message: Optional[str] = None
+    """Explanation of the failure and possible next steps."""
+
+
+class DataErrorResultKeyMetadata(BaseModel):
+    """Credits this request used and your remaining balance."""
+
+    credits_consumed: int
+    """Credits charged for this request."""
+
+    credits_remaining: int
+    """Credits remaining for your organization."""
+
+
+class DataErrorResult(BaseModel):
+    """Per-format failures when scraping returned a structured response.
+
+    Omitted for errors that prevent scraping.
+    """
+
+    bytes: DataErrorResultBytes
+    """The original HTTP response body, unchanged by waits, actions, and filters."""
+
+    cache_metadata: DataErrorResultCacheMetadata
+    """Whether this response came from cache."""
+
+    highlights: DataErrorResultHighlights
+    """Relevant Markdown excerpts in page order.
+
+    `[Heading]` adds context; `…` marks omitted text.
+    """
+
+    html: DataErrorResultHTML
+    """Rendered HTML after content filters."""
+
+    images: DataErrorResultImages
+    """Images after content filters. `[]` when none are found."""
+
+    json_: DataErrorResultJson = FieldInfo(alias="json")
+    """Object matching `jsonParams.schema`."""
+
+    markdown: DataErrorResultMarkdown
+    """Markdown after content filters."""
+
+    metadata: DataErrorResultMetadata
+    """Page metadata. Fields are omitted when not found."""
+
+    parsed: DataErrorResultParsed
+    """
+    Custom rules return fields after content filters; unmatched fields are null ([]
+    for lists). The google-maps parser returns business records in data.results, and
+    the google-play parser returns one app record as data, google-play-reviews
+    returns data.reviews, app-store and app-store-reviews do the same for the App
+    Store, emails, phone-numbers, and links return data.emails, data.phone_numbers,
+    and data.links from the rendered page; the store and Maps parsers read their
+    data directly, independently of DOM filters and other outputs.
+    """
+
+    product: DataErrorResultProduct
+    """Product details found on the page."""
+
+    profile: Optional[DataErrorResultProfile] = None
+    """
+    Authenticated browser profile used for this scrape, or null when no profile was
+    requested. New and existing profile requests both return the profile ID.
+    """
+
+    request_id: str
+    """Unique ID of this request, also in `X-Request-Id`.
+
+    Include it when contacting support.
+    """
+
+    screenshot: DataErrorResultScreenshot
+    """Screenshot as a base64 image data URL."""
+
+    url: str
+    """Final URL after redirects and browser actions."""
+
+    is_partial: Optional[Literal[True]] = FieldInfo(alias="isPartial", default=None)
+    """
+    True when at least one requested output succeeds but the response has failed or
+    incomplete outputs. Absent when all requested outputs fail.
+    """
+
+    key_metadata: Optional[DataErrorResultKeyMetadata] = None
+    """Credits this request used and your remaining balance."""
 
 
 class DataError(BaseModel):
@@ -182,11 +1072,26 @@ class DataError(BaseModel):
     url: str
     """URL as submitted, or as discovered by the crawl."""
 
+    credits_used: Optional[int] = None
+    """Credits charged for this page, including OCR.
+
+    Cached outputs use the same pricing as POST /web/scrape.
+    """
+
     item_id: Optional[str] = FieldInfo(alias="itemId", default=None)
     """Your `itemId` from submission."""
 
     meta: Optional[Dict[str, object]] = None
     """Caller-supplied metadata echoed from submission."""
+
+    ocr_pages: Optional[int] = None
+    """PDF pages recovered by OCR. Omitted when OCR did not run."""
+
+    result: Optional[DataErrorResult] = None
+    """Per-format failures when scraping returned a structured response.
+
+    Omitted for errors that prevent scraping.
+    """
 
 
 Data: TypeAlias = Annotated[Union[DataOk, DataError], PropertyInfo(discriminator="status")]

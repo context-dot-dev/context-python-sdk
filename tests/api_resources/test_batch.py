@@ -80,6 +80,7 @@ class TestBatch:
             limit=1,
             q="batch_1a2b",
             search_type="exact",
+            should_include_unified=True,
             status="queued",
             tags="docs,competitor",
         )
@@ -249,7 +250,7 @@ class TestBatch:
         batch = client.batch.submit(
             input={
                 "data": {
-                    "format": "markdown",
+                    "formats": {},
                     "urls": [
                         {"url": "https://example.com/products/anvil"},
                         {"url": "https://example.com/products/hammer"},
@@ -266,7 +267,17 @@ class TestBatch:
         batch = client.batch.submit(
             input={
                 "data": {
-                    "format": "markdown",
+                    "formats": {
+                        "bytes": True,
+                        "highlights": True,
+                        "html": True,
+                        "images": True,
+                        "json": True,
+                        "markdown": True,
+                        "parse": True,
+                        "product": True,
+                        "screenshot": True,
+                    },
                     "urls": [
                         {
                             "url": "https://example.com/products/anvil",
@@ -279,25 +290,85 @@ class TestBatch:
                             "meta": {"foo": "bar"},
                         },
                     ],
-                    "options": {
-                        "country": "de",
-                        "exclude_selectors": ["x"],
-                        "include_html": True,
+                    "highlights_params": {
+                        "query": "x",
+                        "max_characters": 100,
+                    },
+                    "image_params": {
+                        "dedupe": "none",
+                        "enrich": ["dimensions"],
+                    },
+                    "json_params": {
+                        "schema": {
+                            "type": "bar",
+                            "properties": "bar",
+                            "required": "bar",
+                            "additionalProperties": "bar",
+                        },
+                        "instructions": "instructions",
+                    },
+                    "markdown_params": {
                         "include_images": True,
                         "include_links": True,
-                        "include_selectors": ["x"],
-                        "max_age_ms": 0,
-                        "pdf": {
-                            "end": 1,
-                            "ocr": True,
-                            "should_parse": True,
-                            "start": 1,
+                        "inline_images": "placeholder",
+                    },
+                    "max_age_ms": 0,
+                    "parse_params": {
+                        "rules": {
+                            "title": "h1",
+                            "links": {
+                                "selector": "a",
+                                "output": "@href",
+                                "type": "list",
+                            },
+                        },
+                        "type": "custom",
+                    },
+                    "product_params": {"dedupe_images": True},
+                    "screenshot_params": {
+                        "area": "viewport",
+                        "format": "png",
+                    },
+                    "shared_params": {
+                        "actions": [
+                            {
+                                "action": "Click the product details tab",
+                                "type": "perform",
+                            }
+                        ],
+                        "country": "US",
+                        "dismiss_cookies": True,
+                        "dismiss_popups": True,
+                        "exclude_selectors": ["P"],
+                        "headers": {"Accept-Language": "en-US"},
+                        "include_frames": True,
+                        "include_selectors": ["P"],
+                        "main_content_only": True,
+                        "parsers": {
+                            "pdf": {
+                                "end_page": 1,
+                                "ocr": "off",
+                                "start_page": 1,
+                            }
+                        },
+                        "profile": {
+                            "profile_id": "prof_210b9798eb53baa4e69d31c1071cf03d",
+                            "type": "existing",
                         },
                         "settle_animations": True,
-                        "shorten_base64_images": True,
-                        "use_main_content_only": True,
-                        "wait_for_ms": 0,
+                        "theme": "light",
+                        "viewport": {
+                            "height": 240,
+                            "width": 240,
+                        },
+                        "wait_for": 500,
                     },
+                    "tags": ["production", "team-alpha"],
+                    "timeout_opts": {
+                        "milliseconds": 1,
+                        "behavior": "fail",
+                    },
+                    "zdr": "disabled",
                 },
                 "mode": "scrape",
             },
@@ -317,7 +388,7 @@ class TestBatch:
         response = client.batch.with_raw_response.submit(
             input={
                 "data": {
-                    "format": "markdown",
+                    "formats": {},
                     "urls": [
                         {"url": "https://example.com/products/anvil"},
                         {"url": "https://example.com/products/hammer"},
@@ -338,7 +409,7 @@ class TestBatch:
         with client.batch.with_streaming_response.submit(
             input={
                 "data": {
-                    "format": "markdown",
+                    "formats": {},
                     "urls": [
                         {"url": "https://example.com/products/anvil"},
                         {"url": "https://example.com/products/hammer"},
@@ -417,6 +488,7 @@ class TestAsyncBatch:
             limit=1,
             q="batch_1a2b",
             search_type="exact",
+            should_include_unified=True,
             status="queued",
             tags="docs,competitor",
         )
@@ -586,7 +658,7 @@ class TestAsyncBatch:
         batch = await async_client.batch.submit(
             input={
                 "data": {
-                    "format": "markdown",
+                    "formats": {},
                     "urls": [
                         {"url": "https://example.com/products/anvil"},
                         {"url": "https://example.com/products/hammer"},
@@ -603,7 +675,17 @@ class TestAsyncBatch:
         batch = await async_client.batch.submit(
             input={
                 "data": {
-                    "format": "markdown",
+                    "formats": {
+                        "bytes": True,
+                        "highlights": True,
+                        "html": True,
+                        "images": True,
+                        "json": True,
+                        "markdown": True,
+                        "parse": True,
+                        "product": True,
+                        "screenshot": True,
+                    },
                     "urls": [
                         {
                             "url": "https://example.com/products/anvil",
@@ -616,25 +698,85 @@ class TestAsyncBatch:
                             "meta": {"foo": "bar"},
                         },
                     ],
-                    "options": {
-                        "country": "de",
-                        "exclude_selectors": ["x"],
-                        "include_html": True,
+                    "highlights_params": {
+                        "query": "x",
+                        "max_characters": 100,
+                    },
+                    "image_params": {
+                        "dedupe": "none",
+                        "enrich": ["dimensions"],
+                    },
+                    "json_params": {
+                        "schema": {
+                            "type": "bar",
+                            "properties": "bar",
+                            "required": "bar",
+                            "additionalProperties": "bar",
+                        },
+                        "instructions": "instructions",
+                    },
+                    "markdown_params": {
                         "include_images": True,
                         "include_links": True,
-                        "include_selectors": ["x"],
-                        "max_age_ms": 0,
-                        "pdf": {
-                            "end": 1,
-                            "ocr": True,
-                            "should_parse": True,
-                            "start": 1,
+                        "inline_images": "placeholder",
+                    },
+                    "max_age_ms": 0,
+                    "parse_params": {
+                        "rules": {
+                            "title": "h1",
+                            "links": {
+                                "selector": "a",
+                                "output": "@href",
+                                "type": "list",
+                            },
+                        },
+                        "type": "custom",
+                    },
+                    "product_params": {"dedupe_images": True},
+                    "screenshot_params": {
+                        "area": "viewport",
+                        "format": "png",
+                    },
+                    "shared_params": {
+                        "actions": [
+                            {
+                                "action": "Click the product details tab",
+                                "type": "perform",
+                            }
+                        ],
+                        "country": "US",
+                        "dismiss_cookies": True,
+                        "dismiss_popups": True,
+                        "exclude_selectors": ["P"],
+                        "headers": {"Accept-Language": "en-US"},
+                        "include_frames": True,
+                        "include_selectors": ["P"],
+                        "main_content_only": True,
+                        "parsers": {
+                            "pdf": {
+                                "end_page": 1,
+                                "ocr": "off",
+                                "start_page": 1,
+                            }
+                        },
+                        "profile": {
+                            "profile_id": "prof_210b9798eb53baa4e69d31c1071cf03d",
+                            "type": "existing",
                         },
                         "settle_animations": True,
-                        "shorten_base64_images": True,
-                        "use_main_content_only": True,
-                        "wait_for_ms": 0,
+                        "theme": "light",
+                        "viewport": {
+                            "height": 240,
+                            "width": 240,
+                        },
+                        "wait_for": 500,
                     },
+                    "tags": ["production", "team-alpha"],
+                    "timeout_opts": {
+                        "milliseconds": 1,
+                        "behavior": "fail",
+                    },
+                    "zdr": "disabled",
                 },
                 "mode": "scrape",
             },
@@ -654,7 +796,7 @@ class TestAsyncBatch:
         response = await async_client.batch.with_raw_response.submit(
             input={
                 "data": {
-                    "format": "markdown",
+                    "formats": {},
                     "urls": [
                         {"url": "https://example.com/products/anvil"},
                         {"url": "https://example.com/products/hammer"},
@@ -675,7 +817,7 @@ class TestAsyncBatch:
         async with async_client.batch.with_streaming_response.submit(
             input={
                 "data": {
-                    "format": "markdown",
+                    "formats": {},
                     "urls": [
                         {"url": "https://example.com/products/anvil"},
                         {"url": "https://example.com/products/hammer"},
