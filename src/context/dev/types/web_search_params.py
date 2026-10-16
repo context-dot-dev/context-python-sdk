@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import List, Union, Optional
 from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from .._types import SequenceNotStr
@@ -294,6 +294,92 @@ class WebSearchParams(TypedDict, total=False):
     """Allowlist — only return results from these domains.
 
     Up to 100 domains. Example: ["arxiv.org", "github.com"].
+    """
+
+    languages: Union[
+        Literal["all"],
+        List[
+            Literal[
+                "am",
+                "ar",
+                "az",
+                "be",
+                "bg",
+                "bn",
+                "ca",
+                "ceb",
+                "cs",
+                "cy",
+                "da",
+                "de",
+                "el",
+                "en",
+                "es",
+                "et",
+                "eu",
+                "fa",
+                "fi",
+                "fr",
+                "gu",
+                "ha",
+                "haw",
+                "he",
+                "hi",
+                "hr",
+                "hu",
+                "hy",
+                "id",
+                "is",
+                "it",
+                "ja",
+                "ka",
+                "kk",
+                "kn",
+                "ko",
+                "ku",
+                "ky",
+                "lo",
+                "lt",
+                "lv",
+                "mk",
+                "ml",
+                "mn",
+                "mr",
+                "ms",
+                "ne",
+                "nl",
+                "no",
+                "or",
+                "pa",
+                "pl",
+                "ps",
+                "pt",
+                "ro",
+                "ru",
+                "sk",
+                "sl",
+                "so",
+                "sq",
+                "sr",
+                "sv",
+                "sw",
+                "ta",
+                "te",
+                "th",
+                "tl",
+                "tr",
+                "uk",
+                "ur",
+                "uz",
+                "vi",
+                "yo",
+                "zh",
+            ]
+        ],
+    ]
+    """
+    Languages to return results in, as BCP 47 language codes such as `en` or `de`,
+    or "all" for any language. Defaults to "all". Example: ["en", "de"].
     """
 
     markdown_options: Annotated[Optional[MarkdownOptions], PropertyInfo(alias="markdownOptions")]

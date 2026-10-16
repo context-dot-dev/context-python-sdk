@@ -441,6 +441,7 @@ class TestWeb:
                 "max_characters": 100,
             },
             include_domains=["xxx"],
+            languages="all",
             markdown_options={
                 "enabled": True,
                 "include_frames": True,
@@ -988,6 +989,7 @@ class TestAsyncWeb:
                 "max_characters": 100,
             },
             include_domains=["xxx"],
+            languages="all",
             markdown_options={
                 "enabled": True,
                 "include_frames": True,

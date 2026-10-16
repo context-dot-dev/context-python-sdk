@@ -44,7 +44,7 @@ class TestNews:
             },
             cursor="cursor",
             filter_by={
-                "article_language": ["ar"],
+                "article_language": ["am"],
                 "article_type": ["editorial"],
                 "date": {
                     "from": 0,
@@ -130,7 +130,7 @@ class TestAsyncNews:
             },
             cursor="cursor",
             filter_by={
-                "article_language": ["ar"],
+                "article_language": ["am"],
                 "article_type": ["editorial"],
                 "date": {
                     "from": 0,
