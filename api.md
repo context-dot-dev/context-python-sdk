@@ -215,6 +215,20 @@ Methods:
 - <code title="get /org/logs/{request_id}">client.logs.<a href="./src/context/dev/resources/logs.py">retrieve</a>(request_id) -> <a href="./src/context/dev/types/log_retrieve_response.py">LogRetrieveResponse</a></code>
 - <code title="get /org/logs">client.logs.<a href="./src/context/dev/resources/logs.py">list</a>(\*\*<a href="src/context/dev/types/log_list_params.py">params</a>) -> <a href="./src/context/dev/types/log_list_response.py">LogListResponse</a></code>
 
+# Browser
+
+## Profiles
+
+Types:
+
+```python
+from context.dev.types.browser import ProfileListResponse
+```
+
+Methods:
+
+- <code title="get /org/browser/profiles">client.browser.profiles.<a href="./src/context/dev/resources/browser/profiles.py">list</a>(\*\*<a href="src/context/dev/types/browser/profile_list_params.py">params</a>) -> <a href="./src/context/dev/types/browser/profile_list_response.py">ProfileListResponse</a></code>
+
 # Feedback
 
 Types:

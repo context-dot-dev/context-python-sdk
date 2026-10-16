@@ -381,6 +381,9 @@ class SharedParamsProfileNew(TypedDict, total=False):
     type: Required[Literal["new"]]
     """Sign in and create a browser profile."""
 
+    description: str
+    """Optional label shown when listing profiles with `GET /org/browser/profiles`."""
+
 
 SharedParamsProfile: TypeAlias = Union[SharedParamsProfileExisting, SharedParamsProfileNew]
 

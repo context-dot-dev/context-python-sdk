@@ -35,7 +35,21 @@ from ._base_client import (
 )
 
 if TYPE_CHECKING:
-    from .resources import web, logs, news, batch, brand, parse, people, utility, feedback, industry, monitors, webhooks
+    from .resources import (
+        web,
+        logs,
+        news,
+        batch,
+        brand,
+        parse,
+        people,
+        browser,
+        utility,
+        feedback,
+        industry,
+        monitors,
+        webhooks,
+    )
     from .resources.web import WebResource, AsyncWebResource
     from .resources.logs import LogsResource, AsyncLogsResource
     from .resources.news import NewsResource, AsyncNewsResource
@@ -47,6 +61,7 @@ if TYPE_CHECKING:
     from .resources.feedback import FeedbackResource, AsyncFeedbackResource
     from .resources.industry import IndustryResource, AsyncIndustryResource
     from .resources.monitors import MonitorsResource, AsyncMonitorsResource
+    from .resources.browser.browser import BrowserResource, AsyncBrowserResource
     from .resources.webhooks.webhooks import WebhooksResource, AsyncWebhooksResource
 
 __all__ = [
@@ -194,6 +209,12 @@ class ContextDev(SyncAPIClient):
         from .resources.logs import LogsResource
 
         return LogsResource(self)
+
+    @cached_property
+    def browser(self) -> BrowserResource:
+        from .resources.browser import BrowserResource
+
+        return BrowserResource(self)
 
     @cached_property
     def feedback(self) -> FeedbackResource:
@@ -450,6 +471,12 @@ class AsyncContextDev(AsyncAPIClient):
         return AsyncLogsResource(self)
 
     @cached_property
+    def browser(self) -> AsyncBrowserResource:
+        from .resources.browser import AsyncBrowserResource
+
+        return AsyncBrowserResource(self)
+
+    @cached_property
     def feedback(self) -> AsyncFeedbackResource:
         """Report API issues and documentation mismatches."""
         from .resources.feedback import AsyncFeedbackResource
@@ -646,6 +673,12 @@ class ContextDevWithRawResponse:
         return LogsResourceWithRawResponse(self._client.logs)
 
     @cached_property
+    def browser(self) -> browser.BrowserResourceWithRawResponse:
+        from .resources.browser import BrowserResourceWithRawResponse
+
+        return BrowserResourceWithRawResponse(self._client.browser)
+
+    @cached_property
     def feedback(self) -> feedback.FeedbackResourceWithRawResponse:
         """Report API issues and documentation mismatches."""
         from .resources.feedback import FeedbackResourceWithRawResponse
@@ -728,6 +761,12 @@ class AsyncContextDevWithRawResponse:
         from .resources.logs import AsyncLogsResourceWithRawResponse
 
         return AsyncLogsResourceWithRawResponse(self._client.logs)
+
+    @cached_property
+    def browser(self) -> browser.AsyncBrowserResourceWithRawResponse:
+        from .resources.browser import AsyncBrowserResourceWithRawResponse
+
+        return AsyncBrowserResourceWithRawResponse(self._client.browser)
 
     @cached_property
     def feedback(self) -> feedback.AsyncFeedbackResourceWithRawResponse:
@@ -814,6 +853,12 @@ class ContextDevWithStreamedResponse:
         return LogsResourceWithStreamingResponse(self._client.logs)
 
     @cached_property
+    def browser(self) -> browser.BrowserResourceWithStreamingResponse:
+        from .resources.browser import BrowserResourceWithStreamingResponse
+
+        return BrowserResourceWithStreamingResponse(self._client.browser)
+
+    @cached_property
     def feedback(self) -> feedback.FeedbackResourceWithStreamingResponse:
         """Report API issues and documentation mismatches."""
         from .resources.feedback import FeedbackResourceWithStreamingResponse
@@ -896,6 +941,12 @@ class AsyncContextDevWithStreamedResponse:
         from .resources.logs import AsyncLogsResourceWithStreamingResponse
 
         return AsyncLogsResourceWithStreamingResponse(self._client.logs)
+
+    @cached_property
+    def browser(self) -> browser.AsyncBrowserResourceWithStreamingResponse:
+        from .resources.browser import AsyncBrowserResourceWithStreamingResponse
+
+        return AsyncBrowserResourceWithStreamingResponse(self._client.browser)
 
     @cached_property
     def feedback(self) -> feedback.AsyncFeedbackResourceWithStreamingResponse:

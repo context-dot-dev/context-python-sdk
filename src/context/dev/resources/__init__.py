@@ -56,6 +56,14 @@ from .people import (
     PeopleResourceWithStreamingResponse,
     AsyncPeopleResourceWithStreamingResponse,
 )
+from .browser import (
+    BrowserResource,
+    AsyncBrowserResource,
+    BrowserResourceWithRawResponse,
+    AsyncBrowserResourceWithRawResponse,
+    BrowserResourceWithStreamingResponse,
+    AsyncBrowserResourceWithStreamingResponse,
+)
 from .utility import (
     UtilityResource,
     AsyncUtilityResource,
@@ -164,6 +172,12 @@ __all__ = [
     "AsyncLogsResourceWithRawResponse",
     "LogsResourceWithStreamingResponse",
     "AsyncLogsResourceWithStreamingResponse",
+    "BrowserResource",
+    "AsyncBrowserResource",
+    "BrowserResourceWithRawResponse",
+    "AsyncBrowserResourceWithRawResponse",
+    "BrowserResourceWithStreamingResponse",
+    "AsyncBrowserResourceWithStreamingResponse",
     "FeedbackResource",
     "AsyncFeedbackResource",
     "FeedbackResourceWithRawResponse",
