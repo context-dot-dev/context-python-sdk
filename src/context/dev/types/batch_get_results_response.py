@@ -294,7 +294,7 @@ class DataOkResultMetadata(BaseModel):
 
 class DataOkResultParsed(BaseModel):
     """
-    Custom rules return fields after content filters; unmatched fields are null ([] for lists). The google-maps parser returns business records in data.results, google-maps-reviews returns data.reviews, and the google-play parser returns one app record as data, google-play-reviews returns data.reviews, app-store and app-store-reviews do the same for the App Store, emails, phone-numbers, and links return data.emails, data.phone_numbers, and data.links from the rendered page; the store and Maps parsers read their data directly, independently of DOM filters and other outputs.
+    Custom rules return fields after content filters; unmatched fields are null ([] for lists). The google-maps parser returns business records in data.results, google-maps-reviews returns data.reviews, and the google-play parser returns one app record as data, google-play-reviews returns data.reviews, app-store and app-store-reviews do the same for the App Store, g2-reviews returns data.reviews for a G2 product, emails, phone-numbers, and links return data.emails, data.phone_numbers, and data.links from the rendered page; the store, Maps, and G2 parsers read their data directly, independently of DOM filters and other outputs.
     """
 
     data: Optional[Dict[str, object]] = None
@@ -312,6 +312,7 @@ class DataOkResultParsed(BaseModel):
         "google-play-reviews",
         "app-store",
         "app-store-reviews",
+        "g2-reviews",
         "emails",
         "phone-numbers",
         "links",
@@ -506,10 +507,11 @@ class DataOkResult(BaseModel):
     for lists). The google-maps parser returns business records in data.results,
     google-maps-reviews returns data.reviews, and the google-play parser returns one
     app record as data, google-play-reviews returns data.reviews, app-store and
-    app-store-reviews do the same for the App Store, emails, phone-numbers, and
-    links return data.emails, data.phone_numbers, and data.links from the rendered
-    page; the store and Maps parsers read their data directly, independently of DOM
-    filters and other outputs.
+    app-store-reviews do the same for the App Store, g2-reviews returns data.reviews
+    for a G2 product, emails, phone-numbers, and links return data.emails,
+    data.phone_numbers, and data.links from the rendered page; the store, Maps, and
+    G2 parsers read their data directly, independently of DOM filters and other
+    outputs.
     """
 
     product: DataOkResultProduct
@@ -811,7 +813,7 @@ class DataErrorResultMetadata(BaseModel):
 
 class DataErrorResultParsed(BaseModel):
     """
-    Custom rules return fields after content filters; unmatched fields are null ([] for lists). The google-maps parser returns business records in data.results, google-maps-reviews returns data.reviews, and the google-play parser returns one app record as data, google-play-reviews returns data.reviews, app-store and app-store-reviews do the same for the App Store, emails, phone-numbers, and links return data.emails, data.phone_numbers, and data.links from the rendered page; the store and Maps parsers read their data directly, independently of DOM filters and other outputs.
+    Custom rules return fields after content filters; unmatched fields are null ([] for lists). The google-maps parser returns business records in data.results, google-maps-reviews returns data.reviews, and the google-play parser returns one app record as data, google-play-reviews returns data.reviews, app-store and app-store-reviews do the same for the App Store, g2-reviews returns data.reviews for a G2 product, emails, phone-numbers, and links return data.emails, data.phone_numbers, and data.links from the rendered page; the store, Maps, and G2 parsers read their data directly, independently of DOM filters and other outputs.
     """
 
     data: Optional[Dict[str, object]] = None
@@ -829,6 +831,7 @@ class DataErrorResultParsed(BaseModel):
         "google-play-reviews",
         "app-store",
         "app-store-reviews",
+        "g2-reviews",
         "emails",
         "phone-numbers",
         "links",
@@ -1024,10 +1027,11 @@ class DataErrorResult(BaseModel):
     for lists). The google-maps parser returns business records in data.results,
     google-maps-reviews returns data.reviews, and the google-play parser returns one
     app record as data, google-play-reviews returns data.reviews, app-store and
-    app-store-reviews do the same for the App Store, emails, phone-numbers, and
-    links return data.emails, data.phone_numbers, and data.links from the rendered
-    page; the store and Maps parsers read their data directly, independently of DOM
-    filters and other outputs.
+    app-store-reviews do the same for the App Store, g2-reviews returns data.reviews
+    for a G2 product, emails, phone-numbers, and links return data.emails,
+    data.phone_numbers, and data.links from the rendered page; the store, Maps, and
+    G2 parsers read their data directly, independently of DOM filters and other
+    outputs.
     """
 
     product: DataErrorResultProduct
