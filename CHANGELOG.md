@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.27.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.26.0...v2.27.0) (2026-10-17)
+
+
+### Features
+
+* **brand:** add search metadata and country and language filters ([#1945](https://github.com/context-dot-dev/context-python-sdk/issues/1945)) ([ddd2963](https://github.com/context-dot-dev/context-python-sdk/commit/ddd2963168f36945ab13e33f0329788b3d751b40))
+* **scrape:** add g2-reviews prebuilt parser ([#1933](https://github.com/context-dot-dev/context-python-sdk/issues/1933)) ([f91c76f](https://github.com/context-dot-dev/context-python-sdk/commit/f91c76fea710fddc8bcaa346f2763c12e647d51a))
+* **scrape:** add google-maps-reviews prebuilt parser with oldest-first sort ([#1928](https://github.com/context-dot-dev/context-python-sdk/issues/1928)) ([ada9d68](https://github.com/context-dot-dev/context-python-sdk/commit/ada9d68e2d7ab7d70445ca2a5adea9af2bda3e06))
+* **scrape:** add Instagram profile, post, and feed prebuilt parsers ([#1905](https://github.com/context-dot-dev/context-python-sdk/issues/1905)) ([fb329c9](https://github.com/context-dot-dev/context-python-sdk/commit/fb329c970d2ef2358bae048a845941eb3b427879))
+* **search:** add languages filter to web search ([#1833](https://github.com/context-dot-dev/context-python-sdk/issues/1833)) ([01b289c](https://github.com/context-dot-dev/context-python-sdk/commit/01b289c6c206bf97b2c46b1eeb063eccfda7885c))
+
 ## [2.26.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.25.0...v2.26.0) (2026-10-16)
 
 
