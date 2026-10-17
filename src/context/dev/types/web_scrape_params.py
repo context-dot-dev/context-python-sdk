@@ -210,6 +210,7 @@ class ParseParamsPrebuiltParser(TypedDict, total=False):
     parser: Required[
         Literal[
             "google-maps",
+            "google-maps-reviews",
             "google-play",
             "google-play-reviews",
             "app-store",
@@ -222,7 +223,15 @@ class ParseParamsPrebuiltParser(TypedDict, total=False):
     """google-maps parses Google Maps business data into data.results.
 
     Accepts Maps place, search, and internal data URLs. Uses a US exit and English
-    labels regardless of hl or Accept-Language. google-play parses a Play Store app
+    labels regardless of hl or Accept-Language. google-maps-reviews returns the
+    reviews of a place in data.reviews, in the same shape as the Serper reviews API
+    (rating, date, isoDate, snippet, translatedSnippet, likes, user, media,
+    response, link, id), plus language, guided ratings in details, and
+    user.isLocalGuide; data also carries the place featureId, cid, and sort. sort
+    and limit pick the order and count, and oldest is exact. It accepts Maps place,
+    search, and ?cid= URLs, plus search.google.com/local/reviews URLs, so the
+    google_maps_url and google_reviews_url fields of google-maps results work as
+    input. An unknown place returns no reviews. google-play parses a Play Store app
     into data: details, developer contact, ratings, price, permissions, and data
     safety. google-play-reviews returns the 200 newest reviews of the app, with
     developer replies, in data.reviews. Both Play parsers accept app details URLs
@@ -246,6 +255,19 @@ class ParseParamsPrebuiltParser(TypedDict, total=False):
 
     type: Required[Literal["prebuilt"]]
     """Use a prebuilt parser instead of custom rules."""
+
+    limit: int
+    """google-maps-reviews only.
+
+    Maximum number of reviews to return. Defaults to 100; maximum 1000.
+    """
+
+    sort: Literal["newest", "oldest", "relevant", "highest", "lowest"]
+    """google-maps-reviews only.
+
+    Order of data.reviews. newest, relevant, highest, and lowest follow Google;
+    oldest returns the earliest reviews first, which Google itself does not offer.
+    """
 
 
 ParseParams: TypeAlias = Union[ParseParamsCustomParser, ParseParamsPrebuiltParser]
