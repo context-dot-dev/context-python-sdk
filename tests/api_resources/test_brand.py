@@ -358,6 +358,8 @@ class TestBrand:
         brand = client.brand.search(
             query="x",
             autocomplete=True,
+            country="US",
+            language="afrikaans",
             query_by=["name"],
             tags=["production", "team-alpha"],
             typo_tolerance=0,
@@ -737,6 +739,8 @@ class TestAsyncBrand:
         brand = await async_client.brand.search(
             query="x",
             autocomplete=True,
+            country="US",
+            language="afrikaans",
             query_by=["name"],
             tags=["production", "team-alpha"],
             typo_tolerance=0,
