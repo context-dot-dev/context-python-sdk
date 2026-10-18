@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.29.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.28.0...v2.29.0) (2026-10-18)
+
+
+### Features
+
+* **scrape:** add TikTok profile and video prebuilt parsers ([#1956](https://github.com/context-dot-dev/context-python-sdk/issues/1956)) ([91f3131](https://github.com/context-dot-dev/context-python-sdk/commit/91f3131c8dcdacb6bcd53574afdb771972211dde))
+
 ## [2.28.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.27.0...v2.28.0) (2026-10-18)
 
 
