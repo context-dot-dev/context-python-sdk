@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.28.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.27.0...v2.28.0) (2026-10-18)
+
+
+### Features
+
+* **people:** allow enrichment on free plans ([#1961](https://github.com/context-dot-dev/context-python-sdk/issues/1961)) ([c7c2764](https://github.com/context-dot-dev/context-python-sdk/commit/c7c276439d6e5a9703e514e995adc82f8ddbe039))
+
 ## [2.27.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.26.0...v2.27.0) (2026-10-17)
 
 
