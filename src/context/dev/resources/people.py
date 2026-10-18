@@ -65,7 +65,7 @@ class PeopleResource(SyncAPIResource):
     ) -> PersonEnrichResponse:
         """
         Find a person from identity clues and return their profile with a match score.
-        Requires a paid plan; free or disposable email addresses return 422.
+        Available on all plans; free or disposable email addresses return 422.
 
         Args:
           company: Company context to help identify the person. Provide a name or domain.
@@ -162,7 +162,7 @@ class AsyncPeopleResource(AsyncAPIResource):
     ) -> PersonEnrichResponse:
         """
         Find a person from identity clues and return their profile with a match score.
-        Requires a paid plan; free or disposable email addresses return 422.
+        Available on all plans; free or disposable email addresses return 422.
 
         Args:
           company: Company context to help identify the person. Provide a name or domain.
