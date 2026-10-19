@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.31.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.30.0...v2.31.0) (2026-10-19)
+
+
+### Features
+
+* **crawl:** add exclude URL regex to crawl and sitemap endpoints ([#1982](https://github.com/context-dot-dev/context-python-sdk/issues/1982)) ([485d0ea](https://github.com/context-dot-dev/context-python-sdk/commit/485d0eaf2082192f2b38a15760ba4bd543e51549))
+
 ## [2.30.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.29.0...v2.30.0) (2026-10-19)
 
 
