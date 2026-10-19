@@ -261,6 +261,7 @@ class WebResource(SyncAPIResource):
         self,
         *,
         domain: str,
+        exclude_url_regex: str | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
         include_subdomains: bool | Omit = omit,
         max_links: int | Omit = omit,
@@ -283,6 +284,9 @@ class WebResource(SyncAPIResource):
 
         Args:
           domain: Domain to map, e.g. `stripe.com`.
+
+          exclude_url_regex: Optional RE2-compatible regex pattern. URLs matching this pattern are not
+              returned, even when they match urlRegex.
 
           headers: HTTP headers for the target origin. Non-empty headers bypass caching.
 
@@ -323,6 +327,7 @@ class WebResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "domain": domain,
+                        "exclude_url_regex": exclude_url_regex,
                         "headers": headers,
                         "include_subdomains": include_subdomains,
                         "max_links": max_links,
@@ -1412,6 +1417,7 @@ class WebResource(SyncAPIResource):
         ]
         | Omit = omit,
         exclude_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
+        exclude_url_regex: str | Omit = omit,
         follow_subdomains: bool | Omit = omit,
         include_frames: bool | Omit = omit,
         include_images: bool | Omit = omit,
@@ -1448,6 +1454,9 @@ class WebResource(SyncAPIResource):
           country: Fetch from this country (ISO 3166-1 alpha-2).
 
           exclude_selectors: Remove matching elements after inclusions. Exclusions take precedence.
+
+          exclude_url_regex: RE2 regex pattern. URLs matching this pattern are never followed or scraped,
+              even when they match urlRegex. The starting URL is always scraped.
 
           follow_subdomains: When true, follow links on subdomains of the starting URL's domain (e.g.
               docs.example.com when starting from example.com). www and apex are always
@@ -1510,6 +1519,7 @@ class WebResource(SyncAPIResource):
                     "url": url,
                     "country": country,
                     "exclude_selectors": exclude_selectors,
+                    "exclude_url_regex": exclude_url_regex,
                     "follow_subdomains": follow_subdomains,
                     "include_frames": include_frames,
                     "include_images": include_images,
@@ -1759,6 +1769,7 @@ class AsyncWebResource(AsyncAPIResource):
         self,
         *,
         domain: str,
+        exclude_url_regex: str | Omit = omit,
         headers: Dict[str, str] | Omit = omit,
         include_subdomains: bool | Omit = omit,
         max_links: int | Omit = omit,
@@ -1781,6 +1792,9 @@ class AsyncWebResource(AsyncAPIResource):
 
         Args:
           domain: Domain to map, e.g. `stripe.com`.
+
+          exclude_url_regex: Optional RE2-compatible regex pattern. URLs matching this pattern are not
+              returned, even when they match urlRegex.
 
           headers: HTTP headers for the target origin. Non-empty headers bypass caching.
 
@@ -1821,6 +1835,7 @@ class AsyncWebResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "domain": domain,
+                        "exclude_url_regex": exclude_url_regex,
                         "headers": headers,
                         "include_subdomains": include_subdomains,
                         "max_links": max_links,
@@ -2910,6 +2925,7 @@ class AsyncWebResource(AsyncAPIResource):
         ]
         | Omit = omit,
         exclude_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
+        exclude_url_regex: str | Omit = omit,
         follow_subdomains: bool | Omit = omit,
         include_frames: bool | Omit = omit,
         include_images: bool | Omit = omit,
@@ -2946,6 +2962,9 @@ class AsyncWebResource(AsyncAPIResource):
           country: Fetch from this country (ISO 3166-1 alpha-2).
 
           exclude_selectors: Remove matching elements after inclusions. Exclusions take precedence.
+
+          exclude_url_regex: RE2 regex pattern. URLs matching this pattern are never followed or scraped,
+              even when they match urlRegex. The starting URL is always scraped.
 
           follow_subdomains: When true, follow links on subdomains of the starting URL's domain (e.g.
               docs.example.com when starting from example.com). www and apex are always
@@ -3008,6 +3027,7 @@ class AsyncWebResource(AsyncAPIResource):
                     "url": url,
                     "country": country,
                     "exclude_selectors": exclude_selectors,
+                    "exclude_url_regex": exclude_url_regex,
                     "follow_subdomains": follow_subdomains,
                     "include_frames": include_frames,
                     "include_images": include_images,

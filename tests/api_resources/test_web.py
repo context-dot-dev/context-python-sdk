@@ -186,6 +186,7 @@ class TestWeb:
     def test_method_map_urls_with_all_params(self, client: ContextDev) -> None:
         web = client.web.map_urls(
             domain="stripe.com",
+            exclude_url_regex="/tag/|/author/",
             headers={"foo": "J!"},
             include_subdomains=True,
             max_links=1,
@@ -513,6 +514,7 @@ class TestWeb:
             url="https://example.com",
             country="de",
             exclude_selectors=["x"],
+            exclude_url_regex="/tag/|/author/",
             follow_subdomains=True,
             include_frames=True,
             include_images=True,
@@ -734,6 +736,7 @@ class TestAsyncWeb:
     async def test_method_map_urls_with_all_params(self, async_client: AsyncContextDev) -> None:
         web = await async_client.web.map_urls(
             domain="stripe.com",
+            exclude_url_regex="/tag/|/author/",
             headers={"foo": "J!"},
             include_subdomains=True,
             max_links=1,
@@ -1061,6 +1064,7 @@ class TestAsyncWeb:
             url="https://example.com",
             country="de",
             exclude_selectors=["x"],
+            exclude_url_regex="/tag/|/author/",
             follow_subdomains=True,
             include_frames=True,
             include_images=True,

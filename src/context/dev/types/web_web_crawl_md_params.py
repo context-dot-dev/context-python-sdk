@@ -226,6 +226,13 @@ class WebWebCrawlMdParams(TypedDict, total=False):
     exclude_selectors: Annotated[Optional[SequenceNotStr[str]], PropertyInfo(alias="excludeSelectors")]
     """Remove matching elements after inclusions. Exclusions take precedence."""
 
+    exclude_url_regex: Annotated[str, PropertyInfo(alias="excludeUrlRegex")]
+    """RE2 regex pattern.
+
+    URLs matching this pattern are never followed or scraped, even when they match
+    urlRegex. The starting URL is always scraped.
+    """
+
     follow_subdomains: Annotated[bool, PropertyInfo(alias="followSubdomains")]
     """When true, follow links on subdomains of the starting URL's domain (e.g.
 

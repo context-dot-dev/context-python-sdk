@@ -15,6 +15,12 @@ class WebMapURLsParams(TypedDict, total=False):
     domain: Required[str]
     """Domain to map, e.g. `stripe.com`."""
 
+    exclude_url_regex: Annotated[str, PropertyInfo(alias="excludeUrlRegex")]
+    """Optional RE2-compatible regex pattern.
+
+    URLs matching this pattern are not returned, even when they match urlRegex.
+    """
+
     headers: Dict[str, str]
     """HTTP headers for the target origin. Non-empty headers bypass caching."""
 

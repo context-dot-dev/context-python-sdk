@@ -41,8 +41,8 @@ class Metadata(BaseModel):
 
     num_skipped: int = FieldInfo(alias="numSkipped")
     """
-    Number of URLs skipped (PDFs when pdf.shouldParse=false, or URLs not matching
-    urlRegex)
+    Number of URLs skipped (PDFs when pdf.shouldParse=false, URLs not matching
+    urlRegex, or URLs matching excludeUrlRegex)
     """
 
     num_succeeded: int = FieldInfo(alias="numSucceeded")

@@ -32,6 +32,9 @@ Source: TypeAlias = Union[SourceStartURL, SourceSitemap]
 class CrawlControls(BaseModel):
     """Crawl settings as submitted."""
 
+    exclude_url_pattern: Optional[str] = None
+    """RE2 pattern URLs must not match to be crawled. Null when the crawl set none."""
+
     follow_subdomains: bool
     """Whether links to subdomains were followed. Always false for a sitemap crawl."""
 

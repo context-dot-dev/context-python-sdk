@@ -702,6 +702,12 @@ class InputCrawlDataFormats(TypedDict, total=False):
 class InputCrawlDataSourceStartURLControls(TypedDict, total=False):
     """Limits and filters for page discovery."""
 
+    exclude_regex: Annotated[str, PropertyInfo(alias="excludeRegex")]
+    """RE2 pattern for URLs to exclude, even when they match `regex`.
+
+    The `start_url` itself is always included.
+    """
+
     follow_subdomains: Annotated[bool, PropertyInfo(alias="followSubdomains")]
     """Follow links to subdomains."""
 
@@ -732,6 +738,12 @@ class InputCrawlDataSourceSitemapControls(TypedDict, total=False):
     """Limits and filters for the sitemap URLs.
 
     A sitemap batch scrapes exactly those URLs and never follows links off them, so there is no crawl depth here.
+    """
+
+    exclude_regex: Annotated[str, PropertyInfo(alias="excludeRegex")]
+    """
+    RE2 pattern; sitemap URLs matching it are not scraped, even when they match
+    `regex`.
     """
 
     max_urls: Annotated[int, PropertyInfo(alias="maxUrls")]
