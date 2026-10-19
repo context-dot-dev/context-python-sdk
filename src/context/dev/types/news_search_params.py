@@ -11,11 +11,13 @@ from .._utils import PropertyInfo
 __all__ = [
     "NewsSearchParams",
     "SearchBy",
-    "SearchByEntity",
-    "SearchByEntityNewsSearchEntityByName",
-    "SearchByEntityNewsSearchEntityByDomain",
-    "SearchByEntityNewsSearchEntityByTicker",
-    "SearchByEntityNewsSearchEntityByIsin",
+    "SearchByNewsSearchByNaturalLanguage",
+    "SearchByNewsSearchByEntity",
+    "SearchByNewsSearchByEntityEntity",
+    "SearchByNewsSearchByEntityEntityNewsSearchEntityByName",
+    "SearchByNewsSearchByEntityEntityNewsSearchEntityByDomain",
+    "SearchByNewsSearchByEntityEntityNewsSearchEntityByTicker",
+    "SearchByNewsSearchByEntityEntityNewsSearchEntityByIsin",
     "FilterBy",
     "FilterByDate",
     "SortBy",
@@ -24,7 +26,10 @@ __all__ = [
 
 class NewsSearchParams(TypedDict, total=False):
     search_by: Required[Annotated[SearchBy, PropertyInfo(alias="searchBy")]]
-    """What to search for."""
+    """
+    What to search for: a specific company, or a natural-language query across all
+    news.
+    """
 
     cursor: Optional[str]
     """Opaque next_cursor from the previous response, or null for the first page."""
@@ -40,13 +45,33 @@ class NewsSearchParams(TypedDict, total=False):
     """Maximum results to return. Defaults to 10."""
 
     sort_by: Annotated[SortBy, PropertyInfo(alias="sortBy")]
-    """Result ordering. Defaults to newest."""
+    """Result ordering.
+
+    Defaults to newest for entity searches. Natural-language searches are always
+    ordered by relevance.
+    """
 
     tags: SequenceNotStr[str]
     """Labels for filtering usage in the dashboard."""
 
 
-class SearchByEntityNewsSearchEntityByName(TypedDict, total=False):
+class SearchByNewsSearchByNaturalLanguage(TypedDict, total=False):
+    """Search all news with a plain-language query.
+
+    Returns up to 100 matches, ordered by relevance.
+    """
+
+    query: Required[str]
+    """
+    What to search for, in plain language, such as "chip export restrictions to
+    China".
+    """
+
+    type: Required[Literal["natural_language"]]
+    """Use `natural_language` to search all news with a plain-language query."""
+
+
+class SearchByNewsSearchByEntityEntityNewsSearchEntityByName(TypedDict, total=False):
     """Identify the company by name."""
 
     name: Required[str]
@@ -56,7 +81,7 @@ class SearchByEntityNewsSearchEntityByName(TypedDict, total=False):
     """Use `name` to identify the company by name."""
 
 
-class SearchByEntityNewsSearchEntityByDomain(TypedDict, total=False):
+class SearchByNewsSearchByEntityEntityNewsSearchEntityByDomain(TypedDict, total=False):
     """Identify the company by website domain."""
 
     domain: Required[str]
@@ -66,7 +91,7 @@ class SearchByEntityNewsSearchEntityByDomain(TypedDict, total=False):
     """Use `domain` to identify the company by website domain."""
 
 
-class SearchByEntityNewsSearchEntityByTicker(TypedDict, total=False):
+class SearchByNewsSearchByEntityEntityNewsSearchEntityByTicker(TypedDict, total=False):
     """Identify the company by stock ticker, optionally scoped to an exchange."""
 
     ticker: Required[str]
@@ -155,7 +180,7 @@ class SearchByEntityNewsSearchEntityByTicker(TypedDict, total=False):
     """
 
 
-class SearchByEntityNewsSearchEntityByIsin(TypedDict, total=False):
+class SearchByNewsSearchByEntityEntityNewsSearchEntityByIsin(TypedDict, total=False):
     """Identify the company by International Securities Identification Number."""
 
     isin: Required[str]
@@ -165,23 +190,25 @@ class SearchByEntityNewsSearchEntityByIsin(TypedDict, total=False):
     """Use `isin` to identify the company by its securities identifier."""
 
 
-SearchByEntity: TypeAlias = Union[
-    SearchByEntityNewsSearchEntityByName,
-    SearchByEntityNewsSearchEntityByDomain,
-    SearchByEntityNewsSearchEntityByTicker,
-    SearchByEntityNewsSearchEntityByIsin,
+SearchByNewsSearchByEntityEntity: TypeAlias = Union[
+    SearchByNewsSearchByEntityEntityNewsSearchEntityByName,
+    SearchByNewsSearchByEntityEntityNewsSearchEntityByDomain,
+    SearchByNewsSearchByEntityEntityNewsSearchEntityByTicker,
+    SearchByNewsSearchByEntityEntityNewsSearchEntityByIsin,
 ]
 
 
-class SearchBy(TypedDict, total=False):
-    """What to search for."""
+class SearchByNewsSearchByEntity(TypedDict, total=False):
+    """Find news about a specific company."""
 
-    entity: Required[SearchByEntity]
+    entity: Required[SearchByNewsSearchByEntityEntity]
     """The company to search news for, identified by name, domain, ticker, or ISIN."""
 
     type: Required[Literal["entity"]]
-    """How to search. Only entity search is supported."""
+    """Use `entity` to find news about a specific company."""
 
+
+SearchBy: TypeAlias = Union[SearchByNewsSearchByNaturalLanguage, SearchByNewsSearchByEntity]
 
 _FilterByDateReservedKeywords = TypedDict(
     "_FilterByDateReservedKeywords",
@@ -337,7 +364,10 @@ class FilterBy(TypedDict, total=False):
 
 
 class SortBy(TypedDict, total=False):
-    """Result ordering. Defaults to newest."""
+    """Result ordering.
+
+    Defaults to newest for entity searches. Natural-language searches are always ordered by relevance.
+    """
 
     type: Required[Literal["relevance", "newest"]]
     """Result ordering."""

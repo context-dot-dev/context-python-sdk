@@ -61,13 +61,14 @@ class NewsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> NewsSearchResponse:
-        """Find company news by name, domain, ticker, or ISIN.
-
-        Filter articles and continue
-        through results with a cursor.
+        """
+        Find news about a company by name, domain, ticker, or ISIN, or search all news
+        with a natural-language query. Filter articles and continue through results with
+        a cursor.
 
         Args:
-          search_by: What to search for.
+          search_by: What to search for: a specific company, or a natural-language query across all
+              news.
 
           cursor: Opaque next_cursor from the previous response, or null for the first page.
 
@@ -77,7 +78,8 @@ class NewsResource(SyncAPIResource):
 
           limit: Maximum results to return. Defaults to 10.
 
-          sort_by: Result ordering. Defaults to newest.
+          sort_by: Result ordering. Defaults to newest for entity searches. Natural-language
+              searches are always ordered by relevance.
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -147,13 +149,14 @@ class AsyncNewsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> NewsSearchResponse:
-        """Find company news by name, domain, ticker, or ISIN.
-
-        Filter articles and continue
-        through results with a cursor.
+        """
+        Find news about a company by name, domain, ticker, or ISIN, or search all news
+        with a natural-language query. Filter articles and continue through results with
+        a cursor.
 
         Args:
-          search_by: What to search for.
+          search_by: What to search for: a specific company, or a natural-language query across all
+              news.
 
           cursor: Opaque next_cursor from the previous response, or null for the first page.
 
@@ -163,7 +166,8 @@ class AsyncNewsResource(AsyncAPIResource):
 
           limit: Maximum results to return. Defaults to 10.
 
-          sort_by: Result ordering. Defaults to newest.
+          sort_by: Result ordering. Defaults to newest for entity searches. Natural-language
+              searches are always ordered by relevance.
 
           tags: Labels for filtering usage in the dashboard.
 

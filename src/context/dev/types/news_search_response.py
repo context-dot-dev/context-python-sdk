@@ -10,7 +10,10 @@ __all__ = ["NewsSearchResponse", "Data", "DataMatch", "DataSource", "Meta", "Key
 
 
 class DataMatch(BaseModel):
-    """How the article relates to the company you searched for."""
+    """How the article relates to the company you searched for.
+
+    Null for natural-language searches.
+    """
 
     confidence: Optional[float] = None
     """How confident the match is, from 0 to 1. Null when a score is unavailable."""
@@ -57,8 +60,11 @@ class Data(BaseModel):
     Null when unknown.
     """
 
-    match: DataMatch
-    """How the article relates to the company you searched for."""
+    match: Optional[DataMatch] = None
+    """How the article relates to the company you searched for.
+
+    Null for natural-language searches.
+    """
 
     published_at: Optional[datetime] = None
     """When the article was published, as an ISO 8601 timestamp.
