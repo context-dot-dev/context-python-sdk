@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.34.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.33.0...v2.34.0) (2026-10-21)
+
+
+### Features
+
+* **web-search:** include Scholar papers for research queries ([#2009](https://github.com/context-dot-dev/context-python-sdk/issues/2009)) ([858ef2a](https://github.com/context-dot-dev/context-python-sdk/commit/858ef2abaf449ad0cfe9827f86a334f45ee9249a))
+
 ## [2.33.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.32.0...v2.33.0) (2026-10-21)
 
 
