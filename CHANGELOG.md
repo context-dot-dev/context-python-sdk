@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.35.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.34.2...v2.35.0) (2026-10-21)
+
+
+### Features
+
+* **batch:** follow only chosen languages in start_url crawls ([#2003](https://github.com/context-dot-dev/context-python-sdk/issues/2003)) ([9a47f59](https://github.com/context-dot-dev/context-python-sdk/commit/9a47f5909d505436db6d67662697d39c38b19e8d))
+
 ## [2.34.2](https://github.com/context-dot-dev/context-python-sdk/compare/v2.34.1...v2.34.2) (2026-10-21)
 
 
