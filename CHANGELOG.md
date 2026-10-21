@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.36.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.35.0...v2.36.0) (2026-10-21)
+
+
+### Features
+
+* **scrape:** add sourcePreference to choose between HTML conversion and published Markdown ([#2010](https://github.com/context-dot-dev/context-python-sdk/issues/2010)) ([1e9fdc8](https://github.com/context-dot-dev/context-python-sdk/commit/1e9fdc894e8a55c22294d8e19eeceb9e66ef1f0a))
+
 ## [2.35.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.34.2...v2.35.0) (2026-10-21)
 
 
