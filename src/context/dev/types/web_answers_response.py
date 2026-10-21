@@ -21,6 +21,12 @@ class WebAnswersResponse(BaseModel):
     json_content: Dict[str, object]
     """The answer, in the shape requested by json_format."""
 
+    request_id: str
+    """Unique ID of this request, also in `X-Request-Id`.
+
+    Include it when contacting support.
+    """
+
     sources: List[str]
     """
     URLs of the pages and company/profile records read for the answer, followed by
