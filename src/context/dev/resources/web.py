@@ -285,8 +285,8 @@ class WebResource(SyncAPIResource):
         Args:
           domain: Domain to map, e.g. `stripe.com`.
 
-          exclude_url_regex: Optional RE2-compatible regex pattern. URLs matching this pattern are not
-              returned, even when they match urlRegex.
+          exclude_url_regex: Regex pattern. URLs matching this pattern are not returned, even when they match
+              urlRegex.
 
           headers: HTTP headers for the target origin. Non-empty headers bypass caching.
 
@@ -303,8 +303,8 @@ class WebResource(SyncAPIResource):
 
           timeout_opts: Request deadline and what to return when it passes.
 
-          url_regex: Optional RE2-compatible regex pattern. Only URLs matching this pattern are
-              returned and counted against maxLinks.
+          url_regex: Regex pattern. Only URLs matching this pattern are returned and counted against
+              maxLinks.
 
           zdr: `enabled` turns on zero data retention. Returns 403 `ZDR_NOT_ENABLED` unless
               your organization has ZDR.
@@ -1456,8 +1456,8 @@ class WebResource(SyncAPIResource):
 
           exclude_selectors: Remove matching elements after inclusions. Exclusions take precedence.
 
-          exclude_url_regex: RE2 regex pattern. URLs matching this pattern are never followed or scraped,
-              even when they match urlRegex. The starting URL is always scraped.
+          exclude_url_regex: Regex pattern. URLs matching this pattern are never followed or scraped, even
+              when they match urlRegex. The starting URL is always scraped.
 
           follow_subdomains: When true, follow links on subdomains of the starting URL's domain (e.g.
               docs.example.com when starting from example.com). www and apex are always
@@ -1466,11 +1466,9 @@ class WebResource(SyncAPIResource):
           include_frames: When true, the contents of iframes are rendered to Markdown for each crawled
               page.
 
-          include_images: Include image references in the Markdown output Only applies to
-              `html-conversion` extractions.
+          include_images: Include image references in the Markdown output (`html-conversion` only).
 
-          include_links: Preserve hyperlinks in the Markdown output Only applies to `html-conversion`
-              extractions.
+          include_links: Preserve hyperlinks in the Markdown output (`html-conversion` only).
 
           include_selectors: Keep matching HTML subtrees before converting each page to Markdown.
 
@@ -1485,18 +1483,11 @@ class WebResource(SyncAPIResource):
           settle_animations: Wait briefly for CSS animations and transitions to settle before reading each
               page.
 
-          shorten_base64_images: Truncate base64-encoded image data in the Markdown output Only applies to
-              `html-conversion` extractions.
+          shorten_base64_images: Truncate base64-encoded image data in the Markdown output (`html-conversion`
+              only).
 
-          source_preference: Where the Markdown should come from, in order of preference; the first usable
-              source wins. `html-conversion` converts the page HTML, and counts as unusable
-              when the conversion has almost no content (under 200 characters).
-              `markdown-direct` uses the official Markdown version the page publishes through,
-              returned as the site serves it. Defaults to
-              `["html-conversion", "markdown-direct"]`. With only `markdown-direct`, a page
-              that publishes no Markdown fails with `NO_PUBLISHED_MARKDOWN` and is not billed.
-              Requests with include or exclude selectors never use `markdown-direct`, so they
-              must include `html-conversion`.
+          source_preference: Markdown sources in order of preference: `html-conversion` converts the page
+              HTML, `markdown-direct` uses Markdown the site publishes.
 
           stop_after_ms: Soft crawl deadline in milliseconds. Returns pages collected before the next
               deadline check.
@@ -1808,8 +1799,8 @@ class AsyncWebResource(AsyncAPIResource):
         Args:
           domain: Domain to map, e.g. `stripe.com`.
 
-          exclude_url_regex: Optional RE2-compatible regex pattern. URLs matching this pattern are not
-              returned, even when they match urlRegex.
+          exclude_url_regex: Regex pattern. URLs matching this pattern are not returned, even when they match
+              urlRegex.
 
           headers: HTTP headers for the target origin. Non-empty headers bypass caching.
 
@@ -1826,8 +1817,8 @@ class AsyncWebResource(AsyncAPIResource):
 
           timeout_opts: Request deadline and what to return when it passes.
 
-          url_regex: Optional RE2-compatible regex pattern. Only URLs matching this pattern are
-              returned and counted against maxLinks.
+          url_regex: Regex pattern. Only URLs matching this pattern are returned and counted against
+              maxLinks.
 
           zdr: `enabled` turns on zero data retention. Returns 403 `ZDR_NOT_ENABLED` unless
               your organization has ZDR.
@@ -2979,8 +2970,8 @@ class AsyncWebResource(AsyncAPIResource):
 
           exclude_selectors: Remove matching elements after inclusions. Exclusions take precedence.
 
-          exclude_url_regex: RE2 regex pattern. URLs matching this pattern are never followed or scraped,
-              even when they match urlRegex. The starting URL is always scraped.
+          exclude_url_regex: Regex pattern. URLs matching this pattern are never followed or scraped, even
+              when they match urlRegex. The starting URL is always scraped.
 
           follow_subdomains: When true, follow links on subdomains of the starting URL's domain (e.g.
               docs.example.com when starting from example.com). www and apex are always
@@ -2989,11 +2980,9 @@ class AsyncWebResource(AsyncAPIResource):
           include_frames: When true, the contents of iframes are rendered to Markdown for each crawled
               page.
 
-          include_images: Include image references in the Markdown output Only applies to
-              `html-conversion` extractions.
+          include_images: Include image references in the Markdown output (`html-conversion` only).
 
-          include_links: Preserve hyperlinks in the Markdown output Only applies to `html-conversion`
-              extractions.
+          include_links: Preserve hyperlinks in the Markdown output (`html-conversion` only).
 
           include_selectors: Keep matching HTML subtrees before converting each page to Markdown.
 
@@ -3008,18 +2997,11 @@ class AsyncWebResource(AsyncAPIResource):
           settle_animations: Wait briefly for CSS animations and transitions to settle before reading each
               page.
 
-          shorten_base64_images: Truncate base64-encoded image data in the Markdown output Only applies to
-              `html-conversion` extractions.
+          shorten_base64_images: Truncate base64-encoded image data in the Markdown output (`html-conversion`
+              only).
 
-          source_preference: Where the Markdown should come from, in order of preference; the first usable
-              source wins. `html-conversion` converts the page HTML, and counts as unusable
-              when the conversion has almost no content (under 200 characters).
-              `markdown-direct` uses the official Markdown version the page publishes through,
-              returned as the site serves it. Defaults to
-              `["html-conversion", "markdown-direct"]`. With only `markdown-direct`, a page
-              that publishes no Markdown fails with `NO_PUBLISHED_MARKDOWN` and is not billed.
-              Requests with include or exclude selectors never use `markdown-direct`, so they
-              must include `html-conversion`.
+          source_preference: Markdown sources in order of preference: `html-conversion` converts the page
+              HTML, `markdown-direct` uses Markdown the site publishes.
 
           stop_after_ms: Soft crawl deadline in milliseconds. Returns pages collected before the next
               deadline check.

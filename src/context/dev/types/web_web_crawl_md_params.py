@@ -227,7 +227,7 @@ class WebWebCrawlMdParams(TypedDict, total=False):
     """Remove matching elements after inclusions. Exclusions take precedence."""
 
     exclude_url_regex: Annotated[str, PropertyInfo(alias="excludeUrlRegex")]
-    """RE2 regex pattern.
+    """Regex pattern.
 
     URLs matching this pattern are never followed or scraped, even when they match
     urlRegex. The starting URL is always scraped.
@@ -247,16 +247,10 @@ class WebWebCrawlMdParams(TypedDict, total=False):
     """
 
     include_images: Annotated[bool, PropertyInfo(alias="includeImages")]
-    """
-    Include image references in the Markdown output Only applies to
-    `html-conversion` extractions.
-    """
+    """Include image references in the Markdown output (`html-conversion` only)."""
 
     include_links: Annotated[bool, PropertyInfo(alias="includeLinks")]
-    """
-    Preserve hyperlinks in the Markdown output Only applies to `html-conversion`
-    extractions.
-    """
+    """Preserve hyperlinks in the Markdown output (`html-conversion` only)."""
 
     include_selectors: Annotated[Optional[SequenceNotStr[str]], PropertyInfo(alias="includeSelectors")]
     """Keep matching HTML subtrees before converting each page to Markdown."""
@@ -281,23 +275,16 @@ class WebWebCrawlMdParams(TypedDict, total=False):
 
     shorten_base64_images: Annotated[bool, PropertyInfo(alias="shortenBase64Images")]
     """
-    Truncate base64-encoded image data in the Markdown output Only applies to
-    `html-conversion` extractions.
+    Truncate base64-encoded image data in the Markdown output (`html-conversion`
+    only).
     """
 
     source_preference: Annotated[
         List[Literal["html-conversion", "markdown-direct"]], PropertyInfo(alias="sourcePreference")
     ]
     """
-    Where the Markdown should come from, in order of preference; the first usable
-    source wins. `html-conversion` converts the page HTML, and counts as unusable
-    when the conversion has almost no content (under 200 characters).
-    `markdown-direct` uses the official Markdown version the page publishes through,
-    returned as the site serves it. Defaults to
-    `["html-conversion", "markdown-direct"]`. With only `markdown-direct`, a page
-    that publishes no Markdown fails with `NO_PUBLISHED_MARKDOWN` and is not billed.
-    Requests with include or exclude selectors never use `markdown-direct`, so they
-    must include `html-conversion`.
+    Markdown sources in order of preference: `html-conversion` converts the page
+    HTML, `markdown-direct` uses Markdown the site publishes.
     """
 
     stop_after_ms: Annotated[int, PropertyInfo(alias="stopAfterMs")]

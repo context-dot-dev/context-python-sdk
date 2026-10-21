@@ -16,7 +16,7 @@ class WebMapURLsParams(TypedDict, total=False):
     """Domain to map, e.g. `stripe.com`."""
 
     exclude_url_regex: Annotated[str, PropertyInfo(alias="excludeUrlRegex")]
-    """Optional RE2-compatible regex pattern.
+    """Regex pattern.
 
     URLs matching this pattern are not returned, even when they match urlRegex.
     """
@@ -46,7 +46,7 @@ class WebMapURLsParams(TypedDict, total=False):
     """Request deadline and what to return when it passes."""
 
     url_regex: Annotated[str, PropertyInfo(alias="urlRegex")]
-    """Optional RE2-compatible regex pattern.
+    """Regex pattern.
 
     Only URLs matching this pattern are returned and counted against maxLinks.
     """

@@ -33,7 +33,7 @@ class CrawlControls(BaseModel):
     """Crawl settings as submitted."""
 
     exclude_url_pattern: Optional[str] = None
-    """RE2 pattern URLs must not match to be crawled. Null when the crawl set none."""
+    """Regex pattern URLs must not match to be crawled. Null when the crawl set none."""
 
     follow_subdomains: bool
     """Whether links to subdomains were followed. Always false for a sitemap crawl."""
@@ -120,11 +120,7 @@ class CrawlControls(BaseModel):
         ],
         None,
     ] = None
-    """
-    Languages whose pages were followed: `same_as_start_url` or a list of language
-    codes. Null when every language was followed, which is always the case for a
-    sitemap crawl.
-    """
+    """Languages whose pages were followed; null when all languages were."""
 
     max_depth: Optional[int] = None
     """Link depth limit.
@@ -144,4 +140,4 @@ class CrawlControls(BaseModel):
     """Where the crawl started."""
 
     url_pattern: Optional[str] = None
-    """RE2 pattern URLs had to match to be crawled. Null when the crawl set none."""
+    """Regex pattern URLs had to match to be crawled. Null when the crawl set none."""

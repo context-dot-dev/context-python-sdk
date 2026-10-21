@@ -163,37 +163,20 @@ class MarkdownParams(TypedDict, total=False):
     """Markdown options. Requires `formats.markdown`."""
 
     include_images: Annotated[bool, PropertyInfo(alias="includeImages")]
-    """Include images in the Markdown using image syntax with URLs and alt text.
-
-    Only applies to `html-conversion` extractions.
-    """
+    """Include images in the Markdown (`html-conversion` only)."""
 
     include_links: Annotated[bool, PropertyInfo(alias="includeLinks")]
-    """Keep link URLs in the Markdown.
-
-    Set false to return link text without URLs. Only applies to `html-conversion`
-    extractions.
-    """
+    """Keep link URLs in the Markdown (`html-conversion` only)."""
 
     inline_images: Annotated[Literal["placeholder", "preserve"], PropertyInfo(alias="inlineImages")]
-    """How base64 images appear: `placeholder` (default) or `preserve`.
-
-    Requires `includeImages`. Only applies to `html-conversion` extractions.
-    """
+    """How base64 images appear when `includeImages` is set (`html-conversion` only)."""
 
     source_preference: Annotated[
         List[Literal["html-conversion", "markdown-direct"]], PropertyInfo(alias="sourcePreference")
     ]
     """
-    Where the Markdown should come from, in order of preference; the first usable
-    source wins. `html-conversion` converts the page HTML, and counts as unusable
-    when the conversion has almost no content (under 200 characters).
-    `markdown-direct` uses the official Markdown version the page publishes through,
-    returned as the site serves it. Defaults to
-    `["html-conversion", "markdown-direct"]`. With only `markdown-direct`, a page
-    that publishes no Markdown fails with `NO_PUBLISHED_MARKDOWN` and is not billed.
-    Requests with include or exclude selectors never use `markdown-direct`, so they
-    must include `html-conversion`.
+    Markdown sources in order of preference: `html-conversion` converts the page
+    HTML, `markdown-direct` uses Markdown the site publishes.
     """
 
 

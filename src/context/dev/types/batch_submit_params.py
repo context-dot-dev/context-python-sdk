@@ -193,37 +193,20 @@ class InputScrapeDataMarkdownParams(TypedDict, total=False):
     """Markdown options. Requires `formats.markdown`."""
 
     include_images: Annotated[bool, PropertyInfo(alias="includeImages")]
-    """Include images in the Markdown using image syntax with URLs and alt text.
-
-    Only applies to `html-conversion` extractions.
-    """
+    """Include images in the Markdown (`html-conversion` only)."""
 
     include_links: Annotated[bool, PropertyInfo(alias="includeLinks")]
-    """Keep link URLs in the Markdown.
-
-    Set false to return link text without URLs. Only applies to `html-conversion`
-    extractions.
-    """
+    """Keep link URLs in the Markdown (`html-conversion` only)."""
 
     inline_images: Annotated[Literal["placeholder", "preserve"], PropertyInfo(alias="inlineImages")]
-    """How base64 images appear: `placeholder` (default) or `preserve`.
-
-    Requires `includeImages`. Only applies to `html-conversion` extractions.
-    """
+    """How base64 images appear when `includeImages` is set (`html-conversion` only)."""
 
     source_preference: Annotated[
         List[Literal["html-conversion", "markdown-direct"]], PropertyInfo(alias="sourcePreference")
     ]
     """
-    Where the Markdown should come from, in order of preference; the first usable
-    source wins. `html-conversion` converts the page HTML, and counts as unusable
-    when the conversion has almost no content (under 200 characters).
-    `markdown-direct` uses the official Markdown version the page publishes through,
-    returned as the site serves it. Defaults to
-    `["html-conversion", "markdown-direct"]`. With only `markdown-direct`, a page
-    that publishes no Markdown fails with `NO_PUBLISHED_MARKDOWN` and is not billed.
-    Requests with include or exclude selectors never use `markdown-direct`, so they
-    must include `html-conversion`.
+    Markdown sources in order of preference: `html-conversion` converts the page
+    HTML, `markdown-direct` uses Markdown the site publishes.
     """
 
 
@@ -725,7 +708,7 @@ class InputCrawlDataSourceStartURLControls(TypedDict, total=False):
     """Limits and filters for page discovery."""
 
     exclude_regex: Annotated[str, PropertyInfo(alias="excludeRegex")]
-    """RE2 pattern for URLs to exclude, even when they match `regex`.
+    """Regex pattern for URLs to exclude, even when they match `regex`.
 
     The `start_url` itself is always included.
     """
@@ -814,11 +797,9 @@ class InputCrawlDataSourceStartURLControls(TypedDict, total=False):
             ]
         ],
     ]
-    """Languages whose pages are followed.
-
-    `same_as_start_url` follows only the start page's language; a list of language
-    codes such as `["en"]` follows those languages. Links whose language cannot be
-    determined are followed. When omitted all urls are crawled.
+    """
+    Only follow pages in these languages, or `same_as_start_url`; all languages when
+    omitted.
     """
 
     max_depth: Annotated[int, PropertyInfo(alias="maxDepth")]
@@ -828,7 +809,7 @@ class InputCrawlDataSourceStartURLControls(TypedDict, total=False):
     """Maximum pages to fetch. Unused reserved credits are refunded. Maximum 100000."""
 
     regex: str
-    """RE2 pattern for URLs to include. The `start_url` itself is always included."""
+    """Regex pattern for URLs to include. The `start_url` itself is always included."""
 
 
 class InputCrawlDataSourceStartURL(TypedDict, total=False):
@@ -852,7 +833,7 @@ class InputCrawlDataSourceSitemapControls(TypedDict, total=False):
 
     exclude_regex: Annotated[str, PropertyInfo(alias="excludeRegex")]
     """
-    RE2 pattern; sitemap URLs matching it are not scraped, even when they match
+    Regex pattern; sitemap URLs matching it are not scraped, even when they match
     `regex`.
     """
 
@@ -860,7 +841,7 @@ class InputCrawlDataSourceSitemapControls(TypedDict, total=False):
     """Maximum pages to fetch. Unused reserved credits are refunded. Maximum 100000."""
 
     regex: str
-    """RE2 pattern; only sitemap URLs matching it are scraped."""
+    """Regex pattern; only sitemap URLs matching it are scraped."""
 
 
 class InputCrawlDataSourceSitemap(TypedDict, total=False):
@@ -926,37 +907,20 @@ class InputCrawlDataMarkdownParams(TypedDict, total=False):
     """Markdown options. Requires `formats.markdown`."""
 
     include_images: Annotated[bool, PropertyInfo(alias="includeImages")]
-    """Include images in the Markdown using image syntax with URLs and alt text.
-
-    Only applies to `html-conversion` extractions.
-    """
+    """Include images in the Markdown (`html-conversion` only)."""
 
     include_links: Annotated[bool, PropertyInfo(alias="includeLinks")]
-    """Keep link URLs in the Markdown.
-
-    Set false to return link text without URLs. Only applies to `html-conversion`
-    extractions.
-    """
+    """Keep link URLs in the Markdown (`html-conversion` only)."""
 
     inline_images: Annotated[Literal["placeholder", "preserve"], PropertyInfo(alias="inlineImages")]
-    """How base64 images appear: `placeholder` (default) or `preserve`.
-
-    Requires `includeImages`. Only applies to `html-conversion` extractions.
-    """
+    """How base64 images appear when `includeImages` is set (`html-conversion` only)."""
 
     source_preference: Annotated[
         List[Literal["html-conversion", "markdown-direct"]], PropertyInfo(alias="sourcePreference")
     ]
     """
-    Where the Markdown should come from, in order of preference; the first usable
-    source wins. `html-conversion` converts the page HTML, and counts as unusable
-    when the conversion has almost no content (under 200 characters).
-    `markdown-direct` uses the official Markdown version the page publishes through,
-    returned as the site serves it. Defaults to
-    `["html-conversion", "markdown-direct"]`. With only `markdown-direct`, a page
-    that publishes no Markdown fails with `NO_PUBLISHED_MARKDOWN` and is not billed.
-    Requests with include or exclude selectors never use `markdown-direct`, so they
-    must include `html-conversion`.
+    Markdown sources in order of preference: `html-conversion` converts the page
+    HTML, `markdown-direct` uses Markdown the site publishes.
     """
 
 
