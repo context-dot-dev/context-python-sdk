@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Union, Optional
+from typing import List, Union, Optional
 from typing_extensions import Literal, TypeAlias
 
 from .._models import BaseModel
@@ -37,6 +37,94 @@ class CrawlControls(BaseModel):
 
     follow_subdomains: bool
     """Whether links to subdomains were followed. Always false for a sitemap crawl."""
+
+    languages: Union[
+        Literal["same_as_start_url"],
+        List[
+            Literal[
+                "am",
+                "ar",
+                "az",
+                "be",
+                "bg",
+                "bn",
+                "ca",
+                "ceb",
+                "cs",
+                "cy",
+                "da",
+                "de",
+                "el",
+                "en",
+                "es",
+                "et",
+                "eu",
+                "fa",
+                "fi",
+                "fr",
+                "gu",
+                "ha",
+                "haw",
+                "he",
+                "hi",
+                "hr",
+                "hu",
+                "hy",
+                "id",
+                "is",
+                "it",
+                "ja",
+                "ka",
+                "kk",
+                "kn",
+                "ko",
+                "ku",
+                "ky",
+                "lo",
+                "lt",
+                "lv",
+                "mk",
+                "ml",
+                "mn",
+                "mr",
+                "ms",
+                "ne",
+                "nl",
+                "no",
+                "or",
+                "pa",
+                "pl",
+                "ps",
+                "pt",
+                "ro",
+                "ru",
+                "sk",
+                "sl",
+                "so",
+                "sq",
+                "sr",
+                "sv",
+                "sw",
+                "ta",
+                "te",
+                "th",
+                "tl",
+                "tr",
+                "uk",
+                "ur",
+                "uz",
+                "vi",
+                "yo",
+                "zh",
+            ]
+        ],
+        None,
+    ] = None
+    """
+    Languages whose pages were followed: `same_as_start_url` or a list of language
+    codes. Null when every language was followed, which is always the case for a
+    sitemap crawl.
+    """
 
     max_depth: Optional[int] = None
     """Link depth limit.

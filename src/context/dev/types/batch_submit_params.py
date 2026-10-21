@@ -711,6 +711,94 @@ class InputCrawlDataSourceStartURLControls(TypedDict, total=False):
     follow_subdomains: Annotated[bool, PropertyInfo(alias="followSubdomains")]
     """Follow links to subdomains."""
 
+    languages: Union[
+        Literal["same_as_start_url"],
+        List[
+            Literal[
+                "am",
+                "ar",
+                "az",
+                "be",
+                "bg",
+                "bn",
+                "ca",
+                "ceb",
+                "cs",
+                "cy",
+                "da",
+                "de",
+                "el",
+                "en",
+                "es",
+                "et",
+                "eu",
+                "fa",
+                "fi",
+                "fr",
+                "gu",
+                "ha",
+                "haw",
+                "he",
+                "hi",
+                "hr",
+                "hu",
+                "hy",
+                "id",
+                "is",
+                "it",
+                "ja",
+                "ka",
+                "kk",
+                "kn",
+                "ko",
+                "ku",
+                "ky",
+                "lo",
+                "lt",
+                "lv",
+                "mk",
+                "ml",
+                "mn",
+                "mr",
+                "ms",
+                "ne",
+                "nl",
+                "no",
+                "or",
+                "pa",
+                "pl",
+                "ps",
+                "pt",
+                "ro",
+                "ru",
+                "sk",
+                "sl",
+                "so",
+                "sq",
+                "sr",
+                "sv",
+                "sw",
+                "ta",
+                "te",
+                "th",
+                "tl",
+                "tr",
+                "uk",
+                "ur",
+                "uz",
+                "vi",
+                "yo",
+                "zh",
+            ]
+        ],
+    ]
+    """Languages whose pages are followed.
+
+    `same_as_start_url` follows only the start page's language; a list of language
+    codes such as `["en"]` follows those languages. Links whose language cannot be
+    determined are followed. When omitted all urls are crawled.
+    """
+
     max_depth: Annotated[int, PropertyInfo(alias="maxDepth")]
     """Maximum link depth. Source pages are depth 0. No limit when omitted."""
 
