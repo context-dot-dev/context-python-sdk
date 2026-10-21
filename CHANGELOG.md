@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.33.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.32.0...v2.33.0) (2026-10-21)
+
+
+### Features
+
+* **company-search:** charge two credits per request ([#2024](https://github.com/context-dot-dev/context-python-sdk/issues/2024)) ([da81337](https://github.com/context-dot-dev/context-python-sdk/commit/da8133784683b5412ab849bfe07dd48ec8a3088f))
+
 ## [2.32.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.31.1...v2.32.0) (2026-10-21)
 
 
