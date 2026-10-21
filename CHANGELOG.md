@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.36.1](https://github.com/context-dot-dev/context-python-sdk/compare/v2.36.0...v2.36.1) (2026-10-21)
+
+
+### Documentation
+
+* **openapi:** unify regex wording and shorten sourcePreference descriptions ([#2051](https://github.com/context-dot-dev/context-python-sdk/issues/2051)) ([31bdcb6](https://github.com/context-dot-dev/context-python-sdk/commit/31bdcb645ddb0bfb69e4bcbf6c0f16e8f8d1e353))
+
 ## [2.36.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.35.0...v2.36.0) (2026-10-21)
 
 
