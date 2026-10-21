@@ -49,7 +49,11 @@ class Data(BaseModel):
     """Bylined authors. Empty when no byline is available."""
 
     description: Optional[str] = None
-    """Short summary or excerpt of the article, when the publisher provides one."""
+    """Article summary or excerpt.
+
+    Natural-language search descriptions include matching passages and are capped at
+    2,000 characters.
+    """
 
     image_url: Optional[str] = None
     """Lead image for the article, when one is available."""
