@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import List, Optional
 from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from .._types import SequenceNotStr
@@ -247,10 +247,16 @@ class WebWebCrawlMdParams(TypedDict, total=False):
     """
 
     include_images: Annotated[bool, PropertyInfo(alias="includeImages")]
-    """Include image references in the Markdown output"""
+    """
+    Include image references in the Markdown output Only applies to
+    `html-conversion` extractions.
+    """
 
     include_links: Annotated[bool, PropertyInfo(alias="includeLinks")]
-    """Preserve hyperlinks in the Markdown output"""
+    """
+    Preserve hyperlinks in the Markdown output Only applies to `html-conversion`
+    extractions.
+    """
 
     include_selectors: Annotated[Optional[SequenceNotStr[str]], PropertyInfo(alias="includeSelectors")]
     """Keep matching HTML subtrees before converting each page to Markdown."""
@@ -274,7 +280,25 @@ class WebWebCrawlMdParams(TypedDict, total=False):
     """
 
     shorten_base64_images: Annotated[bool, PropertyInfo(alias="shortenBase64Images")]
-    """Truncate base64-encoded image data in the Markdown output"""
+    """
+    Truncate base64-encoded image data in the Markdown output Only applies to
+    `html-conversion` extractions.
+    """
+
+    source_preference: Annotated[
+        List[Literal["html-conversion", "markdown-direct"]], PropertyInfo(alias="sourcePreference")
+    ]
+    """
+    Where the Markdown should come from, in order of preference; the first usable
+    source wins. `html-conversion` converts the page HTML, and counts as unusable
+    when the conversion has almost no content (under 200 characters).
+    `markdown-direct` uses the official Markdown version the page publishes through,
+    returned as the site serves it. Defaults to
+    `["html-conversion", "markdown-direct"]`. With only `markdown-direct`, a page
+    that publishes no Markdown fails with `NO_PUBLISHED_MARKDOWN` and is not billed.
+    Requests with include or exclude selectors never use `markdown-direct`, so they
+    must include `html-conversion`.
+    """
 
     stop_after_ms: Annotated[int, PropertyInfo(alias="stopAfterMs")]
     """Soft crawl deadline in milliseconds.

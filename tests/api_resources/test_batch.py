@@ -311,6 +311,7 @@ class TestBatch:
                         "include_images": True,
                         "include_links": True,
                         "inline_images": "placeholder",
+                        "source_preference": ["html-conversion"],
                     },
                     "max_age_ms": 0,
                     "parse_params": {
@@ -719,6 +720,7 @@ class TestAsyncBatch:
                         "include_images": True,
                         "include_links": True,
                         "inline_images": "placeholder",
+                        "source_preference": ["html-conversion"],
                     },
                     "max_age_ms": 0,
                     "parse_params": {

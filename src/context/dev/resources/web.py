@@ -1429,6 +1429,7 @@ class WebResource(SyncAPIResource):
         pdf: web_web_crawl_md_params.Pdf | Omit = omit,
         settle_animations: bool | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
+        source_preference: List[Literal["html-conversion", "markdown-direct"]] | Omit = omit,
         stop_after_ms: int | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: web_web_crawl_md_params.TimeoutOpts | Omit = omit,
@@ -1465,9 +1466,11 @@ class WebResource(SyncAPIResource):
           include_frames: When true, the contents of iframes are rendered to Markdown for each crawled
               page.
 
-          include_images: Include image references in the Markdown output
+          include_images: Include image references in the Markdown output Only applies to
+              `html-conversion` extractions.
 
-          include_links: Preserve hyperlinks in the Markdown output
+          include_links: Preserve hyperlinks in the Markdown output Only applies to `html-conversion`
+              extractions.
 
           include_selectors: Keep matching HTML subtrees before converting each page to Markdown.
 
@@ -1482,7 +1485,18 @@ class WebResource(SyncAPIResource):
           settle_animations: Wait briefly for CSS animations and transitions to settle before reading each
               page.
 
-          shorten_base64_images: Truncate base64-encoded image data in the Markdown output
+          shorten_base64_images: Truncate base64-encoded image data in the Markdown output Only applies to
+              `html-conversion` extractions.
+
+          source_preference: Where the Markdown should come from, in order of preference; the first usable
+              source wins. `html-conversion` converts the page HTML, and counts as unusable
+              when the conversion has almost no content (under 200 characters).
+              `markdown-direct` uses the official Markdown version the page publishes through,
+              returned as the site serves it. Defaults to
+              `["html-conversion", "markdown-direct"]`. With only `markdown-direct`, a page
+              that publishes no Markdown fails with `NO_PUBLISHED_MARKDOWN` and is not billed.
+              Requests with include or exclude selectors never use `markdown-direct`, so they
+              must include `html-conversion`.
 
           stop_after_ms: Soft crawl deadline in milliseconds. Returns pages collected before the next
               deadline check.
@@ -1531,6 +1545,7 @@ class WebResource(SyncAPIResource):
                     "pdf": pdf,
                     "settle_animations": settle_animations,
                     "shorten_base64_images": shorten_base64_images,
+                    "source_preference": source_preference,
                     "stop_after_ms": stop_after_ms,
                     "tags": tags,
                     "timeout_opts": timeout_opts,
@@ -2937,6 +2952,7 @@ class AsyncWebResource(AsyncAPIResource):
         pdf: web_web_crawl_md_params.Pdf | Omit = omit,
         settle_animations: bool | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
+        source_preference: List[Literal["html-conversion", "markdown-direct"]] | Omit = omit,
         stop_after_ms: int | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: web_web_crawl_md_params.TimeoutOpts | Omit = omit,
@@ -2973,9 +2989,11 @@ class AsyncWebResource(AsyncAPIResource):
           include_frames: When true, the contents of iframes are rendered to Markdown for each crawled
               page.
 
-          include_images: Include image references in the Markdown output
+          include_images: Include image references in the Markdown output Only applies to
+              `html-conversion` extractions.
 
-          include_links: Preserve hyperlinks in the Markdown output
+          include_links: Preserve hyperlinks in the Markdown output Only applies to `html-conversion`
+              extractions.
 
           include_selectors: Keep matching HTML subtrees before converting each page to Markdown.
 
@@ -2990,7 +3008,18 @@ class AsyncWebResource(AsyncAPIResource):
           settle_animations: Wait briefly for CSS animations and transitions to settle before reading each
               page.
 
-          shorten_base64_images: Truncate base64-encoded image data in the Markdown output
+          shorten_base64_images: Truncate base64-encoded image data in the Markdown output Only applies to
+              `html-conversion` extractions.
+
+          source_preference: Where the Markdown should come from, in order of preference; the first usable
+              source wins. `html-conversion` converts the page HTML, and counts as unusable
+              when the conversion has almost no content (under 200 characters).
+              `markdown-direct` uses the official Markdown version the page publishes through,
+              returned as the site serves it. Defaults to
+              `["html-conversion", "markdown-direct"]`. With only `markdown-direct`, a page
+              that publishes no Markdown fails with `NO_PUBLISHED_MARKDOWN` and is not billed.
+              Requests with include or exclude selectors never use `markdown-direct`, so they
+              must include `html-conversion`.
 
           stop_after_ms: Soft crawl deadline in milliseconds. Returns pages collected before the next
               deadline check.
@@ -3039,6 +3068,7 @@ class AsyncWebResource(AsyncAPIResource):
                     "pdf": pdf,
                     "settle_animations": settle_animations,
                     "shorten_base64_images": shorten_base64_images,
+                    "source_preference": source_preference,
                     "stop_after_ms": stop_after_ms,
                     "tags": tags,
                     "timeout_opts": timeout_opts,

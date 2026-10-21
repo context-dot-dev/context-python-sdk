@@ -274,6 +274,7 @@ class TestWeb:
                 "include_images": True,
                 "include_links": True,
                 "inline_images": "placeholder",
+                "source_preference": ["html-conversion"],
             },
             max_age_ms=0,
             parse_params={
@@ -531,6 +532,7 @@ class TestWeb:
             },
             settle_animations=True,
             shorten_base64_images=True,
+            source_preference=["html-conversion"],
             stop_after_ms=10000,
             tags=["production", "team-alpha"],
             timeout_opts={
@@ -824,6 +826,7 @@ class TestAsyncWeb:
                 "include_images": True,
                 "include_links": True,
                 "inline_images": "placeholder",
+                "source_preference": ["html-conversion"],
             },
             max_age_ms=0,
             parse_params={
@@ -1081,6 +1084,7 @@ class TestAsyncWeb:
             },
             settle_animations=True,
             shorten_base64_images=True,
+            source_preference=["html-conversion"],
             stop_after_ms=10000,
             tags=["production", "team-alpha"],
             timeout_opts={
