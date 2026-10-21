@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.31.1](https://github.com/context-dot-dev/context-python-sdk/compare/v2.31.0...v2.31.1) (2026-10-21)
+
+
+### Bug Fixes
+
+* **news:** return extended descriptions for index search ([#2019](https://github.com/context-dot-dev/context-python-sdk/issues/2019)) ([c4ed061](https://github.com/context-dot-dev/context-python-sdk/commit/c4ed061205073d2659d260b360c49376f16877f6))
+
 ## [2.31.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.30.0...v2.31.0) (2026-10-19)
 
 
