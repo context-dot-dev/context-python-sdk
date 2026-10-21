@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.32.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.31.1...v2.32.0) (2026-10-21)
+
+
+### Features
+
+* **company-search:** prepare public response contract ([#2021](https://github.com/context-dot-dev/context-python-sdk/issues/2021)) ([1799974](https://github.com/context-dot-dev/context-python-sdk/commit/1799974278841d4e165877cd512c66f078706f08))
+
 ## [2.31.1](https://github.com/context-dot-dev/context-python-sdk/compare/v2.31.0...v2.31.1) (2026-10-21)
 
 
