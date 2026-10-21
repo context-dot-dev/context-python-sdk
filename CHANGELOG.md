@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.34.1](https://github.com/context-dot-dev/context-python-sdk/compare/v2.34.0...v2.34.1) (2026-10-21)
+
+
+### Bug Fixes
+
+* **answers:** document request_id in the /web/answers response ([#2040](https://github.com/context-dot-dev/context-python-sdk/issues/2040)) ([4148e67](https://github.com/context-dot-dev/context-python-sdk/commit/4148e6730c5929f3e0be2b541cc41dd8ae3b5651))
+
 ## [2.34.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.33.0...v2.34.0) (2026-10-21)
 
 
