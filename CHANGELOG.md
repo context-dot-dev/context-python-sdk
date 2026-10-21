@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.34.2](https://github.com/context-dot-dev/context-python-sdk/compare/v2.34.1...v2.34.2) (2026-10-21)
+
+
+### Bug Fixes
+
+* **openapi:** document request_id and key_metadata on every response in one place ([#2042](https://github.com/context-dot-dev/context-python-sdk/issues/2042)) ([da4b461](https://github.com/context-dot-dev/context-python-sdk/commit/da4b46189ab0b1547e86ffe25a024914a50d4f87))
+
 ## [2.34.1](https://github.com/context-dot-dev/context-python-sdk/compare/v2.34.0...v2.34.1) (2026-10-21)
 
 
