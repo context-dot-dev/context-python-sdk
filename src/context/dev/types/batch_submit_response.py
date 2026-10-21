@@ -72,7 +72,7 @@ class InvalidURL(BaseModel):
 
 
 class KeyMetadata(BaseModel):
-    """API key usage for this request."""
+    """Credits this request used and your remaining balance."""
 
     credits_consumed: int
     """Credits charged for this request."""
@@ -122,7 +122,7 @@ class BatchSubmitResponse(BaseModel):
     """Tags stored on the batch."""
 
     key_metadata: Optional[KeyMetadata] = None
-    """API key usage for this request."""
+    """Credits this request used and your remaining balance."""
 
     webhook_secret: Optional[str] = None
     """Secret for verifying `X-Context-Signature`.

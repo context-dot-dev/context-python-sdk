@@ -131,7 +131,7 @@ class Timing(BaseModel):
 
 
 class KeyMetadata(BaseModel):
-    """API key usage for this request."""
+    """Credits this request used and your remaining balance."""
 
     credits_consumed: int
     """Credits charged for this request."""
@@ -198,7 +198,7 @@ class BatchRetrieveResponse(BaseModel):
     timing: Timing
 
     key_metadata: Optional[KeyMetadata] = None
-    """API key usage for this request."""
+    """Credits this request used and your remaining balance."""
 
     webhook_delivery_id: Optional[str] = None
     """Batch completion delivery ID, when available."""

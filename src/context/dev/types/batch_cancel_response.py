@@ -75,7 +75,7 @@ class Timing(BaseModel):
 
 
 class KeyMetadata(BaseModel):
-    """API key usage for this request."""
+    """Credits this request used and your remaining balance."""
 
     credits_consumed: int
     """Credits charged for this request."""
@@ -128,4 +128,4 @@ class BatchCancelResponse(BaseModel):
     """Batch timestamps."""
 
     key_metadata: Optional[KeyMetadata] = None
-    """API key usage for this request."""
+    """Credits this request used and your remaining balance."""
