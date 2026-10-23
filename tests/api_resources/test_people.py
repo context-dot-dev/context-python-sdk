@@ -9,7 +9,7 @@ import pytest
 
 from context.dev import ContextDev, AsyncContextDev
 from tests.utils import assert_matches_type
-from context.dev.types import PersonEnrichResponse
+from context.dev.types import PersonEnrichResponse, PersonSearchResponse
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -84,6 +84,55 @@ class TestPeople:
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_search(self, client: ContextDev) -> None:
+        person = client.people.search(
+            query="VPs of sales at solar companies in California",
+        )
+        assert_matches_type(PersonSearchResponse, person, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_search_with_all_params(self, client: ContextDev) -> None:
+        person = client.people.search(
+            query="VPs of sales at solar companies in California",
+            cursor="cursor",
+            filters={
+                "countries": ["SE"],
+                "years_of_experience_max": 0,
+                "years_of_experience_min": 0,
+            },
+            tags=["production", "team-alpha"],
+        )
+        assert_matches_type(PersonSearchResponse, person, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_search(self, client: ContextDev) -> None:
+        response = client.people.with_raw_response.search(
+            query="VPs of sales at solar companies in California",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        person = response.parse()
+        assert_matches_type(PersonSearchResponse, person, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_search(self, client: ContextDev) -> None:
+        with client.people.with_streaming_response.search(
+            query="VPs of sales at solar companies in California",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            person = response.parse()
+            assert_matches_type(PersonSearchResponse, person, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
 
 class TestAsyncPeople:
     parametrize = pytest.mark.parametrize(
@@ -154,5 +203,54 @@ class TestAsyncPeople:
 
             person = await response.parse()
             assert_matches_type(PersonEnrichResponse, person, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_search(self, async_client: AsyncContextDev) -> None:
+        person = await async_client.people.search(
+            query="VPs of sales at solar companies in California",
+        )
+        assert_matches_type(PersonSearchResponse, person, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_search_with_all_params(self, async_client: AsyncContextDev) -> None:
+        person = await async_client.people.search(
+            query="VPs of sales at solar companies in California",
+            cursor="cursor",
+            filters={
+                "countries": ["SE"],
+                "years_of_experience_max": 0,
+                "years_of_experience_min": 0,
+            },
+            tags=["production", "team-alpha"],
+        )
+        assert_matches_type(PersonSearchResponse, person, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_search(self, async_client: AsyncContextDev) -> None:
+        response = await async_client.people.with_raw_response.search(
+            query="VPs of sales at solar companies in California",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        person = await response.parse()
+        assert_matches_type(PersonSearchResponse, person, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_search(self, async_client: AsyncContextDev) -> None:
+        async with async_client.people.with_streaming_response.search(
+            query="VPs of sales at solar companies in California",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            person = await response.parse()
+            assert_matches_type(PersonSearchResponse, person, path=["response"])
 
         assert cast(Any, response.is_closed) is True

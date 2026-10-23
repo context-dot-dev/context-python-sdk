@@ -7,7 +7,7 @@ from typing_extensions import Literal
 
 import httpx
 
-from ..types import person_enrich_params
+from ..types import person_enrich_params, person_search_params
 from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -20,6 +20,7 @@ from .._response import (
 )
 from .._base_client import make_request_options
 from ..types.person_enrich_response import PersonEnrichResponse
+from ..types.person_search_response import PersonSearchResponse
 
 __all__ = ["PeopleResource", "AsyncPeopleResource"]
 
@@ -120,6 +121,57 @@ class PeopleResource(SyncAPIResource):
             cast_to=PersonEnrichResponse,
         )
 
+    def search(
+        self,
+        *,
+        query: str,
+        cursor: str | Omit = omit,
+        filters: person_search_params.Filters | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> PersonSearchResponse:
+        """
+        Find people with a natural-language query.
+
+        Args:
+          query: Describe the people to find.
+
+          cursor: Use next_cursor with the same query and filters to fetch the next page.
+
+          filters: Additional constraints every result must match.
+
+          tags: Labels for filtering usage in the dashboard.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/people/search",
+            body=maybe_transform(
+                {
+                    "query": query,
+                    "cursor": cursor,
+                    "filters": filters,
+                    "tags": tags,
+                },
+                person_search_params.PersonSearchParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=PersonSearchResponse,
+        )
+
 
 class AsyncPeopleResource(AsyncAPIResource):
     @cached_property
@@ -217,6 +269,57 @@ class AsyncPeopleResource(AsyncAPIResource):
             cast_to=PersonEnrichResponse,
         )
 
+    async def search(
+        self,
+        *,
+        query: str,
+        cursor: str | Omit = omit,
+        filters: person_search_params.Filters | Omit = omit,
+        tags: SequenceNotStr[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> PersonSearchResponse:
+        """
+        Find people with a natural-language query.
+
+        Args:
+          query: Describe the people to find.
+
+          cursor: Use next_cursor with the same query and filters to fetch the next page.
+
+          filters: Additional constraints every result must match.
+
+          tags: Labels for filtering usage in the dashboard.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/people/search",
+            body=await async_maybe_transform(
+                {
+                    "query": query,
+                    "cursor": cursor,
+                    "filters": filters,
+                    "tags": tags,
+                },
+                person_search_params.PersonSearchParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=PersonSearchResponse,
+        )
+
 
 class PeopleResourceWithRawResponse:
     def __init__(self, people: PeopleResource) -> None:
@@ -224,6 +327,9 @@ class PeopleResourceWithRawResponse:
 
         self.enrich = to_raw_response_wrapper(
             people.enrich,
+        )
+        self.search = to_raw_response_wrapper(
+            people.search,
         )
 
 
@@ -234,6 +340,9 @@ class AsyncPeopleResourceWithRawResponse:
         self.enrich = async_to_raw_response_wrapper(
             people.enrich,
         )
+        self.search = async_to_raw_response_wrapper(
+            people.search,
+        )
 
 
 class PeopleResourceWithStreamingResponse:
@@ -243,6 +352,9 @@ class PeopleResourceWithStreamingResponse:
         self.enrich = to_streamed_response_wrapper(
             people.enrich,
         )
+        self.search = to_streamed_response_wrapper(
+            people.search,
+        )
 
 
 class AsyncPeopleResourceWithStreamingResponse:
@@ -251,4 +363,7 @@ class AsyncPeopleResourceWithStreamingResponse:
 
         self.enrich = async_to_streamed_response_wrapper(
             people.enrich,
+        )
+        self.search = async_to_streamed_response_wrapper(
+            people.search,
         )

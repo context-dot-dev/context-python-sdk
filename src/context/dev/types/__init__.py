@@ -27,6 +27,7 @@ from .web_search_response import WebSearchResponse as WebSearchResponse
 from .monitor_run_response import MonitorRunResponse as MonitorRunResponse
 from .news_search_response import NewsSearchResponse as NewsSearchResponse
 from .person_enrich_params import PersonEnrichParams as PersonEnrichParams
+from .person_search_params import PersonSearchParams as PersonSearchParams
 from .web_answers_response import WebAnswersResponse as WebAnswersResponse
 from .batch_cancel_response import BatchCancelResponse as BatchCancelResponse
 from .batch_delete_response import BatchDeleteResponse as BatchDeleteResponse
@@ -42,6 +43,7 @@ from .web_map_urls_response import WebMapURLsResponse as WebMapURLsResponse
 from .web_screenshot_params import WebScreenshotParams as WebScreenshotParams
 from .feedback_submit_params import FeedbackSubmitParams as FeedbackSubmitParams
 from .person_enrich_response import PersonEnrichResponse as PersonEnrichResponse
+from .person_search_response import PersonSearchResponse as PersonSearchResponse
 from .batch_retrieve_response import BatchRetrieveResponse as BatchRetrieveResponse
 from .brand_retrieve_response import BrandRetrieveResponse as BrandRetrieveResponse
 from .monitor_create_response import MonitorCreateResponse as MonitorCreateResponse

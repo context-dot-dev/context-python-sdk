@@ -183,12 +183,13 @@ Methods:
 Types:
 
 ```python
-from context.dev.types import PersonEnrichResponse
+from context.dev.types import PersonEnrichResponse, PersonSearchResponse
 ```
 
 Methods:
 
 - <code title="post /people/enrich">client.people.<a href="./src/context/dev/resources/people.py">enrich</a>(\*\*<a href="src/context/dev/types/person_enrich_params.py">params</a>) -> <a href="./src/context/dev/types/person_enrich_response.py">PersonEnrichResponse</a></code>
+- <code title="post /people/search">client.people.<a href="./src/context/dev/resources/people.py">search</a>(\*\*<a href="src/context/dev/types/person_search_params.py">params</a>) -> <a href="./src/context/dev/types/person_search_response.py">PersonSearchResponse</a></code>
 
 # News
 
