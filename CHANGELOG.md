@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.37.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.36.1...v2.37.0) (2026-10-23)
+
+
+### Features
+
+* **people:** publish people search in the API specification ([#2094](https://github.com/context-dot-dev/context-python-sdk/issues/2094)) ([60f3a0b](https://github.com/context-dot-dev/context-python-sdk/commit/60f3a0b9f4973d0c1b007a62c549cab2167cb19f))
+
 ## [2.36.1](https://github.com/context-dot-dev/context-python-sdk/compare/v2.36.0...v2.36.1) (2026-10-21)
 
 
