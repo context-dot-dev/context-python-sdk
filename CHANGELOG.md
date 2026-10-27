@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.40.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.39.0...v2.40.0) (2026-10-27)
+
+
+### Features
+
+* **parse:** mark PDF page numbers inline in Markdown with includeNumberedPages ([#2110](https://github.com/context-dot-dev/context-python-sdk/issues/2110)) ([5cec8f8](https://github.com/context-dot-dev/context-python-sdk/commit/5cec8f8e05efba76b96456a811359d2df321040c))
+
+
+### Bug Fixes
+
+* **people:** split ultra people ranking on its strongest phrase signals ([#2209](https://github.com/context-dot-dev/context-python-sdk/issues/2209)) ([ac222a3](https://github.com/context-dot-dev/context-python-sdk/commit/ac222a384deaa45a459894556ae0cfc70ec21a5a))
+
 ## [2.39.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.38.0...v2.39.0) (2026-10-27)
 
 
