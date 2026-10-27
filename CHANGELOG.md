@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.39.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.38.0...v2.39.0) (2026-10-27)
+
+
+### Features
+
+* **people:** add ultra mode to people search ([#2149](https://github.com/context-dot-dev/context-python-sdk/issues/2149)) ([b7e350b](https://github.com/context-dot-dev/context-python-sdk/commit/b7e350be744bd50743dc693c2de6d69ff56a662a))
+
+
+### Documentation
+
+* **people:** note that complex ultra people searches can take up to 60 seconds ([#2206](https://github.com/context-dot-dev/context-python-sdk/issues/2206)) ([4e6ce7f](https://github.com/context-dot-dev/context-python-sdk/commit/4e6ce7ff8ed955fe6ba3fb7749199586f86c0576))
+
 ## [2.38.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.37.0...v2.38.0) (2026-10-27)
 
 
