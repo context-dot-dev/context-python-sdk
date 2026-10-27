@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.38.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.37.0...v2.38.0) (2026-10-27)
+
+
+### Features
+
+* **api:** serve a public OpenAPI spec and generate the SDKs from it ([#2075](https://github.com/context-dot-dev/context-python-sdk/issues/2075)) ([3681088](https://github.com/context-dot-dev/context-python-sdk/commit/3681088724909a3d05715851ec4e9a512fbcc794))
+
 ## [2.37.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.36.1...v2.37.0) (2026-10-23)
 
 
