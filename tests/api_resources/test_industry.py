@@ -14,6 +14,8 @@ from context.dev.types import (
     IndustryRetrieveNaicsResponse,
 )
 
+# pyright: reportDeprecated=false
+
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 
@@ -23,33 +25,38 @@ class TestIndustry:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_retrieve_naics(self, client: ContextDev) -> None:
-        industry = client.industry.retrieve_naics(
-            input="xxxx",
-        )
+        with pytest.warns(DeprecationWarning):
+            industry = client.industry.retrieve_naics(
+                input="xxxx",
+            )
+
         assert_matches_type(IndustryRetrieveNaicsResponse, industry, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_retrieve_naics_with_all_params(self, client: ContextDev) -> None:
-        industry = client.industry.retrieve_naics(
-            input="xxxx",
-            max_results=1,
-            min_results=1,
-            tags=["production", "team-alpha"],
-            timeout_opts={
-                "milliseconds": 1000,
-                "behavior": "fail",
-            },
-            zdr="enabled",
-        )
+        with pytest.warns(DeprecationWarning):
+            industry = client.industry.retrieve_naics(
+                input="xxxx",
+                max_results=1,
+                min_results=1,
+                tags=["production", "team-alpha"],
+                timeout_opts={
+                    "milliseconds": 1000,
+                    "behavior": "fail",
+                },
+                zdr="enabled",
+            )
+
         assert_matches_type(IndustryRetrieveNaicsResponse, industry, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_retrieve_naics(self, client: ContextDev) -> None:
-        response = client.industry.with_raw_response.retrieve_naics(
-            input="xxxx",
-        )
+        with pytest.warns(DeprecationWarning):
+            response = client.industry.with_raw_response.retrieve_naics(
+                input="xxxx",
+            )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -59,48 +66,54 @@ class TestIndustry:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_retrieve_naics(self, client: ContextDev) -> None:
-        with client.industry.with_streaming_response.retrieve_naics(
-            input="xxxx",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        with pytest.warns(DeprecationWarning):
+            with client.industry.with_streaming_response.retrieve_naics(
+                input="xxxx",
+            ) as response:
+                assert not response.is_closed
+                assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            industry = response.parse()
-            assert_matches_type(IndustryRetrieveNaicsResponse, industry, path=["response"])
+                industry = response.parse()
+                assert_matches_type(IndustryRetrieveNaicsResponse, industry, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_retrieve_sic(self, client: ContextDev) -> None:
-        industry = client.industry.retrieve_sic(
-            input="xxxx",
-        )
+        with pytest.warns(DeprecationWarning):
+            industry = client.industry.retrieve_sic(
+                input="xxxx",
+            )
+
         assert_matches_type(IndustryRetrieveSicResponse, industry, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_retrieve_sic_with_all_params(self, client: ContextDev) -> None:
-        industry = client.industry.retrieve_sic(
-            input="xxxx",
-            max_results=1,
-            min_results=1,
-            tags=["production", "team-alpha"],
-            timeout_opts={
-                "milliseconds": 1000,
-                "behavior": "fail",
-            },
-            type="original_sic",
-            zdr="enabled",
-        )
+        with pytest.warns(DeprecationWarning):
+            industry = client.industry.retrieve_sic(
+                input="xxxx",
+                max_results=1,
+                min_results=1,
+                tags=["production", "team-alpha"],
+                timeout_opts={
+                    "milliseconds": 1000,
+                    "behavior": "fail",
+                },
+                type="original_sic",
+                zdr="enabled",
+            )
+
         assert_matches_type(IndustryRetrieveSicResponse, industry, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_retrieve_sic(self, client: ContextDev) -> None:
-        response = client.industry.with_raw_response.retrieve_sic(
-            input="xxxx",
-        )
+        with pytest.warns(DeprecationWarning):
+            response = client.industry.with_raw_response.retrieve_sic(
+                input="xxxx",
+            )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -110,14 +123,15 @@ class TestIndustry:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_retrieve_sic(self, client: ContextDev) -> None:
-        with client.industry.with_streaming_response.retrieve_sic(
-            input="xxxx",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        with pytest.warns(DeprecationWarning):
+            with client.industry.with_streaming_response.retrieve_sic(
+                input="xxxx",
+            ) as response:
+                assert not response.is_closed
+                assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            industry = response.parse()
-            assert_matches_type(IndustryRetrieveSicResponse, industry, path=["response"])
+                industry = response.parse()
+                assert_matches_type(IndustryRetrieveSicResponse, industry, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -130,33 +144,38 @@ class TestAsyncIndustry:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_retrieve_naics(self, async_client: AsyncContextDev) -> None:
-        industry = await async_client.industry.retrieve_naics(
-            input="xxxx",
-        )
+        with pytest.warns(DeprecationWarning):
+            industry = await async_client.industry.retrieve_naics(
+                input="xxxx",
+            )
+
         assert_matches_type(IndustryRetrieveNaicsResponse, industry, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_retrieve_naics_with_all_params(self, async_client: AsyncContextDev) -> None:
-        industry = await async_client.industry.retrieve_naics(
-            input="xxxx",
-            max_results=1,
-            min_results=1,
-            tags=["production", "team-alpha"],
-            timeout_opts={
-                "milliseconds": 1000,
-                "behavior": "fail",
-            },
-            zdr="enabled",
-        )
+        with pytest.warns(DeprecationWarning):
+            industry = await async_client.industry.retrieve_naics(
+                input="xxxx",
+                max_results=1,
+                min_results=1,
+                tags=["production", "team-alpha"],
+                timeout_opts={
+                    "milliseconds": 1000,
+                    "behavior": "fail",
+                },
+                zdr="enabled",
+            )
+
         assert_matches_type(IndustryRetrieveNaicsResponse, industry, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_retrieve_naics(self, async_client: AsyncContextDev) -> None:
-        response = await async_client.industry.with_raw_response.retrieve_naics(
-            input="xxxx",
-        )
+        with pytest.warns(DeprecationWarning):
+            response = await async_client.industry.with_raw_response.retrieve_naics(
+                input="xxxx",
+            )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -166,48 +185,54 @@ class TestAsyncIndustry:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve_naics(self, async_client: AsyncContextDev) -> None:
-        async with async_client.industry.with_streaming_response.retrieve_naics(
-            input="xxxx",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        with pytest.warns(DeprecationWarning):
+            async with async_client.industry.with_streaming_response.retrieve_naics(
+                input="xxxx",
+            ) as response:
+                assert not response.is_closed
+                assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            industry = await response.parse()
-            assert_matches_type(IndustryRetrieveNaicsResponse, industry, path=["response"])
+                industry = await response.parse()
+                assert_matches_type(IndustryRetrieveNaicsResponse, industry, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_retrieve_sic(self, async_client: AsyncContextDev) -> None:
-        industry = await async_client.industry.retrieve_sic(
-            input="xxxx",
-        )
+        with pytest.warns(DeprecationWarning):
+            industry = await async_client.industry.retrieve_sic(
+                input="xxxx",
+            )
+
         assert_matches_type(IndustryRetrieveSicResponse, industry, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_retrieve_sic_with_all_params(self, async_client: AsyncContextDev) -> None:
-        industry = await async_client.industry.retrieve_sic(
-            input="xxxx",
-            max_results=1,
-            min_results=1,
-            tags=["production", "team-alpha"],
-            timeout_opts={
-                "milliseconds": 1000,
-                "behavior": "fail",
-            },
-            type="original_sic",
-            zdr="enabled",
-        )
+        with pytest.warns(DeprecationWarning):
+            industry = await async_client.industry.retrieve_sic(
+                input="xxxx",
+                max_results=1,
+                min_results=1,
+                tags=["production", "team-alpha"],
+                timeout_opts={
+                    "milliseconds": 1000,
+                    "behavior": "fail",
+                },
+                type="original_sic",
+                zdr="enabled",
+            )
+
         assert_matches_type(IndustryRetrieveSicResponse, industry, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_retrieve_sic(self, async_client: AsyncContextDev) -> None:
-        response = await async_client.industry.with_raw_response.retrieve_sic(
-            input="xxxx",
-        )
+        with pytest.warns(DeprecationWarning):
+            response = await async_client.industry.with_raw_response.retrieve_sic(
+                input="xxxx",
+            )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -217,13 +242,14 @@ class TestAsyncIndustry:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve_sic(self, async_client: AsyncContextDev) -> None:
-        async with async_client.industry.with_streaming_response.retrieve_sic(
-            input="xxxx",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        with pytest.warns(DeprecationWarning):
+            async with async_client.industry.with_streaming_response.retrieve_sic(
+                input="xxxx",
+            ) as response:
+                assert not response.is_closed
+                assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            industry = await response.parse()
-            assert_matches_type(IndustryRetrieveSicResponse, industry, path=["response"])
+                industry = await response.parse()
+                assert_matches_type(IndustryRetrieveSicResponse, industry, path=["response"])
 
         assert cast(Any, response.is_closed) is True

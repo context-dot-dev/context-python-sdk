@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import typing_extensions
 from typing_extensions import Literal
 
 import httpx
@@ -44,6 +45,7 @@ class IndustryResource(SyncAPIResource):
         """
         return IndustryResourceWithStreamingResponse(self)
 
+    @typing_extensions.deprecated("deprecated")
     def retrieve_naics(
         self,
         *,
@@ -110,6 +112,7 @@ class IndustryResource(SyncAPIResource):
             cast_to=IndustryRetrieveNaicsResponse,
         )
 
+    @typing_extensions.deprecated("deprecated")
     def retrieve_sic(
         self,
         *,
@@ -200,6 +203,7 @@ class AsyncIndustryResource(AsyncAPIResource):
         """
         return AsyncIndustryResourceWithStreamingResponse(self)
 
+    @typing_extensions.deprecated("deprecated")
     async def retrieve_naics(
         self,
         *,
@@ -266,6 +270,7 @@ class AsyncIndustryResource(AsyncAPIResource):
             cast_to=IndustryRetrieveNaicsResponse,
         )
 
+    @typing_extensions.deprecated("deprecated")
     async def retrieve_sic(
         self,
         *,
@@ -340,11 +345,15 @@ class IndustryResourceWithRawResponse:
     def __init__(self, industry: IndustryResource) -> None:
         self._industry = industry
 
-        self.retrieve_naics = to_raw_response_wrapper(
-            industry.retrieve_naics,
+        self.retrieve_naics = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                industry.retrieve_naics,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.retrieve_sic = to_raw_response_wrapper(
-            industry.retrieve_sic,
+        self.retrieve_sic = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                industry.retrieve_sic,  # pyright: ignore[reportDeprecated],
+            )
         )
 
 
@@ -352,11 +361,15 @@ class AsyncIndustryResourceWithRawResponse:
     def __init__(self, industry: AsyncIndustryResource) -> None:
         self._industry = industry
 
-        self.retrieve_naics = async_to_raw_response_wrapper(
-            industry.retrieve_naics,
+        self.retrieve_naics = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                industry.retrieve_naics,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.retrieve_sic = async_to_raw_response_wrapper(
-            industry.retrieve_sic,
+        self.retrieve_sic = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                industry.retrieve_sic,  # pyright: ignore[reportDeprecated],
+            )
         )
 
 
@@ -364,11 +377,15 @@ class IndustryResourceWithStreamingResponse:
     def __init__(self, industry: IndustryResource) -> None:
         self._industry = industry
 
-        self.retrieve_naics = to_streamed_response_wrapper(
-            industry.retrieve_naics,
+        self.retrieve_naics = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                industry.retrieve_naics,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.retrieve_sic = to_streamed_response_wrapper(
-            industry.retrieve_sic,
+        self.retrieve_sic = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                industry.retrieve_sic,  # pyright: ignore[reportDeprecated],
+            )
         )
 
 
@@ -376,9 +393,13 @@ class AsyncIndustryResourceWithStreamingResponse:
     def __init__(self, industry: AsyncIndustryResource) -> None:
         self._industry = industry
 
-        self.retrieve_naics = async_to_streamed_response_wrapper(
-            industry.retrieve_naics,
+        self.retrieve_naics = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                industry.retrieve_naics,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.retrieve_sic = async_to_streamed_response_wrapper(
-            industry.retrieve_sic,
+        self.retrieve_sic = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                industry.retrieve_sic,  # pyright: ignore[reportDeprecated],
+            )
         )
