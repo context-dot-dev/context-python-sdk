@@ -461,6 +461,12 @@ class InputScrapeDataSharedParamsParsersPdf(TypedDict, total=False):
     end_page: Annotated[int, PropertyInfo(alias="endPage")]
     """Last page to parse. Must be at least `startPage`."""
 
+    include_numbered_pages: Annotated[bool, PropertyInfo(alias="includeNumberedPages")]
+    """
+    Start each page in the Markdown with a `<!-- page N -->` line using its original
+    1-based page number; these responses are never served from cache.
+    """
+
     ocr: Literal["off", "auto"]
     """Set `auto` to read scanned pages with OCR."""
 
@@ -1174,6 +1180,12 @@ class InputCrawlDataSharedParamsParsersPdf(TypedDict, total=False):
 
     end_page: Annotated[int, PropertyInfo(alias="endPage")]
     """Last page to parse. Must be at least `startPage`."""
+
+    include_numbered_pages: Annotated[bool, PropertyInfo(alias="includeNumberedPages")]
+    """
+    Start each page in the Markdown with a `<!-- page N -->` line using its original
+    1-based page number; these responses are never served from cache.
+    """
 
     ocr: Literal["off", "auto"]
     """Set `auto` to read scanned pages with OCR."""

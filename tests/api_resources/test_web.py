@@ -311,6 +311,7 @@ class TestWeb:
                 "parsers": {
                     "pdf": {
                         "end_page": 1,
+                        "include_numbered_pages": True,
                         "ocr": "off",
                         "start_page": 1,
                     }
@@ -863,6 +864,7 @@ class TestAsyncWeb:
                 "parsers": {
                     "pdf": {
                         "end_page": 1,
+                        "include_numbered_pages": True,
                         "ocr": "off",
                         "start_page": 1,
                     }

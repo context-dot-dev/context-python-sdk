@@ -34,6 +34,7 @@ class TestParse:
             extension="txt",
             include_images=True,
             include_links=True,
+            include_numbered_pages=True,
             ocr=True,
             pdf={
                 "end": 1,
@@ -95,6 +96,7 @@ class TestAsyncParse:
             extension="txt",
             include_images=True,
             include_links=True,
+            include_numbered_pages=True,
             ocr=True,
             pdf={
                 "end": 1,

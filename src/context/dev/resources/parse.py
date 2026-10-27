@@ -137,6 +137,7 @@ class ParseResource(SyncAPIResource):
         | Omit = omit,
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
+        include_numbered_pages: bool | Omit = omit,
         ocr: bool | Omit = omit,
         pdf: parse_handle_params.Pdf | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
@@ -162,6 +163,9 @@ class ParseResource(SyncAPIResource):
           include_images: Include image references in Markdown output
 
           include_links: Preserve hyperlinks in Markdown output
+
+          include_numbered_pages: Start each PDF page in the Markdown with a `<!-- page N -->` line, where N is
+              the original 1-based page number.
 
           ocr: Read text from images and scanned PDF pages. PDF page ranges still apply.
 
@@ -199,6 +203,7 @@ class ParseResource(SyncAPIResource):
                         "extension": extension,
                         "include_images": include_images,
                         "include_links": include_links,
+                        "include_numbered_pages": include_numbered_pages,
                         "ocr": ocr,
                         "pdf": pdf,
                         "shorten_base64_images": shorten_base64_images,
@@ -313,6 +318,7 @@ class AsyncParseResource(AsyncAPIResource):
         | Omit = omit,
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
+        include_numbered_pages: bool | Omit = omit,
         ocr: bool | Omit = omit,
         pdf: parse_handle_params.Pdf | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
@@ -338,6 +344,9 @@ class AsyncParseResource(AsyncAPIResource):
           include_images: Include image references in Markdown output
 
           include_links: Preserve hyperlinks in Markdown output
+
+          include_numbered_pages: Start each PDF page in the Markdown with a `<!-- page N -->` line, where N is
+              the original 1-based page number.
 
           ocr: Read text from images and scanned PDF pages. PDF page ranges still apply.
 
@@ -375,6 +384,7 @@ class AsyncParseResource(AsyncAPIResource):
                         "extension": extension,
                         "include_images": include_images,
                         "include_links": include_links,
+                        "include_numbered_pages": include_numbered_pages,
                         "ocr": ocr,
                         "pdf": pdf,
                         "shorten_base64_images": shorten_base64_images,

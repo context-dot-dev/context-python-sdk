@@ -97,6 +97,12 @@ class ParseHandleParams(TypedDict, total=False):
     include_links: Annotated[bool, PropertyInfo(alias="includeLinks")]
     """Preserve hyperlinks in Markdown output"""
 
+    include_numbered_pages: Annotated[bool, PropertyInfo(alias="includeNumberedPages")]
+    """
+    Start each PDF page in the Markdown with a `<!-- page N -->` line, where N is
+    the original 1-based page number.
+    """
+
     ocr: bool
     """Read text from images and scanned PDF pages. PDF page ranges still apply."""
 

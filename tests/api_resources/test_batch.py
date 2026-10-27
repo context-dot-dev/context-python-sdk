@@ -348,6 +348,7 @@ class TestBatch:
                         "parsers": {
                             "pdf": {
                                 "end_page": 1,
+                                "include_numbered_pages": True,
                                 "ocr": "off",
                                 "start_page": 1,
                             }
@@ -757,6 +758,7 @@ class TestAsyncBatch:
                         "parsers": {
                             "pdf": {
                                 "end_page": 1,
+                                "include_numbered_pages": True,
                                 "ocr": "off",
                                 "start_page": 1,
                             }
