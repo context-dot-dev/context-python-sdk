@@ -4,7 +4,15 @@ from typing import List, Optional
 
 from .._models import BaseModel
 
-__all__ = ["PersonSearchResponse", "Result", "ResultLocation", "ResultRole", "ResultRoleCompany", "KeyMetadata"]
+__all__ = [
+    "PersonSearchResponse",
+    "Result",
+    "ResultLocation",
+    "ResultRole",
+    "ResultRoleCompany",
+    "ResultMatch",
+    "KeyMetadata",
+]
 
 
 class ResultLocation(BaseModel):
@@ -49,6 +57,13 @@ class ResultRole(BaseModel):
     """Job title."""
 
 
+class ResultMatch(BaseModel):
+    """How well the person matches the query. Only returned in `ultra` mode."""
+
+    confidence: float
+    """How well the person matches the query, from 0 to 1."""
+
+
 class Result(BaseModel):
     """A person matching your search; unavailable details are null or empty lists."""
 
@@ -78,6 +93,9 @@ class Result(BaseModel):
 
     years_of_experience: Optional[int] = None
     """Years of professional experience."""
+
+    match: Optional[ResultMatch] = None
+    """How well the person matches the query. Only returned in `ultra` mode."""
 
 
 class KeyMetadata(BaseModel):

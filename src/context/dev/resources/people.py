@@ -127,6 +127,7 @@ class PeopleResource(SyncAPIResource):
         query: str,
         cursor: str | Omit = omit,
         filters: person_search_params.Filters | Omit = omit,
+        mode: Literal["fast", "ultra"] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -139,11 +140,16 @@ class PeopleResource(SyncAPIResource):
         Find people with a natural-language query.
 
         Args:
-          query: Describe the people to find.
+          query: Describe the people to find. Up to 500 characters in `fast` mode and 5000 in
+              `ultra` mode.
 
-          cursor: Use next_cursor with the same query and filters to fetch the next page.
+          cursor: Use next_cursor with the same query, mode and filters to fetch the next page.
 
           filters: Additional constraints every result must match.
+
+          mode: `fast` matches people on basic criteria (e.g. their role, location or
+              background); `ultra` plans a deeper search, judges each candidate against every
+              criterion in the query and explains each match.
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -162,6 +168,7 @@ class PeopleResource(SyncAPIResource):
                     "query": query,
                     "cursor": cursor,
                     "filters": filters,
+                    "mode": mode,
                     "tags": tags,
                 },
                 person_search_params.PersonSearchParams,
@@ -275,6 +282,7 @@ class AsyncPeopleResource(AsyncAPIResource):
         query: str,
         cursor: str | Omit = omit,
         filters: person_search_params.Filters | Omit = omit,
+        mode: Literal["fast", "ultra"] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -287,11 +295,16 @@ class AsyncPeopleResource(AsyncAPIResource):
         Find people with a natural-language query.
 
         Args:
-          query: Describe the people to find.
+          query: Describe the people to find. Up to 500 characters in `fast` mode and 5000 in
+              `ultra` mode.
 
-          cursor: Use next_cursor with the same query and filters to fetch the next page.
+          cursor: Use next_cursor with the same query, mode and filters to fetch the next page.
 
           filters: Additional constraints every result must match.
+
+          mode: `fast` matches people on basic criteria (e.g. their role, location or
+              background); `ultra` plans a deeper search, judges each candidate against every
+              criterion in the query and explains each match.
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -310,6 +323,7 @@ class AsyncPeopleResource(AsyncAPIResource):
                     "query": query,
                     "cursor": cursor,
                     "filters": filters,
+                    "mode": mode,
                     "tags": tags,
                 },
                 person_search_params.PersonSearchParams,

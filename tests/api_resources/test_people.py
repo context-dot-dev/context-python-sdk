@@ -103,6 +103,7 @@ class TestPeople:
                 "years_of_experience_max": 0,
                 "years_of_experience_min": 0,
             },
+            mode="fast",
             tags=["production", "team-alpha"],
         )
         assert_matches_type(PersonSearchResponse, person, path=["response"])
@@ -225,6 +226,7 @@ class TestAsyncPeople:
                 "years_of_experience_max": 0,
                 "years_of_experience_min": 0,
             },
+            mode="fast",
             tags=["production", "team-alpha"],
         )
         assert_matches_type(PersonSearchResponse, person, path=["response"])
