@@ -179,6 +179,13 @@ class BrandRetrieveByDomainRequest(TypedDict, total=False):
     timeout_opts: Annotated[BrandRetrieveByDomainRequestTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
     """Request deadline and what to return when it passes."""
 
+    zdr: Literal["enabled", "disabled"]
+    """`enabled` disables request logs, usage logs, and traces.
+
+    Brand data and hosted assets may still be stored. Returns 403 `ZDR_NOT_ENABLED`
+    unless your organization has ZDR.
+    """
+
 
 class BrandRetrieveByDomainRequestTimeoutOpts(TypedDict, total=False):
     """Request deadline and what to return when it passes."""
@@ -593,6 +600,13 @@ class BrandRetrieveByNameRequest(TypedDict, total=False):
     timeout_opts: Annotated[BrandRetrieveByNameRequestTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
     """Request deadline and what to return when it passes."""
 
+    zdr: Literal["enabled", "disabled"]
+    """`enabled` disables request logs, usage logs, and traces.
+
+    Brand data and hosted assets may still be stored. Returns 403 `ZDR_NOT_ENABLED`
+    unless your organization has ZDR.
+    """
+
 
 class BrandRetrieveByNameRequestTimeoutOpts(TypedDict, total=False):
     """Request deadline and what to return when it passes."""
@@ -760,6 +774,13 @@ class BrandRetrieveByEmailRequest(TypedDict, total=False):
 
     timeout_opts: Annotated[BrandRetrieveByEmailRequestTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
     """Request deadline and what to return when it passes."""
+
+    zdr: Literal["enabled", "disabled"]
+    """`enabled` disables request logs, usage logs, and traces.
+
+    Brand data and hosted assets may still be stored. Returns 403 `ZDR_NOT_ENABLED`
+    unless your organization has ZDR.
+    """
 
 
 class BrandRetrieveByEmailRequestTimeoutOpts(TypedDict, total=False):
@@ -1005,6 +1026,13 @@ class BrandRetrieveByTickerRequest(TypedDict, total=False):
     timeout_opts: Annotated[BrandRetrieveByTickerRequestTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
     """Request deadline and what to return when it passes."""
 
+    zdr: Literal["enabled", "disabled"]
+    """`enabled` disables request logs, usage logs, and traces.
+
+    Brand data and hosted assets may still be stored. Returns 403 `ZDR_NOT_ENABLED`
+    unless your organization has ZDR.
+    """
+
 
 class BrandRetrieveByTickerRequestTimeoutOpts(TypedDict, total=False):
     """Request deadline and what to return when it passes."""
@@ -1038,6 +1066,13 @@ class BrandRetrieveByDirectURLRequest(TypedDict, total=False):
 
     timeout_opts: Annotated[BrandRetrieveByDirectURLRequestTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
     """Request deadline and what to return when it passes."""
+
+    zdr: Literal["enabled", "disabled"]
+    """`enabled` disables request logs, usage logs, and traces.
+
+    Brand data and hosted assets may still be stored. Returns 403 `ZDR_NOT_ENABLED`
+    unless your organization has ZDR.
+    """
 
 
 class BrandRetrieveByDirectURLRequestTimeoutOpts(TypedDict, total=False):
@@ -1464,6 +1499,13 @@ class BrandRetrieveFromTransactionRequest(TypedDict, total=False):
 
     timeout_opts: Annotated[BrandRetrieveFromTransactionRequestTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
     """Request deadline and what to return when it passes."""
+
+    zdr: Literal["enabled", "disabled"]
+    """`enabled` disables request logs, usage logs, and traces.
+
+    Brand data and hosted assets may still be stored. Returns 403 `ZDR_NOT_ENABLED`
+    unless your organization has ZDR.
+    """
 
 
 class BrandRetrieveFromTransactionRequestTimeoutOpts(TypedDict, total=False):

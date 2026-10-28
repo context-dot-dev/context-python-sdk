@@ -44,9 +44,10 @@ class WebExtractStyleguideParams(TypedDict, total=False):
     """Request deadline and what to return when it passes."""
 
     zdr: Literal["enabled", "disabled"]
-    """`enabled` turns on zero data retention.
+    """`enabled` disables request logs, usage logs, and traces.
 
-    Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
+    Brand data and hosted assets may still be stored. Returns 403 `ZDR_NOT_ENABLED`
+    unless your organization has ZDR.
     """
 
 

@@ -181,6 +181,7 @@ class BrandResource(SyncAPIResource):
         policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: brand_retrieve_params.BrandRetrieveByDomainRequestTimeoutOpts | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -209,6 +210,10 @@ class BrandResource(SyncAPIResource):
           tags: Labels for filtering usage in the dashboard.
 
           timeout_opts: Request deadline and what to return when it passes.
+
+          zdr: `enabled` disables request logs, usage logs, and traces. Brand data and hosted
+              assets may still be stored. Returns 403 `ZDR_NOT_ENABLED` unless your
+              organization has ZDR.
 
           extra_headers: Send extra headers
 
@@ -598,6 +603,7 @@ class BrandResource(SyncAPIResource):
         policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: brand_retrieve_params.BrandRetrieveByNameRequestTimeoutOpts | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -629,6 +635,10 @@ class BrandResource(SyncAPIResource):
           tags: Labels for filtering usage in the dashboard.
 
           timeout_opts: Request deadline and what to return when it passes.
+
+          zdr: `enabled` disables request logs, usage logs, and traces. Brand data and hosted
+              assets may still be stored. Returns 403 `ZDR_NOT_ENABLED` unless your
+              organization has ZDR.
 
           extra_headers: Send extra headers
 
@@ -776,6 +786,7 @@ class BrandResource(SyncAPIResource):
         policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: brand_retrieve_params.BrandRetrieveByEmailRequestTimeoutOpts | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -804,6 +815,10 @@ class BrandResource(SyncAPIResource):
           tags: Labels for filtering usage in the dashboard.
 
           timeout_opts: Request deadline and what to return when it passes.
+
+          zdr: `enabled` disables request logs, usage logs, and traces. Brand data and hosted
+              assets may still be stored. Returns 403 `ZDR_NOT_ENABLED` unless your
+              organization has ZDR.
 
           extra_headers: Send extra headers
 
@@ -1026,6 +1041,7 @@ class BrandResource(SyncAPIResource):
         ]
         | Omit = omit,
         timeout_opts: brand_retrieve_params.BrandRetrieveByTickerRequestTimeoutOpts | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1057,6 +1073,10 @@ class BrandResource(SyncAPIResource):
 
           timeout_opts: Request deadline and what to return when it passes.
 
+          zdr: `enabled` disables request logs, usage logs, and traces. Brand data and hosted
+              assets may still be stored. Returns 403 `ZDR_NOT_ENABLED` unless your
+              organization has ZDR.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -1076,6 +1096,7 @@ class BrandResource(SyncAPIResource):
         policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: brand_retrieve_params.BrandRetrieveByDirectURLRequestTimeoutOpts | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1099,6 +1120,10 @@ class BrandResource(SyncAPIResource):
           tags: Labels for filtering usage in the dashboard.
 
           timeout_opts: Request deadline and what to return when it passes.
+
+          zdr: `enabled` disables request logs, usage logs, and traces. Brand data and hosted
+              assets may still be stored. Returns 403 `ZDR_NOT_ENABLED` unless your
+              organization has ZDR.
 
           extra_headers: Send extra headers
 
@@ -1491,6 +1516,7 @@ class BrandResource(SyncAPIResource):
         policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: brand_retrieve_params.BrandRetrieveFromTransactionRequestTimeoutOpts | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1529,6 +1555,10 @@ class BrandResource(SyncAPIResource):
           tags: Labels for filtering usage in the dashboard.
 
           timeout_opts: Request deadline and what to return when it passes.
+
+          zdr: `enabled` disables request logs, usage logs, and traces. Brand data and hosted
+              assets may still be stored. Returns 403 `ZDR_NOT_ENABLED` unless your
+              organization has ZDR.
 
           extra_headers: Send extra headers
 
@@ -1694,6 +1724,7 @@ class BrandResource(SyncAPIResource):
         | brand_retrieve_params.BrandRetrieveByDirectURLRequestTimeoutOpts
         | brand_retrieve_params.BrandRetrieveFromTransactionRequestTimeoutOpts
         | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         name: str | Omit = omit,
         country_gl: Literal[
             "af",
@@ -2039,6 +2070,7 @@ class BrandResource(SyncAPIResource):
                     "policies": policies,
                     "tags": tags,
                     "timeout_opts": timeout_opts,
+                    "zdr": zdr,
                     "name": name,
                     "country_gl": country_gl,
                     "email": email,
@@ -2664,6 +2696,7 @@ class AsyncBrandResource(AsyncAPIResource):
         policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: brand_retrieve_params.BrandRetrieveByDomainRequestTimeoutOpts | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -2692,6 +2725,10 @@ class AsyncBrandResource(AsyncAPIResource):
           tags: Labels for filtering usage in the dashboard.
 
           timeout_opts: Request deadline and what to return when it passes.
+
+          zdr: `enabled` disables request logs, usage logs, and traces. Brand data and hosted
+              assets may still be stored. Returns 403 `ZDR_NOT_ENABLED` unless your
+              organization has ZDR.
 
           extra_headers: Send extra headers
 
@@ -3081,6 +3118,7 @@ class AsyncBrandResource(AsyncAPIResource):
         policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: brand_retrieve_params.BrandRetrieveByNameRequestTimeoutOpts | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -3112,6 +3150,10 @@ class AsyncBrandResource(AsyncAPIResource):
           tags: Labels for filtering usage in the dashboard.
 
           timeout_opts: Request deadline and what to return when it passes.
+
+          zdr: `enabled` disables request logs, usage logs, and traces. Brand data and hosted
+              assets may still be stored. Returns 403 `ZDR_NOT_ENABLED` unless your
+              organization has ZDR.
 
           extra_headers: Send extra headers
 
@@ -3259,6 +3301,7 @@ class AsyncBrandResource(AsyncAPIResource):
         policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: brand_retrieve_params.BrandRetrieveByEmailRequestTimeoutOpts | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -3287,6 +3330,10 @@ class AsyncBrandResource(AsyncAPIResource):
           tags: Labels for filtering usage in the dashboard.
 
           timeout_opts: Request deadline and what to return when it passes.
+
+          zdr: `enabled` disables request logs, usage logs, and traces. Brand data and hosted
+              assets may still be stored. Returns 403 `ZDR_NOT_ENABLED` unless your
+              organization has ZDR.
 
           extra_headers: Send extra headers
 
@@ -3509,6 +3556,7 @@ class AsyncBrandResource(AsyncAPIResource):
         ]
         | Omit = omit,
         timeout_opts: brand_retrieve_params.BrandRetrieveByTickerRequestTimeoutOpts | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -3540,6 +3588,10 @@ class AsyncBrandResource(AsyncAPIResource):
 
           timeout_opts: Request deadline and what to return when it passes.
 
+          zdr: `enabled` disables request logs, usage logs, and traces. Brand data and hosted
+              assets may still be stored. Returns 403 `ZDR_NOT_ENABLED` unless your
+              organization has ZDR.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -3559,6 +3611,7 @@ class AsyncBrandResource(AsyncAPIResource):
         policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: brand_retrieve_params.BrandRetrieveByDirectURLRequestTimeoutOpts | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -3582,6 +3635,10 @@ class AsyncBrandResource(AsyncAPIResource):
           tags: Labels for filtering usage in the dashboard.
 
           timeout_opts: Request deadline and what to return when it passes.
+
+          zdr: `enabled` disables request logs, usage logs, and traces. Brand data and hosted
+              assets may still be stored. Returns 403 `ZDR_NOT_ENABLED` unless your
+              organization has ZDR.
 
           extra_headers: Send extra headers
 
@@ -3974,6 +4031,7 @@ class AsyncBrandResource(AsyncAPIResource):
         policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: brand_retrieve_params.BrandRetrieveFromTransactionRequestTimeoutOpts | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -4012,6 +4070,10 @@ class AsyncBrandResource(AsyncAPIResource):
           tags: Labels for filtering usage in the dashboard.
 
           timeout_opts: Request deadline and what to return when it passes.
+
+          zdr: `enabled` disables request logs, usage logs, and traces. Brand data and hosted
+              assets may still be stored. Returns 403 `ZDR_NOT_ENABLED` unless your
+              organization has ZDR.
 
           extra_headers: Send extra headers
 
@@ -4177,6 +4239,7 @@ class AsyncBrandResource(AsyncAPIResource):
         | brand_retrieve_params.BrandRetrieveByDirectURLRequestTimeoutOpts
         | brand_retrieve_params.BrandRetrieveFromTransactionRequestTimeoutOpts
         | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         name: str | Omit = omit,
         country_gl: Literal[
             "af",
@@ -4522,6 +4585,7 @@ class AsyncBrandResource(AsyncAPIResource):
                     "policies": policies,
                     "tags": tags,
                     "timeout_opts": timeout_opts,
+                    "zdr": zdr,
                     "name": name,
                     "country_gl": country_gl,
                     "email": email,

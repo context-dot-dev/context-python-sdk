@@ -41,6 +41,7 @@ class TestBrand:
                 "milliseconds": 1000,
                 "behavior": "fail",
             },
+            zdr="enabled",
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
@@ -97,6 +98,7 @@ class TestBrand:
                 "milliseconds": 1000,
                 "behavior": "fail",
             },
+            zdr="enabled",
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
@@ -152,6 +154,7 @@ class TestBrand:
                 "milliseconds": 1000,
                 "behavior": "fail",
             },
+            zdr="enabled",
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
@@ -208,6 +211,7 @@ class TestBrand:
                 "milliseconds": 1000,
                 "behavior": "fail",
             },
+            zdr="enabled",
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
@@ -260,6 +264,7 @@ class TestBrand:
                 "milliseconds": 1000,
                 "behavior": "fail",
             },
+            zdr="enabled",
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
@@ -319,6 +324,7 @@ class TestBrand:
                 "milliseconds": 1000,
                 "behavior": "fail",
             },
+            zdr="enabled",
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
@@ -428,6 +434,7 @@ class TestAsyncBrand:
                 "milliseconds": 1000,
                 "behavior": "fail",
             },
+            zdr="enabled",
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
@@ -484,6 +491,7 @@ class TestAsyncBrand:
                 "milliseconds": 1000,
                 "behavior": "fail",
             },
+            zdr="enabled",
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
@@ -539,6 +547,7 @@ class TestAsyncBrand:
                 "milliseconds": 1000,
                 "behavior": "fail",
             },
+            zdr="enabled",
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
@@ -595,6 +604,7 @@ class TestAsyncBrand:
                 "milliseconds": 1000,
                 "behavior": "fail",
             },
+            zdr="enabled",
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
@@ -647,6 +657,7 @@ class TestAsyncBrand:
                 "milliseconds": 1000,
                 "behavior": "fail",
             },
+            zdr="enabled",
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
@@ -706,6 +717,7 @@ class TestAsyncBrand:
                 "milliseconds": 1000,
                 "behavior": "fail",
             },
+            zdr="enabled",
         )
         assert_matches_type(BrandRetrieveResponse, brand, path=["response"])
 
