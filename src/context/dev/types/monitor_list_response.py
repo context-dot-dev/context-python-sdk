@@ -397,6 +397,9 @@ class Data(BaseModel):
     next_run_at: Optional[datetime] = None
     """When the next scheduled run is due; null while paused."""
 
+    policies: Optional[List[str]] = None
+    """Access policy IDs applied to every run."""
+
     tags: Optional[List[str]] = None
     """Labels for filtering monitors, their changes, and their usage."""
 

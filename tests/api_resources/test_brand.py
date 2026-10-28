@@ -35,6 +35,7 @@ class TestBrand:
             force_language="afrikaans",
             max_age_ms=0,
             max_speed=True,
+            policies=["pol_3f9c2a7e5b8d4c1f9a6e0b2d7c4f8a1e"],
             tags=["production", "team-alpha"],
             timeout_opts={
                 "milliseconds": 1000,
@@ -90,6 +91,7 @@ class TestBrand:
             force_language="afrikaans",
             max_age_ms=0,
             max_speed=True,
+            policies=["pol_3f9c2a7e5b8d4c1f9a6e0b2d7c4f8a1e"],
             tags=["production", "team-alpha"],
             timeout_opts={
                 "milliseconds": 1000,
@@ -144,6 +146,7 @@ class TestBrand:
             force_language="afrikaans",
             max_age_ms=0,
             max_speed=True,
+            policies=["pol_3f9c2a7e5b8d4c1f9a6e0b2d7c4f8a1e"],
             tags=["production", "team-alpha"],
             timeout_opts={
                 "milliseconds": 1000,
@@ -198,6 +201,7 @@ class TestBrand:
             force_language="afrikaans",
             max_age_ms=0,
             max_speed=True,
+            policies=["pol_3f9c2a7e5b8d4c1f9a6e0b2d7c4f8a1e"],
             tags=["production", "team-alpha"],
             ticker_exchange="AMEX",
             timeout_opts={
@@ -250,6 +254,7 @@ class TestBrand:
         brand = client.brand.retrieve(
             direct_url="https://example.com",
             type="by_direct_url",
+            policies=["pol_3f9c2a7e5b8d4c1f9a6e0b2d7c4f8a1e"],
             tags=["production", "team-alpha"],
             timeout_opts={
                 "milliseconds": 1000,
@@ -308,6 +313,7 @@ class TestBrand:
             max_speed=True,
             mcc="string",
             phone="string",
+            policies=["pol_3f9c2a7e5b8d4c1f9a6e0b2d7c4f8a1e"],
             tags=["production", "team-alpha"],
             timeout_opts={
                 "milliseconds": 1000,
@@ -416,6 +422,7 @@ class TestAsyncBrand:
             force_language="afrikaans",
             max_age_ms=0,
             max_speed=True,
+            policies=["pol_3f9c2a7e5b8d4c1f9a6e0b2d7c4f8a1e"],
             tags=["production", "team-alpha"],
             timeout_opts={
                 "milliseconds": 1000,
@@ -471,6 +478,7 @@ class TestAsyncBrand:
             force_language="afrikaans",
             max_age_ms=0,
             max_speed=True,
+            policies=["pol_3f9c2a7e5b8d4c1f9a6e0b2d7c4f8a1e"],
             tags=["production", "team-alpha"],
             timeout_opts={
                 "milliseconds": 1000,
@@ -525,6 +533,7 @@ class TestAsyncBrand:
             force_language="afrikaans",
             max_age_ms=0,
             max_speed=True,
+            policies=["pol_3f9c2a7e5b8d4c1f9a6e0b2d7c4f8a1e"],
             tags=["production", "team-alpha"],
             timeout_opts={
                 "milliseconds": 1000,
@@ -579,6 +588,7 @@ class TestAsyncBrand:
             force_language="afrikaans",
             max_age_ms=0,
             max_speed=True,
+            policies=["pol_3f9c2a7e5b8d4c1f9a6e0b2d7c4f8a1e"],
             tags=["production", "team-alpha"],
             ticker_exchange="AMEX",
             timeout_opts={
@@ -631,6 +641,7 @@ class TestAsyncBrand:
         brand = await async_client.brand.retrieve(
             direct_url="https://example.com",
             type="by_direct_url",
+            policies=["pol_3f9c2a7e5b8d4c1f9a6e0b2d7c4f8a1e"],
             tags=["production", "team-alpha"],
             timeout_opts={
                 "milliseconds": 1000,
@@ -689,6 +700,7 @@ class TestAsyncBrand:
             max_speed=True,
             mcc="string",
             phone="string",
+            policies=["pol_3f9c2a7e5b8d4c1f9a6e0b2d7c4f8a1e"],
             tags=["production", "team-alpha"],
             timeout_opts={
                 "milliseconds": 1000,

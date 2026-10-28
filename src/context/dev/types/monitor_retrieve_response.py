@@ -403,6 +403,9 @@ class MonitorRetrieveResponse(BaseModel):
     next_run_at: Optional[datetime] = None
     """When the next scheduled run is due; null while paused."""
 
+    policies: Optional[List[str]] = None
+    """Access policy IDs applied to every run."""
+
     schedule: Optional[Schedule] = None
     """Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
 

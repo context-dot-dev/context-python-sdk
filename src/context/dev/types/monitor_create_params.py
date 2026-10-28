@@ -44,6 +44,9 @@ class MonitorCreateParams(TypedDict, total=False):
     mode: Literal["web"]
     """Always `web`. Optional."""
 
+    policies: SequenceNotStr[str]
+    """Access policy IDs to apply to every run."""
+
     schedule: Schedule
     """Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
 

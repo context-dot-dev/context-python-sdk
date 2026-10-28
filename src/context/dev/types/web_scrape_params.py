@@ -70,6 +70,9 @@ class WebScrapeParams(TypedDict, total=False):
     parse_params: Annotated[ParseParams, PropertyInfo(alias="parseParams")]
     """Requires `formats.parse: true`; required when it is set."""
 
+    policies: SequenceNotStr[str]
+    """Access policy IDs to apply. A URL must pass every policy."""
+
     product_params: Annotated[ProductParams, PropertyInfo(alias="productParams")]
     """Product options. Requires formats.product: true."""
 

@@ -170,6 +170,9 @@ class BrandRetrieveByDomainRequest(TypedDict, total=False):
     response at the cost of less comprehensive data.
     """
 
+    policies: SequenceNotStr[str]
+    """Access policy IDs to apply. A URL must pass every policy."""
+
     tags: SequenceNotStr[str]
     """Labels for filtering usage in the dashboard."""
 
@@ -581,6 +584,9 @@ class BrandRetrieveByNameRequest(TypedDict, total=False):
     response at the cost of less comprehensive data.
     """
 
+    policies: SequenceNotStr[str]
+    """Access policy IDs to apply. A URL must pass every policy."""
+
     tags: SequenceNotStr[str]
     """Labels for filtering usage in the dashboard."""
 
@@ -745,6 +751,9 @@ class BrandRetrieveByEmailRequest(TypedDict, total=False):
     When set to true, the API will skip time-consuming operations for faster
     response at the cost of less comprehensive data.
     """
+
+    policies: SequenceNotStr[str]
+    """Access policy IDs to apply. A URL must pass every policy."""
 
     tags: SequenceNotStr[str]
     """Labels for filtering usage in the dashboard."""
@@ -911,6 +920,9 @@ class BrandRetrieveByTickerRequest(TypedDict, total=False):
     response at the cost of less comprehensive data.
     """
 
+    policies: SequenceNotStr[str]
+    """Access policy IDs to apply. A URL must pass every policy."""
+
     tags: SequenceNotStr[str]
     """Labels for filtering usage in the dashboard."""
 
@@ -1017,6 +1029,9 @@ class BrandRetrieveByDirectURLRequest(TypedDict, total=False):
 
     type: Required[Literal["by_direct_url"]]
     """Discriminator for direct-URL-based brand retrieval."""
+
+    policies: SequenceNotStr[str]
+    """Access policy IDs to apply. A URL must pass every policy."""
 
     tags: SequenceNotStr[str]
     """Labels for filtering usage in the dashboard."""
@@ -1440,6 +1455,9 @@ class BrandRetrieveFromTransactionRequest(TypedDict, total=False):
 
     phone: Union[str, float]
     """Optional phone number from the transaction to help verify brand match."""
+
+    policies: SequenceNotStr[str]
+    """Access policy IDs to apply. A URL must pass every policy."""
 
     tags: SequenceNotStr[str]
     """Labels for filtering usage in the dashboard."""

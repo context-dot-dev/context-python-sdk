@@ -388,6 +388,9 @@ class WebSearchParams(TypedDict, total=False):
     num_results: Annotated[int, PropertyInfo(alias="numResults")]
     """Number of results to request and return (1–100). Defaults to 10."""
 
+    policies: SequenceNotStr[str]
+    """Access policy IDs to apply. A URL must pass every policy."""
+
     query_fanout: Annotated[bool, PropertyInfo(alias="queryFanout")]
     """Currently has no effect."""
 

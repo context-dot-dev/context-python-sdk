@@ -200,5 +200,8 @@ class BatchRetrieveResponse(BaseModel):
     key_metadata: Optional[KeyMetadata] = None
     """Credits this request used and your remaining balance."""
 
+    policies: Optional[List[str]] = None
+    """Access policy IDs applied to every page."""
+
     webhook_delivery_id: Optional[str] = None
     """Batch completion delivery ID, when available."""

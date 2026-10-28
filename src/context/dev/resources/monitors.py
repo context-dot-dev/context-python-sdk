@@ -77,6 +77,7 @@ class MonitorsResource(SyncAPIResource):
         target: monitor_create_params.Target,
         change_detection: monitor_create_params.ChangeDetection | Omit = omit,
         mode: Literal["web"] | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         schedule: monitor_create_params.Schedule | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         webhook: Optional[monitor_create_params.Webhook] | Omit = omit,
@@ -102,6 +103,8 @@ class MonitorsResource(SyncAPIResource):
 
           mode: Always `web`. Optional.
 
+          policies: Access policy IDs to apply to every run.
+
           schedule: Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
               every 6 hours or every 2 days. The total interval (frequency × unit) must be
               between 10 minutes and 1 year.
@@ -126,6 +129,7 @@ class MonitorsResource(SyncAPIResource):
                     "target": target,
                     "change_detection": change_detection,
                     "mode": mode,
+                    "policies": policies,
                     "schedule": schedule,
                     "tags": tags,
                     "webhook": webhook,
@@ -179,6 +183,7 @@ class MonitorsResource(SyncAPIResource):
         *,
         change_detection: monitor_update_params.ChangeDetection | Omit = omit,
         name: str | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         schedule: monitor_update_params.Schedule | Omit = omit,
         status: Literal["active", "paused"] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
@@ -203,6 +208,8 @@ class MonitorsResource(SyncAPIResource):
               targets with `instructions`, otherwise `exact`.
 
           name: Display name for the monitor.
+
+          policies: Access policy IDs to apply to every run. Send an empty list to remove them.
 
           schedule: Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
               every 6 hours or every 2 days. The total interval (frequency × unit) must be
@@ -232,6 +239,7 @@ class MonitorsResource(SyncAPIResource):
                 {
                     "change_detection": change_detection,
                     "name": name,
+                    "policies": policies,
                     "schedule": schedule,
                     "status": status,
                     "tags": tags,
@@ -843,6 +851,7 @@ class AsyncMonitorsResource(AsyncAPIResource):
         target: monitor_create_params.Target,
         change_detection: monitor_create_params.ChangeDetection | Omit = omit,
         mode: Literal["web"] | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         schedule: monitor_create_params.Schedule | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         webhook: Optional[monitor_create_params.Webhook] | Omit = omit,
@@ -868,6 +877,8 @@ class AsyncMonitorsResource(AsyncAPIResource):
 
           mode: Always `web`. Optional.
 
+          policies: Access policy IDs to apply to every run.
+
           schedule: Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
               every 6 hours or every 2 days. The total interval (frequency × unit) must be
               between 10 minutes and 1 year.
@@ -892,6 +903,7 @@ class AsyncMonitorsResource(AsyncAPIResource):
                     "target": target,
                     "change_detection": change_detection,
                     "mode": mode,
+                    "policies": policies,
                     "schedule": schedule,
                     "tags": tags,
                     "webhook": webhook,
@@ -945,6 +957,7 @@ class AsyncMonitorsResource(AsyncAPIResource):
         *,
         change_detection: monitor_update_params.ChangeDetection | Omit = omit,
         name: str | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         schedule: monitor_update_params.Schedule | Omit = omit,
         status: Literal["active", "paused"] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
@@ -969,6 +982,8 @@ class AsyncMonitorsResource(AsyncAPIResource):
               targets with `instructions`, otherwise `exact`.
 
           name: Display name for the monitor.
+
+          policies: Access policy IDs to apply to every run. Send an empty list to remove them.
 
           schedule: Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
               every 6 hours or every 2 days. The total interval (frequency × unit) must be
@@ -998,6 +1013,7 @@ class AsyncMonitorsResource(AsyncAPIResource):
                 {
                     "change_detection": change_detection,
                     "name": name,
+                    "policies": policies,
                     "schedule": schedule,
                     "status": status,
                     "tags": tags,

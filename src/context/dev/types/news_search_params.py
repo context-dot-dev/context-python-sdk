@@ -44,6 +44,9 @@ class NewsSearchParams(TypedDict, total=False):
     limit: int
     """Maximum results to return. Defaults to 10."""
 
+    policies: SequenceNotStr[str]
+    """Access policy IDs to apply. A URL must pass every policy."""
+
     sort_by: Annotated[SortBy, PropertyInfo(alias="sortBy")]
     """Result ordering.
 

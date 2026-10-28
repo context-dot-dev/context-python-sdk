@@ -38,6 +38,9 @@ class MonitorUpdateParams(TypedDict, total=False):
     name: str
     """Display name for the monitor."""
 
+    policies: SequenceNotStr[str]
+    """Access policy IDs to apply to every run. Send an empty list to remove them."""
+
     schedule: Schedule
     """Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
 

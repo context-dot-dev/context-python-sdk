@@ -290,6 +290,7 @@ class BatchResource(SyncAPIResource):
         self,
         *,
         input: batch_submit_params.Input,
+        policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         webhook: batch_submit_params.Webhook | Omit = omit,
         webhook_url: str | Omit = omit,
@@ -309,6 +310,8 @@ class BatchResource(SyncAPIResource):
 
         Args:
           input: Choose a URL list or a site crawl.
+
+          policies: Access policy IDs to apply to every page. A URL must pass every policy.
 
           tags: Tags stored on the batch. Filter the batch list by them later.
 
@@ -335,6 +338,7 @@ class BatchResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "input": input,
+                    "policies": policies,
                     "tags": tags,
                     "webhook": webhook,
                     "webhook_url": webhook_url,
@@ -609,6 +613,7 @@ class AsyncBatchResource(AsyncAPIResource):
         self,
         *,
         input: batch_submit_params.Input,
+        policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         webhook: batch_submit_params.Webhook | Omit = omit,
         webhook_url: str | Omit = omit,
@@ -628,6 +633,8 @@ class AsyncBatchResource(AsyncAPIResource):
 
         Args:
           input: Choose a URL list or a site crawl.
+
+          policies: Access policy IDs to apply to every page. A URL must pass every policy.
 
           tags: Tags stored on the batch. Filter the batch list by them later.
 
@@ -654,6 +661,7 @@ class AsyncBatchResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "input": input,
+                    "policies": policies,
                     "tags": tags,
                     "webhook": webhook,
                     "webhook_url": webhook_url,

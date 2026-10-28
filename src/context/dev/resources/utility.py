@@ -48,6 +48,7 @@ class UtilityResource(SyncAPIResource):
         *,
         identifier: utility_prefetch_params.Identifier,
         type: Literal["brand", "styleguide"],
+        policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: utility_prefetch_params.TimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -64,6 +65,8 @@ class UtilityResource(SyncAPIResource):
           identifier: Identifier of the target to prefetch. Provide exactly one of domain or email.
 
           type: Data to prefetch.
+
+          policies: Access policy IDs to apply. A URL must pass every policy.
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -83,6 +86,7 @@ class UtilityResource(SyncAPIResource):
                 {
                     "identifier": identifier,
                     "type": type,
+                    "policies": policies,
                     "tags": tags,
                     "timeout_opts": timeout_opts,
                 },
@@ -120,6 +124,7 @@ class AsyncUtilityResource(AsyncAPIResource):
         *,
         identifier: utility_prefetch_params.Identifier,
         type: Literal["brand", "styleguide"],
+        policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: utility_prefetch_params.TimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -136,6 +141,8 @@ class AsyncUtilityResource(AsyncAPIResource):
           identifier: Identifier of the target to prefetch. Provide exactly one of domain or email.
 
           type: Data to prefetch.
+
+          policies: Access policy IDs to apply. A URL must pass every policy.
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -155,6 +162,7 @@ class AsyncUtilityResource(AsyncAPIResource):
                 {
                     "identifier": identifier,
                     "type": type,
+                    "policies": policies,
                     "tags": tags,
                     "timeout_opts": timeout_opts,
                 },

@@ -31,6 +31,9 @@ class WebAnswersParams(TypedDict, total=False):
     `ultra` supports deeper research (default).
     """
 
+    policies: SequenceNotStr[str]
+    """Access policy IDs to apply. A URL must pass every policy."""
+
     tags: SequenceNotStr[str]
     """Labels for filtering usage in the dashboard."""
 

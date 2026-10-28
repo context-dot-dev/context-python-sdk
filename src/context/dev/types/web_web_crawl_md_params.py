@@ -267,6 +267,9 @@ class WebWebCrawlMdParams(TypedDict, total=False):
     pdf: Pdf
     """PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range."""
 
+    policies: SequenceNotStr[str]
+    """Access policy IDs to apply. A URL must pass every policy."""
+
     settle_animations: Annotated[bool, PropertyInfo(alias="settleAnimations")]
     """
     Wait briefly for CSS animations and transitions to settle before reading each

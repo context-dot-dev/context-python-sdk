@@ -34,6 +34,9 @@ class WebExtractStyleguideParams(TypedDict, total=False):
     Defaults to 3 months; clamped to 0–1 year. `0` refreshes.
     """
 
+    policies: SequenceNotStr[str]
+    """Comma-separated access policy IDs to apply. A URL must pass every policy."""
+
     tags: SequenceNotStr[str]
     """Comma-separated labels for filtering usage, e.g. `production,team-alpha`."""
 

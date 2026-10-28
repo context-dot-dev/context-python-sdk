@@ -24,6 +24,9 @@ class UtilityPrefetchParams(TypedDict, total=False):
     type: Required[Literal["brand", "styleguide"]]
     """Data to prefetch."""
 
+    policies: SequenceNotStr[str]
+    """Access policy IDs to apply. A URL must pass every policy."""
+
     tags: SequenceNotStr[str]
     """Labels for filtering usage in the dashboard."""
 

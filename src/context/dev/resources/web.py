@@ -66,6 +66,7 @@ class WebResource(SyncAPIResource):
         task: str,
         json_format: Dict[str, object] | Omit = omit,
         mode: Literal["fast", "ultra"] | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: web_answers_params.TimeoutOpts | Omit = omit,
         zdr: Literal["enabled", "disabled"] | Omit = omit,
@@ -91,6 +92,8 @@ class WebResource(SyncAPIResource):
           mode: `fast` prioritizes speed, with extra verification for people and companies;
               `ultra` supports deeper research (default).
 
+          policies: Access policy IDs to apply. A URL must pass every policy.
+
           tags: Labels for filtering usage in the dashboard.
 
           timeout_opts: Request deadline and what to return when it passes.
@@ -113,6 +116,7 @@ class WebResource(SyncAPIResource):
                     "task": task,
                     "json_format": json_format,
                     "mode": mode,
+                    "policies": policies,
                     "tags": tags,
                     "timeout_opts": timeout_opts,
                     "zdr": zdr,
@@ -193,6 +197,7 @@ class WebResource(SyncAPIResource):
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
         max_age_ms: Optional[int] | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: web_extract_styleguide_params.TimeoutOpts | Omit = omit,
         zdr: Literal["enabled", "disabled"] | Omit = omit,
@@ -218,6 +223,8 @@ class WebResource(SyncAPIResource):
 
           max_age_ms: Maximum age of cached brand data in ms. Defaults to 3 months; clamped to 0–1
               year. `0` refreshes.
+
+          policies: Comma-separated access policy IDs to apply. A URL must pass every policy.
 
           tags: Comma-separated labels for filtering usage, e.g. `production,team-alpha`.
 
@@ -247,6 +254,7 @@ class WebResource(SyncAPIResource):
                         "direct_url": direct_url,
                         "domain": domain,
                         "max_age_ms": max_age_ms,
+                        "policies": policies,
                         "tags": tags,
                         "timeout_opts": timeout_opts,
                         "zdr": zdr,
@@ -265,6 +273,7 @@ class WebResource(SyncAPIResource):
         headers: Dict[str, str] | Omit = omit,
         include_subdomains: bool | Omit = omit,
         max_links: int | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         search: str | Omit = omit,
         sitemap_url: str | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
@@ -293,6 +302,8 @@ class WebResource(SyncAPIResource):
           include_subdomains: Include URLs on subdomains.
 
           max_links: Maximum number of URLs to return.
+
+          policies: Comma-separated access policy IDs to apply. A URL must pass every policy.
 
           search: Filter URLs by a topic or phrase, most relevant first.
 
@@ -331,6 +342,7 @@ class WebResource(SyncAPIResource):
                         "headers": headers,
                         "include_subdomains": include_subdomains,
                         "max_links": max_links,
+                        "policies": policies,
                         "search": search,
                         "sitemap_url": sitemap_url,
                         "tags": tags,
@@ -355,6 +367,7 @@ class WebResource(SyncAPIResource):
         markdown_params: web_scrape_params.MarkdownParams | Omit = omit,
         max_age_ms: int | Omit = omit,
         parse_params: web_scrape_params.ParseParams | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         product_params: web_scrape_params.ProductParams | Omit = omit,
         screenshot_params: web_scrape_params.ScreenshotParams | Omit = omit,
         shared_params: web_scrape_params.SharedParams | Omit = omit,
@@ -391,6 +404,8 @@ class WebResource(SyncAPIResource):
 
           parse_params: Requires `formats.parse: true`; required when it is set.
 
+          policies: Access policy IDs to apply. A URL must pass every policy.
+
           product_params: Product options. Requires formats.product: true.
 
           screenshot_params: Screenshot options. Requires formats.screenshot: true.
@@ -424,6 +439,7 @@ class WebResource(SyncAPIResource):
                     "markdown_params": markdown_params,
                     "max_age_ms": max_age_ms,
                     "parse_params": parse_params,
+                    "policies": policies,
                     "product_params": product_params,
                     "screenshot_params": screenshot_params,
                     "shared_params": shared_params,
@@ -1117,6 +1133,7 @@ class WebResource(SyncAPIResource):
         | Omit = omit,
         markdown_options: Optional[web_search_params.MarkdownOptions] | Omit = omit,
         num_results: int | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         query_fanout: bool | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: web_search_params.TimeoutOpts | Omit = omit,
@@ -1161,6 +1178,8 @@ class WebResource(SyncAPIResource):
 
           num_results: Number of results to request and return (1–100). Defaults to 10.
 
+          policies: Access policy IDs to apply. A URL must pass every policy.
+
           query_fanout: Currently has no effect.
 
           tags: Labels for filtering usage in the dashboard.
@@ -1192,6 +1211,7 @@ class WebResource(SyncAPIResource):
                     "languages": languages,
                     "markdown_options": markdown_options,
                     "num_results": num_results,
+                    "policies": policies,
                     "query_fanout": query_fanout,
                     "tags": tags,
                     "timeout_opts": timeout_opts,
@@ -1427,6 +1447,7 @@ class WebResource(SyncAPIResource):
         max_depth: int | Omit = omit,
         max_pages: int | Omit = omit,
         pdf: web_web_crawl_md_params.Pdf | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         settle_animations: bool | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
         source_preference: List[Literal["html-conversion", "markdown-direct"]] | Omit = omit,
@@ -1479,6 +1500,8 @@ class WebResource(SyncAPIResource):
           max_pages: Maximum pages to crawl.
 
           pdf: PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range.
+
+          policies: Access policy IDs to apply. A URL must pass every policy.
 
           settle_animations: Wait briefly for CSS animations and transitions to settle before reading each
               page.
@@ -1534,6 +1557,7 @@ class WebResource(SyncAPIResource):
                     "max_depth": max_depth,
                     "max_pages": max_pages,
                     "pdf": pdf,
+                    "policies": policies,
                     "settle_animations": settle_animations,
                     "shorten_base64_images": shorten_base64_images,
                     "source_preference": source_preference,
@@ -1580,6 +1604,7 @@ class AsyncWebResource(AsyncAPIResource):
         task: str,
         json_format: Dict[str, object] | Omit = omit,
         mode: Literal["fast", "ultra"] | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: web_answers_params.TimeoutOpts | Omit = omit,
         zdr: Literal["enabled", "disabled"] | Omit = omit,
@@ -1605,6 +1630,8 @@ class AsyncWebResource(AsyncAPIResource):
           mode: `fast` prioritizes speed, with extra verification for people and companies;
               `ultra` supports deeper research (default).
 
+          policies: Access policy IDs to apply. A URL must pass every policy.
+
           tags: Labels for filtering usage in the dashboard.
 
           timeout_opts: Request deadline and what to return when it passes.
@@ -1627,6 +1654,7 @@ class AsyncWebResource(AsyncAPIResource):
                     "task": task,
                     "json_format": json_format,
                     "mode": mode,
+                    "policies": policies,
                     "tags": tags,
                     "timeout_opts": timeout_opts,
                     "zdr": zdr,
@@ -1707,6 +1735,7 @@ class AsyncWebResource(AsyncAPIResource):
         direct_url: str | Omit = omit,
         domain: str | Omit = omit,
         max_age_ms: Optional[int] | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: web_extract_styleguide_params.TimeoutOpts | Omit = omit,
         zdr: Literal["enabled", "disabled"] | Omit = omit,
@@ -1732,6 +1761,8 @@ class AsyncWebResource(AsyncAPIResource):
 
           max_age_ms: Maximum age of cached brand data in ms. Defaults to 3 months; clamped to 0–1
               year. `0` refreshes.
+
+          policies: Comma-separated access policy IDs to apply. A URL must pass every policy.
 
           tags: Comma-separated labels for filtering usage, e.g. `production,team-alpha`.
 
@@ -1761,6 +1792,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "direct_url": direct_url,
                         "domain": domain,
                         "max_age_ms": max_age_ms,
+                        "policies": policies,
                         "tags": tags,
                         "timeout_opts": timeout_opts,
                         "zdr": zdr,
@@ -1779,6 +1811,7 @@ class AsyncWebResource(AsyncAPIResource):
         headers: Dict[str, str] | Omit = omit,
         include_subdomains: bool | Omit = omit,
         max_links: int | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         search: str | Omit = omit,
         sitemap_url: str | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
@@ -1807,6 +1840,8 @@ class AsyncWebResource(AsyncAPIResource):
           include_subdomains: Include URLs on subdomains.
 
           max_links: Maximum number of URLs to return.
+
+          policies: Comma-separated access policy IDs to apply. A URL must pass every policy.
 
           search: Filter URLs by a topic or phrase, most relevant first.
 
@@ -1845,6 +1880,7 @@ class AsyncWebResource(AsyncAPIResource):
                         "headers": headers,
                         "include_subdomains": include_subdomains,
                         "max_links": max_links,
+                        "policies": policies,
                         "search": search,
                         "sitemap_url": sitemap_url,
                         "tags": tags,
@@ -1869,6 +1905,7 @@ class AsyncWebResource(AsyncAPIResource):
         markdown_params: web_scrape_params.MarkdownParams | Omit = omit,
         max_age_ms: int | Omit = omit,
         parse_params: web_scrape_params.ParseParams | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         product_params: web_scrape_params.ProductParams | Omit = omit,
         screenshot_params: web_scrape_params.ScreenshotParams | Omit = omit,
         shared_params: web_scrape_params.SharedParams | Omit = omit,
@@ -1905,6 +1942,8 @@ class AsyncWebResource(AsyncAPIResource):
 
           parse_params: Requires `formats.parse: true`; required when it is set.
 
+          policies: Access policy IDs to apply. A URL must pass every policy.
+
           product_params: Product options. Requires formats.product: true.
 
           screenshot_params: Screenshot options. Requires formats.screenshot: true.
@@ -1938,6 +1977,7 @@ class AsyncWebResource(AsyncAPIResource):
                     "markdown_params": markdown_params,
                     "max_age_ms": max_age_ms,
                     "parse_params": parse_params,
+                    "policies": policies,
                     "product_params": product_params,
                     "screenshot_params": screenshot_params,
                     "shared_params": shared_params,
@@ -2631,6 +2671,7 @@ class AsyncWebResource(AsyncAPIResource):
         | Omit = omit,
         markdown_options: Optional[web_search_params.MarkdownOptions] | Omit = omit,
         num_results: int | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         query_fanout: bool | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: web_search_params.TimeoutOpts | Omit = omit,
@@ -2675,6 +2716,8 @@ class AsyncWebResource(AsyncAPIResource):
 
           num_results: Number of results to request and return (1–100). Defaults to 10.
 
+          policies: Access policy IDs to apply. A URL must pass every policy.
+
           query_fanout: Currently has no effect.
 
           tags: Labels for filtering usage in the dashboard.
@@ -2706,6 +2749,7 @@ class AsyncWebResource(AsyncAPIResource):
                     "languages": languages,
                     "markdown_options": markdown_options,
                     "num_results": num_results,
+                    "policies": policies,
                     "query_fanout": query_fanout,
                     "tags": tags,
                     "timeout_opts": timeout_opts,
@@ -2941,6 +2985,7 @@ class AsyncWebResource(AsyncAPIResource):
         max_depth: int | Omit = omit,
         max_pages: int | Omit = omit,
         pdf: web_web_crawl_md_params.Pdf | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         settle_animations: bool | Omit = omit,
         shorten_base64_images: bool | Omit = omit,
         source_preference: List[Literal["html-conversion", "markdown-direct"]] | Omit = omit,
@@ -2993,6 +3038,8 @@ class AsyncWebResource(AsyncAPIResource):
           max_pages: Maximum pages to crawl.
 
           pdf: PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range.
+
+          policies: Access policy IDs to apply. A URL must pass every policy.
 
           settle_animations: Wait briefly for CSS animations and transitions to settle before reading each
               page.
@@ -3048,6 +3095,7 @@ class AsyncWebResource(AsyncAPIResource):
                     "max_depth": max_depth,
                     "max_pages": max_pages,
                     "pdf": pdf,
+                    "policies": policies,
                     "settle_animations": settle_animations,
                     "shorten_base64_images": shorten_base64_images,
                     "source_preference": source_preference,

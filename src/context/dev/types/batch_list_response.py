@@ -172,6 +172,9 @@ class Data(BaseModel):
 
     timing: DataTiming
 
+    policies: Optional[List[str]] = None
+    """Access policy IDs applied to every page."""
+
 
 class KeyMetadata(BaseModel):
     """Credits this request used and your remaining balance."""

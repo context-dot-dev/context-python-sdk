@@ -44,6 +44,7 @@ class TestWeb:
                 "plans": "bar",
             },
             mode="fast",
+            policies=["pol_3f9c2a7e5b8d4c1f9a6e0b2d7c4f8a1e"],
             tags=["production", "team-alpha"],
             timeout_opts={
                 "milliseconds": 1000,
@@ -142,6 +143,7 @@ class TestWeb:
             direct_url="https://example.com",
             domain="xxx",
             max_age_ms=0,
+            policies=["string"],
             tags=["production", "team-alpha"],
             timeout_opts={
                 "milliseconds": 1,
@@ -190,6 +192,7 @@ class TestWeb:
             headers={"foo": "J!"},
             include_subdomains=True,
             max_links=1,
+            policies=["string"],
             search="help center and troubleshooting articles",
             sitemap_url="https://example.com",
             tags=["production", "team-alpha"],
@@ -288,6 +291,7 @@ class TestWeb:
                 },
                 "type": "custom",
             },
+            policies=["pol_3f9c2a7e5b8d4c1f9a6e0b2d7c4f8a1e"],
             product_params={"dedupe_images": True},
             screenshot_params={
                 "area": "viewport",
@@ -465,6 +469,7 @@ class TestWeb:
                 "wait_for_ms": 0,
             },
             num_results=10,
+            policies=["pol_3f9c2a7e5b8d4c1f9a6e0b2d7c4f8a1e"],
             query_fanout=True,
             tags=["production", "team-alpha"],
             timeout_opts={
@@ -531,6 +536,7 @@ class TestWeb:
                 "should_parse": True,
                 "start": 1,
             },
+            policies=["pol_3f9c2a7e5b8d4c1f9a6e0b2d7c4f8a1e"],
             settle_animations=True,
             shorten_base64_images=True,
             source_preference=["html-conversion"],
@@ -597,6 +603,7 @@ class TestAsyncWeb:
                 "plans": "bar",
             },
             mode="fast",
+            policies=["pol_3f9c2a7e5b8d4c1f9a6e0b2d7c4f8a1e"],
             tags=["production", "team-alpha"],
             timeout_opts={
                 "milliseconds": 1000,
@@ -695,6 +702,7 @@ class TestAsyncWeb:
             direct_url="https://example.com",
             domain="xxx",
             max_age_ms=0,
+            policies=["string"],
             tags=["production", "team-alpha"],
             timeout_opts={
                 "milliseconds": 1,
@@ -743,6 +751,7 @@ class TestAsyncWeb:
             headers={"foo": "J!"},
             include_subdomains=True,
             max_links=1,
+            policies=["string"],
             search="help center and troubleshooting articles",
             sitemap_url="https://example.com",
             tags=["production", "team-alpha"],
@@ -841,6 +850,7 @@ class TestAsyncWeb:
                 },
                 "type": "custom",
             },
+            policies=["pol_3f9c2a7e5b8d4c1f9a6e0b2d7c4f8a1e"],
             product_params={"dedupe_images": True},
             screenshot_params={
                 "area": "viewport",
@@ -1018,6 +1028,7 @@ class TestAsyncWeb:
                 "wait_for_ms": 0,
             },
             num_results=10,
+            policies=["pol_3f9c2a7e5b8d4c1f9a6e0b2d7c4f8a1e"],
             query_fanout=True,
             tags=["production", "team-alpha"],
             timeout_opts={
@@ -1084,6 +1095,7 @@ class TestAsyncWeb:
                 "should_parse": True,
                 "start": 1,
             },
+            policies=["pol_3f9c2a7e5b8d4c1f9a6e0b2d7c4f8a1e"],
             settle_animations=True,
             shorten_base64_images=True,
             source_preference=["html-conversion"],

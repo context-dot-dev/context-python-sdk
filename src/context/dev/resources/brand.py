@@ -178,6 +178,7 @@ class BrandResource(SyncAPIResource):
         | Omit = omit,
         max_age_ms: int | Omit = omit,
         max_speed: bool | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: brand_retrieve_params.BrandRetrieveByDomainRequestTimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -202,6 +203,8 @@ class BrandResource(SyncAPIResource):
           max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
+
+          policies: Access policy IDs to apply. A URL must pass every policy.
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -592,6 +595,7 @@ class BrandResource(SyncAPIResource):
         | Omit = omit,
         max_age_ms: int | Omit = omit,
         max_speed: bool | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: brand_retrieve_params.BrandRetrieveByNameRequestTimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -619,6 +623,8 @@ class BrandResource(SyncAPIResource):
           max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
+
+          policies: Access policy IDs to apply. A URL must pass every policy.
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -767,6 +773,7 @@ class BrandResource(SyncAPIResource):
         | Omit = omit,
         max_age_ms: int | Omit = omit,
         max_speed: bool | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: brand_retrieve_params.BrandRetrieveByEmailRequestTimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -791,6 +798,8 @@ class BrandResource(SyncAPIResource):
           max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
+
+          policies: Access policy IDs to apply. A URL must pass every policy.
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -939,6 +948,7 @@ class BrandResource(SyncAPIResource):
         | Omit = omit,
         max_age_ms: int | Omit = omit,
         max_speed: bool | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         ticker_exchange: Literal[
             "AMEX",
@@ -1039,6 +1049,8 @@ class BrandResource(SyncAPIResource):
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
 
+          policies: Access policy IDs to apply. A URL must pass every policy.
+
           tags: Labels for filtering usage in the dashboard.
 
           ticker_exchange: Stock exchange code.
@@ -1061,6 +1073,7 @@ class BrandResource(SyncAPIResource):
         *,
         direct_url: str,
         type: Literal["by_direct_url"],
+        policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: brand_retrieve_params.BrandRetrieveByDirectURLRequestTimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -1080,6 +1093,8 @@ class BrandResource(SyncAPIResource):
               internet.
 
           type: Discriminator for direct-URL-based brand retrieval.
+
+          policies: Access policy IDs to apply. A URL must pass every policy.
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -1473,6 +1488,7 @@ class BrandResource(SyncAPIResource):
         max_speed: bool | Omit = omit,
         mcc: Union[str, float] | Omit = omit,
         phone: Union[str, float] | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: brand_retrieve_params.BrandRetrieveFromTransactionRequestTimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -1507,6 +1523,8 @@ class BrandResource(SyncAPIResource):
               industry.
 
           phone: Optional phone number from the transaction to help verify brand match.
+
+          policies: Access policy IDs to apply. A URL must pass every policy.
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -1667,6 +1685,7 @@ class BrandResource(SyncAPIResource):
         | Omit = omit,
         max_age_ms: int | Omit = omit,
         max_speed: bool | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: brand_retrieve_params.BrandRetrieveByDomainRequestTimeoutOpts
         | brand_retrieve_params.BrandRetrieveByNameRequestTimeoutOpts
@@ -2017,6 +2036,7 @@ class BrandResource(SyncAPIResource):
                     "force_language": force_language,
                     "max_age_ms": max_age_ms,
                     "max_speed": max_speed,
+                    "policies": policies,
                     "tags": tags,
                     "timeout_opts": timeout_opts,
                     "name": name,
@@ -2641,6 +2661,7 @@ class AsyncBrandResource(AsyncAPIResource):
         | Omit = omit,
         max_age_ms: int | Omit = omit,
         max_speed: bool | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: brand_retrieve_params.BrandRetrieveByDomainRequestTimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -2665,6 +2686,8 @@ class AsyncBrandResource(AsyncAPIResource):
           max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
+
+          policies: Access policy IDs to apply. A URL must pass every policy.
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -3055,6 +3078,7 @@ class AsyncBrandResource(AsyncAPIResource):
         | Omit = omit,
         max_age_ms: int | Omit = omit,
         max_speed: bool | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: brand_retrieve_params.BrandRetrieveByNameRequestTimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -3082,6 +3106,8 @@ class AsyncBrandResource(AsyncAPIResource):
           max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
+
+          policies: Access policy IDs to apply. A URL must pass every policy.
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -3230,6 +3256,7 @@ class AsyncBrandResource(AsyncAPIResource):
         | Omit = omit,
         max_age_ms: int | Omit = omit,
         max_speed: bool | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: brand_retrieve_params.BrandRetrieveByEmailRequestTimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -3254,6 +3281,8 @@ class AsyncBrandResource(AsyncAPIResource):
           max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
+
+          policies: Access policy IDs to apply. A URL must pass every policy.
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -3402,6 +3431,7 @@ class AsyncBrandResource(AsyncAPIResource):
         | Omit = omit,
         max_age_ms: int | Omit = omit,
         max_speed: bool | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         ticker_exchange: Literal[
             "AMEX",
@@ -3502,6 +3532,8 @@ class AsyncBrandResource(AsyncAPIResource):
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
 
+          policies: Access policy IDs to apply. A URL must pass every policy.
+
           tags: Labels for filtering usage in the dashboard.
 
           ticker_exchange: Stock exchange code.
@@ -3524,6 +3556,7 @@ class AsyncBrandResource(AsyncAPIResource):
         *,
         direct_url: str,
         type: Literal["by_direct_url"],
+        policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: brand_retrieve_params.BrandRetrieveByDirectURLRequestTimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -3543,6 +3576,8 @@ class AsyncBrandResource(AsyncAPIResource):
               internet.
 
           type: Discriminator for direct-URL-based brand retrieval.
+
+          policies: Access policy IDs to apply. A URL must pass every policy.
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -3936,6 +3971,7 @@ class AsyncBrandResource(AsyncAPIResource):
         max_speed: bool | Omit = omit,
         mcc: Union[str, float] | Omit = omit,
         phone: Union[str, float] | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: brand_retrieve_params.BrandRetrieveFromTransactionRequestTimeoutOpts | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -3970,6 +4006,8 @@ class AsyncBrandResource(AsyncAPIResource):
               industry.
 
           phone: Optional phone number from the transaction to help verify brand match.
+
+          policies: Access policy IDs to apply. A URL must pass every policy.
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -4130,6 +4168,7 @@ class AsyncBrandResource(AsyncAPIResource):
         | Omit = omit,
         max_age_ms: int | Omit = omit,
         max_speed: bool | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: brand_retrieve_params.BrandRetrieveByDomainRequestTimeoutOpts
         | brand_retrieve_params.BrandRetrieveByNameRequestTimeoutOpts
@@ -4480,6 +4519,7 @@ class AsyncBrandResource(AsyncAPIResource):
                     "force_language": force_language,
                     "max_age_ms": max_age_ms,
                     "max_speed": max_speed,
+                    "policies": policies,
                     "tags": tags,
                     "timeout_opts": timeout_opts,
                     "name": name,

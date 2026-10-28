@@ -52,6 +52,7 @@ class NewsResource(SyncAPIResource):
         cursor: Optional[str] | Omit = omit,
         filter_by: news_search_params.FilterBy | Omit = omit,
         limit: int | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         sort_by: news_search_params.SortBy | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -78,6 +79,8 @@ class NewsResource(SyncAPIResource):
 
           limit: Maximum results to return. Defaults to 10.
 
+          policies: Access policy IDs to apply. A URL must pass every policy.
+
           sort_by: Result ordering. Defaults to newest for entity searches. Natural-language
               searches are always ordered by relevance.
 
@@ -99,6 +102,7 @@ class NewsResource(SyncAPIResource):
                     "cursor": cursor,
                     "filter_by": filter_by,
                     "limit": limit,
+                    "policies": policies,
                     "sort_by": sort_by,
                     "tags": tags,
                 },
@@ -140,6 +144,7 @@ class AsyncNewsResource(AsyncAPIResource):
         cursor: Optional[str] | Omit = omit,
         filter_by: news_search_params.FilterBy | Omit = omit,
         limit: int | Omit = omit,
+        policies: SequenceNotStr[str] | Omit = omit,
         sort_by: news_search_params.SortBy | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -166,6 +171,8 @@ class AsyncNewsResource(AsyncAPIResource):
 
           limit: Maximum results to return. Defaults to 10.
 
+          policies: Access policy IDs to apply. A URL must pass every policy.
+
           sort_by: Result ordering. Defaults to newest for entity searches. Natural-language
               searches are always ordered by relevance.
 
@@ -187,6 +194,7 @@ class AsyncNewsResource(AsyncAPIResource):
                     "cursor": cursor,
                     "filter_by": filter_by,
                     "limit": limit,
+                    "policies": policies,
                     "sort_by": sort_by,
                     "tags": tags,
                 },

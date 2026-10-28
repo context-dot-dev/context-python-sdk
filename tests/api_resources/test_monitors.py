@@ -67,6 +67,7 @@ class TestMonitors:
             },
             change_detection={"type": "exact"},
             mode="web",
+            policies=["pol_3f9c2a7e5b8d4c1f9a6e0b2d7c4f8a1e"],
             schedule={
                 "frequency": 6,
                 "type": "interval",
@@ -172,6 +173,7 @@ class TestMonitors:
             monitor_id="mon_123",
             change_detection={"type": "exact"},
             name="Acme pricing monitor",
+            policies=["pol_3f9c2a7e5b8d4c1f9a6e0b2d7c4f8a1e"],
             schedule={
                 "frequency": 1,
                 "type": "interval",
@@ -793,6 +795,7 @@ class TestAsyncMonitors:
             },
             change_detection={"type": "exact"},
             mode="web",
+            policies=["pol_3f9c2a7e5b8d4c1f9a6e0b2d7c4f8a1e"],
             schedule={
                 "frequency": 6,
                 "type": "interval",
@@ -898,6 +901,7 @@ class TestAsyncMonitors:
             monitor_id="mon_123",
             change_detection={"type": "exact"},
             name="Acme pricing monitor",
+            policies=["pol_3f9c2a7e5b8d4c1f9a6e0b2d7c4f8a1e"],
             schedule={
                 "frequency": 1,
                 "type": "interval",

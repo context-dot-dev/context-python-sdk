@@ -30,6 +30,9 @@ class WebMapURLsParams(TypedDict, total=False):
     max_links: Annotated[int, PropertyInfo(alias="maxLinks")]
     """Maximum number of URLs to return."""
 
+    policies: SequenceNotStr[str]
+    """Comma-separated access policy IDs to apply. A URL must pass every policy."""
+
     search: str
     """Filter URLs by a topic or phrase, most relevant first."""
 
