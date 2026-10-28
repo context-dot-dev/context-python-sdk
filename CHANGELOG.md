@@ -1,5 +1,36 @@
 # Changelog
 
+## [2.41.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.40.0...v2.41.0) (2026-10-28)
+
+
+### Features
+
+* **access-policies:** limit which websites API requests can reach ([#2213](https://github.com/context-dot-dev/context-python-sdk/issues/2213)) ([7d2cf48](https://github.com/context-dot-dev/context-python-sdk/commit/7d2cf482b8d06d5c20393693fca257ead637d0b5))
+* **access-policies:** limit which websites API requests can reach ([#2213](https://github.com/context-dot-dev/context-python-sdk/issues/2213)) ([d2a0ffb](https://github.com/context-dot-dev/context-python-sdk/commit/d2a0ffb7e85adc6cf56252649b09825698541752))
+* **access-policies:** limit which websites API requests can reach ([#2213](https://github.com/context-dot-dev/context-python-sdk/issues/2213)) ([5daf298](https://github.com/context-dot-dev/context-python-sdk/commit/5daf2980675ec760539ecd8729274340a0fb139e))
+* **access-policies:** limit which websites API requests can reach ([#2213](https://github.com/context-dot-dev/context-python-sdk/issues/2213)) ([03a296d](https://github.com/context-dot-dev/context-python-sdk/commit/03a296d0a2ebc8dd34e73cf75ec262ad8e2eeb66))
+* **access-policies:** limit which websites API requests can reach ([#2213](https://github.com/context-dot-dev/context-python-sdk/issues/2213)) ([e1fc5b0](https://github.com/context-dot-dev/context-python-sdk/commit/e1fc5b07bf4ac753af0bf5f512f0cc8bed2fa405))
+* **brand:** support log-free brand and styleguide requests ([#2231](https://github.com/context-dot-dev/context-python-sdk/issues/2231)) ([7d2cf48](https://github.com/context-dot-dev/context-python-sdk/commit/7d2cf482b8d06d5c20393693fca257ead637d0b5))
+* **brand:** support log-free brand and styleguide requests ([#2231](https://github.com/context-dot-dev/context-python-sdk/issues/2231)) ([d2a0ffb](https://github.com/context-dot-dev/context-python-sdk/commit/d2a0ffb7e85adc6cf56252649b09825698541752))
+* **brand:** support log-free brand and styleguide requests ([#2231](https://github.com/context-dot-dev/context-python-sdk/issues/2231)) ([5daf298](https://github.com/context-dot-dev/context-python-sdk/commit/5daf2980675ec760539ecd8729274340a0fb139e))
+* **brand:** support log-free brand and styleguide requests ([#2231](https://github.com/context-dot-dev/context-python-sdk/issues/2231)) ([03a296d](https://github.com/context-dot-dev/context-python-sdk/commit/03a296d0a2ebc8dd34e73cf75ec262ad8e2eeb66))
+* **monitors:** add search target to watch the web for new developments ([#2215](https://github.com/context-dot-dev/context-python-sdk/issues/2215)) ([7d2cf48](https://github.com/context-dot-dev/context-python-sdk/commit/7d2cf482b8d06d5c20393693fca257ead637d0b5))
+* **monitors:** add search target to watch the web for new developments ([#2215](https://github.com/context-dot-dev/context-python-sdk/issues/2215)) ([d2a0ffb](https://github.com/context-dot-dev/context-python-sdk/commit/d2a0ffb7e85adc6cf56252649b09825698541752))
+
+
+### Bug Fixes
+
+* **brand:** keep metadata-only usage logs for ZDR brand requests ([#2234](https://github.com/context-dot-dev/context-python-sdk/issues/2234)) ([7d2cf48](https://github.com/context-dot-dev/context-python-sdk/commit/7d2cf482b8d06d5c20393693fca257ead637d0b5))
+* **brand:** keep metadata-only usage logs for ZDR brand requests ([#2234](https://github.com/context-dot-dev/context-python-sdk/issues/2234)) ([d2a0ffb](https://github.com/context-dot-dev/context-python-sdk/commit/d2a0ffb7e85adc6cf56252649b09825698541752))
+* **brand:** keep metadata-only usage logs for ZDR brand requests ([#2234](https://github.com/context-dot-dev/context-python-sdk/issues/2234)) ([5daf298](https://github.com/context-dot-dev/context-python-sdk/commit/5daf2980675ec760539ecd8729274340a0fb139e))
+* **openapi:** keep legacy batch inputs in the spec as deprecated ([#2225](https://github.com/context-dot-dev/context-python-sdk/issues/2225)) ([7d2cf48](https://github.com/context-dot-dev/context-python-sdk/commit/7d2cf482b8d06d5c20393693fca257ead637d0b5))
+* **openapi:** keep legacy batch inputs in the spec as deprecated ([#2225](https://github.com/context-dot-dev/context-python-sdk/issues/2225)) ([d2a0ffb](https://github.com/context-dot-dev/context-python-sdk/commit/d2a0ffb7e85adc6cf56252649b09825698541752))
+* **openapi:** keep legacy batch inputs in the spec as deprecated ([#2225](https://github.com/context-dot-dev/context-python-sdk/issues/2225)) ([5daf298](https://github.com/context-dot-dev/context-python-sdk/commit/5daf2980675ec760539ecd8729274340a0fb139e))
+* **openapi:** keep legacy batch inputs in the spec as deprecated ([#2225](https://github.com/context-dot-dev/context-python-sdk/issues/2225)) ([03a296d](https://github.com/context-dot-dev/context-python-sdk/commit/03a296d0a2ebc8dd34e73cf75ec262ad8e2eeb66))
+* **openapi:** keep legacy batch inputs in the spec as deprecated ([#2225](https://github.com/context-dot-dev/context-python-sdk/issues/2225)) ([e1fc5b0](https://github.com/context-dot-dev/context-python-sdk/commit/e1fc5b07bf4ac753af0bf5f512f0cc8bed2fa405))
+* **openapi:** keep legacy batch inputs in the spec as deprecated ([#2225](https://github.com/context-dot-dev/context-python-sdk/issues/2225)) ([1e9f41e](https://github.com/context-dot-dev/context-python-sdk/commit/1e9f41edbdc2cc118b566921f543e72db281b7c3))
+* **scrape:** restore Instagram profile posts from public pages ([#2233](https://github.com/context-dot-dev/context-python-sdk/issues/2233)) ([7d2cf48](https://github.com/context-dot-dev/context-python-sdk/commit/7d2cf482b8d06d5c20393693fca257ead637d0b5))
+
 ## [2.40.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.39.0...v2.40.0) (2026-10-27)
 
 
