@@ -230,9 +230,9 @@ class WebResource(SyncAPIResource):
 
           timeout_opts: Request deadline and what to return when it passes.
 
-          zdr: `enabled` disables request logs, usage logs, and traces. Brand data and hosted
-              assets may still be stored. Returns 403 `ZDR_NOT_ENABLED` unless your
-              organization has ZDR.
+          zdr: `enabled` disables request logs and traces and omits request and response
+              content from usage logs. Brand data and hosted assets may still be stored.
+              Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
 
           extra_headers: Send extra headers
 
@@ -1769,9 +1769,9 @@ class AsyncWebResource(AsyncAPIResource):
 
           timeout_opts: Request deadline and what to return when it passes.
 
-          zdr: `enabled` disables request logs, usage logs, and traces. Brand data and hosted
-              assets may still be stored. Returns 403 `ZDR_NOT_ENABLED` unless your
-              organization has ZDR.
+          zdr: `enabled` disables request logs and traces and omits request and response
+              content from usage logs. Brand data and hosted assets may still be stored.
+              Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
 
           extra_headers: Send extra headers
 
