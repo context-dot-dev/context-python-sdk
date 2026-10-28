@@ -26,7 +26,8 @@ class MonitorListParams(TypedDict, total=False):
     search_by: Optional[List[Literal["name", "url", "instructions", "tags"]]]
     """Fields to search with `q`.
 
-    Defaults to all fields; page and extract targets can have instructions.
+    Defaults to all fields; page, extract, and search targets can have instructions,
+    and `url` matches a search target’s query.
     """
 
     search_type: Literal["exact", "prefix"]
@@ -46,5 +47,5 @@ class MonitorListParams(TypedDict, total=False):
     Comma-separated list of tags to filter by (matches monitors having any of them).
     """
 
-    target_type: Literal["page", "sitemap", "extract"]
+    target_type: Literal["page", "sitemap", "extract", "search"]
     """Filter by target type."""

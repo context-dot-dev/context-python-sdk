@@ -96,10 +96,11 @@ class MonitorsResource(SyncAPIResource):
         Args:
           name: Display name for the monitor.
 
-          target: What to watch: a page, a sitemap, or data extracted from a site.
+          target: What to watch: a page, a sitemap, data extracted from a site, or web search
+              results.
 
-          change_detection: How changes are judged. Defaults to `semantic` for extract targets and page
-              targets with `instructions`, otherwise `exact`.
+          change_detection: How changes are judged. Defaults to `semantic` for extract and search targets
+              and page targets with `instructions`, otherwise `exact`.
 
           mode: Always `web`. Optional.
 
@@ -204,8 +205,8 @@ class MonitorsResource(SyncAPIResource):
         Args:
           monitor_id: ID of the monitor.
 
-          change_detection: How changes are judged. Defaults to `semantic` for extract targets and page
-              targets with `instructions`, otherwise `exact`.
+          change_detection: How changes are judged. Defaults to `semantic` for extract and search targets
+              and page targets with `instructions`, otherwise `exact`.
 
           name: Display name for the monitor.
 
@@ -219,7 +220,8 @@ class MonitorsResource(SyncAPIResource):
 
           tags: Labels for filtering monitors, their changes, and their usage.
 
-          target: What to watch: a page, a sitemap, or data extracted from a site.
+          target: What to watch: a page, a sitemap, data extracted from a site, or web search
+              results.
 
           webhook: Set to null to remove the webhook. Changing `url` issues a new secret.
 
@@ -266,7 +268,7 @@ class MonitorsResource(SyncAPIResource):
         status: Literal["active", "paused", "failed"] | Omit = omit,
         tag: str | Omit = omit,
         tags: Optional[SequenceNotStr[str]] | Omit = omit,
-        target_type: Literal["page", "sitemap", "extract"] | Omit = omit,
+        target_type: Literal["page", "sitemap", "extract", "search"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -286,8 +288,8 @@ class MonitorsResource(SyncAPIResource):
 
           q: Free-text search term, matched against the fields named in `search_by`.
 
-          search_by: Fields to search with `q`. Defaults to all fields; page and extract targets can
-              have instructions.
+          search_by: Fields to search with `q`. Defaults to all fields; page, extract, and search
+              targets can have instructions, and `url` matches a search target’s query.
 
           search_type: `prefix` for as-you-type prefix matching (default), `exact` for full-token
               matching.
@@ -444,7 +446,7 @@ class MonitorsResource(SyncAPIResource):
         monitor_id: str | Omit = omit,
         since: Union[str, datetime] | Omit = omit,
         tag: str | Omit = omit,
-        target_type: Literal["page", "sitemap", "extract"] | Omit = omit,
+        target_type: Literal["page", "sitemap", "extract", "search"] | Omit = omit,
         until: Union[str, datetime] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -870,10 +872,11 @@ class AsyncMonitorsResource(AsyncAPIResource):
         Args:
           name: Display name for the monitor.
 
-          target: What to watch: a page, a sitemap, or data extracted from a site.
+          target: What to watch: a page, a sitemap, data extracted from a site, or web search
+              results.
 
-          change_detection: How changes are judged. Defaults to `semantic` for extract targets and page
-              targets with `instructions`, otherwise `exact`.
+          change_detection: How changes are judged. Defaults to `semantic` for extract and search targets
+              and page targets with `instructions`, otherwise `exact`.
 
           mode: Always `web`. Optional.
 
@@ -978,8 +981,8 @@ class AsyncMonitorsResource(AsyncAPIResource):
         Args:
           monitor_id: ID of the monitor.
 
-          change_detection: How changes are judged. Defaults to `semantic` for extract targets and page
-              targets with `instructions`, otherwise `exact`.
+          change_detection: How changes are judged. Defaults to `semantic` for extract and search targets
+              and page targets with `instructions`, otherwise `exact`.
 
           name: Display name for the monitor.
 
@@ -993,7 +996,8 @@ class AsyncMonitorsResource(AsyncAPIResource):
 
           tags: Labels for filtering monitors, their changes, and their usage.
 
-          target: What to watch: a page, a sitemap, or data extracted from a site.
+          target: What to watch: a page, a sitemap, data extracted from a site, or web search
+              results.
 
           webhook: Set to null to remove the webhook. Changing `url` issues a new secret.
 
@@ -1040,7 +1044,7 @@ class AsyncMonitorsResource(AsyncAPIResource):
         status: Literal["active", "paused", "failed"] | Omit = omit,
         tag: str | Omit = omit,
         tags: Optional[SequenceNotStr[str]] | Omit = omit,
-        target_type: Literal["page", "sitemap", "extract"] | Omit = omit,
+        target_type: Literal["page", "sitemap", "extract", "search"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1060,8 +1064,8 @@ class AsyncMonitorsResource(AsyncAPIResource):
 
           q: Free-text search term, matched against the fields named in `search_by`.
 
-          search_by: Fields to search with `q`. Defaults to all fields; page and extract targets can
-              have instructions.
+          search_by: Fields to search with `q`. Defaults to all fields; page, extract, and search
+              targets can have instructions, and `url` matches a search target’s query.
 
           search_type: `prefix` for as-you-type prefix matching (default), `exact` for full-token
               matching.
@@ -1218,7 +1222,7 @@ class AsyncMonitorsResource(AsyncAPIResource):
         monitor_id: str | Omit = omit,
         since: Union[str, datetime] | Omit = omit,
         tag: str | Omit = omit,
-        target_type: Literal["page", "sitemap", "extract"] | Omit = omit,
+        target_type: Literal["page", "sitemap", "extract", "search"] | Omit = omit,
         until: Union[str, datetime] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.

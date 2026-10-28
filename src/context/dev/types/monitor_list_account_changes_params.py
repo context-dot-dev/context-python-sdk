@@ -30,7 +30,7 @@ class MonitorListAccountChangesParams(TypedDict, total=False):
     tag: str
     """Filter to items that have this tag."""
 
-    target_type: Literal["page", "sitemap", "extract"]
+    target_type: Literal["page", "sitemap", "extract", "search"]
     """Filter by target type."""
 
     until: Annotated[Union[str, datetime], PropertyInfo(format="iso8601")]

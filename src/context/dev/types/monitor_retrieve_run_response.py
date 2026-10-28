@@ -60,7 +60,7 @@ class MonitorRetrieveRunResponse(BaseModel):
     paused, or superseded by a concurrent run).
     """
 
-    target_type: Literal["page", "sitemap", "extract"]
+    target_type: Literal["page", "sitemap", "extract", "search"]
 
     change_id: Optional[str] = None
 

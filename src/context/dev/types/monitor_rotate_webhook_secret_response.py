@@ -23,10 +23,13 @@ __all__ = [
     "TargetMonitorsPageTargetActionWebScrapeScrollAction",
     "TargetMonitorsSitemapTarget",
     "TargetMonitorsExtractTarget",
+    "TargetMonitorsSearchTarget",
     "Baseline",
     "BaselineMonitorsPageBaseline",
     "BaselineMonitorsSitemapBaseline",
     "BaselineMonitorsExtractBaseline",
+    "BaselineMonitorsSearchBaseline",
+    "BaselineMonitorsSearchBaselineResult",
     "KeyMetadata",
     "LastError",
     "Schedule",
@@ -38,11 +41,11 @@ __all__ = [
 class ChangeDetectionMonitorsExactChangeDetection(BaseModel):
     """Detect exact changes.
 
-    For page targets, this means visible text diffs. For sitemap targets, this means URL additions and removals.
+    For page targets, this means visible text diffs. For sitemap targets, this means URL additions and removals. For search targets, this means every new result.
     """
 
     type: Literal["exact"]
-    """Use `exact` to compare visible text or sitemap URLs."""
+    """Use `exact` to compare visible text, sitemap URLs, or search results."""
 
 
 class ChangeDetectionMonitorsSemanticChangeDetection(BaseModel):
@@ -210,8 +213,28 @@ class TargetMonitorsExtractTarget(BaseModel):
     """
 
 
+class TargetMonitorsSearchTarget(BaseModel):
+    """
+    Search the web on every run and report results not seen before, listed in the change’s `matched_urls` and `evidence`. Semantic detection reports only results describing a new development that matches `instructions`; exact detection reports every new result.
+    """
+
+    query: str
+    """Web search query to run on every check.
+
+    Supports operators such as `site:`, `-site:`, and quoted phrases.
+    """
+
+    type: Literal["search"]
+    """Use `search` to watch the whole web for new results about a topic."""
+
+    instructions: Optional[str] = None
+    """Plain-language description of which new results matter. Defaults to the query."""
+
+
 Target: TypeAlias = Annotated[
-    Union[TargetMonitorsPageTarget, TargetMonitorsSitemapTarget, TargetMonitorsExtractTarget],
+    Union[
+        TargetMonitorsPageTarget, TargetMonitorsSitemapTarget, TargetMonitorsExtractTarget, TargetMonitorsSearchTarget
+    ],
     PropertyInfo(discriminator="type"),
 ]
 
@@ -259,8 +282,34 @@ class BaselineMonitorsExtractBaseline(BaseModel):
     """The page URLs the monitor tracks and analyzes for changes."""
 
 
+class BaselineMonitorsSearchBaselineResult(BaseModel):
+    description: str
+    """Result snippet."""
+
+    published_at: Optional[datetime] = None
+    """When the result was published, when known."""
+
+    title: str
+
+    url: str
+
+
+class BaselineMonitorsSearchBaseline(BaseModel):
+    """Current baseline of a `search` monitor: the search results as last observed."""
+
+    captured_at: datetime
+    """When this baseline was last captured or replaced."""
+
+    results: List[BaselineMonitorsSearchBaselineResult]
+    """Search results as last observed."""
+
+
 Baseline: TypeAlias = Union[
-    BaselineMonitorsPageBaseline, BaselineMonitorsSitemapBaseline, BaselineMonitorsExtractBaseline, None
+    BaselineMonitorsPageBaseline,
+    BaselineMonitorsSitemapBaseline,
+    BaselineMonitorsExtractBaseline,
+    BaselineMonitorsSearchBaseline,
+    None,
 ]
 
 
@@ -355,8 +404,8 @@ class MonitorRotateWebhookSecretResponse(BaseModel):
     change_detection: ChangeDetection
     """How changes are judged.
 
-    Defaults to `semantic` for extract targets and page targets with `instructions`,
-    otherwise `exact`.
+    Defaults to `semantic` for extract and search targets and page targets with
+    `instructions`, otherwise `exact`.
     """
 
     created_at: datetime
@@ -380,7 +429,10 @@ class MonitorRotateWebhookSecretResponse(BaseModel):
     """
 
     target: Target
-    """What to watch: a page, a sitemap, or data extracted from a site."""
+    """
+    What to watch: a page, a sitemap, data extracted from a site, or web search
+    results.
+    """
 
     updated_at: datetime
 

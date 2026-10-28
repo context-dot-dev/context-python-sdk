@@ -23,6 +23,7 @@ __all__ = [
     "TargetMonitorsPageTargetActionWebScrapeScrollAction",
     "TargetMonitorsSitemapTarget",
     "TargetMonitorsExtractTarget",
+    "TargetMonitorsSearchTarget",
     "Webhook",
 ]
 
@@ -31,8 +32,8 @@ class MonitorUpdateParams(TypedDict, total=False):
     change_detection: ChangeDetection
     """How changes are judged.
 
-    Defaults to `semantic` for extract targets and page targets with `instructions`,
-    otherwise `exact`.
+    Defaults to `semantic` for extract and search targets and page targets with
+    `instructions`, otherwise `exact`.
     """
 
     name: str
@@ -55,7 +56,10 @@ class MonitorUpdateParams(TypedDict, total=False):
     """Labels for filtering monitors, their changes, and their usage."""
 
     target: Target
-    """What to watch: a page, a sitemap, or data extracted from a site."""
+    """
+    What to watch: a page, a sitemap, data extracted from a site, or web search
+    results.
+    """
 
     webhook: Optional[Webhook]
     """Set to null to remove the webhook. Changing `url` issues a new secret."""
@@ -64,11 +68,11 @@ class MonitorUpdateParams(TypedDict, total=False):
 class ChangeDetectionMonitorsExactChangeDetection(TypedDict, total=False):
     """Detect exact changes.
 
-    For page targets, this means visible text diffs. For sitemap targets, this means URL additions and removals.
+    For page targets, this means visible text diffs. For sitemap targets, this means URL additions and removals. For search targets, this means every new result.
     """
 
     type: Required[Literal["exact"]]
-    """Use `exact` to compare visible text or sitemap URLs."""
+    """Use `exact` to compare visible text, sitemap URLs, or search results."""
 
 
 class ChangeDetectionMonitorsSemanticChangeDetection(TypedDict, total=False):
@@ -253,7 +257,27 @@ class TargetMonitorsExtractTarget(TypedDict, total=False):
     """
 
 
-Target: TypeAlias = Union[TargetMonitorsPageTarget, TargetMonitorsSitemapTarget, TargetMonitorsExtractTarget]
+class TargetMonitorsSearchTarget(TypedDict, total=False):
+    """
+    Search the web on every run and report results not seen before, listed in the change’s `matched_urls` and `evidence`. Semantic detection reports only results describing a new development that matches `instructions`; exact detection reports every new result.
+    """
+
+    query: Required[str]
+    """Web search query to run on every check.
+
+    Supports operators such as `site:`, `-site:`, and quoted phrases.
+    """
+
+    type: Required[Literal["search"]]
+    """Use `search` to watch the whole web for new results about a topic."""
+
+    instructions: str
+    """Plain-language description of which new results matter. Defaults to the query."""
+
+
+Target: TypeAlias = Union[
+    TargetMonitorsPageTarget, TargetMonitorsSitemapTarget, TargetMonitorsExtractTarget, TargetMonitorsSearchTarget
+]
 
 
 class Webhook(TypedDict, total=False):

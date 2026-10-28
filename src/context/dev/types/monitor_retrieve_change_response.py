@@ -56,11 +56,12 @@ class MonitorRetrieveChangeResponse(BaseModel):
     tags: List[str]
     """Labels for filtering monitors, their changes, and their usage."""
 
-    target_type: Literal["page", "sitemap", "extract"]
+    target_type: Literal["page", "sitemap", "extract", "search"]
 
     title: str
 
     url: str
+    """The monitored URL. For search targets, the first newly reported result."""
 
     added_url_count: Optional[int] = None
 

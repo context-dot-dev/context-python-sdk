@@ -25,10 +25,13 @@ __all__ = [
     "DataTargetMonitorsPageTargetActionWebScrapeScrollAction",
     "DataTargetMonitorsSitemapTarget",
     "DataTargetMonitorsExtractTarget",
+    "DataTargetMonitorsSearchTarget",
     "DataBaseline",
     "DataBaselineMonitorsPageBaseline",
     "DataBaselineMonitorsSitemapBaseline",
     "DataBaselineMonitorsExtractBaseline",
+    "DataBaselineMonitorsSearchBaseline",
+    "DataBaselineMonitorsSearchBaselineResult",
     "DataLastError",
     "DataWebhook",
     "DataWebhookFailure",
@@ -39,11 +42,11 @@ __all__ = [
 class DataChangeDetectionMonitorsExactChangeDetection(BaseModel):
     """Detect exact changes.
 
-    For page targets, this means visible text diffs. For sitemap targets, this means URL additions and removals.
+    For page targets, this means visible text diffs. For sitemap targets, this means URL additions and removals. For search targets, this means every new result.
     """
 
     type: Literal["exact"]
-    """Use `exact` to compare visible text or sitemap URLs."""
+    """Use `exact` to compare visible text, sitemap URLs, or search results."""
 
 
 class DataChangeDetectionMonitorsSemanticChangeDetection(BaseModel):
@@ -232,8 +235,31 @@ class DataTargetMonitorsExtractTarget(BaseModel):
     """
 
 
+class DataTargetMonitorsSearchTarget(BaseModel):
+    """
+    Search the web on every run and report results not seen before, listed in the change’s `matched_urls` and `evidence`. Semantic detection reports only results describing a new development that matches `instructions`; exact detection reports every new result.
+    """
+
+    query: str
+    """Web search query to run on every check.
+
+    Supports operators such as `site:`, `-site:`, and quoted phrases.
+    """
+
+    type: Literal["search"]
+    """Use `search` to watch the whole web for new results about a topic."""
+
+    instructions: Optional[str] = None
+    """Plain-language description of which new results matter. Defaults to the query."""
+
+
 DataTarget: TypeAlias = Annotated[
-    Union[DataTargetMonitorsPageTarget, DataTargetMonitorsSitemapTarget, DataTargetMonitorsExtractTarget],
+    Union[
+        DataTargetMonitorsPageTarget,
+        DataTargetMonitorsSitemapTarget,
+        DataTargetMonitorsExtractTarget,
+        DataTargetMonitorsSearchTarget,
+    ],
     PropertyInfo(discriminator="type"),
 ]
 
@@ -281,8 +307,34 @@ class DataBaselineMonitorsExtractBaseline(BaseModel):
     """The page URLs the monitor tracks and analyzes for changes."""
 
 
+class DataBaselineMonitorsSearchBaselineResult(BaseModel):
+    description: str
+    """Result snippet."""
+
+    published_at: Optional[datetime] = None
+    """When the result was published, when known."""
+
+    title: str
+
+    url: str
+
+
+class DataBaselineMonitorsSearchBaseline(BaseModel):
+    """Current baseline of a `search` monitor: the search results as last observed."""
+
+    captured_at: datetime
+    """When this baseline was last captured or replaced."""
+
+    results: List[DataBaselineMonitorsSearchBaselineResult]
+    """Search results as last observed."""
+
+
 DataBaseline: TypeAlias = Union[
-    DataBaselineMonitorsPageBaseline, DataBaselineMonitorsSitemapBaseline, DataBaselineMonitorsExtractBaseline, None
+    DataBaselineMonitorsPageBaseline,
+    DataBaselineMonitorsSitemapBaseline,
+    DataBaselineMonitorsExtractBaseline,
+    DataBaselineMonitorsSearchBaseline,
+    None,
 ]
 
 
@@ -343,7 +395,7 @@ class DataWebhookFailure(BaseModel):
 class Data(BaseModel):
     """A web monitor.
 
-    `mode` is the constant `web`; behavior is described by `target` (page/sitemap/extract) and `change_detection` (exact/semantic).
+    `mode` is the constant `web`; behavior is described by `target` (page/sitemap/extract/search) and `change_detection` (exact/semantic).
     """
 
     id: str
@@ -351,8 +403,8 @@ class Data(BaseModel):
     change_detection: DataChangeDetection
     """How changes are judged.
 
-    Defaults to `semantic` for extract targets and page targets with `instructions`,
-    otherwise `exact`.
+    Defaults to `semantic` for extract and search targets and page targets with
+    `instructions`, otherwise `exact`.
     """
 
     created_at: datetime
@@ -377,7 +429,10 @@ class Data(BaseModel):
     """
 
     target: DataTarget
-    """What to watch: a page, a sitemap, or data extracted from a site."""
+    """
+    What to watch: a page, a sitemap, data extracted from a site, or web search
+    results.
+    """
 
     updated_at: datetime
 
