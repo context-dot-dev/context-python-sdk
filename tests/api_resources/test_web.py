@@ -292,7 +292,10 @@ class TestWeb:
                 "type": "custom",
             },
             policies=["pol_3f9c2a7e5b8d4c1f9a6e0b2d7c4f8a1e"],
-            product_params={"dedupe_images": True},
+            product_params={
+                "dedupe_images": True,
+                "use_ai_fallback": True,
+            },
             screenshot_params={
                 "area": "viewport",
                 "format": "png",
@@ -851,7 +854,10 @@ class TestAsyncWeb:
                 "type": "custom",
             },
             policies=["pol_3f9c2a7e5b8d4c1f9a6e0b2d7c4f8a1e"],
-            product_params={"dedupe_images": True},
+            product_params={
+                "dedupe_images": True,
+                "use_ai_fallback": True,
+            },
             screenshot_params={
                 "area": "viewport",
                 "format": "png",

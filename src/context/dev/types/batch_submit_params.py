@@ -1000,6 +1000,9 @@ class InputScrapeDataBatchUnifiedScrapeDataProductParams(TypedDict, total=False)
     dedupe_images: Annotated[bool, PropertyInfo(alias="dedupeImages")]
     """Drop visually duplicate product images, keeping the largest copy."""
 
+    use_ai_fallback: Annotated[bool, PropertyInfo(alias="useAIFallback")]
+    """Ignored. The AI fallback runs automatically."""
+
 
 class InputScrapeDataBatchUnifiedScrapeDataScreenshotParamsAreaElement(TypedDict, total=False):
     selector: Required[str]
@@ -1293,7 +1296,7 @@ class InputScrapeDataBatchUnifiedScrapeData(TypedDict, total=False):
     """Browser and content settings shared by all outputs."""
 
     tags: SequenceNotStr[str]
-    """Labels for tracking request usage. Not retained when zdr is enabled."""
+    """Labels for filtering usage in the dashboard."""
 
     timeout_opts: Annotated[InputScrapeDataBatchUnifiedScrapeDataTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
     """
@@ -2637,6 +2640,9 @@ class InputCrawlDataBatchUnifiedCrawlDataProductParams(TypedDict, total=False):
     dedupe_images: Annotated[bool, PropertyInfo(alias="dedupeImages")]
     """Drop visually duplicate product images, keeping the largest copy."""
 
+    use_ai_fallback: Annotated[bool, PropertyInfo(alias="useAIFallback")]
+    """Ignored. The AI fallback runs automatically."""
+
 
 class InputCrawlDataBatchUnifiedCrawlDataScreenshotParamsAreaElement(TypedDict, total=False):
     selector: Required[str]
@@ -2927,7 +2933,7 @@ class InputCrawlDataBatchUnifiedCrawlData(TypedDict, total=False):
     """Browser and content settings shared by all outputs."""
 
     tags: SequenceNotStr[str]
-    """Labels for tracking request usage. Not retained when zdr is enabled."""
+    """Labels for filtering usage in the dashboard."""
 
     timeout_opts: Annotated[InputCrawlDataBatchUnifiedCrawlDataTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
     """

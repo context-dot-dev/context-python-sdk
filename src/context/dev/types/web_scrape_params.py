@@ -83,13 +83,10 @@ class WebScrapeParams(TypedDict, total=False):
     """Browser and content settings shared by all outputs."""
 
     tags: SequenceNotStr[str]
-    """Labels for tracking request usage. Not retained when zdr is enabled."""
+    """Labels for filtering usage in the dashboard."""
 
     timeout_opts: Annotated[TimeoutOpts, PropertyInfo(alias="timeoutOpts")]
-    """Deadline for the whole request.
-
-    Defaults to 90000 ms with `fail`. Fixed waits must end before it.
-    """
+    """Request deadline and what to return when it passes."""
 
     zdr: Literal["enabled", "disabled"]
     """`enabled` turns on zero data retention.
@@ -337,6 +334,9 @@ class ProductParams(TypedDict, total=False):
     dedupe_images: Annotated[bool, PropertyInfo(alias="dedupeImages")]
     """Drop visually duplicate product images, keeping the largest copy."""
 
+    use_ai_fallback: Annotated[bool, PropertyInfo(alias="useAIFallback")]
+    """Ignored. The AI fallback runs automatically."""
+
 
 class ScreenshotParamsAreaElement(TypedDict, total=False):
     selector: Required[str]
@@ -557,10 +557,7 @@ class SharedParams(TypedDict, total=False):
 
 
 class TimeoutOpts(TypedDict, total=False):
-    """Deadline for the whole request.
-
-    Defaults to 90000 ms with `fail`. Fixed waits must end before it.
-    """
+    """Request deadline and what to return when it passes."""
 
     milliseconds: Required[int]
     """Deadline in milliseconds."""

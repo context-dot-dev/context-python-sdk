@@ -413,10 +413,9 @@ class WebResource(SyncAPIResource):
 
           shared_params: Browser and content settings shared by all outputs.
 
-          tags: Labels for tracking request usage. Not retained when zdr is enabled.
+          tags: Labels for filtering usage in the dashboard.
 
-          timeout_opts: Deadline for the whole request. Defaults to 90000 ms with `fail`. Fixed waits
-              must end before it.
+          timeout_opts: Request deadline and what to return when it passes.
 
           zdr: `enabled` turns on zero data retention. Your organization must have ZDR enabled.
 
@@ -1952,10 +1951,9 @@ class AsyncWebResource(AsyncAPIResource):
 
           shared_params: Browser and content settings shared by all outputs.
 
-          tags: Labels for tracking request usage. Not retained when zdr is enabled.
+          tags: Labels for filtering usage in the dashboard.
 
-          timeout_opts: Deadline for the whole request. Defaults to 90000 ms with `fail`. Fixed waits
-              must end before it.
+          timeout_opts: Request deadline and what to return when it passes.
 
           zdr: `enabled` turns on zero data retention. Your organization must have ZDR enabled.
 

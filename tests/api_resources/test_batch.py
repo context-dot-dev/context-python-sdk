@@ -325,7 +325,10 @@ class TestBatch:
                         },
                         "type": "custom",
                     },
-                    "product_params": {"dedupe_images": True},
+                    "product_params": {
+                        "dedupe_images": True,
+                        "use_ai_fallback": True,
+                    },
                     "screenshot_params": {
                         "area": "viewport",
                         "format": "png",
@@ -736,7 +739,10 @@ class TestAsyncBatch:
                         },
                         "type": "custom",
                     },
-                    "product_params": {"dedupe_images": True},
+                    "product_params": {
+                        "dedupe_images": True,
+                        "use_ai_fallback": True,
+                    },
                     "screenshot_params": {
                         "area": "viewport",
                         "format": "png",
