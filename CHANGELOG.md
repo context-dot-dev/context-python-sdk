@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.41.1](https://github.com/context-dot-dev/context-python-sdk/compare/v2.41.0...v2.41.1) (2026-10-29)
+
+
+### Bug Fixes
+
+* **scrape:** derive the /web/scrape request spec from its zod schema ([#2044](https://github.com/context-dot-dev/context-python-sdk/issues/2044)) ([27fa631](https://github.com/context-dot-dev/context-python-sdk/commit/27fa631a1f3dcb9b9a030cf87eb88f6d6b8370e1))
+
 ## [2.41.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.40.0...v2.41.0) (2026-10-28)
 
 
