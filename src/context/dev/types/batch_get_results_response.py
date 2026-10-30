@@ -294,7 +294,7 @@ class DataOkResultMetadata(BaseModel):
 
 class DataOkResultParsed(BaseModel):
     """
-    Custom rules return fields after content filters; unmatched fields are null ([] for lists). The google-maps parser returns business records in data.results, google-maps-reviews returns data.reviews, and the google-play parser returns one app record as data, google-play-reviews returns data.reviews, app-store and app-store-reviews do the same for the App Store, g2-reviews returns data.reviews for a G2 product, instagram-profile and instagram-post return one record as data, instagram-feed returns data.posts, tiktok-profile and tiktok-video return one record as data, tiktok-feed returns data.videos, tiktok-comments returns data.comments, tiktok-followers, tiktok-following, and tiktok-user-search return data.users, emails, phone-numbers, and links return data.emails, data.phone_numbers, and data.links from the rendered page; the store, Maps, G2, Instagram, and TikTok parsers read their data directly, independently of DOM filters and other outputs.
+    Custom rules return fields after content filters; unmatched fields are null ([] for lists). The google-maps parser returns business records in data.results, google-maps-reviews returns data.reviews, and the google-play parser returns one app record as data, google-play-reviews returns data.reviews, app-store and app-store-reviews do the same for the App Store, g2-reviews returns data.reviews for a G2 product, instagram-profile and instagram-post return one record as data, instagram-feed returns data.posts, tiktok-profile and tiktok-video return one record as data, tiktok-feed returns data.videos, tiktok-comments returns data.comments, tiktok-followers, tiktok-following, and tiktok-user-search return data.users, yelp-search returns up to 20 ranked organic businesses in data.businesses, plus total and pagination, from a Yelp search URL; emails, phone-numbers, and links return data.emails, data.phone_numbers, and data.links from the rendered page; the store, Maps, G2, Instagram, and TikTok parsers read their data directly, independently of DOM filters and other outputs.
     """
 
     data: Optional[Dict[str, object]] = None
@@ -323,6 +323,7 @@ class DataOkResultParsed(BaseModel):
         "tiktok-followers",
         "tiktok-following",
         "tiktok-user-search",
+        "yelp-search",
         "emails",
         "phone-numbers",
         "links",
@@ -522,10 +523,11 @@ class DataOkResult(BaseModel):
     data, instagram-feed returns data.posts, tiktok-profile and tiktok-video return
     one record as data, tiktok-feed returns data.videos, tiktok-comments returns
     data.comments, tiktok-followers, tiktok-following, and tiktok-user-search return
-    data.users, emails, phone-numbers, and links return data.emails,
-    data.phone_numbers, and data.links from the rendered page; the store, Maps, G2,
-    Instagram, and TikTok parsers read their data directly, independently of DOM
-    filters and other outputs.
+    data.users, yelp-search returns up to 20 ranked organic businesses in
+    data.businesses, plus total and pagination, from a Yelp search URL; emails,
+    phone-numbers, and links return data.emails, data.phone_numbers, and data.links
+    from the rendered page; the store, Maps, G2, Instagram, and TikTok parsers read
+    their data directly, independently of DOM filters and other outputs.
     """
 
     product: DataOkResultProduct
@@ -827,7 +829,7 @@ class DataErrorResultMetadata(BaseModel):
 
 class DataErrorResultParsed(BaseModel):
     """
-    Custom rules return fields after content filters; unmatched fields are null ([] for lists). The google-maps parser returns business records in data.results, google-maps-reviews returns data.reviews, and the google-play parser returns one app record as data, google-play-reviews returns data.reviews, app-store and app-store-reviews do the same for the App Store, g2-reviews returns data.reviews for a G2 product, instagram-profile and instagram-post return one record as data, instagram-feed returns data.posts, tiktok-profile and tiktok-video return one record as data, tiktok-feed returns data.videos, tiktok-comments returns data.comments, tiktok-followers, tiktok-following, and tiktok-user-search return data.users, emails, phone-numbers, and links return data.emails, data.phone_numbers, and data.links from the rendered page; the store, Maps, G2, Instagram, and TikTok parsers read their data directly, independently of DOM filters and other outputs.
+    Custom rules return fields after content filters; unmatched fields are null ([] for lists). The google-maps parser returns business records in data.results, google-maps-reviews returns data.reviews, and the google-play parser returns one app record as data, google-play-reviews returns data.reviews, app-store and app-store-reviews do the same for the App Store, g2-reviews returns data.reviews for a G2 product, instagram-profile and instagram-post return one record as data, instagram-feed returns data.posts, tiktok-profile and tiktok-video return one record as data, tiktok-feed returns data.videos, tiktok-comments returns data.comments, tiktok-followers, tiktok-following, and tiktok-user-search return data.users, yelp-search returns up to 20 ranked organic businesses in data.businesses, plus total and pagination, from a Yelp search URL; emails, phone-numbers, and links return data.emails, data.phone_numbers, and data.links from the rendered page; the store, Maps, G2, Instagram, and TikTok parsers read their data directly, independently of DOM filters and other outputs.
     """
 
     data: Optional[Dict[str, object]] = None
@@ -856,6 +858,7 @@ class DataErrorResultParsed(BaseModel):
         "tiktok-followers",
         "tiktok-following",
         "tiktok-user-search",
+        "yelp-search",
         "emails",
         "phone-numbers",
         "links",
@@ -1056,10 +1059,11 @@ class DataErrorResult(BaseModel):
     data, instagram-feed returns data.posts, tiktok-profile and tiktok-video return
     one record as data, tiktok-feed returns data.videos, tiktok-comments returns
     data.comments, tiktok-followers, tiktok-following, and tiktok-user-search return
-    data.users, emails, phone-numbers, and links return data.emails,
-    data.phone_numbers, and data.links from the rendered page; the store, Maps, G2,
-    Instagram, and TikTok parsers read their data directly, independently of DOM
-    filters and other outputs.
+    data.users, yelp-search returns up to 20 ranked organic businesses in
+    data.businesses, plus total and pagination, from a Yelp search URL; emails,
+    phone-numbers, and links return data.emails, data.phone_numbers, and data.links
+    from the rendered page; the store, Maps, G2, Instagram, and TikTok parsers read
+    their data directly, independently of DOM filters and other outputs.
     """
 
     product: DataErrorResultProduct
