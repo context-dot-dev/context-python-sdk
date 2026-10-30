@@ -895,6 +895,7 @@ class InputScrapeDataBatchUnifiedScrapeDataParseParamsPrebuiltParser(TypedDict, 
             "tiktok-following",
             "tiktok-user-search",
             "yelp-search",
+            "yelp-reviews",
             "emails",
             "phone-numbers",
             "links",
@@ -962,16 +963,22 @@ class InputScrapeDataBatchUnifiedScrapeDataParseParamsPrebuiltParser(TypedDict, 
     links (vm.tiktok.com, vt.tiktok.com, tiktok.com/t/…). yelp-search accepts Yelp
     search URLs with find_desc and find_loc, reads start as the result offset, and
     returns up to 20 ranked organic businesses in data.businesses with total and
-    pagination. emails accepts any page and returns its email addresses as
-    data.emails ([{ email }]), read from mailto links, Cloudflare-protected
-    addresses, and visible text. phone-numbers accepts any page and returns its
-    valid phone numbers in E.164 as data.phone_numbers ([{ phone }]), read from tel
-    links and visible text; numbers without a country code are read for the country
-    of the site TLD, defaulting to US. links accepts any page and returns its unique
-    http(s) links as data.links ([{ url, text }]), with absolute URLs; text falls
-    back to aria-label or image alt and is null when a link has none. The emails
-    parser reads the rendered page and respects content filters; the other prebuilt
-    parsers read their data independently of DOM filters.
+    pagination. yelp-reviews accepts a Yelp business URL (yelp.com/biz/{alias}),
+    uses optional start for the offset, and always sorts newest first; unsupported
+    sort and review filters are rejected, while tracking params are ignored. It
+    returns up to 20 latest public reviews in data.reviews with business details and
+    pagination.next_offset. Each review has rating, full text, updated_at, and
+    author; owner replies and photos are not included. emails accepts any page and
+    returns its email addresses as data.emails ([{ email }]), read from mailto
+    links, Cloudflare-protected addresses, and visible text. phone-numbers accepts
+    any page and returns its valid phone numbers in E.164 as data.phone_numbers ([{
+    phone }]), read from tel links and visible text; numbers without a country code
+    are read for the country of the site TLD, defaulting to US. links accepts any
+    page and returns its unique http(s) links as data.links ([{ url, text }]), with
+    absolute URLs; text falls back to aria-label or image alt and is null when a
+    link has none. The emails parser reads the rendered page and respects content
+    filters; the other prebuilt parsers read their data independently of DOM
+    filters.
     """
 
     type: Required[Literal["prebuilt"]]
@@ -2538,6 +2545,7 @@ class InputCrawlDataBatchUnifiedCrawlDataParseParamsPrebuiltParser(TypedDict, to
             "tiktok-following",
             "tiktok-user-search",
             "yelp-search",
+            "yelp-reviews",
             "emails",
             "phone-numbers",
             "links",
@@ -2605,16 +2613,22 @@ class InputCrawlDataBatchUnifiedCrawlDataParseParamsPrebuiltParser(TypedDict, to
     links (vm.tiktok.com, vt.tiktok.com, tiktok.com/t/…). yelp-search accepts Yelp
     search URLs with find_desc and find_loc, reads start as the result offset, and
     returns up to 20 ranked organic businesses in data.businesses with total and
-    pagination. emails accepts any page and returns its email addresses as
-    data.emails ([{ email }]), read from mailto links, Cloudflare-protected
-    addresses, and visible text. phone-numbers accepts any page and returns its
-    valid phone numbers in E.164 as data.phone_numbers ([{ phone }]), read from tel
-    links and visible text; numbers without a country code are read for the country
-    of the site TLD, defaulting to US. links accepts any page and returns its unique
-    http(s) links as data.links ([{ url, text }]), with absolute URLs; text falls
-    back to aria-label or image alt and is null when a link has none. The emails
-    parser reads the rendered page and respects content filters; the other prebuilt
-    parsers read their data independently of DOM filters.
+    pagination. yelp-reviews accepts a Yelp business URL (yelp.com/biz/{alias}),
+    uses optional start for the offset, and always sorts newest first; unsupported
+    sort and review filters are rejected, while tracking params are ignored. It
+    returns up to 20 latest public reviews in data.reviews with business details and
+    pagination.next_offset. Each review has rating, full text, updated_at, and
+    author; owner replies and photos are not included. emails accepts any page and
+    returns its email addresses as data.emails ([{ email }]), read from mailto
+    links, Cloudflare-protected addresses, and visible text. phone-numbers accepts
+    any page and returns its valid phone numbers in E.164 as data.phone_numbers ([{
+    phone }]), read from tel links and visible text; numbers without a country code
+    are read for the country of the site TLD, defaulting to US. links accepts any
+    page and returns its unique http(s) links as data.links ([{ url, text }]), with
+    absolute URLs; text falls back to aria-label or image alt and is null when a
+    link has none. The emails parser reads the rendered page and respects content
+    filters; the other prebuilt parsers read their data independently of DOM
+    filters.
     """
 
     type: Required[Literal["prebuilt"]]
