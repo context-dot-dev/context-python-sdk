@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.42.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.41.1...v2.42.0) (2026-10-30)
+
+
+### Features
+
+* **scrape:** add Yelp reviews parser ([54d8fb4](https://github.com/context-dot-dev/context-python-sdk/commit/54d8fb46d52d5627b7b793d53fd54e11117f7f79))
+* **scrape:** add Yelp search parser ([3d8428b](https://github.com/context-dot-dev/context-python-sdk/commit/3d8428bcf66793d9a2fbe5b3b8549143d9b71e53))
+
 ## [2.41.1](https://github.com/context-dot-dev/context-python-sdk/compare/v2.41.0...v2.41.1) (2026-10-29)
 
 
