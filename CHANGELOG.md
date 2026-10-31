@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.43.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.42.0...v2.43.0) (2026-10-31)
+
+
+### Features
+
+* **scrape:** add reddit-post prebuilt parser with full comment trees ([#2217](https://github.com/context-dot-dev/context-python-sdk/issues/2217)) ([fdbfb37](https://github.com/context-dot-dev/context-python-sdk/commit/fdbfb37e87536ac9d8e7533a93a46897bd003d3d))
+
 ## [2.42.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.41.1...v2.42.0) (2026-10-30)
 
 
