@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.44.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.43.0...v2.44.0) (2026-11-01)
+
+
+### Features
+
+* **scrape:** return Yelp reviewer id and profile url in yelp-reviews ([#2402](https://github.com/context-dot-dev/context-python-sdk/issues/2402)) ([d030032](https://github.com/context-dot-dev/context-python-sdk/commit/d03003251219f888a00f0375e57d0449095ea518))
+
 ## [2.43.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.42.0...v2.43.0) (2026-10-31)
 
 
