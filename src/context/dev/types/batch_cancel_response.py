@@ -36,7 +36,10 @@ class Formats(BaseModel):
     """Images found on the page."""
 
     json_: Optional[bool] = FieldInfo(alias="json", default=None)
-    """An object matching `jsonParams.schema`, extracted from the page."""
+    """
+    An object matching `jsonParams.schema`, extracted from the page text and its
+    embedded data (JSON-LD, meta tags, framework state).
+    """
 
     markdown: Optional[bool] = None
     """Page content as Markdown."""

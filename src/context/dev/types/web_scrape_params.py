@@ -111,7 +111,10 @@ class Formats(TypedDict, total=False):
     """Images found on the page."""
 
     json: bool
-    """An object matching `jsonParams.schema`, extracted from the page."""
+    """
+    An object matching `jsonParams.schema`, extracted from the page text and its
+    embedded data (JSON-LD, meta tags, framework state).
+    """
 
     markdown: bool
     """Page content as Markdown."""
