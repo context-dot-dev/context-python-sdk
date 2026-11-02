@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.45.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.44.0...v2.45.0) (2026-11-02)
+
+
+### Features
+
+* **scrape:** read framework-embedded page data in the json format ([#2405](https://github.com/context-dot-dev/context-python-sdk/issues/2405)) ([f29b1f8](https://github.com/context-dot-dev/context-python-sdk/commit/f29b1f89280a78e01c57e9b583402fa5984cf928))
+
 ## [2.44.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.43.0...v2.44.0) (2026-11-01)
 
 
