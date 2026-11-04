@@ -21,6 +21,7 @@ __all__ = [
     "StyleguideComponentsCard",
     "StyleguideElementSpacing",
     "StyleguideFontLinks",
+    "StyleguideFontLinksFace",
     "StyleguideShadows",
     "StyleguideTypography",
     "StyleguideTypographyHeadings",
@@ -270,13 +271,31 @@ class StyleguideElementSpacing(BaseModel):
     xs: str
 
 
-class StyleguideFontLinks(BaseModel):
-    files: Dict[str, str]
-    """Upright font files keyed by weight string (e.g.
-
-    "400" for regular, "500", "700"). Values are absolute URLs.
+class StyleguideFontLinksFace(BaseModel):
+    style: str
+    """
+    CSS font-style descriptor: normal, italic, or oblique, including an optional
+    oblique angle or angle range (e.g. oblique 10deg 20deg).
     """
 
+    url: str
+    """Preferred font file URL or inline font data URL."""
+
+    weight: str
+    """CSS font-weight descriptor.
+
+    A variable font file can have a range such as "300 500", covering intermediate
+    weights without separate files.
+    """
+
+    unicode_range: Optional[str] = FieldInfo(alias="unicodeRange", default=None)
+    """CSS unicode-range descriptor."""
+
+    width: Optional[str] = None
+    """CSS font-width or font-stretch descriptor."""
+
+
+class StyleguideFontLinks(BaseModel):
     type: Literal["google", "custom"]
 
     category: Optional[str] = None
@@ -287,10 +306,20 @@ class StyleguideFontLinks(BaseModel):
     """
 
     display_name: Optional[str] = FieldInfo(alias="displayName", default=None)
+    """Human-readable family name.
+
+    For custom fonts, derived from the fontLinks key; for Google fonts, the
+    canonical Google Fonts family name.
     """
-    Present when type is custom: human-readable name derived from the fontLinks key
-    (strip build/hash suffixes, split camelCase / PascalCase, normalize separators).
-    Google entries omit this.
+
+    faces: Optional[List[StyleguideFontLinksFace]] = None
+    """Discovered font faces, including style, weight, and distinct Unicode subsets."""
+
+    files: Optional[Dict[str, str]] = None
+    """Deprecated upright font lookup keyed by weight string.
+
+    A variable font can map several standard weight keys to the same URL; faces
+    retains its actual weight range.
     """
 
 
@@ -424,8 +453,8 @@ class Styleguide(BaseModel):
     font_links: Dict[str, StyleguideFontLinks] = FieldInfo(alias="fontLinks")
     """
     Font assets keyed by family name as it appears in fontFamily/fontFallbacks
-    (non-generic names only). Clients match typography.fontFamily / fontWeight or
-    button styles to pick a file URL from files.
+    (non-generic names only). Match font style and weight against faces to select a
+    file URL.
     """
 
     mode: Literal["light", "dark"]
