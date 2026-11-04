@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.45.1](https://github.com/context-dot-dev/context-python-sdk/compare/v2.45.0...v2.45.1) (2026-11-04)
+
+
+### Refactors
+
+* **fonts:** share font link schemas and inferred types ([899059e](https://github.com/context-dot-dev/context-python-sdk/commit/899059ec5b875faf148153daa2087f477b8725f8))
+
 ## [2.45.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.44.0...v2.45.0) (2026-11-02)
 
 
