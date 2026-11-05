@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.46.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.45.1...v2.46.0) (2026-11-05)
+
+
+### Features
+
+* **scrape:** add Tripadvisor reviews parser ([#2508](https://github.com/context-dot-dev/context-python-sdk/issues/2508)) ([8251b05](https://github.com/context-dot-dev/context-python-sdk/commit/8251b05c84a761273ed9fc8d49e50fbd77c3d7c1))
+
 ## [2.45.1](https://github.com/context-dot-dev/context-python-sdk/compare/v2.45.0...v2.45.1) (2026-11-04)
 
 
