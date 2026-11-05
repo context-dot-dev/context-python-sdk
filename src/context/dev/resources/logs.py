@@ -58,8 +58,12 @@ class LogsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> LogRetrieveResponse:
-        """
-        Retrieve a request’s metadata, retained input, and response.
+        """Retrieve a request’s metadata, retained input, and response.
+
+        An entry becomes
+        retrievable a few seconds after its request completes, so a 404 NOT_FOUND for a
+        request that just finished means ingestion has not caught up yet; retry after a
+        few seconds.
 
         Args:
           request_id: The request ID of the logged API call.
@@ -203,8 +207,12 @@ class AsyncLogsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> LogRetrieveResponse:
-        """
-        Retrieve a request’s metadata, retained input, and response.
+        """Retrieve a request’s metadata, retained input, and response.
+
+        An entry becomes
+        retrievable a few seconds after its request completes, so a 404 NOT_FOUND for a
+        request that just finished means ingestion has not caught up yet; retry after a
+        few seconds.
 
         Args:
           request_id: The request ID of the logged API call.
