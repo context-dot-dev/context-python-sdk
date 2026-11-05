@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.46.1](https://github.com/context-dot-dev/context-python-sdk/compare/v2.46.0...v2.46.1) (2026-11-05)
+
+
+### Documentation
+
+* **logs:** say that a request log appears a few seconds after the request ([#2564](https://github.com/context-dot-dev/context-python-sdk/issues/2564)) ([199e36c](https://github.com/context-dot-dev/context-python-sdk/commit/199e36cc95572c3b7f2f1d06e15d6cbade080509))
+
 ## [2.46.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.45.1...v2.46.0) (2026-11-05)
 
 
