@@ -26,10 +26,10 @@ class CacheMetadata(BaseModel):
 
 
 class Credits(BaseModel):
-    """What accepting this batch cost."""
+    """Credits are reserved after background validation, before scraping starts."""
 
     reserved: int
-    """Credits held at submission."""
+    """Credits reserved by background preparation. Zero while pending."""
 
 
 class Formats(BaseModel):
@@ -98,7 +98,7 @@ class BatchSubmitResponse(BaseModel):
     """When the batch was created."""
 
     credits: Credits
-    """What accepting this batch cost."""
+    """Credits are reserved after background validation, before scraping starts."""
 
     formats: Formats
     """Outputs requested for each page. Matches input.data.formats on submission."""
@@ -118,8 +118,13 @@ class BatchSubmitResponse(BaseModel):
     Include it when contacting support.
     """
 
-    status: Literal["queued"]
-    """Always `queued`. An accepted batch has not started yet."""
+    status: Literal["pending", "queued", "running", "cancelling", "completed", "cancelled", "failed"]
+    """Current state.
+
+    `pending` means waiting for execution capacity or background validation.
+    Capacity-limited batches remain pending until a slot opens. `completed`,
+    `cancelled`, and `failed` are final.
+    """
 
     tags: List[str]
     """Tags stored on the batch."""

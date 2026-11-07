@@ -81,7 +81,7 @@ class TestBatch:
             q="batch_1a2b",
             search_type="exact",
             should_include_unified=True,
-            status="queued",
+            status="pending",
             tags="docs,competitor",
         )
         assert_matches_type(BatchListResponse, batch, path=["response"])
@@ -495,7 +495,7 @@ class TestAsyncBatch:
             q="batch_1a2b",
             search_type="exact",
             should_include_unified=True,
-            status="queued",
+            status="pending",
             tags="docs,competitor",
         )
         assert_matches_type(BatchListResponse, batch, path=["response"])

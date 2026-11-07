@@ -33,7 +33,7 @@ class BatchListParams(TypedDict, total=False):
     should_include_unified: Annotated[bool, PropertyInfo(alias="shouldIncludeUnified")]
     """Include batches submitted with Scrape Anything formats. Defaults to false."""
 
-    status: Literal["queued", "running", "cancelling", "completed", "cancelled", "failed"]
+    status: Literal["pending", "queued", "running", "cancelling", "completed", "cancelled", "failed"]
     """Filter by status."""
 
     tags: Union[str, SequenceNotStr[str]]

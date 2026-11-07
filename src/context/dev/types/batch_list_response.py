@@ -37,7 +37,10 @@ class DataCredits(BaseModel):
     """Credits returned for unsuccessful pages when the batch settles."""
 
     reserved: int
-    """Credits held when the batch was accepted."""
+    """Credits held by background preparation before scraping starts.
+
+    Zero while pending.
+    """
 
 
 class DataFormats(BaseModel):
@@ -167,8 +170,13 @@ class Data(BaseModel):
     Files are deleted 180 days after the batch finishes.
     """
 
-    status: Literal["queued", "running", "cancelling", "completed", "cancelled", "failed"]
-    """Current state. `completed`, `cancelled`, and `failed` are final."""
+    status: Literal["pending", "queued", "running", "cancelling", "completed", "cancelled", "failed"]
+    """Current state.
+
+    `pending` means waiting for execution capacity or background validation.
+    Capacity-limited batches remain pending until a slot opens. `completed`,
+    `cancelled`, and `failed` are final.
+    """
 
     tags: List[str]
     """Tags stored on the batch at submission."""
