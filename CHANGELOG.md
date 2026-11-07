@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.47.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.46.1...v2.47.0) (2026-11-07)
+
+
+### Features
+
+* **batch:** accept lightweight submissions and queue pending work ([#2683](https://github.com/context-dot-dev/context-python-sdk/issues/2683)) ([334f2f8](https://github.com/context-dot-dev/context-python-sdk/commit/334f2f89afcf647adb4482715b8153d4db3bd1b0))
+
 ## [2.46.1](https://github.com/context-dot-dev/context-python-sdk/compare/v2.46.0...v2.46.1) (2026-11-05)
 
 
