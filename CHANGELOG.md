@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.48.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.47.0...v2.48.0) (2026-11-08)
+
+
+### Features
+
+* **batch:** raise batch submissions to 2,500 per minute per organization ([#2734](https://github.com/context-dot-dev/context-python-sdk/issues/2734)) ([62a1c82](https://github.com/context-dot-dev/context-python-sdk/commit/62a1c82b89c32dd2d0dae55a9c8351e79ca08349))
+
 ## [2.47.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.46.1...v2.47.0) (2026-11-07)
 
 
