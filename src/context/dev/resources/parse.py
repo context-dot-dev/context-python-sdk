@@ -63,6 +63,8 @@ class ParseResource(SyncAPIResource):
         *,
         client: str | Omit = omit,
         extension: Literal[
+            "warc",
+            "warc.gz",
             "txt",
             "text",
             "md",
@@ -151,14 +153,18 @@ class ParseResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ParseHandleResponse:
-        """
-        Convert uploaded file bytes into Markdown and optional HTML.
+        """Convert uploaded file bytes into Markdown and optional HTML.
+
+        WARC and WARC.GZ
+        archives combine HTTP response, resource, and conversion records in archive
+        order. Revisit and segmented records are skipped. Decoded WARC content is
+        limited to 50 MiB.
 
         Args:
           client: Optional client identifier used for usage attribution.
 
           extension: Optional file extension hint, such as pdf, docx, xlsx, pptx, html, json, csv,
-              md, py, rtf, jpg, png, or txt.
+              md, py, rtf, jpg, png, txt, warc, or warc.gz.
 
           include_images: Include image references in Markdown output
 
@@ -244,6 +250,8 @@ class AsyncParseResource(AsyncAPIResource):
         *,
         client: str | Omit = omit,
         extension: Literal[
+            "warc",
+            "warc.gz",
             "txt",
             "text",
             "md",
@@ -332,14 +340,18 @@ class AsyncParseResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ParseHandleResponse:
-        """
-        Convert uploaded file bytes into Markdown and optional HTML.
+        """Convert uploaded file bytes into Markdown and optional HTML.
+
+        WARC and WARC.GZ
+        archives combine HTTP response, resource, and conversion records in archive
+        order. Revisit and segmented records are skipped. Decoded WARC content is
+        limited to 50 MiB.
 
         Args:
           client: Optional client identifier used for usage attribution.
 
           extension: Optional file extension hint, such as pdf, docx, xlsx, pptx, html, json, csv,
-              md, py, rtf, jpg, png, or txt.
+              md, py, rtf, jpg, png, txt, warc, or warc.gz.
 
           include_images: Include image references in Markdown output
 

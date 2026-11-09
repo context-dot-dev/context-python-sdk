@@ -15,6 +15,8 @@ class ParseHandleParams(TypedDict, total=False):
     """Optional client identifier used for usage attribution."""
 
     extension: Literal[
+        "warc",
+        "warc.gz",
         "txt",
         "text",
         "md",
@@ -88,7 +90,7 @@ class ParseHandleParams(TypedDict, total=False):
     ]
     """
     Optional file extension hint, such as pdf, docx, xlsx, pptx, html, json, csv,
-    md, py, rtf, jpg, png, or txt.
+    md, py, rtf, jpg, png, txt, warc, or warc.gz.
     """
 
     include_images: Annotated[bool, PropertyInfo(alias="includeImages")]

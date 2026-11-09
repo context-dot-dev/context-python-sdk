@@ -31,7 +31,7 @@ class TestParse:
         parse = client.parse.handle(
             body=b"Example data",
             client="x",
-            extension="txt",
+            extension="warc",
             include_images=True,
             include_links=True,
             include_numbered_pages=True,
@@ -93,7 +93,7 @@ class TestAsyncParse:
         parse = await async_client.parse.handle(
             body=b"Example data",
             client="x",
-            extension="txt",
+            extension="warc",
             include_images=True,
             include_links=True,
             include_numbered_pages=True,

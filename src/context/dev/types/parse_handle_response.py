@@ -32,6 +32,7 @@ class ParseHandleResponse(BaseModel):
     """Indicates success"""
 
     type: Literal[
+        "warc",
         "html",
         "xml",
         "json",
