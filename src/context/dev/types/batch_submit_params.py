@@ -1530,6 +1530,14 @@ class InputCrawlDataMarkdownSourceSitemapControls(TypedDict, total=False):
     A sitemap batch scrapes exactly those URLs and never follows links off them, so there is no crawl depth here.
     """
 
+    exclude_paths: Annotated[SequenceNotStr[str], PropertyInfo(alias="excludePaths")]
+    """Path fragments that skip a sitemap URL in a crawl.
+
+    Works separately from any regex inclusion or exclusion you define. Defaults to
+    ["/feed","/rss","/atom","/api/","/cdn-cgi/","/_next/","/__"]. Pass `[]` to keep
+    every listed URL.
+    """
+
     exclude_regex: Annotated[str, PropertyInfo(alias="excludeRegex")]
     """
     Regex pattern; sitemap URLs matching it are not scraped, even when they match
@@ -1991,6 +1999,14 @@ class InputCrawlDataHTMLSourceSitemapControls(TypedDict, total=False):
     """Limits and filters for the sitemap URLs.
 
     A sitemap batch scrapes exactly those URLs and never follows links off them, so there is no crawl depth here.
+    """
+
+    exclude_paths: Annotated[SequenceNotStr[str], PropertyInfo(alias="excludePaths")]
+    """Path fragments that skip a sitemap URL in a crawl.
+
+    Works separately from any regex inclusion or exclusion you define. Defaults to
+    ["/feed","/rss","/atom","/api/","/cdn-cgi/","/_next/","/__"]. Pass `[]` to keep
+    every listed URL.
     """
 
     exclude_regex: Annotated[str, PropertyInfo(alias="excludeRegex")]
@@ -2466,6 +2482,14 @@ class InputCrawlDataBatchUnifiedCrawlDataSourceSitemapControls(TypedDict, total=
     """Limits and filters for the sitemap URLs.
 
     A sitemap batch scrapes exactly those URLs and never follows links off them, so there is no crawl depth here.
+    """
+
+    exclude_paths: Annotated[SequenceNotStr[str], PropertyInfo(alias="excludePaths")]
+    """Path fragments that skip a sitemap URL in a crawl.
+
+    Works separately from any regex inclusion or exclusion you define. Defaults to
+    ["/feed","/rss","/atom","/api/","/cdn-cgi/","/_next/","/__"]. Pass `[]` to keep
+    every listed URL.
     """
 
     exclude_regex: Annotated[str, PropertyInfo(alias="excludeRegex")]
