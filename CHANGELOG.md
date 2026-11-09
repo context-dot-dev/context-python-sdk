@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.49.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.48.0...v2.49.0) (2026-11-09)
+
+
+### Features
+
+* **batches:** let sitemap crawls choose which paths count as non-pages ([#2796](https://github.com/context-dot-dev/context-python-sdk/issues/2796)) ([83d96d1](https://github.com/context-dot-dev/context-python-sdk/commit/83d96d1fbe1f10c3e9dfa56ef15470fd1936b8f8))
+
 ## [2.48.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.47.0...v2.48.0) (2026-11-08)
 
 
