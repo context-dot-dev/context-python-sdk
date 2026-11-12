@@ -105,6 +105,7 @@ class TestPeople:
             },
             mode="fast",
             tags=["production", "team-alpha"],
+            zdr="enabled",
         )
         assert_matches_type(PersonSearchResponse, person, path=["response"])
 
@@ -228,6 +229,7 @@ class TestAsyncPeople:
             },
             mode="fast",
             tags=["production", "team-alpha"],
+            zdr="enabled",
         )
         assert_matches_type(PersonSearchResponse, person, path=["response"])
 

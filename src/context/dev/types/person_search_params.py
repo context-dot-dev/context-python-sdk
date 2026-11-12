@@ -33,6 +33,12 @@ class PersonSearchParams(TypedDict, total=False):
     tags: SequenceNotStr[str]
     """Labels for filtering usage in the dashboard."""
 
+    zdr: Literal["enabled", "disabled"]
+    """`enabled` turns on zero data retention.
+
+    Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
+    """
+
 
 class Filters(TypedDict, total=False):
     """Additional constraints every result must match."""

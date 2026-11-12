@@ -129,6 +129,7 @@ class PeopleResource(SyncAPIResource):
         filters: person_search_params.Filters | Omit = omit,
         mode: Literal["fast", "ultra"] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -154,6 +155,9 @@ class PeopleResource(SyncAPIResource):
 
           tags: Labels for filtering usage in the dashboard.
 
+          zdr: `enabled` turns on zero data retention. Returns 403 `ZDR_NOT_ENABLED` unless
+              your organization has ZDR.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -171,6 +175,7 @@ class PeopleResource(SyncAPIResource):
                     "filters": filters,
                     "mode": mode,
                     "tags": tags,
+                    "zdr": zdr,
                 },
                 person_search_params.PersonSearchParams,
             ),
@@ -285,6 +290,7 @@ class AsyncPeopleResource(AsyncAPIResource):
         filters: person_search_params.Filters | Omit = omit,
         mode: Literal["fast", "ultra"] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
+        zdr: Literal["enabled", "disabled"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -310,6 +316,9 @@ class AsyncPeopleResource(AsyncAPIResource):
 
           tags: Labels for filtering usage in the dashboard.
 
+          zdr: `enabled` turns on zero data retention. Returns 403 `ZDR_NOT_ENABLED` unless
+              your organization has ZDR.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -327,6 +336,7 @@ class AsyncPeopleResource(AsyncAPIResource):
                     "filters": filters,
                     "mode": mode,
                     "tags": tags,
+                    "zdr": zdr,
                 },
                 person_search_params.PersonSearchParams,
             ),
