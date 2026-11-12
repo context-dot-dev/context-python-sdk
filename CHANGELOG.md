@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.50.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.49.0...v2.50.0) (2026-11-12)
+
+
+### Features
+
+* **parse:** support WARC archives in parsing and scraping ([#2761](https://github.com/context-dot-dev/context-python-sdk/issues/2761)) ([d4d77b3](https://github.com/context-dot-dev/context-python-sdk/commit/d4d77b3945221d90836dc3063548ad26ab9073eb))
+* **zdr:** accept zero data retention on people search and company search ([#2852](https://github.com/context-dot-dev/context-python-sdk/issues/2852)) ([0cc760d](https://github.com/context-dot-dev/context-python-sdk/commit/0cc760d45dd45993ad895b75661c6037598a6897))
+
 ## [2.49.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.48.0...v2.49.0) (2026-11-09)
 
 
