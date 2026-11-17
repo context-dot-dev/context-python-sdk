@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.51.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.50.0...v2.51.0) (2026-11-17)
+
+
+### Features
+
+* **billing:** report plan facts in usage and limit errors ([#2897](https://github.com/context-dot-dev/context-python-sdk/issues/2897)) ([9dce738](https://github.com/context-dot-dev/context-python-sdk/commit/9dce7389c698b8fb1faa0e238422ba703e2d0be6))
+
+
+### Chores
+
+* run release-please centrally from brand-dev-server ([3b526d0](https://github.com/context-dot-dev/context-python-sdk/commit/3b526d0acfa6c7a4419b1114b2c5ae32f71619d7))
+
+
+### Documentation
+
+* **scrape:** mention transcripts on the Markdown format ([#2903](https://github.com/context-dot-dev/context-python-sdk/issues/2903)) ([9dce738](https://github.com/context-dot-dev/context-python-sdk/commit/9dce7389c698b8fb1faa0e238422ba703e2d0be6))
+
 ## [2.50.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.49.0...v2.50.0) (2026-11-12)
 
 
