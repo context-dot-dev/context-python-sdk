@@ -65,7 +65,7 @@ class DataFormats(BaseModel):
     """
 
     markdown: Optional[bool] = None
-    """Page content as Markdown."""
+    """Page content or video transcript as Markdown."""
 
     parse: Optional[bool] = None
     """Fields extracted with custom rules or a prebuilt parser, returned as `parsed`."""

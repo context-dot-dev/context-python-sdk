@@ -117,7 +117,7 @@ class Formats(TypedDict, total=False):
     """
 
     markdown: bool
-    """Page content as Markdown."""
+    """Page content or video transcript as Markdown."""
 
     parse: bool
     """Fields extracted with custom rules or a prebuilt parser, returned as `parsed`."""
