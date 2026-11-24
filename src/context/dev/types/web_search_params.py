@@ -389,7 +389,12 @@ class WebSearchParams(TypedDict, total=False):
     """Number of results to request and return (1–100). Defaults to 10."""
 
     policies: SequenceNotStr[str]
-    """Access policy IDs to apply. A URL must pass every policy."""
+    """Access policy IDs to apply.
+
+    A URL must pass every policy. Leave it out unless access policies are enabled
+    for your organization; otherwise the request fails with
+    `ACCESS_POLICIES_NOT_ENABLED`.
+    """
 
     query_fanout: Annotated[bool, PropertyInfo(alias="queryFanout")]
     """Currently has no effect."""

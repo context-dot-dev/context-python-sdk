@@ -79,7 +79,9 @@ class NewsResource(SyncAPIResource):
 
           limit: Maximum results to return. Defaults to 10.
 
-          policies: Access policy IDs to apply. A URL must pass every policy.
+          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
+              access policies are enabled for your organization; otherwise the request fails
+              with `ACCESS_POLICIES_NOT_ENABLED`.
 
           sort_by: Result ordering. Defaults to newest for entity searches. Natural-language
               searches are always ordered by relevance.
@@ -171,7 +173,9 @@ class AsyncNewsResource(AsyncAPIResource):
 
           limit: Maximum results to return. Defaults to 10.
 
-          policies: Access policy IDs to apply. A URL must pass every policy.
+          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
+              access policies are enabled for your organization; otherwise the request fails
+              with `ACCESS_POLICIES_NOT_ENABLED`.
 
           sort_by: Result ordering. Defaults to newest for entity searches. Natural-language
               searches are always ordered by relevance.

@@ -318,7 +318,9 @@ class BatchResource(SyncAPIResource):
         Args:
           input: Choose a URL list or a site crawl.
 
-          policies: Access policy IDs to apply to every page. A URL must pass every policy.
+          policies: Access policy IDs to apply to every page. A URL must pass every policy. Leave it
+              out unless access policies are enabled for your organization; otherwise the
+              request fails with `ACCESS_POLICIES_NOT_ENABLED`.
 
           tags: Tags stored on the batch. Filter the batch list by them later.
 
@@ -648,7 +650,9 @@ class AsyncBatchResource(AsyncAPIResource):
         Args:
           input: Choose a URL list or a site crawl.
 
-          policies: Access policy IDs to apply to every page. A URL must pass every policy.
+          policies: Access policy IDs to apply to every page. A URL must pass every policy. Leave it
+              out unless access policies are enabled for your organization; otherwise the
+              request fails with `ACCESS_POLICIES_NOT_ENABLED`.
 
           tags: Tags stored on the batch. Filter the batch list by them later.
 

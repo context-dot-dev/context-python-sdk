@@ -92,7 +92,9 @@ class WebResource(SyncAPIResource):
           mode: `fast` prioritizes speed, with extra verification for people and companies;
               `ultra` supports deeper research (default).
 
-          policies: Access policy IDs to apply. A URL must pass every policy.
+          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
+              access policies are enabled for your organization; otherwise the request fails
+              with `ACCESS_POLICIES_NOT_ENABLED`.
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -224,7 +226,9 @@ class WebResource(SyncAPIResource):
           max_age_ms: Maximum age of cached brand data in ms. Defaults to 3 months; clamped to 0–1
               year. `0` refreshes.
 
-          policies: Comma-separated access policy IDs to apply. A URL must pass every policy.
+          policies: Comma-separated access policy IDs to apply. A URL must pass every policy. Leave
+              it out unless access policies are enabled for your organization; otherwise the
+              request fails with `ACCESS_POLICIES_NOT_ENABLED`.
 
           tags: Comma-separated labels for filtering usage, e.g. `production,team-alpha`.
 
@@ -304,7 +308,9 @@ class WebResource(SyncAPIResource):
 
           max_links: Maximum number of URLs to return.
 
-          policies: Comma-separated access policy IDs to apply. A URL must pass every policy.
+          policies: Comma-separated access policy IDs to apply. A URL must pass every policy. Leave
+              it out unless access policies are enabled for your organization; otherwise the
+              request fails with `ACCESS_POLICIES_NOT_ENABLED`.
 
           search: Filter URLs by a topic or phrase, most relevant first.
 
@@ -405,7 +411,9 @@ class WebResource(SyncAPIResource):
 
           parse_params: Requires `formats.parse: true`; required when it is set.
 
-          policies: Access policy IDs to apply. A URL must pass every policy.
+          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
+              access policies are enabled for your organization; otherwise the request fails
+              with `ACCESS_POLICIES_NOT_ENABLED`.
 
           product_params: Product options. Requires formats.product: true.
 
@@ -1178,7 +1186,9 @@ class WebResource(SyncAPIResource):
 
           num_results: Number of results to request and return (1–100). Defaults to 10.
 
-          policies: Access policy IDs to apply. A URL must pass every policy.
+          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
+              access policies are enabled for your organization; otherwise the request fails
+              with `ACCESS_POLICIES_NOT_ENABLED`.
 
           query_fanout: Currently has no effect.
 
@@ -1501,7 +1511,9 @@ class WebResource(SyncAPIResource):
 
           pdf: PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range.
 
-          policies: Access policy IDs to apply. A URL must pass every policy.
+          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
+              access policies are enabled for your organization; otherwise the request fails
+              with `ACCESS_POLICIES_NOT_ENABLED`.
 
           settle_animations: Wait briefly for CSS animations and transitions to settle before reading each
               page.
@@ -1630,7 +1642,9 @@ class AsyncWebResource(AsyncAPIResource):
           mode: `fast` prioritizes speed, with extra verification for people and companies;
               `ultra` supports deeper research (default).
 
-          policies: Access policy IDs to apply. A URL must pass every policy.
+          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
+              access policies are enabled for your organization; otherwise the request fails
+              with `ACCESS_POLICIES_NOT_ENABLED`.
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -1762,7 +1776,9 @@ class AsyncWebResource(AsyncAPIResource):
           max_age_ms: Maximum age of cached brand data in ms. Defaults to 3 months; clamped to 0–1
               year. `0` refreshes.
 
-          policies: Comma-separated access policy IDs to apply. A URL must pass every policy.
+          policies: Comma-separated access policy IDs to apply. A URL must pass every policy. Leave
+              it out unless access policies are enabled for your organization; otherwise the
+              request fails with `ACCESS_POLICIES_NOT_ENABLED`.
 
           tags: Comma-separated labels for filtering usage, e.g. `production,team-alpha`.
 
@@ -1842,7 +1858,9 @@ class AsyncWebResource(AsyncAPIResource):
 
           max_links: Maximum number of URLs to return.
 
-          policies: Comma-separated access policy IDs to apply. A URL must pass every policy.
+          policies: Comma-separated access policy IDs to apply. A URL must pass every policy. Leave
+              it out unless access policies are enabled for your organization; otherwise the
+              request fails with `ACCESS_POLICIES_NOT_ENABLED`.
 
           search: Filter URLs by a topic or phrase, most relevant first.
 
@@ -1943,7 +1961,9 @@ class AsyncWebResource(AsyncAPIResource):
 
           parse_params: Requires `formats.parse: true`; required when it is set.
 
-          policies: Access policy IDs to apply. A URL must pass every policy.
+          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
+              access policies are enabled for your organization; otherwise the request fails
+              with `ACCESS_POLICIES_NOT_ENABLED`.
 
           product_params: Product options. Requires formats.product: true.
 
@@ -2716,7 +2736,9 @@ class AsyncWebResource(AsyncAPIResource):
 
           num_results: Number of results to request and return (1–100). Defaults to 10.
 
-          policies: Access policy IDs to apply. A URL must pass every policy.
+          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
+              access policies are enabled for your organization; otherwise the request fails
+              with `ACCESS_POLICIES_NOT_ENABLED`.
 
           query_fanout: Currently has no effect.
 
@@ -3039,7 +3061,9 @@ class AsyncWebResource(AsyncAPIResource):
 
           pdf: PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range.
 
-          policies: Access policy IDs to apply. A URL must pass every policy.
+          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
+              access policies are enabled for your organization; otherwise the request fails
+              with `ACCESS_POLICIES_NOT_ENABLED`.
 
           settle_animations: Wait briefly for CSS animations and transitions to settle before reading each
               page.

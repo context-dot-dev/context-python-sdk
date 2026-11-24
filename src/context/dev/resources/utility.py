@@ -66,7 +66,9 @@ class UtilityResource(SyncAPIResource):
 
           type: Data to prefetch.
 
-          policies: Access policy IDs to apply. A URL must pass every policy.
+          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
+              access policies are enabled for your organization; otherwise the request fails
+              with `ACCESS_POLICIES_NOT_ENABLED`.
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -142,7 +144,9 @@ class AsyncUtilityResource(AsyncAPIResource):
 
           type: Data to prefetch.
 
-          policies: Access policy IDs to apply. A URL must pass every policy.
+          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
+              access policies are enabled for your organization; otherwise the request fails
+              with `ACCESS_POLICIES_NOT_ENABLED`.
 
           tags: Labels for filtering usage in the dashboard.
 

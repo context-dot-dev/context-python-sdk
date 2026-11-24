@@ -113,7 +113,12 @@ class BatchSubmitParams(TypedDict, total=False):
     """Choose a URL list or a site crawl."""
 
     policies: SequenceNotStr[str]
-    """Access policy IDs to apply to every page. A URL must pass every policy."""
+    """Access policy IDs to apply to every page.
+
+    A URL must pass every policy. Leave it out unless access policies are enabled
+    for your organization; otherwise the request fails with
+    `ACCESS_POLICIES_NOT_ENABLED`.
+    """
 
     tags: SequenceNotStr[str]
     """Tags stored on the batch. Filter the batch list by them later."""

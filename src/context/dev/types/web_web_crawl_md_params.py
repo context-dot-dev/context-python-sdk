@@ -268,7 +268,12 @@ class WebWebCrawlMdParams(TypedDict, total=False):
     """PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range."""
 
     policies: SequenceNotStr[str]
-    """Access policy IDs to apply. A URL must pass every policy."""
+    """Access policy IDs to apply.
+
+    A URL must pass every policy. Leave it out unless access policies are enabled
+    for your organization; otherwise the request fails with
+    `ACCESS_POLICIES_NOT_ENABLED`.
+    """
 
     settle_animations: Annotated[bool, PropertyInfo(alias="settleAnimations")]
     """

@@ -32,7 +32,12 @@ class WebAnswersParams(TypedDict, total=False):
     """
 
     policies: SequenceNotStr[str]
-    """Access policy IDs to apply. A URL must pass every policy."""
+    """Access policy IDs to apply.
+
+    A URL must pass every policy. Leave it out unless access policies are enabled
+    for your organization; otherwise the request fails with
+    `ACCESS_POLICIES_NOT_ENABLED`.
+    """
 
     tags: SequenceNotStr[str]
     """Labels for filtering usage in the dashboard."""

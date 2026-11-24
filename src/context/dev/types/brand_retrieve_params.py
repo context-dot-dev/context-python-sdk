@@ -171,7 +171,12 @@ class BrandRetrieveByDomainRequest(TypedDict, total=False):
     """
 
     policies: SequenceNotStr[str]
-    """Access policy IDs to apply. A URL must pass every policy."""
+    """Access policy IDs to apply.
+
+    A URL must pass every policy. Leave it out unless access policies are enabled
+    for your organization; otherwise the request fails with
+    `ACCESS_POLICIES_NOT_ENABLED`.
+    """
 
     tags: SequenceNotStr[str]
     """Labels for filtering usage in the dashboard."""
@@ -592,7 +597,12 @@ class BrandRetrieveByNameRequest(TypedDict, total=False):
     """
 
     policies: SequenceNotStr[str]
-    """Access policy IDs to apply. A URL must pass every policy."""
+    """Access policy IDs to apply.
+
+    A URL must pass every policy. Leave it out unless access policies are enabled
+    for your organization; otherwise the request fails with
+    `ACCESS_POLICIES_NOT_ENABLED`.
+    """
 
     tags: SequenceNotStr[str]
     """Labels for filtering usage in the dashboard."""
@@ -767,7 +777,12 @@ class BrandRetrieveByEmailRequest(TypedDict, total=False):
     """
 
     policies: SequenceNotStr[str]
-    """Access policy IDs to apply. A URL must pass every policy."""
+    """Access policy IDs to apply.
+
+    A URL must pass every policy. Leave it out unless access policies are enabled
+    for your organization; otherwise the request fails with
+    `ACCESS_POLICIES_NOT_ENABLED`.
+    """
 
     tags: SequenceNotStr[str]
     """Labels for filtering usage in the dashboard."""
@@ -942,7 +957,12 @@ class BrandRetrieveByTickerRequest(TypedDict, total=False):
     """
 
     policies: SequenceNotStr[str]
-    """Access policy IDs to apply. A URL must pass every policy."""
+    """Access policy IDs to apply.
+
+    A URL must pass every policy. Leave it out unless access policies are enabled
+    for your organization; otherwise the request fails with
+    `ACCESS_POLICIES_NOT_ENABLED`.
+    """
 
     tags: SequenceNotStr[str]
     """Labels for filtering usage in the dashboard."""
@@ -1059,7 +1079,12 @@ class BrandRetrieveByDirectURLRequest(TypedDict, total=False):
     """Discriminator for direct-URL-based brand retrieval."""
 
     policies: SequenceNotStr[str]
-    """Access policy IDs to apply. A URL must pass every policy."""
+    """Access policy IDs to apply.
+
+    A URL must pass every policy. Leave it out unless access policies are enabled
+    for your organization; otherwise the request fails with
+    `ACCESS_POLICIES_NOT_ENABLED`.
+    """
 
     tags: SequenceNotStr[str]
     """Labels for filtering usage in the dashboard."""
@@ -1492,7 +1517,12 @@ class BrandRetrieveFromTransactionRequest(TypedDict, total=False):
     """Optional phone number from the transaction to help verify brand match."""
 
     policies: SequenceNotStr[str]
-    """Access policy IDs to apply. A URL must pass every policy."""
+    """Access policy IDs to apply.
+
+    A URL must pass every policy. Leave it out unless access policies are enabled
+    for your organization; otherwise the request fails with
+    `ACCESS_POLICIES_NOT_ENABLED`.
+    """
 
     tags: SequenceNotStr[str]
     """Labels for filtering usage in the dashboard."""

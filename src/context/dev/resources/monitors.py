@@ -104,7 +104,9 @@ class MonitorsResource(SyncAPIResource):
 
           mode: Always `web`. Optional.
 
-          policies: Access policy IDs to apply to every run.
+          policies: Access policy IDs to apply to every run. Leave it out unless access policies are
+              enabled for your organization; otherwise the request fails with
+              `ACCESS_POLICIES_NOT_ENABLED`.
 
           schedule: Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
               every 6 hours or every 2 days. The total interval (frequency × unit) must be
@@ -211,6 +213,8 @@ class MonitorsResource(SyncAPIResource):
           name: Display name for the monitor.
 
           policies: Access policy IDs to apply to every run. Send an empty list to remove them.
+              Leave it out unless access policies are enabled for your organization; otherwise
+              the request fails with `ACCESS_POLICIES_NOT_ENABLED`.
 
           schedule: Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
               every 6 hours or every 2 days. The total interval (frequency × unit) must be
@@ -886,7 +890,9 @@ class AsyncMonitorsResource(AsyncAPIResource):
 
           mode: Always `web`. Optional.
 
-          policies: Access policy IDs to apply to every run.
+          policies: Access policy IDs to apply to every run. Leave it out unless access policies are
+              enabled for your organization; otherwise the request fails with
+              `ACCESS_POLICIES_NOT_ENABLED`.
 
           schedule: Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
               every 6 hours or every 2 days. The total interval (frequency × unit) must be
@@ -993,6 +999,8 @@ class AsyncMonitorsResource(AsyncAPIResource):
           name: Display name for the monitor.
 
           policies: Access policy IDs to apply to every run. Send an empty list to remove them.
+              Leave it out unless access policies are enabled for your organization; otherwise
+              the request fails with `ACCESS_POLICIES_NOT_ENABLED`.
 
           schedule: Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
               every 6 hours or every 2 days. The total interval (frequency × unit) must be

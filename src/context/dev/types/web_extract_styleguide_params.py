@@ -35,7 +35,12 @@ class WebExtractStyleguideParams(TypedDict, total=False):
     """
 
     policies: SequenceNotStr[str]
-    """Comma-separated access policy IDs to apply. A URL must pass every policy."""
+    """Comma-separated access policy IDs to apply.
+
+    A URL must pass every policy. Leave it out unless access policies are enabled
+    for your organization; otherwise the request fails with
+    `ACCESS_POLICIES_NOT_ENABLED`.
+    """
 
     tags: SequenceNotStr[str]
     """Comma-separated labels for filtering usage, e.g. `production,team-alpha`."""

@@ -205,7 +205,9 @@ class BrandResource(SyncAPIResource):
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
 
-          policies: Access policy IDs to apply. A URL must pass every policy.
+          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
+              access policies are enabled for your organization; otherwise the request fails
+              with `ACCESS_POLICIES_NOT_ENABLED`.
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -630,7 +632,9 @@ class BrandResource(SyncAPIResource):
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
 
-          policies: Access policy IDs to apply. A URL must pass every policy.
+          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
+              access policies are enabled for your organization; otherwise the request fails
+              with `ACCESS_POLICIES_NOT_ENABLED`.
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -810,7 +814,9 @@ class BrandResource(SyncAPIResource):
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
 
-          policies: Access policy IDs to apply. A URL must pass every policy.
+          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
+              access policies are enabled for your organization; otherwise the request fails
+              with `ACCESS_POLICIES_NOT_ENABLED`.
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -1065,7 +1071,9 @@ class BrandResource(SyncAPIResource):
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
 
-          policies: Access policy IDs to apply. A URL must pass every policy.
+          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
+              access policies are enabled for your organization; otherwise the request fails
+              with `ACCESS_POLICIES_NOT_ENABLED`.
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -1115,7 +1123,9 @@ class BrandResource(SyncAPIResource):
 
           type: Discriminator for direct-URL-based brand retrieval.
 
-          policies: Access policy IDs to apply. A URL must pass every policy.
+          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
+              access policies are enabled for your organization; otherwise the request fails
+              with `ACCESS_POLICIES_NOT_ENABLED`.
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -1550,7 +1560,9 @@ class BrandResource(SyncAPIResource):
 
           phone: Optional phone number from the transaction to help verify brand match.
 
-          policies: Access policy IDs to apply. A URL must pass every policy.
+          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
+              access policies are enabled for your organization; otherwise the request fails
+              with `ACCESS_POLICIES_NOT_ENABLED`.
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -2720,7 +2732,9 @@ class AsyncBrandResource(AsyncAPIResource):
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
 
-          policies: Access policy IDs to apply. A URL must pass every policy.
+          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
+              access policies are enabled for your organization; otherwise the request fails
+              with `ACCESS_POLICIES_NOT_ENABLED`.
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -3145,7 +3159,9 @@ class AsyncBrandResource(AsyncAPIResource):
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
 
-          policies: Access policy IDs to apply. A URL must pass every policy.
+          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
+              access policies are enabled for your organization; otherwise the request fails
+              with `ACCESS_POLICIES_NOT_ENABLED`.
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -3325,7 +3341,9 @@ class AsyncBrandResource(AsyncAPIResource):
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
 
-          policies: Access policy IDs to apply. A URL must pass every policy.
+          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
+              access policies are enabled for your organization; otherwise the request fails
+              with `ACCESS_POLICIES_NOT_ENABLED`.
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -3580,7 +3598,9 @@ class AsyncBrandResource(AsyncAPIResource):
               the API will skip time-consuming operations for faster response at the cost of
               less comprehensive data.
 
-          policies: Access policy IDs to apply. A URL must pass every policy.
+          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
+              access policies are enabled for your organization; otherwise the request fails
+              with `ACCESS_POLICIES_NOT_ENABLED`.
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -3630,7 +3650,9 @@ class AsyncBrandResource(AsyncAPIResource):
 
           type: Discriminator for direct-URL-based brand retrieval.
 
-          policies: Access policy IDs to apply. A URL must pass every policy.
+          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
+              access policies are enabled for your organization; otherwise the request fails
+              with `ACCESS_POLICIES_NOT_ENABLED`.
 
           tags: Labels for filtering usage in the dashboard.
 
@@ -4065,7 +4087,9 @@ class AsyncBrandResource(AsyncAPIResource):
 
           phone: Optional phone number from the transaction to help verify brand match.
 
-          policies: Access policy IDs to apply. A URL must pass every policy.
+          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
+              access policies are enabled for your organization; otherwise the request fails
+              with `ACCESS_POLICIES_NOT_ENABLED`.
 
           tags: Labels for filtering usage in the dashboard.
 
