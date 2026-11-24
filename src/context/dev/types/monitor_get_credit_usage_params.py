@@ -15,5 +15,11 @@ class MonitorGetCreditUsageParams(TypedDict, total=False):
     since: Annotated[Union[str, datetime], PropertyInfo(format="iso8601")]
     """Only include items at or after this ISO 8601 timestamp."""
 
+    tag: str
+    """Only include monitors that currently have this tag.
+
+    Deleted monitors are left out.
+    """
+
     until: Annotated[Union[str, datetime], PropertyInfo(format="iso8601")]
     """Only include items before this ISO 8601 timestamp."""

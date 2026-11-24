@@ -335,6 +335,7 @@ class TestMonitors:
     def test_method_get_credit_usage_with_all_params(self, client: ContextDev) -> None:
         monitor = client.monitors.get_credit_usage(
             since=parse_datetime("2026-06-01T00:00:00Z"),
+            tag="pricing",
             until=parse_datetime("2026-06-28T00:00:00Z"),
         )
         assert_matches_type(MonitorGetCreditUsageResponse, monitor, path=["response"])
@@ -1063,6 +1064,7 @@ class TestAsyncMonitors:
     async def test_method_get_credit_usage_with_all_params(self, async_client: AsyncContextDev) -> None:
         monitor = await async_client.monitors.get_credit_usage(
             since=parse_datetime("2026-06-01T00:00:00Z"),
+            tag="pricing",
             until=parse_datetime("2026-06-28T00:00:00Z"),
         )
         assert_matches_type(MonitorGetCreditUsageResponse, monitor, path=["response"])

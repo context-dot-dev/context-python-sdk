@@ -375,6 +375,7 @@ class MonitorsResource(SyncAPIResource):
         self,
         *,
         since: Union[str, datetime] | Omit = omit,
+        tag: str | Omit = omit,
         until: Union[str, datetime] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -385,10 +386,14 @@ class MonitorsResource(SyncAPIResource):
     ) -> MonitorGetCreditUsageResponse:
         """
         Return usage per monitor, highest first, for up to the 10,000 most recent runs
-        in the requested window.
+        in the requested window. Pass `tag` to report only the monitors that carry that
+        tag, such as one customer’s monitors.
 
         Args:
           since: Only include items at or after this ISO 8601 timestamp.
+
+          tag: Only include monitors that currently have this tag. Deleted monitors are left
+              out.
 
           until: Only include items before this ISO 8601 timestamp.
 
@@ -410,6 +415,7 @@ class MonitorsResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "since": since,
+                        "tag": tag,
                         "until": until,
                     },
                     monitor_get_credit_usage_params.MonitorGetCreditUsageParams,
@@ -1151,6 +1157,7 @@ class AsyncMonitorsResource(AsyncAPIResource):
         self,
         *,
         since: Union[str, datetime] | Omit = omit,
+        tag: str | Omit = omit,
         until: Union[str, datetime] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -1161,10 +1168,14 @@ class AsyncMonitorsResource(AsyncAPIResource):
     ) -> MonitorGetCreditUsageResponse:
         """
         Return usage per monitor, highest first, for up to the 10,000 most recent runs
-        in the requested window.
+        in the requested window. Pass `tag` to report only the monitors that carry that
+        tag, such as one customer’s monitors.
 
         Args:
           since: Only include items at or after this ISO 8601 timestamp.
+
+          tag: Only include monitors that currently have this tag. Deleted monitors are left
+              out.
 
           until: Only include items before this ISO 8601 timestamp.
 
@@ -1186,6 +1197,7 @@ class AsyncMonitorsResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "since": since,
+                        "tag": tag,
                         "until": until,
                     },
                     monitor_get_credit_usage_params.MonitorGetCreditUsageParams,
