@@ -88,7 +88,7 @@ class ResultMetadata(BaseModel):
     """Original URL requested by the caller."""
 
     status_code: int = FieldInfo(alias="statusCode")
-    """HTTP status code of the response"""
+    """HTTP status code of the response (0 when the page could not be retrieved)"""
 
     success: bool
     """true if the page was fetched and parsed successfully"""
@@ -113,6 +113,15 @@ class ResultMetadata(BaseModel):
 
     description: Optional[str] = None
     """Best description extracted from standard, Open Graph, or Twitter metadata."""
+
+    error_code: Optional[str] = None
+    """Why the page failed.
+
+    Present only when `success` is `false`: `WEBSITE_BLOCKED` (the site served an
+    anti-bot challenge or access wall), `WEBSITE_ACCESS_ERROR` (the page could not
+    be retrieved or had no usable content), `NOT_FOUND`, `UNSUPPORTED_CONTENT`,
+    `NO_PUBLISHED_MARKDOWN`, or `INTERNAL_ERROR`.
+    """
 
     favicon: Optional[str] = None
     """Resolved favicon URL, when present."""

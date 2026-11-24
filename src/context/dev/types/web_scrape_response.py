@@ -334,6 +334,19 @@ class ProductDataProductVariant(BaseModel):
     url: Optional[str] = None
     """Variant or offer URL when provided by the source. May be shared by variants."""
 
+    availability: Optional[
+        Literal[
+            "in_stock", "out_of_stock", "limited_availability", "preorder", "backorder", "made_to_order", "discontinued"
+        ]
+    ] = None
+    """Normalized stock or ordering availability of this variant."""
+
+    currency: Optional[str] = None
+    """Currency code for the variant price (e.g., USD, EUR) when stated with it."""
+
+    price: Optional[float] = None
+    """Price of this variant when the source states one per variant."""
+
 
 class ProductDataProduct(BaseModel):
     """The extracted product, or null when the page is not a product detail page."""
