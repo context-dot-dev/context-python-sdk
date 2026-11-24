@@ -13,7 +13,7 @@ __all__ = ["WebAnswersParams", "TimeoutOpts"]
 
 class WebAnswersParams(TypedDict, total=False):
     task: Required[str]
-    """Research task.
+    """Research task, up to 2000 characters.
 
     The agent selects company/profile lookups, web searches, or page reads. Include
     domains or URLs to focus the research.

@@ -10,7 +10,9 @@ __all__ = ["FeedbackSubmitParams"]
 
 
 class FeedbackSubmitParams(TypedDict, total=False):
-    category: Required[Literal["bug", "docs_mismatch", "friction", "feature_gap", "quality_degradation", "other"]]
+    category: Required[
+        Literal["bug", "docs_mismatch", "friction", "feature_gap", "quality_degradation", "bad_brand", "other"]
+    ]
     """Kind of issue."""
 
     note: Required[str]

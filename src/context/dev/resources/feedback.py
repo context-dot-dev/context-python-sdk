@@ -48,7 +48,9 @@ class FeedbackResource(SyncAPIResource):
     def submit(
         self,
         *,
-        category: Literal["bug", "docs_mismatch", "friction", "feature_gap", "quality_degradation", "other"],
+        category: Literal[
+            "bug", "docs_mismatch", "friction", "feature_gap", "quality_degradation", "bad_brand", "other"
+        ],
         note: str,
         request_id: str | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
@@ -128,7 +130,9 @@ class AsyncFeedbackResource(AsyncAPIResource):
     async def submit(
         self,
         *,
-        category: Literal["bug", "docs_mismatch", "friction", "feature_gap", "quality_degradation", "other"],
+        category: Literal[
+            "bug", "docs_mismatch", "friction", "feature_gap", "quality_degradation", "bad_brand", "other"
+        ],
         note: str,
         request_id: str | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
