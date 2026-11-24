@@ -27,7 +27,14 @@ class ResultHighlights(BaseModel):
     """Highlights status and passages for this result."""
 
     code: Literal[
-        "SUCCESS", "NOT_REQUESTED", "TIMEOUT", "CONTENT_TOO_LARGE", "WEBSITE_ACCESS_ERROR", "WEBSITE_BLOCKED", "ERROR"
+        "SUCCESS",
+        "NOT_REQUESTED",
+        "TIMEOUT",
+        "CONTENT_TOO_LARGE",
+        "WEBSITE_ACCESS_ERROR",
+        "WEBSITE_BLOCKED",
+        "WEBSITE_NOT_FOUND",
+        "ERROR",
     ]
     """Per-result highlights outcome. Inspect this before reading `highlights`."""
 
@@ -37,12 +44,22 @@ class ResultHighlights(BaseModel):
     Null unless highlightsOptions.enabled is true and the page was read.
     """
 
+    message: Optional[str] = None
+    """Why this output is missing. Present only when `code` is a failure."""
+
 
 class ResultMarkdown(BaseModel):
     """Markdown scrape status and content for this result."""
 
     code: Literal[
-        "SUCCESS", "NOT_REQUESTED", "TIMEOUT", "CONTENT_TOO_LARGE", "WEBSITE_ACCESS_ERROR", "WEBSITE_BLOCKED", "ERROR"
+        "SUCCESS",
+        "NOT_REQUESTED",
+        "TIMEOUT",
+        "CONTENT_TOO_LARGE",
+        "WEBSITE_ACCESS_ERROR",
+        "WEBSITE_BLOCKED",
+        "WEBSITE_NOT_FOUND",
+        "ERROR",
     ]
     """Per-result scrape outcome. Inspect this before reading `markdown`."""
 
@@ -57,6 +74,9 @@ class ResultMarkdown(BaseModel):
     `loaded`, or `still-loading` when capture ended before the page finished
     loading.
     """
+
+    message: Optional[str] = None
+    """Why this output is missing. Present only when `code` is a failure."""
 
 
 class Result(BaseModel):
