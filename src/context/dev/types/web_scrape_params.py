@@ -246,6 +246,8 @@ class ParseParamsPrebuiltParser(TypedDict, total=False):
             "yelp-search",
             "yelp-reviews",
             "tripadvisor-reviews",
+            "car-rental-availability",
+            "car-rental-locations",
             "emails",
             "phone-numbers",
             "links",
