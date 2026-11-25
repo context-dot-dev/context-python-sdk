@@ -64,6 +64,14 @@ from .browser import (
     BrowserResourceWithStreamingResponse,
     AsyncBrowserResourceWithStreamingResponse,
 )
+from .scholar import (
+    ScholarResource,
+    AsyncScholarResource,
+    ScholarResourceWithRawResponse,
+    AsyncScholarResourceWithRawResponse,
+    ScholarResourceWithStreamingResponse,
+    AsyncScholarResourceWithStreamingResponse,
+)
 from .utility import (
     UtilityResource,
     AsyncUtilityResource,
@@ -166,6 +174,12 @@ __all__ = [
     "AsyncNewsResourceWithRawResponse",
     "NewsResourceWithStreamingResponse",
     "AsyncNewsResourceWithStreamingResponse",
+    "ScholarResource",
+    "AsyncScholarResource",
+    "ScholarResourceWithRawResponse",
+    "AsyncScholarResourceWithRawResponse",
+    "ScholarResourceWithStreamingResponse",
+    "AsyncScholarResourceWithStreamingResponse",
     "LogsResource",
     "AsyncLogsResource",
     "LogsResourceWithRawResponse",

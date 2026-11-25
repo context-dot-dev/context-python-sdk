@@ -44,6 +44,7 @@ if TYPE_CHECKING:
         parse,
         people,
         browser,
+        scholar,
         utility,
         feedback,
         industry,
@@ -57,6 +58,7 @@ if TYPE_CHECKING:
     from .resources.brand import BrandResource, AsyncBrandResource
     from .resources.parse import ParseResource, AsyncParseResource
     from .resources.people import PeopleResource, AsyncPeopleResource
+    from .resources.scholar import ScholarResource, AsyncScholarResource
     from .resources.utility import UtilityResource, AsyncUtilityResource
     from .resources.feedback import FeedbackResource, AsyncFeedbackResource
     from .resources.industry import IndustryResource, AsyncIndustryResource
@@ -202,6 +204,13 @@ class ContextDev(SyncAPIClient):
         from .resources.news import NewsResource
 
         return NewsResource(self)
+
+    @cached_property
+    def scholar(self) -> ScholarResource:
+        """Search full-text academic papers from arXiv and Europe PMC."""
+        from .resources.scholar import ScholarResource
+
+        return ScholarResource(self)
 
     @cached_property
     def logs(self) -> LogsResource:
@@ -464,6 +473,13 @@ class AsyncContextDev(AsyncAPIClient):
         return AsyncNewsResource(self)
 
     @cached_property
+    def scholar(self) -> AsyncScholarResource:
+        """Search full-text academic papers from arXiv and Europe PMC."""
+        from .resources.scholar import AsyncScholarResource
+
+        return AsyncScholarResource(self)
+
+    @cached_property
     def logs(self) -> AsyncLogsResource:
         """Read your organization's API request logs."""
         from .resources.logs import AsyncLogsResource
@@ -666,6 +682,13 @@ class ContextDevWithRawResponse:
         return NewsResourceWithRawResponse(self._client.news)
 
     @cached_property
+    def scholar(self) -> scholar.ScholarResourceWithRawResponse:
+        """Search full-text academic papers from arXiv and Europe PMC."""
+        from .resources.scholar import ScholarResourceWithRawResponse
+
+        return ScholarResourceWithRawResponse(self._client.scholar)
+
+    @cached_property
     def logs(self) -> logs.LogsResourceWithRawResponse:
         """Read your organization's API request logs."""
         from .resources.logs import LogsResourceWithRawResponse
@@ -754,6 +777,13 @@ class AsyncContextDevWithRawResponse:
         from .resources.news import AsyncNewsResourceWithRawResponse
 
         return AsyncNewsResourceWithRawResponse(self._client.news)
+
+    @cached_property
+    def scholar(self) -> scholar.AsyncScholarResourceWithRawResponse:
+        """Search full-text academic papers from arXiv and Europe PMC."""
+        from .resources.scholar import AsyncScholarResourceWithRawResponse
+
+        return AsyncScholarResourceWithRawResponse(self._client.scholar)
 
     @cached_property
     def logs(self) -> logs.AsyncLogsResourceWithRawResponse:
@@ -846,6 +876,13 @@ class ContextDevWithStreamedResponse:
         return NewsResourceWithStreamingResponse(self._client.news)
 
     @cached_property
+    def scholar(self) -> scholar.ScholarResourceWithStreamingResponse:
+        """Search full-text academic papers from arXiv and Europe PMC."""
+        from .resources.scholar import ScholarResourceWithStreamingResponse
+
+        return ScholarResourceWithStreamingResponse(self._client.scholar)
+
+    @cached_property
     def logs(self) -> logs.LogsResourceWithStreamingResponse:
         """Read your organization's API request logs."""
         from .resources.logs import LogsResourceWithStreamingResponse
@@ -934,6 +971,13 @@ class AsyncContextDevWithStreamedResponse:
         from .resources.news import AsyncNewsResourceWithStreamingResponse
 
         return AsyncNewsResourceWithStreamingResponse(self._client.news)
+
+    @cached_property
+    def scholar(self) -> scholar.AsyncScholarResourceWithStreamingResponse:
+        """Search full-text academic papers from arXiv and Europe PMC."""
+        from .resources.scholar import AsyncScholarResourceWithStreamingResponse
+
+        return AsyncScholarResourceWithStreamingResponse(self._client.scholar)
 
     @cached_property
     def logs(self) -> logs.AsyncLogsResourceWithStreamingResponse:

@@ -203,6 +203,18 @@ Methods:
 
 - <code title="post /news/search">client.news.<a href="./src/context/dev/resources/news.py">search</a>(\*\*<a href="src/context/dev/types/news_search_params.py">params</a>) -> <a href="./src/context/dev/types/news_search_response.py">NewsSearchResponse</a></code>
 
+# Scholar
+
+Types:
+
+```python
+from context.dev.types import ScholarSearchResponse
+```
+
+Methods:
+
+- <code title="post /scholar/search">client.scholar.<a href="./src/context/dev/resources/scholar.py">search</a>(\*\*<a href="src/context/dev/types/scholar_search_params.py">params</a>) -> <a href="./src/context/dev/types/scholar_search_response.py">ScholarSearchResponse</a></code>
+
 # Logs
 
 Types:

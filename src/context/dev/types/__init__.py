@@ -39,6 +39,7 @@ from .monitor_create_params import MonitorCreateParams as MonitorCreateParams
 from .monitor_list_response import MonitorListResponse as MonitorListResponse
 from .monitor_update_params import MonitorUpdateParams as MonitorUpdateParams
 from .parse_handle_response import ParseHandleResponse as ParseHandleResponse
+from .scholar_search_params import ScholarSearchParams as ScholarSearchParams
 from .web_map_urls_response import WebMapURLsResponse as WebMapURLsResponse
 from .web_screenshot_params import WebScreenshotParams as WebScreenshotParams
 from .feedback_submit_params import FeedbackSubmitParams as FeedbackSubmitParams
@@ -49,6 +50,7 @@ from .brand_retrieve_response import BrandRetrieveResponse as BrandRetrieveRespo
 from .monitor_create_response import MonitorCreateResponse as MonitorCreateResponse
 from .monitor_delete_response import MonitorDeleteResponse as MonitorDeleteResponse
 from .monitor_update_response import MonitorUpdateResponse as MonitorUpdateResponse
+from .scholar_search_response import ScholarSearchResponse as ScholarSearchResponse
 from .utility_prefetch_params import UtilityPrefetchParams as UtilityPrefetchParams
 from .web_screenshot_response import WebScreenshotResponse as WebScreenshotResponse
 from .web_web_crawl_md_params import WebWebCrawlMdParams as WebWebCrawlMdParams
