@@ -8,7 +8,7 @@ from typing_extensions import Literal, Required, Annotated, TypedDict
 from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
-__all__ = ["WebAnswersParams", "TimeoutOpts"]
+__all__ = ["WebAnswersParams", "Controls", "TimeoutOpts"]
 
 
 class WebAnswersParams(TypedDict, total=False):
@@ -18,6 +18,9 @@ class WebAnswersParams(TypedDict, total=False):
     The agent selects company/profile lookups, web searches, or page reads. Include
     domains or URLs to focus the research.
     """
+
+    controls: Controls
+    """Limits what the research may use."""
 
     json_format: Dict[str, object]
     """Example answer object, not JSON Schema.
@@ -49,6 +52,24 @@ class WebAnswersParams(TypedDict, total=False):
     """`enabled` turns on zero data retention.
 
     Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
+    """
+
+
+class Controls(TypedDict, total=False):
+    """Limits what the research may use."""
+
+    exclude_sources: Annotated[SequenceNotStr[str], PropertyInfo(alias="excludeSources")]
+    """Never search, read or cite these sites, sections or pages.
+
+    Same format as `sources`. Up to 100 entries.
+    """
+
+    sources: SequenceNotStr[str]
+    """Only search, read and cite these sites, sections or pages.
+
+    Each entry is a URL prefix: "example.com" covers the site and its subdomains,
+    "example.com/docs" covers that section, and "example.com/docs/setup.html" is one
+    page. Up to 20 entries.
     """
 
 

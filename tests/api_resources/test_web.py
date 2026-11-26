@@ -39,6 +39,10 @@ class TestWeb:
     def test_method_answers_with_all_params(self, client: ContextDev) -> None:
         web = client.web.answers(
             task="Find the pricing page URL and plan names for context.dev.",
+            controls={
+                "exclude_sources": ["string"],
+                "sources": ["string"],
+            },
             json_format={
                 "pricing_page_url": "bar",
                 "plans": "bar",
@@ -601,6 +605,10 @@ class TestAsyncWeb:
     async def test_method_answers_with_all_params(self, async_client: AsyncContextDev) -> None:
         web = await async_client.web.answers(
             task="Find the pricing page URL and plan names for context.dev.",
+            controls={
+                "exclude_sources": ["string"],
+                "sources": ["string"],
+            },
             json_format={
                 "pricing_page_url": "bar",
                 "plans": "bar",

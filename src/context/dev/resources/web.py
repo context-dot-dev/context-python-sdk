@@ -64,6 +64,7 @@ class WebResource(SyncAPIResource):
         self,
         *,
         task: str,
+        controls: web_answers_params.Controls | Omit = omit,
         json_format: Dict[str, object] | Omit = omit,
         mode: Literal["fast", "ultra"] | Omit = omit,
         policies: SequenceNotStr[str] | Omit = omit,
@@ -85,6 +86,8 @@ class WebResource(SyncAPIResource):
         Args:
           task: Research task, up to 2000 characters. The agent selects company/profile lookups,
               web searches, or page reads. Include domains or URLs to focus the research.
+
+          controls: Limits what the research may use.
 
           json_format: Example answer object, not JSON Schema. Up to 8 levels, 500 values, and 16000
               characters; unknowns may be null.
@@ -116,6 +119,7 @@ class WebResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "task": task,
+                    "controls": controls,
                     "json_format": json_format,
                     "mode": mode,
                     "policies": policies,
@@ -1614,6 +1618,7 @@ class AsyncWebResource(AsyncAPIResource):
         self,
         *,
         task: str,
+        controls: web_answers_params.Controls | Omit = omit,
         json_format: Dict[str, object] | Omit = omit,
         mode: Literal["fast", "ultra"] | Omit = omit,
         policies: SequenceNotStr[str] | Omit = omit,
@@ -1635,6 +1640,8 @@ class AsyncWebResource(AsyncAPIResource):
         Args:
           task: Research task, up to 2000 characters. The agent selects company/profile lookups,
               web searches, or page reads. Include domains or URLs to focus the research.
+
+          controls: Limits what the research may use.
 
           json_format: Example answer object, not JSON Schema. Up to 8 levels, 500 values, and 16000
               characters; unknowns may be null.
@@ -1666,6 +1673,7 @@ class AsyncWebResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "task": task,
+                    "controls": controls,
                     "json_format": json_format,
                     "mode": mode,
                     "policies": policies,
