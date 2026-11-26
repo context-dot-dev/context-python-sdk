@@ -1,11 +1,101 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import List, Union, Optional
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Literal, Annotated, TypeAlias
 
+from .._utils import PropertyInfo
 from .._models import BaseModel
 
-__all__ = ["CrawlControls", "Source", "SourceStartURL", "SourceSitemap"]
+__all__ = [
+    "CrawlControls",
+    "Exclude",
+    "ExcludeCrawlRegexMatcher",
+    "ExcludeCrawlProductMatcher",
+    "Follow",
+    "FollowCrawlRegexMatcher",
+    "FollowCrawlPaginationMatcher",
+    "FollowCrawlProductMatcher",
+    "Scrape",
+    "ScrapeCrawlRegexMatcher",
+    "ScrapeCrawlProductMatcher",
+    "Source",
+    "SourceStartURL",
+    "SourceSitemap",
+]
+
+
+class ExcludeCrawlRegexMatcher(BaseModel):
+    """Pages whose URL matches a regex pattern."""
+
+    kind: Literal["regex"]
+    """Match pages by URL pattern."""
+
+    pattern: str
+    """Regex pattern for the page URL."""
+
+
+class ExcludeCrawlProductMatcher(BaseModel):
+    """Product detail pages."""
+
+    kind: Literal["product"]
+    """Match product detail pages."""
+
+
+Exclude: TypeAlias = Annotated[
+    Union[ExcludeCrawlRegexMatcher, ExcludeCrawlProductMatcher], PropertyInfo(discriminator="kind")
+]
+
+
+class FollowCrawlRegexMatcher(BaseModel):
+    """Pages whose URL matches a regex pattern."""
+
+    kind: Literal["regex"]
+    """Match pages by URL pattern."""
+
+    pattern: str
+    """Regex pattern for the page URL."""
+
+
+class FollowCrawlPaginationMatcher(BaseModel):
+    """Further pages of a paginated list, such as page 2 of a catalog."""
+
+    kind: Literal["pagination"]
+    """Match the further pages of a paginated list."""
+
+
+class FollowCrawlProductMatcher(BaseModel):
+    """Product detail pages."""
+
+    kind: Literal["product"]
+    """Match product detail pages."""
+
+
+Follow: TypeAlias = Annotated[
+    Union[FollowCrawlRegexMatcher, FollowCrawlPaginationMatcher, FollowCrawlProductMatcher],
+    PropertyInfo(discriminator="kind"),
+]
+
+
+class ScrapeCrawlRegexMatcher(BaseModel):
+    """Pages whose URL matches a regex pattern."""
+
+    kind: Literal["regex"]
+    """Match pages by URL pattern."""
+
+    pattern: str
+    """Regex pattern for the page URL."""
+
+
+class ScrapeCrawlProductMatcher(BaseModel):
+    """Product detail pages."""
+
+    kind: Literal["product"]
+    """Match product detail pages."""
+
+
+Scrape: TypeAlias = Annotated[
+    Union[ScrapeCrawlRegexMatcher, ScrapeCrawlProductMatcher], PropertyInfo(discriminator="kind")
+]
 
 
 class SourceStartURL(BaseModel):
@@ -32,8 +122,14 @@ Source: TypeAlias = Union[SourceStartURL, SourceSitemap]
 class CrawlControls(BaseModel):
     """Crawl settings as submitted."""
 
+    exclude: Optional[List[Exclude]] = None
+    """Pages the crawl skipped. Null when it skipped none."""
+
     exclude_url_pattern: Optional[str] = None
     """Regex pattern URLs must not match to be crawled. Null when the crawl set none."""
+
+    follow: Optional[List[Follow]] = None
+    """Links the crawl followed. Null when it followed every link."""
 
     follow_subdomains: bool
     """Whether links to subdomains were followed. Always false for a sitemap crawl."""
@@ -135,6 +231,9 @@ class CrawlControls(BaseModel):
     A sitemap crawl scrapes only the URLs its sitemap actually lists, up to this
     many, so `input.reserved` is often lower.
     """
+
+    scrape: Optional[List[Scrape]] = None
+    """Pages the crawl returned. Null when it returned every fetched page."""
 
     source: Source
     """Where the crawl started."""

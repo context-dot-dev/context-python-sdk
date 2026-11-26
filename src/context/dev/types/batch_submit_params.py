@@ -58,16 +58,48 @@ __all__ = [
     "InputCrawlDataMarkdownSource",
     "InputCrawlDataMarkdownSourceStartURL",
     "InputCrawlDataMarkdownSourceStartURLControls",
+    "InputCrawlDataMarkdownSourceStartURLControlsExclude",
+    "InputCrawlDataMarkdownSourceStartURLControlsExcludeCrawlRegexMatcher",
+    "InputCrawlDataMarkdownSourceStartURLControlsExcludeCrawlProductMatcher",
+    "InputCrawlDataMarkdownSourceStartURLControlsFollow",
+    "InputCrawlDataMarkdownSourceStartURLControlsFollowCrawlRegexMatcher",
+    "InputCrawlDataMarkdownSourceStartURLControlsFollowCrawlPaginationMatcher",
+    "InputCrawlDataMarkdownSourceStartURLControlsFollowCrawlProductMatcher",
+    "InputCrawlDataMarkdownSourceStartURLControlsScrape",
+    "InputCrawlDataMarkdownSourceStartURLControlsScrapeCrawlRegexMatcher",
+    "InputCrawlDataMarkdownSourceStartURLControlsScrapeCrawlProductMatcher",
     "InputCrawlDataMarkdownSourceSitemap",
     "InputCrawlDataMarkdownSourceSitemapControls",
+    "InputCrawlDataMarkdownSourceSitemapControlsExclude",
+    "InputCrawlDataMarkdownSourceSitemapControlsExcludeCrawlRegexMatcher",
+    "InputCrawlDataMarkdownSourceSitemapControlsExcludeCrawlProductMatcher",
+    "InputCrawlDataMarkdownSourceSitemapControlsScrape",
+    "InputCrawlDataMarkdownSourceSitemapControlsScrapeCrawlRegexMatcher",
+    "InputCrawlDataMarkdownSourceSitemapControlsScrapeCrawlProductMatcher",
     "InputCrawlDataMarkdownOptions",
     "InputCrawlDataMarkdownOptionsPdf",
     "InputCrawlDataHTML",
     "InputCrawlDataHTMLSource",
     "InputCrawlDataHTMLSourceStartURL",
     "InputCrawlDataHTMLSourceStartURLControls",
+    "InputCrawlDataHTMLSourceStartURLControlsExclude",
+    "InputCrawlDataHTMLSourceStartURLControlsExcludeCrawlRegexMatcher",
+    "InputCrawlDataHTMLSourceStartURLControlsExcludeCrawlProductMatcher",
+    "InputCrawlDataHTMLSourceStartURLControlsFollow",
+    "InputCrawlDataHTMLSourceStartURLControlsFollowCrawlRegexMatcher",
+    "InputCrawlDataHTMLSourceStartURLControlsFollowCrawlPaginationMatcher",
+    "InputCrawlDataHTMLSourceStartURLControlsFollowCrawlProductMatcher",
+    "InputCrawlDataHTMLSourceStartURLControlsScrape",
+    "InputCrawlDataHTMLSourceStartURLControlsScrapeCrawlRegexMatcher",
+    "InputCrawlDataHTMLSourceStartURLControlsScrapeCrawlProductMatcher",
     "InputCrawlDataHTMLSourceSitemap",
     "InputCrawlDataHTMLSourceSitemapControls",
+    "InputCrawlDataHTMLSourceSitemapControlsExclude",
+    "InputCrawlDataHTMLSourceSitemapControlsExcludeCrawlRegexMatcher",
+    "InputCrawlDataHTMLSourceSitemapControlsExcludeCrawlProductMatcher",
+    "InputCrawlDataHTMLSourceSitemapControlsScrape",
+    "InputCrawlDataHTMLSourceSitemapControlsScrapeCrawlRegexMatcher",
+    "InputCrawlDataHTMLSourceSitemapControlsScrapeCrawlProductMatcher",
     "InputCrawlDataHTMLOptions",
     "InputCrawlDataHTMLOptionsPdf",
     "InputCrawlDataBatchUnifiedCrawlData",
@@ -75,8 +107,24 @@ __all__ = [
     "InputCrawlDataBatchUnifiedCrawlDataSource",
     "InputCrawlDataBatchUnifiedCrawlDataSourceStartURL",
     "InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControls",
+    "InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsExclude",
+    "InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsExcludeCrawlRegexMatcher",
+    "InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsExcludeCrawlProductMatcher",
+    "InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsFollow",
+    "InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsFollowCrawlRegexMatcher",
+    "InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsFollowCrawlPaginationMatcher",
+    "InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsFollowCrawlProductMatcher",
+    "InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsScrape",
+    "InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsScrapeCrawlRegexMatcher",
+    "InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsScrapeCrawlProductMatcher",
     "InputCrawlDataBatchUnifiedCrawlDataSourceSitemap",
     "InputCrawlDataBatchUnifiedCrawlDataSourceSitemapControls",
+    "InputCrawlDataBatchUnifiedCrawlDataSourceSitemapControlsExclude",
+    "InputCrawlDataBatchUnifiedCrawlDataSourceSitemapControlsExcludeCrawlRegexMatcher",
+    "InputCrawlDataBatchUnifiedCrawlDataSourceSitemapControlsExcludeCrawlProductMatcher",
+    "InputCrawlDataBatchUnifiedCrawlDataSourceSitemapControlsScrape",
+    "InputCrawlDataBatchUnifiedCrawlDataSourceSitemapControlsScrapeCrawlRegexMatcher",
+    "InputCrawlDataBatchUnifiedCrawlDataSourceSitemapControlsScrapeCrawlProductMatcher",
     "InputCrawlDataBatchUnifiedCrawlDataHighlightsParams",
     "InputCrawlDataBatchUnifiedCrawlDataImageParams",
     "InputCrawlDataBatchUnifiedCrawlDataJsonParams",
@@ -1421,13 +1469,93 @@ class InputScrape(TypedDict, total=False):
     """Scrape the pages in `data.urls`."""
 
 
+class InputCrawlDataMarkdownSourceStartURLControlsExcludeCrawlRegexMatcher(TypedDict, total=False):
+    """Pages whose URL matches a regex pattern."""
+
+    kind: Required[Literal["regex"]]
+    """Match pages by URL pattern."""
+
+    pattern: Required[str]
+    """Regex pattern for the page URL."""
+
+
+class InputCrawlDataMarkdownSourceStartURLControlsExcludeCrawlProductMatcher(TypedDict, total=False):
+    """Product detail pages."""
+
+    kind: Required[Literal["product"]]
+    """Match product detail pages."""
+
+
+InputCrawlDataMarkdownSourceStartURLControlsExclude: TypeAlias = Union[
+    InputCrawlDataMarkdownSourceStartURLControlsExcludeCrawlRegexMatcher,
+    InputCrawlDataMarkdownSourceStartURLControlsExcludeCrawlProductMatcher,
+]
+
+
+class InputCrawlDataMarkdownSourceStartURLControlsFollowCrawlRegexMatcher(TypedDict, total=False):
+    """Pages whose URL matches a regex pattern."""
+
+    kind: Required[Literal["regex"]]
+    """Match pages by URL pattern."""
+
+    pattern: Required[str]
+    """Regex pattern for the page URL."""
+
+
+class InputCrawlDataMarkdownSourceStartURLControlsFollowCrawlPaginationMatcher(TypedDict, total=False):
+    """Further pages of a paginated list, such as page 2 of a catalog."""
+
+    kind: Required[Literal["pagination"]]
+    """Match the further pages of a paginated list."""
+
+
+class InputCrawlDataMarkdownSourceStartURLControlsFollowCrawlProductMatcher(TypedDict, total=False):
+    """Product detail pages."""
+
+    kind: Required[Literal["product"]]
+    """Match product detail pages."""
+
+
+InputCrawlDataMarkdownSourceStartURLControlsFollow: TypeAlias = Union[
+    InputCrawlDataMarkdownSourceStartURLControlsFollowCrawlRegexMatcher,
+    InputCrawlDataMarkdownSourceStartURLControlsFollowCrawlPaginationMatcher,
+    InputCrawlDataMarkdownSourceStartURLControlsFollowCrawlProductMatcher,
+]
+
+
+class InputCrawlDataMarkdownSourceStartURLControlsScrapeCrawlRegexMatcher(TypedDict, total=False):
+    """Pages whose URL matches a regex pattern."""
+
+    kind: Required[Literal["regex"]]
+    """Match pages by URL pattern."""
+
+    pattern: Required[str]
+    """Regex pattern for the page URL."""
+
+
+class InputCrawlDataMarkdownSourceStartURLControlsScrapeCrawlProductMatcher(TypedDict, total=False):
+    """Product detail pages."""
+
+    kind: Required[Literal["product"]]
+    """Match product detail pages."""
+
+
+InputCrawlDataMarkdownSourceStartURLControlsScrape: TypeAlias = Union[
+    InputCrawlDataMarkdownSourceStartURLControlsScrapeCrawlRegexMatcher,
+    InputCrawlDataMarkdownSourceStartURLControlsScrapeCrawlProductMatcher,
+]
+
+
 class InputCrawlDataMarkdownSourceStartURLControls(TypedDict, total=False):
     """Limits and filters for page discovery."""
 
-    exclude_regex: Annotated[str, PropertyInfo(alias="excludeRegex")]
-    """Regex pattern for URLs to exclude, even when they match `regex`.
+    exclude: Iterable[InputCrawlDataMarkdownSourceStartURLControlsExclude]
+    """Pages to skip entirely, even when they match `follow` or `scrape`."""
 
-    The `start_url` itself is always included.
+    follow: Iterable[InputCrawlDataMarkdownSourceStartURLControlsFollow]
+    """Links to follow from each page; every followed page is checked for links again.
+
+    Follows all links when omitted.
     """
 
     follow_subdomains: Annotated[bool, PropertyInfo(alias="followSubdomains")]
@@ -1525,8 +1653,8 @@ class InputCrawlDataMarkdownSourceStartURLControls(TypedDict, total=False):
     max_urls: Annotated[int, PropertyInfo(alias="maxUrls")]
     """Maximum pages to fetch. Unused reserved credits are refunded. Maximum 100000."""
 
-    regex: str
-    """Regex pattern for URLs to include. The `start_url` itself is always included."""
+    scrape: Iterable[InputCrawlDataMarkdownSourceStartURLControlsScrape]
+    """Pages to return in the results. Returns every fetched page when omitted."""
 
 
 class InputCrawlDataMarkdownSourceStartURL(TypedDict, total=False):
@@ -1542,31 +1670,74 @@ class InputCrawlDataMarkdownSourceStartURL(TypedDict, total=False):
     """Limits and filters for page discovery."""
 
 
+class InputCrawlDataMarkdownSourceSitemapControlsExcludeCrawlRegexMatcher(TypedDict, total=False):
+    """Pages whose URL matches a regex pattern."""
+
+    kind: Required[Literal["regex"]]
+    """Match pages by URL pattern."""
+
+    pattern: Required[str]
+    """Regex pattern for the page URL."""
+
+
+class InputCrawlDataMarkdownSourceSitemapControlsExcludeCrawlProductMatcher(TypedDict, total=False):
+    """Product detail pages."""
+
+    kind: Required[Literal["product"]]
+    """Match product detail pages."""
+
+
+InputCrawlDataMarkdownSourceSitemapControlsExclude: TypeAlias = Union[
+    InputCrawlDataMarkdownSourceSitemapControlsExcludeCrawlRegexMatcher,
+    InputCrawlDataMarkdownSourceSitemapControlsExcludeCrawlProductMatcher,
+]
+
+
+class InputCrawlDataMarkdownSourceSitemapControlsScrapeCrawlRegexMatcher(TypedDict, total=False):
+    """Pages whose URL matches a regex pattern."""
+
+    kind: Required[Literal["regex"]]
+    """Match pages by URL pattern."""
+
+    pattern: Required[str]
+    """Regex pattern for the page URL."""
+
+
+class InputCrawlDataMarkdownSourceSitemapControlsScrapeCrawlProductMatcher(TypedDict, total=False):
+    """Product detail pages."""
+
+    kind: Required[Literal["product"]]
+    """Match product detail pages."""
+
+
+InputCrawlDataMarkdownSourceSitemapControlsScrape: TypeAlias = Union[
+    InputCrawlDataMarkdownSourceSitemapControlsScrapeCrawlRegexMatcher,
+    InputCrawlDataMarkdownSourceSitemapControlsScrapeCrawlProductMatcher,
+]
+
+
 class InputCrawlDataMarkdownSourceSitemapControls(TypedDict, total=False):
     """Limits and filters for the sitemap URLs.
 
     A sitemap batch scrapes exactly those URLs and never follows links off them, so there is no crawl depth here.
     """
 
+    exclude: Iterable[InputCrawlDataMarkdownSourceSitemapControlsExclude]
+    """Sitemap pages to skip, even when they match `scrape`."""
+
     exclude_paths: Annotated[SequenceNotStr[str], PropertyInfo(alias="excludePaths")]
     """Path fragments that skip a sitemap URL in a crawl.
 
-    Works separately from any regex inclusion or exclusion you define. Defaults to
+    Works separately from `scrape` and `exclude`. Defaults to
     ["/feed","/rss","/atom","/api/","/cdn-cgi/","/_next/","/__"]. Pass `[]` to keep
     every listed URL.
-    """
-
-    exclude_regex: Annotated[str, PropertyInfo(alias="excludeRegex")]
-    """
-    Regex pattern; sitemap URLs matching it are not scraped, even when they match
-    `regex`.
     """
 
     max_urls: Annotated[int, PropertyInfo(alias="maxUrls")]
     """Maximum pages to fetch. Unused reserved credits are refunded. Maximum 100000."""
 
-    regex: str
-    """Regex pattern; only sitemap URLs matching it are scraped."""
+    scrape: Iterable[InputCrawlDataMarkdownSourceSitemapControlsScrape]
+    """Sitemap pages to return in the results. Returns every listed page when omitted."""
 
 
 class InputCrawlDataMarkdownSourceSitemap(TypedDict, total=False):
@@ -1892,13 +2063,93 @@ class InputCrawlDataMarkdown(TypedDict, total=False):
     """Options for Markdown output."""
 
 
+class InputCrawlDataHTMLSourceStartURLControlsExcludeCrawlRegexMatcher(TypedDict, total=False):
+    """Pages whose URL matches a regex pattern."""
+
+    kind: Required[Literal["regex"]]
+    """Match pages by URL pattern."""
+
+    pattern: Required[str]
+    """Regex pattern for the page URL."""
+
+
+class InputCrawlDataHTMLSourceStartURLControlsExcludeCrawlProductMatcher(TypedDict, total=False):
+    """Product detail pages."""
+
+    kind: Required[Literal["product"]]
+    """Match product detail pages."""
+
+
+InputCrawlDataHTMLSourceStartURLControlsExclude: TypeAlias = Union[
+    InputCrawlDataHTMLSourceStartURLControlsExcludeCrawlRegexMatcher,
+    InputCrawlDataHTMLSourceStartURLControlsExcludeCrawlProductMatcher,
+]
+
+
+class InputCrawlDataHTMLSourceStartURLControlsFollowCrawlRegexMatcher(TypedDict, total=False):
+    """Pages whose URL matches a regex pattern."""
+
+    kind: Required[Literal["regex"]]
+    """Match pages by URL pattern."""
+
+    pattern: Required[str]
+    """Regex pattern for the page URL."""
+
+
+class InputCrawlDataHTMLSourceStartURLControlsFollowCrawlPaginationMatcher(TypedDict, total=False):
+    """Further pages of a paginated list, such as page 2 of a catalog."""
+
+    kind: Required[Literal["pagination"]]
+    """Match the further pages of a paginated list."""
+
+
+class InputCrawlDataHTMLSourceStartURLControlsFollowCrawlProductMatcher(TypedDict, total=False):
+    """Product detail pages."""
+
+    kind: Required[Literal["product"]]
+    """Match product detail pages."""
+
+
+InputCrawlDataHTMLSourceStartURLControlsFollow: TypeAlias = Union[
+    InputCrawlDataHTMLSourceStartURLControlsFollowCrawlRegexMatcher,
+    InputCrawlDataHTMLSourceStartURLControlsFollowCrawlPaginationMatcher,
+    InputCrawlDataHTMLSourceStartURLControlsFollowCrawlProductMatcher,
+]
+
+
+class InputCrawlDataHTMLSourceStartURLControlsScrapeCrawlRegexMatcher(TypedDict, total=False):
+    """Pages whose URL matches a regex pattern."""
+
+    kind: Required[Literal["regex"]]
+    """Match pages by URL pattern."""
+
+    pattern: Required[str]
+    """Regex pattern for the page URL."""
+
+
+class InputCrawlDataHTMLSourceStartURLControlsScrapeCrawlProductMatcher(TypedDict, total=False):
+    """Product detail pages."""
+
+    kind: Required[Literal["product"]]
+    """Match product detail pages."""
+
+
+InputCrawlDataHTMLSourceStartURLControlsScrape: TypeAlias = Union[
+    InputCrawlDataHTMLSourceStartURLControlsScrapeCrawlRegexMatcher,
+    InputCrawlDataHTMLSourceStartURLControlsScrapeCrawlProductMatcher,
+]
+
+
 class InputCrawlDataHTMLSourceStartURLControls(TypedDict, total=False):
     """Limits and filters for page discovery."""
 
-    exclude_regex: Annotated[str, PropertyInfo(alias="excludeRegex")]
-    """Regex pattern for URLs to exclude, even when they match `regex`.
+    exclude: Iterable[InputCrawlDataHTMLSourceStartURLControlsExclude]
+    """Pages to skip entirely, even when they match `follow` or `scrape`."""
 
-    The `start_url` itself is always included.
+    follow: Iterable[InputCrawlDataHTMLSourceStartURLControlsFollow]
+    """Links to follow from each page; every followed page is checked for links again.
+
+    Follows all links when omitted.
     """
 
     follow_subdomains: Annotated[bool, PropertyInfo(alias="followSubdomains")]
@@ -1996,8 +2247,8 @@ class InputCrawlDataHTMLSourceStartURLControls(TypedDict, total=False):
     max_urls: Annotated[int, PropertyInfo(alias="maxUrls")]
     """Maximum pages to fetch. Unused reserved credits are refunded. Maximum 100000."""
 
-    regex: str
-    """Regex pattern for URLs to include. The `start_url` itself is always included."""
+    scrape: Iterable[InputCrawlDataHTMLSourceStartURLControlsScrape]
+    """Pages to return in the results. Returns every fetched page when omitted."""
 
 
 class InputCrawlDataHTMLSourceStartURL(TypedDict, total=False):
@@ -2013,31 +2264,74 @@ class InputCrawlDataHTMLSourceStartURL(TypedDict, total=False):
     """Limits and filters for page discovery."""
 
 
+class InputCrawlDataHTMLSourceSitemapControlsExcludeCrawlRegexMatcher(TypedDict, total=False):
+    """Pages whose URL matches a regex pattern."""
+
+    kind: Required[Literal["regex"]]
+    """Match pages by URL pattern."""
+
+    pattern: Required[str]
+    """Regex pattern for the page URL."""
+
+
+class InputCrawlDataHTMLSourceSitemapControlsExcludeCrawlProductMatcher(TypedDict, total=False):
+    """Product detail pages."""
+
+    kind: Required[Literal["product"]]
+    """Match product detail pages."""
+
+
+InputCrawlDataHTMLSourceSitemapControlsExclude: TypeAlias = Union[
+    InputCrawlDataHTMLSourceSitemapControlsExcludeCrawlRegexMatcher,
+    InputCrawlDataHTMLSourceSitemapControlsExcludeCrawlProductMatcher,
+]
+
+
+class InputCrawlDataHTMLSourceSitemapControlsScrapeCrawlRegexMatcher(TypedDict, total=False):
+    """Pages whose URL matches a regex pattern."""
+
+    kind: Required[Literal["regex"]]
+    """Match pages by URL pattern."""
+
+    pattern: Required[str]
+    """Regex pattern for the page URL."""
+
+
+class InputCrawlDataHTMLSourceSitemapControlsScrapeCrawlProductMatcher(TypedDict, total=False):
+    """Product detail pages."""
+
+    kind: Required[Literal["product"]]
+    """Match product detail pages."""
+
+
+InputCrawlDataHTMLSourceSitemapControlsScrape: TypeAlias = Union[
+    InputCrawlDataHTMLSourceSitemapControlsScrapeCrawlRegexMatcher,
+    InputCrawlDataHTMLSourceSitemapControlsScrapeCrawlProductMatcher,
+]
+
+
 class InputCrawlDataHTMLSourceSitemapControls(TypedDict, total=False):
     """Limits and filters for the sitemap URLs.
 
     A sitemap batch scrapes exactly those URLs and never follows links off them, so there is no crawl depth here.
     """
 
+    exclude: Iterable[InputCrawlDataHTMLSourceSitemapControlsExclude]
+    """Sitemap pages to skip, even when they match `scrape`."""
+
     exclude_paths: Annotated[SequenceNotStr[str], PropertyInfo(alias="excludePaths")]
     """Path fragments that skip a sitemap URL in a crawl.
 
-    Works separately from any regex inclusion or exclusion you define. Defaults to
+    Works separately from `scrape` and `exclude`. Defaults to
     ["/feed","/rss","/atom","/api/","/cdn-cgi/","/_next/","/__"]. Pass `[]` to keep
     every listed URL.
-    """
-
-    exclude_regex: Annotated[str, PropertyInfo(alias="excludeRegex")]
-    """
-    Regex pattern; sitemap URLs matching it are not scraped, even when they match
-    `regex`.
     """
 
     max_urls: Annotated[int, PropertyInfo(alias="maxUrls")]
     """Maximum pages to fetch. Unused reserved credits are refunded. Maximum 100000."""
 
-    regex: str
-    """Regex pattern; only sitemap URLs matching it are scraped."""
+    scrape: Iterable[InputCrawlDataHTMLSourceSitemapControlsScrape]
+    """Sitemap pages to return in the results. Returns every listed page when omitted."""
 
 
 class InputCrawlDataHTMLSourceSitemap(TypedDict, total=False):
@@ -2375,13 +2669,93 @@ class InputCrawlDataBatchUnifiedCrawlDataFormats(TypedDict, total=False):
     """A screenshot of the page."""
 
 
+class InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsExcludeCrawlRegexMatcher(TypedDict, total=False):
+    """Pages whose URL matches a regex pattern."""
+
+    kind: Required[Literal["regex"]]
+    """Match pages by URL pattern."""
+
+    pattern: Required[str]
+    """Regex pattern for the page URL."""
+
+
+class InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsExcludeCrawlProductMatcher(TypedDict, total=False):
+    """Product detail pages."""
+
+    kind: Required[Literal["product"]]
+    """Match product detail pages."""
+
+
+InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsExclude: TypeAlias = Union[
+    InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsExcludeCrawlRegexMatcher,
+    InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsExcludeCrawlProductMatcher,
+]
+
+
+class InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsFollowCrawlRegexMatcher(TypedDict, total=False):
+    """Pages whose URL matches a regex pattern."""
+
+    kind: Required[Literal["regex"]]
+    """Match pages by URL pattern."""
+
+    pattern: Required[str]
+    """Regex pattern for the page URL."""
+
+
+class InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsFollowCrawlPaginationMatcher(TypedDict, total=False):
+    """Further pages of a paginated list, such as page 2 of a catalog."""
+
+    kind: Required[Literal["pagination"]]
+    """Match the further pages of a paginated list."""
+
+
+class InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsFollowCrawlProductMatcher(TypedDict, total=False):
+    """Product detail pages."""
+
+    kind: Required[Literal["product"]]
+    """Match product detail pages."""
+
+
+InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsFollow: TypeAlias = Union[
+    InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsFollowCrawlRegexMatcher,
+    InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsFollowCrawlPaginationMatcher,
+    InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsFollowCrawlProductMatcher,
+]
+
+
+class InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsScrapeCrawlRegexMatcher(TypedDict, total=False):
+    """Pages whose URL matches a regex pattern."""
+
+    kind: Required[Literal["regex"]]
+    """Match pages by URL pattern."""
+
+    pattern: Required[str]
+    """Regex pattern for the page URL."""
+
+
+class InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsScrapeCrawlProductMatcher(TypedDict, total=False):
+    """Product detail pages."""
+
+    kind: Required[Literal["product"]]
+    """Match product detail pages."""
+
+
+InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsScrape: TypeAlias = Union[
+    InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsScrapeCrawlRegexMatcher,
+    InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsScrapeCrawlProductMatcher,
+]
+
+
 class InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControls(TypedDict, total=False):
     """Limits and filters for page discovery."""
 
-    exclude_regex: Annotated[str, PropertyInfo(alias="excludeRegex")]
-    """Regex pattern for URLs to exclude, even when they match `regex`.
+    exclude: Iterable[InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsExclude]
+    """Pages to skip entirely, even when they match `follow` or `scrape`."""
 
-    The `start_url` itself is always included.
+    follow: Iterable[InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsFollow]
+    """Links to follow from each page; every followed page is checked for links again.
+
+    Follows all links when omitted.
     """
 
     follow_subdomains: Annotated[bool, PropertyInfo(alias="followSubdomains")]
@@ -2479,8 +2853,8 @@ class InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControls(TypedDict, total
     max_urls: Annotated[int, PropertyInfo(alias="maxUrls")]
     """Maximum pages to fetch. Unused reserved credits are refunded. Maximum 100000."""
 
-    regex: str
-    """Regex pattern for URLs to include. The `start_url` itself is always included."""
+    scrape: Iterable[InputCrawlDataBatchUnifiedCrawlDataSourceStartURLControlsScrape]
+    """Pages to return in the results. Returns every fetched page when omitted."""
 
 
 class InputCrawlDataBatchUnifiedCrawlDataSourceStartURL(TypedDict, total=False):
@@ -2496,31 +2870,74 @@ class InputCrawlDataBatchUnifiedCrawlDataSourceStartURL(TypedDict, total=False):
     """Limits and filters for page discovery."""
 
 
+class InputCrawlDataBatchUnifiedCrawlDataSourceSitemapControlsExcludeCrawlRegexMatcher(TypedDict, total=False):
+    """Pages whose URL matches a regex pattern."""
+
+    kind: Required[Literal["regex"]]
+    """Match pages by URL pattern."""
+
+    pattern: Required[str]
+    """Regex pattern for the page URL."""
+
+
+class InputCrawlDataBatchUnifiedCrawlDataSourceSitemapControlsExcludeCrawlProductMatcher(TypedDict, total=False):
+    """Product detail pages."""
+
+    kind: Required[Literal["product"]]
+    """Match product detail pages."""
+
+
+InputCrawlDataBatchUnifiedCrawlDataSourceSitemapControlsExclude: TypeAlias = Union[
+    InputCrawlDataBatchUnifiedCrawlDataSourceSitemapControlsExcludeCrawlRegexMatcher,
+    InputCrawlDataBatchUnifiedCrawlDataSourceSitemapControlsExcludeCrawlProductMatcher,
+]
+
+
+class InputCrawlDataBatchUnifiedCrawlDataSourceSitemapControlsScrapeCrawlRegexMatcher(TypedDict, total=False):
+    """Pages whose URL matches a regex pattern."""
+
+    kind: Required[Literal["regex"]]
+    """Match pages by URL pattern."""
+
+    pattern: Required[str]
+    """Regex pattern for the page URL."""
+
+
+class InputCrawlDataBatchUnifiedCrawlDataSourceSitemapControlsScrapeCrawlProductMatcher(TypedDict, total=False):
+    """Product detail pages."""
+
+    kind: Required[Literal["product"]]
+    """Match product detail pages."""
+
+
+InputCrawlDataBatchUnifiedCrawlDataSourceSitemapControlsScrape: TypeAlias = Union[
+    InputCrawlDataBatchUnifiedCrawlDataSourceSitemapControlsScrapeCrawlRegexMatcher,
+    InputCrawlDataBatchUnifiedCrawlDataSourceSitemapControlsScrapeCrawlProductMatcher,
+]
+
+
 class InputCrawlDataBatchUnifiedCrawlDataSourceSitemapControls(TypedDict, total=False):
     """Limits and filters for the sitemap URLs.
 
     A sitemap batch scrapes exactly those URLs and never follows links off them, so there is no crawl depth here.
     """
 
+    exclude: Iterable[InputCrawlDataBatchUnifiedCrawlDataSourceSitemapControlsExclude]
+    """Sitemap pages to skip, even when they match `scrape`."""
+
     exclude_paths: Annotated[SequenceNotStr[str], PropertyInfo(alias="excludePaths")]
     """Path fragments that skip a sitemap URL in a crawl.
 
-    Works separately from any regex inclusion or exclusion you define. Defaults to
+    Works separately from `scrape` and `exclude`. Defaults to
     ["/feed","/rss","/atom","/api/","/cdn-cgi/","/_next/","/__"]. Pass `[]` to keep
     every listed URL.
-    """
-
-    exclude_regex: Annotated[str, PropertyInfo(alias="excludeRegex")]
-    """
-    Regex pattern; sitemap URLs matching it are not scraped, even when they match
-    `regex`.
     """
 
     max_urls: Annotated[int, PropertyInfo(alias="maxUrls")]
     """Maximum pages to fetch. Unused reserved credits are refunded. Maximum 100000."""
 
-    regex: str
-    """Regex pattern; only sitemap URLs matching it are scraped."""
+    scrape: Iterable[InputCrawlDataBatchUnifiedCrawlDataSourceSitemapControlsScrape]
+    """Sitemap pages to return in the results. Returns every listed page when omitted."""
 
 
 class InputCrawlDataBatchUnifiedCrawlDataSourceSitemap(TypedDict, total=False):
