@@ -80,7 +80,6 @@ class TestBatch:
             limit=1,
             q="batch_1a2b",
             search_type="exact",
-            should_include_unified=True,
             status="pending",
             tags="docs,competitor",
         )
@@ -494,7 +493,6 @@ class TestAsyncBatch:
             limit=1,
             q="batch_1a2b",
             search_type="exact",
-            should_include_unified=True,
             status="pending",
             tags="docs,competitor",
         )

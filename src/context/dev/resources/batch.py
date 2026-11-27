@@ -95,7 +95,6 @@ class BatchResource(SyncAPIResource):
         limit: int | Omit = omit,
         q: str | Omit = omit,
         search_type: Literal["exact", "prefix"] | Omit = omit,
-        should_include_unified: bool | Omit = omit,
         status: Literal["pending", "queued", "running", "cancelling", "completed", "cancelled", "failed"] | Omit = omit,
         tags: Union[str, SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -118,8 +117,6 @@ class BatchResource(SyncAPIResource):
 
           search_type: `prefix` for as-you-type prefix matching (default), `exact` for full-token
               matching.
-
-          should_include_unified: Include batches submitted with Scrape Anything formats. Defaults to false.
 
           status: Filter by status.
 
@@ -147,7 +144,6 @@ class BatchResource(SyncAPIResource):
                         "limit": limit,
                         "q": q,
                         "search_type": search_type,
-                        "should_include_unified": should_include_unified,
                         "status": status,
                         "tags": tags,
                     },
@@ -427,7 +423,6 @@ class AsyncBatchResource(AsyncAPIResource):
         limit: int | Omit = omit,
         q: str | Omit = omit,
         search_type: Literal["exact", "prefix"] | Omit = omit,
-        should_include_unified: bool | Omit = omit,
         status: Literal["pending", "queued", "running", "cancelling", "completed", "cancelled", "failed"] | Omit = omit,
         tags: Union[str, SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -450,8 +445,6 @@ class AsyncBatchResource(AsyncAPIResource):
 
           search_type: `prefix` for as-you-type prefix matching (default), `exact` for full-token
               matching.
-
-          should_include_unified: Include batches submitted with Scrape Anything formats. Defaults to false.
 
           status: Filter by status.
 
@@ -479,7 +472,6 @@ class AsyncBatchResource(AsyncAPIResource):
                         "limit": limit,
                         "q": q,
                         "search_type": search_type,
-                        "should_include_unified": should_include_unified,
                         "status": status,
                         "tags": tags,
                     },
