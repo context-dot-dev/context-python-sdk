@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import List, Union, Optional
 from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from .._types import SequenceNotStr
@@ -240,10 +240,12 @@ class WebWebCrawlMdParams(TypedDict, total=False):
     treated as equivalent.
     """
 
-    include_frames: Annotated[bool, PropertyInfo(alias="includeFrames")]
-    """
-    When true, the contents of iframes are rendered to Markdown for each crawled
-    page.
+    include_frames: Annotated[Union[bool, Literal["auto"]], PropertyInfo(alias="includeFrames")]
+    """Which iframe contents to render to Markdown for each crawled page.
+
+    `auto` (default) inlines only iframes that hold page content, such as same-site
+    documents, framesets, job boards, forms and embedded documents, and skips ads
+    and widgets. `true` inlines every iframe. `false` inlines none.
     """
 
     include_images: Annotated[bool, PropertyInfo(alias="includeImages")]

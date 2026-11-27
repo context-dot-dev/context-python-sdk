@@ -1327,10 +1327,13 @@ class InputScrapeDataBatchUnifiedScrapeDataSharedParams(TypedDict, total=False):
     headers: Dict[str, str]
     """HTTP headers to send to the target site. Requests with headers skip the cache."""
 
-    include_frames: Annotated[bool, PropertyInfo(alias="includeFrames")]
-    """Include iframe content in HTML and text outputs.
+    include_frames: Annotated[Union[bool, Literal["auto"]], PropertyInfo(alias="includeFrames")]
+    """Which iframe contents to include in HTML and text outputs.
 
-    Screenshots always show visible frames.
+    Screenshots always show visible frames. `auto` (default) inlines only iframes
+    that hold page content, such as same-site documents, framesets, job boards,
+    forms and embedded documents, and skips ads and widgets. `true` inlines every
+    iframe. `false` inlines none.
     """
 
     include_selectors: Annotated[SequenceNotStr[str], PropertyInfo(alias="includeSelectors")]
@@ -3452,10 +3455,13 @@ class InputCrawlDataBatchUnifiedCrawlDataSharedParams(TypedDict, total=False):
     headers: Dict[str, str]
     """HTTP headers to send to the target site. Requests with headers skip the cache."""
 
-    include_frames: Annotated[bool, PropertyInfo(alias="includeFrames")]
-    """Include iframe content in HTML and text outputs.
+    include_frames: Annotated[Union[bool, Literal["auto"]], PropertyInfo(alias="includeFrames")]
+    """Which iframe contents to include in HTML and text outputs.
 
-    Screenshots always show visible frames.
+    Screenshots always show visible frames. `auto` (default) inlines only iframes
+    that hold page content, such as same-site documents, framesets, job boards,
+    forms and embedded documents, and skips ads and widgets. `true` inlines every
+    iframe. `false` inlines none.
     """
 
     include_selectors: Annotated[SequenceNotStr[str], PropertyInfo(alias="includeSelectors")]

@@ -345,7 +345,7 @@ class TestBatch:
                         "dismiss_popups": True,
                         "exclude_selectors": ["P"],
                         "headers": {"Accept-Language": "en-US"},
-                        "include_frames": True,
+                        "include_frames": "auto",
                         "include_selectors": ["P"],
                         "main_content_only": True,
                         "parsers": {
@@ -759,7 +759,7 @@ class TestAsyncBatch:
                         "dismiss_popups": True,
                         "exclude_selectors": ["P"],
                         "headers": {"Accept-Language": "en-US"},
-                        "include_frames": True,
+                        "include_frames": "auto",
                         "include_selectors": ["P"],
                         "main_content_only": True,
                         "parsers": {

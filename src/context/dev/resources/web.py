@@ -1453,7 +1453,7 @@ class WebResource(SyncAPIResource):
         exclude_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
         exclude_url_regex: str | Omit = omit,
         follow_subdomains: bool | Omit = omit,
-        include_frames: bool | Omit = omit,
+        include_frames: Union[bool, Literal["auto"]] | Omit = omit,
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
         include_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
@@ -1498,8 +1498,10 @@ class WebResource(SyncAPIResource):
               docs.example.com when starting from example.com). www and apex are always
               treated as equivalent.
 
-          include_frames: When true, the contents of iframes are rendered to Markdown for each crawled
-              page.
+          include_frames: Which iframe contents to render to Markdown for each crawled page. `auto`
+              (default) inlines only iframes that hold page content, such as same-site
+              documents, framesets, job boards, forms and embedded documents, and skips ads
+              and widgets. `true` inlines every iframe. `false` inlines none.
 
           include_images: Include image references in the Markdown output (`html-conversion` only).
 
@@ -3007,7 +3009,7 @@ class AsyncWebResource(AsyncAPIResource):
         exclude_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
         exclude_url_regex: str | Omit = omit,
         follow_subdomains: bool | Omit = omit,
-        include_frames: bool | Omit = omit,
+        include_frames: Union[bool, Literal["auto"]] | Omit = omit,
         include_images: bool | Omit = omit,
         include_links: bool | Omit = omit,
         include_selectors: Optional[SequenceNotStr[str]] | Omit = omit,
@@ -3052,8 +3054,10 @@ class AsyncWebResource(AsyncAPIResource):
               docs.example.com when starting from example.com). www and apex are always
               treated as equivalent.
 
-          include_frames: When true, the contents of iframes are rendered to Markdown for each crawled
-              page.
+          include_frames: Which iframe contents to render to Markdown for each crawled page. `auto`
+              (default) inlines only iframes that hold page content, such as same-site
+              documents, framesets, job boards, forms and embedded documents, and skips ads
+              and widgets. `true` inlines every iframe. `false` inlines none.
 
           include_images: Include image references in the Markdown output (`html-conversion` only).
 

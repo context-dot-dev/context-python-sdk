@@ -316,7 +316,7 @@ class TestWeb:
                 "dismiss_popups": True,
                 "exclude_selectors": ["P"],
                 "headers": {"Accept-Language": "en-US"},
-                "include_frames": True,
+                "include_frames": "auto",
                 "include_selectors": ["P"],
                 "main_content_only": True,
                 "parsers": {
@@ -458,7 +458,7 @@ class TestWeb:
             languages="all",
             markdown_options={
                 "enabled": True,
-                "include_frames": True,
+                "include_frames": "auto",
                 "include_images": True,
                 "include_links": True,
                 "max_age_ms": 0,
@@ -530,7 +530,7 @@ class TestWeb:
             exclude_selectors=["x"],
             exclude_url_regex="/tag/|/author/",
             follow_subdomains=True,
-            include_frames=True,
+            include_frames="auto",
             include_images=True,
             include_links=True,
             include_selectors=["x"],
@@ -882,7 +882,7 @@ class TestAsyncWeb:
                 "dismiss_popups": True,
                 "exclude_selectors": ["P"],
                 "headers": {"Accept-Language": "en-US"},
-                "include_frames": True,
+                "include_frames": "auto",
                 "include_selectors": ["P"],
                 "main_content_only": True,
                 "parsers": {
@@ -1024,7 +1024,7 @@ class TestAsyncWeb:
             languages="all",
             markdown_options={
                 "enabled": True,
-                "include_frames": True,
+                "include_frames": "auto",
                 "include_images": True,
                 "include_links": True,
                 "max_age_ms": 0,
@@ -1096,7 +1096,7 @@ class TestAsyncWeb:
             exclude_selectors=["x"],
             exclude_url_regex="/tag/|/author/",
             follow_subdomains=True,
-            include_frames=True,
+            include_frames="auto",
             include_images=True,
             include_links=True,
             include_selectors=["x"],

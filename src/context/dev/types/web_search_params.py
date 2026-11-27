@@ -464,8 +464,13 @@ class MarkdownOptions(TypedDict, total=False):
     enabled: bool
     """Scrape each result to Markdown. Adds 1 credit per result with Markdown."""
 
-    include_frames: Annotated[bool, PropertyInfo(alias="includeFrames")]
-    """Render iframe contents into the Markdown."""
+    include_frames: Annotated[Union[bool, Literal["auto"]], PropertyInfo(alias="includeFrames")]
+    """Which iframe contents to render into the Markdown.
+
+    `auto` (default) inlines only iframes that hold page content, such as same-site
+    documents, framesets, job boards, forms and embedded documents, and skips ads
+    and widgets. `true` inlines every iframe. `false` inlines none.
+    """
 
     include_images: Annotated[bool, PropertyInfo(alias="includeImages")]
     """Emit image references in the Markdown."""
