@@ -396,9 +396,6 @@ class WebSearchParams(TypedDict, total=False):
     `ACCESS_POLICIES_NOT_ENABLED`.
     """
 
-    query_fanout: Annotated[bool, PropertyInfo(alias="queryFanout")]
-    """Currently has no effect."""
-
     tags: SequenceNotStr[str]
     """Labels for filtering usage in the dashboard."""
 

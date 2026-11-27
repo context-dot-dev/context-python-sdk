@@ -477,7 +477,6 @@ class TestWeb:
             },
             num_results=10,
             policies=["pol_3f9c2a7e5b8d4c1f9a6e0b2d7c4f8a1e"],
-            query_fanout=True,
             tags=["production", "team-alpha"],
             timeout_opts={
                 "milliseconds": 1000,
@@ -1043,7 +1042,6 @@ class TestAsyncWeb:
             },
             num_results=10,
             policies=["pol_3f9c2a7e5b8d4c1f9a6e0b2d7c4f8a1e"],
-            query_fanout=True,
             tags=["production", "team-alpha"],
             timeout_opts={
                 "milliseconds": 1000,

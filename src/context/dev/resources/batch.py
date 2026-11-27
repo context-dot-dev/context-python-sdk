@@ -289,7 +289,6 @@ class BatchResource(SyncAPIResource):
         policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         webhook: batch_submit_params.Webhook | Omit = omit,
-        webhook_url: str | Omit = omit,
         idempotency_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -323,9 +322,6 @@ class BatchResource(SyncAPIResource):
           webhook: Where to send the batch's final-status event. Omit `retry` for one attempt; `{}`
               uses the default retry schedule.
 
-          webhook_url: Legacy URL notified when the batch finishes. Preserves one best-effort attempt.
-              Cannot be combined with webhook.
-
           idempotency_key: Unique key per submission. Retrying with the same key and body returns the
               original batch; a different body returns `409`.
 
@@ -346,7 +342,6 @@ class BatchResource(SyncAPIResource):
                     "policies": policies,
                     "tags": tags,
                     "webhook": webhook,
-                    "webhook_url": webhook_url,
                 },
                 batch_submit_params.BatchSubmitParams,
             ),
@@ -617,7 +612,6 @@ class AsyncBatchResource(AsyncAPIResource):
         policies: SequenceNotStr[str] | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         webhook: batch_submit_params.Webhook | Omit = omit,
-        webhook_url: str | Omit = omit,
         idempotency_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -651,9 +645,6 @@ class AsyncBatchResource(AsyncAPIResource):
           webhook: Where to send the batch's final-status event. Omit `retry` for one attempt; `{}`
               uses the default retry schedule.
 
-          webhook_url: Legacy URL notified when the batch finishes. Preserves one best-effort attempt.
-              Cannot be combined with webhook.
-
           idempotency_key: Unique key per submission. Retrying with the same key and body returns the
               original batch; a different body returns `409`.
 
@@ -674,7 +665,6 @@ class AsyncBatchResource(AsyncAPIResource):
                     "policies": policies,
                     "tags": tags,
                     "webhook": webhook,
-                    "webhook_url": webhook_url,
                 },
                 batch_submit_params.BatchSubmitParams,
             ),

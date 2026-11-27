@@ -270,7 +270,6 @@ class MonitorsResource(SyncAPIResource):
         search_by: Optional[List[Literal["name", "url", "instructions", "tags"]]] | Omit = omit,
         search_type: Literal["exact", "prefix"] | Omit = omit,
         status: Literal["active", "paused", "failed"] | Omit = omit,
-        tag: str | Omit = omit,
         tags: Optional[SequenceNotStr[str]] | Omit = omit,
         target_type: Literal["page", "sitemap", "extract", "search"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -300,8 +299,6 @@ class MonitorsResource(SyncAPIResource):
 
           status: Filter monitors by lifecycle status.
 
-          tag: Filter to items that have this tag.
-
           tags: Comma-separated list of tags to filter by (matches monitors having any of them).
 
           target_type: Filter by target type.
@@ -330,7 +327,6 @@ class MonitorsResource(SyncAPIResource):
                         "search_by": search_by,
                         "search_type": search_type,
                         "status": status,
-                        "tag": tag,
                         "tags": tags,
                         "target_type": target_type,
                     },
@@ -1056,7 +1052,6 @@ class AsyncMonitorsResource(AsyncAPIResource):
         search_by: Optional[List[Literal["name", "url", "instructions", "tags"]]] | Omit = omit,
         search_type: Literal["exact", "prefix"] | Omit = omit,
         status: Literal["active", "paused", "failed"] | Omit = omit,
-        tag: str | Omit = omit,
         tags: Optional[SequenceNotStr[str]] | Omit = omit,
         target_type: Literal["page", "sitemap", "extract", "search"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -1086,8 +1081,6 @@ class AsyncMonitorsResource(AsyncAPIResource):
 
           status: Filter monitors by lifecycle status.
 
-          tag: Filter to items that have this tag.
-
           tags: Comma-separated list of tags to filter by (matches monitors having any of them).
 
           target_type: Filter by target type.
@@ -1116,7 +1109,6 @@ class AsyncMonitorsResource(AsyncAPIResource):
                         "search_by": search_by,
                         "search_type": search_type,
                         "status": status,
-                        "tag": tag,
                         "tags": tags,
                         "target_type": target_type,
                     },

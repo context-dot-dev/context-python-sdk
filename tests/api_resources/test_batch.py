@@ -382,7 +382,6 @@ class TestBatch:
                 "url": "https://example.com",
                 "retry": {"delays_seconds": [10, 60, 300, 1800, 7200, 21600, 57600]},
             },
-            webhook_url="https://example.com",
             idempotency_key="Idempotency-Key",
         )
         assert_matches_type(BatchSubmitResponse, batch, path=["response"])
@@ -795,7 +794,6 @@ class TestAsyncBatch:
                 "url": "https://example.com",
                 "retry": {"delays_seconds": [10, 60, 300, 1800, 7200, 21600, 57600]},
             },
-            webhook_url="https://example.com",
             idempotency_key="Idempotency-Key",
         )
         assert_matches_type(BatchSubmitResponse, batch, path=["response"])

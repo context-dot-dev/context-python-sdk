@@ -1146,7 +1146,6 @@ class WebResource(SyncAPIResource):
         markdown_options: Optional[web_search_params.MarkdownOptions] | Omit = omit,
         num_results: int | Omit = omit,
         policies: SequenceNotStr[str] | Omit = omit,
-        query_fanout: bool | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: web_search_params.TimeoutOpts | Omit = omit,
         zdr: Literal["enabled", "disabled"] | Omit = omit,
@@ -1194,8 +1193,6 @@ class WebResource(SyncAPIResource):
               access policies are enabled for your organization; otherwise the request fails
               with `ACCESS_POLICIES_NOT_ENABLED`.
 
-          query_fanout: Currently has no effect.
-
           tags: Labels for filtering usage in the dashboard.
 
           timeout_opts: Request deadline and what to return when it passes.
@@ -1226,7 +1223,6 @@ class WebResource(SyncAPIResource):
                     "markdown_options": markdown_options,
                     "num_results": num_results,
                     "policies": policies,
-                    "query_fanout": query_fanout,
                     "tags": tags,
                     "timeout_opts": timeout_opts,
                     "zdr": zdr,
@@ -2702,7 +2698,6 @@ class AsyncWebResource(AsyncAPIResource):
         markdown_options: Optional[web_search_params.MarkdownOptions] | Omit = omit,
         num_results: int | Omit = omit,
         policies: SequenceNotStr[str] | Omit = omit,
-        query_fanout: bool | Omit = omit,
         tags: SequenceNotStr[str] | Omit = omit,
         timeout_opts: web_search_params.TimeoutOpts | Omit = omit,
         zdr: Literal["enabled", "disabled"] | Omit = omit,
@@ -2750,8 +2745,6 @@ class AsyncWebResource(AsyncAPIResource):
               access policies are enabled for your organization; otherwise the request fails
               with `ACCESS_POLICIES_NOT_ENABLED`.
 
-          query_fanout: Currently has no effect.
-
           tags: Labels for filtering usage in the dashboard.
 
           timeout_opts: Request deadline and what to return when it passes.
@@ -2782,7 +2775,6 @@ class AsyncWebResource(AsyncAPIResource):
                     "markdown_options": markdown_options,
                     "num_results": num_results,
                     "policies": policies,
-                    "query_fanout": query_fanout,
                     "tags": tags,
                     "timeout_opts": timeout_opts,
                     "zdr": zdr,

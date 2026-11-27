@@ -254,7 +254,6 @@ class TestMonitors:
             search_by=["name"],
             search_type="exact",
             status="active",
-            tag="pricing",
             tags=["x"],
             target_type="page",
         )
@@ -983,7 +982,6 @@ class TestAsyncMonitors:
             search_by=["name"],
             search_type="exact",
             status="active",
-            tag="pricing",
             tags=["x"],
             target_type="page",
         )

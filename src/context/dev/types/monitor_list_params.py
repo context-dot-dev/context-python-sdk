@@ -39,9 +39,6 @@ class MonitorListParams(TypedDict, total=False):
     status: Literal["active", "paused", "failed"]
     """Filter monitors by lifecycle status."""
 
-    tag: str
-    """Filter to items that have this tag."""
-
     tags: Optional[SequenceNotStr[str]]
     """
     Comma-separated list of tags to filter by (matches monitors having any of them).

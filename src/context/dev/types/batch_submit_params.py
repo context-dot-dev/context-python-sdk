@@ -177,12 +177,6 @@ class BatchSubmitParams(TypedDict, total=False):
     Omit `retry` for one attempt; `{}` uses the default retry schedule.
     """
 
-    webhook_url: Annotated[str, PropertyInfo(alias="webhookUrl")]
-    """Legacy URL notified when the batch finishes.
-
-    Preserves one best-effort attempt. Cannot be combined with webhook.
-    """
-
     idempotency_key: Annotated[str, PropertyInfo(alias="Idempotency-Key")]
     """Unique key per submission.
 
