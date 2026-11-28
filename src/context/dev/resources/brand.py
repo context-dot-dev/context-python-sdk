@@ -233,7 +233,7 @@ class BrandResource(SyncAPIResource):
         *,
         name: str,
         type: Literal["by_name"],
-        country_gl: Literal[
+        country: Literal[
             "af",
             "al",
             "dz",
@@ -622,8 +622,7 @@ class BrandResource(SyncAPIResource):
 
           type: Discriminator for name-based brand retrieval.
 
-          country_gl: Two-letter ISO 3166-1 alpha-2 country code (GL parameter) used to localize
-              search.
+          country: Lowercase ISO 3166-1 alpha-2 country code, such as `us`.
 
           max_age_ms: Maximum age of cached brand data in ms. Defaults to 3 months; clamped to 0–1
               year. `0` refreshes.
@@ -1152,7 +1151,7 @@ class BrandResource(SyncAPIResource):
         transaction_info: str,
         type: Literal["by_transaction"],
         city: str | Omit = omit,
-        country_gl: Literal[
+        country: Literal[
             "af",
             "al",
             "dz",
@@ -1545,8 +1544,7 @@ class BrandResource(SyncAPIResource):
 
           city: Optional city name to prioritize when searching for the brand.
 
-          country_gl: Two-letter ISO 3166-1 alpha-2 country code (GL parameter) used to localize
-              search.
+          country: Lowercase ISO 3166-1 alpha-2 country code, such as `us`.
 
           high_confidence_only: When set to true, the API performs additional verification to ensure the
               identified brand matches the transaction with high confidence.
@@ -1738,7 +1736,7 @@ class BrandResource(SyncAPIResource):
         | Omit = omit,
         zdr: Literal["enabled", "disabled"] | Omit = omit,
         name: str | Omit = omit,
-        country_gl: Literal[
+        country: Literal[
             "af",
             "al",
             "dz",
@@ -2084,7 +2082,7 @@ class BrandResource(SyncAPIResource):
                     "timeout_opts": timeout_opts,
                     "zdr": zdr,
                     "name": name,
-                    "country_gl": country_gl,
+                    "country": country,
                     "email": email,
                     "ticker": ticker,
                     "ticker_exchange": ticker_exchange,
@@ -2760,7 +2758,7 @@ class AsyncBrandResource(AsyncAPIResource):
         *,
         name: str,
         type: Literal["by_name"],
-        country_gl: Literal[
+        country: Literal[
             "af",
             "al",
             "dz",
@@ -3149,8 +3147,7 @@ class AsyncBrandResource(AsyncAPIResource):
 
           type: Discriminator for name-based brand retrieval.
 
-          country_gl: Two-letter ISO 3166-1 alpha-2 country code (GL parameter) used to localize
-              search.
+          country: Lowercase ISO 3166-1 alpha-2 country code, such as `us`.
 
           max_age_ms: Maximum age of cached brand data in ms. Defaults to 3 months; clamped to 0–1
               year. `0` refreshes.
@@ -3679,7 +3676,7 @@ class AsyncBrandResource(AsyncAPIResource):
         transaction_info: str,
         type: Literal["by_transaction"],
         city: str | Omit = omit,
-        country_gl: Literal[
+        country: Literal[
             "af",
             "al",
             "dz",
@@ -4072,8 +4069,7 @@ class AsyncBrandResource(AsyncAPIResource):
 
           city: Optional city name to prioritize when searching for the brand.
 
-          country_gl: Two-letter ISO 3166-1 alpha-2 country code (GL parameter) used to localize
-              search.
+          country: Lowercase ISO 3166-1 alpha-2 country code, such as `us`.
 
           high_confidence_only: When set to true, the API performs additional verification to ensure the
               identified brand matches the transaction with high confidence.
@@ -4265,7 +4261,7 @@ class AsyncBrandResource(AsyncAPIResource):
         | Omit = omit,
         zdr: Literal["enabled", "disabled"] | Omit = omit,
         name: str | Omit = omit,
-        country_gl: Literal[
+        country: Literal[
             "af",
             "al",
             "dz",
@@ -4611,7 +4607,7 @@ class AsyncBrandResource(AsyncAPIResource):
                     "timeout_opts": timeout_opts,
                     "zdr": zdr,
                     "name": name,
-                    "country_gl": country_gl,
+                    "country": country,
                     "email": email,
                     "ticker": ticker,
                     "ticker_exchange": ticker_exchange,

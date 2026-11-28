@@ -212,7 +212,7 @@ class BrandRetrieveByNameRequest(TypedDict, total=False):
     type: Required[Literal["by_name"]]
     """Discriminator for name-based brand retrieval."""
 
-    country_gl: Literal[
+    country: Literal[
         "af",
         "al",
         "dz",
@@ -453,10 +453,7 @@ class BrandRetrieveByNameRequest(TypedDict, total=False):
         "zm",
         "zw",
     ]
-    """
-    Two-letter ISO 3166-1 alpha-2 country code (GL parameter) used to localize
-    search.
-    """
+    """Lowercase ISO 3166-1 alpha-2 country code, such as `us`."""
 
     force_language: Optional[
         Literal[
@@ -1123,7 +1120,7 @@ class BrandRetrieveFromTransactionRequest(TypedDict, total=False):
     city: str
     """Optional city name to prioritize when searching for the brand."""
 
-    country_gl: Literal[
+    country: Literal[
         "af",
         "al",
         "dz",
@@ -1364,10 +1361,7 @@ class BrandRetrieveFromTransactionRequest(TypedDict, total=False):
         "zm",
         "zw",
     ]
-    """
-    Two-letter ISO 3166-1 alpha-2 country code (GL parameter) used to localize
-    search.
-    """
+    """Lowercase ISO 3166-1 alpha-2 country code, such as `us`."""
 
     force_language: Optional[
         Literal[
