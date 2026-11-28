@@ -1,5 +1,39 @@
 # Changelog
 
+## [2.52.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.51.0...v2.52.0) (2026-11-28)
+
+
+### Features
+
+* **answers:** limit research to listed sources with controls ([#3252](https://github.com/context-dot-dev/context-python-sdk/issues/3252)) ([cf73377](https://github.com/context-dot-dev/context-python-sdk/commit/cf733776bfa3f1839b5dd400b3358f845de645df))
+* **batch:** add follow, scrape and exclude crawl rules ([#3244](https://github.com/context-dot-dev/context-python-sdk/issues/3244)) ([a16c2ec](https://github.com/context-dot-dev/context-python-sdk/commit/a16c2ec6b62aed65c831ba4a507a04d18ce219cd))
+* **crawl:** say why a crawled page failed ([#3130](https://github.com/context-dot-dev/context-python-sdk/issues/3130)) ([c6bb00f](https://github.com/context-dot-dev/context-python-sdk/commit/c6bb00ffb4f2757af477910c7029042e151eb8bc))
+* **feedback:** add bad_brand feedback category ([#3136](https://github.com/context-dot-dev/context-python-sdk/issues/3136)) ([c1b0475](https://github.com/context-dot-dev/context-python-sdk/commit/c1b04750b6604fb245c8368111cfb34f0c682bf4))
+* **monitors:** filter monitor credit usage by tag ([#3077](https://github.com/context-dot-dev/context-python-sdk/issues/3077)) ([3c04c5d](https://github.com/context-dot-dev/context-python-sdk/commit/3c04c5dfcb28e4f4fb1c6a2e1ad7f515e42353b4))
+* **scholar:** add POST /scholar/search endpoint ([#2997](https://github.com/context-dot-dev/context-python-sdk/issues/2997)) ([a0d0dad](https://github.com/context-dot-dev/context-python-sdk/commit/a0d0dad7db5fc91132b79200e0e6f95c45d7bdf4))
+* **scrape:** accept includeFrames auto and make it the default ([#3280](https://github.com/context-dot-dev/context-python-sdk/issues/3280)) ([455e11f](https://github.com/context-dot-dev/context-python-sdk/commit/455e11f618435665b8cabbe9988ee27b012a300a))
+* **scrape:** add a car-rental-locations parser for avis and budget branches ([#3021](https://github.com/context-dot-dev/context-python-sdk/issues/3021)) ([8b18f71](https://github.com/context-dot-dev/context-python-sdk/commit/8b18f71fdec85e7aa57be377cc9667dd3a336af2))
+* **scrape:** include price and availability on product variants ([#3113](https://github.com/context-dot-dev/context-python-sdk/issues/3113)) ([c6bb00f](https://github.com/context-dot-dev/context-python-sdk/commit/c6bb00ffb4f2757af477910c7029042e151eb8bc))
+
+
+### Bug Fixes
+
+* **access-policies:** tell callers to drop `policies` when the feature is off ([#3090](https://github.com/context-dot-dev/context-python-sdk/issues/3090)) ([4be4f7f](https://github.com/context-dot-dev/context-python-sdk/commit/4be4f7f0760e04c142f102bc13063d7483120d7c))
+* **answers:** flag list items that came back unresearched and send incomplete answers back once ([#3145](https://github.com/context-dot-dev/context-python-sdk/issues/3145)) ([ea31dd3](https://github.com/context-dot-dev/context-python-sdk/commit/ea31dd3c016191c77b6e119bd2bb0e44d5858d9b))
+* **batch:** list every batch and remove shouldIncludeUnified ([#3322](https://github.com/context-dot-dev/context-python-sdk/issues/3322)) ([2f9a565](https://github.com/context-dot-dev/context-python-sdk/commit/2f9a5653ed9d972aca56fbb307a072a57fc3e156))
+* **brand:** rename country_gl to country and CountryGL to LowercaseCountryCode ([#3326](https://github.com/context-dot-dev/context-python-sdk/issues/3326)) ([d241292](https://github.com/context-dot-dev/context-python-sdk/commit/d241292c5788745955d05a94433ccefca4febeae))
+* **google-maps:** search from the URL's country, merge two draws, and read the real primary category ([#3158](https://github.com/context-dot-dev/context-python-sdk/issues/3158)) ([99eba83](https://github.com/context-dot-dev/context-python-sdk/commit/99eba832c5225a3851bde52dbb153d3698f84f16))
+* **scrape:** read google play ratings from the storefront that offers the app ([#3084](https://github.com/context-dot-dev/context-python-sdk/issues/3084)) ([3c04c5d](https://github.com/context-dot-dev/context-python-sdk/commit/3c04c5dfcb28e4f4fb1c6a2e1ad7f515e42353b4))
+* **web-search:** explain why a result's page content is missing ([#3074](https://github.com/context-dot-dev/context-python-sdk/issues/3074)) ([6c9c2e4](https://github.com/context-dot-dev/context-python-sdk/commit/6c9c2e4dbb6cb5d27109f00e45f1efb8ad0696c4))
+
+
+### Documentation
+
+* **answers:** state the 2000-character task limit in its description ([#3137](https://github.com/context-dot-dev/context-python-sdk/issues/3137)) ([c1b0475](https://github.com/context-dot-dev/context-python-sdk/commit/c1b04750b6604fb245c8368111cfb34f0c682bf4))
+* **openapi:** hide superseded inputs and document missing 403 and 402 responses ([#3323](https://github.com/context-dot-dev/context-python-sdk/issues/3323)) ([7e99da3](https://github.com/context-dot-dev/context-python-sdk/commit/7e99da3f3d03de6fcaecd48dcb7bc6721c666ddb))
+* **openapi:** rewrite public reference copy and normalize field order ([#3325](https://github.com/context-dot-dev/context-python-sdk/issues/3325)) ([270c862](https://github.com/context-dot-dev/context-python-sdk/commit/270c86242101211d19015cc6442c01bcfc250358))
+* **scrape:** describe late scrape outputs as per-output REQUEST_TIMEOUT in a 200 ([#3080](https://github.com/context-dot-dev/context-python-sdk/issues/3080)) ([fac696f](https://github.com/context-dot-dev/context-python-sdk/commit/fac696f02a8380fc28950ea0fa838b0ff52385cc))
+
 ## [2.51.0](https://github.com/context-dot-dev/context-python-sdk/compare/v2.50.0...v2.51.0) (2026-11-17)
 
 
