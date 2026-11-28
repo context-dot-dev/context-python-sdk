@@ -26,6 +26,10 @@ __all__ = ["PeopleResource", "AsyncPeopleResource"]
 
 
 class PeopleResource(SyncAPIResource):
+    """
+    Enrich a person from identity clues, or find people with a natural-language query.
+    """
+
     @cached_property
     def with_raw_response(self) -> PeopleResourceWithRawResponse:
         """
@@ -65,26 +69,30 @@ class PeopleResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PersonEnrichResponse:
         """
-        Find a person from identity clues and return their profile with a match score.
-        Available on all plans; free or disposable email addresses return 422.
+        Match a person from a work email, a profile URL, or a name with company,
+        education, or location context, and get their profile with an identity-match
+        score from 0 to 100. The best candidate is returned even when the match is weak,
+        so set a score threshold for your workflow. `not_found` results are free.
 
         Args:
-          company: Company context to help identify the person. Provide a name or domain.
+          company: Company associated with the person. Send a `name`, a `domain`, or both.
 
           education: Education history to help distinguish people with similar names.
 
-          email: Email address of the person to find.
+          email: Work email address of the person. Free and disposable email providers
+              return 422.
 
-          location: Location context to help identify the person. Provide a city, region, or
-              country.
+          location: Location associated with the person. Send at least one of `city`, `region`, or
+              `country`.
 
-          name: Person name. Without an email or person-profile URL, provide both first and last
-              name plus company, education, or location.
+          name: Name of the person. Without an email or profile URL, send both `first` and
+              `last` plus `company`, `education`, or `location`.
 
-          social_urls: Public profile URLs for the person. A person-profile URL can identify the person
-              without a name.
+          social_urls: Public profile URLs for the person. A person-profile URL is enough to identify
+              them without a name.
 
-          tags: Labels for filtering usage in the dashboard.
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
 
           timeout_opts: Request deadline and what to return when it passes.
 
@@ -138,22 +146,27 @@ class PeopleResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PersonSearchResponse:
         """
-        Find people with a natural-language query.
+        Find people from a plain-language description, such as
+        `VPs of sales at solar companies in California`. Each result includes the
+        current role and employer, location, years of experience, skills, schools, and
+        public profile URLs. Pages with no matches are free.
 
         Args:
-          query: Describe the people to find. Up to 500 characters in `fast` mode and 5000 in
-              `ultra` mode.
+          query: Plain-language description of the people to find. Up to 500 characters in `fast`
+              mode and 5000 in `ultra` mode.
 
-          cursor: Use next_cursor with the same query, mode and filters to fetch the next page.
+          cursor: Cursor from the previous page's `next_cursor`. Omit for the first page. Send the
+              same `query`, `mode`, and `filters` with it.
 
-          filters: Additional constraints every result must match.
+          filters: Constraints every result must match, in addition to `query`.
 
-          mode: `fast` matches people on basic criteria (e.g. their role, location or
-              background); `ultra` plans a deeper search, judges each candidate against every
-              criterion in the query. Complex `ultra` searches can take up to 30 seconds to
-              complete, so allow for that in your client timeout.
+          mode: `fast` matches people on basic criteria such as role, location, or background;
+              `ultra` runs a deeper search, checks every candidate against each criterion in
+              your query, and adds a `match` score. Complex `ultra` searches can take up to 30
+              seconds, so set your client timeout to match.
 
-          tags: Labels for filtering usage in the dashboard.
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
 
           zdr: `enabled` turns on zero data retention. Returns 403 `ZDR_NOT_ENABLED` unless
               your organization has ZDR.
@@ -187,6 +200,10 @@ class PeopleResource(SyncAPIResource):
 
 
 class AsyncPeopleResource(AsyncAPIResource):
+    """
+    Enrich a person from identity clues, or find people with a natural-language query.
+    """
+
     @cached_property
     def with_raw_response(self) -> AsyncPeopleResourceWithRawResponse:
         """
@@ -226,26 +243,30 @@ class AsyncPeopleResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PersonEnrichResponse:
         """
-        Find a person from identity clues and return their profile with a match score.
-        Available on all plans; free or disposable email addresses return 422.
+        Match a person from a work email, a profile URL, or a name with company,
+        education, or location context, and get their profile with an identity-match
+        score from 0 to 100. The best candidate is returned even when the match is weak,
+        so set a score threshold for your workflow. `not_found` results are free.
 
         Args:
-          company: Company context to help identify the person. Provide a name or domain.
+          company: Company associated with the person. Send a `name`, a `domain`, or both.
 
           education: Education history to help distinguish people with similar names.
 
-          email: Email address of the person to find.
+          email: Work email address of the person. Free and disposable email providers
+              return 422.
 
-          location: Location context to help identify the person. Provide a city, region, or
-              country.
+          location: Location associated with the person. Send at least one of `city`, `region`, or
+              `country`.
 
-          name: Person name. Without an email or person-profile URL, provide both first and last
-              name plus company, education, or location.
+          name: Name of the person. Without an email or profile URL, send both `first` and
+              `last` plus `company`, `education`, or `location`.
 
-          social_urls: Public profile URLs for the person. A person-profile URL can identify the person
-              without a name.
+          social_urls: Public profile URLs for the person. A person-profile URL is enough to identify
+              them without a name.
 
-          tags: Labels for filtering usage in the dashboard.
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
 
           timeout_opts: Request deadline and what to return when it passes.
 
@@ -299,22 +320,27 @@ class AsyncPeopleResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PersonSearchResponse:
         """
-        Find people with a natural-language query.
+        Find people from a plain-language description, such as
+        `VPs of sales at solar companies in California`. Each result includes the
+        current role and employer, location, years of experience, skills, schools, and
+        public profile URLs. Pages with no matches are free.
 
         Args:
-          query: Describe the people to find. Up to 500 characters in `fast` mode and 5000 in
-              `ultra` mode.
+          query: Plain-language description of the people to find. Up to 500 characters in `fast`
+              mode and 5000 in `ultra` mode.
 
-          cursor: Use next_cursor with the same query, mode and filters to fetch the next page.
+          cursor: Cursor from the previous page's `next_cursor`. Omit for the first page. Send the
+              same `query`, `mode`, and `filters` with it.
 
-          filters: Additional constraints every result must match.
+          filters: Constraints every result must match, in addition to `query`.
 
-          mode: `fast` matches people on basic criteria (e.g. their role, location or
-              background); `ultra` plans a deeper search, judges each candidate against every
-              criterion in the query. Complex `ultra` searches can take up to 30 seconds to
-              complete, so allow for that in your client timeout.
+          mode: `fast` matches people on basic criteria such as role, location, or background;
+              `ultra` runs a deeper search, checks every candidate against each criterion in
+              your query, and adds a `match` score. Complex `ultra` searches can take up to 30
+              seconds, so set your client timeout to match.
 
-          tags: Labels for filtering usage in the dashboard.
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
 
           zdr: `enabled` turns on zero data retention. Returns 403 `ZDR_NOT_ENABLED` unless
               your organization has ZDR.

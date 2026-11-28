@@ -38,6 +38,8 @@ __all__ = ["ParseResource", "AsyncParseResource"]
 
 
 class ParseResource(SyncAPIResource):
+    """Convert uploaded files, such as PDFs and Office documents, into Markdown."""
+
     @cached_property
     def with_raw_response(self) -> ParseResourceWithRawResponse:
         """
@@ -153,35 +155,38 @@ class ParseResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ParseHandleResponse:
-        """Convert uploaded file bytes into Markdown and optional HTML.
+        """Convert a file to Markdown.
 
-        WARC and WARC.GZ
-        archives combine HTTP response, resource, and conversion records in archive
-        order. Revisit and segmented records are skipped. Decoded WARC content is
-        limited to 50 MiB.
+        Handles PDF, Word, Excel, PowerPoint, HTML, XML,
+        CSV, JSON, YAML, source code, subtitles, images, and WARC archives. Send the raw
+        bytes as the request body; set `ocr=true` to read scanned pages and images.
 
         Args:
-          client: Optional client identifier used for usage attribution.
+          client: Client identifier for usage attribution.
 
-          extension: Optional file extension hint, such as pdf, docx, xlsx, pptx, html, json, csv,
-              md, py, rtf, jpg, png, txt, warc, or warc.gz.
+          extension: File type hint, such as `pdf`, `docx`, `xlsx`, `pptx`, `html`, `json`, `csv`,
+              `md`, `py`, `rtf`, `jpg`, `png`, `txt`, `warc`, or `warc.gz`. Use it when the
+              `Content-Type` header is missing or generic.
 
-          include_images: Include image references in Markdown output
+          include_images: Include image references in the Markdown.
 
-          include_links: Preserve hyperlinks in Markdown output
+          include_links: Keep link URLs in the Markdown.
 
-          include_numbered_pages: Start each PDF page in the Markdown with a `<!-- page N -->` line, where N is
+          include_numbered_pages: Start each PDF page in the Markdown with a `<!-- page N -->` line, where `N` is
               the original 1-based page number.
 
-          ocr: Read text from images and scanned PDF pages. PDF page ranges still apply.
+          ocr: Read text from images and scanned PDF pages with OCR, within the `pdf` page
+              range. Adds 1 credit per page read.
 
-          pdf: PDF page-range options as a JSON object, e.g. {"start": 2, "end": 5}.
+          pdf: PDF page range as a JSON object, such as `{"start": 2, "end": 5}`.
 
-          shorten_base64_images: Shorten base64-encoded image data in the Markdown output
+          shorten_base64_images: Shorten inline base64 image data.
 
-          tags: Comma-separated labels for filtering usage, e.g. `production,team-alpha`.
+          tags: Comma-separated labels for this request, such as `production,team-alpha`. Filter
+              usage and request logs by them.
 
-          use_main_content_only: Extract only the main content from HTML-like inputs
+          use_main_content_only: Keep only the main content, without navigation, headers, footers, or sidebars.
+              Applies to HTML-like inputs.
 
           zdr: `enabled` turns on zero data retention. Returns 403 `ZDR_NOT_ENABLED` unless
               your organization has ZDR.
@@ -225,6 +230,8 @@ class ParseResource(SyncAPIResource):
 
 
 class AsyncParseResource(AsyncAPIResource):
+    """Convert uploaded files, such as PDFs and Office documents, into Markdown."""
+
     @cached_property
     def with_raw_response(self) -> AsyncParseResourceWithRawResponse:
         """
@@ -340,35 +347,38 @@ class AsyncParseResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ParseHandleResponse:
-        """Convert uploaded file bytes into Markdown and optional HTML.
+        """Convert a file to Markdown.
 
-        WARC and WARC.GZ
-        archives combine HTTP response, resource, and conversion records in archive
-        order. Revisit and segmented records are skipped. Decoded WARC content is
-        limited to 50 MiB.
+        Handles PDF, Word, Excel, PowerPoint, HTML, XML,
+        CSV, JSON, YAML, source code, subtitles, images, and WARC archives. Send the raw
+        bytes as the request body; set `ocr=true` to read scanned pages and images.
 
         Args:
-          client: Optional client identifier used for usage attribution.
+          client: Client identifier for usage attribution.
 
-          extension: Optional file extension hint, such as pdf, docx, xlsx, pptx, html, json, csv,
-              md, py, rtf, jpg, png, txt, warc, or warc.gz.
+          extension: File type hint, such as `pdf`, `docx`, `xlsx`, `pptx`, `html`, `json`, `csv`,
+              `md`, `py`, `rtf`, `jpg`, `png`, `txt`, `warc`, or `warc.gz`. Use it when the
+              `Content-Type` header is missing or generic.
 
-          include_images: Include image references in Markdown output
+          include_images: Include image references in the Markdown.
 
-          include_links: Preserve hyperlinks in Markdown output
+          include_links: Keep link URLs in the Markdown.
 
-          include_numbered_pages: Start each PDF page in the Markdown with a `<!-- page N -->` line, where N is
+          include_numbered_pages: Start each PDF page in the Markdown with a `<!-- page N -->` line, where `N` is
               the original 1-based page number.
 
-          ocr: Read text from images and scanned PDF pages. PDF page ranges still apply.
+          ocr: Read text from images and scanned PDF pages with OCR, within the `pdf` page
+              range. Adds 1 credit per page read.
 
-          pdf: PDF page-range options as a JSON object, e.g. {"start": 2, "end": 5}.
+          pdf: PDF page range as a JSON object, such as `{"start": 2, "end": 5}`.
 
-          shorten_base64_images: Shorten base64-encoded image data in the Markdown output
+          shorten_base64_images: Shorten inline base64 image data.
 
-          tags: Comma-separated labels for filtering usage, e.g. `production,team-alpha`.
+          tags: Comma-separated labels for this request, such as `production,team-alpha`. Filter
+              usage and request logs by them.
 
-          use_main_content_only: Extract only the main content from HTML-like inputs
+          use_main_content_only: Keep only the main content, without navigation, headers, footers, or sidebars.
+              Applies to HTML-like inputs.
 
           zdr: `enabled` turns on zero data retention. Returns 403 `ZDR_NOT_ENABLED` unless
               your organization has ZDR.

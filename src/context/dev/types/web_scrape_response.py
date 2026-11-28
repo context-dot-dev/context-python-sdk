@@ -34,9 +34,10 @@ __all__ = [
 
 class BytesData(BaseModel):
     base64: str
-    """Body as base64, after HTTP decompression. Up to 50 MiB decoded."""
+    """Response body as base64, after HTTP decompression. Up to 50 MiB decoded."""
 
     content_type: str = FieldInfo(alias="contentType")
+    """`Content-Type` of the response."""
 
 
 class Bytes(BaseModel):
@@ -45,27 +46,31 @@ class Bytes(BaseModel):
     data: Optional[BytesData] = None
 
     requested: bool
+    """Whether you requested this output in `formats`."""
 
     success: Optional[bool] = None
-    """`true` if returned, `false` if it failed, `null` if not requested."""
+    """
+    `true` when the output succeeded, `false` when it failed, `null` when it was not
+    requested.
+    """
 
     error_code: Optional[str] = None
-    """Why the output failed. Present only when `success` is `false`."""
+    """Machine-readable error code. Present only when `success` is `false`."""
 
     message: Optional[str] = None
-    """Explanation of the failure and possible next steps."""
+    """Human-readable explanation of the error and how to resolve it."""
 
 
 class CacheMetadata(BaseModel):
-    """Whether this response came from cache."""
+    """Cache status of this response."""
 
     age_ms: int
-    """Age of the cached data in milliseconds. Zero for miss and zdr responses."""
+    """Age of the cached data, in milliseconds. `0` for `miss` and `zdr`."""
 
     status: Literal["hit", "miss", "zdr"]
     """
-    Whether the response was served from cache, required fresh work, or honored
-    zero-data-retention cache bypass.
+    `hit` when served from cache, `miss` when fetched fresh, `zdr` when zero data
+    retention bypassed the cache.
     """
 
 
@@ -78,37 +83,45 @@ class Highlights(BaseModel):
     data: Optional[List[str]] = None
 
     requested: bool
+    """Whether you requested this output in `formats`."""
 
     success: Optional[bool] = None
-    """`true` if returned, `false` if it failed, `null` if not requested."""
+    """
+    `true` when the output succeeded, `false` when it failed, `null` when it was not
+    requested.
+    """
 
     error_code: Optional[str] = None
-    """Why the output failed. Present only when `success` is `false`."""
+    """Machine-readable error code. Present only when `success` is `false`."""
 
     message: Optional[str] = None
-    """Explanation of the failure and possible next steps."""
+    """Human-readable explanation of the error and how to resolve it."""
 
 
 class HTML(BaseModel):
-    """Rendered HTML after content filters."""
+    """Rendered HTML of the page, after content filters."""
 
     data: Optional[str] = None
 
     requested: bool
+    """Whether you requested this output in `formats`."""
 
     success: Optional[bool] = None
-    """`true` if returned, `false` if it failed, `null` if not requested."""
+    """
+    `true` when the output succeeded, `false` when it failed, `null` when it was not
+    requested.
+    """
 
     error_code: Optional[str] = None
-    """Why the output failed. Present only when `success` is `false`."""
+    """Machine-readable error code. Present only when `success` is `false`."""
 
     message: Optional[str] = None
-    """Explanation of the failure and possible next steps."""
+    """Human-readable explanation of the error and how to resolve it."""
 
 
 class ImagesData(BaseModel):
     alt: Optional[str] = None
-    """Alt text, if present."""
+    """Alt text. `null` when the image has none."""
 
     url: str
     """Image URL, or a data URI for inline images."""
@@ -116,33 +129,43 @@ class ImagesData(BaseModel):
     classification: Optional[
         Literal["photography", "illustration", "logo", "wordmark", "icon", "pattern", "graphic", "other"]
     ] = None
+    """What the image shows, such as a photo, logo, or icon.
+
+    Requires `classification` enrichment.
+    """
 
     file_url: Optional[str] = FieldInfo(alias="fileUrl", default=None)
-    """Hosted image URL, valid for 24 hours after capture.
+    """Hosted copy of the image, valid for 24 hours after capture.
 
-    Requires `file` enrichment and ZDR disabled.
+    Requires `file` enrichment; not returned with ZDR.
     """
 
     height: Optional[int] = None
+    """Image height in pixels. Requires `dimensions` enrichment."""
 
     width: Optional[int] = None
+    """Image width in pixels. Requires `dimensions` enrichment."""
 
 
 class Images(BaseModel):
-    """Images after content filters. `[]` when none are found."""
+    """Images found on the page, after content filters. `[]` when there are none."""
 
     data: Optional[List[ImagesData]] = None
 
     requested: bool
+    """Whether you requested this output in `formats`."""
 
     success: Optional[bool] = None
-    """`true` if returned, `false` if it failed, `null` if not requested."""
+    """
+    `true` when the output succeeded, `false` when it failed, `null` when it was not
+    requested.
+    """
 
     error_code: Optional[str] = None
-    """Why the output failed. Present only when `success` is `false`."""
+    """Machine-readable error code. Present only when `success` is `false`."""
 
     message: Optional[str] = None
-    """Explanation of the failure and possible next steps."""
+    """Human-readable explanation of the error and how to resolve it."""
 
 
 class Json(BaseModel):
@@ -151,57 +174,65 @@ class Json(BaseModel):
     data: Optional[Dict[str, object]] = None
 
     requested: bool
+    """Whether you requested this output in `formats`."""
 
     success: Optional[bool] = None
-    """`true` if returned, `false` if it failed, `null` if not requested."""
+    """
+    `true` when the output succeeded, `false` when it failed, `null` when it was not
+    requested.
+    """
 
     error_code: Optional[str] = None
-    """Why the output failed. Present only when `success` is `false`."""
+    """Machine-readable error code. Present only when `success` is `false`."""
 
     is_truncated: Optional[Literal[True]] = FieldInfo(alias="isTruncated", default=None)
     """
-    True when the page was too long to read in full, so values found only in the
-    unread parts may be missing.
+    `true` when the page was too long to read in full, so values that appear only in
+    the unread part may be missing.
     """
 
     message: Optional[str] = None
-    """Explanation of the failure and possible next steps."""
+    """Human-readable explanation of the error and how to resolve it."""
 
 
 class Markdown(BaseModel):
-    """Markdown after content filters."""
+    """Page content as Markdown, after content filters."""
 
     data: Optional[str] = None
 
     requested: bool
+    """Whether you requested this output in `formats`."""
 
     success: Optional[bool] = None
-    """`true` if returned, `false` if it failed, `null` if not requested."""
+    """
+    `true` when the output succeeded, `false` when it failed, `null` when it was not
+    requested.
+    """
 
     error_code: Optional[str] = None
-    """Why the output failed. Present only when `success` is `false`."""
+    """Machine-readable error code. Present only when `success` is `false`."""
 
     message: Optional[str] = None
-    """Explanation of the failure and possible next steps."""
+    """Human-readable explanation of the error and how to resolve it."""
 
 
 class MetadataAlternate(BaseModel):
     href: str
-    """Resolved alternate URL."""
+    """Absolute URL of the alternate version."""
 
     hreflang: Optional[str] = None
-    """Language or locale for the alternate URL, when present."""
+    """Language or locale of the alternate version, when present."""
 
     title: Optional[str] = None
-    """Alternate resource title, when present."""
+    """Title of the alternate version, when present."""
 
     type: Optional[str] = None
-    """Alternate resource MIME type, when present."""
+    """MIME type of the alternate version, when present."""
 
 
 class MetadataHeading(BaseModel):
     level: int
-    """Heading level, 1–6 (from h1–h6)."""
+    """Heading level, from 1 (`h1`) to 6 (`h6`)."""
 
     text: str
     """Heading text with whitespace collapsed, truncated to 1000 characters."""
@@ -211,71 +242,79 @@ class Metadata(BaseModel):
     """Page metadata. Fields are omitted when not found."""
 
     additional_meta: Optional[Dict[str, Union[str, List[str]]]] = FieldInfo(alias="additionalMeta", default=None)
-    """Additional non-social meta tags not promoted to top-level metadata fields."""
+    """Other non-social meta tags that don't have their own field."""
 
     alternates: Optional[List[MetadataAlternate]] = None
-    """Resolved alternate links from link rel=alternate tags."""
+    """Alternate links from `link rel="alternate"` tags, as absolute URLs."""
 
     author: Optional[str] = None
-    """Author metadata, when present."""
+    """Author, when present."""
 
     canonical_url: Optional[str] = FieldInfo(alias="canonicalUrl", default=None)
-    """Resolved canonical URL, when present."""
+    """Absolute canonical URL, when present."""
 
     description: Optional[str] = None
-    """Best description extracted from standard, Open Graph, or Twitter metadata."""
+    """Best available description, from standard, Open Graph, or Twitter meta tags."""
 
     favicon: Optional[str] = None
-    """Resolved favicon URL, when present."""
+    """Absolute favicon URL, when present."""
 
     headings: Optional[List[MetadataHeading]] = None
-    """Up to 500 h1–h6 headings in document order, before content filtering."""
+    """
+    Headings (`h1` to `h6`) in document order, from the full page before any
+    filtering. Up to 500. Omitted when the page has none.
+    """
 
     image: Optional[str] = None
-    """Primary resolved preview image from Open Graph, Twitter, or image metadata."""
+    """Main preview image URL, from Open Graph, Twitter, or image meta tags."""
 
     json_ld: Optional[List[Dict[str, object]]] = FieldInfo(alias="jsonLd", default=None)
     """JSON-LD structured data blocks parsed from the page."""
 
     keywords: Optional[List[str]] = None
-    """Keywords extracted from the page's keywords meta tag."""
+    """Keywords from the page's `keywords` meta tag."""
 
     language: Optional[str] = None
-    """Language extracted from html lang or language meta tags."""
+    """Page language, from the `html` `lang` attribute or language meta tags."""
 
     modified_time: Optional[str] = FieldInfo(alias="modifiedTime", default=None)
-    """Modified timestamp/date from page metadata, when present."""
+    """Last-modified date or timestamp from page metadata, when present."""
 
     open_graph: Optional[Dict[str, Union[str, List[str]]]] = FieldInfo(alias="openGraph", default=None)
-    """Open Graph metadata with the og: prefix removed and keys camel-cased."""
+    """Open Graph tags, with the `og:` prefix removed and keys in camelCase."""
 
     published_time: Optional[str] = FieldInfo(alias="publishedTime", default=None)
-    """Published timestamp/date from page metadata, when present."""
+    """Publish date or timestamp from page metadata, when present."""
 
     robots: Optional[str] = None
-    """Robots meta directive, when present."""
+    """`robots` meta directive, when present."""
 
     site_name: Optional[str] = FieldInfo(alias="siteName", default=None)
-    """Site or application name from page metadata."""
+    """Site or app name from page metadata."""
 
     title: Optional[str] = None
-    """Best title extracted from the page."""
+    """Best available page title."""
 
     twitter: Optional[Dict[str, Union[str, List[str]]]] = None
-    """Twitter card metadata with the twitter: prefix removed and keys camel-cased."""
+    """Twitter card tags, with the `twitter:` prefix removed and keys in camelCase."""
 
 
 class Parsed(BaseModel):
-    """
-    Custom rules return fields after content filters; unmatched fields are null ([] for lists). The google-maps parser returns business records in data.results, google-maps-reviews returns data.reviews, and the google-play parser returns one app record as data, google-play-reviews returns data.reviews, app-store and app-store-reviews do the same for the App Store, g2-reviews returns data.reviews for a G2 product, instagram-profile and instagram-post return one record as data, instagram-feed returns data.posts, tiktok-profile and tiktok-video return one record as data, tiktok-feed returns data.videos, tiktok-comments returns data.comments, tiktok-followers, tiktok-following, and tiktok-user-search return data.users, yelp-search returns up to 20 ranked organic businesses in data.businesses, plus total and pagination, from a Yelp search URL; yelp-reviews returns up to 20 latest public reviews in data.reviews, with business details and next_offset, from a Yelp business URL; tripadvisor-reviews returns 20 reviews in data.reviews, with data.location and next_offset, from a Tripadvisor hotel, restaurant, or attraction review URL; car-rental-availability returns every vehicle with pay-now and pay-later prices in data.vehicles from an avis.com or budget.com vehicle-availability search URL; car-rental-locations returns rental branches with codes, addresses, coordinates and hours in data.locations from an avis.com or budget.com /locations?keyword= URL; emails, phone-numbers, and links return data.emails, data.phone_numbers, and data.links from the rendered page; the store, Maps, G2, Instagram, and TikTok parsers read their data directly, independently of DOM filters and other outputs.
+    """Fields extracted by `parseParams`.
+
+    Custom rules return each field after content filters, with `null` when nothing matches (`[]` for `list` rules). Prebuilt parsers return the record or lists described under `parseParams.parser`.
     """
 
     data: Optional[Dict[str, object]] = None
 
     requested: bool
+    """Whether you requested this output in `formats`."""
 
     success: Optional[bool] = None
-    """`true` if returned, `false` if it failed, `null` if not requested."""
+    """
+    `true` when the output succeeded, `false` when it failed, `null` when it was not
+    requested.
+    """
 
     type: Literal[
         "custom",
@@ -310,48 +349,52 @@ class Parsed(BaseModel):
         "links",
     ]
     """
-    The selected prebuilt parser name, or custom when type is omitted, custom rules
-    are used, or parsing is not requested.
+    Prebuilt parser that ran, or `custom` for custom rules or when `parse` was not
+    requested.
     """
 
     error_code: Optional[str] = None
-    """Why the output failed. Present only when `success` is `false`."""
+    """Machine-readable error code. Present only when `success` is `false`."""
 
     message: Optional[str] = None
-    """Explanation of the failure and possible next steps."""
+    """Human-readable explanation of the error and how to resolve it."""
 
 
 class ProductDataProductVariant(BaseModel):
     attributes: Dict[str, str]
     """
-    Explicit variant attributes such as color, size, material, pattern and
-    properties declared by page.
+    Attributes that define this variant, such as color, size, material, or pattern,
+    as stated on the page.
     """
 
     images: List[str]
-    """Original source image URLs explicitly attached to this variant."""
+    """Image URLs the source attaches to this variant."""
 
     sku: Optional[str] = None
+    """SKU of this variant. `null` when the source does not state one."""
 
     url: Optional[str] = None
-    """Variant or offer URL when provided by the source. May be shared by variants."""
+    """URL of this variant or offer, when the source provides one.
+
+    Several variants can share a URL.
+    """
 
     availability: Optional[
         Literal[
             "in_stock", "out_of_stock", "limited_availability", "preorder", "backorder", "made_to_order", "discontinued"
         ]
     ] = None
-    """Normalized stock or ordering availability of this variant."""
+    """Stock or ordering availability of this variant."""
 
     currency: Optional[str] = None
-    """Currency code for the variant price (e.g., USD, EUR) when stated with it."""
+    """Currency code of `price`, such as `USD` or `EUR`, when stated."""
 
     price: Optional[float] = None
-    """Price of this variant when the source states one per variant."""
+    """Price of this variant, when the source states one per variant."""
 
 
 class ProductDataProduct(BaseModel):
-    """The extracted product, or null when the page is not a product detail page."""
+    """The extracted product. `null` when the page is not a product detail page."""
 
     availability: Optional[
         Literal[
@@ -367,7 +410,7 @@ class ProductDataProduct(BaseModel):
     """Product category."""
 
     currency: Optional[str] = None
-    """ISO 4217 currency code."""
+    """ISO 4217 currency code of `price`."""
 
     description: Optional[str] = None
     """Product description."""
@@ -403,10 +446,9 @@ class ProductDataProduct(BaseModel):
     """Intended audience."""
 
     variants: List[ProductDataProductVariant]
-    """
-    Product variations, such as different colors or sizes, with their attributes and
-    images. Empty if none are found. May not include every variation offered by the
-    store.
+    """Product variants, such as colors or sizes, with their attributes and images.
+
+    `[]` when none are found. May not include every variant the store offers.
     """
 
 
@@ -415,7 +457,7 @@ class ProductData(BaseModel):
     """Whether the page is a product detail page."""
 
     product: Optional[ProductDataProduct] = None
-    """The extracted product, or null when the page is not a product detail page."""
+    """The extracted product. `null` when the page is not a product detail page."""
 
 
 class Product(BaseModel):
@@ -424,26 +466,29 @@ class Product(BaseModel):
     data: Optional[ProductData] = None
 
     requested: bool
+    """Whether you requested this output in `formats`."""
 
     success: Optional[bool] = None
-    """`true` if returned, `false` if it failed, `null` if not requested."""
+    """
+    `true` when the output succeeded, `false` when it failed, `null` when it was not
+    requested.
+    """
 
     error_code: Optional[str] = None
-    """Why the output failed. Present only when `success` is `false`."""
+    """Machine-readable error code. Present only when `success` is `false`."""
 
     message: Optional[str] = None
-    """Explanation of the failure and possible next steps."""
+    """Human-readable explanation of the error and how to resolve it."""
 
 
 class Profile(BaseModel):
-    """
-    Authenticated browser profile used for this scrape, or null when no profile was requested. New and existing profile requests both return the profile ID.
-    """
+    """Browser profile used for this scrape. `null` when no profile was requested."""
 
     id: str
-    """
-    Save this ID after creating a profile, then reuse it as
-    sharedParams.profile.profileId with type "existing".
+    """ID of the browser profile.
+
+    After creating a profile, save it and pass it as
+    `sharedParams.profile.profileId` with `type: "existing"`.
     """
 
 
@@ -453,15 +498,19 @@ class Screenshot(BaseModel):
     data: Optional[str] = None
 
     requested: bool
+    """Whether you requested this output in `formats`."""
 
     success: Optional[bool] = None
-    """`true` if returned, `false` if it failed, `null` if not requested."""
+    """
+    `true` when the output succeeded, `false` when it failed, `null` when it was not
+    requested.
+    """
 
     error_code: Optional[str] = None
-    """Why the output failed. Present only when `success` is `false`."""
+    """Machine-readable error code. Present only when `success` is `false`."""
 
     message: Optional[str] = None
-    """Explanation of the failure and possible next steps."""
+    """Human-readable explanation of the error and how to resolve it."""
 
 
 class KeyMetadata(BaseModel):
@@ -471,7 +520,7 @@ class KeyMetadata(BaseModel):
     """Credits charged for this request."""
 
     credits_remaining: int
-    """Credits remaining for your organization."""
+    """Credits your organization has left after this request."""
 
 
 class WebScrapeResponse(BaseModel):
@@ -479,7 +528,7 @@ class WebScrapeResponse(BaseModel):
     """The original HTTP response body, unchanged by waits, actions, and filters."""
 
     cache_metadata: CacheMetadata
-    """Whether this response came from cache."""
+    """Cache status of this response."""
 
     highlights: Highlights
     """Relevant Markdown excerpts in page order.
@@ -488,54 +537,33 @@ class WebScrapeResponse(BaseModel):
     """
 
     html: HTML
-    """Rendered HTML after content filters."""
+    """Rendered HTML of the page, after content filters."""
 
     images: Images
-    """Images after content filters. `[]` when none are found."""
+    """Images found on the page, after content filters. `[]` when there are none."""
 
     json_: Json = FieldInfo(alias="json")
     """Object matching `jsonParams.schema`."""
 
     markdown: Markdown
-    """Markdown after content filters."""
+    """Page content as Markdown, after content filters."""
 
     metadata: Metadata
     """Page metadata. Fields are omitted when not found."""
 
     parsed: Parsed
-    """
-    Custom rules return fields after content filters; unmatched fields are null ([]
-    for lists). The google-maps parser returns business records in data.results,
-    google-maps-reviews returns data.reviews, and the google-play parser returns one
-    app record as data, google-play-reviews returns data.reviews, app-store and
-    app-store-reviews do the same for the App Store, g2-reviews returns data.reviews
-    for a G2 product, instagram-profile and instagram-post return one record as
-    data, instagram-feed returns data.posts, tiktok-profile and tiktok-video return
-    one record as data, tiktok-feed returns data.videos, tiktok-comments returns
-    data.comments, tiktok-followers, tiktok-following, and tiktok-user-search return
-    data.users, yelp-search returns up to 20 ranked organic businesses in
-    data.businesses, plus total and pagination, from a Yelp search URL; yelp-reviews
-    returns up to 20 latest public reviews in data.reviews, with business details
-    and next_offset, from a Yelp business URL; tripadvisor-reviews returns 20
-    reviews in data.reviews, with data.location and next_offset, from a Tripadvisor
-    hotel, restaurant, or attraction review URL; car-rental-availability returns
-    every vehicle with pay-now and pay-later prices in data.vehicles from an
-    avis.com or budget.com vehicle-availability search URL; car-rental-locations
-    returns rental branches with codes, addresses, coordinates and hours in
-    data.locations from an avis.com or budget.com /locations?keyword= URL; emails,
-    phone-numbers, and links return data.emails, data.phone_numbers, and data.links
-    from the rendered page; the store, Maps, G2, Instagram, and TikTok parsers read
-    their data directly, independently of DOM filters and other outputs.
+    """Fields extracted by `parseParams`.
+
+    Custom rules return each field after content filters, with `null` when nothing
+    matches (`[]` for `list` rules). Prebuilt parsers return the record or lists
+    described under `parseParams.parser`.
     """
 
     product: Product
     """Product details found on the page."""
 
     profile: Optional[Profile] = None
-    """
-    Authenticated browser profile used for this scrape, or null when no profile was
-    requested. New and existing profile requests both return the profile ID.
-    """
+    """Browser profile used for this scrape. `null` when no profile was requested."""
 
     request_id: str
     """Unique ID of this request, also in `X-Request-Id`.
@@ -551,8 +579,8 @@ class WebScrapeResponse(BaseModel):
 
     is_partial: Optional[Literal[True]] = FieldInfo(alias="isPartial", default=None)
     """
-    True when at least one requested output succeeds but the response has failed or
-    incomplete outputs. Absent when all requested outputs fail.
+    `true` when at least one requested output succeeded but others failed or are
+    incomplete. Absent otherwise.
     """
 
     key_metadata: Optional[KeyMetadata] = None

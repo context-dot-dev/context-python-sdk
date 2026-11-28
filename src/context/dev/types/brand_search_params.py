@@ -13,15 +13,15 @@ __all__ = ["BrandSearchParams"]
 
 class BrandSearchParams(TypedDict, total=False):
     query: Required[str]
-    """Search term, matched against the fields selected by queryBy (e.g.
-
-    'nike', 'nike.com', 'nik').
+    """
+    Search term, matched against the fields in `queryBy`, such as `nike`,
+    `nike.com`, or `nik`.
     """
 
     autocomplete: bool
     """
-    Whether the search term matches by prefix, so partial words match as they are
-    typed (e.g. 'nik' matches Nike). Set to false to match whole words only.
+    Match the search term as a prefix, so `nik` matches Nike while the user is still
+    typing. Set to `false` to match whole words only.
     """
 
     country: Literal[
@@ -277,7 +277,7 @@ class BrandSearchParams(TypedDict, total=False):
     ]
     """
     Only return brands in this country, as an uppercase ISO 3166-1 alpha-2 code such
-    as US or GB.
+    as `US` or `GB`.
     """
 
     language: Literal[
@@ -402,19 +402,19 @@ class BrandSearchParams(TypedDict, total=False):
         "yoruba",
         "zulu",
     ]
-    """Only return brands with this primary language, such as english or french."""
+    """Only return brands with this primary language, such as `english` or `french`."""
 
     query_by: Annotated[List[Literal["name", "domain"]], PropertyInfo(alias="queryBy")]
-    """
-    Fields to match the search term against, as a comma-separated list or repeated
-    parameter: 'name', 'domain', or both. Defaults to both.
+    """Fields to match the search term against: `name`, `domain`, or both.
+
+    Send a comma-separated list or repeat the parameter.
     """
 
     tags: SequenceNotStr[str]
-    """Comma-separated labels for filtering usage, e.g. `production,team-alpha`."""
+    """Comma-separated labels for this request, such as `production,team-alpha`.
+
+    Filter usage and request logs by them.
+    """
 
     typo_tolerance: Annotated[int, PropertyInfo(alias="typoTolerance")]
-    """Maximum number of typos tolerated when matching, from 0 to 2.
-
-    Defaults to 0 (no typo tolerance).
-    """
+    """Maximum number of typos to tolerate when matching. `0` requires exact spelling."""

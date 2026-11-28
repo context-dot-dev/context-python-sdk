@@ -9,7 +9,7 @@ __all__ = ["ProfileListParams"]
 
 class ProfileListParams(TypedDict, total=False):
     cursor: str
-    """The `next_cursor` from the previous page."""
+    """Cursor from the previous page's `next_cursor`. Omit for the first page."""
 
     limit: int
-    """Number of profiles per page."""
+    """Maximum number of profiles to return per page."""

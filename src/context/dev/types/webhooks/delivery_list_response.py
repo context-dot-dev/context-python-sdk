@@ -15,18 +15,18 @@ class KeyMetadata(BaseModel):
     """Credits charged for this request."""
 
     credits_remaining: int
-    """Credits remaining for your organization."""
+    """Credits your organization has left after this request."""
 
 
 class DeliveryListResponse(BaseModel):
     data: List[DeliverySummary]
-    """Webhook deliveries."""
+    """Webhook deliveries on this page."""
 
     has_more: bool
-    """Whether more deliveries are available."""
+    """Whether more results are available after this page."""
 
     next_cursor: Optional[str] = None
-    """Next page cursor, or null on the last page."""
+    """Pass as `cursor` to fetch the next page. `null` on the last page."""
 
     request_id: str
     """Unique ID of this request, also in `X-Request-Id`.

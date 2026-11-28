@@ -14,13 +14,15 @@ class KeyMetadata(BaseModel):
     """Credits charged for this request."""
 
     credits_remaining: int
-    """Credits remaining for your organization."""
+    """Credits your organization has left after this request."""
 
 
 class MonitorDeleteResponse(BaseModel):
     id: str
+    """ID of the deleted monitor."""
 
     deleted: bool
+    """Whether the monitor was deleted."""
 
     request_id: str
     """Unique ID of this request, also in `X-Request-Id`.

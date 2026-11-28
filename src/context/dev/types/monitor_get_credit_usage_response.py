@@ -9,15 +9,16 @@ __all__ = ["MonitorGetCreditUsageResponse", "Data", "KeyMetadata"]
 
 class Data(BaseModel):
     credits: int
-    """Credits charged to this monitor over the window."""
+    """Credits charged to the monitor in the window."""
 
     monitor_id: str
+    """ID of the monitor."""
 
     name: str
-    """Monitor name (falls back to the id when the monitor was deleted)."""
+    """Name of the monitor, or its ID if the monitor was deleted."""
 
     runs: int
-    """Number of billed runs over the window."""
+    """Number of billed runs in the window."""
 
 
 class KeyMetadata(BaseModel):
@@ -27,11 +28,12 @@ class KeyMetadata(BaseModel):
     """Credits charged for this request."""
 
     credits_remaining: int
-    """Credits remaining for your organization."""
+    """Credits your organization has left after this request."""
 
 
 class MonitorGetCreditUsageResponse(BaseModel):
     data: List[Data]
+    """Usage per monitor, highest first."""
 
     request_id: str
     """Unique ID of this request, also in `X-Request-Id`.
@@ -40,7 +42,7 @@ class MonitorGetCreditUsageResponse(BaseModel):
     """
 
     total_credits: int
-    """Sum of credits across all monitors in the window."""
+    """Total credits across the monitors in `data`."""
 
     key_metadata: Optional[KeyMetadata] = None
     """Credits this request used and your remaining balance."""

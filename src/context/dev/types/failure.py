@@ -6,12 +6,13 @@ __all__ = ["Failure"]
 
 
 class Failure(BaseModel):
-    """
-    A failure of the batch as a whole, distinct from the per-page failures in `page_errors`.
+    """Why the batch as a whole failed.
+
+    Individual page failures are counted in `page_errors`.
     """
 
     code: str
-    """Why the batch itself stopped."""
+    """Machine-readable failure code, such as `stalled` or `USAGE_EXCEEDED`."""
 
     message: str
-    """Human-readable explanation."""
+    """Human-readable explanation of the failure."""

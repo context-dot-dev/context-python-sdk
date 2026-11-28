@@ -15,34 +15,32 @@ class MonitorListParams(TypedDict, total=False):
     """Filter by change detection type."""
 
     cursor: str
-    """Opaque pagination cursor from a previous response."""
+    """Cursor from the previous page's `next_cursor`. Omit for the first page."""
 
     limit: int
-    """Maximum number of items to return per page (1-100). Defaults to 25."""
+    """Maximum number of monitors to return per page. Defaults to 25."""
 
     q: str
-    """Free-text search term, matched against the fields named in `search_by`."""
+    """Text to search for in the fields listed in `search_by`."""
 
     search_by: Optional[List[Literal["name", "url", "instructions", "tags"]]]
-    """Fields to search with `q`.
+    """Comma-separated fields to search with `q`.
 
-    Defaults to all fields; page, extract, and search targets can have instructions,
-    and `url` matches a search target’s query.
+    Defaults to all fields. For search targets, `url` matches the target's `query`.
     """
 
     search_type: Literal["exact", "prefix"]
-    """
-    `prefix` for as-you-type prefix matching (default), `exact` for full-token
-    matching.
+    """How `q` matches.
+
+    `prefix` matches the start of words and tolerates one typo, for search as you
+    type; `exact` matches whole words only. Defaults to `prefix`.
     """
 
     status: Literal["active", "paused", "failed"]
-    """Filter monitors by lifecycle status."""
+    """Filter by monitor status."""
 
     tags: Optional[SequenceNotStr[str]]
-    """
-    Comma-separated list of tags to filter by (matches monitors having any of them).
-    """
+    """Comma-separated tags. Returns monitors that have any of them."""
 
     target_type: Literal["page", "sitemap", "extract", "search"]
     """Filter by target type."""

@@ -13,16 +13,16 @@ __all__ = ["MonitorListChangesParams"]
 
 class MonitorListChangesParams(TypedDict, total=False):
     cursor: str
-    """Opaque pagination cursor from a previous response."""
+    """Cursor from the previous page's `next_cursor`. Omit for the first page."""
 
     limit: int
-    """Maximum number of items to return per page (1-100). Defaults to 25."""
+    """Maximum number of changes to return per page. Defaults to 25."""
 
     since: Annotated[Union[str, datetime], PropertyInfo(format="iso8601")]
-    """Only include items at or after this ISO 8601 timestamp."""
+    """Return only changes detected at or after this time."""
 
     tag: str
-    """Filter to items that have this tag."""
+    """Return only changes that have this tag."""
 
     until: Annotated[Union[str, datetime], PropertyInfo(format="iso8601")]
-    """Only include items before this ISO 8601 timestamp."""
+    """Return only changes detected at or before this time."""

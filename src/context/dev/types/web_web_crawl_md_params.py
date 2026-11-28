@@ -221,59 +221,64 @@ class WebWebCrawlMdParams(TypedDict, total=False):
         "zm",
         "zw",
     ]
-    """Fetch from this country (ISO 3166-1 alpha-2)."""
+    """Country to fetch from, as an ISO 3166-1 alpha-2 code."""
 
     exclude_selectors: Annotated[Optional[SequenceNotStr[str]], PropertyInfo(alias="excludeSelectors")]
-    """Remove matching elements after inclusions. Exclusions take precedence."""
+    """Remove elements matching these CSS selectors. Overrides `includeSelectors`."""
 
     exclude_url_regex: Annotated[str, PropertyInfo(alias="excludeUrlRegex")]
-    """Regex pattern.
+    """Never follow or scrape URLs matching this regex, even when they match
+    `urlRegex`.
 
-    URLs matching this pattern are never followed or scraped, even when they match
-    urlRegex. The starting URL is always scraped.
+    The start URL is always scraped.
     """
 
     follow_subdomains: Annotated[bool, PropertyInfo(alias="followSubdomains")]
-    """When true, follow links on subdomains of the starting URL's domain (e.g.
-
-    docs.example.com when starting from example.com). www and apex are always
-    treated as equivalent.
+    """
+    Follow links to subdomains of the start URL's domain, such as `docs.example.com`
+    from `example.com`. `www` and the apex domain always count as the same site.
     """
 
     include_frames: Annotated[Union[bool, Literal["auto"]], PropertyInfo(alias="includeFrames")]
-    """Which iframe contents to render to Markdown for each crawled page.
+    """Which iframe contents to include in each page's Markdown.
 
-    `auto` (default) inlines only iframes that hold page content, such as same-site
-    documents, framesets, job boards, forms and embedded documents, and skips ads
-    and widgets. `true` inlines every iframe. `false` inlines none.
+    `auto` inlines only iframes that hold page content, such as same-site documents,
+    framesets, job boards, forms, and embedded documents, and skips ads and widgets.
+    `true` inlines every iframe; `false` inlines none.
     """
 
     include_images: Annotated[bool, PropertyInfo(alias="includeImages")]
-    """Include image references in the Markdown output (`html-conversion` only)."""
+    """Include image references in the Markdown (`html-conversion` only)."""
 
     include_links: Annotated[bool, PropertyInfo(alias="includeLinks")]
-    """Preserve hyperlinks in the Markdown output (`html-conversion` only)."""
+    """Keep link URLs in the Markdown (`html-conversion` only)."""
 
     include_selectors: Annotated[Optional[SequenceNotStr[str]], PropertyInfo(alias="includeSelectors")]
-    """Keep matching HTML subtrees before converting each page to Markdown."""
+    """Keep only elements matching these CSS selectors."""
 
     max_age_ms: Annotated[Optional[int], PropertyInfo(alias="maxAgeMs")]
-    """Maximum cache age in milliseconds. Defaults to 1 day; `0` fetches fresh."""
+    """Maximum age of a cached result, in milliseconds.
+
+    `0` always fetches fresh. Defaults to 1 day (86400000 ms). Maximum: 30 days
+    (2592000000 ms).
+    """
 
     max_depth: Annotated[int, PropertyInfo(alias="maxDepth")]
-    """Maximum link depth from the starting URL (0 = only the starting page)"""
+    """Maximum link depth from the start URL.
+
+    `0` crawls only the start URL. Omit for no depth limit.
+    """
 
     max_pages: Annotated[int, PropertyInfo(alias="maxPages")]
-    """Maximum pages to crawl."""
+    """Maximum number of pages to crawl."""
 
     pdf: Pdf
-    """PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range."""
+    """Whether to parse PDFs and which pages to read."""
 
     policies: SequenceNotStr[str]
-    """Access policy IDs to apply.
+    """Access policy IDs to apply; each URL must pass all of them.
 
-    A URL must pass every policy. Leave it out unless access policies are enabled
-    for your organization; otherwise the request fails with
+    Requires access policies enabled for your organization; otherwise returns
     `ACCESS_POLICIES_NOT_ENABLED`.
     """
 
@@ -284,10 +289,7 @@ class WebWebCrawlMdParams(TypedDict, total=False):
     """
 
     shorten_base64_images: Annotated[bool, PropertyInfo(alias="shortenBase64Images")]
-    """
-    Truncate base64-encoded image data in the Markdown output (`html-conversion`
-    only).
-    """
+    """Shorten inline base64 image data (`html-conversion` only)."""
 
     source_preference: Annotated[
         List[Literal["html-conversion", "markdown-direct"]], PropertyInfo(alias="sourcePreference")
@@ -298,35 +300,36 @@ class WebWebCrawlMdParams(TypedDict, total=False):
     """
 
     stop_after_ms: Annotated[int, PropertyInfo(alias="stopAfterMs")]
-    """Soft crawl deadline in milliseconds.
+    """Soft time budget for the crawl, in milliseconds.
 
-    Returns pages collected before the next deadline check.
+    When it runs out, the crawl returns the pages collected so far. Larger values
+    are capped at 110 seconds.
     """
 
     tags: SequenceNotStr[str]
-    """Labels for filtering usage in the dashboard."""
+    """Labels for this request.
+
+    Filter usage and request logs by them in the dashboard or with `GET /org/logs`.
+    """
 
     timeout_opts: Annotated[TimeoutOpts, PropertyInfo(alias="timeoutOpts")]
     """Request deadline and what to return when it passes."""
 
     url_regex: Annotated[str, PropertyInfo(alias="urlRegex")]
-    """Regex pattern.
+    """Only follow and scrape URLs matching this regex.
 
-    Only URLs matching this pattern will be followed and scraped. An automatic
-    prefix scope in the form ^<starting URL> follows a redirect of the starting
+    A prefix pattern of the form `^<start URL>` also follows a redirect of the start
     page.
     """
 
     use_main_content_only: Annotated[bool, PropertyInfo(alias="useMainContentOnly")]
-    """
-    Extract only the main content, stripping headers, footers, sidebars, and
-    navigation
-    """
+    """Keep only the main content, without navigation, headers, footers, or sidebars."""
 
     wait_for_ms: Annotated[Optional[int], PropertyInfo(alias="waitForMs")]
-    """Browser wait time in milliseconds after initial page load for each crawled page.
+    """Time to wait after each page loads before reading it, in milliseconds.
 
-    Defaults to 3500 (3.5 seconds). Min: 0. Max: 30000 (30 seconds).
+    `0` waits 500 ms. `timeoutOpts.milliseconds` must be at least `waitForMs` plus
+    10000 ms, or the request fails with `TIMEOUT_TOO_SHORT_FOR_WAIT`.
     """
 
     zdr: Literal["enabled", "disabled"]
@@ -337,26 +340,22 @@ class WebWebCrawlMdParams(TypedDict, total=False):
 
 
 class Pdf(TypedDict, total=False):
-    """PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range."""
+    """Whether to parse PDFs and which pages to read."""
 
     end: int
-    """Last PDF page to parse (1-based, inclusive).
-
-    Defaults to the final page. Must be >= start.
-    """
+    """Last page to parse. Defaults to the last page. Must be at least `start`."""
 
     ocr: bool
-    """Read scanned PDF pages with OCR; preserve pages that already have text."""
+    """Read scanned PDF pages with OCR. Pages that already have text are kept as is."""
 
     should_parse: Annotated[bool, PropertyInfo(alias="shouldParse")]
-    """When true, PDF pages are fetched and parsed.
+    """Parse PDF pages.
 
-    When false, PDF pages are skipped entirely (not included in results and not
-    counted as failures).
+    When `false`, PDFs are left out of the results and not counted as failures.
     """
 
     start: int
-    """First 1-based PDF page to parse."""
+    """First page to parse, starting at 1."""
 
 
 class TimeoutOpts(TypedDict, total=False):
@@ -366,7 +365,8 @@ class TimeoutOpts(TypedDict, total=False):
     """Deadline in milliseconds."""
 
     behavior: Literal["fail", "return-partial"]
-    """\"fail" returns 408 at the deadline.
+    """`fail` returns 408 at the deadline.
 
-    "return-partial" returns available results; inspect the response’s partial flag.
+    `return-partial` returns the results collected so far and marks the response as
+    partial.
     """

@@ -11,32 +11,33 @@ __all__ = ["WebhookDelivery", "Error"]
 
 class Error(BaseModel):
     code: str
+    """Machine-readable error code, such as `fetch_failed`."""
 
     message: str
+    """Human-readable explanation of the error."""
 
 
 class WebhookDelivery(BaseModel):
     attempted_at: datetime
+    """When the delivery was attempted."""
 
     error: Optional[Error] = None
 
     event: Literal["change.detected", "run.completed"]
-    """The event this delivery carried.
-
-    Deliveries recorded before event selection existed report change.detected.
-    """
+    """Event this delivery carried."""
 
     event_id: str
-    """Identifier sent in the X-Context-Id header."""
+    """Event ID, sent in the `X-Context-Id` header."""
 
     http_status: Optional[int] = None
-    """
-    The endpoint's final HTTP response status, or null when no response was
-    received.
-    """
+    """Final HTTP status from your endpoint. `null` when no response was received."""
 
     status: Literal["delivered", "rejected", "failed", "skipped_unsafe_url"]
-    """Outcome of the delivery attempt. Any 2xx response counts as delivered."""
+    """
+    Outcome of the delivery: `delivered` (2xx response), `rejected` (non-2xx
+    response), `failed` (no response), or `skipped_unsafe_url` (the URL isn't a safe
+    public endpoint).
+    """
 
     delivery_id: Optional[str] = None
-    """Delivery ID for status checks and retries, when available."""
+    """ID for looking up or retrying this delivery, when available."""

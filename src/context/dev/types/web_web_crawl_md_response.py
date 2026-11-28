@@ -20,55 +20,55 @@ __all__ = [
 
 
 class CacheMetadata(BaseModel):
-    """Whether this response came from cache."""
+    """Cache status of this response."""
 
     age_ms: int
-    """Age of the cached data in milliseconds. Zero for miss and zdr responses."""
+    """Age of the cached data, in milliseconds. `0` for `miss` and `zdr`."""
 
     status: Literal["hit", "miss", "zdr"]
     """
-    Whether the response was served from cache, required fresh work, or honored
-    zero-data-retention cache bypass.
+    `hit` when served from cache, `miss` when fetched fresh, `zdr` when zero data
+    retention bypassed the cache.
     """
 
 
 class Metadata(BaseModel):
     max_crawl_depth: int = FieldInfo(alias="maxCrawlDepth")
-    """Maximum crawl depth reached during the crawl"""
+    """Deepest link depth reached."""
 
     num_failed: int = FieldInfo(alias="numFailed")
-    """Number of pages that failed to crawl"""
+    """Number of pages that failed."""
 
     num_skipped: int = FieldInfo(alias="numSkipped")
     """
-    Number of URLs skipped (PDFs when pdf.shouldParse=false, URLs not matching
-    urlRegex, or URLs matching excludeUrlRegex)
+    Number of URLs skipped: PDFs when `pdf.shouldParse` is `false`, URLs that do not
+    match `urlRegex`, and URLs that match `excludeUrlRegex`.
     """
 
     num_succeeded: int = FieldInfo(alias="numSucceeded")
-    """Number of pages successfully crawled"""
+    """Number of pages crawled successfully."""
 
     num_urls: int = FieldInfo(alias="numUrls")
-    """Total number of URLs crawled"""
+    """Number of URLs crawled."""
 
 
 class ResultMetadataAlternate(BaseModel):
     href: str
-    """Resolved alternate URL."""
+    """Absolute URL of the alternate version."""
 
     hreflang: Optional[str] = None
-    """Language or locale for the alternate URL, when present."""
+    """Language or locale of the alternate version, when present."""
 
     title: Optional[str] = None
-    """Alternate resource title, when present."""
+    """Title of the alternate version, when present."""
 
     type: Optional[str] = None
-    """Alternate resource MIME type, when present."""
+    """MIME type of the alternate version, when present."""
 
 
 class ResultMetadataHeading(BaseModel):
     level: int
-    """Heading level, 1–6 (from h1–h6)."""
+    """Heading level, from 1 (`h1`) to 6 (`h6`)."""
 
     text: str
     """Heading text with whitespace collapsed, truncated to 1000 characters."""
@@ -76,43 +76,40 @@ class ResultMetadataHeading(BaseModel):
 
 class ResultMetadata(BaseModel):
     crawl_depth: int = FieldInfo(alias="crawlDepth")
-    """Depth relative to the start URL. 0 = start URL, 1 = one link away."""
+    """Link depth from the start URL. `0` is the start URL, `1` is one link away."""
 
     final_url: str = FieldInfo(alias="finalUrl")
-    """Final URL scraped after redirects or scraper fallback, when known.
-
-    Falls back to sourceUrl when unavailable.
-    """
+    """URL that was scraped, after redirects. Same as `sourceUrl` when unknown."""
 
     source_url: str = FieldInfo(alias="sourceUrl")
-    """Original URL requested by the caller."""
+    """URL that was requested, before redirects."""
 
     status_code: int = FieldInfo(alias="statusCode")
-    """HTTP status code of the response (0 when the page could not be retrieved)"""
+    """HTTP status code of the page. `0` when the page could not be retrieved."""
 
     success: bool
-    """true if the page was fetched and parsed successfully"""
+    """Whether the page was fetched and parsed."""
 
     title: str
-    """Best page title extracted from the page (empty string if unavailable)."""
+    """Page title. Empty string when unavailable."""
 
     url: str
-    """The crawl URL fetched for this page."""
+    """URL fetched for this page."""
 
     additional_meta: Optional[Dict[str, Union[str, List[str]]]] = FieldInfo(alias="additionalMeta", default=None)
-    """Additional non-social meta tags not promoted to top-level metadata fields."""
+    """Other non-social meta tags that don't have their own field."""
 
     alternates: Optional[List[ResultMetadataAlternate]] = None
-    """Resolved alternate links from link rel=alternate tags."""
+    """Alternate links from `link rel="alternate"` tags, as absolute URLs."""
 
     author: Optional[str] = None
-    """Author metadata, when present."""
+    """Author, when present."""
 
     canonical_url: Optional[str] = FieldInfo(alias="canonicalUrl", default=None)
-    """Resolved canonical URL, when present."""
+    """Absolute canonical URL, when present."""
 
     description: Optional[str] = None
-    """Best description extracted from standard, Open Graph, or Twitter metadata."""
+    """Best available description, from standard, Open Graph, or Twitter meta tags."""
 
     error_code: Optional[str] = None
     """Why the page failed.
@@ -124,48 +121,48 @@ class ResultMetadata(BaseModel):
     """
 
     favicon: Optional[str] = None
-    """Resolved favicon URL, when present."""
+    """Absolute favicon URL, when present."""
 
     headings: Optional[List[ResultMetadataHeading]] = None
-    """Page headings (h1–h6) in document order, extracted from the unfiltered document.
-
-    Capped at the first 500 headings. Omitted when the page has none.
+    """
+    Headings (`h1` to `h6`) in document order, from the full page before any
+    filtering. Up to 500. Omitted when the page has none.
     """
 
     image: Optional[str] = None
-    """Primary resolved preview image from Open Graph, Twitter, or image metadata."""
+    """Main preview image URL, from Open Graph, Twitter, or image meta tags."""
 
     json_ld: Optional[List[Dict[str, object]]] = FieldInfo(alias="jsonLd", default=None)
     """JSON-LD structured data blocks parsed from the page."""
 
     keywords: Optional[List[str]] = None
-    """Keywords extracted from the page's keywords meta tag."""
+    """Keywords from the page's `keywords` meta tag."""
 
     language: Optional[str] = None
-    """Language extracted from html lang or language meta tags."""
+    """Page language, from the `html` `lang` attribute or language meta tags."""
 
     modified_time: Optional[str] = FieldInfo(alias="modifiedTime", default=None)
-    """Modified timestamp/date from page metadata, when present."""
+    """Last-modified date or timestamp from page metadata, when present."""
 
     open_graph: Optional[Dict[str, Union[str, List[str]]]] = FieldInfo(alias="openGraph", default=None)
-    """Open Graph metadata with the og: prefix removed and keys camel-cased."""
+    """Open Graph tags, with the `og:` prefix removed and keys in camelCase."""
 
     published_time: Optional[str] = FieldInfo(alias="publishedTime", default=None)
-    """Published timestamp/date from page metadata, when present."""
+    """Publish date or timestamp from page metadata, when present."""
 
     robots: Optional[str] = None
-    """Robots meta directive, when present."""
+    """`robots` meta directive, when present."""
 
     site_name: Optional[str] = FieldInfo(alias="siteName", default=None)
-    """Site or application name from page metadata."""
+    """Site or app name from page metadata."""
 
     twitter: Optional[Dict[str, Union[str, List[str]]]] = None
-    """Twitter card metadata with the twitter: prefix removed and keys camel-cased."""
+    """Twitter card tags, with the `twitter:` prefix removed and keys in camelCase."""
 
 
 class Result(BaseModel):
     markdown: str
-    """Extracted page content as Markdown (empty string on failure)"""
+    """Page content as Markdown. Empty string when the page failed."""
 
     metadata: ResultMetadata
 
@@ -177,12 +174,12 @@ class KeyMetadata(BaseModel):
     """Credits charged for this request."""
 
     credits_remaining: int
-    """Credits remaining for your organization."""
+    """Credits your organization has left after this request."""
 
 
 class WebWebCrawlMdResponse(BaseModel):
     cache_metadata: CacheMetadata
-    """Whether this response came from cache."""
+    """Cache status of this response."""
 
     metadata: Metadata
 
@@ -199,7 +196,7 @@ class WebWebCrawlMdResponse(BaseModel):
 
     partial: Optional[bool] = None
     """
-    True when timeoutOpts.behavior=return-partial returned the usable results
-    collected before the deadline. Partial collections are not cached as complete
-    results.
+    `true` when the deadline passed with `timeoutOpts.behavior` set to
+    `return-partial`. Only results finished in time are included. Partial results
+    are not cached.
     """

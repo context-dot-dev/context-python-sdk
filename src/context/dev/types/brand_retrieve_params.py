@@ -27,10 +27,10 @@ __all__ = [
 
 class BrandRetrieveByDomainRequest(TypedDict, total=False):
     domain: Required[str]
-    """Domain name to retrieve brand data for (e.g., 'stripe.com')."""
+    """Domain of the brand, such as `stripe.com`."""
 
     type: Required[Literal["by_domain"]]
-    """Discriminator for domain-based brand retrieval."""
+    """Set to `by_domain` to look up a brand by domain."""
 
     force_language: Optional[
         Literal[
@@ -156,38 +156,38 @@ class BrandRetrieveByDomainRequest(TypedDict, total=False):
             "zulu",
         ]
     ]
+    """Translate the brand's `title`, `description`, and `slogan` into this language."""
 
     max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
-    """Maximum age of cached brand data in ms.
+    """Maximum age of cached brand data, in milliseconds.
 
-    Defaults to 3 months; clamped to 0–1 year. `0` refreshes.
+    `0` always fetches fresh. Defaults to 90 days (7776000000 ms). Values above 1
+    year (31536000000 ms) are capped at 1 year.
     """
 
     max_speed: Annotated[bool, PropertyInfo(alias="maxSpeed")]
-    """Optional parameter to optimize the API call for maximum speed.
-
-    When set to true, the API will skip time-consuming operations for faster
-    response at the cost of less comprehensive data.
-    """
+    """Skip slower enrichment steps for a faster, less detailed response."""
 
     policies: SequenceNotStr[str]
-    """Access policy IDs to apply.
+    """Access policy IDs to apply; each URL must pass all of them.
 
-    A URL must pass every policy. Leave it out unless access policies are enabled
-    for your organization; otherwise the request fails with
+    Requires access policies enabled for your organization; otherwise returns
     `ACCESS_POLICIES_NOT_ENABLED`.
     """
 
     tags: SequenceNotStr[str]
-    """Labels for filtering usage in the dashboard."""
+    """Labels for this request.
+
+    Filter usage and request logs by them in the dashboard or with `GET /org/logs`.
+    """
 
     timeout_opts: Annotated[BrandRetrieveByDomainRequestTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
     """Request deadline and what to return when it passes."""
 
     zdr: Literal["enabled", "disabled"]
     """
-    `enabled` disables request logs and traces and omits request and response
-    content from usage logs. Brand data and hosted assets may still be stored.
+    `enabled` turns off request logs and traces and keeps request and response
+    content out of usage logs. Brand data and hosted assets may still be stored.
     Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
     """
 
@@ -199,18 +199,19 @@ class BrandRetrieveByDomainRequestTimeoutOpts(TypedDict, total=False):
     """Deadline in milliseconds."""
 
     behavior: Literal["fail", "return-partial"]
-    """\"fail" returns 408 at the deadline.
+    """`fail` returns 408 at the deadline.
 
-    "return-partial" returns available results; inspect the response’s partial flag.
+    `return-partial` returns the results collected so far and marks the response as
+    partial.
     """
 
 
 class BrandRetrieveByNameRequest(TypedDict, total=False):
     name: Required[str]
-    """Company name to retrieve brand data for (e.g., 'Apple Inc')."""
+    """Company name, such as `Apple Inc`."""
 
     type: Required[Literal["by_name"]]
-    """Discriminator for name-based brand retrieval."""
+    """Set to `by_name` to look up a brand by company name."""
 
     country: Literal[
         "af",
@@ -579,38 +580,38 @@ class BrandRetrieveByNameRequest(TypedDict, total=False):
             "zulu",
         ]
     ]
+    """Translate the brand's `title`, `description`, and `slogan` into this language."""
 
     max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
-    """Maximum age of cached brand data in ms.
+    """Maximum age of cached brand data, in milliseconds.
 
-    Defaults to 3 months; clamped to 0–1 year. `0` refreshes.
+    `0` always fetches fresh. Defaults to 90 days (7776000000 ms). Values above 1
+    year (31536000000 ms) are capped at 1 year.
     """
 
     max_speed: Annotated[bool, PropertyInfo(alias="maxSpeed")]
-    """Optional parameter to optimize the API call for maximum speed.
-
-    When set to true, the API will skip time-consuming operations for faster
-    response at the cost of less comprehensive data.
-    """
+    """Skip slower enrichment steps for a faster, less detailed response."""
 
     policies: SequenceNotStr[str]
-    """Access policy IDs to apply.
+    """Access policy IDs to apply; each URL must pass all of them.
 
-    A URL must pass every policy. Leave it out unless access policies are enabled
-    for your organization; otherwise the request fails with
+    Requires access policies enabled for your organization; otherwise returns
     `ACCESS_POLICIES_NOT_ENABLED`.
     """
 
     tags: SequenceNotStr[str]
-    """Labels for filtering usage in the dashboard."""
+    """Labels for this request.
+
+    Filter usage and request logs by them in the dashboard or with `GET /org/logs`.
+    """
 
     timeout_opts: Annotated[BrandRetrieveByNameRequestTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
     """Request deadline and what to return when it passes."""
 
     zdr: Literal["enabled", "disabled"]
     """
-    `enabled` disables request logs and traces and omits request and response
-    content from usage logs. Brand data and hosted assets may still be stored.
+    `enabled` turns off request logs and traces and keeps request and response
+    content out of usage logs. Brand data and hosted assets may still be stored.
     Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
     """
 
@@ -622,18 +623,22 @@ class BrandRetrieveByNameRequestTimeoutOpts(TypedDict, total=False):
     """Deadline in milliseconds."""
 
     behavior: Literal["fail", "return-partial"]
-    """\"fail" returns 408 at the deadline.
+    """`fail` returns 408 at the deadline.
 
-    "return-partial" returns available results; inspect the response’s partial flag.
+    `return-partial` returns the results collected so far and marks the response as
+    partial.
     """
 
 
 class BrandRetrieveByEmailRequest(TypedDict, total=False):
     email: Required[str]
-    """Email address to retrieve brand data for (e.g., 'jane@stripe.com')."""
+    """Work email address, such as `jane@stripe.com`.
+
+    The brand is looked up from its domain.
+    """
 
     type: Required[Literal["by_email"]]
-    """Discriminator for email-based brand retrieval."""
+    """Set to `by_email` to look up a brand from a work email address."""
 
     force_language: Optional[
         Literal[
@@ -759,38 +764,38 @@ class BrandRetrieveByEmailRequest(TypedDict, total=False):
             "zulu",
         ]
     ]
+    """Translate the brand's `title`, `description`, and `slogan` into this language."""
 
     max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
-    """Maximum age of cached brand data in ms.
+    """Maximum age of cached brand data, in milliseconds.
 
-    Defaults to 3 months; clamped to 0–1 year. `0` refreshes.
+    `0` always fetches fresh. Defaults to 90 days (7776000000 ms). Values above 1
+    year (31536000000 ms) are capped at 1 year.
     """
 
     max_speed: Annotated[bool, PropertyInfo(alias="maxSpeed")]
-    """Optional parameter to optimize the API call for maximum speed.
-
-    When set to true, the API will skip time-consuming operations for faster
-    response at the cost of less comprehensive data.
-    """
+    """Skip slower enrichment steps for a faster, less detailed response."""
 
     policies: SequenceNotStr[str]
-    """Access policy IDs to apply.
+    """Access policy IDs to apply; each URL must pass all of them.
 
-    A URL must pass every policy. Leave it out unless access policies are enabled
-    for your organization; otherwise the request fails with
+    Requires access policies enabled for your organization; otherwise returns
     `ACCESS_POLICIES_NOT_ENABLED`.
     """
 
     tags: SequenceNotStr[str]
-    """Labels for filtering usage in the dashboard."""
+    """Labels for this request.
+
+    Filter usage and request logs by them in the dashboard or with `GET /org/logs`.
+    """
 
     timeout_opts: Annotated[BrandRetrieveByEmailRequestTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
     """Request deadline and what to return when it passes."""
 
     zdr: Literal["enabled", "disabled"]
     """
-    `enabled` disables request logs and traces and omits request and response
-    content from usage logs. Brand data and hosted assets may still be stored.
+    `enabled` turns off request logs and traces and keeps request and response
+    content out of usage logs. Brand data and hosted assets may still be stored.
     Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
     """
 
@@ -802,18 +807,19 @@ class BrandRetrieveByEmailRequestTimeoutOpts(TypedDict, total=False):
     """Deadline in milliseconds."""
 
     behavior: Literal["fail", "return-partial"]
-    """\"fail" returns 408 at the deadline.
+    """`fail` returns 408 at the deadline.
 
-    "return-partial" returns available results; inspect the response’s partial flag.
+    `return-partial` returns the results collected so far and marks the response as
+    partial.
     """
 
 
 class BrandRetrieveByTickerRequest(TypedDict, total=False):
     ticker: Required[str]
-    """Stock ticker symbol to retrieve brand data for (e.g., 'AAPL')."""
+    """Stock ticker symbol, such as `AAPL`."""
 
     type: Required[Literal["by_ticker"]]
-    """Discriminator for ticker-based brand retrieval."""
+    """Set to `by_ticker` to look up a brand by stock ticker."""
 
     force_language: Optional[
         Literal[
@@ -939,30 +945,30 @@ class BrandRetrieveByTickerRequest(TypedDict, total=False):
             "zulu",
         ]
     ]
+    """Translate the brand's `title`, `description`, and `slogan` into this language."""
 
     max_age_ms: Annotated[int, PropertyInfo(alias="maxAgeMs")]
-    """Maximum age of cached brand data in ms.
+    """Maximum age of cached brand data, in milliseconds.
 
-    Defaults to 3 months; clamped to 0–1 year. `0` refreshes.
+    `0` always fetches fresh. Defaults to 90 days (7776000000 ms). Values above 1
+    year (31536000000 ms) are capped at 1 year.
     """
 
     max_speed: Annotated[bool, PropertyInfo(alias="maxSpeed")]
-    """Optional parameter to optimize the API call for maximum speed.
-
-    When set to true, the API will skip time-consuming operations for faster
-    response at the cost of less comprehensive data.
-    """
+    """Skip slower enrichment steps for a faster, less detailed response."""
 
     policies: SequenceNotStr[str]
-    """Access policy IDs to apply.
+    """Access policy IDs to apply; each URL must pass all of them.
 
-    A URL must pass every policy. Leave it out unless access policies are enabled
-    for your organization; otherwise the request fails with
+    Requires access policies enabled for your organization; otherwise returns
     `ACCESS_POLICIES_NOT_ENABLED`.
     """
 
     tags: SequenceNotStr[str]
-    """Labels for filtering usage in the dashboard."""
+    """Labels for this request.
+
+    Filter usage and request logs by them in the dashboard or with `GET /org/logs`.
+    """
 
     ticker_exchange: Literal[
         "AMEX",
@@ -1038,15 +1044,15 @@ class BrandRetrieveByTickerRequest(TypedDict, total=False):
         "WSE",
         "XETRA",
     ]
-    """Stock exchange code."""
+    """Stock exchange code, such as `NASDAQ` or `LSE`."""
 
     timeout_opts: Annotated[BrandRetrieveByTickerRequestTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
     """Request deadline and what to return when it passes."""
 
     zdr: Literal["enabled", "disabled"]
     """
-    `enabled` disables request logs and traces and omits request and response
-    content from usage logs. Brand data and hosted assets may still be stored.
+    `enabled` turns off request logs and traces and keeps request and response
+    content out of usage logs. Brand data and hosted assets may still be stored.
     Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
     """
 
@@ -1058,41 +1064,43 @@ class BrandRetrieveByTickerRequestTimeoutOpts(TypedDict, total=False):
     """Deadline in milliseconds."""
 
     behavior: Literal["fail", "return-partial"]
-    """\"fail" returns 408 at the deadline.
+    """`fail` returns 408 at the deadline.
 
-    "return-partial" returns available results; inspect the response’s partial flag.
+    `return-partial` returns the results collected so far and marks the response as
+    partial.
     """
 
 
 class BrandRetrieveByDirectURLRequest(TypedDict, total=False):
     direct_url: Required[str]
     """
-    Full http(s) URL to fetch brand data from (e.g.,
-    'https://stripe.com/enterprise'). Only this URL is fetched — not the entire
-    internet.
+    Full `http` or `https` URL of the page to read, such as
+    `https://stripe.com/enterprise`. Only this page is fetched.
     """
 
     type: Required[Literal["by_direct_url"]]
-    """Discriminator for direct-URL-based brand retrieval."""
+    """Set to `by_direct_url` to extract brand data from a single page."""
 
     policies: SequenceNotStr[str]
-    """Access policy IDs to apply.
+    """Access policy IDs to apply; each URL must pass all of them.
 
-    A URL must pass every policy. Leave it out unless access policies are enabled
-    for your organization; otherwise the request fails with
+    Requires access policies enabled for your organization; otherwise returns
     `ACCESS_POLICIES_NOT_ENABLED`.
     """
 
     tags: SequenceNotStr[str]
-    """Labels for filtering usage in the dashboard."""
+    """Labels for this request.
+
+    Filter usage and request logs by them in the dashboard or with `GET /org/logs`.
+    """
 
     timeout_opts: Annotated[BrandRetrieveByDirectURLRequestTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
     """Request deadline and what to return when it passes."""
 
     zdr: Literal["enabled", "disabled"]
     """
-    `enabled` disables request logs and traces and omits request and response
-    content from usage logs. Brand data and hosted assets may still be stored.
+    `enabled` turns off request logs and traces and keeps request and response
+    content out of usage logs. Brand data and hosted assets may still be stored.
     Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
     """
 
@@ -1104,21 +1112,27 @@ class BrandRetrieveByDirectURLRequestTimeoutOpts(TypedDict, total=False):
     """Deadline in milliseconds."""
 
     behavior: Literal["fail", "return-partial"]
-    """\"fail" returns 408 at the deadline.
+    """`fail` returns 408 at the deadline.
 
-    "return-partial" returns available results; inspect the response’s partial flag.
+    `return-partial` returns the results collected so far and marks the response as
+    partial.
     """
 
 
 class BrandRetrieveFromTransactionRequest(TypedDict, total=False):
     transaction_info: Required[str]
-    """Transaction information to identify the brand."""
+    """
+    Transaction descriptor from a card or bank statement, such as `SQ *COFFEE SHOP`.
+    """
 
     type: Required[Literal["by_transaction"]]
-    """Discriminator for transaction-based brand retrieval."""
+    """
+    Set to `by_transaction` to identify the merchant behind a transaction
+    descriptor.
+    """
 
     city: str
-    """Optional city name to prioritize when searching for the brand."""
+    """City where the transaction took place. Brands in this city are preferred."""
 
     country: Literal[
         "af",
@@ -1487,47 +1501,46 @@ class BrandRetrieveFromTransactionRequest(TypedDict, total=False):
             "zulu",
         ]
     ]
+    """Translate the brand's `title`, `description`, and `slogan` into this language."""
 
     high_confidence_only: bool
     """
-    When set to true, the API performs additional verification to ensure the
-    identified brand matches the transaction with high confidence.
+    Run extra verification so the returned brand matches the transaction with high
+    confidence.
     """
 
     max_speed: Annotated[bool, PropertyInfo(alias="maxSpeed")]
-    """Optional parameter to optimize the API call for maximum speed.
-
-    When set to true, the API will skip time-consuming operations for faster
-    response at the cost of less comprehensive data.
-    """
+    """Skip slower enrichment steps for a faster, less detailed response."""
 
     mcc: Union[str, float]
-    """
-    Optional Merchant Category Code (MCC) to help identify the business category or
-    industry.
+    """Merchant Category Code (MCC) from the transaction.
+
+    Helps identify the type of business.
     """
 
     phone: Union[str, float]
-    """Optional phone number from the transaction to help verify brand match."""
+    """Merchant phone number from the transaction. Helps confirm the match."""
 
     policies: SequenceNotStr[str]
-    """Access policy IDs to apply.
+    """Access policy IDs to apply; each URL must pass all of them.
 
-    A URL must pass every policy. Leave it out unless access policies are enabled
-    for your organization; otherwise the request fails with
+    Requires access policies enabled for your organization; otherwise returns
     `ACCESS_POLICIES_NOT_ENABLED`.
     """
 
     tags: SequenceNotStr[str]
-    """Labels for filtering usage in the dashboard."""
+    """Labels for this request.
+
+    Filter usage and request logs by them in the dashboard or with `GET /org/logs`.
+    """
 
     timeout_opts: Annotated[BrandRetrieveFromTransactionRequestTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
     """Request deadline and what to return when it passes."""
 
     zdr: Literal["enabled", "disabled"]
     """
-    `enabled` disables request logs and traces and omits request and response
-    content from usage logs. Brand data and hosted assets may still be stored.
+    `enabled` turns off request logs and traces and keeps request and response
+    content out of usage logs. Brand data and hosted assets may still be stored.
     Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
     """
 
@@ -1539,9 +1552,10 @@ class BrandRetrieveFromTransactionRequestTimeoutOpts(TypedDict, total=False):
     """Deadline in milliseconds."""
 
     behavior: Literal["fail", "return-partial"]
-    """\"fail" returns 408 at the deadline.
+    """`fail` returns 408 at the deadline.
 
-    "return-partial" returns available results; inspect the response’s partial flag.
+    `return-partial` returns the results collected so far and marks the response as
+    partial.
     """
 
 

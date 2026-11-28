@@ -14,12 +14,12 @@ class KeyMetadata(BaseModel):
     """Credits charged for this request."""
 
     credits_remaining: int
-    """Credits remaining for your organization."""
+    """Credits your organization has left after this request."""
 
 
 class WebAnswersResponse(BaseModel):
     json_content: Dict[str, object]
-    """The answer, in the shape requested by json_format."""
+    """The answer, in the shape of `json_format`."""
 
     request_id: str
     """Unique ID of this request, also in `X-Request-Id`.
@@ -29,8 +29,8 @@ class WebAnswersResponse(BaseModel):
 
     sources: List[str]
     """
-    URLs of the pages and company/profile records read for the answer, followed by
-    URLs cited in json_content.
+    URLs of the pages and company or profile records read for the answer, followed
+    by URLs cited in `json_content`.
     """
 
     key_metadata: Optional[KeyMetadata] = None
@@ -38,6 +38,6 @@ class WebAnswersResponse(BaseModel):
 
     partial: Optional[bool] = None
     """
-    True when the answer is incomplete: the request deadline ended research, or a
+    `true` when the answer is incomplete because the deadline ended research or a
     requested list item has no researched values.
     """

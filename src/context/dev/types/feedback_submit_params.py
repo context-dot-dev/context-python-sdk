@@ -13,19 +13,32 @@ class FeedbackSubmitParams(TypedDict, total=False):
     category: Required[
         Literal["bug", "docs_mismatch", "friction", "feature_gap", "quality_degradation", "bad_brand", "other"]
     ]
-    """Kind of issue."""
+    """Kind of issue.
+
+    Use `quality_degradation` for wrong or incomplete results and `bad_brand` for
+    wrong or outdated brand data, such as a logo or colors.
+    """
 
     note: Required[str]
-    """What went wrong and what you expected instead."""
+    """What went wrong and what you expected instead.
+
+    Leave out API keys and personal data.
+    """
 
     request_id: str
     """
-    The request_id of the API call the feedback is about, from its response body or
-    X-Request-Id header.
+    ID of the API call the feedback is about, from its `request_id` or
+    `X-Request-Id` header. Send this, `url`, or both.
     """
 
     tags: SequenceNotStr[str]
-    """Labels for filtering usage in the dashboard."""
+    """Labels for this request.
+
+    Filter usage and request logs by them in the dashboard or with `GET /org/logs`.
+    """
 
     url: str
-    """The page the feedback is about, such as one page of a crawl or a docs page."""
+    """URL the feedback is about, such as one page of a crawl or a docs page.
+
+    Send this, `request_id`, or both.
+    """

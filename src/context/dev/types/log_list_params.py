@@ -16,40 +16,35 @@ class LogListParams(TypedDict, total=False):
     """Filter by the `error_code` returned in the response."""
 
     errors_only: bool
-    """Only include requests that returned a 4xx or 5xx status."""
+    """Return only requests that failed with a 4xx or 5xx status."""
 
     from_: Annotated[Union[str, datetime], PropertyInfo(alias="from", format="iso8601")]
-    """Only include requests at or after this ISO 8601 timestamp.
-
-    Defaults to 24 hours before `to`.
-    """
+    """Return requests at or after this time. Defaults to 24 hours before `to`."""
 
     key_id: str
-    """Filter by the API key that made the request."""
+    """Filter by the ID of the API key that made the request."""
 
     limit: int
-    """Number of log entries per page."""
+    """Maximum number of log entries to return per page."""
 
     page: int
     """Page number, starting at 1."""
 
     path: str
-    """Filter by endpoint path, with or without the /v1 prefix."""
+    """Filter by endpoint path, with or without the `/v1` prefix."""
 
     search: str
-    """Case-insensitive substring match against the request query and body, e.g.
-
-    a domain.
-    """
+    """Case-insensitive text to find in the request query or body, such as a domain."""
 
     status_code: int
     """Filter by exact HTTP status code."""
 
     tags: str
-    """Comma-separated request tags.
+    """Comma-separated tags.
 
-    Matches requests carrying any of them. Up to 20 tags, each 1-50 characters.
+    Returns log entries that have any of them. Up to 20 tags of 1 to 50 characters
+    each.
     """
 
     to: Annotated[Union[str, datetime], PropertyInfo(format="iso8601")]
-    """Only include requests at or before this ISO 8601 timestamp. Defaults to now."""
+    """Return requests at or before this time. Defaults to now."""

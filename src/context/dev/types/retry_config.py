@@ -8,10 +8,10 @@ __all__ = ["RetryConfig"]
 
 
 class RetryConfig(BaseModel):
-    """Webhook retry settings. Use {} for the default schedule."""
+    """Automatic retry settings. Pass `{}` for the default schedule."""
 
     delays_seconds: Optional[List[int]] = None
-    """Retry delays in seconds, totaling at most 72 hours.
+    """Delay before each automatic retry, in seconds, totaling at most 72 hours.
 
-    Use [] to disable automatic retries.
+    Pass `[]` to disable automatic retries.
     """

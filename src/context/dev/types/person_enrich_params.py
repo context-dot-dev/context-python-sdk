@@ -13,35 +13,41 @@ __all__ = ["PersonEnrichParams", "Company", "Education", "EducationInstitution",
 
 class PersonEnrichParams(TypedDict, total=False):
     company: Company
-    """Company context to help identify the person. Provide a name or domain."""
+    """Company associated with the person. Send a `name`, a `domain`, or both."""
 
     education: Iterable[Education]
     """Education history to help distinguish people with similar names."""
 
     email: str
-    """Email address of the person to find."""
+    """Work email address of the person.
+
+    Free and disposable email providers return 422.
+    """
 
     location: Location
-    """Location context to help identify the person.
+    """Location associated with the person.
 
-    Provide a city, region, or country.
+    Send at least one of `city`, `region`, or `country`.
     """
 
     name: Name
-    """Person name.
+    """Name of the person.
 
-    Without an email or person-profile URL, provide both first and last name plus
-    company, education, or location.
+    Without an email or profile URL, send both `first` and `last` plus `company`,
+    `education`, or `location`.
     """
 
     social_urls: SequenceNotStr[str]
     """Public profile URLs for the person.
 
-    A person-profile URL can identify the person without a name.
+    A person-profile URL is enough to identify them without a name.
     """
 
     tags: SequenceNotStr[str]
-    """Labels for filtering usage in the dashboard."""
+    """Labels for this request.
+
+    Filter usage and request logs by them in the dashboard or with `GET /org/logs`.
+    """
 
     timeout_opts: Annotated[TimeoutOpts, PropertyInfo(alias="timeoutOpts")]
     """Request deadline and what to return when it passes."""
@@ -54,7 +60,7 @@ class PersonEnrichParams(TypedDict, total=False):
 
 
 class Company(TypedDict, total=False):
-    """Company context to help identify the person. Provide a name or domain."""
+    """Company associated with the person. Send a `name`, a `domain`, or both."""
 
     domain: str
     """Website domain of a company associated with the person."""
@@ -88,9 +94,9 @@ class Education(TypedDict, total=False):
 
 
 class Location(TypedDict, total=False):
-    """Location context to help identify the person.
+    """Location associated with the person.
 
-    Provide a city, region, or country.
+    Send at least one of `city`, `region`, or `country`.
     """
 
     city: str
@@ -104,9 +110,9 @@ class Location(TypedDict, total=False):
 
 
 class Name(TypedDict, total=False):
-    """Person name.
+    """Name of the person.
 
-    Without an email or person-profile URL, provide both first and last name plus company, education, or location.
+    Without an email or profile URL, send both `first` and `last` plus `company`, `education`, or `location`.
     """
 
     first: str
@@ -123,7 +129,8 @@ class TimeoutOpts(TypedDict, total=False):
     """Deadline in milliseconds."""
 
     behavior: Literal["fail", "return-partial"]
-    """\"fail" returns 408 at the deadline.
+    """`fail` returns 408 at the deadline.
 
-    "return-partial" returns available results; inspect the response’s partial flag.
+    `return-partial` returns the results collected so far and marks the response as
+    partial.
     """

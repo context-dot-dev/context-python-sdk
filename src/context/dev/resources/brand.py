@@ -26,6 +26,10 @@ __all__ = ["BrandResource", "AsyncBrandResource"]
 
 
 class BrandResource(SyncAPIResource):
+    """
+    Retrieve a brand's logos, colors, company details, and social links, or find brands by name or domain.
+    """
+
     @cached_property
     def with_raw_response(self) -> BrandResourceWithRawResponse:
         """
@@ -190,31 +194,35 @@ class BrandResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandRetrieveResponse:
         """
-        Retrieve logos, colors, company details, and social links using one lookup
-        identifier. A direct URL limits extraction to that page.
+        Look up a brand by domain, company name, work email, stock ticker, page URL, or
+        card transaction descriptor. Returns logos, colors, backdrops, description,
+        industries, address, stock listing, and social links. A `by_direct_url` lookup
+        reads only that page.
 
         Args:
-          domain: Domain name to retrieve brand data for (e.g., 'stripe.com').
+          domain: Domain of the brand, such as `stripe.com`.
 
-          type: Discriminator for domain-based brand retrieval.
+          type: Set to `by_domain` to look up a brand by domain.
 
-          max_age_ms: Maximum age of cached brand data in ms. Defaults to 3 months; clamped to 0–1
-              year. `0` refreshes.
+          force_language: Translate the brand's `title`, `description`, and `slogan` into this language.
 
-          max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
-              the API will skip time-consuming operations for faster response at the cost of
-              less comprehensive data.
+          max_age_ms: Maximum age of cached brand data, in milliseconds. `0` always fetches fresh.
+              Defaults to 90 days (7776000000 ms). Values above 1 year (31536000000 ms) are
+              capped at 1 year.
 
-          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
-              access policies are enabled for your organization; otherwise the request fails
-              with `ACCESS_POLICIES_NOT_ENABLED`.
+          max_speed: Skip slower enrichment steps for a faster, less detailed response.
 
-          tags: Labels for filtering usage in the dashboard.
+          policies: Access policy IDs to apply; each URL must pass all of them. Requires access
+              policies enabled for your organization; otherwise returns
+              `ACCESS_POLICIES_NOT_ENABLED`.
+
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
 
           timeout_opts: Request deadline and what to return when it passes.
 
-          zdr: `enabled` disables request logs and traces and omits request and response
-              content from usage logs. Brand data and hosted assets may still be stored.
+          zdr: `enabled` turns off request logs and traces and keeps request and response
+              content out of usage logs. Brand data and hosted assets may still be stored.
               Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
 
           extra_headers: Send extra headers
@@ -614,33 +622,37 @@ class BrandResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandRetrieveResponse:
         """
-        Retrieve logos, colors, company details, and social links using one lookup
-        identifier. A direct URL limits extraction to that page.
+        Look up a brand by domain, company name, work email, stock ticker, page URL, or
+        card transaction descriptor. Returns logos, colors, backdrops, description,
+        industries, address, stock listing, and social links. A `by_direct_url` lookup
+        reads only that page.
 
         Args:
-          name: Company name to retrieve brand data for (e.g., 'Apple Inc').
+          name: Company name, such as `Apple Inc`.
 
-          type: Discriminator for name-based brand retrieval.
+          type: Set to `by_name` to look up a brand by company name.
 
           country: Lowercase ISO 3166-1 alpha-2 country code, such as `us`.
 
-          max_age_ms: Maximum age of cached brand data in ms. Defaults to 3 months; clamped to 0–1
-              year. `0` refreshes.
+          force_language: Translate the brand's `title`, `description`, and `slogan` into this language.
 
-          max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
-              the API will skip time-consuming operations for faster response at the cost of
-              less comprehensive data.
+          max_age_ms: Maximum age of cached brand data, in milliseconds. `0` always fetches fresh.
+              Defaults to 90 days (7776000000 ms). Values above 1 year (31536000000 ms) are
+              capped at 1 year.
 
-          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
-              access policies are enabled for your organization; otherwise the request fails
-              with `ACCESS_POLICIES_NOT_ENABLED`.
+          max_speed: Skip slower enrichment steps for a faster, less detailed response.
 
-          tags: Labels for filtering usage in the dashboard.
+          policies: Access policy IDs to apply; each URL must pass all of them. Requires access
+              policies enabled for your organization; otherwise returns
+              `ACCESS_POLICIES_NOT_ENABLED`.
+
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
 
           timeout_opts: Request deadline and what to return when it passes.
 
-          zdr: `enabled` disables request logs and traces and omits request and response
-              content from usage logs. Brand data and hosted assets may still be stored.
+          zdr: `enabled` turns off request logs and traces and keeps request and response
+              content out of usage logs. Brand data and hosted assets may still be stored.
               Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
 
           extra_headers: Send extra headers
@@ -798,31 +810,36 @@ class BrandResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandRetrieveResponse:
         """
-        Retrieve logos, colors, company details, and social links using one lookup
-        identifier. A direct URL limits extraction to that page.
+        Look up a brand by domain, company name, work email, stock ticker, page URL, or
+        card transaction descriptor. Returns logos, colors, backdrops, description,
+        industries, address, stock listing, and social links. A `by_direct_url` lookup
+        reads only that page.
 
         Args:
-          email: Email address to retrieve brand data for (e.g., 'jane@stripe.com').
+          email: Work email address, such as `jane@stripe.com`. The brand is looked up from its
+              domain.
 
-          type: Discriminator for email-based brand retrieval.
+          type: Set to `by_email` to look up a brand from a work email address.
 
-          max_age_ms: Maximum age of cached brand data in ms. Defaults to 3 months; clamped to 0–1
-              year. `0` refreshes.
+          force_language: Translate the brand's `title`, `description`, and `slogan` into this language.
 
-          max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
-              the API will skip time-consuming operations for faster response at the cost of
-              less comprehensive data.
+          max_age_ms: Maximum age of cached brand data, in milliseconds. `0` always fetches fresh.
+              Defaults to 90 days (7776000000 ms). Values above 1 year (31536000000 ms) are
+              capped at 1 year.
 
-          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
-              access policies are enabled for your organization; otherwise the request fails
-              with `ACCESS_POLICIES_NOT_ENABLED`.
+          max_speed: Skip slower enrichment steps for a faster, less detailed response.
 
-          tags: Labels for filtering usage in the dashboard.
+          policies: Access policy IDs to apply; each URL must pass all of them. Requires access
+              policies enabled for your organization; otherwise returns
+              `ACCESS_POLICIES_NOT_ENABLED`.
+
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
 
           timeout_opts: Request deadline and what to return when it passes.
 
-          zdr: `enabled` disables request logs and traces and omits request and response
-              content from usage logs. Brand data and hosted assets may still be stored.
+          zdr: `enabled` turns off request logs and traces and keeps request and response
+              content out of usage logs. Brand data and hosted assets may still be stored.
               Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
 
           extra_headers: Send extra headers
@@ -1055,33 +1072,37 @@ class BrandResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandRetrieveResponse:
         """
-        Retrieve logos, colors, company details, and social links using one lookup
-        identifier. A direct URL limits extraction to that page.
+        Look up a brand by domain, company name, work email, stock ticker, page URL, or
+        card transaction descriptor. Returns logos, colors, backdrops, description,
+        industries, address, stock listing, and social links. A `by_direct_url` lookup
+        reads only that page.
 
         Args:
-          ticker: Stock ticker symbol to retrieve brand data for (e.g., 'AAPL').
+          ticker: Stock ticker symbol, such as `AAPL`.
 
-          type: Discriminator for ticker-based brand retrieval.
+          type: Set to `by_ticker` to look up a brand by stock ticker.
 
-          max_age_ms: Maximum age of cached brand data in ms. Defaults to 3 months; clamped to 0–1
-              year. `0` refreshes.
+          force_language: Translate the brand's `title`, `description`, and `slogan` into this language.
 
-          max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
-              the API will skip time-consuming operations for faster response at the cost of
-              less comprehensive data.
+          max_age_ms: Maximum age of cached brand data, in milliseconds. `0` always fetches fresh.
+              Defaults to 90 days (7776000000 ms). Values above 1 year (31536000000 ms) are
+              capped at 1 year.
 
-          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
-              access policies are enabled for your organization; otherwise the request fails
-              with `ACCESS_POLICIES_NOT_ENABLED`.
+          max_speed: Skip slower enrichment steps for a faster, less detailed response.
 
-          tags: Labels for filtering usage in the dashboard.
+          policies: Access policy IDs to apply; each URL must pass all of them. Requires access
+              policies enabled for your organization; otherwise returns
+              `ACCESS_POLICIES_NOT_ENABLED`.
 
-          ticker_exchange: Stock exchange code.
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
+
+          ticker_exchange: Stock exchange code, such as `NASDAQ` or `LSE`.
 
           timeout_opts: Request deadline and what to return when it passes.
 
-          zdr: `enabled` disables request logs and traces and omits request and response
-              content from usage logs. Brand data and hosted assets may still be stored.
+          zdr: `enabled` turns off request logs and traces and keeps request and response
+              content out of usage logs. Brand data and hosted assets may still be stored.
               Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
 
           extra_headers: Send extra headers
@@ -1112,26 +1133,28 @@ class BrandResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandRetrieveResponse:
         """
-        Retrieve logos, colors, company details, and social links using one lookup
-        identifier. A direct URL limits extraction to that page.
+        Look up a brand by domain, company name, work email, stock ticker, page URL, or
+        card transaction descriptor. Returns logos, colors, backdrops, description,
+        industries, address, stock listing, and social links. A `by_direct_url` lookup
+        reads only that page.
 
         Args:
-          direct_url: Full http(s) URL to fetch brand data from (e.g.,
-              'https://stripe.com/enterprise'). Only this URL is fetched — not the entire
-              internet.
+          direct_url: Full `http` or `https` URL of the page to read, such as
+              `https://stripe.com/enterprise`. Only this page is fetched.
 
-          type: Discriminator for direct-URL-based brand retrieval.
+          type: Set to `by_direct_url` to extract brand data from a single page.
 
-          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
-              access policies are enabled for your organization; otherwise the request fails
-              with `ACCESS_POLICIES_NOT_ENABLED`.
+          policies: Access policy IDs to apply; each URL must pass all of them. Requires access
+              policies enabled for your organization; otherwise returns
+              `ACCESS_POLICIES_NOT_ENABLED`.
 
-          tags: Labels for filtering usage in the dashboard.
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
 
           timeout_opts: Request deadline and what to return when it passes.
 
-          zdr: `enabled` disables request logs and traces and omits request and response
-              content from usage logs. Brand data and hosted assets may still be stored.
+          zdr: `enabled` turns off request logs and traces and keeps request and response
+              content out of usage logs. Brand data and hosted assets may still be stored.
               Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
 
           extra_headers: Send extra headers
@@ -1534,40 +1557,44 @@ class BrandResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandRetrieveResponse:
         """
-        Retrieve logos, colors, company details, and social links using one lookup
-        identifier. A direct URL limits extraction to that page.
+        Look up a brand by domain, company name, work email, stock ticker, page URL, or
+        card transaction descriptor. Returns logos, colors, backdrops, description,
+        industries, address, stock listing, and social links. A `by_direct_url` lookup
+        reads only that page.
 
         Args:
-          transaction_info: Transaction information to identify the brand.
+          transaction_info: Transaction descriptor from a card or bank statement, such as `SQ *COFFEE SHOP`.
 
-          type: Discriminator for transaction-based brand retrieval.
+          type: Set to `by_transaction` to identify the merchant behind a transaction
+              descriptor.
 
-          city: Optional city name to prioritize when searching for the brand.
+          city: City where the transaction took place. Brands in this city are preferred.
 
           country: Lowercase ISO 3166-1 alpha-2 country code, such as `us`.
 
-          high_confidence_only: When set to true, the API performs additional verification to ensure the
-              identified brand matches the transaction with high confidence.
+          force_language: Translate the brand's `title`, `description`, and `slogan` into this language.
 
-          max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
-              the API will skip time-consuming operations for faster response at the cost of
-              less comprehensive data.
+          high_confidence_only: Run extra verification so the returned brand matches the transaction with high
+              confidence.
 
-          mcc: Optional Merchant Category Code (MCC) to help identify the business category or
-              industry.
+          max_speed: Skip slower enrichment steps for a faster, less detailed response.
 
-          phone: Optional phone number from the transaction to help verify brand match.
+          mcc: Merchant Category Code (MCC) from the transaction. Helps identify the type of
+              business.
 
-          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
-              access policies are enabled for your organization; otherwise the request fails
-              with `ACCESS_POLICIES_NOT_ENABLED`.
+          phone: Merchant phone number from the transaction. Helps confirm the match.
 
-          tags: Labels for filtering usage in the dashboard.
+          policies: Access policy IDs to apply; each URL must pass all of them. Requires access
+              policies enabled for your organization; otherwise returns
+              `ACCESS_POLICIES_NOT_ENABLED`.
+
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
 
           timeout_opts: Request deadline and what to return when it passes.
 
-          zdr: `enabled` disables request logs and traces and omits request and response
-              content from usage logs. Brand data and hosted assets may still be stored.
+          zdr: `enabled` turns off request logs and traces and keeps request and response
+              content out of usage logs. Brand data and hosted assets may still be stored.
               Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
 
           extra_headers: Send extra headers
@@ -2491,32 +2518,31 @@ class BrandResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandSearchResponse:
-        """Find up to 10 brands by name or domain, ordered by popularity.
-
-        Optionally filter
-        by country and primary language; both filters must match when provided together.
-        Results include description, country, and language when available. Use the
-        returned domain to retrieve a full brand profile.
+        """
+        Autocomplete brand names and domains as a user types, with up to 10 brands
+        ranked by popularity and a ready-to-use logo URL for each. Filter by country and
+        primary language. Pass a returned `domain` to `POST /brand/retrieve` for the
+        full brand profile.
 
         Args:
-          query: Search term, matched against the fields selected by queryBy (e.g. 'nike',
-              'nike.com', 'nik').
+          query: Search term, matched against the fields in `queryBy`, such as `nike`,
+              `nike.com`, or `nik`.
 
-          autocomplete: Whether the search term matches by prefix, so partial words match as they are
-              typed (e.g. 'nik' matches Nike). Set to false to match whole words only.
+          autocomplete: Match the search term as a prefix, so `nik` matches Nike while the user is still
+              typing. Set to `false` to match whole words only.
 
           country: Only return brands in this country, as an uppercase ISO 3166-1 alpha-2 code such
-              as US or GB.
+              as `US` or `GB`.
 
-          language: Only return brands with this primary language, such as english or french.
+          language: Only return brands with this primary language, such as `english` or `french`.
 
-          query_by: Fields to match the search term against, as a comma-separated list or repeated
-              parameter: 'name', 'domain', or both. Defaults to both.
+          query_by: Fields to match the search term against: `name`, `domain`, or both. Send a
+              comma-separated list or repeat the parameter.
 
-          tags: Comma-separated labels for filtering usage, e.g. `production,team-alpha`.
+          tags: Comma-separated labels for this request, such as `production,team-alpha`. Filter
+              usage and request logs by them.
 
-          typo_tolerance: Maximum number of typos tolerated when matching, from 0 to 2. Defaults to 0 (no
-              typo tolerance).
+          typo_tolerance: Maximum number of typos to tolerate when matching. `0` requires exact spelling.
 
           extra_headers: Send extra headers
 
@@ -2551,6 +2577,10 @@ class BrandResource(SyncAPIResource):
 
 
 class AsyncBrandResource(AsyncAPIResource):
+    """
+    Retrieve a brand's logos, colors, company details, and social links, or find brands by name or domain.
+    """
+
     @cached_property
     def with_raw_response(self) -> AsyncBrandResourceWithRawResponse:
         """
@@ -2715,31 +2745,35 @@ class AsyncBrandResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandRetrieveResponse:
         """
-        Retrieve logos, colors, company details, and social links using one lookup
-        identifier. A direct URL limits extraction to that page.
+        Look up a brand by domain, company name, work email, stock ticker, page URL, or
+        card transaction descriptor. Returns logos, colors, backdrops, description,
+        industries, address, stock listing, and social links. A `by_direct_url` lookup
+        reads only that page.
 
         Args:
-          domain: Domain name to retrieve brand data for (e.g., 'stripe.com').
+          domain: Domain of the brand, such as `stripe.com`.
 
-          type: Discriminator for domain-based brand retrieval.
+          type: Set to `by_domain` to look up a brand by domain.
 
-          max_age_ms: Maximum age of cached brand data in ms. Defaults to 3 months; clamped to 0–1
-              year. `0` refreshes.
+          force_language: Translate the brand's `title`, `description`, and `slogan` into this language.
 
-          max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
-              the API will skip time-consuming operations for faster response at the cost of
-              less comprehensive data.
+          max_age_ms: Maximum age of cached brand data, in milliseconds. `0` always fetches fresh.
+              Defaults to 90 days (7776000000 ms). Values above 1 year (31536000000 ms) are
+              capped at 1 year.
 
-          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
-              access policies are enabled for your organization; otherwise the request fails
-              with `ACCESS_POLICIES_NOT_ENABLED`.
+          max_speed: Skip slower enrichment steps for a faster, less detailed response.
 
-          tags: Labels for filtering usage in the dashboard.
+          policies: Access policy IDs to apply; each URL must pass all of them. Requires access
+              policies enabled for your organization; otherwise returns
+              `ACCESS_POLICIES_NOT_ENABLED`.
+
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
 
           timeout_opts: Request deadline and what to return when it passes.
 
-          zdr: `enabled` disables request logs and traces and omits request and response
-              content from usage logs. Brand data and hosted assets may still be stored.
+          zdr: `enabled` turns off request logs and traces and keeps request and response
+              content out of usage logs. Brand data and hosted assets may still be stored.
               Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
 
           extra_headers: Send extra headers
@@ -3139,33 +3173,37 @@ class AsyncBrandResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandRetrieveResponse:
         """
-        Retrieve logos, colors, company details, and social links using one lookup
-        identifier. A direct URL limits extraction to that page.
+        Look up a brand by domain, company name, work email, stock ticker, page URL, or
+        card transaction descriptor. Returns logos, colors, backdrops, description,
+        industries, address, stock listing, and social links. A `by_direct_url` lookup
+        reads only that page.
 
         Args:
-          name: Company name to retrieve brand data for (e.g., 'Apple Inc').
+          name: Company name, such as `Apple Inc`.
 
-          type: Discriminator for name-based brand retrieval.
+          type: Set to `by_name` to look up a brand by company name.
 
           country: Lowercase ISO 3166-1 alpha-2 country code, such as `us`.
 
-          max_age_ms: Maximum age of cached brand data in ms. Defaults to 3 months; clamped to 0–1
-              year. `0` refreshes.
+          force_language: Translate the brand's `title`, `description`, and `slogan` into this language.
 
-          max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
-              the API will skip time-consuming operations for faster response at the cost of
-              less comprehensive data.
+          max_age_ms: Maximum age of cached brand data, in milliseconds. `0` always fetches fresh.
+              Defaults to 90 days (7776000000 ms). Values above 1 year (31536000000 ms) are
+              capped at 1 year.
 
-          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
-              access policies are enabled for your organization; otherwise the request fails
-              with `ACCESS_POLICIES_NOT_ENABLED`.
+          max_speed: Skip slower enrichment steps for a faster, less detailed response.
 
-          tags: Labels for filtering usage in the dashboard.
+          policies: Access policy IDs to apply; each URL must pass all of them. Requires access
+              policies enabled for your organization; otherwise returns
+              `ACCESS_POLICIES_NOT_ENABLED`.
+
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
 
           timeout_opts: Request deadline and what to return when it passes.
 
-          zdr: `enabled` disables request logs and traces and omits request and response
-              content from usage logs. Brand data and hosted assets may still be stored.
+          zdr: `enabled` turns off request logs and traces and keeps request and response
+              content out of usage logs. Brand data and hosted assets may still be stored.
               Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
 
           extra_headers: Send extra headers
@@ -3323,31 +3361,36 @@ class AsyncBrandResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandRetrieveResponse:
         """
-        Retrieve logos, colors, company details, and social links using one lookup
-        identifier. A direct URL limits extraction to that page.
+        Look up a brand by domain, company name, work email, stock ticker, page URL, or
+        card transaction descriptor. Returns logos, colors, backdrops, description,
+        industries, address, stock listing, and social links. A `by_direct_url` lookup
+        reads only that page.
 
         Args:
-          email: Email address to retrieve brand data for (e.g., 'jane@stripe.com').
+          email: Work email address, such as `jane@stripe.com`. The brand is looked up from its
+              domain.
 
-          type: Discriminator for email-based brand retrieval.
+          type: Set to `by_email` to look up a brand from a work email address.
 
-          max_age_ms: Maximum age of cached brand data in ms. Defaults to 3 months; clamped to 0–1
-              year. `0` refreshes.
+          force_language: Translate the brand's `title`, `description`, and `slogan` into this language.
 
-          max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
-              the API will skip time-consuming operations for faster response at the cost of
-              less comprehensive data.
+          max_age_ms: Maximum age of cached brand data, in milliseconds. `0` always fetches fresh.
+              Defaults to 90 days (7776000000 ms). Values above 1 year (31536000000 ms) are
+              capped at 1 year.
 
-          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
-              access policies are enabled for your organization; otherwise the request fails
-              with `ACCESS_POLICIES_NOT_ENABLED`.
+          max_speed: Skip slower enrichment steps for a faster, less detailed response.
 
-          tags: Labels for filtering usage in the dashboard.
+          policies: Access policy IDs to apply; each URL must pass all of them. Requires access
+              policies enabled for your organization; otherwise returns
+              `ACCESS_POLICIES_NOT_ENABLED`.
+
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
 
           timeout_opts: Request deadline and what to return when it passes.
 
-          zdr: `enabled` disables request logs and traces and omits request and response
-              content from usage logs. Brand data and hosted assets may still be stored.
+          zdr: `enabled` turns off request logs and traces and keeps request and response
+              content out of usage logs. Brand data and hosted assets may still be stored.
               Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
 
           extra_headers: Send extra headers
@@ -3580,33 +3623,37 @@ class AsyncBrandResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandRetrieveResponse:
         """
-        Retrieve logos, colors, company details, and social links using one lookup
-        identifier. A direct URL limits extraction to that page.
+        Look up a brand by domain, company name, work email, stock ticker, page URL, or
+        card transaction descriptor. Returns logos, colors, backdrops, description,
+        industries, address, stock listing, and social links. A `by_direct_url` lookup
+        reads only that page.
 
         Args:
-          ticker: Stock ticker symbol to retrieve brand data for (e.g., 'AAPL').
+          ticker: Stock ticker symbol, such as `AAPL`.
 
-          type: Discriminator for ticker-based brand retrieval.
+          type: Set to `by_ticker` to look up a brand by stock ticker.
 
-          max_age_ms: Maximum age of cached brand data in ms. Defaults to 3 months; clamped to 0–1
-              year. `0` refreshes.
+          force_language: Translate the brand's `title`, `description`, and `slogan` into this language.
 
-          max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
-              the API will skip time-consuming operations for faster response at the cost of
-              less comprehensive data.
+          max_age_ms: Maximum age of cached brand data, in milliseconds. `0` always fetches fresh.
+              Defaults to 90 days (7776000000 ms). Values above 1 year (31536000000 ms) are
+              capped at 1 year.
 
-          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
-              access policies are enabled for your organization; otherwise the request fails
-              with `ACCESS_POLICIES_NOT_ENABLED`.
+          max_speed: Skip slower enrichment steps for a faster, less detailed response.
 
-          tags: Labels for filtering usage in the dashboard.
+          policies: Access policy IDs to apply; each URL must pass all of them. Requires access
+              policies enabled for your organization; otherwise returns
+              `ACCESS_POLICIES_NOT_ENABLED`.
 
-          ticker_exchange: Stock exchange code.
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
+
+          ticker_exchange: Stock exchange code, such as `NASDAQ` or `LSE`.
 
           timeout_opts: Request deadline and what to return when it passes.
 
-          zdr: `enabled` disables request logs and traces and omits request and response
-              content from usage logs. Brand data and hosted assets may still be stored.
+          zdr: `enabled` turns off request logs and traces and keeps request and response
+              content out of usage logs. Brand data and hosted assets may still be stored.
               Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
 
           extra_headers: Send extra headers
@@ -3637,26 +3684,28 @@ class AsyncBrandResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandRetrieveResponse:
         """
-        Retrieve logos, colors, company details, and social links using one lookup
-        identifier. A direct URL limits extraction to that page.
+        Look up a brand by domain, company name, work email, stock ticker, page URL, or
+        card transaction descriptor. Returns logos, colors, backdrops, description,
+        industries, address, stock listing, and social links. A `by_direct_url` lookup
+        reads only that page.
 
         Args:
-          direct_url: Full http(s) URL to fetch brand data from (e.g.,
-              'https://stripe.com/enterprise'). Only this URL is fetched — not the entire
-              internet.
+          direct_url: Full `http` or `https` URL of the page to read, such as
+              `https://stripe.com/enterprise`. Only this page is fetched.
 
-          type: Discriminator for direct-URL-based brand retrieval.
+          type: Set to `by_direct_url` to extract brand data from a single page.
 
-          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
-              access policies are enabled for your organization; otherwise the request fails
-              with `ACCESS_POLICIES_NOT_ENABLED`.
+          policies: Access policy IDs to apply; each URL must pass all of them. Requires access
+              policies enabled for your organization; otherwise returns
+              `ACCESS_POLICIES_NOT_ENABLED`.
 
-          tags: Labels for filtering usage in the dashboard.
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
 
           timeout_opts: Request deadline and what to return when it passes.
 
-          zdr: `enabled` disables request logs and traces and omits request and response
-              content from usage logs. Brand data and hosted assets may still be stored.
+          zdr: `enabled` turns off request logs and traces and keeps request and response
+              content out of usage logs. Brand data and hosted assets may still be stored.
               Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
 
           extra_headers: Send extra headers
@@ -4059,40 +4108,44 @@ class AsyncBrandResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandRetrieveResponse:
         """
-        Retrieve logos, colors, company details, and social links using one lookup
-        identifier. A direct URL limits extraction to that page.
+        Look up a brand by domain, company name, work email, stock ticker, page URL, or
+        card transaction descriptor. Returns logos, colors, backdrops, description,
+        industries, address, stock listing, and social links. A `by_direct_url` lookup
+        reads only that page.
 
         Args:
-          transaction_info: Transaction information to identify the brand.
+          transaction_info: Transaction descriptor from a card or bank statement, such as `SQ *COFFEE SHOP`.
 
-          type: Discriminator for transaction-based brand retrieval.
+          type: Set to `by_transaction` to identify the merchant behind a transaction
+              descriptor.
 
-          city: Optional city name to prioritize when searching for the brand.
+          city: City where the transaction took place. Brands in this city are preferred.
 
           country: Lowercase ISO 3166-1 alpha-2 country code, such as `us`.
 
-          high_confidence_only: When set to true, the API performs additional verification to ensure the
-              identified brand matches the transaction with high confidence.
+          force_language: Translate the brand's `title`, `description`, and `slogan` into this language.
 
-          max_speed: Optional parameter to optimize the API call for maximum speed. When set to true,
-              the API will skip time-consuming operations for faster response at the cost of
-              less comprehensive data.
+          high_confidence_only: Run extra verification so the returned brand matches the transaction with high
+              confidence.
 
-          mcc: Optional Merchant Category Code (MCC) to help identify the business category or
-              industry.
+          max_speed: Skip slower enrichment steps for a faster, less detailed response.
 
-          phone: Optional phone number from the transaction to help verify brand match.
+          mcc: Merchant Category Code (MCC) from the transaction. Helps identify the type of
+              business.
 
-          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
-              access policies are enabled for your organization; otherwise the request fails
-              with `ACCESS_POLICIES_NOT_ENABLED`.
+          phone: Merchant phone number from the transaction. Helps confirm the match.
 
-          tags: Labels for filtering usage in the dashboard.
+          policies: Access policy IDs to apply; each URL must pass all of them. Requires access
+              policies enabled for your organization; otherwise returns
+              `ACCESS_POLICIES_NOT_ENABLED`.
+
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
 
           timeout_opts: Request deadline and what to return when it passes.
 
-          zdr: `enabled` disables request logs and traces and omits request and response
-              content from usage logs. Brand data and hosted assets may still be stored.
+          zdr: `enabled` turns off request logs and traces and keeps request and response
+              content out of usage logs. Brand data and hosted assets may still be stored.
               Returns 403 `ZDR_NOT_ENABLED` unless your organization has ZDR.
 
           extra_headers: Send extra headers
@@ -5016,32 +5069,31 @@ class AsyncBrandResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrandSearchResponse:
-        """Find up to 10 brands by name or domain, ordered by popularity.
-
-        Optionally filter
-        by country and primary language; both filters must match when provided together.
-        Results include description, country, and language when available. Use the
-        returned domain to retrieve a full brand profile.
+        """
+        Autocomplete brand names and domains as a user types, with up to 10 brands
+        ranked by popularity and a ready-to-use logo URL for each. Filter by country and
+        primary language. Pass a returned `domain` to `POST /brand/retrieve` for the
+        full brand profile.
 
         Args:
-          query: Search term, matched against the fields selected by queryBy (e.g. 'nike',
-              'nike.com', 'nik').
+          query: Search term, matched against the fields in `queryBy`, such as `nike`,
+              `nike.com`, or `nik`.
 
-          autocomplete: Whether the search term matches by prefix, so partial words match as they are
-              typed (e.g. 'nik' matches Nike). Set to false to match whole words only.
+          autocomplete: Match the search term as a prefix, so `nik` matches Nike while the user is still
+              typing. Set to `false` to match whole words only.
 
           country: Only return brands in this country, as an uppercase ISO 3166-1 alpha-2 code such
-              as US or GB.
+              as `US` or `GB`.
 
-          language: Only return brands with this primary language, such as english or french.
+          language: Only return brands with this primary language, such as `english` or `french`.
 
-          query_by: Fields to match the search term against, as a comma-separated list or repeated
-              parameter: 'name', 'domain', or both. Defaults to both.
+          query_by: Fields to match the search term against: `name`, `domain`, or both. Send a
+              comma-separated list or repeat the parameter.
 
-          tags: Comma-separated labels for filtering usage, e.g. `production,team-alpha`.
+          tags: Comma-separated labels for this request, such as `production,team-alpha`. Filter
+              usage and request logs by them.
 
-          typo_tolerance: Maximum number of typos tolerated when matching, from 0 to 2. Defaults to 0 (no
-              typo tolerance).
+          typo_tolerance: Maximum number of typos to tolerate when matching. `0` requires exact spelling.
 
           extra_headers: Send extra headers
 

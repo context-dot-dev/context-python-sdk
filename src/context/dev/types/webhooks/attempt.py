@@ -10,13 +10,13 @@ __all__ = ["Attempt", "Error"]
 
 
 class Error(BaseModel):
-    """Attempt error, or null if none."""
+    """Why the attempt failed. `null` when it did not fail."""
 
     code: str
-    """Error code."""
+    """Machine-readable error code."""
 
     message: str
-    """Error details."""
+    """Human-readable explanation of the error."""
 
 
 class Attempt(BaseModel):
@@ -24,19 +24,23 @@ class Attempt(BaseModel):
     """Attempt number, starting at 1."""
 
     completed_at: Optional[datetime] = None
-    """Completion time, or null while in progress."""
+    """When the attempt finished. `null` while in progress."""
 
     error: Optional[Error] = None
-    """Attempt error, or null if none."""
+    """Why the attempt failed. `null` when it did not fail."""
 
     http_status: Optional[int] = None
-    """HTTP response status, or null if no response was received."""
+    """HTTP status your endpoint returned. `null` when no response was received."""
 
     started_at: datetime
-    """Attempt start time."""
+    """When the attempt started."""
 
     trigger: Literal["initial", "automatic", "manual"]
-    """`initial`, `automatic` (scheduled retry), or `manual` (Retry endpoint)."""
+    """
+    What started the attempt: `initial` is the first send, `automatic` is a
+    scheduled retry, and `manual` came from
+    `POST /webhooks/deliveries/{delivery_id}/retry`.
+    """
 
     url: str
-    """URL used for this attempt."""
+    """URL this attempt was sent to."""

@@ -22,8 +22,8 @@ class WebSearchParams(TypedDict, total=False):
     query: Required[str]
     """Search query.
 
-    Accepts natural language as well as Google-style search operators such as
-    `site:`, `-site:`, `inurl:`, `intitle:`, quoted phrases, and `OR`.
+    Accepts natural language and search operators such as `site:`, `-site:`,
+    `inurl:`, `intitle:`, quoted phrases, and `OR`.
     """
 
     country: Literal[
@@ -268,33 +268,27 @@ class WebSearchParams(TypedDict, total=False):
         "zw",
     ]
     """
-    Two-letter ISO 3166-1 alpha-2 country code to localize results to a specific
-    country (maps to Google's `gl` parameter). Example: "us", "gb", "de".
+    Localize results to this country, as an ISO 3166-1 alpha-2 code such as `us` or
+    `de`.
     """
 
     description_max_characters: Annotated[Optional[int], PropertyInfo(alias="descriptionMaxCharacters")]
     """Maximum length of each result's `description`, in characters."""
 
     exclude_domains: Annotated[SequenceNotStr[str], PropertyInfo(alias="excludeDomains")]
-    """Blocklist — drop results from these domains.
-
-    Up to 100 domains. Example: ["pinterest.com", "reddit.com"].
-    """
+    """Leave out results from these domains, such as `pinterest.com`."""
 
     freshness: Literal["last_24_hours", "last_week", "last_month", "last_year"]
     """Restrict results to content published within this window."""
 
     highlights_options: Annotated[Optional[HighlightsOptions], PropertyInfo(alias="highlightsOptions")]
-    """Passages from each result page that are relevant to the query.
+    """Return passages from each result page that are relevant to the query.
 
     Pages are read with the `markdownOptions` settings.
     """
 
     include_domains: Annotated[SequenceNotStr[str], PropertyInfo(alias="includeDomains")]
-    """Allowlist — only return results from these domains.
-
-    Up to 100 domains. Example: ["arxiv.org", "github.com"].
-    """
+    """Only return results from these domains, such as `arxiv.org`."""
 
     languages: Union[
         Literal["all"],
@@ -378,26 +372,28 @@ class WebSearchParams(TypedDict, total=False):
         ],
     ]
     """
-    Languages to return results in, as BCP 47 language codes such as `en` or `de`,
-    or "all" for any language. Defaults to "all". Example: ["en", "de"].
+    Languages to return results in, as BCP 47 codes such as `en` or `de`, or `all`
+    for any language.
     """
 
     markdown_options: Annotated[Optional[MarkdownOptions], PropertyInfo(alias="markdownOptions")]
-    """Inline Markdown scraping for each result. Set `enabled: true` to activate."""
+    """Scrape each result page to Markdown. Set `enabled` to `true` to turn it on."""
 
     num_results: Annotated[int, PropertyInfo(alias="numResults")]
-    """Number of results to request and return (1–100). Defaults to 10."""
+    """Number of results to return."""
 
     policies: SequenceNotStr[str]
-    """Access policy IDs to apply.
+    """Access policy IDs to apply; each URL must pass all of them.
 
-    A URL must pass every policy. Leave it out unless access policies are enabled
-    for your organization; otherwise the request fails with
+    Requires access policies enabled for your organization; otherwise returns
     `ACCESS_POLICIES_NOT_ENABLED`.
     """
 
     tags: SequenceNotStr[str]
-    """Labels for filtering usage in the dashboard."""
+    """Labels for this request.
+
+    Filter usage and request logs by them in the dashboard or with `GET /org/logs`.
+    """
 
     timeout_opts: Annotated[TimeoutOpts, PropertyInfo(alias="timeoutOpts")]
     """Request deadline and what to return when it passes."""
@@ -410,7 +406,7 @@ class WebSearchParams(TypedDict, total=False):
 
 
 class HighlightsOptions(TypedDict, total=False):
-    """Passages from each result page that are relevant to the query.
+    """Return passages from each result page that are relevant to the query.
 
     Pages are read with the `markdownOptions` settings.
     """
@@ -419,23 +415,20 @@ class HighlightsOptions(TypedDict, total=False):
     """Return relevant passages for each result. Adds 1 credit per 10 results."""
 
     max_characters: Annotated[int, PropertyInfo(alias="maxCharacters")]
-    """Maximum combined length of passages per result."""
+    """Maximum combined length of passages per result, in characters."""
 
 
 class MarkdownOptionsPdf(TypedDict, total=False):
-    """PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range."""
+    """Whether to parse PDFs and which pages to read."""
 
     end: int
-    """Last PDF page to parse (1-based, inclusive).
-
-    Defaults to the final page. Must be >= start.
-    """
+    """Last page to parse. Defaults to the last page. Must be at least `start`."""
 
     should_parse: Annotated[bool, PropertyInfo(alias="shouldParse")]
-    """Parse PDF URLs. When false, PDF results are skipped with WEBSITE_ACCESS_ERROR."""
+    """Parse PDF results. When `false`, PDF results fail with `WEBSITE_ACCESS_ERROR`."""
 
     start: int
-    """First 1-based PDF page to parse."""
+    """First page to parse, starting at 1."""
 
 
 class MarkdownOptionsTimeoutOpts(TypedDict, total=False):
@@ -445,60 +438,62 @@ class MarkdownOptionsTimeoutOpts(TypedDict, total=False):
     """Deadline in milliseconds."""
 
     behavior: Literal["fail", "return-partial"]
-    """\"fail" returns 408 at the deadline.
+    """`fail` returns 408 at the deadline.
 
-    "return-partial" returns available results; inspect the response’s partial flag.
-    "return-partial" requires at least 5000 ms. On POST /web/scrape, an output that
-    is not ready in time fails with error_code REQUEST_TIMEOUT inside a 200 response
-    under either behavior; 408 is returned only when the whole request cannot
-    respond by the deadline.
+    `return-partial` returns the results collected so far and marks the response as
+    partial. `return-partial` requires at least 5000 ms. On `POST /web/scrape`, an
+    output that is not ready in time fails with `REQUEST_TIMEOUT` inside a 200
+    response under either behavior; 408 means the whole request could not respond by
+    the deadline.
     """
 
 
 class MarkdownOptions(TypedDict, total=False):
-    """Inline Markdown scraping for each result. Set `enabled: true` to activate."""
+    """Scrape each result page to Markdown. Set `enabled` to `true` to turn it on."""
 
     enabled: bool
-    """Scrape each result to Markdown. Adds 1 credit per result with Markdown."""
+    """Scrape each result page to Markdown.
+
+    Adds 1 credit per result that returns Markdown.
+    """
 
     include_frames: Annotated[Union[bool, Literal["auto"]], PropertyInfo(alias="includeFrames")]
-    """Which iframe contents to render into the Markdown.
+    """Which iframe contents to include in the Markdown.
 
-    `auto` (default) inlines only iframes that hold page content, such as same-site
-    documents, framesets, job boards, forms and embedded documents, and skips ads
-    and widgets. `true` inlines every iframe. `false` inlines none.
+    `auto` inlines only iframes that hold page content, such as same-site documents,
+    framesets, job boards, forms, and embedded documents, and skips ads and widgets.
+    `true` inlines every iframe; `false` inlines none.
     """
 
     include_images: Annotated[bool, PropertyInfo(alias="includeImages")]
-    """Emit image references in the Markdown."""
+    """Include image references in the Markdown."""
 
     include_links: Annotated[bool, PropertyInfo(alias="includeLinks")]
-    """Keep hyperlinks in the Markdown."""
+    """Keep link URLs in the Markdown."""
 
     max_age_ms: Annotated[Optional[int], PropertyInfo(alias="maxAgeMs")]
-    """Maximum cache age in milliseconds for result page content.
+    """Maximum age of a cached result, in milliseconds.
 
-    Defaults to 180 days (15552000000 ms) when Markdown is requested, or 365 days
-    (31536000000 ms) when only highlights are requested. Explicit values override
-    either default. Maximum: 365 days. Set to 0 to force a fresh scrape.
+    `0` always fetches fresh. Defaults to 180 days (15552000000 ms) with Markdown,
+    or 365 days (31536000000 ms) with highlights only.
     """
 
     pdf: MarkdownOptionsPdf
-    """PDF handling. `start`/`end` limit parsing to an inclusive, 1-based page range."""
+    """Whether to parse PDFs and which pages to read."""
 
     shorten_base64_images: Annotated[bool, PropertyInfo(alias="shortenBase64Images")]
-    """Truncate inline base64 image payloads to keep responses small."""
+    """Shorten inline base64 image data."""
 
     timeout_opts: Annotated[MarkdownOptionsTimeoutOpts, PropertyInfo(alias="timeoutOpts")]
     """Request deadline and what to return when it passes."""
 
     use_main_content_only: Annotated[bool, PropertyInfo(alias="useMainContentOnly")]
-    """Strip nav, header, footer, and sidebar — keep only the primary article content."""
+    """Keep only the main content, without navigation, headers, footers, or sidebars."""
 
     wait_for_ms: Annotated[Optional[int], PropertyInfo(alias="waitForMs")]
-    """Extra wait after page load before rendering, in ms (0–30000).
+    """Time to wait after each result page loads before reading it, in milliseconds.
 
-    Useful for JS-heavy pages.
+    `0` waits 500 ms. Helps with JavaScript-heavy pages.
     """
 
 
@@ -509,7 +504,8 @@ class TimeoutOpts(TypedDict, total=False):
     """Deadline in milliseconds."""
 
     behavior: Literal["fail", "return-partial"]
-    """\"fail" returns 408 at the deadline.
+    """`fail` returns 408 at the deadline.
 
-    "return-partial" returns available results; inspect the response’s partial flag.
+    `return-partial` returns the results collected so far and marks the response as
+    partial.
     """

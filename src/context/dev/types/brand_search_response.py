@@ -10,16 +10,16 @@ __all__ = ["BrandSearchResponse", "Result", "KeyMetadata"]
 
 class Result(BaseModel):
     domain: str
-    """The brand's domain."""
+    """Domain of the brand."""
 
     logo: str
-    """
-    Logo link URL that serves the brand's logo, generated per request for the
-    calling organization.
+    """Logo Link URL that serves the brand's logo with your organization's client ID.
+
+    Use it directly as an image source.
     """
 
     name: str
-    """The brand's name. Empty string when unknown."""
+    """Name of the brand. Empty string when unknown."""
 
     country: Optional[
         Literal[
@@ -274,10 +274,13 @@ class Result(BaseModel):
             "ZW",
         ]
     ] = None
-    """The brand's country, when available, as an uppercase ISO 3166-1 alpha-2 code."""
+    """Country of the brand, as an uppercase ISO 3166-1 alpha-2 code.
+
+    Omitted when unknown.
+    """
 
     description: Optional[str] = None
-    """The brand's description, when available."""
+    """Short description of the brand. Omitted when unknown."""
 
     language: Optional[
         Literal[
@@ -403,7 +406,7 @@ class Result(BaseModel):
             "zulu",
         ]
     ] = None
-    """The brand's primary language, when available."""
+    """Primary language of the brand. Omitted when unknown."""
 
 
 class KeyMetadata(BaseModel):
@@ -413,7 +416,7 @@ class KeyMetadata(BaseModel):
     """Credits charged for this request."""
 
     credits_remaining: int
-    """Credits remaining for your organization."""
+    """Credits your organization has left after this request."""
 
 
 class BrandSearchResponse(BaseModel):
@@ -425,8 +428,8 @@ class BrandSearchResponse(BaseModel):
 
     results: List[Result]
     """
-    Up to 10 matching brands, name matches first, then domain matches, most popular
-    first within each group. Empty when nothing matches.
+    Up to 10 matching brands: name matches first, then domain matches, each group
+    ordered by popularity. Empty when nothing matches.
     """
 
     key_metadata: Optional[KeyMetadata] = None

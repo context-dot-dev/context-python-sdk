@@ -11,27 +11,33 @@ __all__ = ["PersonSearchParams", "Filters"]
 
 class PersonSearchParams(TypedDict, total=False):
     query: Required[str]
-    """Describe the people to find.
+    """Plain-language description of the people to find.
 
     Up to 500 characters in `fast` mode and 5000 in `ultra` mode.
     """
 
     cursor: str
-    """Use next_cursor with the same query, mode and filters to fetch the next page."""
+    """Cursor from the previous page's `next_cursor`.
+
+    Omit for the first page. Send the same `query`, `mode`, and `filters` with it.
+    """
 
     filters: Filters
-    """Additional constraints every result must match."""
+    """Constraints every result must match, in addition to `query`."""
 
     mode: Literal["fast", "ultra"]
-    """`fast` matches people on basic criteria (e.g.
-
-    their role, location or background); `ultra` plans a deeper search, judges each
-    candidate against every criterion in the query. Complex `ultra` searches can
-    take up to 30 seconds to complete, so allow for that in your client timeout.
+    """
+    `fast` matches people on basic criteria such as role, location, or background;
+    `ultra` runs a deeper search, checks every candidate against each criterion in
+    your query, and adds a `match` score. Complex `ultra` searches can take up to 30
+    seconds, so set your client timeout to match.
     """
 
     tags: SequenceNotStr[str]
-    """Labels for filtering usage in the dashboard."""
+    """Labels for this request.
+
+    Filter usage and request logs by them in the dashboard or with `GET /org/logs`.
+    """
 
     zdr: Literal["enabled", "disabled"]
     """`enabled` turns on zero data retention.
@@ -41,10 +47,13 @@ class PersonSearchParams(TypedDict, total=False):
 
 
 class Filters(TypedDict, total=False):
-    """Additional constraints every result must match."""
+    """Constraints every result must match, in addition to `query`."""
 
     countries: SequenceNotStr[str]
-    """Countries people live in as two-letter codes, such as US or GB."""
+    """
+    Only return people who live in these countries, as ISO 3166-1 alpha-2 codes such
+    as `US`.
+    """
 
     years_of_experience_max: int
     """Maximum years of professional experience."""

@@ -144,6 +144,7 @@ class ContextDev(SyncAPIClient):
 
     @cached_property
     def parse(self) -> ParseResource:
+        """Convert uploaded files, such as PDFs and Office documents, into Markdown."""
         from .resources.parse import ParseResource
 
         return ParseResource(self)
@@ -156,32 +157,37 @@ class ContextDev(SyncAPIClient):
 
     @cached_property
     def brand(self) -> BrandResource:
+        """
+        Retrieve a brand's logos, colors, company details, and social links, or find brands by name or domain.
+        """
         from .resources.brand import BrandResource
 
         return BrandResource(self)
 
     @cached_property
     def industry(self) -> IndustryResource:
+        """Extract structured data, competitors, styleguides, and fonts from any website."""
         from .resources.industry import IndustryResource
 
         return IndustryResource(self)
 
     @cached_property
     def utility(self) -> UtilityResource:
+        """Prefetch brand and styleguide data so later lookups return sooner."""
         from .resources.utility import UtilityResource
 
         return UtilityResource(self)
 
     @cached_property
     def monitors(self) -> MonitorsResource:
-        """Watch websites for exact or meaningful changes."""
+        """Watch websites on a schedule for exact or meaningful changes."""
         from .resources.monitors import MonitorsResource
 
         return MonitorsResource(self)
 
     @cached_property
     def batch(self) -> BatchResource:
-        """Scrape many pages or crawl a site asynchronously."""
+        """Scrape up to 100,000 URLs or crawl a site asynchronously."""
         from .resources.batch import BatchResource
 
         return BatchResource(self)
@@ -194,13 +200,16 @@ class ContextDev(SyncAPIClient):
 
     @cached_property
     def people(self) -> PeopleResource:
+        """
+        Enrich a person from identity clues, or find people with a natural-language query.
+        """
         from .resources.people import PeopleResource
 
         return PeopleResource(self)
 
     @cached_property
     def news(self) -> NewsResource:
-        """Search live and historical news about a company."""
+        """Search live and historical news by company or with a natural-language query."""
         from .resources.news import NewsResource
 
         return NewsResource(self)
@@ -214,7 +223,9 @@ class ContextDev(SyncAPIClient):
 
     @cached_property
     def logs(self) -> LogsResource:
-        """Read your organization's API request logs."""
+        """
+        Inspect your organization's API requests, including retained inputs and responses.
+        """
         from .resources.logs import LogsResource
 
         return LogsResource(self)
@@ -227,7 +238,7 @@ class ContextDev(SyncAPIClient):
 
     @cached_property
     def feedback(self) -> FeedbackResource:
-        """Report API issues and documentation mismatches."""
+        """Report bugs, wrong results, and docs mismatches to the Context.dev team."""
         from .resources.feedback import FeedbackResource
 
         return FeedbackResource(self)
@@ -411,6 +422,7 @@ class AsyncContextDev(AsyncAPIClient):
 
     @cached_property
     def parse(self) -> AsyncParseResource:
+        """Convert uploaded files, such as PDFs and Office documents, into Markdown."""
         from .resources.parse import AsyncParseResource
 
         return AsyncParseResource(self)
@@ -423,32 +435,37 @@ class AsyncContextDev(AsyncAPIClient):
 
     @cached_property
     def brand(self) -> AsyncBrandResource:
+        """
+        Retrieve a brand's logos, colors, company details, and social links, or find brands by name or domain.
+        """
         from .resources.brand import AsyncBrandResource
 
         return AsyncBrandResource(self)
 
     @cached_property
     def industry(self) -> AsyncIndustryResource:
+        """Extract structured data, competitors, styleguides, and fonts from any website."""
         from .resources.industry import AsyncIndustryResource
 
         return AsyncIndustryResource(self)
 
     @cached_property
     def utility(self) -> AsyncUtilityResource:
+        """Prefetch brand and styleguide data so later lookups return sooner."""
         from .resources.utility import AsyncUtilityResource
 
         return AsyncUtilityResource(self)
 
     @cached_property
     def monitors(self) -> AsyncMonitorsResource:
-        """Watch websites for exact or meaningful changes."""
+        """Watch websites on a schedule for exact or meaningful changes."""
         from .resources.monitors import AsyncMonitorsResource
 
         return AsyncMonitorsResource(self)
 
     @cached_property
     def batch(self) -> AsyncBatchResource:
-        """Scrape many pages or crawl a site asynchronously."""
+        """Scrape up to 100,000 URLs or crawl a site asynchronously."""
         from .resources.batch import AsyncBatchResource
 
         return AsyncBatchResource(self)
@@ -461,13 +478,16 @@ class AsyncContextDev(AsyncAPIClient):
 
     @cached_property
     def people(self) -> AsyncPeopleResource:
+        """
+        Enrich a person from identity clues, or find people with a natural-language query.
+        """
         from .resources.people import AsyncPeopleResource
 
         return AsyncPeopleResource(self)
 
     @cached_property
     def news(self) -> AsyncNewsResource:
-        """Search live and historical news about a company."""
+        """Search live and historical news by company or with a natural-language query."""
         from .resources.news import AsyncNewsResource
 
         return AsyncNewsResource(self)
@@ -481,7 +501,9 @@ class AsyncContextDev(AsyncAPIClient):
 
     @cached_property
     def logs(self) -> AsyncLogsResource:
-        """Read your organization's API request logs."""
+        """
+        Inspect your organization's API requests, including retained inputs and responses.
+        """
         from .resources.logs import AsyncLogsResource
 
         return AsyncLogsResource(self)
@@ -494,7 +516,7 @@ class AsyncContextDev(AsyncAPIClient):
 
     @cached_property
     def feedback(self) -> AsyncFeedbackResource:
-        """Report API issues and documentation mismatches."""
+        """Report bugs, wrong results, and docs mismatches to the Context.dev team."""
         from .resources.feedback import AsyncFeedbackResource
 
         return AsyncFeedbackResource(self)
@@ -620,6 +642,7 @@ class ContextDevWithRawResponse:
 
     @cached_property
     def parse(self) -> parse.ParseResourceWithRawResponse:
+        """Convert uploaded files, such as PDFs and Office documents, into Markdown."""
         from .resources.parse import ParseResourceWithRawResponse
 
         return ParseResourceWithRawResponse(self._client.parse)
@@ -632,32 +655,37 @@ class ContextDevWithRawResponse:
 
     @cached_property
     def brand(self) -> brand.BrandResourceWithRawResponse:
+        """
+        Retrieve a brand's logos, colors, company details, and social links, or find brands by name or domain.
+        """
         from .resources.brand import BrandResourceWithRawResponse
 
         return BrandResourceWithRawResponse(self._client.brand)
 
     @cached_property
     def industry(self) -> industry.IndustryResourceWithRawResponse:
+        """Extract structured data, competitors, styleguides, and fonts from any website."""
         from .resources.industry import IndustryResourceWithRawResponse
 
         return IndustryResourceWithRawResponse(self._client.industry)
 
     @cached_property
     def utility(self) -> utility.UtilityResourceWithRawResponse:
+        """Prefetch brand and styleguide data so later lookups return sooner."""
         from .resources.utility import UtilityResourceWithRawResponse
 
         return UtilityResourceWithRawResponse(self._client.utility)
 
     @cached_property
     def monitors(self) -> monitors.MonitorsResourceWithRawResponse:
-        """Watch websites for exact or meaningful changes."""
+        """Watch websites on a schedule for exact or meaningful changes."""
         from .resources.monitors import MonitorsResourceWithRawResponse
 
         return MonitorsResourceWithRawResponse(self._client.monitors)
 
     @cached_property
     def batch(self) -> batch.BatchResourceWithRawResponse:
-        """Scrape many pages or crawl a site asynchronously."""
+        """Scrape up to 100,000 URLs or crawl a site asynchronously."""
         from .resources.batch import BatchResourceWithRawResponse
 
         return BatchResourceWithRawResponse(self._client.batch)
@@ -670,13 +698,16 @@ class ContextDevWithRawResponse:
 
     @cached_property
     def people(self) -> people.PeopleResourceWithRawResponse:
+        """
+        Enrich a person from identity clues, or find people with a natural-language query.
+        """
         from .resources.people import PeopleResourceWithRawResponse
 
         return PeopleResourceWithRawResponse(self._client.people)
 
     @cached_property
     def news(self) -> news.NewsResourceWithRawResponse:
-        """Search live and historical news about a company."""
+        """Search live and historical news by company or with a natural-language query."""
         from .resources.news import NewsResourceWithRawResponse
 
         return NewsResourceWithRawResponse(self._client.news)
@@ -690,7 +721,9 @@ class ContextDevWithRawResponse:
 
     @cached_property
     def logs(self) -> logs.LogsResourceWithRawResponse:
-        """Read your organization's API request logs."""
+        """
+        Inspect your organization's API requests, including retained inputs and responses.
+        """
         from .resources.logs import LogsResourceWithRawResponse
 
         return LogsResourceWithRawResponse(self._client.logs)
@@ -703,7 +736,7 @@ class ContextDevWithRawResponse:
 
     @cached_property
     def feedback(self) -> feedback.FeedbackResourceWithRawResponse:
-        """Report API issues and documentation mismatches."""
+        """Report bugs, wrong results, and docs mismatches to the Context.dev team."""
         from .resources.feedback import FeedbackResourceWithRawResponse
 
         return FeedbackResourceWithRawResponse(self._client.feedback)
@@ -717,6 +750,7 @@ class AsyncContextDevWithRawResponse:
 
     @cached_property
     def parse(self) -> parse.AsyncParseResourceWithRawResponse:
+        """Convert uploaded files, such as PDFs and Office documents, into Markdown."""
         from .resources.parse import AsyncParseResourceWithRawResponse
 
         return AsyncParseResourceWithRawResponse(self._client.parse)
@@ -729,32 +763,37 @@ class AsyncContextDevWithRawResponse:
 
     @cached_property
     def brand(self) -> brand.AsyncBrandResourceWithRawResponse:
+        """
+        Retrieve a brand's logos, colors, company details, and social links, or find brands by name or domain.
+        """
         from .resources.brand import AsyncBrandResourceWithRawResponse
 
         return AsyncBrandResourceWithRawResponse(self._client.brand)
 
     @cached_property
     def industry(self) -> industry.AsyncIndustryResourceWithRawResponse:
+        """Extract structured data, competitors, styleguides, and fonts from any website."""
         from .resources.industry import AsyncIndustryResourceWithRawResponse
 
         return AsyncIndustryResourceWithRawResponse(self._client.industry)
 
     @cached_property
     def utility(self) -> utility.AsyncUtilityResourceWithRawResponse:
+        """Prefetch brand and styleguide data so later lookups return sooner."""
         from .resources.utility import AsyncUtilityResourceWithRawResponse
 
         return AsyncUtilityResourceWithRawResponse(self._client.utility)
 
     @cached_property
     def monitors(self) -> monitors.AsyncMonitorsResourceWithRawResponse:
-        """Watch websites for exact or meaningful changes."""
+        """Watch websites on a schedule for exact or meaningful changes."""
         from .resources.monitors import AsyncMonitorsResourceWithRawResponse
 
         return AsyncMonitorsResourceWithRawResponse(self._client.monitors)
 
     @cached_property
     def batch(self) -> batch.AsyncBatchResourceWithRawResponse:
-        """Scrape many pages or crawl a site asynchronously."""
+        """Scrape up to 100,000 URLs or crawl a site asynchronously."""
         from .resources.batch import AsyncBatchResourceWithRawResponse
 
         return AsyncBatchResourceWithRawResponse(self._client.batch)
@@ -767,13 +806,16 @@ class AsyncContextDevWithRawResponse:
 
     @cached_property
     def people(self) -> people.AsyncPeopleResourceWithRawResponse:
+        """
+        Enrich a person from identity clues, or find people with a natural-language query.
+        """
         from .resources.people import AsyncPeopleResourceWithRawResponse
 
         return AsyncPeopleResourceWithRawResponse(self._client.people)
 
     @cached_property
     def news(self) -> news.AsyncNewsResourceWithRawResponse:
-        """Search live and historical news about a company."""
+        """Search live and historical news by company or with a natural-language query."""
         from .resources.news import AsyncNewsResourceWithRawResponse
 
         return AsyncNewsResourceWithRawResponse(self._client.news)
@@ -787,7 +829,9 @@ class AsyncContextDevWithRawResponse:
 
     @cached_property
     def logs(self) -> logs.AsyncLogsResourceWithRawResponse:
-        """Read your organization's API request logs."""
+        """
+        Inspect your organization's API requests, including retained inputs and responses.
+        """
         from .resources.logs import AsyncLogsResourceWithRawResponse
 
         return AsyncLogsResourceWithRawResponse(self._client.logs)
@@ -800,7 +844,7 @@ class AsyncContextDevWithRawResponse:
 
     @cached_property
     def feedback(self) -> feedback.AsyncFeedbackResourceWithRawResponse:
-        """Report API issues and documentation mismatches."""
+        """Report bugs, wrong results, and docs mismatches to the Context.dev team."""
         from .resources.feedback import AsyncFeedbackResourceWithRawResponse
 
         return AsyncFeedbackResourceWithRawResponse(self._client.feedback)
@@ -814,6 +858,7 @@ class ContextDevWithStreamedResponse:
 
     @cached_property
     def parse(self) -> parse.ParseResourceWithStreamingResponse:
+        """Convert uploaded files, such as PDFs and Office documents, into Markdown."""
         from .resources.parse import ParseResourceWithStreamingResponse
 
         return ParseResourceWithStreamingResponse(self._client.parse)
@@ -826,32 +871,37 @@ class ContextDevWithStreamedResponse:
 
     @cached_property
     def brand(self) -> brand.BrandResourceWithStreamingResponse:
+        """
+        Retrieve a brand's logos, colors, company details, and social links, or find brands by name or domain.
+        """
         from .resources.brand import BrandResourceWithStreamingResponse
 
         return BrandResourceWithStreamingResponse(self._client.brand)
 
     @cached_property
     def industry(self) -> industry.IndustryResourceWithStreamingResponse:
+        """Extract structured data, competitors, styleguides, and fonts from any website."""
         from .resources.industry import IndustryResourceWithStreamingResponse
 
         return IndustryResourceWithStreamingResponse(self._client.industry)
 
     @cached_property
     def utility(self) -> utility.UtilityResourceWithStreamingResponse:
+        """Prefetch brand and styleguide data so later lookups return sooner."""
         from .resources.utility import UtilityResourceWithStreamingResponse
 
         return UtilityResourceWithStreamingResponse(self._client.utility)
 
     @cached_property
     def monitors(self) -> monitors.MonitorsResourceWithStreamingResponse:
-        """Watch websites for exact or meaningful changes."""
+        """Watch websites on a schedule for exact or meaningful changes."""
         from .resources.monitors import MonitorsResourceWithStreamingResponse
 
         return MonitorsResourceWithStreamingResponse(self._client.monitors)
 
     @cached_property
     def batch(self) -> batch.BatchResourceWithStreamingResponse:
-        """Scrape many pages or crawl a site asynchronously."""
+        """Scrape up to 100,000 URLs or crawl a site asynchronously."""
         from .resources.batch import BatchResourceWithStreamingResponse
 
         return BatchResourceWithStreamingResponse(self._client.batch)
@@ -864,13 +914,16 @@ class ContextDevWithStreamedResponse:
 
     @cached_property
     def people(self) -> people.PeopleResourceWithStreamingResponse:
+        """
+        Enrich a person from identity clues, or find people with a natural-language query.
+        """
         from .resources.people import PeopleResourceWithStreamingResponse
 
         return PeopleResourceWithStreamingResponse(self._client.people)
 
     @cached_property
     def news(self) -> news.NewsResourceWithStreamingResponse:
-        """Search live and historical news about a company."""
+        """Search live and historical news by company or with a natural-language query."""
         from .resources.news import NewsResourceWithStreamingResponse
 
         return NewsResourceWithStreamingResponse(self._client.news)
@@ -884,7 +937,9 @@ class ContextDevWithStreamedResponse:
 
     @cached_property
     def logs(self) -> logs.LogsResourceWithStreamingResponse:
-        """Read your organization's API request logs."""
+        """
+        Inspect your organization's API requests, including retained inputs and responses.
+        """
         from .resources.logs import LogsResourceWithStreamingResponse
 
         return LogsResourceWithStreamingResponse(self._client.logs)
@@ -897,7 +952,7 @@ class ContextDevWithStreamedResponse:
 
     @cached_property
     def feedback(self) -> feedback.FeedbackResourceWithStreamingResponse:
-        """Report API issues and documentation mismatches."""
+        """Report bugs, wrong results, and docs mismatches to the Context.dev team."""
         from .resources.feedback import FeedbackResourceWithStreamingResponse
 
         return FeedbackResourceWithStreamingResponse(self._client.feedback)
@@ -911,6 +966,7 @@ class AsyncContextDevWithStreamedResponse:
 
     @cached_property
     def parse(self) -> parse.AsyncParseResourceWithStreamingResponse:
+        """Convert uploaded files, such as PDFs and Office documents, into Markdown."""
         from .resources.parse import AsyncParseResourceWithStreamingResponse
 
         return AsyncParseResourceWithStreamingResponse(self._client.parse)
@@ -923,32 +979,37 @@ class AsyncContextDevWithStreamedResponse:
 
     @cached_property
     def brand(self) -> brand.AsyncBrandResourceWithStreamingResponse:
+        """
+        Retrieve a brand's logos, colors, company details, and social links, or find brands by name or domain.
+        """
         from .resources.brand import AsyncBrandResourceWithStreamingResponse
 
         return AsyncBrandResourceWithStreamingResponse(self._client.brand)
 
     @cached_property
     def industry(self) -> industry.AsyncIndustryResourceWithStreamingResponse:
+        """Extract structured data, competitors, styleguides, and fonts from any website."""
         from .resources.industry import AsyncIndustryResourceWithStreamingResponse
 
         return AsyncIndustryResourceWithStreamingResponse(self._client.industry)
 
     @cached_property
     def utility(self) -> utility.AsyncUtilityResourceWithStreamingResponse:
+        """Prefetch brand and styleguide data so later lookups return sooner."""
         from .resources.utility import AsyncUtilityResourceWithStreamingResponse
 
         return AsyncUtilityResourceWithStreamingResponse(self._client.utility)
 
     @cached_property
     def monitors(self) -> monitors.AsyncMonitorsResourceWithStreamingResponse:
-        """Watch websites for exact or meaningful changes."""
+        """Watch websites on a schedule for exact or meaningful changes."""
         from .resources.monitors import AsyncMonitorsResourceWithStreamingResponse
 
         return AsyncMonitorsResourceWithStreamingResponse(self._client.monitors)
 
     @cached_property
     def batch(self) -> batch.AsyncBatchResourceWithStreamingResponse:
-        """Scrape many pages or crawl a site asynchronously."""
+        """Scrape up to 100,000 URLs or crawl a site asynchronously."""
         from .resources.batch import AsyncBatchResourceWithStreamingResponse
 
         return AsyncBatchResourceWithStreamingResponse(self._client.batch)
@@ -961,13 +1022,16 @@ class AsyncContextDevWithStreamedResponse:
 
     @cached_property
     def people(self) -> people.AsyncPeopleResourceWithStreamingResponse:
+        """
+        Enrich a person from identity clues, or find people with a natural-language query.
+        """
         from .resources.people import AsyncPeopleResourceWithStreamingResponse
 
         return AsyncPeopleResourceWithStreamingResponse(self._client.people)
 
     @cached_property
     def news(self) -> news.AsyncNewsResourceWithStreamingResponse:
-        """Search live and historical news about a company."""
+        """Search live and historical news by company or with a natural-language query."""
         from .resources.news import AsyncNewsResourceWithStreamingResponse
 
         return AsyncNewsResourceWithStreamingResponse(self._client.news)
@@ -981,7 +1045,9 @@ class AsyncContextDevWithStreamedResponse:
 
     @cached_property
     def logs(self) -> logs.AsyncLogsResourceWithStreamingResponse:
-        """Read your organization's API request logs."""
+        """
+        Inspect your organization's API requests, including retained inputs and responses.
+        """
         from .resources.logs import AsyncLogsResourceWithStreamingResponse
 
         return AsyncLogsResourceWithStreamingResponse(self._client.logs)
@@ -994,7 +1060,7 @@ class AsyncContextDevWithStreamedResponse:
 
     @cached_property
     def feedback(self) -> feedback.AsyncFeedbackResourceWithStreamingResponse:
-        """Report API issues and documentation mismatches."""
+        """Report bugs, wrong results, and docs mismatches to the Context.dev team."""
         from .resources.feedback import AsyncFeedbackResourceWithStreamingResponse
 
         return AsyncFeedbackResourceWithStreamingResponse(self._client.feedback)

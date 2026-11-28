@@ -22,56 +22,56 @@ class ResultLocation(BaseModel):
     """City."""
 
     country_code: Optional[str] = None
-    """Country as a two-letter code, such as US or GB."""
+    """ISO 3166-1 alpha-2 country code, such as `US`."""
 
     region: Optional[str] = None
     """State or region."""
 
 
 class ResultRoleCompany(BaseModel):
-    """Current employer, when known."""
+    """Current employer. `null` when unknown."""
 
     domain: Optional[str] = None
-    """The company’s website domain."""
+    """Website domain of the company."""
 
     name: Optional[str] = None
     """Company name."""
 
 
 class ResultRole(BaseModel):
-    """The person’s current role."""
+    """The person's current role."""
 
     company: Optional[ResultRoleCompany] = None
-    """Current employer, when known."""
+    """Current employer. `null` when unknown."""
 
     functions: List[str]
-    """Areas of responsibility."""
+    """Areas of responsibility, such as `sales`."""
 
     seniority: Optional[str] = None
-    """Seniority level."""
+    """Seniority level, such as `executive`."""
 
     started_on: Optional[str] = None
-    """Role start date (YYYY-MM-DD)."""
+    """When the role started, as `YYYY-MM-DD`."""
 
     title: Optional[str] = None
     """Job title."""
 
 
 class ResultMatch(BaseModel):
-    """How well the person matches the query. Only returned in `ultra` mode."""
+    """How well the person matches the query. Returned only in `ultra` mode."""
 
     confidence: float
     """How well the person matches the query, from 0 to 1."""
 
 
 class Result(BaseModel):
-    """A person matching your search; unavailable details are null or empty lists."""
+    """A person who matches your search. Unknown details are `null` or empty lists."""
 
     description: Optional[str] = None
     """What the person does."""
 
     is_founder: Optional[bool] = None
-    """Whether the person is currently a founder or co-founder."""
+    """Whether the person is currently a founder or co-founder. `null` when unknown."""
 
     location: ResultLocation
     """Where the person lives."""
@@ -80,10 +80,13 @@ class Result(BaseModel):
     """Full name."""
 
     profiles: List[str]
-    """Public professional profile URLs."""
+    """Public professional profile URLs.
+
+    Send one to `POST /people/enrich` as `social_urls` for the full profile.
+    """
 
     role: ResultRole
-    """The person’s current role."""
+    """The person's current role."""
 
     schools: List[str]
     """Schools attended."""
@@ -92,10 +95,10 @@ class Result(BaseModel):
     """Professional skills."""
 
     years_of_experience: Optional[int] = None
-    """Years of professional experience."""
+    """Years of professional experience. `null` when unknown."""
 
     match: Optional[ResultMatch] = None
-    """How well the person matches the query. Only returned in `ultra` mode."""
+    """How well the person matches the query. Returned only in `ultra` mode."""
 
 
 class KeyMetadata(BaseModel):
@@ -105,7 +108,7 @@ class KeyMetadata(BaseModel):
     """Credits charged for this request."""
 
     credits_remaining: int
-    """Credits remaining for your organization."""
+    """Credits your organization has left after this request."""
 
 
 class PersonSearchResponse(BaseModel):
@@ -122,4 +125,4 @@ class PersonSearchResponse(BaseModel):
     """Credits this request used and your remaining balance."""
 
     next_cursor: Optional[str] = None
-    """Pass as cursor to fetch the next page; null when there are no more results."""
+    """Pass as `cursor` to fetch the next page. `null` on the last page."""

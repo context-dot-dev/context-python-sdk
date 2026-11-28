@@ -15,20 +15,24 @@ class KeyMetadata(BaseModel):
     """Credits charged for this request."""
 
     credits_remaining: int
-    """Credits remaining for your organization."""
+    """Credits your organization has left after this request."""
 
 
 class MonitorGetLimitsResponse(BaseModel):
     monitors_limit: int
-    """Most monitors you can have: your plan's allowance or a custom limit."""
+    """
+    Maximum number of monitors your organization can have, from your plan or a
+    custom limit.
+    """
 
     monitors_used: int
-    """Number of monitors the account currently has."""
+    """Number of monitors your organization has."""
 
     plan: Literal["free", "starter", "pro", "scale"]
-    """
-    `starter` means Developer; `pro` means Pro or Growth; `scale` means Scale or
-    Enterprise.
+    """Your plan tier.
+
+    `free` is Free, `starter` is Developer, `pro` is Pro or Growth, and `scale` is
+    Scale or Enterprise.
     """
 
     request_id: str

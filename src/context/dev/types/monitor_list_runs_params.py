@@ -9,10 +9,10 @@ __all__ = ["MonitorListRunsParams"]
 
 class MonitorListRunsParams(TypedDict, total=False):
     cursor: str
-    """Opaque pagination cursor from a previous response."""
+    """Cursor from the previous page's `next_cursor`. Omit for the first page."""
 
     limit: int
-    """Maximum number of items to return per page (1-100). Defaults to 25."""
+    """Maximum number of runs to return per page. Defaults to 25."""
 
     status: Literal["queued", "running", "completed", "failed", "skipped"]
-    """Filter runs by lifecycle status."""
+    """Filter by run status."""

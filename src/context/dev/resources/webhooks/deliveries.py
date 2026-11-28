@@ -68,12 +68,13 @@ class DeliveriesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DeliveryRetrieveResponse:
         """
-        Retrieve a webhook delivery’s status and original payload.
+        Retrieve a webhook delivery's status, retry settings, and most recent attempt.
 
         Args:
-          delivery_id: Delivery ID.
+          delivery_id: ID of the delivery.
 
-          tags: Comma-separated labels for filtering usage, e.g. `production,team-alpha`.
+          tags: Comma-separated labels for this request, such as `production,team-alpha`. Filter
+              usage and request logs by them.
 
           extra_headers: Send extra headers
 
@@ -116,22 +117,24 @@ class DeliveriesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DeliveryListResponse:
         """
-        List batch and monitor webhook deliveries from the last 30 days.
+        List webhook deliveries for your batches or monitors from the last 30 days,
+        newest first. Filter by source, status, or creation time.
 
         Args:
-          type: Delivery source.
+          type: List batch webhook deliveries.
 
           batch_id: Filter by batch ID.
 
-          created_after: Only include events created after this ISO 8601 timestamp.
+          created_after: Only include deliveries created after this time.
 
-          cursor: The next_cursor from the previous response.
+          cursor: Cursor from the previous page's `next_cursor`. Omit for the first page.
 
-          limit: Number of deliveries to return.
+          limit: Maximum number of deliveries to return per page.
 
           status: Filter by delivery status.
 
-          tags: Labels for filtering usage in the dashboard.
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
 
           extra_headers: Send extra headers
 
@@ -163,16 +166,17 @@ class DeliveriesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DeliveryListResponse:
         """
-        List batch and monitor webhook deliveries from the last 30 days.
+        List webhook deliveries for your batches or monitors from the last 30 days,
+        newest first. Filter by source, status, or creation time.
 
         Args:
-          type: Delivery source.
+          type: List monitor webhook deliveries.
 
-          created_after: Only include events created after this ISO 8601 timestamp.
+          created_after: Only include deliveries created after this time.
 
-          cursor: The next_cursor from the previous response.
+          cursor: Cursor from the previous page's `next_cursor`. Omit for the first page.
 
-          limit: Number of deliveries to return.
+          limit: Maximum number of deliveries to return per page.
 
           monitor_id: Filter by monitor ID.
 
@@ -180,7 +184,8 @@ class DeliveriesResource(SyncAPIResource):
 
           status: Filter by delivery status.
 
-          tags: Labels for filtering usage in the dashboard.
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
 
           extra_headers: Send extra headers
 
@@ -249,16 +254,17 @@ class DeliveriesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DeliveryListAttemptsResponse:
         """
-        List a delivery’s attempts, newest first.
+        List a webhook delivery's attempts, newest first.
 
         Args:
-          delivery_id: Delivery ID.
+          delivery_id: ID of the delivery.
 
-          cursor: The next_cursor from the previous response.
+          cursor: Cursor from the previous page's `next_cursor`. Omit for the first page.
 
-          limit: Number of attempts to return.
+          limit: Maximum number of attempts to return per page.
 
-          tags: Comma-separated labels for filtering usage, e.g. `production,team-alpha`.
+          tags: Comma-separated labels for this request, such as `production,team-alpha`. Filter
+              usage and request logs by them.
 
           extra_headers: Send extra headers
 
@@ -303,19 +309,20 @@ class DeliveriesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DeliveryRetryResponse:
-        """Resend the original payload using the source’s current URL and secret.
-
-        Available
-        for 7 days after the event.
+        """
+        Resend a delivery's original payload to the source's current webhook URL, signed
+        with its current secret. Available for 7 days after the event.
 
         Args:
-          delivery_id: Delivery ID.
+          delivery_id: ID of the delivery.
 
-          force: Resend even if the delivery already succeeded. Defaults to false.
+          force: Resend even if the delivery already succeeded.
 
-          tags: Labels for filtering usage in the dashboard.
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
 
-          idempotency_key: Unique key to prevent duplicate retry requests.
+          idempotency_key: Unique key for this retry. Repeating the request with the same key does not send
+              the payload again.
 
           extra_headers: Send extra headers
 
@@ -379,12 +386,13 @@ class AsyncDeliveriesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DeliveryRetrieveResponse:
         """
-        Retrieve a webhook delivery’s status and original payload.
+        Retrieve a webhook delivery's status, retry settings, and most recent attempt.
 
         Args:
-          delivery_id: Delivery ID.
+          delivery_id: ID of the delivery.
 
-          tags: Comma-separated labels for filtering usage, e.g. `production,team-alpha`.
+          tags: Comma-separated labels for this request, such as `production,team-alpha`. Filter
+              usage and request logs by them.
 
           extra_headers: Send extra headers
 
@@ -427,22 +435,24 @@ class AsyncDeliveriesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DeliveryListResponse:
         """
-        List batch and monitor webhook deliveries from the last 30 days.
+        List webhook deliveries for your batches or monitors from the last 30 days,
+        newest first. Filter by source, status, or creation time.
 
         Args:
-          type: Delivery source.
+          type: List batch webhook deliveries.
 
           batch_id: Filter by batch ID.
 
-          created_after: Only include events created after this ISO 8601 timestamp.
+          created_after: Only include deliveries created after this time.
 
-          cursor: The next_cursor from the previous response.
+          cursor: Cursor from the previous page's `next_cursor`. Omit for the first page.
 
-          limit: Number of deliveries to return.
+          limit: Maximum number of deliveries to return per page.
 
           status: Filter by delivery status.
 
-          tags: Labels for filtering usage in the dashboard.
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
 
           extra_headers: Send extra headers
 
@@ -474,16 +484,17 @@ class AsyncDeliveriesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DeliveryListResponse:
         """
-        List batch and monitor webhook deliveries from the last 30 days.
+        List webhook deliveries for your batches or monitors from the last 30 days,
+        newest first. Filter by source, status, or creation time.
 
         Args:
-          type: Delivery source.
+          type: List monitor webhook deliveries.
 
-          created_after: Only include events created after this ISO 8601 timestamp.
+          created_after: Only include deliveries created after this time.
 
-          cursor: The next_cursor from the previous response.
+          cursor: Cursor from the previous page's `next_cursor`. Omit for the first page.
 
-          limit: Number of deliveries to return.
+          limit: Maximum number of deliveries to return per page.
 
           monitor_id: Filter by monitor ID.
 
@@ -491,7 +502,8 @@ class AsyncDeliveriesResource(AsyncAPIResource):
 
           status: Filter by delivery status.
 
-          tags: Labels for filtering usage in the dashboard.
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
 
           extra_headers: Send extra headers
 
@@ -560,16 +572,17 @@ class AsyncDeliveriesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DeliveryListAttemptsResponse:
         """
-        List a delivery’s attempts, newest first.
+        List a webhook delivery's attempts, newest first.
 
         Args:
-          delivery_id: Delivery ID.
+          delivery_id: ID of the delivery.
 
-          cursor: The next_cursor from the previous response.
+          cursor: Cursor from the previous page's `next_cursor`. Omit for the first page.
 
-          limit: Number of attempts to return.
+          limit: Maximum number of attempts to return per page.
 
-          tags: Comma-separated labels for filtering usage, e.g. `production,team-alpha`.
+          tags: Comma-separated labels for this request, such as `production,team-alpha`. Filter
+              usage and request logs by them.
 
           extra_headers: Send extra headers
 
@@ -614,19 +627,20 @@ class AsyncDeliveriesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DeliveryRetryResponse:
-        """Resend the original payload using the source’s current URL and secret.
-
-        Available
-        for 7 days after the event.
+        """
+        Resend a delivery's original payload to the source's current webhook URL, signed
+        with its current secret. Available for 7 days after the event.
 
         Args:
-          delivery_id: Delivery ID.
+          delivery_id: ID of the delivery.
 
-          force: Resend even if the delivery already succeeded. Defaults to false.
+          force: Resend even if the delivery already succeeded.
 
-          tags: Labels for filtering usage in the dashboard.
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
 
-          idempotency_key: Unique key to prevent duplicate retry requests.
+          idempotency_key: Unique key for this retry. Repeating the request with the same key does not send
+              the payload again.
 
           extra_headers: Send extra headers
 

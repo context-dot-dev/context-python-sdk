@@ -14,7 +14,7 @@ class KeyMetadata(BaseModel):
     """Credits charged for this request."""
 
     credits_remaining: int
-    """Credits remaining for your organization."""
+    """Credits your organization has left after this request."""
 
 
 class BatchDeleteResponse(BaseModel):
@@ -28,7 +28,7 @@ class BatchDeleteResponse(BaseModel):
     """ID of the deleted batch."""
 
     deleted: Optional[bool] = None
-    """Always true on success."""
+    """Always `true`."""
 
     key_metadata: Optional[KeyMetadata] = None
     """Credits this request used and your remaining balance."""

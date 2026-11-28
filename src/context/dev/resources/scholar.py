@@ -62,25 +62,27 @@ class ScholarResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ScholarSearchResponse:
-        """Search full-text papers from arXiv and Europe PMC.
-
-        Returns up to 250 relevant
-        papers with matching passages and full-text links.
+        """
+        Search the full text of papers from arXiv and Europe PMC by topic or question.
+        Each result includes the matching passage and a direct link to the full text.
+        Page through up to 250 matches, ranked by relevance or newest first.
 
         Args:
-          query: A topic or question. Append one arxiv:, pmcid:, pmid:, or doi: ID to search
-              within an indexed paper.
+          query: Topic or question to search for. Append one `arxiv:`, `pmcid:`, `pmid:`, or
+              `doi:` ID to search within that paper, such as `protein folding pmid:34265844`,
+              or send the ID on its own.
 
-          cursor: Use next_cursor to fetch the next page.
+          cursor: Cursor from the previous page's `next_cursor`. Omit for the first page.
 
           filter_by: Filter by publication date.
 
-          limit: Papers per page.
+          limit: Maximum number of papers to return per page.
 
-          sort: Order the top 250 matches. date_desc puts newest first, with undated papers
-              last.
+          sort: `relevance` puts the closest matches first; `date_desc` puts the newest papers
+              first, with undated papers last. Both orders apply to the top 250 matches.
 
-          tags: Labels for filtering usage in the dashboard.
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
 
           extra_headers: Send extra headers
 
@@ -148,25 +150,27 @@ class AsyncScholarResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ScholarSearchResponse:
-        """Search full-text papers from arXiv and Europe PMC.
-
-        Returns up to 250 relevant
-        papers with matching passages and full-text links.
+        """
+        Search the full text of papers from arXiv and Europe PMC by topic or question.
+        Each result includes the matching passage and a direct link to the full text.
+        Page through up to 250 matches, ranked by relevance or newest first.
 
         Args:
-          query: A topic or question. Append one arxiv:, pmcid:, pmid:, or doi: ID to search
-              within an indexed paper.
+          query: Topic or question to search for. Append one `arxiv:`, `pmcid:`, `pmid:`, or
+              `doi:` ID to search within that paper, such as `protein folding pmid:34265844`,
+              or send the ID on its own.
 
-          cursor: Use next_cursor to fetch the next page.
+          cursor: Cursor from the previous page's `next_cursor`. Omit for the first page.
 
           filter_by: Filter by publication date.
 
-          limit: Papers per page.
+          limit: Maximum number of papers to return per page.
 
-          sort: Order the top 250 matches. date_desc puts newest first, with undated papers
-              last.
+          sort: `relevance` puts the closest matches first; `date_desc` puts the newest papers
+              first, with undated papers last. Both orders apply to the top 250 matches.
 
-          tags: Labels for filtering usage in the dashboard.
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
 
           extra_headers: Send extra headers
 

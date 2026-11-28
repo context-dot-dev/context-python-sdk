@@ -13,16 +13,13 @@ __all__ = ["WebMapURLsParams", "TimeoutOpts"]
 
 class WebMapURLsParams(TypedDict, total=False):
     domain: Required[str]
-    """Domain to map, e.g. `stripe.com`."""
+    """Domain to map, such as `stripe.com`."""
 
     exclude_url_regex: Annotated[str, PropertyInfo(alias="excludeUrlRegex")]
-    """Regex pattern.
-
-    URLs matching this pattern are not returned, even when they match urlRegex.
-    """
+    """Leave out URLs matching this regex, even when they match `urlRegex`."""
 
     headers: Dict[str, str]
-    """HTTP headers for the target origin. Non-empty headers bypass caching."""
+    """HTTP headers to send to the target site. Requests with headers skip the cache."""
 
     include_subdomains: Annotated[bool, PropertyInfo(alias="includeSubdomains")]
     """Include URLs on subdomains."""
@@ -31,10 +28,9 @@ class WebMapURLsParams(TypedDict, total=False):
     """Maximum number of URLs to return."""
 
     policies: SequenceNotStr[str]
-    """Comma-separated access policy IDs to apply.
+    """Comma-separated access policy IDs to apply; each URL must pass all of them.
 
-    A URL must pass every policy. Leave it out unless access policies are enabled
-    for your organization; otherwise the request fails with
+    Requires access policies enabled for your organization; otherwise returns
     `ACCESS_POLICIES_NOT_ENABLED`.
     """
 
@@ -48,16 +44,16 @@ class WebMapURLsParams(TypedDict, total=False):
     """
 
     tags: SequenceNotStr[str]
-    """Comma-separated labels for filtering usage, e.g. `production,team-alpha`."""
+    """Comma-separated labels for this request, such as `production,team-alpha`.
+
+    Filter usage and request logs by them.
+    """
 
     timeout_opts: Annotated[TimeoutOpts, PropertyInfo(alias="timeoutOpts")]
     """Request deadline and what to return when it passes."""
 
     url_regex: Annotated[str, PropertyInfo(alias="urlRegex")]
-    """Regex pattern.
-
-    Only URLs matching this pattern are returned and counted against maxLinks.
-    """
+    """Only return URLs matching this regex. Only matches count toward `maxLinks`."""
 
     zdr: Literal["enabled", "disabled"]
     """`enabled` turns on zero data retention.
@@ -73,7 +69,8 @@ class TimeoutOpts(TypedDict, total=False):
     """Deadline in milliseconds."""
 
     behavior: Literal["fail", "return-partial"]
-    """\"fail" returns 408 at the deadline.
+    """`fail` returns 408 at the deadline.
 
-    "return-partial" returns available results; inspect the response’s partial flag.
+    `return-partial` returns the results collected so far and marks the response as
+    partial.
     """

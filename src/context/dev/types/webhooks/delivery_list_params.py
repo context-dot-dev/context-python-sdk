@@ -14,39 +14,42 @@ __all__ = ["DeliveryListParams", "ByBatch", "ByMonitor"]
 
 class ByBatch(TypedDict, total=False):
     type: Required[Literal["batch"]]
-    """Delivery source."""
+    """List batch webhook deliveries."""
 
     batch_id: str
     """Filter by batch ID."""
 
     created_after: Annotated[Union[str, datetime], PropertyInfo(format="iso8601")]
-    """Only include events created after this ISO 8601 timestamp."""
+    """Only include deliveries created after this time."""
 
     cursor: str
-    """The next_cursor from the previous response."""
+    """Cursor from the previous page's `next_cursor`. Omit for the first page."""
 
     limit: int
-    """Number of deliveries to return."""
+    """Maximum number of deliveries to return per page."""
 
     status: Literal["pending", "delivering", "retrying", "delivered", "failed", "cancelled"]
     """Filter by delivery status."""
 
     tags: SequenceNotStr[str]
-    """Labels for filtering usage in the dashboard."""
+    """Labels for this request.
+
+    Filter usage and request logs by them in the dashboard or with `GET /org/logs`.
+    """
 
 
 class ByMonitor(TypedDict, total=False):
     type: Required[Literal["monitor"]]
-    """Delivery source."""
+    """List monitor webhook deliveries."""
 
     created_after: Annotated[Union[str, datetime], PropertyInfo(format="iso8601")]
-    """Only include events created after this ISO 8601 timestamp."""
+    """Only include deliveries created after this time."""
 
     cursor: str
-    """The next_cursor from the previous response."""
+    """Cursor from the previous page's `next_cursor`. Omit for the first page."""
 
     limit: int
-    """Number of deliveries to return."""
+    """Maximum number of deliveries to return per page."""
 
     monitor_id: str
     """Filter by monitor ID."""
@@ -58,7 +61,10 @@ class ByMonitor(TypedDict, total=False):
     """Filter by delivery status."""
 
     tags: SequenceNotStr[str]
-    """Labels for filtering usage in the dashboard."""
+    """Labels for this request.
+
+    Filter usage and request logs by them in the dashboard or with `GET /org/logs`.
+    """
 
 
 DeliveryListParams: TypeAlias = Union[ByBatch, ByMonitor]

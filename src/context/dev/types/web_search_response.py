@@ -11,15 +11,15 @@ __all__ = ["WebSearchResponse", "CacheMetadata", "Result", "ResultHighlights", "
 
 
 class CacheMetadata(BaseModel):
-    """Whether this response came from cache."""
+    """Cache status of this response."""
 
     age_ms: int
-    """Age of the cached data in milliseconds. Zero for miss and zdr responses."""
+    """Age of the cached data, in milliseconds. `0` for `miss` and `zdr`."""
 
     status: Literal["hit", "miss", "zdr"]
     """
-    Whether the response was served from cache, required fresh work, or honored
-    zero-data-retention cache bypass.
+    `hit` when served from cache, `miss` when fetched fresh, `zdr` when zero data
+    retention bypassed the cache.
     """
 
 
@@ -36,12 +36,12 @@ class ResultHighlights(BaseModel):
         "WEBSITE_NOT_FOUND",
         "ERROR",
     ]
-    """Per-result highlights outcome. Inspect this before reading `highlights`."""
+    """Highlights outcome for this result. Check it before reading `highlights`."""
 
     highlights: Optional[List[str]] = None
     """Passages relevant to the query, in page order.
 
-    Null unless highlightsOptions.enabled is true and the page was read.
+    `null` unless `highlightsOptions.enabled` is `true` and the page was read.
     """
 
     message: Optional[str] = None
@@ -61,12 +61,12 @@ class ResultMarkdown(BaseModel):
         "WEBSITE_NOT_FOUND",
         "ERROR",
     ]
-    """Per-result scrape outcome. Inspect this before reading `markdown`."""
+    """Scrape outcome for this result. Check it before reading `markdown`."""
 
     markdown: Optional[str] = None
-    """GFM Markdown of the page.
+    """Page content as GitHub-flavored Markdown.
 
-    Null unless markdownOptions.enabled is true and scraping succeeded.
+    `null` unless `markdownOptions.enabled` is `true` and the scrape succeeded.
     """
 
     final_dom_state: Optional[Literal["loaded", "still-loading"]] = FieldInfo(alias="finalDOMState", default=None)
@@ -81,10 +81,7 @@ class ResultMarkdown(BaseModel):
 
 class Result(BaseModel):
     description: str
-    """Snippet excerpt from the page.
-
-    Empty string when the search provider does not supply a snippet.
-    """
+    """Snippet from the page. Empty string when no snippet is available."""
 
     highlights: ResultHighlights
     """Highlights status and passages for this result."""
@@ -93,7 +90,7 @@ class Result(BaseModel):
     """Markdown scrape status and content for this result."""
 
     relevance: Literal["high", "medium", "low"]
-    """Relevance to the original query."""
+    """How relevant the result is to the query."""
 
     title: str
     """Page title."""
@@ -109,15 +106,15 @@ class KeyMetadata(BaseModel):
     """Credits charged for this request."""
 
     credits_remaining: int
-    """Credits remaining for your organization."""
+    """Credits your organization has left after this request."""
 
 
 class WebSearchResponse(BaseModel):
     cache_metadata: CacheMetadata
-    """Whether this response came from cache."""
+    """Cache status of this response."""
 
     query: str
-    """Echo of the original query (useful when fanout was enabled)."""
+    """The query you sent."""
 
     request_id: str
     """Unique ID of this request, also in `X-Request-Id`.
@@ -132,7 +129,7 @@ class WebSearchResponse(BaseModel):
 
     partial: Optional[bool] = None
     """
-    True when timeoutOpts.behavior=return-partial returned the usable results
-    collected before the deadline. Partial collections are not cached as complete
-    results.
+    `true` when the deadline passed with `timeoutOpts.behavior` set to
+    `return-partial`. Only results finished in time are included. Partial results
+    are not cached.
     """

@@ -15,7 +15,7 @@ class KeyMetadata(BaseModel):
     """Credits charged for this request."""
 
     credits_remaining: int
-    """Credits remaining for your organization."""
+    """Credits your organization has left after this request."""
 
 
 class UtilityPrefetchResponse(BaseModel):
@@ -26,16 +26,16 @@ class UtilityPrefetchResponse(BaseModel):
     """
 
     domain: Optional[str] = None
-    """The domain that was queued for prefetching"""
+    """Domain queued for prefetching."""
 
     key_metadata: Optional[KeyMetadata] = None
     """Credits this request used and your remaining balance."""
 
     message: Optional[str] = None
-    """Success message"""
+    """Human-readable confirmation."""
 
     status: Optional[str] = None
     """Always `ok` on success."""
 
     type: Optional[Literal["brand", "styleguide"]] = None
-    """The type of prefetch that was queued, echoed from the request"""
+    """Data type that was queued, from the request."""

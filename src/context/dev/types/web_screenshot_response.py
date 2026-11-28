@@ -11,15 +11,15 @@ __all__ = ["WebScreenshotResponse", "CacheMetadata", "KeyMetadata"]
 
 
 class CacheMetadata(BaseModel):
-    """Whether this response came from cache."""
+    """Cache status of this response."""
 
     age_ms: int
-    """Age of the cached data in milliseconds. Zero for miss and zdr responses."""
+    """Age of the cached data, in milliseconds. `0` for `miss` and `zdr`."""
 
     status: Literal["hit", "miss", "zdr"]
     """
-    Whether the response was served from cache, required fresh work, or honored
-    zero-data-retention cache bypass.
+    `hit` when served from cache, `miss` when fetched fresh, `zdr` when zero data
+    retention bypassed the cache.
     """
 
 
@@ -30,12 +30,12 @@ class KeyMetadata(BaseModel):
     """Credits charged for this request."""
 
     credits_remaining: int
-    """Credits remaining for your organization."""
+    """Credits your organization has left after this request."""
 
 
 class WebScreenshotResponse(BaseModel):
     cache_metadata: CacheMetadata
-    """Whether this response came from cache."""
+    """Cache status of this response."""
 
     request_id: str
     """Unique ID of this request, also in `X-Request-Id`.
@@ -44,10 +44,10 @@ class WebScreenshotResponse(BaseModel):
     """
 
     code: Optional[int] = None
-    """HTTP status code"""
+    """HTTP status code, repeated in the body."""
 
     domain: Optional[str] = None
-    """The normalized domain that was processed"""
+    """Normalized domain that was captured."""
 
     final_dom_state: Optional[Literal["loaded", "still-loading"]] = FieldInfo(alias="finalDOMState", default=None)
     """
@@ -56,22 +56,22 @@ class WebScreenshotResponse(BaseModel):
     """
 
     height: Optional[int] = None
-    """Height in pixels of the returned screenshot image"""
+    """Height of the returned image, in pixels."""
 
     key_metadata: Optional[KeyMetadata] = None
     """Credits this request used and your remaining balance."""
 
     screenshot: Optional[str] = None
-    """
-    Public image URL for standard requests, or an in-memory data URL when ZDR or
-    non-empty custom headers are supplied.
+    """URL of the screenshot image.
+
+    A data URL instead when `zdr` is `enabled` or `headers` are sent.
     """
 
     screenshot_type: Optional[Literal["viewport", "fullPage"]] = FieldInfo(alias="screenshotType", default=None)
-    """Type of screenshot that was captured"""
+    """Whether the image covers the viewport or the full page."""
 
     status: Optional[str] = None
     """Always `ok` on success."""
 
     width: Optional[int] = None
-    """Width in pixels of the returned screenshot image"""
+    """Width of the returned image, in pixels."""

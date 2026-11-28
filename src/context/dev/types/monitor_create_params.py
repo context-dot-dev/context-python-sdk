@@ -41,36 +41,39 @@ class MonitorCreateParams(TypedDict, total=False):
     change_detection: ChangeDetection
     """How changes are judged.
 
-    Defaults to `semantic` for extract and search targets and page targets with
-    `instructions`, otherwise `exact`.
+    Defaults to `semantic` for extract and search targets and for page targets with
+    `instructions`; otherwise `exact`. Sitemap targets support only `exact`, and
+    extract targets only `semantic`.
     """
 
     mode: Literal["web"]
-    """Always `web`. Optional."""
+    """Monitor category. Always `web`."""
 
     policies: SequenceNotStr[str]
     """Access policy IDs to apply to every run.
 
-    Leave it out unless access policies are enabled for your organization; otherwise
-    the request fails with `ACCESS_POLICIES_NOT_ENABLED`.
+    Requires access policies enabled for your organization; otherwise returns
+    `ACCESS_POLICIES_NOT_ENABLED`.
     """
 
     schedule: Schedule
-    """Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
+    """Run the monitor at a fixed interval, such as every 6 hours or every 2 days.
 
-    every 6 hours or every 2 days. The total interval (frequency × unit) must be
-    between 10 minutes and 1 year.
+    The interval must be between 10 minutes and 1 year.
     """
 
     tags: SequenceNotStr[str]
-    """Labels for filtering monitors, their changes, and their usage."""
+    """Labels for grouping monitors.
+
+    Filter monitors, changes, and credit usage by tag.
+    """
 
     webhook: Optional[Webhook]
-    """Webhook destination and delivery settings. Null means no webhook is configured."""
+    """Webhook that receives monitor events. `null` when no webhook is configured."""
 
 
 class TargetMonitorsPageTargetActionWebScrapeWaitAction(TypedDict, total=False):
-    """Pause for a fixed number of milliseconds before continuing to the next action."""
+    """Pause for a fixed time before the next action."""
 
     do: Required[Literal["wait"]]
     """Use `wait` to pause for a fixed duration."""
@@ -80,7 +83,7 @@ class TargetMonitorsPageTargetActionWebScrapeWaitAction(TypedDict, total=False):
 
 
 class TargetMonitorsPageTargetActionWebScrapePerformAction(TypedDict, total=False):
-    """Resolve and perform one natural-language browser action."""
+    """Perform one browser instruction written in plain language."""
 
     action: Required[str]
     """One browser instruction, such as clicking a button or entering text."""
@@ -90,30 +93,25 @@ class TargetMonitorsPageTargetActionWebScrapePerformAction(TypedDict, total=Fals
 
 
 class TargetMonitorsPageTargetActionWebScrapeScrollAction(TypedDict, total=False):
-    """
-    Scroll the page or a selected scrollable container, waiting adaptively for content and dimensions to settle after each iteration.
+    """Scroll the page or a scrollable container.
+
+    Waits for new content to settle after each scroll.
     """
 
     do: Required[Literal["scroll"]]
     """Use `scroll` to move through the page or a container."""
 
     amount: Union[int, Literal["viewport", "max"]]
-    """Pixels per scroll, one visible viewport, or the current scroll boundary.
-
-    Defaults to viewport.
-    """
+    """Distance per scroll: pixels, one `viewport`, or `max` to reach the end."""
 
     container: str
-    """CSS selector for the first matching scroll container. Defaults to the page."""
+    """Scroll the first container matching this CSS selector. Omit to scroll the page."""
 
     direction: Literal["up", "down", "left", "right"]
-    """Direction to scroll. Defaults to down."""
+    """Direction to scroll."""
 
     max_scrolls: Annotated[int, PropertyInfo(alias="maxScrolls")]
-    """Maximum scroll iterations.
-
-    Stops early when scrolling and scrollable extent stop changing. Defaults to 1.
-    """
+    """Maximum number of scroll steps. Stops early when the page stops changing."""
 
 
 TargetMonitorsPageTargetAction: TypeAlias = Union[
@@ -124,111 +122,120 @@ TargetMonitorsPageTargetAction: TypeAlias = Union[
 
 
 class TargetMonitorsPageTarget(TypedDict, total=False):
-    """Watch a single web page.
+    """Watch one web page.
 
-    Exact detection reports visible-text diffs; semantic detection judges confirmed stable diffs against `instructions`.
+    `exact` detection reports any change to the visible text; `semantic` detection reports only confirmed changes that match `instructions`.
     """
 
     type: Required[Literal["page"]]
     """Use `page` to watch one web page."""
 
     url: Required[str]
-    """Public HTTP(S) page URL to monitor."""
+    """Public HTTP(S) URL of the page to watch."""
 
     actions: Optional[Iterable[TargetMonitorsPageTargetAction]]
-    """
-    Optional browser actions executed in array order after the page loads, before
-    content is captured, on every run. Requires a paid plan. Maximum: 5 actions.
-    Changes create a new baseline.
+    """Browser actions to run in order after the page loads and before each capture.
+
+    Requires a paid plan. Changing it resets the baseline.
     """
 
     exclude_selectors: SequenceNotStr[str]
-    """Remove matching regions after inclusions. Changes create a new baseline."""
+    """CSS selectors for regions to ignore, applied after `include_selectors`.
+
+    Changing it resets the baseline.
+    """
 
     include_selectors: SequenceNotStr[str]
-    """Monitor these CSS-selected regions.
+    """CSS selectors for the regions to watch.
 
-    Empty or omitted uses main content. Changes create a new baseline.
+    Omit or leave empty to watch the main content. Changing it resets the baseline.
     """
 
     instructions: str
-    """Plain-language goal describing which page changes matter.
+    """Plain-language description of the changes that matter.
 
-    When provided without change_detection, semantic detection is inferred.
+    Requires `semantic` detection, which is selected when `change_detection` is
+    omitted.
     """
 
     normalize_whitespace: bool
-    """Normalize whitespace before comparing or analyzing text."""
+    """
+    Collapse whitespace before comparing text, so spacing-only edits are not
+    reported.
+    """
 
 
 class TargetMonitorsSitemapTarget(TypedDict, total=False):
-    """Watch a site’s URL inventory for confirmed additions and removals."""
+    """Watch a sitemap and report URLs that are added or removed."""
 
     type: Required[Literal["sitemap"]]
     """Use `sitemap` to watch a site for added or removed URLs."""
 
     url: Required[str]
-    """Sitemap URL to monitor."""
+    """Public HTTP(S) URL of the sitemap to watch."""
 
     exclude: SequenceNotStr[str]
-    """URL path patterns to exclude (max 50)."""
+    """Path patterns of URLs to ignore, such as `/legal/*`."""
 
     include: SequenceNotStr[str]
-    """URL path patterns to include (max 50)."""
+    """Path patterns of URLs to track, such as `/blog/*`."""
 
     max_urls: int
-    """Maximum number of sitemap URLs to track (capped at 10,000)."""
+    """Maximum number of URLs to track."""
 
 
 class TargetMonitorsExtractTarget(TypedDict, total=False):
     """
-    Track relevant pages selected by `schema` and `instructions`; refresh the page set periodically.
+    Extract structured data from the most relevant pages of a site and report meaningful changes. Pages are chosen from `schema` and `instructions`, and the page set is refreshed periodically.
     """
 
     instructions: Required[str]
     """
-    Natural-language instructions guiding which pages and facts to track and which
-    changes to report.
+    Plain-language description of the pages and facts to track and the changes to
+    report.
     """
 
     type: Required[Literal["extract"]]
     """Use `extract` to watch structured data across selected pages."""
 
     url: Required[str]
-    """Root URL to extract structured data from."""
+    """Public HTTP(S) URL where page discovery starts, usually the site home page."""
 
     follow_subdomains: bool
-    """Allow page discovery on subdomains of the target site."""
+    """Also discover pages on subdomains of the site."""
 
     max_depth: int
-    """Optional maximum link depth from the starting URL (0 = only the starting page)."""
+    """Maximum link depth from `url`. `0` tracks only the starting page."""
 
     max_pages: int
     """Maximum number of pages to track."""
 
     schema: Dict[str, object]
-    """JSON Schema for page selection and the baseline snapshot.
-
-    Changes return diffs and evidence.
+    """
+    JSON Schema for the data to extract, up to 20,000 characters; it also guides
+    which pages are tracked. Defaults to a `summary` string and a `key_points` list.
     """
 
 
 class TargetMonitorsSearchTarget(TypedDict, total=False):
     """
-    Search the web on every run and report results not seen before, listed in the change’s `matched_urls` and `evidence`. Semantic detection reports only results describing a new development that matches `instructions`; exact detection reports every new result.
+    Search the web on every run and report results not seen before, listed in the change's `matched_urls` and `evidence`. `semantic` detection reports only results about a new development that matches `instructions`; `exact` detection reports every new result.
     """
 
     query: Required[str]
     """Web search query to run on every check.
 
-    Supports operators such as `site:`, `-site:`, and quoted phrases.
+    Supports `site:`, `-site:`, and quoted phrases.
     """
 
     type: Required[Literal["search"]]
-    """Use `search` to watch the whole web for new results about a topic."""
+    """Use `search` to watch the web for new results about a topic."""
 
     instructions: str
-    """Plain-language description of which new results matter. Defaults to the query."""
+    """Plain-language description of the new results that matter.
+
+    Defaults to `query`. Not allowed with `exact` detection.
+    """
 
 
 Target: TypeAlias = Union[
@@ -237,9 +244,8 @@ Target: TypeAlias = Union[
 
 
 class ChangeDetectionMonitorsExactChangeDetection(TypedDict, total=False):
-    """Detect exact changes.
-
-    For page targets, this means visible text diffs. For sitemap targets, this means URL additions and removals. For search targets, this means every new result.
+    """
+    Report every change: visible-text diffs for pages, added or removed URLs for sitemaps, and every new result for searches.
     """
 
     type: Required[Literal["exact"]]
@@ -248,14 +254,17 @@ class ChangeDetectionMonitorsExactChangeDetection(TypedDict, total=False):
 
 class ChangeDetectionMonitorsSemanticChangeDetection(TypedDict, total=False):
     """
-    Detect meaningful content changes using the target’s instructions and optional schema.
+    Report only changes that matter, judged against the target's `instructions` and, for extract targets, its `schema`.
     """
 
     type: Required[Literal["semantic"]]
-    """Use `semantic` to judge changes against the target instructions."""
+    """Use `semantic` to report only changes that match the target's `instructions`."""
 
     confidence_threshold: float
-    """Minimum confidence required to report a meaningful change, from 0 to 1."""
+    """Minimum confidence a change needs to be reported.
+
+    Higher values mean fewer, more certain alerts.
+    """
 
 
 ChangeDetection: TypeAlias = Union[
@@ -264,40 +273,40 @@ ChangeDetection: TypeAlias = Union[
 
 
 class Schedule(TypedDict, total=False):
-    """Run the monitor on a fixed interval defined by a frequency and a unit, e.g.
+    """Run the monitor at a fixed interval, such as every 6 hours or every 2 days.
 
-    every 6 hours or every 2 days. The total interval (frequency × unit) must be between 10 minutes and 1 year.
+    The interval must be between 10 minutes and 1 year.
     """
 
     frequency: Required[int]
-    """Number of units between runs.
+    """Number of `unit` periods between runs.
 
-    The resulting interval (frequency × unit) must be at least 10 minutes and at
-    most 1 year (e.g. minimum 10 when unit is minutes; maximum 365 when unit is
-    days).
+    The interval must be between 10 minutes and 1 year, so at least `10` with
+    `minutes` and at most `365` with `days`.
     """
 
     type: Required[Literal["interval"]]
     """Use `interval` to run on a repeating schedule."""
 
     unit: Required[Literal["minutes", "hours", "days"]]
-    """Time unit used with `frequency` to set the run interval."""
+    """Time unit for `frequency`."""
 
 
 class Webhook(TypedDict, total=False):
-    """Webhook destination and delivery settings. Null means no webhook is configured."""
+    """Webhook that receives monitor events. `null` when no webhook is configured."""
 
     url: Required[str]
     """Public HTTP(S) URL that receives events.
 
-    Slack and GovSlack URLs get formatted messages.
+    Slack and GovSlack webhook URLs get formatted messages.
     """
 
     events: List[Literal["change.detected", "run.completed"]]
-    """Events to deliver.
+    """Events to send.
 
-    Defaults to `change.detected`; `run.completed` also includes unchanged runs.
+    Defaults to `change.detected`. Add `run.completed` to get a delivery after every
+    completed run, including runs with no change.
     """
 
     retry: RetryConfigParam
-    """Webhook retry settings. Use {} for the default schedule."""
+    """Automatic retry settings. Pass `{}` for the default schedule."""

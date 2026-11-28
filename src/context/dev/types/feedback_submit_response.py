@@ -14,18 +14,18 @@ class KeyMetadata(BaseModel):
     """Credits charged for this request."""
 
     credits_remaining: int
-    """Credits remaining for your organization."""
+    """Credits your organization has left after this request."""
 
 
 class FeedbackSubmitResponse(BaseModel):
     already_submitted: bool
-    """
-    True when feedback for this request_id was already recorded; the original
-    feedback_id is returned.
+    """`true` when feedback for this `request_id` was already recorded.
+
+    `feedback_id` is then the original ID.
     """
 
     feedback_id: str
-    """ID of the stored feedback."""
+    """Unique ID of the feedback."""
 
     request_id: str
     """Unique ID of this request, also in `X-Request-Id`.

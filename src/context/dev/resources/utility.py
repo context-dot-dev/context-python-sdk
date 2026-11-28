@@ -24,6 +24,8 @@ __all__ = ["UtilityResource", "AsyncUtilityResource"]
 
 
 class UtilityResource(SyncAPIResource):
+    """Prefetch brand and styleguide data so later lookups return sooner."""
+
     @cached_property
     def with_raw_response(self) -> UtilityResourceWithRawResponse:
         """
@@ -59,20 +61,22 @@ class UtilityResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UtilityPrefetchResponse:
         """
-        Queue brand or styleguide data so a later lookup can return sooner.
+        Start fetching a domain's brand or styleguide data in the background so a later
+        lookup returns faster. Accepts a domain or a work email.
 
         Args:
-          identifier: Identifier of the target to prefetch. Provide exactly one of domain or email.
+          identifier: Domain or work email to prefetch. Provide exactly one.
 
           type: Data to prefetch.
 
-          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
-              access policies are enabled for your organization; otherwise the request fails
-              with `ACCESS_POLICIES_NOT_ENABLED`.
+          policies: Access policy IDs to apply; each URL must pass all of them. Requires access
+              policies enabled for your organization; otherwise returns
+              `ACCESS_POLICIES_NOT_ENABLED`.
 
-          tags: Labels for filtering usage in the dashboard.
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
 
-          timeout_opts: Request deadline and what to return when it passes.
+          timeout_opts: Request deadline. The request fails with 408 when it passes.
 
           extra_headers: Send extra headers
 
@@ -102,6 +106,8 @@ class UtilityResource(SyncAPIResource):
 
 
 class AsyncUtilityResource(AsyncAPIResource):
+    """Prefetch brand and styleguide data so later lookups return sooner."""
+
     @cached_property
     def with_raw_response(self) -> AsyncUtilityResourceWithRawResponse:
         """
@@ -137,20 +143,22 @@ class AsyncUtilityResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UtilityPrefetchResponse:
         """
-        Queue brand or styleguide data so a later lookup can return sooner.
+        Start fetching a domain's brand or styleguide data in the background so a later
+        lookup returns faster. Accepts a domain or a work email.
 
         Args:
-          identifier: Identifier of the target to prefetch. Provide exactly one of domain or email.
+          identifier: Domain or work email to prefetch. Provide exactly one.
 
           type: Data to prefetch.
 
-          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
-              access policies are enabled for your organization; otherwise the request fails
-              with `ACCESS_POLICIES_NOT_ENABLED`.
+          policies: Access policy IDs to apply; each URL must pass all of them. Requires access
+              policies enabled for your organization; otherwise returns
+              `ACCESS_POLICIES_NOT_ENABLED`.
 
-          tags: Labels for filtering usage in the dashboard.
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
 
-          timeout_opts: Request deadline and what to return when it passes.
+          timeout_opts: Request deadline. The request fails with 408 when it passes.
 
           extra_headers: Send extra headers
 

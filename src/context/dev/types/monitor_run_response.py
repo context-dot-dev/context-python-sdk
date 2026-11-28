@@ -14,13 +14,15 @@ class KeyMetadata(BaseModel):
     """Credits charged for this request."""
 
     credits_remaining: int
-    """Credits remaining for your organization."""
+    """Credits your organization has left after this request."""
 
 
 class MonitorRunResponse(BaseModel):
     monitor_id: str
+    """ID of the monitor."""
 
     queued: bool
+    """Whether the run was queued."""
 
     request_id: str
     """Unique ID of this request, also in `X-Request-Id`.
@@ -29,7 +31,7 @@ class MonitorRunResponse(BaseModel):
     """
 
     run_id: str
-    """ID of the queued run; pass it to Retrieve a monitor run."""
+    """ID of the queued run. Poll it with `GET /monitors/{monitor_id}/runs/{run_id}`."""
 
     key_metadata: Optional[KeyMetadata] = None
     """Credits this request used and your remaining balance."""

@@ -34,15 +34,15 @@ __all__ = [
 
 
 class CacheMetadata(BaseModel):
-    """Whether this response came from cache."""
+    """Cache status of this response."""
 
     age_ms: int
-    """Age of the cached data in milliseconds. Zero for miss and zdr responses."""
+    """Age of the cached data, in milliseconds. `0` for `miss` and `zdr`."""
 
     status: Literal["hit", "miss", "zdr"]
     """
-    Whether the response was served from cache, required fresh work, or honored
-    zero-data-retention cache bypass.
+    `hit` when served from cache, `miss` when fetched fresh, `zdr` when zero data
+    retention bypassed the cache.
     """
 
 
@@ -53,30 +53,27 @@ class KeyMetadata(BaseModel):
     """Credits charged for this request."""
 
     credits_remaining: int
-    """Credits remaining for your organization."""
+    """Credits your organization has left after this request."""
 
 
 class StyleguideColors(BaseModel):
-    """Primary colors used on the website"""
+    """Core colors used on the website."""
 
     accent: str
-    """Accent color (hex format)"""
+    """Accent color, in hex."""
 
     background: str
-    """Background color (hex format)"""
+    """Background color, in hex."""
 
     text: str
-    """Text color (hex format)"""
+    """Text color, in hex."""
 
 
 class StyleguideComponentsButtonLink(BaseModel):
     background_color: str = FieldInfo(alias="backgroundColor")
 
     border_color: str = FieldInfo(alias="borderColor")
-    """
-    Border color as CSS hex (#RRGGBB or #RRGGBBAA when computed border-color has
-    alpha)
-    """
+    """Border color in hex: `#RRGGBB`, or `#RRGGBBAA` when the border is translucent."""
 
     border_radius: str = FieldInfo(alias="borderRadius")
 
@@ -85,45 +82,42 @@ class StyleguideComponentsButtonLink(BaseModel):
     border_width: str = FieldInfo(alias="borderWidth")
 
     box_shadow: str = FieldInfo(alias="boxShadow")
-    """Computed box-shadow (comma-separated layers when present)"""
+    """Computed `box-shadow`, with layers separated by commas."""
 
     color: str
 
     css: str
-    """Ready-to-use CSS declaration block for this component style"""
+    """Ready-to-use CSS declarations for this style."""
 
     font_size: str = FieldInfo(alias="fontSize")
 
     font_weight: float = FieldInfo(alias="fontWeight")
 
     min_height: str = FieldInfo(alias="minHeight")
-    """Sampled minimum height of the button box (typically px)"""
+    """Minimum height as a CSS length, usually in pixels."""
 
     min_width: str = FieldInfo(alias="minWidth")
-    """Minimum width (usually px)."""
+    """Minimum width as a CSS length, usually in pixels."""
 
     padding: str
 
     text_decoration: str = FieldInfo(alias="textDecoration")
 
     font_fallbacks: Optional[List[str]] = FieldInfo(alias="fontFallbacks", default=None)
-    """Full ordered font list from computed font-family"""
+    """Full font stack from the computed `font-family`, in order."""
 
     font_family: Optional[str] = FieldInfo(alias="fontFamily", default=None)
-    """Primary button typeface (first in fontFallbacks)"""
+    """Button typeface, the first entry in `fontFallbacks`."""
 
     text_decoration_color: Optional[str] = FieldInfo(alias="textDecorationColor", default=None)
-    """Hex color of the underline when it differs from the text color"""
+    """Underline color in hex, when it differs from the text color."""
 
 
 class StyleguideComponentsButtonPrimary(BaseModel):
     background_color: str = FieldInfo(alias="backgroundColor")
 
     border_color: str = FieldInfo(alias="borderColor")
-    """
-    Border color as CSS hex (#RRGGBB or #RRGGBBAA when computed border-color has
-    alpha)
-    """
+    """Border color in hex: `#RRGGBB`, or `#RRGGBBAA` when the border is translucent."""
 
     border_radius: str = FieldInfo(alias="borderRadius")
 
@@ -132,45 +126,42 @@ class StyleguideComponentsButtonPrimary(BaseModel):
     border_width: str = FieldInfo(alias="borderWidth")
 
     box_shadow: str = FieldInfo(alias="boxShadow")
-    """Computed box-shadow (comma-separated layers when present)"""
+    """Computed `box-shadow`, with layers separated by commas."""
 
     color: str
 
     css: str
-    """Ready-to-use CSS declaration block for this component style"""
+    """Ready-to-use CSS declarations for this style."""
 
     font_size: str = FieldInfo(alias="fontSize")
 
     font_weight: float = FieldInfo(alias="fontWeight")
 
     min_height: str = FieldInfo(alias="minHeight")
-    """Sampled minimum height of the button box (typically px)"""
+    """Minimum height as a CSS length, usually in pixels."""
 
     min_width: str = FieldInfo(alias="minWidth")
-    """Minimum width (usually px)."""
+    """Minimum width as a CSS length, usually in pixels."""
 
     padding: str
 
     text_decoration: str = FieldInfo(alias="textDecoration")
 
     font_fallbacks: Optional[List[str]] = FieldInfo(alias="fontFallbacks", default=None)
-    """Full ordered font list from computed font-family"""
+    """Full font stack from the computed `font-family`, in order."""
 
     font_family: Optional[str] = FieldInfo(alias="fontFamily", default=None)
-    """Primary button typeface (first in fontFallbacks)"""
+    """Button typeface, the first entry in `fontFallbacks`."""
 
     text_decoration_color: Optional[str] = FieldInfo(alias="textDecorationColor", default=None)
-    """Hex color of the underline when it differs from the text color"""
+    """Underline color in hex, when it differs from the text color."""
 
 
 class StyleguideComponentsButtonSecondary(BaseModel):
     background_color: str = FieldInfo(alias="backgroundColor")
 
     border_color: str = FieldInfo(alias="borderColor")
-    """
-    Border color as CSS hex (#RRGGBB or #RRGGBBAA when computed border-color has
-    alpha)
-    """
+    """Border color in hex: `#RRGGBB`, or `#RRGGBBAA` when the border is translucent."""
 
     border_radius: str = FieldInfo(alias="borderRadius")
 
@@ -179,39 +170,39 @@ class StyleguideComponentsButtonSecondary(BaseModel):
     border_width: str = FieldInfo(alias="borderWidth")
 
     box_shadow: str = FieldInfo(alias="boxShadow")
-    """Computed box-shadow (comma-separated layers when present)"""
+    """Computed `box-shadow`, with layers separated by commas."""
 
     color: str
 
     css: str
-    """Ready-to-use CSS declaration block for this component style"""
+    """Ready-to-use CSS declarations for this style."""
 
     font_size: str = FieldInfo(alias="fontSize")
 
     font_weight: float = FieldInfo(alias="fontWeight")
 
     min_height: str = FieldInfo(alias="minHeight")
-    """Sampled minimum height of the button box (typically px)"""
+    """Minimum height as a CSS length, usually in pixels."""
 
     min_width: str = FieldInfo(alias="minWidth")
-    """Minimum width (usually px)."""
+    """Minimum width as a CSS length, usually in pixels."""
 
     padding: str
 
     text_decoration: str = FieldInfo(alias="textDecoration")
 
     font_fallbacks: Optional[List[str]] = FieldInfo(alias="fontFallbacks", default=None)
-    """Full ordered font list from computed font-family"""
+    """Full font stack from the computed `font-family`, in order."""
 
     font_family: Optional[str] = FieldInfo(alias="fontFamily", default=None)
-    """Primary button typeface (first in fontFallbacks)"""
+    """Button typeface, the first entry in `fontFallbacks`."""
 
     text_decoration_color: Optional[str] = FieldInfo(alias="textDecorationColor", default=None)
-    """Hex color of the underline when it differs from the text color"""
+    """Underline color in hex, when it differs from the text color."""
 
 
 class StyleguideComponentsButton(BaseModel):
-    """Button component styles"""
+    """Primary, secondary, and link button styles."""
 
     link: Optional[StyleguideComponentsButtonLink] = None
 
@@ -221,15 +212,12 @@ class StyleguideComponentsButton(BaseModel):
 
 
 class StyleguideComponentsCard(BaseModel):
-    """Card component style"""
+    """Card style."""
 
     background_color: str = FieldInfo(alias="backgroundColor")
 
     border_color: str = FieldInfo(alias="borderColor")
-    """
-    Border color as CSS hex (#RRGGBB or #RRGGBBAA when computed border-color has
-    alpha)
-    """
+    """Border color in hex: `#RRGGBB`, or `#RRGGBBAA` when the border is translucent."""
 
     border_radius: str = FieldInfo(alias="borderRadius")
 
@@ -240,7 +228,7 @@ class StyleguideComponentsCard(BaseModel):
     box_shadow: str = FieldInfo(alias="boxShadow")
 
     css: str
-    """Ready-to-use CSS declaration block for this component style"""
+    """Ready-to-use CSS declarations for this style."""
 
     padding: str
 
@@ -248,17 +236,17 @@ class StyleguideComponentsCard(BaseModel):
 
 
 class StyleguideComponents(BaseModel):
-    """UI component styles"""
+    """Styles for buttons and cards."""
 
     button: StyleguideComponentsButton
-    """Button component styles"""
+    """Primary, secondary, and link button styles."""
 
     card: Optional[StyleguideComponentsCard] = None
-    """Card component style"""
+    """Card style."""
 
 
 class StyleguideElementSpacing(BaseModel):
-    """Spacing system used on the website"""
+    """Spacing scale used on the website, from `xs` to `xl`."""
 
     lg: str
 
@@ -274,46 +262,45 @@ class StyleguideElementSpacing(BaseModel):
 class StyleguideFontLinksFace(BaseModel):
     style: str
     """
-    CSS font-style descriptor: normal, italic, or oblique, including an optional
-    oblique angle or angle range (e.g. oblique 10deg 20deg).
+    CSS `font-style` descriptor: `normal`, `italic`, or `oblique`, with an optional
+    angle or angle range such as `oblique 10deg 20deg`.
     """
 
     url: str
-    """Preferred font file URL or inline font data URL."""
+    """URL of the font file, or an inline data URL."""
 
     weight: str
-    """CSS font-weight descriptor.
+    """CSS `font-weight` descriptor.
 
-    A variable font file can have a range such as "300 500", covering intermediate
-    weights without separate files.
+    A variable font can have a range such as `300 500`, which covers every weight in
+    between with one file.
     """
 
     unicode_range: Optional[str] = FieldInfo(alias="unicodeRange", default=None)
-    """CSS unicode-range descriptor."""
+    """CSS `unicode-range` descriptor."""
 
     width: Optional[str] = None
-    """CSS font-width or font-stretch descriptor."""
+    """CSS `font-width` or `font-stretch` descriptor."""
 
 
 class StyleguideFontLinks(BaseModel):
     type: Literal["google", "custom"]
+    """`google` for Google Fonts, `custom` for any other font source."""
 
     category: Optional[str] = None
-    """Google Fonts category when type is google (e.g.
-
-    sans-serif, serif, monospace, display, handwriting). Omitted for custom fonts
-    when unknown.
+    """
+    Google Fonts category, such as `sans-serif`, `serif`, `monospace`, `display`, or
+    `handwriting`. Omitted for custom fonts when unknown.
     """
 
     display_name: Optional[str] = FieldInfo(alias="displayName", default=None)
-    """Human-readable family name.
-
-    For custom fonts, derived from the fontLinks key; for Google fonts, the
-    canonical Google Fonts family name.
+    """
+    Human-readable family name: the `fontLinks` key for custom fonts, or the
+    official Google Fonts name for Google fonts.
     """
 
     faces: Optional[List[StyleguideFontLinksFace]] = None
-    """Discovered font faces, including style, weight, and distinct Unicode subsets."""
+    """Font faces found for this family, one per style, weight, and Unicode subset."""
 
     files: Optional[Dict[str, str]] = None
     """Deprecated upright font lookup keyed by weight string.
@@ -324,7 +311,7 @@ class StyleguideFontLinks(BaseModel):
 
 
 class StyleguideShadows(BaseModel):
-    """Shadow styles used on the website"""
+    """Box shadow scale used on the website, from `sm` to `xl`, plus `inner`."""
 
     inner: str
 
@@ -339,7 +326,7 @@ class StyleguideShadows(BaseModel):
 
 class StyleguideTypographyHeadingsH1(BaseModel):
     font_fallbacks: List[str] = FieldInfo(alias="fontFallbacks")
-    """Full ordered font list from resolved computed font-family"""
+    """Full font stack from the computed `font-family`, in order."""
 
     font_family: str = FieldInfo(alias="fontFamily")
     """First font in the stack."""
@@ -355,7 +342,7 @@ class StyleguideTypographyHeadingsH1(BaseModel):
 
 class StyleguideTypographyHeadingsH2(BaseModel):
     font_fallbacks: List[str] = FieldInfo(alias="fontFallbacks")
-    """Full ordered font list from resolved computed font-family"""
+    """Full font stack from the computed `font-family`, in order."""
 
     font_family: str = FieldInfo(alias="fontFamily")
     """First font in the stack."""
@@ -371,7 +358,7 @@ class StyleguideTypographyHeadingsH2(BaseModel):
 
 class StyleguideTypographyHeadingsH3(BaseModel):
     font_fallbacks: List[str] = FieldInfo(alias="fontFallbacks")
-    """Full ordered font list from resolved computed font-family"""
+    """Full font stack from the computed `font-family`, in order."""
 
     font_family: str = FieldInfo(alias="fontFamily")
     """First font in the stack."""
@@ -387,7 +374,7 @@ class StyleguideTypographyHeadingsH3(BaseModel):
 
 class StyleguideTypographyHeadingsH4(BaseModel):
     font_fallbacks: List[str] = FieldInfo(alias="fontFallbacks")
-    """Full ordered font list from resolved computed font-family"""
+    """Full font stack from the computed `font-family`, in order."""
 
     font_family: str = FieldInfo(alias="fontFamily")
     """First font in the stack."""
@@ -402,7 +389,7 @@ class StyleguideTypographyHeadingsH4(BaseModel):
 
 
 class StyleguideTypographyHeadings(BaseModel):
-    """Heading styles"""
+    """Styles for `h1` through `h4` headings."""
 
     h1: Optional[StyleguideTypographyHeadingsH1] = None
 
@@ -415,7 +402,7 @@ class StyleguideTypographyHeadings(BaseModel):
 
 class StyleguideTypographyP(BaseModel):
     font_fallbacks: List[str] = FieldInfo(alias="fontFallbacks")
-    """Full ordered font list from resolved computed font-family"""
+    """Full font stack from the computed `font-family`, in order."""
 
     font_family: str = FieldInfo(alias="fontFamily")
     """First font in the stack."""
@@ -430,46 +417,46 @@ class StyleguideTypographyP(BaseModel):
 
 
 class StyleguideTypography(BaseModel):
-    """Typography styles used on the website"""
+    """Text styles for headings and body text."""
 
     headings: StyleguideTypographyHeadings
-    """Heading styles"""
+    """Styles for `h1` through `h4` headings."""
 
     p: Optional[StyleguideTypographyP] = None
 
 
 class Styleguide(BaseModel):
-    """Comprehensive styleguide data extracted from the website"""
+    """Design tokens and component styles extracted from the website."""
 
     colors: StyleguideColors
-    """Primary colors used on the website"""
+    """Core colors used on the website."""
 
     components: StyleguideComponents
-    """UI component styles"""
+    """Styles for buttons and cards."""
 
     element_spacing: StyleguideElementSpacing = FieldInfo(alias="elementSpacing")
-    """Spacing system used on the website"""
+    """Spacing scale used on the website, from `xs` to `xl`."""
 
     font_links: Dict[str, StyleguideFontLinks] = FieldInfo(alias="fontLinks")
     """
-    Font assets keyed by family name as it appears in fontFamily/fontFallbacks
-    (non-generic names only). Match font style and weight against faces to select a
-    file URL.
+    Font files keyed by family name, as it appears in `fontFamily` and
+    `fontFallbacks`. Generic families are left out. Match style and weight against
+    `faces` to pick a file.
     """
 
     mode: Literal["light", "dark"]
-    """The primary color mode of the website design"""
+    """Whether the site's design is mainly light or dark."""
 
     shadows: StyleguideShadows
-    """Shadow styles used on the website"""
+    """Box shadow scale used on the website, from `sm` to `xl`, plus `inner`."""
 
     typography: StyleguideTypography
-    """Typography styles used on the website"""
+    """Text styles for headings and body text."""
 
 
 class WebExtractStyleguideResponse(BaseModel):
     cache_metadata: CacheMetadata
-    """Whether this response came from cache."""
+    """Cache status of this response."""
 
     request_id: str
     """Unique ID of this request, also in `X-Request-Id`.
@@ -478,10 +465,10 @@ class WebExtractStyleguideResponse(BaseModel):
     """
 
     code: Optional[int] = None
-    """HTTP status code"""
+    """HTTP status code, repeated in the body."""
 
     domain: Optional[str] = None
-    """The normalized domain that was processed"""
+    """Normalized domain that was analyzed."""
 
     final_dom_state: Optional[Literal["loaded", "still-loading"]] = FieldInfo(alias="finalDOMState", default=None)
     """
@@ -496,4 +483,4 @@ class WebExtractStyleguideResponse(BaseModel):
     """Always `ok` on success."""
 
     styleguide: Optional[Styleguide] = None
-    """Comprehensive styleguide data extracted from the website"""
+    """Design tokens and component styles extracted from the website."""

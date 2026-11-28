@@ -12,29 +12,28 @@ __all__ = ["BatchListParams"]
 
 class BatchListParams(TypedDict, total=False):
     cursor: str
-    """Cursor from the previous page."""
+    """Cursor from the previous page's `next_cursor`. Omit for the first page."""
 
     limit: int
-    """Batches per page. Defaults to 25."""
+    """Maximum number of batches to return per page."""
 
     q: str
     """
-    Free-text search term, matched against the batch id, crawl source (start URL or
-    sitemap domain), and tags.
+    Search term matched against batch IDs, crawl sources (start URL or sitemap
+    domain), and tags.
     """
 
     search_type: Literal["exact", "prefix"]
     """
-    `prefix` for as-you-type prefix matching (default), `exact` for full-token
-    matching.
+    How `q` matches: `prefix` matches the start of a term, for search-as-you-type,
+    and `exact` matches whole terms. Defaults to `prefix`.
     """
 
     status: Literal["pending", "queued", "running", "cancelling", "completed", "cancelled", "failed"]
-    """Filter by status."""
+    """Filter by batch status."""
 
     tags: Union[str, SequenceNotStr[str]]
-    """Tags to filter by (matches batches having any of them).
+    """Comma-separated tags.
 
-    Pass repeated `tags` params or one comma-separated list, e.g.
-    `tags=docs,competitor`.
+    Returns batches that have any of them. You can also repeat the `tags` parameter.
     """

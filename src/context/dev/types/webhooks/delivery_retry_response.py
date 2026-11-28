@@ -14,12 +14,12 @@ class KeyMetadata(BaseModel):
     """Credits charged for this request."""
 
     credits_remaining: int
-    """Credits remaining for your organization."""
+    """Credits your organization has left after this request."""
 
 
 class DeliveryRetryResponse(BaseModel):
     id: str
-    """Delivery ID."""
+    """Unique ID of the delivery."""
 
     request_id: str
     """Unique ID of this request, also in `X-Request-Id`.

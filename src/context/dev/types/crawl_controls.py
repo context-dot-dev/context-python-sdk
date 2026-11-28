@@ -31,7 +31,7 @@ class ExcludeCrawlRegexMatcher(BaseModel):
     """Match pages by URL pattern."""
 
     pattern: str
-    """Regex pattern for the page URL."""
+    """Regular expression matched against the page URL."""
 
 
 class ExcludeCrawlProductMatcher(BaseModel):
@@ -53,7 +53,7 @@ class FollowCrawlRegexMatcher(BaseModel):
     """Match pages by URL pattern."""
 
     pattern: str
-    """Regex pattern for the page URL."""
+    """Regular expression matched against the page URL."""
 
 
 class FollowCrawlPaginationMatcher(BaseModel):
@@ -83,7 +83,7 @@ class ScrapeCrawlRegexMatcher(BaseModel):
     """Match pages by URL pattern."""
 
     pattern: str
-    """Regex pattern for the page URL."""
+    """Regular expression matched against the page URL."""
 
 
 class ScrapeCrawlProductMatcher(BaseModel):
@@ -123,16 +123,19 @@ class CrawlControls(BaseModel):
     """Crawl settings as submitted."""
 
     exclude: Optional[List[Exclude]] = None
-    """Pages the crawl skipped. Null when it skipped none."""
+    """Matchers for the pages the crawl skipped. `null` when it skipped none."""
 
     exclude_url_pattern: Optional[str] = None
-    """Regex pattern URLs must not match to be crawled. Null when the crawl set none."""
+    """Regex that excluded matching URLs from the crawl.
+
+    `null` when the crawl set none.
+    """
 
     follow: Optional[List[Follow]] = None
-    """Links the crawl followed. Null when it followed every link."""
+    """Matchers for the links the crawl followed. `null` when it followed every link."""
 
     follow_subdomains: bool
-    """Whether links to subdomains were followed. Always false for a sitemap crawl."""
+    """Whether links to subdomains were followed. Always `false` for a sitemap crawl."""
 
     languages: Union[
         Literal["same_as_start_url"],
@@ -216,27 +219,29 @@ class CrawlControls(BaseModel):
         ],
         None,
     ] = None
-    """Languages whose pages were followed; null when all languages were."""
+    """Languages whose pages were followed. `null` when all languages were."""
 
     max_depth: Optional[int] = None
-    """Link depth limit.
+    """Maximum link depth.
 
-    Always 0 for a sitemap crawl, which never follows links off its URLs; null when
-    a `start_url` crawl set no limit.
+    Always `0` for a sitemap crawl; `null` when a `start_url` crawl set no limit.
     """
 
     max_pages: int
     """The `maxUrls` submitted with the crawl.
 
-    A sitemap crawl scrapes only the URLs its sitemap actually lists, up to this
-    many, so `input.reserved` is often lower.
+    A sitemap crawl scrapes only the URLs its sitemap lists, up to this many, so
+    `input.reserved` can be lower.
     """
 
     scrape: Optional[List[Scrape]] = None
-    """Pages the crawl returned. Null when it returned every fetched page."""
+    """Matchers for the pages the crawl returned.
+
+    `null` when it returned every fetched page.
+    """
 
     source: Source
     """Where the crawl started."""
 
     url_pattern: Optional[str] = None
-    """Regex pattern URLs had to match to be crawled. Null when the crawl set none."""
+    """Regex that URLs had to match to be crawled. `null` when the crawl set none."""

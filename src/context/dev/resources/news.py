@@ -24,7 +24,7 @@ __all__ = ["NewsResource", "AsyncNewsResource"]
 
 
 class NewsResource(SyncAPIResource):
-    """Search live and historical news about a company."""
+    """Search live and historical news by company or with a natural-language query."""
 
     @cached_property
     def with_raw_response(self) -> NewsResourceWithRawResponse:
@@ -64,29 +64,30 @@ class NewsResource(SyncAPIResource):
     ) -> NewsSearchResponse:
         """
         Find news about a company by name, domain, ticker, or ISIN, or search all news
-        with a natural-language query. Filter articles and continue through results with
-        a cursor.
+        with a natural-language query. Each article includes its publisher, type of
+        coverage, and, for company searches, whether the company is the main subject.
+        Narrow results by publisher, country, language, article type, or publish date.
 
         Args:
-          search_by: What to search for: a specific company, or a natural-language query across all
-              news.
+          search_by: What to search for: news about a specific company, or a natural-language query
+              across all news.
 
-          cursor: Opaque next_cursor from the previous response, or null for the first page.
+          cursor: Cursor from the previous page's `next_cursor`. Omit for the first page.
 
-          filter_by: Optional result filters. Use at most one of sourceDomain, sourceCountry,
-              articleLanguage, or articleType. A date range may accompany that category;
-              date.from must not exceed date.to.
+          filter_by: Filters for the results. Use at most one of `sourceDomain`, `sourceCountry`,
+              `articleLanguage`, or `articleType`, optionally combined with `date`.
 
-          limit: Maximum results to return. Defaults to 10.
+          limit: Maximum number of articles to return per page.
 
-          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
-              access policies are enabled for your organization; otherwise the request fails
-              with `ACCESS_POLICIES_NOT_ENABLED`.
+          policies: Access policy IDs to apply; each URL must pass all of them. Requires access
+              policies enabled for your organization; otherwise returns
+              `ACCESS_POLICIES_NOT_ENABLED`.
 
-          sort_by: Result ordering. Defaults to newest for entity searches. Natural-language
-              searches are always ordered by relevance.
+          sort_by: How to order results. Company searches default to `newest`; natural-language
+              searches always use `relevance`.
 
-          tags: Labels for filtering usage in the dashboard.
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
 
           extra_headers: Send extra headers
 
@@ -118,7 +119,7 @@ class NewsResource(SyncAPIResource):
 
 
 class AsyncNewsResource(AsyncAPIResource):
-    """Search live and historical news about a company."""
+    """Search live and historical news by company or with a natural-language query."""
 
     @cached_property
     def with_raw_response(self) -> AsyncNewsResourceWithRawResponse:
@@ -158,29 +159,30 @@ class AsyncNewsResource(AsyncAPIResource):
     ) -> NewsSearchResponse:
         """
         Find news about a company by name, domain, ticker, or ISIN, or search all news
-        with a natural-language query. Filter articles and continue through results with
-        a cursor.
+        with a natural-language query. Each article includes its publisher, type of
+        coverage, and, for company searches, whether the company is the main subject.
+        Narrow results by publisher, country, language, article type, or publish date.
 
         Args:
-          search_by: What to search for: a specific company, or a natural-language query across all
-              news.
+          search_by: What to search for: news about a specific company, or a natural-language query
+              across all news.
 
-          cursor: Opaque next_cursor from the previous response, or null for the first page.
+          cursor: Cursor from the previous page's `next_cursor`. Omit for the first page.
 
-          filter_by: Optional result filters. Use at most one of sourceDomain, sourceCountry,
-              articleLanguage, or articleType. A date range may accompany that category;
-              date.from must not exceed date.to.
+          filter_by: Filters for the results. Use at most one of `sourceDomain`, `sourceCountry`,
+              `articleLanguage`, or `articleType`, optionally combined with `date`.
 
-          limit: Maximum results to return. Defaults to 10.
+          limit: Maximum number of articles to return per page.
 
-          policies: Access policy IDs to apply. A URL must pass every policy. Leave it out unless
-              access policies are enabled for your organization; otherwise the request fails
-              with `ACCESS_POLICIES_NOT_ENABLED`.
+          policies: Access policy IDs to apply; each URL must pass all of them. Requires access
+              policies enabled for your organization; otherwise returns
+              `ACCESS_POLICIES_NOT_ENABLED`.
 
-          sort_by: Result ordering. Defaults to newest for entity searches. Natural-language
-              searches are always ordered by relevance.
+          sort_by: How to order results. Company searches default to `newest`; natural-language
+              searches always use `relevance`.
 
-          tags: Labels for filtering usage in the dashboard.
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
 
           extra_headers: Send extra headers
 

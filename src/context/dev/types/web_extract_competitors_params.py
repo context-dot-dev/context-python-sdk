@@ -12,16 +12,16 @@ __all__ = ["WebExtractCompetitorsParams", "TimeoutOpts"]
 
 class WebExtractCompetitorsParams(TypedDict, total=False):
     domain: Required[str]
-    """Company domain to analyze, such as `stripe.com`.
-
-    Full http(s) URLs are accepted and normalized to their domain.
-    """
+    """Company domain, such as `stripe.com`. Full URLs are reduced to their domain."""
 
     num_competitors: Annotated[int, PropertyInfo(alias="numCompetitors")]
-    """Exact number of direct competitors to return. Defaults to 5."""
+    """Exact number of direct competitors to return."""
 
     tags: SequenceNotStr[str]
-    """Comma-separated labels for filtering usage, e.g. `production,team-alpha`."""
+    """Comma-separated labels for this request, such as `production,team-alpha`.
+
+    Filter usage and request logs by them.
+    """
 
     timeout_opts: Annotated[TimeoutOpts, PropertyInfo(alias="timeoutOpts")]
     """Request deadline and what to return when it passes."""
@@ -40,7 +40,8 @@ class TimeoutOpts(TypedDict, total=False):
     """Deadline in milliseconds."""
 
     behavior: Literal["fail", "return-partial"]
-    """\"fail" returns 408 at the deadline.
+    """`fail` returns 408 at the deadline.
 
-    "return-partial" returns available results; inspect the response’s partial flag.
+    `return-partial` returns the results collected so far and marks the response as
+    partial.
     """

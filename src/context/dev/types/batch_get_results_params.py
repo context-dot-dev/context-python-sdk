@@ -9,11 +9,11 @@ __all__ = ["BatchGetResultsParams"]
 
 class BatchGetResultsParams(TypedDict, total=False):
     cursor: str
-    """next_cursor from the previous page."""
+    """Cursor from the previous page's `next_cursor`. Omit for the first page."""
 
     limit: int
-    """Records per page.
+    """Maximum number of results to return per page.
 
-    Defaults to 25. A page can close early so its payload stays under ~8 MB; rely on
-    next_cursor rather than counting records.
+    A page can hold fewer to stay under about 8 MB, so page with `next_cursor`
+    instead of counting records.
     """

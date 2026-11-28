@@ -13,13 +13,13 @@ __all__ = ["MonitorGetCreditUsageParams"]
 
 class MonitorGetCreditUsageParams(TypedDict, total=False):
     since: Annotated[Union[str, datetime], PropertyInfo(format="iso8601")]
-    """Only include items at or after this ISO 8601 timestamp."""
+    """Count only runs created at or after this time."""
 
     tag: str
-    """Only include monitors that currently have this tag.
+    """Return usage only for monitors that currently have this tag.
 
-    Deleted monitors are left out.
+    Deleted monitors are excluded.
     """
 
     until: Annotated[Union[str, datetime], PropertyInfo(format="iso8601")]
-    """Only include items before this ISO 8601 timestamp."""
+    """Count only runs created at or before this time."""

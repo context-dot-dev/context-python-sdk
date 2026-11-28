@@ -22,7 +22,7 @@ __all__ = ["ProfilesResource", "AsyncProfilesResource"]
 
 
 class ProfilesResource(SyncAPIResource):
-    """See the authenticated browser profiles your organization created."""
+    """List the authenticated browser profiles your organization created."""
 
     @cached_property
     def with_raw_response(self) -> ProfilesResourceWithRawResponse:
@@ -56,13 +56,14 @@ class ProfilesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ProfileListResponse:
         """
-        List the browser profiles your organization created with `/web/scrape`, newest
-        first.
+        List the browser profiles your organization saved through `POST /web/scrape`,
+        newest first. Pass a profile `id` as `sharedParams.profile.profileId` to scrape
+        as that signed-in user.
 
         Args:
-          cursor: The `next_cursor` from the previous page.
+          cursor: Cursor from the previous page's `next_cursor`. Omit for the first page.
 
-          limit: Number of profiles per page.
+          limit: Maximum number of profiles to return per page.
 
           extra_headers: Send extra headers
 
@@ -92,7 +93,7 @@ class ProfilesResource(SyncAPIResource):
 
 
 class AsyncProfilesResource(AsyncAPIResource):
-    """See the authenticated browser profiles your organization created."""
+    """List the authenticated browser profiles your organization created."""
 
     @cached_property
     def with_raw_response(self) -> AsyncProfilesResourceWithRawResponse:
@@ -126,13 +127,14 @@ class AsyncProfilesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ProfileListResponse:
         """
-        List the browser profiles your organization created with `/web/scrape`, newest
-        first.
+        List the browser profiles your organization saved through `POST /web/scrape`,
+        newest first. Pass a profile `id` as `sharedParams.profile.profileId` to scrape
+        as that signed-in user.
 
         Args:
-          cursor: The `next_cursor` from the previous page.
+          cursor: Cursor from the previous page's `next_cursor`. Omit for the first page.
 
-          limit: Number of profiles per page.
+          limit: Maximum number of profiles to return per page.
 
           extra_headers: Send extra headers
 

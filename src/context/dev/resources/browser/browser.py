@@ -19,7 +19,7 @@ __all__ = ["BrowserResource", "AsyncBrowserResource"]
 class BrowserResource(SyncAPIResource):
     @cached_property
     def profiles(self) -> ProfilesResource:
-        """See the authenticated browser profiles your organization created."""
+        """List the authenticated browser profiles your organization created."""
         return ProfilesResource(self._client)
 
     @cached_property
@@ -45,7 +45,7 @@ class BrowserResource(SyncAPIResource):
 class AsyncBrowserResource(AsyncAPIResource):
     @cached_property
     def profiles(self) -> AsyncProfilesResource:
-        """See the authenticated browser profiles your organization created."""
+        """List the authenticated browser profiles your organization created."""
         return AsyncProfilesResource(self._client)
 
     @cached_property
@@ -74,7 +74,7 @@ class BrowserResourceWithRawResponse:
 
     @cached_property
     def profiles(self) -> ProfilesResourceWithRawResponse:
-        """See the authenticated browser profiles your organization created."""
+        """List the authenticated browser profiles your organization created."""
         return ProfilesResourceWithRawResponse(self._browser.profiles)
 
 
@@ -84,7 +84,7 @@ class AsyncBrowserResourceWithRawResponse:
 
     @cached_property
     def profiles(self) -> AsyncProfilesResourceWithRawResponse:
-        """See the authenticated browser profiles your organization created."""
+        """List the authenticated browser profiles your organization created."""
         return AsyncProfilesResourceWithRawResponse(self._browser.profiles)
 
 
@@ -94,7 +94,7 @@ class BrowserResourceWithStreamingResponse:
 
     @cached_property
     def profiles(self) -> ProfilesResourceWithStreamingResponse:
-        """See the authenticated browser profiles your organization created."""
+        """List the authenticated browser profiles your organization created."""
         return ProfilesResourceWithStreamingResponse(self._browser.profiles)
 
 
@@ -104,5 +104,5 @@ class AsyncBrowserResourceWithStreamingResponse:
 
     @cached_property
     def profiles(self) -> AsyncProfilesResourceWithStreamingResponse:
-        """See the authenticated browser profiles your organization created."""
+        """List the authenticated browser profiles your organization created."""
         return AsyncProfilesResourceWithStreamingResponse(self._browser.profiles)

@@ -15,12 +15,12 @@ class KeyMetadata(BaseModel):
     """Credits charged for this request."""
 
     credits_remaining: int
-    """Credits remaining for your organization."""
+    """Credits your organization has left after this request."""
 
 
 class ParseHandleResponse(BaseModel):
     markdown: str
-    """Input bytes converted to GitHub Flavored Markdown"""
+    """The file content as GitHub Flavored Markdown."""
 
     request_id: str
     """Unique ID of this request, also in `X-Request-Id`.
@@ -29,7 +29,7 @@ class ParseHandleResponse(BaseModel):
     """
 
     success: Literal[True]
-    """Indicates success"""
+    """Always `true` for a successful parse."""
 
     type: Literal[
         "warc",
@@ -75,7 +75,7 @@ class ParseHandleResponse(BaseModel):
         "pgm",
         "pnm",
     ]
-    """Detected content type used for parsing"""
+    """File type the input was parsed as."""
 
     key_metadata: Optional[KeyMetadata] = None
     """Credits this request used and your remaining balance."""

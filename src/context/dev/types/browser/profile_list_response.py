@@ -10,13 +10,16 @@ __all__ = ["ProfileListResponse", "Data", "KeyMetadata"]
 
 class Data(BaseModel):
     id: str
-    """Profile ID to pass as `sharedParams.profile.profileId` on `/web/scrape`."""
+    """Unique ID of the browser profile.
+
+    Pass it as `sharedParams.profile.profileId` on `POST /web/scrape`.
+    """
 
     created_at: datetime
-    """When the profile was created."""
+    """When the browser profile was created."""
 
     description: Optional[str] = None
-    """The description supplied when the profile was created, or null."""
+    """Label set when the profile was created. `null` when none was set."""
 
 
 class KeyMetadata(BaseModel):
@@ -26,18 +29,18 @@ class KeyMetadata(BaseModel):
     """Credits charged for this request."""
 
     credits_remaining: int
-    """Credits remaining for your organization."""
+    """Credits your organization has left after this request."""
 
 
 class ProfileListResponse(BaseModel):
     data: List[Data]
-    """Browser profiles, newest first."""
+    """Browser profiles on this page, newest first."""
 
     has_more: bool
-    """Whether a next page exists."""
+    """Whether more results are available after this page."""
 
     next_cursor: Optional[str] = None
-    """Pass as `cursor` to fetch the next page."""
+    """Pass as `cursor` to fetch the next page. `null` on the last page."""
 
     request_id: str
     """Unique ID of this request, also in `X-Request-Id`.

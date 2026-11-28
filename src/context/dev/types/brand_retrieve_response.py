@@ -28,89 +28,88 @@ __all__ = [
 
 
 class BrandAddress(BaseModel):
-    """Physical address of the brand"""
+    """Physical address of the brand. Omitted when unknown."""
 
     city: Optional[str] = None
-    """City name"""
+    """City."""
 
     country: Optional[str] = None
-    """Country name"""
+    """Country name."""
 
     country_code: Optional[str] = None
-    """Country code"""
+    """Country code, such as `US`."""
 
     postal_code: Optional[str] = None
-    """Postal or ZIP code"""
+    """Postal or ZIP code."""
 
     state_code: Optional[str] = None
-    """State or province code"""
+    """State or province code."""
 
     state_province: Optional[str] = None
-    """State or province name"""
+    """State or province name."""
 
     street: Optional[str] = None
-    """Street address"""
+    """Street address."""
 
 
 class BrandBackdropColor(BaseModel):
     hex: Optional[str] = None
-    """Color in hexadecimal format"""
+    """Hex color code, such as `#635BFF`."""
 
     name: Optional[str] = None
-    """Name of the color"""
+    """Human-readable color name."""
 
 
 class BrandBackdropResolution(BaseModel):
-    """Resolution of the backdrop image"""
+    """Size of the backdrop image."""
 
     aspect_ratio: Optional[float] = None
-    """Aspect ratio of the image (width/height)"""
+    """Aspect ratio, as width divided by height."""
 
     height: Optional[int] = None
-    """Height of the image in pixels"""
+    """Height, in pixels."""
 
     width: Optional[int] = None
-    """Width of the image in pixels"""
+    """Width, in pixels."""
 
 
 class BrandBackdrop(BaseModel):
     colors: Optional[List[BrandBackdropColor]] = None
-    """Array of colors in the backdrop image"""
+    """Colors in the backdrop image."""
 
     resolution: Optional[BrandBackdropResolution] = None
-    """Resolution of the backdrop image"""
+    """Size of the backdrop image."""
 
     url: Optional[str] = None
-    """URL of the backdrop image"""
+    """URL of the backdrop image."""
 
 
 class BrandColor(BaseModel):
     hex: Optional[str] = None
-    """Color in hexadecimal format"""
+    """Hex color code, such as `#635BFF`."""
 
     name: Optional[str] = None
-    """Name of the color"""
+    """Human-readable color name."""
 
     source: Optional[Literal["site", "logo"]] = None
     """
-    Where the color was observed: 'site' colors come from the website's own theme
-    signals (rendered page colors, manifest, theme-color meta), 'logo' colors from
-    logo image pixels.
+    `site` colors come from the website's own theme (rendered page colors, web app
+    manifest, `theme-color` meta tag); `logo` colors come from logo pixels.
     """
 
 
 class BrandEmployees(BaseModel):
-    """Employee headcount information for the brand (will be null if unknown)"""
+    """Employee headcount. Omitted when unknown."""
 
     exact: Optional[int] = None
-    """Exact employee count when a precise headcount is known"""
+    """Exact employee count, when known."""
 
     range: Optional[
         Literal[
             "1 to 10", "11 to 50", "51 to 200", "201 to 500", "501 to 1000", "1001 to 5000", "5001 to 10000", "10001+"
         ]
     ] = None
-    """Employee count range for the brand (e.g. '11 to 50')"""
+    """Headcount range, such as `11 to 50`."""
 
 
 class BrandIndustriesEic(BaseModel):
@@ -140,7 +139,7 @@ class BrandIndustriesEic(BaseModel):
         "Construction & Built Environment",
         "Consumer Packaged Goods (CPG)",
     ]
-    """Industry classification enum"""
+    """Top-level industry in the Easy Industry Classification (EIC)."""
 
     subindustry: Literal[
         "Defense Systems & Military Hardware",
@@ -364,78 +363,81 @@ class BrandIndustriesEic(BaseModel):
         "Beauty & Cosmetics CPG",
         "Health & Wellness CPG",
     ]
-    """Subindustry classification enum"""
+    """Subindustry in the Easy Industry Classification (EIC)."""
 
 
 class BrandIndustries(BaseModel):
-    """Industry classification information for the brand"""
+    """Industry classification of the brand."""
 
     eic: Optional[List[BrandIndustriesEic]] = None
-    """Easy Industry Classification - array of industry and subindustry pairs"""
+    """
+    Industry and subindustry pairs from Context.dev's Easy Industry Classification
+    (EIC).
+    """
 
 
 class BrandLinks(BaseModel):
-    """Important website links for the brand"""
+    """Key pages on the brand's website."""
 
     blog: Optional[str] = None
-    """URL to the brand's blog or news page"""
+    """URL of the blog or newsroom. `null` when not found."""
 
     careers: Optional[str] = None
-    """URL to the brand's careers or job opportunities page"""
+    """URL of the careers page. `null` when not found."""
 
     contact: Optional[str] = None
-    """URL to the brand's contact or contact us page"""
+    """URL of the contact page. `null` when not found."""
 
     pricing: Optional[str] = None
-    """URL to the brand's pricing or plans page"""
+    """URL of the pricing page. `null` when not found."""
 
     privacy: Optional[str] = None
-    """URL to the brand's privacy policy page"""
+    """URL of the privacy policy. `null` when not found."""
 
     terms: Optional[str] = None
-    """URL to the brand's terms of service or terms and conditions page"""
+    """URL of the terms of service. `null` when not found."""
 
 
 class BrandLogoColor(BaseModel):
     hex: Optional[str] = None
-    """Color in hexadecimal format"""
+    """Hex color code, such as `#635BFF`."""
 
     name: Optional[str] = None
-    """Name of the color"""
+    """Human-readable color name."""
 
 
 class BrandLogoResolution(BaseModel):
-    """Resolution of the logo image"""
+    """Size of the logo image."""
 
     aspect_ratio: Optional[float] = None
-    """Aspect ratio of the image (width/height)"""
+    """Aspect ratio, as width divided by height."""
 
     height: Optional[int] = None
-    """Height of the image in pixels"""
+    """Height, in pixels."""
 
     width: Optional[int] = None
-    """Width of the image in pixels"""
+    """Width, in pixels."""
 
 
 class BrandLogo(BaseModel):
     colors: Optional[List[BrandLogoColor]] = None
-    """Array of colors in the logo"""
+    """Colors in the logo."""
 
     mode: Optional[Literal["light", "dark", "has_opaque_background"]] = None
     """
-    Indicates when this logo is best used: 'light' = best for light mode, 'dark' =
-    best for dark mode, 'has_opaque_background' = can be used for either as image
-    has its own background
+    `light` works best in light mode, `dark` works best in dark mode, and
+    `has_opaque_background` works in either because the image has its own
+    background.
     """
 
     resolution: Optional[BrandLogoResolution] = None
-    """Resolution of the logo image"""
+    """Size of the logo image."""
 
     type: Optional[Literal["icon", "logo"]] = None
-    """Type of the logo based on resolution (e.g., 'icon', 'logo')"""
+    """Whether the image is an `icon` or a full `logo`, based on its dimensions."""
 
     url: Optional[str] = None
-    """Hosted logo URL."""
+    """URL of the hosted logo image."""
 
 
 class BrandSocial(BaseModel):
@@ -474,66 +476,63 @@ class BrandSocial(BaseModel):
             "playstore",
         ]
     ] = None
-    """Type of social media platform"""
+    """Social platform."""
 
     url: Optional[str] = None
-    """URL of the social media page"""
+    """URL of the brand's profile on that platform."""
 
 
 class BrandStock(BaseModel):
-    """
-    Stock market information for this brand (will be null if not a publicly traded company)
-    """
+    """Stock listing. Omitted when the company is not publicly traded."""
 
     exchange: Optional[str] = None
-    """Stock exchange name"""
+    """Exchange the stock trades on."""
 
     ticker: Optional[str] = None
-    """Stock ticker symbol"""
+    """Stock ticker symbol."""
 
 
 class Brand(BaseModel):
-    """Detailed brand information"""
+    """The brand's identity, visual assets, and company details."""
 
     address: Optional[BrandAddress] = None
-    """Physical address of the brand"""
+    """Physical address of the brand. Omitted when unknown."""
 
     backdrops: Optional[List[BrandBackdrop]] = None
-    """An array of backdrop images for the brand"""
+    """Backdrop images for the brand, such as social profile banners."""
 
     colors: Optional[List[BrandColor]] = None
-    """An array of brand colors"""
+    """Brand colors from the website and logos."""
 
     description: Optional[str] = None
-    """A brief description of the brand"""
+    """Short description of the brand."""
 
     domain: Optional[str] = None
-    """The domain name of the brand"""
+    """Domain of the brand."""
 
     email: Optional[str] = None
-    """Company email address"""
+    """Contact email address for the company."""
 
     employees: Optional[BrandEmployees] = None
-    """Employee headcount information for the brand (will be null if unknown)"""
+    """Employee headcount. Omitted when unknown."""
 
     industries: Optional[BrandIndustries] = None
-    """Industry classification information for the brand"""
+    """Industry classification of the brand."""
 
     is_nsfw: Optional[bool] = None
-    """Indicates whether the brand content is not safe for work (NSFW)"""
+    """Whether the brand's content is not safe for work (NSFW)."""
 
     links: Optional[BrandLinks] = None
-    """Important website links for the brand"""
+    """Key pages on the brand's website."""
 
     logos: Optional[List[BrandLogo]] = None
-    """An array of logos associated with the brand.
+    """Brand logos, most relevant first.
 
-    When a similarly shaped SVG variant exists, it is returned ahead of its raster
-    equivalent; otherwise relevance order is preserved
+    An SVG is listed ahead of a raster logo of the same shape.
     """
 
     phone: Optional[str] = None
-    """Company phone number"""
+    """Contact phone number for the company."""
 
     primary_language: Optional[
         Literal[
@@ -659,34 +658,31 @@ class Brand(BaseModel):
             "zulu",
         ]
     ] = None
-    """Language, e.g. `english`."""
+    """Lowercase language name, such as `english`."""
 
     slogan: Optional[str] = None
-    """The brand's slogan"""
+    """Brand slogan or tagline."""
 
     socials: Optional[List[BrandSocial]] = None
-    """An array of social media links for the brand"""
+    """Social media profiles of the brand."""
 
     stock: Optional[BrandStock] = None
-    """
-    Stock market information for this brand (will be null if not a publicly traded
-    company)
-    """
+    """Stock listing. Omitted when the company is not publicly traded."""
 
     title: Optional[str] = None
-    """The title or name of the brand"""
+    """Brand name."""
 
 
 class CacheMetadata(BaseModel):
-    """Whether this response came from cache."""
+    """Cache status of this response."""
 
     age_ms: int
-    """Age of the cached data in milliseconds. Zero for miss and zdr responses."""
+    """Age of the cached data, in milliseconds. `0` for `miss` and `zdr`."""
 
     status: Literal["hit", "miss", "zdr"]
     """
-    Whether the response was served from cache, required fresh work, or honored
-    zero-data-retention cache bypass.
+    `hit` when served from cache, `miss` when fetched fresh, `zdr` when zero data
+    retention bypassed the cache.
     """
 
 
@@ -697,18 +693,18 @@ class KeyMetadata(BaseModel):
     """Credits charged for this request."""
 
     credits_remaining: int
-    """Credits remaining for your organization."""
+    """Credits your organization has left after this request."""
 
 
 class BrandRetrieveResponse(BaseModel):
     brand: Brand
-    """Detailed brand information"""
+    """The brand's identity, visual assets, and company details."""
 
     cache_metadata: CacheMetadata
-    """Whether this response came from cache."""
+    """Cache status of this response."""
 
     code: int
-    """HTTP status code"""
+    """HTTP status code. Always `200` on success."""
 
     request_id: str
     """Unique ID of this request, also in `X-Request-Id`.
@@ -723,7 +719,7 @@ class BrandRetrieveResponse(BaseModel):
     """Credits this request used and your remaining balance."""
 
     partial: Optional[bool] = None
-    """
-    True when the timeout ended processing and this response contains the usable
-    data completed so far. Unfinished fields are omitted.
+    """`true` when the `timeoutOpts` deadline ended processing early.
+
+    The response holds the data completed so far; unfinished fields are omitted.
     """

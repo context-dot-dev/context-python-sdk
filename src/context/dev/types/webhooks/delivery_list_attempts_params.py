@@ -11,10 +11,13 @@ __all__ = ["DeliveryListAttemptsParams"]
 
 class DeliveryListAttemptsParams(TypedDict, total=False):
     cursor: str
-    """The next_cursor from the previous response."""
+    """Cursor from the previous page's `next_cursor`. Omit for the first page."""
 
     limit: int
-    """Number of attempts to return."""
+    """Maximum number of attempts to return per page."""
 
     tags: SequenceNotStr[str]
-    """Comma-separated labels for filtering usage, e.g. `production,team-alpha`."""
+    """Comma-separated labels for this request, such as `production,team-alpha`.
+
+    Filter usage and request logs by them.
+    """

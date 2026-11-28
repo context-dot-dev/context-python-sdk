@@ -15,10 +15,10 @@ class Competitor(BaseModel):
     """Confidence that this company is a direct competitor."""
 
     description: str
-    """Short description of the competitor."""
+    """Short description of what the competitor offers."""
 
     domain: str
-    """Competitor's normalized official domain."""
+    """Competitor's official domain, normalized."""
 
     name: str
     """Competitor company or product name."""
@@ -27,23 +27,23 @@ class Competitor(BaseModel):
     """Search result URLs used as evidence for this competitor."""
 
     url: str
-    """Competitor website URL."""
+    """Competitor's website URL."""
 
 
 class Target(BaseModel):
-    """Target company profile inferred from the landing page."""
+    """Profile of the requested company, inferred from its website."""
 
     company_name: str = FieldInfo(alias="companyName")
-    """Company or product name inferred from the landing page."""
+    """Company or product name, inferred from its website."""
 
     field: str
-    """Specific operating field, product category, or market."""
+    """Product category or market the company operates in."""
 
     field_description: str = FieldInfo(alias="fieldDescription")
-    """One-sentence description of what the target company sells and who it serves."""
+    """One-sentence summary of what the company sells and who it serves."""
 
     website_url: str = FieldInfo(alias="websiteUrl")
-    """Resolved URL used for the landing page analysis."""
+    """Website URL that was analyzed."""
 
 
 class KeyMetadata(BaseModel):
@@ -53,15 +53,15 @@ class KeyMetadata(BaseModel):
     """Credits charged for this request."""
 
     credits_remaining: int
-    """Credits remaining for your organization."""
+    """Credits your organization has left after this request."""
 
 
 class WebExtractCompetitorsResponse(BaseModel):
     competitors: List[Competitor]
-    """Direct competitors ordered by relevance and confidence."""
+    """Direct competitors, ordered by relevance and confidence."""
 
     domain: str
-    """Normalized input domain."""
+    """Normalized domain from the request."""
 
     request_id: str
     """Unique ID of this request, also in `X-Request-Id`.
@@ -70,16 +70,16 @@ class WebExtractCompetitorsResponse(BaseModel):
     """
 
     status: Literal["ok"]
-    """Status of the response."""
+    """Always `ok` on success."""
 
     target: Target
-    """Target company profile inferred from the landing page."""
+    """Profile of the requested company, inferred from its website."""
 
     key_metadata: Optional[KeyMetadata] = None
     """Credits this request used and your remaining balance."""
 
     partial: Optional[bool] = None
     """
-    True when the timeout ended processing and this response contains only usable
-    results completed so far. Unfinished results are omitted.
+    `true` when the deadline passed with `timeoutOpts.behavior` set to
+    `return-partial`. Only results finished in time are included.
     """

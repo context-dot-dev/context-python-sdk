@@ -13,28 +13,32 @@ __all__ = ["ScholarSearchParams", "FilterBy", "FilterByDate"]
 
 class ScholarSearchParams(TypedDict, total=False):
     query: Required[str]
-    """A topic or question.
+    """Topic or question to search for.
 
-    Append one arxiv:, pmcid:, pmid:, or doi: ID to search within an indexed paper.
+    Append one `arxiv:`, `pmcid:`, `pmid:`, or `doi:` ID to search within that
+    paper, such as `protein folding pmid:34265844`, or send the ID on its own.
     """
 
     cursor: Optional[str]
-    """Use next_cursor to fetch the next page."""
+    """Cursor from the previous page's `next_cursor`. Omit for the first page."""
 
     filter_by: Annotated[FilterBy, PropertyInfo(alias="filterBy")]
     """Filter by publication date."""
 
     limit: int
-    """Papers per page."""
+    """Maximum number of papers to return per page."""
 
     sort: Literal["relevance", "date_desc"]
-    """Order the top 250 matches.
-
-    date_desc puts newest first, with undated papers last.
+    """
+    `relevance` puts the closest matches first; `date_desc` puts the newest papers
+    first, with undated papers last. Both orders apply to the top 250 matches.
     """
 
     tags: SequenceNotStr[str]
-    """Labels for filtering usage in the dashboard."""
+    """Labels for this request.
+
+    Filter usage and request logs by them in the dashboard or with `GET /org/logs`.
+    """
 
 
 _FilterByDateReservedKeywords = TypedDict(

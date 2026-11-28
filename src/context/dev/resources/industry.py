@@ -26,6 +26,8 @@ __all__ = ["IndustryResource", "AsyncIndustryResource"]
 
 
 class IndustryResource(SyncAPIResource):
+    """Extract structured data, competitors, styleguides, and fonts from any website."""
+
     @cached_property
     def with_raw_response(self) -> IndustryResourceWithRawResponse:
         """
@@ -75,7 +77,8 @@ class IndustryResource(SyncAPIResource):
 
           min_results: Minimum number of NAICS codes to return. Must be at least 1. Defaults to 1.
 
-          tags: Comma-separated labels for filtering usage, e.g. `production,team-alpha`.
+          tags: Comma-separated labels for this request, such as `production,team-alpha`. Filter
+              usage and request logs by them.
 
           timeout_opts: Request deadline and what to return when it passes.
 
@@ -142,7 +145,8 @@ class IndustryResource(SyncAPIResource):
 
           min_results: Minimum number of SIC codes to return. Must be at least 1. Defaults to 1.
 
-          tags: Comma-separated labels for filtering usage, e.g. `production,team-alpha`.
+          tags: Comma-separated labels for this request, such as `production,team-alpha`. Filter
+              usage and request logs by them.
 
           timeout_opts: Request deadline and what to return when it passes.
 
@@ -184,6 +188,8 @@ class IndustryResource(SyncAPIResource):
 
 
 class AsyncIndustryResource(AsyncAPIResource):
+    """Extract structured data, competitors, styleguides, and fonts from any website."""
+
     @cached_property
     def with_raw_response(self) -> AsyncIndustryResourceWithRawResponse:
         """
@@ -233,7 +239,8 @@ class AsyncIndustryResource(AsyncAPIResource):
 
           min_results: Minimum number of NAICS codes to return. Must be at least 1. Defaults to 1.
 
-          tags: Comma-separated labels for filtering usage, e.g. `production,team-alpha`.
+          tags: Comma-separated labels for this request, such as `production,team-alpha`. Filter
+              usage and request logs by them.
 
           timeout_opts: Request deadline and what to return when it passes.
 
@@ -300,7 +307,8 @@ class AsyncIndustryResource(AsyncAPIResource):
 
           min_results: Minimum number of SIC codes to return. Must be at least 1. Defaults to 1.
 
-          tags: Comma-separated labels for filtering usage, e.g. `production,team-alpha`.
+          tags: Comma-separated labels for this request, such as `production,team-alpha`. Filter
+              usage and request logs by them.
 
           timeout_opts: Request deadline and what to return when it passes.
 

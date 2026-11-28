@@ -25,60 +25,60 @@ __all__ = [
 
 
 class DataCredits(BaseModel):
-    """Batch credit usage and settlement."""
+    """Credits reserved, refunded, and charged for the batch."""
 
     net: int
     """`reserved` minus `refunded` plus `ocr_charged`."""
 
     ocr_charged: int
-    """OCR usage charged when the batch settles."""
+    """Credits charged for OCR when the batch finishes."""
 
     refunded: int
-    """Credits returned for unsuccessful pages when the batch settles."""
+    """
+    Credits returned when the batch finishes, such as for failed or unattempted
+    pages.
+    """
 
     reserved: int
-    """Credits held by background preparation before scraping starts.
-
-    Zero while pending.
-    """
+    """Credits reserved before scraping starts. `0` while `pending`."""
 
 
 class DataFormats(BaseModel):
-    """Outputs requested for each page. Matches input.data.formats on submission."""
+    """Formats requested for each page, as submitted in `input.data.formats`."""
 
     bytes: Optional[bool] = None
-    """The original HTTP response body."""
+    """Return the original HTTP response body."""
 
     highlights: Optional[bool] = None
-    """Markdown excerpts relevant to `highlightsParams.query`."""
+    """Return Markdown excerpts relevant to `highlightsParams.query`."""
 
     html: Optional[bool] = None
-    """Rendered HTML."""
+    """Return the rendered HTML."""
 
     images: Optional[bool] = None
-    """Images found on the page."""
+    """Return the images found on the page."""
 
     json_: Optional[bool] = FieldInfo(alias="json", default=None)
     """
-    An object matching `jsonParams.schema`, extracted from the page text and its
-    embedded data (JSON-LD, meta tags, framework state).
+    Return an object matching `jsonParams.schema`, extracted from the page text and
+    embedded data such as JSON-LD, meta tags, and framework state.
     """
 
     markdown: Optional[bool] = None
-    """Page content or video transcript as Markdown."""
+    """Return the page content, or a video transcript, as Markdown."""
 
     parse: Optional[bool] = None
-    """Fields extracted with custom rules or a prebuilt parser, returned as `parsed`."""
+    """Return fields extracted with custom rules or a prebuilt parser, as `parsed`."""
 
     product: Optional[bool] = None
-    """Product details such as name, price, and availability."""
+    """Return product details such as name, price, and availability."""
 
     screenshot: Optional[bool] = None
-    """A screenshot of the page."""
+    """Return a screenshot of the page."""
 
 
 class DataProgress(BaseModel):
-    """Pages attempted so far. Use `status` to check completion."""
+    """Page counts so far. Check `status` to know when the batch is done."""
 
     failed: int
     """Pages that could not be scraped."""
@@ -86,7 +86,8 @@ class DataProgress(BaseModel):
     pending: int
     """Accepted pages not yet attempted.
 
-    Unused crawl capacity is excluded after completion.
+    A link-following crawl reports `0` once it finishes, since its unused page
+    budget is not counted.
     """
 
     succeeded: int
@@ -98,90 +99,97 @@ class DataResultsFile(BaseModel):
     """Compressed file size in bytes."""
 
     items: int
-    """Results in this file."""
+    """Number of result records in this file."""
 
     url: str
-    """Temporary URL for a gzipped NDJSON file."""
+    """Temporary download URL for a gzipped NDJSON file of result records."""
 
 
 class DataResults(BaseModel):
-    """Result download links; null until the batch finishes.
+    """Links to download the results.
 
-    Files are deleted 180 days after the batch finishes.
+    `null` until the batch finishes; the files are deleted 180 days after that.
     """
 
     expires_at: str
-    """When these links expire (24 hours after this response)."""
+    """When these links expire, 24 hours after this response.
+
+    Retrieve the batch again for fresh links.
+    """
 
     files: List[DataResultsFile]
-    """Result files. Order is not guaranteed."""
+    """Result files, in no particular order."""
 
 
 class DataTiming(BaseModel):
+    """When the batch was created, started, and finished."""
+
     completed_at: Optional[str] = None
-    """When processing finished. Null while active."""
+    """When the batch reached a final status. `null` until then."""
 
     created_at: str
     """When the batch was created."""
 
     started_at: Optional[str] = None
-    """When processing started. Null while queued."""
+    """When scraping started. `null` until the batch is `running`."""
 
 
 class Data(BaseModel):
-    """An asynchronous web scraping job."""
+    """An asynchronous scrape or crawl job."""
 
     id: str
-    """Batch ID."""
+    """Unique ID of the batch."""
 
     crawl: Optional[CrawlControls] = None
     """Crawl settings as submitted."""
 
     credits: DataCredits
-    """Batch credit usage and settlement."""
+    """Credits reserved, refunded, and charged for the batch."""
 
     failure: Optional[Failure] = None
-    """
-    A failure of the batch as a whole, distinct from the per-page failures in
-    `page_errors`.
+    """Why the batch as a whole failed.
+
+    Individual page failures are counted in `page_errors`.
     """
 
     formats: DataFormats
-    """Outputs requested for each page. Matches input.data.formats on submission."""
+    """Formats requested for each page, as submitted in `input.data.formats`."""
 
     input: Intake
-    """What the submission accepted."""
+    """Page counts from your submission."""
 
     mode: Literal["scrape", "crawl"]
-    """`scrape` (URL list) or `crawl`."""
+    """`scrape` for a URL list, `crawl` for a site crawl."""
 
     page_errors: List[PageErrorCount]
-    """Individual page failures grouped by error code, sorted by count.
+    """Page failures grouped by error code, most common first.
 
-    Unrelated to `failure`, which is the batch itself failing.
+    For the batch itself failing, see `failure`.
     """
 
     progress: DataProgress
-    """Pages attempted so far. Use `status` to check completion."""
+    """Page counts so far. Check `status` to know when the batch is done."""
 
     results: Optional[DataResults] = None
-    """Result download links; null until the batch finishes.
+    """Links to download the results.
 
-    Files are deleted 180 days after the batch finishes.
+    `null` until the batch finishes; the files are deleted 180 days after that.
     """
 
     status: Literal["pending", "queued", "running", "cancelling", "completed", "cancelled", "failed"]
     """Current state.
 
-    `pending` means waiting for execution capacity or background validation.
-    Capacity-limited batches remain pending until a slot opens. `completed`,
-    `cancelled`, and `failed` are final.
+    `pending` batches are being validated or are waiting for a slot under your
+    plan's concurrent batch limit, `queued` batches are ready to start, and
+    `running` batches are scraping. `completed`, `cancelled`, and `failed` are
+    final.
     """
 
     tags: List[str]
-    """Tags stored on the batch at submission."""
+    """Tags set when the batch was submitted."""
 
     timing: DataTiming
+    """When the batch was created, started, and finished."""
 
     policies: Optional[List[str]] = None
     """Access policy IDs applied to every page."""
@@ -194,7 +202,7 @@ class KeyMetadata(BaseModel):
     """Credits charged for this request."""
 
     credits_remaining: int
-    """Credits remaining for your organization."""
+    """Credits your organization has left after this request."""
 
 
 class BatchListResponse(BaseModel):
@@ -208,10 +216,10 @@ class BatchListResponse(BaseModel):
     """Batches on this page."""
 
     has_more: Optional[bool] = None
-    """Whether another page is available."""
+    """Whether more results are available after this page."""
 
     key_metadata: Optional[KeyMetadata] = None
     """Credits this request used and your remaining balance."""
 
     next_cursor: Optional[str] = None
-    """Cursor for the next page."""
+    """Pass as `cursor` to fetch the next page. `null` on the last page."""

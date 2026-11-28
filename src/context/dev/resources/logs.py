@@ -26,7 +26,9 @@ __all__ = ["LogsResource", "AsyncLogsResource"]
 
 
 class LogsResource(SyncAPIResource):
-    """Read your organization's API request logs."""
+    """
+    Inspect your organization's API requests, including retained inputs and responses.
+    """
 
     @cached_property
     def with_raw_response(self) -> LogsResourceWithRawResponse:
@@ -58,15 +60,13 @@ class LogsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> LogRetrieveResponse:
-        """Retrieve a request’s metadata, retained input, and response.
+        """Retrieve a request's metadata, retained input, and response.
 
-        An entry becomes
-        retrievable a few seconds after its request completes, so a 404 NOT_FOUND for a
-        request that just finished means ingestion has not caught up yet; retry after a
-        few seconds.
+        A request that just
+        finished can return 404 `NOT_FOUND` for a few seconds, so retry shortly.
 
         Args:
-          request_id: The request ID of the logged API call.
+          request_id: ID of the request, from its response's `request_id` or `X-Request-Id` header.
 
           extra_headers: Send extra headers
 
@@ -107,36 +107,35 @@ class LogsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> LogListResponse:
-        """List your organization’s request logs with filters and pagination.
+        """List your organization's API requests, newest first.
 
-        Logs also
-        include batch settlements and monitor runs.
+        Filter by time, endpoint,
+        API key, status, error code, tags, or text. Includes batch settlements and
+        monitor runs.
 
         Args:
           error_code: Filter by the `error_code` returned in the response.
 
-          errors_only: Only include requests that returned a 4xx or 5xx status.
+          errors_only: Return only requests that failed with a 4xx or 5xx status.
 
-          from_: Only include requests at or after this ISO 8601 timestamp. Defaults to 24 hours
-              before `to`.
+          from_: Return requests at or after this time. Defaults to 24 hours before `to`.
 
-          key_id: Filter by the API key that made the request.
+          key_id: Filter by the ID of the API key that made the request.
 
-          limit: Number of log entries per page.
+          limit: Maximum number of log entries to return per page.
 
           page: Page number, starting at 1.
 
-          path: Filter by endpoint path, with or without the /v1 prefix.
+          path: Filter by endpoint path, with or without the `/v1` prefix.
 
-          search: Case-insensitive substring match against the request query and body, e.g. a
-              domain.
+          search: Case-insensitive text to find in the request query or body, such as a domain.
 
           status_code: Filter by exact HTTP status code.
 
-          tags: Comma-separated request tags. Matches requests carrying any of them. Up to 20
-              tags, each 1-50 characters.
+          tags: Comma-separated tags. Returns log entries that have any of them. Up to 20 tags
+              of 1 to 50 characters each.
 
-          to: Only include requests at or before this ISO 8601 timestamp. Defaults to now.
+          to: Return requests at or before this time. Defaults to now.
 
           extra_headers: Send extra headers
 
@@ -175,7 +174,9 @@ class LogsResource(SyncAPIResource):
 
 
 class AsyncLogsResource(AsyncAPIResource):
-    """Read your organization's API request logs."""
+    """
+    Inspect your organization's API requests, including retained inputs and responses.
+    """
 
     @cached_property
     def with_raw_response(self) -> AsyncLogsResourceWithRawResponse:
@@ -207,15 +208,13 @@ class AsyncLogsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> LogRetrieveResponse:
-        """Retrieve a request’s metadata, retained input, and response.
+        """Retrieve a request's metadata, retained input, and response.
 
-        An entry becomes
-        retrievable a few seconds after its request completes, so a 404 NOT_FOUND for a
-        request that just finished means ingestion has not caught up yet; retry after a
-        few seconds.
+        A request that just
+        finished can return 404 `NOT_FOUND` for a few seconds, so retry shortly.
 
         Args:
-          request_id: The request ID of the logged API call.
+          request_id: ID of the request, from its response's `request_id` or `X-Request-Id` header.
 
           extra_headers: Send extra headers
 
@@ -256,36 +255,35 @@ class AsyncLogsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> LogListResponse:
-        """List your organization’s request logs with filters and pagination.
+        """List your organization's API requests, newest first.
 
-        Logs also
-        include batch settlements and monitor runs.
+        Filter by time, endpoint,
+        API key, status, error code, tags, or text. Includes batch settlements and
+        monitor runs.
 
         Args:
           error_code: Filter by the `error_code` returned in the response.
 
-          errors_only: Only include requests that returned a 4xx or 5xx status.
+          errors_only: Return only requests that failed with a 4xx or 5xx status.
 
-          from_: Only include requests at or after this ISO 8601 timestamp. Defaults to 24 hours
-              before `to`.
+          from_: Return requests at or after this time. Defaults to 24 hours before `to`.
 
-          key_id: Filter by the API key that made the request.
+          key_id: Filter by the ID of the API key that made the request.
 
-          limit: Number of log entries per page.
+          limit: Maximum number of log entries to return per page.
 
           page: Page number, starting at 1.
 
-          path: Filter by endpoint path, with or without the /v1 prefix.
+          path: Filter by endpoint path, with or without the `/v1` prefix.
 
-          search: Case-insensitive substring match against the request query and body, e.g. a
-              domain.
+          search: Case-insensitive text to find in the request query or body, such as a domain.
 
           status_code: Filter by exact HTTP status code.
 
-          tags: Comma-separated request tags. Matches requests carrying any of them. Up to 20
-              tags, each 1-50 characters.
+          tags: Comma-separated tags. Returns log entries that have any of them. Up to 20 tags
+              of 1 to 50 characters each.
 
-          to: Only include requests at or before this ISO 8601 timestamp. Defaults to now.
+          to: Return requests at or before this time. Defaults to now.
 
           extra_headers: Send extra headers
 

@@ -19,41 +19,43 @@ __all__ = [
 
 class UtilityPrefetchParams(TypedDict, total=False):
     identifier: Required[Identifier]
-    """Identifier of the target to prefetch. Provide exactly one of domain or email."""
+    """Domain or work email to prefetch. Provide exactly one."""
 
     type: Required[Literal["brand", "styleguide"]]
     """Data to prefetch."""
 
     policies: SequenceNotStr[str]
-    """Access policy IDs to apply.
+    """Access policy IDs to apply; each URL must pass all of them.
 
-    A URL must pass every policy. Leave it out unless access policies are enabled
-    for your organization; otherwise the request fails with
+    Requires access policies enabled for your organization; otherwise returns
     `ACCESS_POLICIES_NOT_ENABLED`.
     """
 
     tags: SequenceNotStr[str]
-    """Labels for filtering usage in the dashboard."""
+    """Labels for this request.
+
+    Filter usage and request logs by them in the dashboard or with `GET /org/logs`.
+    """
 
     timeout_opts: Annotated[TimeoutOpts, PropertyInfo(alias="timeoutOpts")]
-    """Request deadline and what to return when it passes."""
+    """Request deadline. The request fails with 408 when it passes."""
 
 
 class IdentifierUtilityPrefetchDomainIdentifier(TypedDict, total=False):
     """Prefetch by domain."""
 
     domain: Required[str]
-    """Domain, e.g. `stripe.com`."""
+    """Domain to prefetch, such as `stripe.com`."""
 
 
 class IdentifierUtilityPrefetchEmailIdentifier(TypedDict, total=False):
-    """Prefetch by email. The domain will be extracted and validated."""
+    """Prefetch by work email. Context.dev uses the email's domain."""
 
     email: Required[str]
-    """Email address to prefetch data for.
+    """Work email whose domain to prefetch.
 
-    The domain will be extracted from the email. Free email providers (gmail.com,
-    yahoo.com, etc.) and disposable email addresses are not allowed.
+    Free email providers such as `gmail.com` and disposable addresses are rejected
+    with 422.
     """
 
 
@@ -61,10 +63,10 @@ Identifier: TypeAlias = Union[IdentifierUtilityPrefetchDomainIdentifier, Identif
 
 
 class TimeoutOpts(TypedDict, total=False):
-    """Request deadline and what to return when it passes."""
+    """Request deadline. The request fails with 408 when it passes."""
 
     milliseconds: Required[int]
     """Deadline in milliseconds."""
 
     behavior: Literal["fail"]
-    """Only "fail" is supported: return 408 at the deadline."""
+    """Only `fail` is supported: the request returns 408 at the deadline."""

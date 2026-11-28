@@ -10,14 +10,19 @@ __all__ = ["MonitorRetrieveChangeResponse", "Evidence", "KeyMetadata"]
 
 
 class Evidence(BaseModel):
+    """Before and after excerpts that support a change."""
+
     after: str
-    """Snapshot of the content after the change."""
+    """Content after the change."""
 
     before: str
-    """Snapshot of the content before the change."""
+    """Content before the change. Empty for new search results."""
 
     url: Optional[str] = None
-    """Optional URL the evidence relates to. Absent for whole-target diffs."""
+    """Page the evidence comes from.
+
+    Omitted when the evidence covers the whole target.
+    """
 
 
 class KeyMetadata(BaseModel):
@@ -27,20 +32,24 @@ class KeyMetadata(BaseModel):
     """Credits charged for this request."""
 
     credits_remaining: int
-    """Credits remaining for your organization."""
+    """Credits your organization has left after this request."""
 
 
 class MonitorRetrieveChangeResponse(BaseModel):
     id: str
+    """Unique ID of the change."""
 
     change_detection_type: Literal["exact", "semantic"]
+    """Change detection type the monitor uses."""
 
     detected_at: datetime
+    """When the change was detected."""
 
     mode: Literal["web"]
-    """Always `web`. Optional."""
+    """Monitor category. Always `web`."""
 
     monitor_id: str
+    """ID of the monitor that detected the change."""
 
     request_id: str
     """Unique ID of this request, also in `X-Request-Id`.
@@ -49,47 +58,71 @@ class MonitorRetrieveChangeResponse(BaseModel):
     """
 
     run_id: str
-    """The run that detected this change."""
+    """ID of the run that detected the change."""
 
     summary: str
+    """Plain-language summary of what changed."""
 
     tags: List[str]
-    """Labels for filtering monitors, their changes, and their usage."""
+    """Tags the monitor had when the change was detected."""
 
     target_type: Literal["page", "sitemap", "extract", "search"]
+    """Type of target the monitor watches."""
 
     title: str
+    """Short headline for the change."""
 
     url: str
-    """The monitored URL. For search targets, the first newly reported result."""
+    """Monitored URL. For search targets, the first new result."""
 
     added_url_count: Optional[int] = None
+    """Total number of URLs added."""
 
     added_urls: Optional[List[str]] = None
-    """At most 500 URLs are included; the corresponding count field is always exact."""
+    """URLs added to the sitemap, up to 500. `added_url_count` has the full count."""
 
     after_text_excerpt: Optional[str] = None
+    """Excerpt of the page text after the change. Page targets only."""
 
     before_text_excerpt: Optional[str] = None
+    """Excerpt of the page text before the change. Page targets only."""
 
     confidence: Optional[float] = None
+    """Confidence that the change matters, from 0 to 1.
+
+    Set by `semantic` detection only.
+    """
 
     diff: Optional[str] = None
-    """Text diff between the previous and current page baseline (page targets)."""
+    """Text diff of the change, for page and extract targets.
+
+    Extract diffs have one section per changed page.
+    """
 
     evidence: Optional[List[Evidence]] = None
+    """Before and after excerpts that support the change."""
 
     importance: Optional[Literal["low", "medium", "high"]] = None
+    """How important the change is. Set by `semantic` detection only."""
 
     key_metadata: Optional[KeyMetadata] = None
     """Credits this request used and your remaining balance."""
 
     matched_url_count: Optional[int] = None
+    """Total number of matched URLs."""
 
     matched_urls: Optional[List[str]] = None
-    """At most 500 URLs are included; the corresponding count field is always exact."""
+    """
+    URLs where the change was found: the changed pages for page and extract targets,
+    or the new results for search targets. Up to 500; `matched_url_count` has the
+    full count.
+    """
 
     removed_url_count: Optional[int] = None
+    """Total number of URLs removed."""
 
     removed_urls: Optional[List[str]] = None
-    """At most 500 URLs are included; the corresponding count field is always exact."""
+    """
+    URLs removed from the sitemap, or pages no longer found for extract targets, up
+    to 500. `removed_url_count` has the full count.
+    """

@@ -24,7 +24,7 @@ __all__ = ["FeedbackResource", "AsyncFeedbackResource"]
 
 
 class FeedbackResource(SyncAPIResource):
-    """Report API issues and documentation mismatches."""
+    """Report bugs, wrong results, and docs mismatches to the Context.dev team."""
 
     @cached_property
     def with_raw_response(self) -> FeedbackResourceWithRawResponse:
@@ -62,21 +62,27 @@ class FeedbackResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FeedbackSubmitResponse:
-        """
-        Report an API issue or documentation mismatch, including request IDs when
-        available.
+        """Report a bug, docs mismatch, or wrong result to the Context.dev team.
+
+        Send
+        `request_id`, `url`, or both. Any API key can submit, and a repeat report for
+        the same `request_id` returns the original feedback.
 
         Args:
-          category: Kind of issue.
+          category: Kind of issue. Use `quality_degradation` for wrong or incomplete results and
+              `bad_brand` for wrong or outdated brand data, such as a logo or colors.
 
-          note: What went wrong and what you expected instead.
+          note: What went wrong and what you expected instead. Leave out API keys and personal
+              data.
 
-          request_id: The request_id of the API call the feedback is about, from its response body or
-              X-Request-Id header.
+          request_id: ID of the API call the feedback is about, from its `request_id` or
+              `X-Request-Id` header. Send this, `url`, or both.
 
-          tags: Labels for filtering usage in the dashboard.
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
 
-          url: The page the feedback is about, such as one page of a crawl or a docs page.
+          url: URL the feedback is about, such as one page of a crawl or a docs page. Send
+              this, `request_id`, or both.
 
           extra_headers: Send extra headers
 
@@ -106,7 +112,7 @@ class FeedbackResource(SyncAPIResource):
 
 
 class AsyncFeedbackResource(AsyncAPIResource):
-    """Report API issues and documentation mismatches."""
+    """Report bugs, wrong results, and docs mismatches to the Context.dev team."""
 
     @cached_property
     def with_raw_response(self) -> AsyncFeedbackResourceWithRawResponse:
@@ -144,21 +150,27 @@ class AsyncFeedbackResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FeedbackSubmitResponse:
-        """
-        Report an API issue or documentation mismatch, including request IDs when
-        available.
+        """Report a bug, docs mismatch, or wrong result to the Context.dev team.
+
+        Send
+        `request_id`, `url`, or both. Any API key can submit, and a repeat report for
+        the same `request_id` returns the original feedback.
 
         Args:
-          category: Kind of issue.
+          category: Kind of issue. Use `quality_degradation` for wrong or incomplete results and
+              `bad_brand` for wrong or outdated brand data, such as a logo or colors.
 
-          note: What went wrong and what you expected instead.
+          note: What went wrong and what you expected instead. Leave out API keys and personal
+              data.
 
-          request_id: The request_id of the API call the feedback is about, from its response body or
-              X-Request-Id header.
+          request_id: ID of the API call the feedback is about, from its `request_id` or
+              `X-Request-Id` header. Send this, `url`, or both.
 
-          tags: Labels for filtering usage in the dashboard.
+          tags: Labels for this request. Filter usage and request logs by them in the dashboard
+              or with `GET /org/logs`.
 
-          url: The page the feedback is about, such as one page of a crawl or a docs page.
+          url: URL the feedback is about, such as one page of a crawl or a docs page. Send
+              this, `request_id`, or both.
 
           extra_headers: Send extra headers
 

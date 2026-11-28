@@ -12,7 +12,7 @@ __all__ = ["ParseHandleParams", "Pdf"]
 
 class ParseHandleParams(TypedDict, total=False):
     client: str
-    """Optional client identifier used for usage attribution."""
+    """Client identifier for usage attribution."""
 
     extension: Literal[
         "warc",
@@ -89,36 +89,46 @@ class ParseHandleParams(TypedDict, total=False):
         "pnm",
     ]
     """
-    Optional file extension hint, such as pdf, docx, xlsx, pptx, html, json, csv,
-    md, py, rtf, jpg, png, txt, warc, or warc.gz.
+    File type hint, such as `pdf`, `docx`, `xlsx`, `pptx`, `html`, `json`, `csv`,
+    `md`, `py`, `rtf`, `jpg`, `png`, `txt`, `warc`, or `warc.gz`. Use it when the
+    `Content-Type` header is missing or generic.
     """
 
     include_images: Annotated[bool, PropertyInfo(alias="includeImages")]
-    """Include image references in Markdown output"""
+    """Include image references in the Markdown."""
 
     include_links: Annotated[bool, PropertyInfo(alias="includeLinks")]
-    """Preserve hyperlinks in Markdown output"""
+    """Keep link URLs in the Markdown."""
 
     include_numbered_pages: Annotated[bool, PropertyInfo(alias="includeNumberedPages")]
     """
-    Start each PDF page in the Markdown with a `<!-- page N -->` line, where N is
+    Start each PDF page in the Markdown with a `<!-- page N -->` line, where `N` is
     the original 1-based page number.
     """
 
     ocr: bool
-    """Read text from images and scanned PDF pages. PDF page ranges still apply."""
+    """
+    Read text from images and scanned PDF pages with OCR, within the `pdf` page
+    range. Adds 1 credit per page read.
+    """
 
     pdf: Pdf
-    """PDF page-range options as a JSON object, e.g. {"start": 2, "end": 5}."""
+    """PDF page range as a JSON object, such as `{"start": 2, "end": 5}`."""
 
     shorten_base64_images: Annotated[bool, PropertyInfo(alias="shortenBase64Images")]
-    """Shorten base64-encoded image data in the Markdown output"""
+    """Shorten inline base64 image data."""
 
     tags: SequenceNotStr[str]
-    """Comma-separated labels for filtering usage, e.g. `production,team-alpha`."""
+    """Comma-separated labels for this request, such as `production,team-alpha`.
+
+    Filter usage and request logs by them.
+    """
 
     use_main_content_only: Annotated[bool, PropertyInfo(alias="useMainContentOnly")]
-    """Extract only the main content from HTML-like inputs"""
+    """Keep only the main content, without navigation, headers, footers, or sidebars.
+
+    Applies to HTML-like inputs.
+    """
 
     zdr: Literal["enabled", "disabled"]
     """`enabled` turns on zero data retention.
@@ -128,13 +138,10 @@ class ParseHandleParams(TypedDict, total=False):
 
 
 class Pdf(TypedDict, total=False):
-    """PDF page-range options as a JSON object, e.g. {"start": 2, "end": 5}."""
+    """PDF page range as a JSON object, such as `{"start": 2, "end": 5}`."""
 
     end: int
-    """Last PDF page to parse (1-based, inclusive).
-
-    Defaults to the final page. Must be >= start.
-    """
+    """Last page to parse. Defaults to the last page. Must be at least `start`."""
 
     start: int
-    """First 1-based PDF page to parse."""
+    """First page to parse, starting at 1."""

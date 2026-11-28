@@ -12,4 +12,4 @@ class PageErrorCount(BaseModel):
     """Error code for these failures."""
 
     count: int
-    """Pages that failed with this code."""
+    """Number of pages that failed with this code."""
